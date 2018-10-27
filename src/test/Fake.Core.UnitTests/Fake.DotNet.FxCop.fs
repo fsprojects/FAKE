@@ -1,13 +1,141 @@
-﻿module Fake.DotNet.FxCop
+module Fake.DotNet.FxCop
 
-open Fake.Core
+open System
 open Fake.DotNet
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Expecto
 
 [<Tests>]
 let tests =
-  testList "Fake.DotNet.FxCop.Tests" [
-    testCase "Test that we can run a test" <| fun _ ->
-      let p = FxCop.Params.Create()
-      Expect.isFalse (p.IncludeSummaryReport) "This test should fail"
-  ]
+    testList "Fake.DotNet.FxCop.Tests"
+        [ testCase "Test that default arguments are processed as expected" <| fun _ ->
+              let p = FxCop.Params.Create()
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p [ dummy ]
+              Expect.isTrue (p.IncludeSummaryReport)
+                  "A field should have non-default value for a bool"
+              Expect.equal args [ "/c"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/s"
+                                  "/v" ] "The defaults should be simple"
+          testCase "Test that all arguments are processed as expected" <| fun _ ->
+              let p =
+                  { FxCop.Params.Create() with DependencyDirectories =
+                                                   [ Guid.NewGuid().ToString()
+                                                     Guid.NewGuid().ToString() ]
+                                               ImportFiles =
+                                                   [ Guid.NewGuid().ToString()
+                                                     Guid.NewGuid().ToString() ]
+                                               RuleLibraries =
+                                                   [ Guid.NewGuid().ToString()
+                                                     Guid.NewGuid().ToString() ]
+                                               Rules =
+                                                   [ Guid.NewGuid().ToString()
+                                                     Guid.NewGuid().ToString() ]
+                                               CustomRuleset = Guid.NewGuid().ToString()
+                                               ConsoleXslFileName =
+                                                   Guid.NewGuid().ToString()
+                                               ReportFileName = Guid.NewGuid().ToString()
+                                               OutputXslFileName =
+                                                   Guid.NewGuid().ToString()
+                                               PlatformDirectory =
+                                                   Guid.NewGuid().ToString()
+                                               ProjectFile = Guid.NewGuid().ToString()
+                                               Types =
+                                                   [ Guid.NewGuid().ToString()
+                                                     Guid.NewGuid().ToString() ]
+                                               WorkingDirectory =
+                                                   Guid.NewGuid().ToString()
+                                               CustomDictionary =
+                                                   Guid.NewGuid().ToString()
+                                               ApplyOutXsl = true
+                                               ToolPath = Guid.NewGuid().ToString() }
+
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p [ dummy ]
+              let wrap s a = s + "\"" + a + "\""
+
+              let expected =
+                  [ "/aXsl"
+                    "/c"
+                    wrap "/cXsl:" p.ConsoleXslFileName
+                    wrap "/d:" (p.DependencyDirectories |> Seq.head)
+                    wrap "/d:" (p.DependencyDirectories |> Seq.last)
+                    wrap "/f:" dummy
+                    wrap "/i:" (p.ImportFiles |> Seq.head)
+                    wrap "/i:" (p.ImportFiles |> Seq.last)
+                    wrap "/o:" p.ReportFileName
+                    wrap "/oXsl:" p.OutputXslFileName
+                    wrap "/plat:" p.PlatformDirectory
+                    wrap "/p:" p.ProjectFile
+                    wrap "/ruleset:=" p.CustomRuleset
+                    wrap "/r:" (p.ToolPath @@ "Rules" @@ (p.RuleLibraries |> Seq.head))
+                    wrap "/r:" (p.ToolPath @@ "Rules" @@ (p.RuleLibraries |> Seq.last))
+                    "/rid:" + (p.Rules |> Seq.head)
+                    "/rid:" + (p.Rules |> Seq.last)
+                    "/s"
+                    "/t:" + (p.Types |> Seq.head) + "," + (p.Types |> Seq.last)
+                    "/v"
+                    wrap "/dic:" p.CustomDictionary ]
+              Expect.equal args expected "The Xsl should be applied"
+          testCase "Test that generated code should be ignored" <| fun _ ->
+              let p1 = { FxCop.Params.Create() with IgnoreGeneratedCode = true }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p1 [ dummy ]
+              Expect.equal args [ "/c"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/ignoregeneratedcode"
+                                  "/s"
+                                  "/v" ] "Generated code should be ignored"
+          testCase "Test that console output can be switched off" <| fun _ ->
+              let p2 = { FxCop.Params.Create() with DirectOutputToConsole = false }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p2 [ dummy ]
+              Expect.equal args [ "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/s"
+                                  "/v" ] "No output to console expected"
+          testCase "Test that summary reporting can be switched off" <| fun _ ->
+              let p3 = { FxCop.Params.Create() with IncludeSummaryReport = false }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p3 [ dummy ]
+              Expect.equal args [ "/c"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/v" ] "No summary expected"
+          testCase "Test project file update can be enabled" <| fun _ ->
+              let p4 = { FxCop.Params.Create() with SaveResultsInProjectFile = true }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p4 [ dummy ]
+              Expect.equal args [ "/c"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/s"
+                                  "/u"
+                                  "/v" ] "results should be in project file"
+          testCase "Test that output can be forced" <| fun _ ->
+              let p5 = { FxCop.Params.Create() with ForceOutput = true }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p5 [ dummy ]
+              Expect.equal args [ "/c"
+                                  "/fo"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/s"
+                                  "/v" ] "Output should be forced"
+          testCase "Test that Xsl is defaulted" <| fun _ ->
+              let p0 = { FxCop.Params.Create() with ApplyOutXsl = true }
+              let dummy = Guid.NewGuid().ToString()
+              let args = FxCop.createArgs p0 [ dummy ]
+              Expect.equal args [ "/aXsl"
+                                  "/c"
+                                  "/f:\"" + dummy + "\""
+                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+
+                                  "/oXsl:\"" + p0.ToolPath
+                                  @@ "Xml" @@ "FxCopReport.xsl" + "\""
+                                  "/s"
+                                  "/v" ] "Xsl should be defaulted" ]
