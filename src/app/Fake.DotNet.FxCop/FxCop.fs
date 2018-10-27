@@ -115,10 +115,8 @@ type Params =
 let checkForErrors resultFile =
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let getErrorValue s =
-        let _, value =
-            Xml.read_Int false resultFile String.Empty String.Empty
-                (sprintf "string(count(//Issue[@Level='%s']))" s)
-        value
+        Xml.read_Int false resultFile String.Empty String.Empty
+            (sprintf "string(count(//Issue[@Level='%s']))" s) |> snd
     getErrorValue "CriticalError", getErrorValue "Error", getErrorValue "CriticalWarning",
     getErrorValue "Warning"
 
