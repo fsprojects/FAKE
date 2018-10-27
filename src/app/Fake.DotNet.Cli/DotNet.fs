@@ -1284,7 +1284,7 @@ module DotNet =
         execWithBinLog project param.Common "build" args param.MSBuildParams
         __.MarkSuccess()
 
-    /// dotnet build command options
+    /// dotnet test command options
     type TestOptions =
         {
             /// Common tool options
@@ -1381,11 +1381,11 @@ module DotNet =
         |> List.filter (not << String.IsNullOrEmpty)
 
 
-    /// Execute dotnet build command
+    /// Execute dotnet test command
     /// ## Parameters
     ///
-    /// - 'setParams' - set compile command parameters
-    /// - 'project' - project to compile
+    /// - 'setParams' - set test command parameters
+    /// - 'project' - project to test
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
