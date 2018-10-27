@@ -1067,7 +1067,7 @@ module DotNet =
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
         __.MarkSuccess()
 
-    /// dotnet build command options
+    /// dotnet test command options
     type TestOptions =
         {
             /// Common tool options
@@ -1159,11 +1159,11 @@ module DotNet =
         ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
 
-    /// Execute dotnet build command
+    /// Execute dotnet test command
     /// ## Parameters
     ///
-    /// - 'setParams' - set compile command parameters
-    /// - 'project' - project to compile
+    /// - 'setParams' - set test command parameters
+    /// - 'project' - project to test
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
