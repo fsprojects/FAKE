@@ -1,8 +1,14 @@
-//#if (dependencies == "inline")
+//#if (dependencies == "inline" && dsl == "default")
 #r "paket:
 nuget Fake.DotNet.Cli
 nuget Fake.IO.FileSystem
 nuget Fake.Core.Target //"
+//#elseif (dependencies == "inline" && dsl == "blackfox")
+#r "paket:
+nuget Fake.DotNet.Cli
+nuget Fake.IO.FileSystem
+nuget Fake.Core.Target
+nuget BlackFox.Fake.BuildTask //"
 //#endif
 #load ".fake/(build.fsx)/intellisense.fsx"
 open Fake.Core

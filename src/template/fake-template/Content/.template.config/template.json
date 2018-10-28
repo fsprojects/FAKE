@@ -48,6 +48,20 @@
                 }
             ]
         },
+        "dsl": {
+            "type": "parameter",
+            "dataType": "choice",
+            "defaultValue": "default",
+            "choices": [{
+                    "choice": "default",
+                    "description": "Uses the default FAKE domain specific language"
+                },
+                {
+                    "choice": "blackfox",
+                    "description": "Uses the BlackFox domain specific language"
+                }
+            ]
+        },
         "tool-path": {
             "type": "parameter",
             "description": "Folder for the FAKE dotnet sdk global tool. This parameter is only applicable when 'tool' is used for bootstrapping",
@@ -65,7 +79,8 @@
     },
     "sources": [{
         "exclude": "**/.template.config/**/*",
-        "modifiers": [{
+        "modifiers": [
+            {
                 "exclude": "**/fake.tool.*",
                 "condition": "(bootstrap != \"tool\")"
             },
@@ -88,6 +103,28 @@
             {
                 "exclude": "**/paket.dependencies",
                 "condition": "(dependencies != \"file\")"
+            },
+            {
+                "exclude": "**/fake.tool.*",
+                "condition": "(bootstrap != \"tool\")"
+            },            
+            {
+                "exclude": "**/build.default.*",
+                "condition": "(dsl != \"default\")"
+            },
+            {
+                "rename": {
+                    "build.default.fsx": "build.fsx"
+                }
+            },            
+            {
+                "exclude": "**/build.blackfox.*",
+                "condition": "(dsl != \"blackfox\")"
+            },
+            {
+                "rename": {
+                    "build.blackfox.fsx": "build.fsx"
+                }
             }
         ]
     }],
