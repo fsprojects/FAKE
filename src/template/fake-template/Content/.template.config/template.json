@@ -71,8 +71,8 @@
             },
             {
                 "rename": {
-                    "fake.tool.sh": "fake.sh",
-                    "fake.tool.cmd": "fake.cmd"
+                    "fake.tool.sh": "build.sh",
+                    "fake.tool.cmd": "build.cmd"
                 }
             },
             {
@@ -81,8 +81,8 @@
             },
             {
                 "rename": {
-                    "fake.proj.sh": "fake.sh",
-                    "fake.proj.cmd": "fake.cmd"
+                    "fake.proj.sh": "build.sh",
+                    "fake.proj.cmd": "build.cmd"
                 }
             },
             {

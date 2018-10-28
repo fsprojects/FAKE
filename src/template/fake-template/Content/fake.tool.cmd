@@ -8,4 +8,4 @@ IF NOT EXIST "%TOOL_PATH%\fake.exe" (
   rem #endif
 )
 
-"%TOOL_PATH%/fake.exe" %*
+"%TOOL_PATH%/fake.exe" build %*

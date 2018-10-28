@@ -28,4 +28,4 @@ then
   dotnet tool install fake-cli --tool-path "$TOOL_PATH" --version (version)
 #endif
 fi
-"$FAKE" "$@"
+"$FAKE" build "$@"
