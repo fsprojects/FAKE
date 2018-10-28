@@ -87,6 +87,11 @@ div.tip strong {
     color: #d1d1d1;
 }
 
+table.module-list {
+    overflow: auto;
+    display: block;
+}
+
 table.pre pre {
     padding: 0px;
     margin: 0px;
