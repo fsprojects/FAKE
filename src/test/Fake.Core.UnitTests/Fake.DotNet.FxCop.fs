@@ -1,14 +1,14 @@
 module Fake.DotNet.FxCop
 
 open System
+open Fake.Core
 open Fake.DotNet
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Expecto
 
-[<Tests>]
-let tests =
-    testList "Fake.DotNet.FxCop.Tests"
+let testCases =
+    if Environment.isWindows then
         [ testCase "Test that default arguments are processed as expected" <| fun _ ->
               let p = FxCop.Params.Create()
               let dummy = Guid.NewGuid().ToString()
@@ -138,4 +138,53 @@ let tests =
                                   "/oXsl:\"" + p0.ToolPath
                                   @@ "Xml" @@ "FxCopReport.xsl" + "\""
                                   "/s"
-                                  "/v" ] "Xsl should be defaulted" ]
+                                  "/v" ] "Xsl should be defaulted"
+
+          testCase "Test process is created"
+          <| fun _ ->
+              let dummy = Guid.NewGuid().ToString()
+              let p = { FxCop.Params.Create() with ToolPath = dummy }
+              let args = [ Guid.NewGuid().ToString() ]
+              let proc = FxCop.createProcess p args
+              Expect.equal proc.CommandLine (dummy + " " + String.Join(" ", args))
+                  "tool should match"
+              Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
+                  "WorkingDirectory should default"
+
+          testCase "Test process is created with working directory"
+          <| fun _ ->
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+
+              let p =
+                  { FxCop.Params.Create() with ToolPath = dummy
+                                               WorkingDirectory = dummy2 }
+
+              let args = [ Guid.NewGuid().ToString() ]
+              let proc = FxCop.createProcess p args
+              Expect.equal proc.CommandLine (dummy + " " + String.Join(" ", args))
+                  "tool should match"
+              Expect.equal proc.WorkingDirectory (Some dummy2)
+                  "WorkingDirectory should match input"
+
+          testCase "Test full command line is created"
+          <| fun _ ->
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+
+              let p =
+                  { FxCop.Params.Create() with ToolPath = dummy
+                                               ReportFileName = dummy2 }
+
+              let assemblies = [ Guid.NewGuid().ToString() ]
+              let proc = FxCop.composeCommandLine p assemblies
+              let expected =
+                  sprintf """%s /c "/f:\"%s\"" "/o:\"%s\"" /s /v""" dummy
+                      (Seq.head assemblies) dummy2
+              Expect.equal proc.CommandLine expected "composed command line should match"
+              Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
+                  "WorkingDirectory should default" ]
+    else []
+
+[<Tests>]
+let tests = testList "Fake.DotNet.FxCop.Tests" testCases

@@ -189,11 +189,15 @@ let internal failAsrequired param result =
         if warnings <> 0 && param.FailOnError >= ErrorLevel.Warning then
             failwithf "FxCop found %d warnings." warnings
 
-/// Run FxCop on a group of assemblies.
-let run param (assemblies : string seq) =
-    use __ = Trace.traceTask "FxCop" ""
+let internal composeCommandLine param assemblies =
     let args = createArgs param assemblies
     createProcess param args
-    |> Proc.run
-    |> failAsrequired param
-    __.MarkSuccess()
+
+/// Run FxCop on a group of assemblies.
+let run param (assemblies : string seq) =
+    if Environment.isWindows then
+        use __ = Trace.traceTask "FxCop" ""
+        composeCommandLine param assemblies
+        |> Proc.run
+        |> failAsrequired param
+        __.MarkSuccess()
