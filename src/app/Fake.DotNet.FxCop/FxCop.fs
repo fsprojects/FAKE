@@ -110,13 +110,20 @@ type Params =
           ForceOutput = false
           CustomDictionary = String.Empty }
 
+// default Xml reader
+let internal XmlReadIntBase failOnError xmlFileName nameSpace prefix xPath =
+  (Xml.read_Int failOnError xmlFileName nameSpace prefix xPath) |> snd
+
+// Unit test mocking point
+let mutable internal XmlReadInt = XmlReadIntBase
+
 /// This checks the result file with some XML queries for errors
 /// [omit]
 let checkForErrors resultFile =
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let getErrorValue s =
-        Xml.read_Int false resultFile String.Empty String.Empty
-            (sprintf "string(count(//Issue[@Level='%s']))" s) |> snd
+        XmlReadInt false resultFile String.Empty String.Empty
+            (sprintf "string(count(//Issue[@Level='%s']))" s)
     getErrorValue "CriticalError", getErrorValue "Error", getErrorValue "CriticalWarning",
     getErrorValue "Warning"
 
@@ -176,7 +183,7 @@ let internal failAsrequired param result =
     let ok = 0 = result.ExitCode
     if not ok && (param.FailOnError >= ErrorLevel.ToolError) then
         failwith "FxCop test failed."
-    if param.FailOnError <> ErrorLevel.DontFailBuild
+    if param.FailOnError > ErrorLevel.ToolError
        && param.ReportFileName <> String.Empty then
         let criticalErrors, errors, criticalWarnings, warnings =
             checkForErrors param.ReportFileName
