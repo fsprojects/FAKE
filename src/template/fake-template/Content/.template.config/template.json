@@ -51,9 +51,9 @@
         "dsl": {
             "type": "parameter",
             "dataType": "choice",
-            "defaultValue": "default",
+            "defaultValue": "fake",
             "choices": [{
-                    "choice": "default",
+                    "choice": "fake",
                     "description": "Uses the default FAKE domain specific language"
                 },
                 {
@@ -109,12 +109,12 @@
                 "condition": "(bootstrap != \"tool\")"
             },            
             {
-                "exclude": "**/build.default.*",
-                "condition": "(dsl != \"default\")"
+                "exclude": "**/build.fake.*",
+                "condition": "(dsl != \"fake\")"
             },
             {
                 "rename": {
-                    "build.default.fsx": "build.fsx"
+                    "build.fake.fsx": "build.fsx"
                 }
             },            
             {

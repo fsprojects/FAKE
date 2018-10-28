@@ -1,4 +1,4 @@
-//#if (dependencies == "inline" && dsl == "default")
+//#if (dependencies == "inline" && dsl == "fake")
 #r "paket:
 nuget Fake.DotNet.Cli
 nuget Fake.IO.FileSystem
