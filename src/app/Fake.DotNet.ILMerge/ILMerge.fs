@@ -153,6 +153,10 @@ let internal createProcess parameters outputFile primaryAssembly =
 let run parameters outputFile primaryAssembly =
     use __ = Trace.traceTask "ILMerge" primaryAssembly
     let args = getArguments outputFile primaryAssembly parameters
-    let run = createProcess parameters outputFile primaryAssembly |> Proc.run
+
+    let run =
+        createProcess parameters outputFile primaryAssembly
+        |> CreateProcess.withFramework
+        |> Proc.run
     if 0 <> run.ExitCode then failwithf "ILMerge %s failed." (String.separated " " args)
     __.MarkSuccess()
