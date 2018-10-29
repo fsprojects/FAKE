@@ -54,11 +54,11 @@
             "defaultValue": "fake",
             "choices": [{
                     "choice": "fake",
-                    "description": "Uses the default FAKE domain specific language"
+                    "description": "Uses the default FAKE domain specific language (see https://fake.build/core-targets.html)"
                 },
                 {
                     "choice": "blackfox",
-                    "description": "Uses the BlackFox domain specific language"
+                    "description": "Uses the BlackFox domain specific language (see https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md)"
                 }
             ]
         },

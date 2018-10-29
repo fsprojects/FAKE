@@ -1,9 +1,4 @@
-//#if (dependencies == "inline" && dsl == "fake")
-#r "paket:
-nuget Fake.DotNet.Cli
-nuget Fake.IO.FileSystem
-nuget Fake.Core.Target //"
-//#elseif (dependencies == "inline" && dsl == "blackfox")
+//#if (dependencies == "inline")
 #r "paket:
 nuget Fake.DotNet.Cli
 nuget Fake.IO.FileSystem
