@@ -1,7 +1,12 @@
-﻿/// Contains task a task which allows to merge .NET assemblies with [ILMerge](http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx).
-module Fake.ILMerge
+/// Contains task a task which allows to merge .NET assemblies with [ILMerge](http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx).
+[<RequireQualifiedAccess>]
+module Fake.DotNet.ILMerge
 
 open System
+open Fake.Core
+open Fake.IO
+open Fake.IO.Globbing
+open System.Globalization
 
 /// Option type to configure ILMerge's processing of duplicate types.
 type AllowDuplicateTypes =
@@ -25,13 +30,12 @@ type TargetKind =
     | WinExe
 
 /// Parameter type for ILMerge
-[<CLIMutable>]
-type ILMergeParams =
+[<NoComparison>]
+type Params =
     { /// Path to ILMerge.exe
       ToolPath : string
       /// Version to use for the merged assembly
-      Version : string
-      TimeOut : TimeSpan
+      Version : Version option
       /// Assemblies to merge with the primary assembly
       Libraries : string seq
       /// Duplicate types policy
@@ -63,89 +67,92 @@ type ILMergeParams =
       UnionMerge : bool
       /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
       XmlDocs : bool }
-
-/// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
-let ILMergeDefaults : ILMergeParams =
-    { ToolPath = findToolInSubPath "ilmerge.exe" (currentDirectory @@ "tools" @@ "ILMerge")
-      Version = ""
-      TimeOut = TimeSpan.FromMinutes 5.
-      Libraries = []
-      AllowDuplicateTypes = NoDuplicateTypes
-      AllowMultipleAssemblyLevelAttributes = false
-      AllowWildcards = false
-      AllowZeroPeKind = false
-      AttributeFile = null
-      Closed = false
-      CopyAttributes = false
-      DebugInfo = true
-      Internalize = NoInternalize
-      FileAlignment = None
-      KeyFile = null
-      TargetPlatform = null
-      LogFile = null
-      SearchDirectories = []
-      TargetKind = Library
-      UnionMerge = false
-      XmlDocs = false }
+    /// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
+    static member Create() =
+        { ToolPath = Tools.findToolInSubPath "ilmerge.exe" <| Shell.pwd()
+          Version = None
+          Libraries = []
+          AllowDuplicateTypes = NoDuplicateTypes
+          AllowMultipleAssemblyLevelAttributes = false
+          AllowWildcards = false
+          AllowZeroPeKind = false
+          AttributeFile = null
+          Closed = false
+          CopyAttributes = false
+          DebugInfo = true
+          Internalize = NoInternalize
+          FileAlignment = None
+          KeyFile = null
+          TargetPlatform = null
+          LogFile = null
+          SearchDirectories = []
+          TargetKind = Library
+          UnionMerge = false
+          XmlDocs = false }
 
 /// Builds the arguments for the ILMerge task
 /// [omit]
-let getArguments outputFile primaryAssembly parameters =
-    let stringParams =
-        [ "out", outputFile
-          "ver", parameters.Version
-          "attr", parameters.AttributeFile
-          "keyfile", parameters.KeyFile
-          "log", parameters.LogFile
-          "target", (sprintf "%A" parameters.TargetKind).ToLower()
-          "targetplatform", parameters.TargetPlatform ]
-        |> List.map stringParam
+let internal getArguments outputFile primaryAssembly parameters =
+    let Item a x =
+        if x |> String.IsNullOrWhiteSpace then []
+        else [ sprintf a x ]
 
-    let fileAlign = optionParam ("align", parameters.FileAlignment)
+    let ItemList a x =
+        if x |> isNull then []
+        else
+            x
+            |> Seq.collect (fun i -> [ sprintf a i ])
+            |> Seq.toList
 
-    let allowDup =
-        match parameters.AllowDuplicateTypes with
-        | NoDuplicateTypes -> [ None ]
-        | AllPublicTypes -> [ Some("allowDup", null) ]
-        | DuplicateTypes types -> multipleStringParams "allowDup" types
+    let Flag a predicate =
+        if predicate then [ a ]
+        else []
 
-    let libDirs = multipleStringParams "lib" parameters.SearchDirectories
+    [ Item "/out:%s" outputFile
+      Item "/ver:%s" (match parameters.Version with
+                      | Some v -> v.ToString()
+                      | None -> String.Empty)
+      Item "/attr:%s" parameters.AttributeFile
+      Item "/keyfile:%s" parameters.KeyFile
+      Item "/log:%s" parameters.LogFile
+      Item "/target:%s" <| (sprintf "%A" parameters.TargetKind).ToLower()
+      Item "/targetplatform:%s" parameters.TargetPlatform
+      Item "/align:%s" (match parameters.FileAlignment with
+                        | Some i -> i.ToString(CultureInfo.InvariantCulture)
+                        | None -> String.Empty)
+      (match parameters.Internalize with
+       | NoInternalize -> []
+       | Internalize -> Flag "/internalize" true
+       | InternalizeExcept excludeFile -> Item "/internalize:%s" excludeFile)
+      Flag "/allowMultiple" parameters.AllowMultipleAssemblyLevelAttributes
+      Flag "/wildcards" parameters.AllowWildcards
+      Flag "/zeroPeKind" parameters.AllowZeroPeKind
+      Flag "/closed" parameters.Closed
+      Flag "/copyattrs" parameters.CopyAttributes
+      Flag "/union" parameters.UnionMerge
+      Flag "/ndebug" (not parameters.DebugInfo)
+      Flag "/xmldocs" parameters.XmlDocs
+      (match parameters.AllowDuplicateTypes with
+       | NoDuplicateTypes -> []
+       | AllPublicTypes -> Flag "/allowDup" true
+       | DuplicateTypes types -> ItemList "/allowDup:%s" types)
+      ItemList "/lib:%s" parameters.SearchDirectories
+      (primaryAssembly :: (parameters.Libraries |> Seq.toList)) ]
+    |> List.concat
 
-    let internalize =
-        match parameters.Internalize with
-        | NoInternalize -> None
-        | Internalize -> Some("internalize", null)
-        | InternalizeExcept excludeFile -> Some("internalize", quote excludeFile)
-
-    let flags =
-        [ "allowMultiple", parameters.AllowMultipleAssemblyLevelAttributes
-          "wildcards", parameters.AllowWildcards
-          "zeroPeKind", parameters.AllowZeroPeKind
-          "closed", parameters.Closed
-          "copyattrs", parameters.CopyAttributes
-          "union", parameters.UnionMerge
-          "ndebug", not parameters.DebugInfo
-          "xmldocs", parameters.XmlDocs ]
-        |> List.map boolParam
-
-    let allParameters = stringParams @ [ fileAlign; internalize ] @ flags @ allowDup @ libDirs
-                        |> parametersToString "/" ":"
-    let libraries = primaryAssembly :: (parameters.Libraries |> Seq.toList)
-                    |> separated " "
-    allParameters + " " + libraries
+let internal createProcess parameters outputFile primaryAssembly =
+    let args = getArguments outputFile primaryAssembly parameters
+    CreateProcess.fromRawCommand parameters.ToolPath args
 
 /// Uses ILMerge to merge .NET assemblies.
 /// ## Parameters
 ///
-///  - `setParams` - Function used to create an ILMergeParams value with your required settings. Called with an ILMergeParams value configured with the defaults.
+///  - `parameters` - An ILMerge.Params value with your required settings.
 ///  - `outputFile` - Output file path for the merged assembly.
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
-let ILMerge setParams outputFile primaryAssembly =
-    use __ = traceStartTaskUsing "ILMerge" primaryAssembly
-    let parameters = setParams ILMergeDefaults
+let run parameters outputFile primaryAssembly =
+    use __ = Trace.traceTask "ILMerge" primaryAssembly
     let args = getArguments outputFile primaryAssembly parameters
-    if 0 <> ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- null
-                info.Arguments <- args) parameters.TimeOut
-    then failwithf "ILMerge %s failed." args
+    let run = createProcess parameters outputFile primaryAssembly |> Proc.run
+    if 0 <> run.ExitCode then failwithf "ILMerge %s failed." (String.separated " " args)
+    __.MarkSuccess()
