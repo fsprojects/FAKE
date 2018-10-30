@@ -108,13 +108,13 @@ let internal getArguments outputFile primaryAssembly parameters =
         if predicate then [ a ]
         else []
 
-    [ Item "/out:%s" outputFile
+    [ Item "/out:\"%s\"" outputFile
       Item "/ver:%s" (match parameters.Version with
                       | Some v -> v.ToString()
                       | None -> String.Empty)
-      Item "/attr:%s" parameters.AttributeFile
-      Item "/keyfile:%s" parameters.KeyFile
-      Item "/log:%s" parameters.LogFile
+      Item "/attr:\"%s\"" parameters.AttributeFile
+      Item "/keyfile:\"%s\"" parameters.KeyFile
+      Item "/log:\"%s\"" parameters.LogFile
       Item "/target:%s" <| (sprintf "%A" parameters.TargetKind).ToLower()
       Item "/targetplatform:%s" parameters.TargetPlatform
       Item "/align:%s" (match parameters.FileAlignment with
@@ -123,7 +123,7 @@ let internal getArguments outputFile primaryAssembly parameters =
       (match parameters.Internalize with
        | NoInternalize -> []
        | Internalize -> Flag "/internalize" true
-       | InternalizeExcept excludeFile -> Item "/internalize:%s" excludeFile)
+       | InternalizeExcept excludeFile -> Item "/internalize:\"%s\"" excludeFile)
       Flag "/allowMultiple" parameters.AllowMultipleAssemblyLevelAttributes
       Flag "/wildcards" parameters.AllowWildcards
       Flag "/zeroPeKind" parameters.AllowZeroPeKind
@@ -136,7 +136,7 @@ let internal getArguments outputFile primaryAssembly parameters =
        | NoDuplicateTypes -> []
        | AllPublicTypes -> Flag "/allowDup" true
        | DuplicateTypes types -> ItemList "/allowDup:%s" types)
-      ItemList "/lib:%s" parameters.SearchDirectories
+      ItemList "/lib:\"%s\"" parameters.SearchDirectories
       (primaryAssembly :: (parameters.Libraries |> Seq.toList)) ]
     |> List.concat
 
@@ -145,6 +145,7 @@ let internal createProcess parameters outputFile primaryAssembly =
     CreateProcess.fromRawCommand parameters.ToolPath args
 
 /// Uses ILMerge to merge .NET assemblies.
+/// This task is a no-op (marked as failed) on non-Windows platforms
 /// ## Parameters
 ///
 ///  - `parameters` - An ILMerge.Params value with your required settings.
@@ -152,11 +153,12 @@ let internal createProcess parameters outputFile primaryAssembly =
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
 let run parameters outputFile primaryAssembly =
     use __ = Trace.traceTask "ILMerge" primaryAssembly
-    let args = getArguments outputFile primaryAssembly parameters
-
-    let run =
-        createProcess parameters outputFile primaryAssembly
-        |> CreateProcess.withFramework
-        |> Proc.run
-    if 0 <> run.ExitCode then failwithf "ILMerge %s failed." (String.separated " " args)
-    __.MarkSuccess()
+  
+    // The type initializer for 'System.Compiler.CoreSystemTypes' throws on Mono.
+    // So let task be a no-op marked as failed on non-Windows platforms  
+    if Environment.isWindows then
+        let args = getArguments outputFile primaryAssembly parameters
+        let run = createProcess parameters outputFile primaryAssembly |> Proc.run
+        if 0 <> run.ExitCode then
+            failwithf "'ILMerge %s' failed." (String.separated " " args)
+        __.MarkSuccess()
