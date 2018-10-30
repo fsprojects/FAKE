@@ -75,11 +75,13 @@ type Params =
 
     static member private vsInstallPath() =
         if Environment.isWindows then
-            use hklmKey =
-                RegistryKey.OpenBaseKey
-                    (RegistryHive.LocalMachine, RegistryView.Registry32)
-            use key = hklmKey.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\SxS\VS7")
-            key.GetValue("15.0", String.Empty) :?> string
+            let instance =
+                BlackFox.VsWhere.VsInstances.getWithPackage
+                    "Microsoft.VisualStudio.Component.Static.Analysis.Tools" false
+                |> List.tryHead
+            match instance with
+            | Some vs -> vs.InstallationPath
+            | None -> String.Empty
         else String.Empty
 
     /// FxCop Default parameters, values as above
