@@ -317,7 +317,7 @@ let internal createProcess (setParams : NUnit3Params -> NUnit3Params) (assemblie
     //let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     
     let path = Path.GetTempFileName()
-    let args = (sprintf "@%s" path)
+    let args = (sprintf "\"@%s\"" path)
     CreateProcess.fromRawWindowsCommandLine tool args
     |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
