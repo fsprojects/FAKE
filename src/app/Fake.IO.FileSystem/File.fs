@@ -1,4 +1,4 @@
-﻿/// Contains helpers which allow to interact with the file system.
+/// Contains helpers which allow to interact with the file system.
 namespace Fake.IO
 
 open System.Text
@@ -64,10 +64,10 @@ module File =
         |> fun x -> x.FileVersion.ToString()
 
     /// Creates a file if it does not exist.
-    let create fileName = 
+    let create fileName =
         let file = FileInfo.ofPath fileName
-        if not file.Exists then 
-            file.Create() |> ignore
+        if not file.Exists then
+            file.Create().Dispose()
 
     /// Deletes a file if it exists.
     let delete fileName = 
