@@ -121,7 +121,7 @@ let mutable internal XmlReadInt = XmlReadIntBase
 
 /// This checks the result file with some XML queries for errors
 /// [omit]
-let checkForErrors resultFile =
+let internal checkForErrors resultFile =
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let getErrorValue s =
         XmlReadInt false resultFile String.Empty String.Empty
