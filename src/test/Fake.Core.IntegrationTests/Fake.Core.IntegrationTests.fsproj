@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fake.DotNet.MSBuild.fs" />
+    <Compile Include="Fake.IO.File.fs" />
     <Compile Include="TestHelpers.fs" />
     <Compile Include="SimpleHelloWorldTests.fs" />
     <Compile Include="Main.fs" />
