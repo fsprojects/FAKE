@@ -1,3 +1,20 @@
+/// Contains a task to invoke the FxCop tool
+///
+/// ### Sample
+///
+///        Target.create "FxCop" (fun _ ->
+///            Directory.ensure "./_Reports"
+///            let rules = [ "-Microsoft.Design#CA1011"   // maybe sometimes
+///                          "-Microsoft.Design#CA1062" ] // null checks,  In F#!
+///            !! ("**/bin/Debug/*.dll")
+///            |> FxCop.run { FxCop.Params.Create() with WorkingDirectory = "."
+///                                                      UseGAC = true
+///                                                      Verbose = false
+///                                                      ReportFileName = "_Reports/FxCopReport.xml"
+///                                                      Rules = rules
+///                                                      FailOnError = FxCop.ErrorLevel.Warning
+///                                                      IgnoreGeneratedCode = true})
+///
 [<RequireQualifiedAccess>]
 module Fake.DotNet.FxCop
 
