@@ -3,12 +3,12 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
-  
+
 #content {
     flex: 1;
     overflow: auto;
 }
-  
+
 nav.navbar {
     z-index: 99 !important;
 }
@@ -63,6 +63,11 @@ section.is-small {
 
 .content a {
     color: #222;
+    text-decoration: underline;
+}
+
+.content .anchor {
+    text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -76,7 +81,7 @@ section.is-small {
 }
 
 @media screen and (min-width: 769px) {
-    .same-height-columns {    
+    .same-height-columns {
         display: flex !important;
         flex-flow: row wrap;
         justify-content: flex-start;
@@ -118,8 +123,8 @@ section.is-small {
     }
 }
 
-/*-------------------------------------------------------------------------- 
-  Formatting for F# code snippets 
+/*--------------------------------------------------------------------------
+  Formatting for F# code snippets
 /*--------------------------------------------------------------------------*/
 
 /* identifier */
@@ -204,6 +209,11 @@ div.tip {
 
 div.tip strong {
     color: #d1d1d1;
+}
+
+table.module-list {
+    overflow: auto;
+    display: block;
 }
 
 table.pre pre {

@@ -7,6 +7,7 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.AssemblyInfoFile\Fake.DotNet.AssemblyInfoFile.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.ILMerge\Fake.DotNet.ILMerge.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.FxCop\Fake.DotNet.FxCop.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
@@ -31,6 +32,7 @@
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.DotNet.AssemblyInfoFile.fs" />
     <Compile Include="Fake.DotNet.ILMerge.fs" />
+    <Compile Include="Fake.DotNet.FxCop.fs" />
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.Testing.NUnit.fs" />
     <Compile Include="Fake.DotNet.Testing.SpecFlow.fs" />
