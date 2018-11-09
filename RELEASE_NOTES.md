@@ -1,7 +1,14 @@
 # Release Notes
 
-## 5.9.4-alpha - tbd
+## 5.10.0-alpha - tbd
 
+* DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
+* ICON: Fake has a new icon (again huge thanks to @FlorianBaderDE)
+* NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
+* NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
+* ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
 * tbd
 
 ## 5.9.3 - 2018-10-15
