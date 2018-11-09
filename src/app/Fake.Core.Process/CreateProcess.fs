@@ -494,7 +494,7 @@ module CreateProcess =
             Some output
         | _ -> None
 
-    /// Makes sure the exit code is `0`, if now a detailed exception is thrown (showing the command line).    
+    /// Makes sure the exit code is `0`, otherwise a detailed exception is thrown (showing the command line).    
     let ensureExitCode (r:CreateProcess<_>) =
         r
         |> addOnExited (fun data exitCode ->

@@ -16,13 +16,13 @@ module File =
     let internal utf8WithoutBom = new UTF8Encoding(false)
 
     // Detect the encoding, from https://stackoverflow.com/questions/3825390/effective-way-to-find-any-files-encoding
-    let getEncoding def filename = 
+    let getEncoding def filename =
         // Read the BOM
         let bom = Array.zeroCreate 4
         let read =
             use file = new FileStream(filename, FileMode.Open, FileAccess.Read)
             file.Read(bom, 0, 4)
-            
+
         match bom |> Array.toList with
         | _ when read < 2 -> def
         | 0xffuy :: 0xfeuy :: _ -> Encoding.Unicode //UTF-16LE
@@ -47,8 +47,8 @@ module File =
     let getEncodingOrUtf8WithoutBom = getEncodingOrDefault utf8WithoutBom
 
     /// Raises an exception if the file doesn't exist on disk.
-    let checkExists fileName = 
-        if not <| exists fileName then 
+    let checkExists fileName =
+        if not <| exists fileName then
             FileNotFoundException(sprintf "File %s does not exist." fileName) |> raise
 
     /// Checks if all given files exist.
@@ -58,33 +58,33 @@ module File =
     /// ## Parameters
     ///
     ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
-    let getVersion (fileName : string) = 
+    let getVersion (fileName : string) =
         Path.getFullName fileName
         |> System.Diagnostics.FileVersionInfo.GetVersionInfo
         |> fun x -> x.FileVersion.ToString()
 
     /// Creates a file if it does not exist.
-    let create fileName = 
+    let create fileName =
         let file = FileInfo.ofPath fileName
-        if not file.Exists then 
-            file.Create() |> ignore
+        if not file.Exists then
+            file.Create().Dispose()
 
     /// Deletes a file if it exists.
-    let delete fileName = 
+    let delete fileName =
         let file = FileInfo.ofPath fileName
-        if file.Exists then 
+        if file.Exists then
             file.Delete()
 
     /// Deletes the given files.
     let deleteAll files = Seq.iter delete files
 
     /// Active Pattern for determining file extension.
-    let (|EndsWith|_|) (extension : string) (file : string) = 
+    let (|EndsWith|_|) (extension : string) (file : string) =
         if file.EndsWith extension then Some()
         else None
-        
+
     /// Reads a file line by line
-    let readWithEncoding (encoding : Encoding) (file : string) = 
+    let readWithEncoding (encoding : Encoding) (file : string) =
         seq {
             use stream = File.OpenRead(file)
             use textReader = new StreamReader(stream, encoding)
@@ -92,7 +92,7 @@ module File =
                 yield textReader.ReadLine()
         }
     let read (file : string) = readWithEncoding (getEncodingOrUtf8WithoutBom file) file
-    
+
     /// Reads the first line of a file. This can be helpful to read a password from file.
     let readLineWithEncoding (encoding:Encoding) (file : string) =
         use stream = File.OpenRead file
@@ -110,12 +110,12 @@ module File =
         lines |> Seq.iter writer.WriteLine
 
     let write append fileName (lines : seq<string>) = writeWithEncoding (getEncodingOrUtf8WithoutBom fileName) append fileName lines
-        
+
     /// Writes a byte array to a file
     let writeBytes file bytes = File.WriteAllBytes(file, bytes)
 
     /// Writes a string to a file
-    let writeStringWithEncoding (encoding:Encoding) append fileName (text : string) = 
+    let writeStringWithEncoding (encoding:Encoding) append fileName (text : string) =
         let fi = FileInfo.ofPath fileName
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
         use writer = new StreamWriter(file, encoding)
@@ -124,9 +124,9 @@ module File =
     let writeString append fileName (text : string) = writeStringWithEncoding (getEncodingOrUtf8WithoutBom fileName) append fileName text
 
     /// Replaces the file with the given string
-    let replaceContent fileName text = 
+    let replaceContent fileName text =
         let fi = FileInfo.ofPath fileName
-        if fi.Exists then 
+        if fi.Exists then
             fi.IsReadOnly <- false
             fi.Delete()
         writeString false fileName text
@@ -145,7 +145,7 @@ module File =
     let readAsBytes file = File.ReadAllBytes file
 
     /// Replaces the text in the given file
-    let applyReplace replaceF fileName = 
+    let applyReplace replaceF fileName =
         fileName
         |> readAsString
         |> replaceF
