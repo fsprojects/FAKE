@@ -27,7 +27,7 @@
 			<div class="hero-body">
 				<div class="container">
 					<h2 class="title is-2 is-uppercase">Why use Fake?</h2>
-					<h3 class="subtitle is-3 is-uppercase">Fake was built on several key design principles ...</h3>
+					<h3 class="subtitle is-3 is-uppercase">Fake is built on several key design principles ...</h3>
 				</div>
 			</div>
 		</div>
@@ -123,14 +123,14 @@
 						#r "paket:
 						nuget Fake.Core.Target //"
 						#load "./.fake/build.fsx/intellisense.fsx"
-						
+
 						open Fake.Core
-						
+
 						// Default target
 						Target.create "Default" (fun _ ->
 							Trace.trace "Hello World from FAKE"
 						)
-						
+
 						// start build
 						Target.runOrDefault "Default"
 					</code>
@@ -157,28 +157,28 @@
 							nuget Fake.IO.FileSystem
 							nuget Fake.Core.Target //"
 							#load "./.fake/build.fsx/intellisense.fsx"
-							
+
 							open Fake.Core
 							open Fake.IO
-							
+
 							// Properties
 							let buildDir = "./build/"
-							
+
 							// Targets
 							Target.create "Clean" (fun _ ->
 								Shell.cleanDir buildDir
 							)
-							
+
 							Target.create "Default" (fun _ ->
 								Trace.trace "Hello World from FAKE"
 							)
-							
+
 							// Dependencies
 							open Fake.Core.TargetOperators
-							
+
 							"Clean"
 								==> "Default"
-							
+
 							// start build
 							Target.runOrDefault "Default"
 					</code>
@@ -206,20 +206,20 @@
 							nuget Fake.DotNet.MSBuild
 							nuget Fake.Core.Target //"
 							#load "./.fake/build.fsx/intellisense.fsx"
-							
+
 							open Fake.IO
 							open Fake.IO.Globbing.Operators //enables !! and globbing
 							open Fake.DotNet
 							open Fake.Core
-							
+
 							// Properties
 							let buildDir = "./build/"
-							
+
 							// Targets
 							Target.create "Clean" (fun _ ->
 								Shell.cleanDir buildDir
 							)
-							
+
 							Target.create "BuildApp" (fun _ ->
 								!! "src/app/**/*.csproj"
 								++ "src/*/*.target"
@@ -227,17 +227,17 @@
 								|> MSBuild.runRelease id buildDir "Build"
 								|> Trace.logItems "AppBuild-Output: "
 							)
-							
+
 							Target.create "Default" (fun _ ->
 								Trace.trace "Hello World from FAKE"
 							)
-							
+
 							open Fake.Core.TargetOperators
-							
+
 							"Clean"
 								==> "BuildApp"
 								==> "Default"
-							
+
 							// start build
 							Target.runOrDefault "Default"
 					</code>

@@ -242,6 +242,12 @@ table.pre pre {
     width: 100%;
 }
 
+table.pre code {
+    display: inline-block;
+    /* Width is set to 10px so the code block doesn't breakout of the pre element */
+    width: 10px;
+}
+
 table.pre td {
     padding: 0px;
     white-space: normal;
