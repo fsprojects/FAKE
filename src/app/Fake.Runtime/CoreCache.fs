@@ -251,7 +251,10 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                             if logLevel.PrintVerbose then tracefn "Could not get Location from '%s': %O" strName e
                             None
                     Some (location, assembly)
-            with e -> None
+            with
+            | e ->
+                //eprintfn "Exception in LoadFromAssemblyName: %O" e
+                None
         match result with
         | Some r -> true, Some r
         | None ->                
