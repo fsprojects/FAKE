@@ -1,5 +1,6 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.CoreCache
+
 open Fake.Runtime.Environment
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
@@ -19,6 +20,25 @@ open Yaaf.FSharp.Scripting
 open System.Reflection
 open Paket.ProjectFile
 open Mono.Cecil
+
+exception CacheOutdated
+
+let getCached getUncached readFromCache writeToCache checkCacheUpToDate =
+    let inline getUncached () =
+        let data = getUncached()
+        writeToCache data
+        data
+
+    if checkCacheUpToDate () then 
+        try readFromCache()
+        with 
+        | CacheOutdated ->
+            getUncached()
+        | e ->
+            Trace.traceError <| sprintf "Fake cache failed, please consider reporting a bug: %O" e
+            getUncached()
+    else
+        getUncached()
 
 type ICachingProvider =
     abstract TryLoadCache : context:FakeContext -> FakeContext * CoreCacheInfo option
@@ -356,7 +376,6 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
                let actual = contents |> Seq.choose id |> fun texts -> String.Join("", texts)
                let cached = File.ReadAllText fakeCacheContentsFile
                actual = cached
-
         // TODO: This could be improved in such a way that we only
         // TODO: need to tokenize "changed" files and not everything
         if cacheFilesExist && dependencyCacheUpdated() then

@@ -24,6 +24,24 @@
             "console": "internalConsole"
         },
         {
+            "name": "Debug testbuild PrintColors",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet:build:fake-netcore.fsproj",
+            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
+            "args": [
+                "run",
+                "--fsiargs",
+                "--debug:portable --optimize-",
+                "testbuild.fsx",
+                "-t",
+                "PrintColors"
+            ],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
             "name": "Run Tests",
             "type": "coreclr",
             "request": "launch",

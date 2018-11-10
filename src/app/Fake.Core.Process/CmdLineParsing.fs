@@ -108,6 +108,7 @@ module internal CmdLineParsing =
 
         results.ToArray()
 
+#if !FAKE_RUNTIME
     let toProcessStartInfo args =
         let cmd = windowsArgvToCommandLine true args
         if Environment.isMono && Environment.isLinux then
@@ -151,3 +152,4 @@ module Arguments =
         Arguments.OfArgs(Seq.append s a.Args)
     let append s (a:Arguments) =
         Arguments.OfArgs(Seq.append a.Args s)
+#endif   
