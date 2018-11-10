@@ -296,16 +296,23 @@ let findAndLoadInRuntimeDepsCached =
             findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
         if wasCalled && isNull result then
             failwithf """Could not load '%A'.
-Full framework assemblies are not supported!
-- You might try to load a legacy-script with the new netcore runner.
-  Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
+This can happen for various reasons:
+- You are trying to load full-framework assemblies which is not supported
+  -> You might try to load a legacy-script with the new netcore runner.
+    Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
 - The nuget cache (or packages folder) might be broken.
-  Please save your state, open an issue and then 
+  -> Please save your state, open an issue and then 
   - delete '%s' from the '~/.nuget' cache (and the 'packages' folder)
   - delete 'paket-files/paket.restore.cached' if it exists
   - delete '<script.fsx>.lock' if it exists
   - try running fake again
-  - the package should be downloaded again""" name name.Name
+  - the package should be downloaded again
+- Some package introduced a breaking change in their dependencies and .dll files are missing in the resolution
+  -> Try to compare the lockfile with a previous working version
+  -> Try to lower transitive dependency versions (for example by adding 'strategy: min' to the paket group)
+  see https://github.com/fsharp/FAKE/issues/1966 where this happend for 'System.Reactive' version 4
+
+-> If the above doesn't apply or you need help please open an issue!""" name name.Name
         if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
