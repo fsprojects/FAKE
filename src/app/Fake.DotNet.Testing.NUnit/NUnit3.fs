@@ -309,16 +309,16 @@ let buildArgs (parameters:NUnit3Params) (assemblies: string seq) =
     |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.toText
 
-let internal createProcess (setParams : NUnit3Params -> NUnit3Params) (assemblies : string[]) =
+let internal createProcess createTempFile (setParams : NUnit3Params -> NUnit3Params) (assemblies : string[]) =
     let parameters = NUnit3Defaults |> setParams
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
     let generatedArgs = buildArgs parameters assemblies
     //let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     
-    let path = Path.GetTempFileName()
-    let args = (sprintf "@%s" path)
-    CreateProcess.fromRawWindowsCommandLine tool args
+    let path = createTempFile()
+    let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
+    CreateProcess.fromRawWindowsCommandLine tool argLine
     |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
     //|> CreateProcess.withTimeout processTimeout
@@ -351,7 +351,7 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
-    createProcess setParams assemblies
+    createProcess Path.GetTempFileName setParams assemblies
     |> Proc.run
 
     __.MarkSuccess()

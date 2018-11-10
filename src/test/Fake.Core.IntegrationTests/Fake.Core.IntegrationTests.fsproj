@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.NuGet\Fake.DotNet.NuGet.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
@@ -12,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fake.DotNet.MSBuild.fs" />
+    <Compile Include="Fake.DotNet.NuGet.fs" />
     <Compile Include="Fake.IO.File.fs" />
     <Compile Include="TestHelpers.fs" />
     <Compile Include="SimpleHelloWorldTests.fs" />

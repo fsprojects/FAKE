@@ -7,9 +7,11 @@
 * NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
 * NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
 * ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* ENHANCEMENT: the fake template now supports the buildtask-dsl - https://github.com/fsharp/FAKE/pull/2177
 * BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* BUGFIX: NuGet.Version.getLastNuGetVersion failed for some servers - https://github.com/fsharp/FAKE/pull/2170
+* BUGFIX: Fake.DotNet.Tesing.NUnit failed to work when temporary-directory contains spaces (for example if windows username contains spaces) - https://github.com/fsharp/FAKE/pull/2180
 * OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
-* tbd
 
 ## 5.9.3 - 2018-10-15
 
