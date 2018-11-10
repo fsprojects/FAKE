@@ -340,7 +340,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
     File.WriteAllText(gitDirectory </> "paket.dependencies", replacedFile)
 
     // paket update
-    callpaket gitDirectory "update"
+    callpaket gitDirectory "update --group NetcoreBuild"
 
     // push to branch
     Git.Staging.stageAll gitDirectory
