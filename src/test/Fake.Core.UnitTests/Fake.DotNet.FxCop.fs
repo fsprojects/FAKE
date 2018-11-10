@@ -142,8 +142,7 @@ let testCases =
                                   "/s"
                                   "/v" ] "Xsl should be defaulted"
 
-          testCase "Test process is created"
-          <| fun _ ->
+          testCase "Test process is created" <| fun _ ->
               let dummy = Guid.NewGuid().ToString()
               let p = { FxCop.Params.Create() with ToolPath = dummy }
               let args = [ Guid.NewGuid().ToString() ]
@@ -153,8 +152,7 @@ let testCases =
               Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
                   "WorkingDirectory should default"
 
-          testCase "Test process is created with working directory"
-          <| fun _ ->
+          testCase "Test process is created with working directory" <| fun _ ->
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
 
@@ -169,8 +167,7 @@ let testCases =
               Expect.equal proc.WorkingDirectory (Some dummy2)
                   "WorkingDirectory should match input"
 
-          testCase "Test full command line is created"
-          <| fun _ ->
+          testCase "Test full command line is created" <| fun _ ->
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
 
@@ -203,17 +200,16 @@ let testCases =
                   Expect.isEmpty prefix "no prefix wanted"
                   Expect.isTrue (data.ContainsKey xPath) "key should be in map"
                   Map.find xPath data
+              lock serializingObject (fun _ ->
+                  let saved = FxCop.XmlReadInt
+                  try
+                      FxCop.XmlReadInt <- XmlMock
+                      Expect.equal (FxCop.checkForErrors dummy) (23, 42, 17, 5)
+                          "Results should match"
+                  finally
+                      FxCop.XmlReadInt <- saved)
 
-              let saved = FxCop.XmlReadInt
-              try
-                  FxCop.XmlReadInt <- XmlMock
-                  Expect.equal (FxCop.checkForErrors dummy) (23, 42, 17, 5)
-                      "Results should match"
-              finally
-                  FxCop.XmlReadInt <- saved
-
-          testCase "Tool failure is handled"
-          <| fun _ ->
+          testCase "Tool failure is handled" <| fun _ ->
               let dummy = Guid.NewGuid().ToString()
 
               let p =

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD</DefineConstants>
+    <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
     <Compile Include="Profile.fs" />
     <Compile Include="LegacyApiHelper.fs" />
     <Compile Include="Environment.fs" />
@@ -25,7 +26,9 @@
     <Compile Include="ScriptRunner.fs" />
     <Compile Include="HashGeneration.fs" />
     <Compile Include="CoreCache.fs" />
+    <Compile Include="FakeHeader.fs" />
     <Compile Include="FakeRuntime.fs" />
+    <Compile Include="FakeRuntimeHints.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
