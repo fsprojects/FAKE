@@ -316,7 +316,6 @@ Target.create "StartBootstrapBuild" (fun _ ->
     let token = githubtoken.Value
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
-
     let gitDirectory = getVarOrDefault "git_directory" "."
     let remoteUrl =
         if not BuildServer.isLocalBuild then
