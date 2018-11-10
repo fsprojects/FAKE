@@ -603,19 +603,6 @@ type HttpClient with
         stream.Write(newlineBytes, 0, newlineBytes.Length)
         stream.Position <- 0L
         x.PutAsync(url, new StreamContent(stream)).GetAwaiter().GetResult()
-
-    member x.DownloadStringAndHeaders (url :string) =
-      async {
-        let! response = x.GetAsync(url) |> Async.AwaitTask
-        let! result = response.Content.ReadAsStringAsync() |> Async.AwaitTask
-
-        return
-            result,
-            response.Headers :> seq<KeyValuePair<string, seq<string>>>
-            |> Seq.append (response.Content.Headers :> seq<KeyValuePair<string, seq<string>>>)
-            |> Seq.map (fun kv -> kv.Key, kv.Value |> Seq.toList)
-            |> Map.ofSeq
-      } |> Async.RunSynchronously
 let internal addAcceptHeader (client:HttpClient) (contentType:string) =
     for headerVal in contentType.Split([|','|], System.StringSplitOptions.RemoveEmptyEntries) do
         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(headerVal))
@@ -646,12 +633,6 @@ type WebClient with
         stream.Write(trailerbytes, 0, trailerbytes.Length)
         stream.Write(newlineBytes, 0, newlineBytes.Length)
         ()
-    member x.DownloadStringAndHeaders (url :string) =
-        let result = x.DownloadString(url)
-        result,
-        x.ResponseHeaders.AllKeys
-        |> Seq.map (fun kv -> kv, [ x.ResponseHeaders.Get kv ])
-        |> Map.ofSeq
 
 type WebClient = System.Net.WebClient
 
