@@ -36,8 +36,8 @@ with override x.ToString () = match x with | Tool -> "tool" | Project -> "projec
 
 type DslKind =
 | Fake
-| BlackFox
-with override x.ToString () = match x with | Fake -> "fake" | BlackFox -> "blackfox"
+| BuildTask
+with override x.ToString () = match x with | Fake -> "fake" | BuildTask -> "buildtask"
 
 type DependenciesKind =
 | File
@@ -136,28 +136,28 @@ let tests =
                 Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
             }
 
-            yield test "can install a blackfox-dsl file-dependencies template" {
+            yield test "can install a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project File BlackFox
+                runTemplate tempDir Project File BuildTask
                 Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
                 Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
             }
 
-            yield test "can build a blackfox-dsl file-dependencies template" {
+            yield test "can build a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project File BlackFox
+                runTemplate tempDir Project File BuildTask
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
-            yield test "can install a blackfox-dsl inline-dependencies template" {
+            yield test "can install a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project Inline BlackFox
+                runTemplate tempDir Project Inline BuildTask
                 Expect.isTrue (fileContainsText tempDir buildFile "nuget BlackFox.Fake.BuildTask") "the build file should contain blackfox dependency"
             }
 
-            yield test "can build a blackfox-dsl inline-dependencies template" {
+            yield test "can build a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project Inline BlackFox
+                runTemplate tempDir Project Inline BuildTask
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 

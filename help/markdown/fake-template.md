@@ -44,7 +44,7 @@ Specifies your prefered way to define the nuget packages used in your build:
 Specifies your prefered way to define build tasks inside your build script:
 
 - `fake` (default) - Uses the default FAKE domain specific language
-- `blackfox` - Uses the BlackFox domain specific language
+- `buildtask` - Uses a string free domain specific language, called [BuildTask](https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md)
 
 ### --tool-path
 Specifies the folder for the fake-cli tool. This parameter is only applicable when `tool` option is used for bootstrapping with `--bootstrap`. Defaults to `.fake`.

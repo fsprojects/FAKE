@@ -5,6 +5,6 @@ group Build
     nuget Fake.DotNet.Cli
     nuget Fake.IO.FileSystem
     nuget Fake.Core.Target
-    //#if (dsl == "blackfox")
+    //#if (dsl == "buildtask")
     nuget BlackFox.Fake.BuildTask
     //#endif
