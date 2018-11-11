@@ -8,138 +8,6 @@ open Fake.Runtime.Trace
 open Paket
 open System
 
-type FakeSection =
- | PaketDependencies of Paket.Dependencies * Lazy<Paket.DependenciesFile> * group : String option
-
-let readAllLines (r : TextReader) =
-  seq {
-    let mutable line = r.ReadLine()
-    while not (isNull line) do
-      yield line
-      line <- r.ReadLine()
-  }
-let private dependenciesFileName = "paket.dependencies"
-
-type InlinePaketDependenciesSection =
-  { Header : string
-    Section : string }
-
-let writeFixedPaketDependencies scriptCacheDir (f : InlinePaketDependenciesSection) =
-  match f.Header with
-  | "paket-inline" ->
-    let dependenciesFile = Path.Combine(scriptCacheDir, dependenciesFileName)
-    let fixedSection =
-      f.Section.Split([| "\r\n"; "\r"; "\n" |], System.StringSplitOptions.None)
-      |> Seq.map (fun line ->
-        let replacePaketCommand (command:string) (line:string) =
-          let trimmed = line.Trim()
-          if trimmed.StartsWith command then
-            let restString = trimmed.Substring(command.Length).Trim()
-            let isValidPath = try Path.GetFullPath restString |> ignore; true with _ -> false
-            let isAbsoluteUrl = match Uri.TryCreate(restString, UriKind.Absolute) with | true, _ -> true | _ -> false
-            if isAbsoluteUrl || not isValidPath || Path.IsPathRooted restString then line
-            else line.Replace(restString, Path.Combine("..", "..", restString))
-          else line
-        line
-        |> replacePaketCommand "source"
-        |> replacePaketCommand "cache"
-      )
-    File.WriteAllLines(dependenciesFile, fixedSection)
-    PaketDependencies (Dependencies dependenciesFile, (lazy DependenciesFile.ReadFromFile dependenciesFile), None)
-  | "paket.dependencies" ->
-    let groupStart = "group "
-    let fileStart = "file "
-    let readLine (l:string) : (string * string) option =
-      if l.StartsWith groupStart then ("group", (l.Substring groupStart.Length).Trim()) |> Some
-      elif l.StartsWith fileStart then ("file", (l.Substring fileStart.Length).Trim()) |> Some
-      elif String.IsNullOrWhiteSpace l then None
-      else failwithf "Cannot recognise line in dependency section: '%s'" l
-    let options =
-      (use r = new StringReader(f.Section)
-       readAllLines r |> Seq.toList)
-      |> Seq.choose readLine
-      |> dict
-    let group =
-      match options.TryGetValue "group" with
-      | true, gr -> Some gr
-      | _ -> None
-    let file =
-      match options.TryGetValue "file" with
-      | true, depFile -> depFile
-      | _ -> dependenciesFileName
-    let fullpath = Path.GetFullPath file
-    PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group)
-  | _ -> failwithf "unknown dependencies header '%s'" f.Header
-
-let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.TokenizedScript) cacheDir (scriptPath:string) =
-  let pRefStr = "paket:"
-  let grRefStr = "groupref"
-  let groupReferences, paketLines =
-    FSharpParser.findInterestingItems tokenized
-    |> Seq.choose (fun item -> 
-        match item with
-        | FSharpParser.InterestingItem.Reference ref when ref.StartsWith pRefStr ->
-          let sub = ref.Substring (pRefStr.Length)
-          Some (sub.TrimStart[|' '|])
-        | _ -> None)
-    |> Seq.toList
-    |> List.partition (fun ref -> ref.StartsWith(grRefStr, System.StringComparison.OrdinalIgnoreCase))
-  let paketCode =
-    paketLines
-    |> String.concat "\n"
-  let paketGroupReferences =
-    groupReferences
-    |> List.map (fun groupRefString ->
-      let raw = groupRefString.Substring(grRefStr.Length).Trim()
-      let commentStart = raw.IndexOf "//"
-      if commentStart >= 0 then raw.Substring(0, commentStart).Trim()
-      else raw)
-
-  if paketCode <> "" && paketGroupReferences.Length > 0 then
-    failwith "paket code in combination with a groupref is currently not supported!"
-
-  if paketGroupReferences.Length > 1 then
-    failwith "multiple paket groupref are currently not supported!"
-
-  if paketCode <> "" then
-    let fixDefaults (paketCode:string) =
-      let lines = paketCode.Split([|'\r';'\n'|]) |> Array.map (fun line -> line.ToLower().TrimStart())
-      let storageRef = "storage"
-      let sourceRef = "source"
-      let frameworkRef = "framework"
-      let restrictionRef = "restriction"
-      let containsStorage = lines |> Seq.exists (fun line -> line.StartsWith(storageRef))
-      let containsSource = lines |> Seq.exists (fun line -> line.StartsWith(sourceRef))
-      let containsFramework = lines |> Seq.exists (fun line -> line.StartsWith(frameworkRef))
-      let containsRestriction = lines |> Seq.exists (fun line -> line.StartsWith(restrictionRef))
-      paketCode
-      |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
-      |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
-      |> fun p -> if containsFramework || containsRestriction then p 
-                  else "framework: netstandard2.0" + "\n" + p
-
-    { Header = "paket-inline"
-      Section = fixDefaults paketCode }
-    |> writeFixedPaketDependencies cacheDir
-    |> Some
-  else
-    match paketGroupReferences with
-    | [] ->
-      None
-    | group :: _ ->
-      let fullScriptDir = Path.GetFullPath scriptPath
-      let scriptDir = Path.GetDirectoryName fullScriptDir
-      let dependencies =
-            match Paket.Dependencies.TryLocate(scriptDir) with 
-            | Some deps -> deps
-            | None ->
-                failwithf "Could not find '%s'. To use Fake with an external file, please run 'paket init' first.%sAlternatively you can use inline-dependencies. See https://fake.build/fake-fake5-modules.html" 
-                    Constants.DependenciesFileName Environment.NewLine
-      
-      let fullpath = Path.GetFullPath dependencies.DependenciesFile
-      PaketDependencies (dependencies, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
-      |> Some
-
 type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
@@ -418,20 +286,11 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       ()
       
   let getKnownAssemblies () =
-    let inline getUncached () =
-        let list = retrieveInfosUncached()
-        writeIntellisenseTask.Value |> ignore
-        writeToCache list
-        list
-        
-    if File.Exists assemblyCacheHashFile && File.Exists assemblyCacheFile && File.ReadAllText assemblyCacheHashFile = File.ReadAllText lockFilePath.FullName then 
-        // get assembly list from cache
-        try readFromCache()
-        with e ->
-            Trace.traceError (sprintf "Retrieving assembly list from cache failed, please report a bug: %O" e)
-            getUncached()
-    else
-        getUncached()
+      CoreCache.getCached
+          (fun () -> let list = retrieveInfosUncached() in writeIntellisenseTask.Value |> ignore; list)
+          readFromCache
+          writeToCache
+          (fun _ -> File.Exists assemblyCacheHashFile && File.Exists assemblyCacheFile && File.ReadAllText assemblyCacheHashFile = File.ReadAllText lockFilePath.FullName)
   
   // Restore or update immediatly, because or everything might be OK -> cached path.
   //let knownAssemblies, writeIntellisenseTask = restoreOrUpdate()
@@ -479,12 +338,12 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
           if writeIntellisenseTask.IsValueCreated then 
             writeIntellisenseTask.Value.Wait() }
 
-let restoreDependencies config cacheDir section =
+let internal restoreDependencies config cacheDir section =
   match section with
-  | PaketDependencies (paketDependencies, paketDependenciesFile, group) ->
+  | FakeHeader.PaketDependencies (_, paketDependencies, paketDependenciesFile, group) ->
     paketCachingProvider config cacheDir paketDependencies paketDependenciesFile group
 
-let tryFindGroupFromDepsFile scriptDir =
+let internal tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
     if File.Exists (depsFile) then
         match
@@ -509,10 +368,26 @@ let tryFindGroupFromDepsFile scriptDir =
             |> snd with
         | Some group ->
             let fullpath = Path.GetFullPath depsFile
-            PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
+            FakeHeader.PaketDependencies (FakeHeader.PaketDependenciesRef, Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
             |> Some
         | _ -> None
     else None
+
+type PreparedDependencyType =
+  | PaketInline
+  | PaketDependenciesRef
+  | DefaultDependencies
+
+type PrepareInfo =
+  internal
+    { _CacheDir : string
+      _Config : FakeConfig
+      _Section : FakeHeader.FakeSection
+      _DependencyType : PreparedDependencyType
+      _CachingProvider : CoreCache.ICachingProvider }
+  member x.CacheDir = x._CacheDir
+  member x.DependencyType = x._DependencyType
+
 
 let prepareFakeScript (config:FakeConfig) =
     let script = config.ScriptFilePath
@@ -524,15 +399,19 @@ let prepareFakeScript (config:FakeConfig) =
     let scriptSectionCacheFile = Path.Combine(cacheDir, "fake-section.txt")
     let inline getSectionUncached () =
         use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
-        let newSection = tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
+        let newSection = FakeHeader.tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
         match newSection with
         | Some s -> Some s
         | None ->
           tryFindGroupFromDepsFile scriptDir
-    let writeToCache (section : FakeSection option) =
+    let writeToCache (section : FakeHeader.FakeSection option) =
         match section with 
-        | Some (PaketDependencies(p, _, group)) ->
-            sprintf "paket: %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>")
+        | Some (FakeHeader.PaketDependencies(headerType, p, _, group)) ->
+            let s =
+              match headerType with
+              | FakeHeader.PaketInline -> "paket-inline"
+              | FakeHeader.PaketDependenciesRef -> "paket-ref"
+            sprintf "paket: %s, %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>") s
         | None -> "none"
         |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
         File.Copy (script, scriptSectionHashFile, true)
@@ -542,32 +421,39 @@ let prepareFakeScript (config:FakeConfig) =
         if t.StartsWith("paket:") then 
             let s = t.Substring("paket: ".Length)
             let splits = s.Split(',')
-            let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
-            let group =
-                let trimmed = splits.[1].Trim()
-                if trimmed = "<null>" then None else Some trimmed
-            let fullpath = Path.GetFullPath depsFile
-            PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group) |> Some
+            if splits.Length < 3 then
+              raise <| CoreCache.CacheOutdated
+            else
+              let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
+              let group =
+                  let trimmed = splits.[1].Trim()
+                  if trimmed = "<null>" then None else Some trimmed
+              let headerType =
+                match splits.[2].Trim() with
+                | "paket-inline" -> FakeHeader.PaketInline
+                | "paket-ref" -> FakeHeader.PaketDependenciesRef
+                | s -> failwithf "Invalid header type '%s'" s         
+              let fullpath = Path.GetFullPath depsFile
+              FakeHeader.PaketDependencies (headerType, Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group) |> Some
         else None
         
     let section =
-        let inline getUncached () =
-            let section = getSectionUncached()
-            writeToCache section
-            section
-            
-        if File.Exists scriptSectionHashFile && File.Exists scriptSectionCacheFile && File.ReadAllText scriptSectionHashFile = File.ReadAllText script then 
-            // get assembly list from cache
-            try readFromCache()
-            with e ->
-                eprintfn "Caching fake section failed: %O" e
-                getUncached()
-        else
-            getUncached()
+        CoreCache.getCached
+            getSectionUncached
+            readFromCache
+            writeToCache
+            (fun _ -> File.Exists scriptSectionHashFile && File.Exists scriptSectionCacheFile && File.ReadAllText scriptSectionHashFile = File.ReadAllText script)
 
     match section with
     | Some section ->
-        restoreDependencies config cacheDir section
+        { _CacheDir = cacheDir
+          _Config = config
+          _Section = section
+          _DependencyType =
+            match section with
+            | FakeHeader.PaketDependencies(FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
+            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef
+          _CachingProvider = restoreDependencies config cacheDir section }
     | None ->
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
@@ -580,10 +466,14 @@ nuget FSharp.Core
 See https://fake.build/fake-fake5-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =
-          { Header = "paket-inline"
-            Section = defaultPaketCode }
-          |> writeFixedPaketDependencies cacheDir        
-        restoreDependencies config cacheDir section
+          { FakeHeader.Header = FakeHeader.PaketInline
+            FakeHeader.Section = defaultPaketCode }
+          |> FakeHeader.writeFixedPaketDependencies cacheDir
+        { _CacheDir = cacheDir
+          _Config = config
+          _Section = section
+          _DependencyType = PreparedDependencyType.DefaultDependencies
+          _CachingProvider = restoreDependencies config cacheDir section }
 
 
 let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
@@ -615,82 +505,5 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
 let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
-let prepareAndRunScriptExt (config:FakeConfig) : RunResult * ResultCoreCacheInfo * FakeContext =
-  let provider = prepareFakeScript config
-  CoreCache.runScriptWithCacheProviderExt config provider
-
-[<Obsolete("Use prepareAndRunScriptExt instead")>]
-let prepareAndRunScript (config:FakeConfig) : RunResult =
-  let res, _, _ = prepareAndRunScriptExt config
-  res
-
-type Hint =
- { Important : bool
-   Text : string }
-
-let retrieveHintsExt (context:FakeContext) (runResult:Runners.RunResult) (cache:ResultCoreCacheInfo) =
-    let config = context.Config
-    // https://github.com/fsharp/FAKE/issues/2001
-    let fsCoreDll =
-        config.CompileOptions.FsiOptions.References
-        |> Seq.tryFind (fun r -> r.ToLower().EndsWith("fsharp.core.dll"))
-    let globalHints =
-        [
-            match fsCoreDll with
-            | Some fsCoreDll ->
-                match filterValidAssembly VerboseLevel.Silent ("", false, FileInfo fsCoreDll) with
-                | Some assInfo ->
-                    let refVersion = Version assInfo.Info.Version
-                    let currentVersion = Environment.fsCoreAssembly().GetName().Version
-                    if refVersion > currentVersion then
-                        yield { Important = true
-                                Text = sprintf "Paket resolved a FSharp.Core with version '%O', but fake runs with a version of '%O'. This is not supported.\nPlease either lock the version via 'nuget FSharp.Core <nuget-version>' or upgrade fake.\nRead https://github.com/fsharp/FAKE/issues/2001 for details." refVersion currentVersion }
-                | None -> ()
-            | None -> ()
-        ]
-
-    match runResult with
-    | Runners.RunResult.SuccessRun _ -> globalHints
-    | Runners.RunResult.CompilationError err ->
-      [
-        // Add some hints about the error, for example
-        // detect https://github.com/fsharp/FAKE/issues/1783
-        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
-        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
-        if containsNotDefined then
-          yield { Important = false; Text = sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath }
-        if containsNotSupportOperator then
-          yield { Important = false; Text = "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators" }
-        yield! globalHints
-      ]
-    | Runners.RunResult.RuntimeError _ ->
-      [
-        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
-          yield { Important = false; Text = "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'" }
-        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
-          yield { Important = false; Text = "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'" }
-        yield! globalHints
-      ]
-
-[<Obsolete("Use retrieveHintsExt instead.")>]
-let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
-    match runResult with
-    | Runners.RunResult.SuccessRun _ -> []
-    | Runners.RunResult.CompilationError err ->
-      [
-        // Add some hints about the error, for example
-        // detect https://github.com/fsharp/FAKE/issues/1783
-        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
-        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
-        if containsNotDefined then
-          yield sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath
-        if containsNotSupportOperator then
-          yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
-      ]
-    | Runners.RunResult.RuntimeError _ ->
-      [
-        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
-          yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
-        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
-          yield "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
-      ]
+let runScript (preparedScript:PrepareInfo) : RunResult * ResultCoreCacheInfo * FakeContext =
+  CoreCache.runScriptWithCacheProviderExt preparedScript._Config preparedScript._CachingProvider

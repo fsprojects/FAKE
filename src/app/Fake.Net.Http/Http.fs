@@ -155,18 +155,26 @@ module Http =
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
     ///  - `url` - The URL to perform the GET operation.
-    let private getAsync (userName : string) (password : string) (url : string) = async {
+    let private getAsync headerF (userName : string) (password : string) (url : string) = async {
         use client = new HttpClient()
         if not (isNull userName) || not (isNull password) then
             let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
             client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
         //try 
-        let! response = client.GetAsync(url) |> Async.AwaitTask
+        let request = new HttpRequestMessage(HttpMethod.Get, url)
+        headerF request.Headers
+        let! response = client.SendAsync(request) |> Async.AwaitTask
         response.EnsureSuccessStatusCode () |> ignore
+        
+        let headers =
+            response.Headers :> seq<System.Collections.Generic.KeyValuePair<string, seq<string>>>
+            |> Seq.append (response.Content.Headers :> seq<System.Collections.Generic.KeyValuePair<string, seq<string>>>)
+            |> Seq.map (fun kv -> kv.Key, kv.Value |> Seq.toList)
+            |> Map.ofSeq
         use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
         use reader = new StreamReader(stream)
-        return reader.ReadToEnd()
+        return headers, reader.ReadToEnd()
         //with exn -> 
         //    // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
         //    null
@@ -179,9 +187,10 @@ module Http =
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
     ///  - `url` - The URL to perform the GET operation.
-    let get userName password url =
-        getAsync userName password url
+    let get userName password url : string =
+        getAsync ignore userName password url
         |> Async.RunSynchronously
+        |> snd
 
     /// Executes an HTTP POST command and retrives the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
@@ -210,11 +219,16 @@ module Http =
         request.Content <- new ByteArrayContent(bytes, 0, bytes.Length)
         request.Content.Headers.ContentType <- new MediaTypeHeaderValue("application/x-www-form-urlencoded")
         let! response = client.SendAsync(request) |> Async.AwaitTask
-
         response.EnsureSuccessStatusCode () |> ignore
+        
+        let headers =
+            response.Headers :> seq<System.Collections.Generic.KeyValuePair<string, seq<string>>>
+            |> Seq.append (response.Content.Headers :> seq<System.Collections.Generic.KeyValuePair<string, seq<string>>>)
+            |> Seq.map (fun kv -> kv.Key, kv.Value |> Seq.toList)
+            |> Map.ofSeq
         use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
         use reader = new StreamReader(stream)
-        return reader.ReadToEnd() }
+        return headers, reader.ReadToEnd() }
 
 
     /// Executes an HTTP POST command and retrives the information.    
@@ -227,9 +241,10 @@ module Http =
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
     ///  - `data` - The data to post.
-    let postCommand headerF url userName password data =
+    let postCommand headerF url userName password data : string =
         postCommandAsync headerF url userName password data
         |> Async.RunSynchronously
+        |> snd
 
 
     /// Executes an HTTP POST command and retrives the information.
@@ -257,4 +272,11 @@ module Http =
 
         response.EnsureSuccessStatusCode () |> ignore }
 
-    let upload url file = uploadAsync url file |> Async.RunSynchronously    
+    /// Upload the given file to the given endpoint
+    let upload url file = uploadAsync url file |> Async.RunSynchronously
+
+    /// Like 'get' but allow to set headers and returns the response headers.
+    let getWithHeaders userName password headerF (url:string) : Map<string, string list> * string =
+        getAsync headerF userName password url
+        |> Async.RunSynchronously
+        
