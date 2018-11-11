@@ -1,11 +1,6 @@
-# Getting started with FAKE - F# Make
+# Getting started
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-gettingstarted.html">here</a></p>
-</div>
-
-In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
+In this tutorial you will learn how to set up a complete build infrastructure with FAKE. This includes:
 
 * how to install the latest FAKE version
 * how to edit and run scripts
@@ -14,11 +9,11 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 ## Install FAKE
 
-"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.
+FAKE is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the FAKE syntax is hopefully very easy to learn.
 
 There are various ways to install FAKE 5:
 
-* Install FAKE as a global dotnet tool: 
+* Install FAKE as a global dotnet tool:
     * To install FAKE globally, run:
         <pre><code class="lang-bash">
         dotnet tool install fake-cli -g
@@ -28,9 +23,9 @@ There are various ways to install FAKE 5:
         dotnet tool install fake-cli --tool-path your_tool_path
         </code></pre>
 
-    Use `--version` to specify the version of FAKE. See the [`global_tool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) for ideas to bootstrap in your CI process.
+    Use `--version` to specify the version of FAKE. See the [`global_tool`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) branch of `fake-bootstrap` for ideas to bootstrap in your CI process.
 
-* Bootstrap via the [fake dotnet new template](fake-template.html). The template bootstraps FAKE and sets up a basic build-script.
+* Bootstrap via the `fake dotnet new` [template](fake-template.html). The template bootstraps FAKE and sets up a basic build-script.
     * To install the template run:
         <pre><code class="lang-bash">
         dotnet new -i "fake-template::*"
@@ -42,24 +37,24 @@ There are various ways to install FAKE 5:
 
     See the [template](fake-template.html) page for more information.
 
-* Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey).  
+* Install the 'fake' or 'fake-netcore' package for your system (currenty chocolatey).
   Example `choco install fake`
 
-* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Use it as a dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
 
-* Bootstrap via shell script (fake.cmd/fake.sh),
+* Bootstrap via a shell script (fake.cmd/fake.sh),
   see this [example project](https://github.com/FakeBuild/fake-bootstrap)
     <div class="alert alert-warning">
         <h5>WARNING</h5>
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
+* Bootstrap via paket `clitool`, this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
 
 ## One note on Intellisense
 
-Whenever you update the dependencies (part of the example) delete the `<script>.fsx.lock` file and re-run fake to update all files and intellisense!
+Whenever you update the dependencies (part of the example), you need to delete the `<script>.fsx.lock` file and re-run fake to update all files and intellisense!
 
 ## Example - Compiling and building your .NET application
 
@@ -67,7 +62,7 @@ This example will guide you by adding a fake script to your existing .NET applic
 
 ### Getting started
 
-Initially we need to create a file called `build.fsx` where our build-logic will have its home.
+Initially we need to create a file called `build.fsx` where all our build-logic will reside.
 Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:
 
 ```fsharp
@@ -78,9 +73,9 @@ nuget Fake.Core.Target //"
 
 This is all we need for now to declare that we need the `Fake.Core.Target` module and want to enable intellisense.
 
-Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some editors).
+Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and we will have intellisense enabled (you might need to reopen the script file on some editors).
 
-Now that we have setup our basic environment to edit the script file we add our first target:
+Now that we have setup our basic environment to edit the script file we can add our first target:
 
 ```fsharp
 #r "paket:
@@ -98,7 +93,7 @@ Target.create "Default" (fun _ ->
 Target.runOrDefault "Default"
 ```
 
-As you can see the code is really simple. The few first lines (`nuget Fake.Core.Target` and `open Fake.Core`) load the fake modules we need and is vital for all build scripts to support creating and running targets. The `#load` line is optional but a good way to make the IDE aware of all the modules (for intellisense and IDE support)
+As you can see the code is really simple. The first few lines (`nuget Fake.Core.Target` and `open Fake.Core`) load the fake modules we need and this is vital for all build scripts to support creating and running targets. The `#load` line is optional but a good way to make the IDE aware of all the modules (for intellisense and IDE support)
 
 After this header the *Default* target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
 
@@ -119,9 +114,9 @@ nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 ```
 
-Now we remove the `build.fsx.lock` file and run `fake build` in order to restore the newly added `Fake.IO.FileSystem` module.
+Now we need to remove the `build.fsx.lock` file and run `fake build` in order to restore the newly added `Fake.IO.FileSystem` module.
 
-As we can now work with intellisense we can easily discover the various modules and functions in `Fake.IO`, for example the `Shell` module provides various functions you expect from regular shell scripting, but we use `Shell.CleanDir` which will ensure the given directory is empty by deleting everything within or creating the directory if required:
+Since we now can rely on intellisense we can easily discover the various modules and functions in `Fake.IO`, for example the `Shell` module provides various functions you expect from regular shell scripting, we will use `Shell.cleanDir` which will ensure the given directory is empty by deleting everything within or creating the directory if required:
 
 
 ```fsharp
@@ -162,9 +157,9 @@ Target.runOrDefault "Default"
 
 We introduced some new concepts in this snippet. At first we defined a global property called `buildDir` with the relative path of a temporary build folder.
 
-In the `Clean` target we use the `Shell.CleanDir` task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.
+In the `Clean` target we use the `Shell.cleanDir` task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.
 
-In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *Clean* is a prerequisite of *Default* and will be run before the execution of *Default*:
+In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *Clean* is a prerequisite of *Default* and will run before the *Default* target is executed:
 
 ![alt text](pics/gettingstarted/afterclean.png "We introduced a Clean target")
 
@@ -172,10 +167,10 @@ In the dependencies section we say that the *Default* target has a dependency on
 
 In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild.
 
-Again we need some new module for this, namely `Fake.DotNet.MSBuild`.
+Again we need a new module for this, namely `Fake.DotNet.MSBuild`.
 
 Just like before add the required module on top via `nuget Fake.DotNet.MSBuild`, delete the `build.fsx.lock` file and run the script.
-Now edit the script like this:
+Now edit the script so it looks like this:
 
 ```fsharp
 #r "paket:
@@ -283,7 +278,7 @@ This time we defined a new target "BuildTest" which compiles all C# projects bel
 
 ### Running the tests with NUnit
 
-Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (again we need a new module `Fake.DotNet.Testing.NUnit`):
+Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (we have to add a new module for this: `Fake.DotNet.Testing.NUnit`):
 
 ```fsharp
 #r "paket:

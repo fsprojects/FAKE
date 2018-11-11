@@ -37,6 +37,7 @@ type ReportType =
     | LatexSummary
     | Badges
     | CsvSummary
+    | Cobertura
 
 type LogVerbosity =
     | Verbose = 0

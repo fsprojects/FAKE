@@ -38,7 +38,7 @@
         </div> 
     }
 </p>
-<a name="@Model.Type.Name" class="anchor" href="#@Model.Type.Name" ><h1>@Model.Type.Name</h1></a>
+<h1><a name="@Model.Type.Name" class="anchor" href="#@Model.Type.Name">@Model.Type.Name</a></h1>
 <div class="xmldoc">
   @foreach (var sec in comment.Sections) {
     // XML comment for the type has multiple sections that can be labelled
@@ -46,7 +46,7 @@
     // we print only those that belong to the <default> section.
     if (!byCategory.Any(g => g.GroupKey == sec.Key)) {
       if (sec.Key != "<default>") {
-        <h2>@sec.Key</h2>
+        <h2><a name="@sec.Key" class="anchor" href="#@sec.Key">@sec.Key</a></h2>
       }
       @sec.Value
     }

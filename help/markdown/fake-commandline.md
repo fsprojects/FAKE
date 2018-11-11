@@ -1,10 +1,5 @@
 # FAKE Command Line
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-commandline.html">here</a></p>
-</div>
-
 The `fake.exe` command line interface (CLI) is defined as follows:
 ```bash
 Usage:
@@ -38,7 +33,7 @@ Fake Build Options [build_opts]:
 -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
 ```
-Please refer to the [Fake.Core.CommandLineParsing documentation](core-commandlineparsing.html) for a explanation of the synax.
+Please refer to the [Fake.Core.CommandLineParsing](core-commandlineparsing.html) documentation for a explanation of the synax.
 
 For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future. In general you should use the `run` subcommand in scripting when you use parameters, because it is safer in regards to adding options without breaking. Use `build` to have a more dense workflow in the command line
 
@@ -64,7 +59,7 @@ Currently Fake supports 4 verbosity levels:
 
 ### `--version`
 
-Print FAKE version information.
+Prints FAKE version information.
 
 ### `--help`
 
@@ -99,7 +94,7 @@ Display CLI help.
 
 ## Running Targets
 
-Please refer to the [target module documentation](core-targets.html)
+Please refer to the [Fake.Core.Target](core-targets.html) module documentation
 
 For reference the CLI for the targets-module looks like this:
 

@@ -1,5 +1,37 @@
 # Release Notes
 
+## 5.10.1 - 2018-11-11
+
+* DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
+* ICON: Fake has a new icon (again huge thanks to @FlorianBaderDE)
+* NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
+* NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
+* ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* ENHANCEMENT: the fake template now supports the buildtask-dsl - https://github.com/fsharp/FAKE/pull/2177
+* ENHANCEMENT: add new fake hints for https://github.com/fsharp/FAKE/issues/2097, https://github.com/fsharp/FAKE/issues/2099 and https://github.com/fsharp/FAKE/issues/2181
+* BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* BUGFIX: NuGet.Version.getLastNuGetVersion failed for some servers - https://github.com/fsharp/FAKE/pull/2170
+* BUGFIX: Fake.DotNet.Tesing.NUnit failed to work when temporary-directory contains spaces (for example if windows username contains spaces) - https://github.com/fsharp/FAKE/pull/2180
+* BUGFIX: `--silent` now disables fake hints as well
+* (Minor) BREAKING: Refactor & cleanup `Fake.Runtime` internals - make sure to open an issue if you are hit by this.
+* OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
+
+## 5.10.0 - 2018-11-11
+
+* DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
+* ICON: Fake has a new icon (again huge thanks to @FlorianBaderDE)
+* NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
+* NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
+* ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* ENHANCEMENT: the fake template now supports the buildtask-dsl - https://github.com/fsharp/FAKE/pull/2177
+* ENHANCEMENT: add new fake hints for https://github.com/fsharp/FAKE/issues/2097, https://github.com/fsharp/FAKE/issues/2099 and https://github.com/fsharp/FAKE/issues/2181
+* BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* BUGFIX: NuGet.Version.getLastNuGetVersion failed for some servers - https://github.com/fsharp/FAKE/pull/2170
+* BUGFIX: Fake.DotNet.Tesing.NUnit failed to work when temporary-directory contains spaces (for example if windows username contains spaces) - https://github.com/fsharp/FAKE/pull/2180
+* BUGFIX: `--silent` now disables fake hints as well
+* (Minor) BREAKING: Refactor & cleanup `Fake.Runtime` internals - make sure to open an issue if you are hit by this.
+* OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
+
 ## 5.9.3 - 2018-10-15
 
 * BUGFIX: `/restore` was missing from msbuild command line - https://github.com/fsharp/FAKE/issues/2160

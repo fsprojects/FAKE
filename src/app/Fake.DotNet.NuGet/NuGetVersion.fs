@@ -2,6 +2,7 @@ module Fake.DotNet.NuGet.Version
 
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core
+open Fake.Net
 open Newtonsoft.Json
 open System
 open System.Xml.Linq
@@ -51,9 +52,10 @@ let getLastNuGetVersion server (packageName:string) =
     let url =
       sprintf "%s/Search()?$filter=IsLatestVersion&searchTerm='%s'&includePrerelease=false"
         server packageName
-    let client = new WebClient()
-    addHeader client "Accept" "application/json, application/xml"
-    let text, headers = client.DownloadStringAndHeaders url
+    let headers, text =
+        Http.getWithHeaders null null (fun rh ->
+            rh.Add("Accept", "application/json, application/xml"))
+            url
     let hasContentType = headers.ContainsKey "Content-Type"
     let version =
       if hasContentType && headers.["Content-Type"] |> List.exists (fun e -> e.Contains "application/json")
