@@ -244,9 +244,7 @@ module Tools =
         try
             !! ("./**/" @@ toolname)
             |> Seq.tryHead
-            |> Option.map (fun path -> 
-                let fi = FileInfo path
-                fi.Directory.FullName)            
+            |> Option.map Path.GetDirectoryName
         with
         | _ -> None
 
