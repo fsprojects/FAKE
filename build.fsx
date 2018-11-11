@@ -193,11 +193,31 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     |> File.deleteAll
 )
 
+let callpaket wd args =
+    if 0 <> Process.execSimple (fun info ->
+            { info with
+                FileName = wd </> ".paket/paket.exe"
+                WorkingDirectory = wd
+                Arguments = args }
+            |> Process.withFramework
+            ) (System.TimeSpan.FromMinutes 5.0) then
+        failwith "paket failed to start"
+
 // Targets
 Target.create "Clean" (fun _ ->
     !! "src/*/*/bin"
     //++ "src/*/*/obj"
     |> Shell.cleanDirs
+
+    let fakeRuntimeVersion = typeof<Fake.Core.Context.FakeExecutionContext>.Assembly.GetName().Version
+    printfn "fake runtime %O" fakeRuntimeVersion
+    if fakeRuntimeVersion < new System.Version(5, 10, 0) then
+        printfn "deleting obj directories because of https://github.com/fsprojects/Paket/issues/3404"
+        !! "src/*/*/obj"
+        |> Shell.cleanDirs
+        // Allow paket to do a full-restore (to improve performance)
+        Shell.rm ("paket-files" </> "paket.restore.cached")
+        callpaket "." "restore"
 
     Shell.cleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -301,16 +321,6 @@ Target.create "SetAssemblyInfo" (fun _ ->
         ()
 )
 
-let callpaket wd args =
-    if 0 <> Process.execSimple (fun info ->
-            { info with
-                FileName = wd </> ".paket/paket.exe"
-                WorkingDirectory = wd
-                Arguments = args }
-            |> Process.withFramework
-            ) (System.TimeSpan.FromMinutes 5.0) then
-        failwith "paket failed to start"
-
 Target.create "StartBootstrapBuild" (fun _ ->
     // Prepare stuff
     let token = githubtoken.Value
@@ -352,12 +362,11 @@ Target.create "StartBootstrapBuild" (fun _ ->
     let startTime = System.Diagnostics.Stopwatch.StartNew()
     let maxTime = System.TimeSpan.FromMinutes 60.0
     let formatState (state:Octokit.CommitStatus) =
-        sprintf "{ State: %O, TargetUrl: %O, Description: %O, Context: %O, Url: %O }"
-            state.State state.TargetUrl state.Description state.Context state.Url
+        sprintf "{ State: %O, Description: %O, TargetUrl: %O }"
+            state.State state.Description state.TargetUrl
     let result = 
         async {
             let! client = GitHub.createClientWithToken token
-            //let obsClient = ObservableRepositoriesClient(client)
             let mutable whileResult = None
             while startTime.Elapsed < maxTime && whileResult.IsNone do
                 let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
