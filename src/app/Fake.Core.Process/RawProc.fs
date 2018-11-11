@@ -272,10 +272,9 @@ module internal RawProc =
                             retries <- retries - 1
                             if retries = 2 then
                                 tok.Cancel()
-                            if not ok then
+                            if not ok && retries < 6 then
                                 Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                             allFinished <- ok
-                        //tok.Cancel()
                         
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
