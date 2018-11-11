@@ -1,13 +1,10 @@
 module Fake.DotNet.ILMerge
 
 open System
+open System.Globalization
 open Fake.Core
 open Fake.DotNet
-open Fake.IO
-open Fake.IO.FileSystemOperators
 open Expecto
-
-let serializingObject = Object()
 
 let testCases =
     if Environment.isWindows then
@@ -18,280 +15,198 @@ let testCases =
               let args = ILMerge.getArguments dummy dummy2 p
               Expect.isTrue (p.DebugInfo)
                   "A field should have non-default value for a bool"
-              Expect.equal args [ "/out:\"" + dummy + "\""
+              Expect.equal args [ "/out:" + dummy
                                   "/target:library"
-                                  dummy2 ] "The defaults should be simple" ]
-    //testCase "Test that all arguments are processed as expected" <| fun _ ->
-    //    let p =
-    //        { FxCop.Params.Create() with DependencyDirectories =
-    //                                         [ Guid.NewGuid().ToString()
-    //                                           Guid.NewGuid().ToString() ]
-    //                                     ImportFiles =
-    //                                         [ Guid.NewGuid().ToString()
-    //                                           Guid.NewGuid().ToString() ]
-    //                                     RuleLibraries =
-    //                                         [ Guid.NewGuid().ToString()
-    //                                           Guid.NewGuid().ToString() ]
-    //                                     Rules =
-    //                                         [ Guid.NewGuid().ToString()
-    //                                           Guid.NewGuid().ToString() ]
-    //                                     CustomRuleset = Guid.NewGuid().ToString()
-    //                                     ConsoleXslFileName =
-    //                                         Guid.NewGuid().ToString()
-    //                                     ReportFileName = Guid.NewGuid().ToString()
-    //                                     OutputXslFileName =
-    //                                         Guid.NewGuid().ToString()
-    //                                     PlatformDirectory =
-    //                                         Guid.NewGuid().ToString()
-    //                                     ProjectFile = Guid.NewGuid().ToString()
-    //                                     Types =
-    //                                         [ Guid.NewGuid().ToString()
-    //                                           Guid.NewGuid().ToString() ]
-    //                                     WorkingDirectory =
-    //                                         Guid.NewGuid().ToString()
-    //                                     CustomDictionary =
-    //                                         Guid.NewGuid().ToString()
-    //                                     ApplyOutXsl = true
-    //                                     ToolPath = Guid.NewGuid().ToString() }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p [ dummy ]
-    //    let wrap s a = s + "\"" + a + "\""
-    //    let expected =
-    //        [ "/aXsl"
-    //          "/c"
-    //          wrap "/cXsl:" p.ConsoleXslFileName
-    //          wrap "/d:" (p.DependencyDirectories |> Seq.head)
-    //          wrap "/d:" (p.DependencyDirectories |> Seq.last)
-    //          wrap "/f:" dummy
-    //          wrap "/i:" (p.ImportFiles |> Seq.head)
-    //          wrap "/i:" (p.ImportFiles |> Seq.last)
-    //          wrap "/o:" p.ReportFileName
-    //          wrap "/oXsl:" p.OutputXslFileName
-    //          wrap "/plat:" p.PlatformDirectory
-    //          wrap "/p:" p.ProjectFile
-    //          wrap "/ruleset:=" p.CustomRuleset
-    //          wrap "/r:" (p.ToolPath @@ "Rules" @@ (p.RuleLibraries |> Seq.head))
-    //          wrap "/r:" (p.ToolPath @@ "Rules" @@ (p.RuleLibraries |> Seq.last))
-    //          "/rid:" + (p.Rules |> Seq.head)
-    //          "/rid:" + (p.Rules |> Seq.last)
-    //          "/s"
-    //          "/t:" + (p.Types |> Seq.head) + "," + (p.Types |> Seq.last)
-    //          "/v"
-    //          wrap "/dic:" p.CustomDictionary ]
-    //    Expect.equal args expected "The Xsl should be applied"
-    //testCase "Test that generated code should be ignored" <| fun _ ->
-    //    let p1 = { FxCop.Params.Create() with IgnoreGeneratedCode = true }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p1 [ dummy ]
-    //    Expect.equal args [ "/c"
-    //                        "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/ignoregeneratedcode"
-    //                        "/s"
-    //                        "/v" ] "Generated code should be ignored"
-    //testCase "Test that console output can be switched off" <| fun _ ->
-    //    let p2 = { FxCop.Params.Create() with DirectOutputToConsole = false }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p2 [ dummy ]
-    //    Expect.equal args [ "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/s"
-    //                        "/v" ] "No output to console expected"
-    //testCase "Test that summary reporting can be switched off" <| fun _ ->
-    //    let p3 = { FxCop.Params.Create() with IncludeSummaryReport = false }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p3 [ dummy ]
-    //    Expect.equal args [ "/c"
-    //                        "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/v" ] "No summary expected"
-    //testCase "Test project file update can be enabled" <| fun _ ->
-    //    let p4 = { FxCop.Params.Create() with SaveResultsInProjectFile = true }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p4 [ dummy ]
-    //    Expect.equal args [ "/c"
-    //                        "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/s"
-    //                        "/u"
-    //                        "/v" ] "results should be in project file"
-    //testCase "Test that output can be forced" <| fun _ ->
-    //    let p5 = { FxCop.Params.Create() with ForceOutput = true }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p5 [ dummy ]
-    //    Expect.equal args [ "/c"
-    //                        "/fo"
-    //                        "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/s"
-    //                        "/v" ] "Output should be forced"
-    //testCase "Test that Xsl is defaulted" <| fun _ ->
-    //    let p0 = { FxCop.Params.Create() with ApplyOutXsl = true }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let args = FxCop.createArgs p0 [ dummy ]
-    //    Expect.equal args [ "/aXsl"
-    //                        "/c"
-    //                        "/f:\"" + dummy + "\""
-    //                        "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
-    //                        "/oXsl:\"" + p0.ToolPath
-    //                        @@ "Xml" @@ "FxCopReport.xsl" + "\""
-    //                        "/s"
-    //                        "/v" ] "Xsl should be defaulted"
-    //testCase "Test process is created"
-    //<| fun _ ->
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let p = { FxCop.Params.Create() with ToolPath = dummy }
-    //    let args = [ Guid.NewGuid().ToString() ]
-    //    let proc = FxCop.createProcess p args
-    //    Expect.equal proc.CommandLine (dummy + " " + String.Join(" ", args))
-    //        "tool should match"
-    //    Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
-    //        "WorkingDirectory should default"
-    //testCase "Test process is created with working directory"
-    //<| fun _ ->
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let dummy2 = Guid.NewGuid().ToString()
-    //    let p =
-    //        { FxCop.Params.Create() with ToolPath = dummy
-    //                                     WorkingDirectory = dummy2 }
-    //    let args = [ Guid.NewGuid().ToString() ]
-    //    let proc = FxCop.createProcess p args
-    //    Expect.equal proc.CommandLine (dummy + " " + String.Join(" ", args))
-    //        "tool should match"
-    //    Expect.equal proc.WorkingDirectory (Some dummy2)
-    //        "WorkingDirectory should match input"
-    //testCase "Test full command line is created"
-    //<| fun _ ->
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let dummy2 = Guid.NewGuid().ToString()
-    //    let p =
-    //        { FxCop.Params.Create() with ToolPath = dummy
-    //                                     ReportFileName = dummy2 }
-    //    let assemblies = [ Guid.NewGuid().ToString() ]
-    //    let proc = FxCop.composeCommandLine p assemblies
-    //    let expected =
-    //        sprintf """%s /c "/f:\"%s\"" "/o:\"%s\"" /s /v""" dummy
-    //            (Seq.head assemblies) dummy2
-    //    Expect.equal proc.CommandLine expected "composed command line should match"
-    //    Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
-    //        "WorkingDirectory should default"
-    //testCase "Test errors are read as expected" <| fun _ ->
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let data =
-    //        [ ("string(count(//Issue[@Level='CriticalError']))", 23)
-    //          ("string(count(//Issue[@Level='Error']))", 42)
-    //          ("string(count(//Issue[@Level='CriticalWarning']))", 17)
-    //          ("string(count(//Issue[@Level='Warning']))", 5) ]
-    //        |> Map.ofList
-    //    let XmlMock failOnError xmlFileName nameSpace prefix xPath =
-    //        Expect.isFalse failOnError "no fail on error"
-    //        Expect.equal xmlFileName dummy "file name should pass through"
-    //        Expect.isEmpty nameSpace "no namespace wanted"
-    //        Expect.isEmpty prefix "no prefix wanted"
-    //        Expect.isTrue (data.ContainsKey xPath) "key should be in map"
-    //        Map.find xPath data
-    //    let saved = FxCop.XmlReadInt
-    //    try
-    //        FxCop.XmlReadInt <- XmlMock
-    //        Expect.equal (FxCop.checkForErrors dummy) (23, 42, 17, 5)
-    //            "Results should match"
-    //    finally
-    //        FxCop.XmlReadInt <- saved
-    //testCase "Tool failure is handled"
-    //<| fun _ ->
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let p =
-    //        { FxCop.Params.Create() with ReportFileName = dummy
-    //                                     FailOnError = FxCop.ErrorLevel.ToolError }
-    //    let result =
-    //        { ExitCode = 1
-    //          Result = () }
-    //    let XmlMock _ _ _ _ _ =
-    //        Expect.isTrue false "should not be called"
-    //        0
-    //    Expect.throwsC (fun () ->
-    //        lock serializingObject (fun _ ->
-    //            let saved = FxCop.XmlReadInt
-    //            try
-    //                FxCop.XmlReadInt <- XmlMock
-    //                FxCop.failAsrequired p result
-    //            finally
-    //                FxCop.XmlReadInt <- saved))
-    //        (fun ex ->
-    //        Expect.equal ex.Message "FxCop test failed."
-    //            "should have simple failure")
-    //testCase "Analysis failure is handled" <| fun _ ->
-    //    let crossproduct l1 l2 =
-    //        seq {
-    //            for el1 in l1 do
-    //                for el2 in l2 do
-    //                    yield el1, el2
-    //        }
-    //    let dummy = Guid.NewGuid().ToString()
-    //    let levels = { 0..5 }
-    //    let maps =
-    //        [| [ ("string(count(//Issue[@Level='CriticalError']))", 1)
-    //             ("string(count(//Issue[@Level='Error']))", 2)
-    //             ("string(count(//Issue[@Level='CriticalWarning']))", 3)
-    //             ("string(count(//Issue[@Level='Warning']))", 4) ]
-    //           |> Map.ofList
-    //           [ ("string(count(//Issue[@Level='CriticalError']))", 0)
-    //             ("string(count(//Issue[@Level='Error']))", 1)
-    //             ("string(count(//Issue[@Level='CriticalWarning']))", 3)
-    //             ("string(count(//Issue[@Level='Warning']))", 4) ]
-    //           |> Map.ofList
-    //           [ ("string(count(//Issue[@Level='CriticalError']))", 0)
-    //             ("string(count(//Issue[@Level='Error']))", 0)
-    //             ("string(count(//Issue[@Level='CriticalWarning']))", 1)
-    //             ("string(count(//Issue[@Level='Warning']))", 4) ]
-    //           |> Map.ofList
-    //           [ ("string(count(//Issue[@Level='CriticalError']))", 0)
-    //             ("string(count(//Issue[@Level='Error']))", 0)
-    //             ("string(count(//Issue[@Level='CriticalWarning']))", 0)
-    //             ("string(count(//Issue[@Level='Warning']))", 1) ]
-    //           |> Map.ofList
-    //           [ ("string(count(//Issue[@Level='CriticalError']))", 0)
-    //             ("string(count(//Issue[@Level='Error']))", 0)
-    //             ("string(count(//Issue[@Level='CriticalWarning']))", 0)
-    //             ("string(count(//Issue[@Level='Warning']))", 0) ]
-    //           |> Map.ofList |]
-    //    let mapIndexes = { 0..4 }
-    //    let messages =
-    //        [| "FxCop found 1 critical errors."; "FxCop found 1 errors.";
-    //           "FxCop found 1 critical warnings."; "FxCop found 1 warnings.";
-    //           String.Empty |]
-    //    crossproduct levels mapIndexes
-    //    |> Seq.iter (fun (level, mapIndex) ->
-    //           let p =
-    //               { FxCop.Params.Create() with ReportFileName = dummy
-    //                                            FailOnError =
-    //                                                enum<FxCop.ErrorLevel> level }
-    //           let result =
-    //               { ExitCode = 0
-    //                 Result = () }
-    //           let XmlMock _ _ _ _ xPath = Map.find xPath maps.[mapIndex]
-    //           let op() =
-    //               lock serializingObject (fun _ ->
-    //                   let saved = FxCop.XmlReadInt
-    //                   try
-    //                       FxCop.XmlReadInt <- XmlMock
-    //                       FxCop.failAsrequired p result
-    //                   finally
-    //                       FxCop.XmlReadInt <- saved)
-    //           if level >= int FxCop.ErrorLevel.CriticalError
-    //              && level >= mapIndex + 2 then
-    //               Expect.throwsC op
-    //                   (fun ex ->
-    //                   Expect.equal ex.Message messages.[mapIndex]
-    //                       (sprintf "should have expected failure level=%d index=%d"
-    //                            level mapIndex))
-    //           else
-    //               try
-    //                   op()
-    //               with x ->
-    //                   printfn "Unexpected failure %A level=%d index=%d" x level
-    //                       mapIndex
-    //                   reraise()) ]
+                                  dummy2 ] "The defaults should be simple"
+          testCase "Test that process is created as expected" <| fun _ ->
+              let toolPath = Guid.NewGuid().ToString()
+              let p = { ILMerge.Params.Create() with ToolPath = toolPath }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let proc = ILMerge.createProcess p dummy dummy2
+              Expect.equal proc.CommandLine (String.Join(" ",
+                                                         [ toolPath
+                                                           "/out:" + dummy
+                                                           "/target:library"
+                                                           dummy2 ]))
+                  "The defaults should be simple"
+          testCase "Test that version can be set" <| fun _ ->
+              let vdummy = Guid.NewGuid().ToByteArray()
+              let v =
+                  System.Version
+                      (int vdummy.[0], int vdummy.[4], int vdummy.[8], int vdummy.[12])
+              let p = { ILMerge.Params.Create() with Version = Some v }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/ver:" + v.ToString()
+                                  "/target:library"
+                                  dummy2 ] "Version should be as given"
+          testCase "Test that duplicate types can be allowed" <| fun _ ->
+              let p =
+                  { ILMerge.Params.Create() with AllowDuplicateTypes =
+                                                     ILMerge.AllPublicTypes }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/allowDup"
+                                  dummy2 ] "Duplicates should be allowed"
+          testCase "Test that assembly attributes may be multiplied" <| fun _ ->
+              let p =
+                  { ILMerge.Params.Create() with AllowMultipleAssemblyLevelAttributes =
+                                                     true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/allowMultiple"
+                                  dummy2 ] "Multiples should be allowed"
+          testCase "Test that wild cards may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with AllowWildcards = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/wildcards"
+                                  dummy2 ] "Wild cards should be allowed"
+          testCase "Test that zero PE Kind may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with AllowZeroPeKind = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/zeroPeKind"
+                                  dummy2 ] "Wild cards should be allowed"
+          testCase "Test that closure may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with Closed = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/closed"
+                                  dummy2 ] "Closure should be allowed"
+          testCase "Test that attributes may be copied" <| fun _ ->
+              let p = { ILMerge.Params.Create() with CopyAttributes = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/copyattrs"
+                                  dummy2 ] "Attribute copying should be allowed"
+          testCase "Test that types may be made internal" <| fun _ ->
+              let p = { ILMerge.Params.Create() with Internalize = ILMerge.Internalize }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/internalize"
+                                  dummy2 ] "Internalization should be allowed"
+          testCase "Test that files may be aligned" <| fun _ ->
+              let a = DateTime.Now.Second
+              let p = { ILMerge.Params.Create() with FileAlignment = Some a }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/align:" + a.ToString(CultureInfo.InvariantCulture)
+                                  dummy2 ] "Alignment should be allowed"
+          testCase "Test that debug info may be excluded" <| fun _ ->
+              let p = { ILMerge.Params.Create() with DebugInfo = false }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/ndebug"
+                                  dummy2 ] "No-debug should be allowed"
+          testCase "Test that type merging may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with UnionMerge = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/union"
+                                  dummy2 ] "Merging types should be allowed"
+          testCase "Test that xml documentation merge may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with XmlDocs = true }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:library"
+                                  "/xmldocs"
+                                  dummy2 ] "Merging XML docs should be allowed"
+          testCase "Test that EXE merge may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with TargetKind = ILMerge.Exe }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:exe"
+                                  dummy2 ] "Merging EXEs should be allowed"
+          testCase "Test that WinEXE merge may be allowed" <| fun _ ->
+              let p = { ILMerge.Params.Create() with TargetKind = ILMerge.WinExe }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/target:winexe"
+                                  dummy2 ] "Merging WinEXEs should be allowed"
+          testCase "Test that string arguments are processed as expected" <| fun _ ->
+              let libs =
+                  [ Guid.NewGuid().ToString()
+                    Guid.NewGuid().ToString() ]
+              let dups =
+                  [ Guid.NewGuid().ToString()
+                    Guid.NewGuid().ToString() ]
+              let attr = Guid.NewGuid().ToString()
+              let except = Guid.NewGuid().ToString()
+              let key = Guid.NewGuid().ToString()
+              let log = Guid.NewGuid().ToString()
+              let search =
+                  [ Guid.NewGuid().ToString()
+                    Guid.NewGuid().ToString() ]
+              let platform = Guid.NewGuid().ToString()
+              let p =
+                  { ILMerge.Params.Create() with Libraries = libs
+                                                 AllowDuplicateTypes =
+                                                     ILMerge.DuplicateTypes dups
+                                                 AttributeFile = attr
+                                                 Internalize =
+                                                     ILMerge.InternalizeExcept except
+                                                 KeyFile = key
+                                                 LogFile = log
+                                                 SearchDirectories = search
+                                                 TargetPlatform = platform }
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              let args = ILMerge.getArguments dummy dummy2 p
+              Expect.equal args [ "/out:" + dummy
+                                  "/attr:" + attr
+                                  "/keyfile:" + key
+                                  "/log:" + log
+                                  "/target:library"
+                                  "/targetplatform:" + platform
+                                  "/internalize:" + except
+                                  "/allowDup:" + (dups |> Seq.head)
+                                  "/allowDup:" + (dups |> Seq.last)
+                                  "/lib:" + (search |> Seq.head)
+                                  "/lib:" + (search |> Seq.last)
+                                  dummy2
+                                  libs |> Seq.head
+                                  libs |> Seq.last ]
+                  "Strings should be assigned as expected" ]
     else []
 
 [<Tests>]
