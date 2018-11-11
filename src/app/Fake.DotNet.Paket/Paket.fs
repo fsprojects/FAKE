@@ -33,20 +33,12 @@ type PaketPackParams =
       PinProjectReferences : bool }
 
 let private findPaketExecutable () =
-    let windowsName = "paket.exe"
-    let unixName = "paket"
+    match Tools.tryFindToolFolderInSubPath "paket" with
+    | Some folder ->
+        folder @@ "paket"
+    | None ->
+        (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
 
-    let exeName =
-        if Environment.isWindows then
-            windowsName
-        else
-            if !! ("./**/" @@ unixName) |> Seq.isEmpty |> not then
-                unixName
-            else
-                windowsName
-
-    (Tools.findToolFolderInSubPath exeName (Directory.GetCurrentDirectory() @@ ".paket")) @@ exeName
-    
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
     { ToolPath = findPaketExecutable ()
