@@ -1,279 +1,304 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en" class="has-navbar-fixed-top">
 
-<html>
-	<head>
-		<title>WiXHelper - FAKE - F# Make</title>
-		<meta charset="utf-8" />
-		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
-		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<body class="no-sidebar">
-		<div id="page-wrapper">
+<head>
+	<title>WiXHelper - FAKE - F# Make</title>
+	<meta charset="utf-8" />
+
+	<!-- from https://realfavicongenerator.net -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="theme-color" content="#ffffff">
 
 
-			<!-- Header Wrapper -->
-				<div id="header-wrapper">
-					<div class="container">
-						<!-- Header -->
-							<header id="header">
-								<div class="inner">
+	<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+	<link rel="stylesheet" href="/assets/css/bulmaswatch.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-tomorrow.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+</head>
 
-									<!-- Logo -->
-										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+<body>
+	<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item no-hover" href="/">
+				<img src="/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28">
+				<span class="p-l-sm">FAKE</span>
+			</a>
 
-									<!-- Nav -->
-										<nav id="nav">
-											<ul>
-												<li >
-													<a href="/legacy-index.html">FAKE 4</a>
-													<ul>
-														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
-														<li><a href="/help-docs.html">Where is XYZ???</a></li>
-														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
-														<li><a href="/legacy-core-targets.html">Targets</a></li>
-													</ul>
-												</li>
-                                                <li >
-                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
-                                                    <ul>
-                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
-                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
-                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
-                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
-                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
-                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
-                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
-                                                    </ul>
-                                                </li>
-												<li >
-													<a href="/fake-what-is-fake.html">Project</a>
-													<ul>
-														<li><a href="/help-users.html">Who is using FAKE?</a></li>
-														<li><a href="/help-supporters.html">Supporters</a></li>
-														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
-														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
-														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
-														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
-														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
-														<li><a href="/contributing.html">Contributing</a></li>
-														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
-													</ul>
-												</li>
-												<li >
-													<a href="/fake-fake5-modules.html">Modules</a>
-													<ul>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
-															<ul>
-																<li><a href="/api-slack.html">Slack</a></li>
-																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
-																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
-																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
-																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
-																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/buildserver.html">BuildServer</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/core.html">Core</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
-																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
-																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
-																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
-																<li><a href="/core-process.html">Process</a></li>
-																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
-																<li><a href="/apidocs/v5/fake-core-semver.html">SemVer</a></li>
-																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
-																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
-																<li><a href="/core-trace.html">Trace</a></li>
-																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
-																<li><a href="/core-vault.html">Vault</a></li>
-																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
-															<ul>
-																<li><a href="/dotnet-cli.html">Cli</a></li>
-																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
-                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
-																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
-																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
-																<li><a href="/dotnet-nuget.html">NuGet</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/core-targets.html">DSL</a>
-															<ul>
-																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
-																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
-                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
-																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/index.html#Fake.IO">IO</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
-																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
-																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
-																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
-																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
-															<ul>
-																<li><a href="/net-http.html">Http</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
-															<ul>
-																<li><a href="/sql-dacpac.html">DacPac</a></li>
-																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
-															<ul>
-																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
-																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
-																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
-																<li><a href="/fake-tools-octo.html">Octo</a></li>
-																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
-															<ul>
-																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
-															</ul>
-                                                            <ul>
-																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
-															<ul>
-																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
-																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="/todo-wix.html">Windows.WiX</a></li>
-																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
-																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
-																<li><a href="/todo-iis.html">?.?.IIS</a></li>
-																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
-																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
-																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
-																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
-																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-												<li class="current_page_item">
-                                                    <a href="/apidocs/v5/index.html">API Reference</a>
-                                                    <ul>
-														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
-	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
-	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
-													</ul>
-                                                </li>
-											</ul>
-										</nav>
+			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
 
-								</div>
-							</header>
-
-						<!-- Banner -->
-							
-
+		<div id="navbar" class="navbar-menu">
+			<div class="navbar-start">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">Tutorials</a>
+					<div class="navbar-dropdown">
+						<a href="/fake-gettingstarted.html" class="navbar-item">Getting started</a>
+						<a href="/fake-commandline.html" class="navbar-item">Running FAKE from command line</a>
+						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
+						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
+                        <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
 					</div>
 				</div>
 
-			<!-- Main Wrapper -->
-				<div id="main-wrapper">
-          			
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">About</a>
+					<div class="navbar-dropdown" class="navbar-item">
+						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
+						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
+						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
+						<a href="https://github.com/fsharp/FAKE/blob/master/License.txt" class="navbar-item">License</a>
+						<a href="/RELEASE_NOTES.html" class="navbar-item">Release Notes</a>
+						<a href="/contributing.html" class="navbar-item">Contributing</a>
+						<a href="https://github.com/fsharp/FAKE/issues/new" class="navbar-item">Ask a question or
+							report a bug</a>
+					</div>
+				</div>
 
-					<div class="wrapper style2">
-						<div class="inner">
-							<div class="container">
-								<div id="content">
-                                    <p>
-                                        <strong>Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                                            <a href="/apidocs/v5/index.html">here</a>.
-                                            If the API is already migrated you can check <a href="/apidocs/v5/fake-wixhelper.html">here if exists in a module</a>.
-                                            More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                                        </strong>
-                                    </p>
-									<!-- Content -->
-                      <article>
-          			
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a href="/fake-fake5-modules.html" class="navbar-link">Modules</a>
+					<div class="navbar-dropdown" class="navbar-item">
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Api" class="navbar-link">API</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/api-slack.html" class="navbar-item">Slack</a>
+								<a href="/apidocs/v5/fake-api-github.html" class="navbar-item">GitHub</a>
+								<a href="/apidocs/v5/fake-api-hockeyapp.html" class="navbar-item">HockeyApp</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Azure" class="navbar-link">Azure</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-azure-cloudservices.html" class="navbar-item">CloudServices</a>
+								<a href="/apidocs/v5/fake-azure-emulators.html" class="navbar-item">Emulators</a>
+								<a href="/apidocs/v5/fake-azure-kudu.html" class="navbar-item">Kudu</a>
+								<a href="/apidocs/v5/fake-azure-webjobs.html" class="navbar-item">WebJobs</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
+								<a href="/apidocs/v5/fake-buildserver-appveyor.html" class="navbar-item">AppVeyor</a>
+								<a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
+									DevOps</a>
+								<a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
+								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/core.html" class="navbar-link">Core</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-core-buildserver.html" class="navbar-item">BuildServer</a>
+								<a href="/apidocs/v5/fake-core-changelog.html" class="navbar-item">ChangeLog</a>
+								<a href="/core-commandlineparsing.html" class="navbar-item">CommandLineParsing</a>
+								<a href="/apidocs/v5/fake-core-context.html" class="navbar-item">Context</a>
+								<a href="/apidocs/v5/fake-core-environment.html" class="navbar-item">Environment</a>
+								<a href="/core-process.html" class="navbar-item">Process</a>
+								<a href="/apidocs/v5/fake-core-releasenotes.html" class="navbar-item">ReleaseNotes</a>
+								<a href="/apidocs/v5/fake-core-semver.html" class="navbar-item">SemVer</a>
+								<a href="/apidocs/v5/fake-core-string.html" class="navbar-item">String</a>
+								<a href="/core-targets.html" class="navbar-item">Targets</a>
+								<a href="/apidocs/v5/fake-core-taskrunner.html" class="navbar-item">Tasks</a>
+								<a href="/core-trace.html" class="navbar-item">Trace</a>
+								<a href="/apidocs/v5/fake-core-userinput.html" class="navbar-item">UserInput</a>
+								<a href="/core-vault.html" class="navbar-item">Vault</a>
+								<a href="/apidocs/v5/fake-core-xml.html" class="navbar-item">Xml</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Documentation" class="navbar-link">Documentation</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-documentation-docfx.html" class="navbar-item">DocFx</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.DotNet" class="navbar-link">DotNet</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/dotnet-cli.html" class="navbar-item">Cli</a>
+								<a href="/dotnet-assemblyinfo.html" class="navbar-item">AssemblyInfoFile</a>
+								<a href="/apidocs/v5/fake-dotnet-fsc.html" class="navbar-item">Fsc</a>
+								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
+								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
+								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
+									NUnit</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
+									MSpec</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-xunit2.html" class="navbar-item">Testing -
+									XUnit2</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-expecto.html" class="navbar-item">Testing -
+									Expecto</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-vstest.html" class="navbar-item">Testing -
+									VSTest</a>
+								<a href="/fake-dotnet-testing-specflow.html" class="navbar-item">Testing - SpecFlow</a>
+								<a href="/dotnet-testing-opencover.html" class="navbar-item">Testing - OpenCover</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-dotcover.html" class="navbar-item">Testing -
+									DotCover</a>
+								<a href="/dotnet-nuget.html" class="navbar-item">NuGet</a>
+								<a href="/apidocs/v5/fake-dotnet-mage.html" class="navbar-item">Mage</a>
+								<a href="/apidocs/v5/fake-dotnet-paket.html" class="navbar-item">Paket</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/core-targets.html" class="navbar-link">DSL</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md" class="navbar-item">BlackFox.Fake.BuildTask</a>
+								<a href="https://github.com/xakebuild/Xake" class="navbar-item">Xake</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/index.html#Fake.Installer" class="navbar-link">Installer</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-installer-innosetup.html" class="navbar-item">InnoSetup</a>
+								<a href="/fake-installer-squirrel.html" class="navbar-item">Squirrel</a>
+								<a href="/apidocs/v5/fake-installer-wix.html" class="navbar-item">Wix</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/index.html#Fake.IO" class="navbar-link">IO</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.IO" class="navbar-item">FileSystem</a>
+								<a href="/apidocs/v5/fake-io-changewatcher.html" class="navbar-item">Change Watcher</a>
+								<a href="/apidocs/v5/fake-io-globbing-operators.html" class="navbar-item">Globbing</a>
+								<a href="/apidocs/v5/fake-io-zip.html#Functions and values" class="navbar-item">Zip</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.JavaScript" class="navbar-link">JavaScript</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
+								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/net-http.html" class="navbar-item">Http</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+								<a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
+								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
+								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
+								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Windows" class="navbar-link">Windows</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/windows-chocolatey.html" class="navbar-item">Chocolatey</a>
+							</div>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-windows-registry.html" class="navbar-item">Registry</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/legacy/index.html#Fake" class="navbar-link">Legacy / Not Migrated</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/todo-fluentmigrator.html" class="navbar-item">?.?.FluentMigrator</a>
+								<a href="/todo-androidpublisher.html" class="navbar-item">?.?.AndroidPublisher</a>
+								<a href="/todo-wix.html" class="navbar-item">Windows.WiX</a>
+								<a href="/todo-msteamsnotification.html" class="navbar-item">API.MsTeams</a>
+								<a href="/todo-stylecop.html" class="navbar-item">DotNet.StyleCop</a>
+								<a href="/todo-deploy.html" class="navbar-item">Fake.Deploy</a>
+								<a href="/todo-iis.html" class="navbar-item">?.?.IIS</a>
+								<a href="/todo-vagrant.html" class="navbar-item">?.?.Vagrant</a>
+								<a href="/todo-fxcop.html" class="navbar-item">DotNet.FxCop</a>
+								<a href="/todo-canopy.html" class="navbar-item">DotNet.Testing.Canopy</a>
+								<a href="/todo-octopusdeploy.html" class="navbar-item">?.?.OctopusDeploy</a>
+								<a href="/todo-typescript.html" class="navbar-item">JavaScript?.TypeScript</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a href="/apidocs/v5/index.html" class="navbar-link">API Reference</a>
+					<div class="navbar-dropdown is-right">
+						<a href="/apidocs/v5/index.html" class="navbar-item">FAKE 5 API Reference</a>
+						<a href="/apidocs/v5/legacy/index.html" class="navbar-item">FAKE 5 Migration API</a>
+						<a href="/apidocs/v4/index.html" class="navbar-item">FAKE 4 API Reference</a>
+					</div>
+				</div>
+
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">FAKE 4</a>
+					<div class="navbar-dropdown is-right">
+						<a href="/fake-migrate-to-fake-5.html" class="navbar-item">FAKE migration</a>
+						<a href="/legacy-gettingstarted.html" class="navbar-item">Getting started</a>
+						<a href="/help-docs.html" class="navbar-item">Where is XYZ???</a>
+						<a href="/legacy-commandline.html" class="navbar-item">Running FAKE from command line</a>
+						<a href="/legacy-core-targets.html" class="navbar-item">Targets</a>
+						<a href="/fake-cache.html" class="navbar-item">Build script caching</a>
+					</div>
+				</div>
+				<div class="navbar-item no-hover">
+					<div class="buttons">
+						<a href="https://github.com/fsharp/FAKE" class="m-r-sm">
+							<i class="fab fa-github fa-lg fa-fw"></i>
+						</a>
+						<a href="https://twitter.com/fsharpMake" class="m-r-sm">
+							<i class="fab fa-twitter fa-lg fa-fw"></i>
+						</a>
+						<a href="https://fsharp.slack.com/" class="m-r-sm">
+							<i class="fab fa-slack fa-lg fa-fw"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	
+
+<section id="content" class="section">
+	<div class="columns">
+		<div class="column is-9-desktop is-12-mobile">            
+			<article class="content">
+                <div class="notification">
+                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
+                    <a href="/apidocs/v5/index.html">here</a>.
+                    If the API is already migrated you can check <a href="/apidocs/v5/fake-wixhelper.html">here if exists in a module</a>.
+                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
+                </div>
+
+                
 
 
 <p>
@@ -283,7 +308,7 @@
         </div> 
 
 </p>
-<a name="WiXHelper" class="anchor" href="#WiXHelper"><h1>WiXHelper</h1></a>
+<h1><a name="WiXHelper" class="anchor" href="#WiXHelper">WiXHelper</a></h1>
 
 <div class="xmldoc">
 <p>Contains tasks to create msi installers using the <a href="http://wixtoolset.org/">WiX toolset</a></p>
@@ -291,7 +316,7 @@
 </div>
 
 <!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
   <div>
       <table class="table table-bordered type-list">
     <thead>
@@ -863,7 +888,7 @@
 
   </div>
 
-  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
+  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
     <thead>
       <tr><td>Function or value</td><td>Description</td></tr>
@@ -884,13 +909,12 @@
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceControlToComponent)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L909-909" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -907,8 +931,7 @@
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L917-917" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -928,13 +951,12 @@
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceInstallToComponent)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L923-923" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this to attach service installs to your components.</p>
 
@@ -953,8 +975,7 @@
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L931-931" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -974,13 +995,12 @@
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreation)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L870-870" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates WiX component with directories and files from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
@@ -1006,13 +1026,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreationAsSubDir)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L899-899" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates WiX component with directories and files from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
@@ -1038,13 +1057,12 @@ The components are embedded into the passed in root directory.</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentTreeCreation)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L842-842" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a WiX directory and component hierarchy from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
@@ -1071,13 +1089,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Candle)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1953-1953" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a> on the given WiX script with the given parameters</p>
 
@@ -1099,13 +1116,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L43-43" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -1125,13 +1141,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompRefName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L31-31" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -1151,13 +1166,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getDirName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L19-19" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -1177,13 +1191,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1151-1151" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for creating WiX Feature</p>
 
@@ -1205,13 +1218,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Please use new fillInWiXTemplate function</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1722-1722" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Takes path where script files reside and sets all parameters as defined</p>
 <h2>Parameters</h2>
@@ -1277,13 +1289,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FillInWiXTemplate)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1772-1772" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Takes path where script files reside and sets all parameters as defined</p>
 <h2>Parameters</h2>
@@ -1351,13 +1362,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponent)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L769-769" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating single components</p>
 
@@ -1379,13 +1389,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponentRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L648-648" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating component refs</p>
 
@@ -1407,13 +1416,12 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomAction)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1862-1862" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a customAction based on the given parameters, use toString on it when embedding it
 Be careful to make Id unique. FileKey is a reference to a file Id which you added by using wixDir or wixFile
@@ -1466,13 +1474,12 @@ ExeCommand are the parameters passed to your executable</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomActionExecution)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1882-1882" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a custom action execution based on the given parameters, use toString on it when embedding it
 Condition in sample makes execute only on install</p>
@@ -1519,13 +1526,12 @@ Condition in sample makes execute only on install</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectory)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L787-787" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating directories</p>
 
@@ -1547,13 +1553,12 @@ Condition in sample makes execute only on install</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectoryRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L729-729" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating component refs</p>
 
@@ -1575,13 +1580,12 @@ Condition in sample makes execute only on install</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Please use the new generateFeatureElement</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1816-1816" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a feature based on the given parameters, use toString on it when embedding it
 You can pass other features into InnerContent for making a hierarchy</p>
@@ -1632,13 +1636,12 @@ You can pass other features into InnerContent for making a hierarchy</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateFeatureElement)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1838-1838" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a feature based on the given parameters, use toString on it when embedding it
 You can pass other features into InnerContent for making a hierarchy</p>
@@ -1689,13 +1692,12 @@ You can pass other features into InnerContent for making a hierarchy</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateMajorUpgradeVersion)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1947-1947" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a major upgrade based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
@@ -1735,13 +1737,12 @@ You can pass other features into InnerContent for making a hierarchy</p>
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryKey)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L627-627" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a registry key based on the given parameters, use toString on it when embedding it
 You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy</p>
@@ -1779,13 +1780,12 @@ Values = someChildValues
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryValue)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L555-555" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a registry value based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
@@ -1822,13 +1822,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceConfig)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L300-300" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating service configs</p>
 
@@ -1850,13 +1849,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceControl)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L170-170" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating service controls</p>
 
@@ -1878,13 +1876,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceDependency)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L334-334" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating service dependencies</p>
 
@@ -1906,13 +1903,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceInstall)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L425-425" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this for generating service installs</p>
 
@@ -1934,13 +1930,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUIRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1898-1898" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates a ui ref based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
@@ -1980,13 +1975,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgrade)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1915-1915" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates an upgrade based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
@@ -2026,13 +2020,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgradeVersion)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1932-1932" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates an upgrade version based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
@@ -2074,13 +2067,12 @@ Value = "2"
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateWiXScript)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1635-1635" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Generates WiX Template with specified file name (you can prepend location too)
 You need to run this once every build an then use FillInWiXScript to replace placeholders</p>
@@ -2114,13 +2106,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentIdsFromWiXString)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L995-995" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves all component ids from given WiX directory string</p>
 <h2>Parameters</h2>
@@ -2157,13 +2148,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefs)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L736-736" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -2183,13 +2173,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFileIdFromWiXString)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L976-976" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the file id of the first file in WiXString, which name matches fileRegex</p>
 <h2>Parameters</h2>
@@ -2227,13 +2216,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFilesAsWiXString)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L60-60" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates WiX File tags from the given files</p>
 
@@ -2255,13 +2243,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.harvestDirectory)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2077-2077" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Harvests the contents of a Directory for use with Wix using the <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.</p>
 <h2>Parameters</h2>
@@ -2289,13 +2276,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatDefaulParams)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2053-2053" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for the Heat harvesting</p>
 
@@ -2317,13 +2303,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Light)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1970-1970" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a> on the given WiX script with the given parameters</p>
 
@@ -2345,13 +2330,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ScriptDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1602-1602" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for WiX Script properties</p>
 
@@ -2373,13 +2357,12 @@ You need to run this once every build an then use FillInWiXScript to replace pla
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.setComponentsNeverOverwrite)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1019-1019" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Take a component string and set "neverOverwrite" Tag
 This is useful for config files, since they are not replaced on upgrade like that</p>
@@ -2402,13 +2385,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.WiX)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2015-2015" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Uses the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a> and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.</p>
 <h2>Parameters</h2>
@@ -2493,13 +2475,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L755-755" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for component</p>
 
@@ -2521,13 +2502,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRefDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L641-641" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for component ref</p>
 
@@ -2549,13 +2529,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefsTags)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1006-1006" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates WiX ComponentRef tags from the given DirectoryInfo</p>
 
@@ -2577,13 +2556,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1332-1332" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for WiX custom actions</p>
 
@@ -2605,13 +2583,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecutionDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1371-1371" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for WiX custom action executions</p>
 
@@ -2633,13 +2610,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1035-1035" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Contains the WiX default parameters</p>
 
@@ -2661,13 +2637,12 @@ This is useful for config files, since they are not replaced on upgrade like tha
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixDirTag)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L941-941" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates recursive WiX directory and file tags from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
@@ -2693,13 +2668,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L777-777" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for directories</p>
 
@@ -2721,13 +2695,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRefDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L721-721" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for component ref</p>
 
@@ -2749,13 +2722,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Please use the new &#39;Feature&#39; type which features automatic string concatenation of inner features</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1094-1094" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for creating WiX Feature</p>
 
@@ -2777,13 +2749,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixFileTag)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L54-54" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a WiX File tag from the given FileInfo</p>
 
@@ -2805,13 +2776,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FileDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L92-92" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for WiX file</p>
 
@@ -2833,13 +2803,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1502-1502" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default value for WiX Major Upgrade</p>
 
@@ -2861,13 +2830,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKeyDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L599-599" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -2887,13 +2855,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L526-526" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -2913,13 +2880,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Please use new &#39;Script&#39; type</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1233-1233" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default values for WiX Script properties</p>
 
@@ -2941,13 +2907,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfigDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L286-286" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -2967,13 +2932,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControlDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L158-158" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for service control element</p>
 
@@ -2995,13 +2959,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependencyDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L326-326" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           
         </td>
@@ -3021,13 +2984,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L403-403" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Defaults for service install element</p>
 
@@ -3049,13 +3011,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1390-1390" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default value for WiX UI Reference (WixUI_Minimal)</p>
 
@@ -3077,13 +3038,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1408-1408" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default value for WiX Upgrade</p>
 
@@ -3105,13 +3065,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersionDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1440-1440" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default value for WiX Upgrade</p>
 
@@ -3133,13 +3092,12 @@ You can use the getComponentIdsFromWiXString function for getting all created co
           </div>
         </td>
         <td class="xmldoc">
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.VariableDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1525-1525" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Default value for WiX Variable</p>
 
@@ -3149,143 +3107,91 @@ You can use the getComponentIdsFromWiXString function for getting all created co
     </tbody>
   </table>
 
-                      </article>
+			</article>
+		</div>
+
+		<aside class="menu column is-3 is-hidden-touch">
+			<ul class="menu-list"></ul>
+		</aside>
+	</div>
+</section>
+
+	<footer>
+		<div class="hero is-dark">
+			<div class="hero-body">
+				<div class="container">
+					<div class="columns">
+						<div class="column is-6">
+							<div class="columns">
+								<div class="column is-6">
+									<h4 class="title is-4">Important links</h4>
+									<ul class="has-text-grey-light">
+										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+										<li><a href="/fake-fake5-modules.html">Modules</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+									</ul>
+								</div>
+								<div class="column is-6">
+									<h4 class="title is-4">Further projects</h4>
+									<ul class="has-text-grey-light">
+										<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+										<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+										<li><a href="http://fsharp.org/">F#</a></li>
+										<li><a href="http://ionide.io/">Ionide</a></li>
+										<li><a href="http://forge.run/">Forge</a></li>
+										<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+						</div>
+						<div class="column is-6">
+							<h4 class="title is-4">FAKE is a community effort</h4>
+							<p>Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+								running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">GitHub</a>,
+								discuss new features, fix bugs and
+								send pull requests!</p>
+							<a href="/contributing.html" class="button is-light is-medium m-t-md">Learn more</a>
+
+							<h4 class="title is-4 m-t-lg">Get in touch</h4>
+
+							<div class="footer-contact">
+								<div class="columns">
+									<div class="column is-2">Twitter</div>
+									<div class="column is-6"><a href="https://twitter.com/fsharpMake">@fsharpMake</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">WWW</div>
+									<div class="column is-6"><a href="https://fake.build">fake.build</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">GitHub</div>
+									<div class="column is-6"><a href="https://github.com/fsharp/FAKE">GitHub</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">F# Slack</div>
+									<div class="column is-6"><a href="https://fsharp.slack.com/">Slack</a></div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
-
-			<!-- Footer Wrapper -->
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row">
-							<div class="3u 12u(mobile)">
-
-								<!-- Links -->
-									<section>
-										<h2>Important Links</h2>
-										<ul class="divided">
-											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
-											<li><a href="/fake-fake5-modules.html">Modules</a></li>
-											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="3u 12u(mobile)">
-
-								<!-- Links -->
-									<section>
-										<h2>Further projects</h2>
-										<ul class="divided">
-											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
-											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
-											<li><a href="http://fsharp.org/">F#</a></li>
-											<li><a href="http://ionide.io/">Ionide</a></li>
-											<li><a href="http://forge.run/">Forge</a></li>
-											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
-										</ul>
-									</section>
-
-								<!-- Links
-									<section>
-										<h2>Learn F#</h2>
-										<ul class="divided">
-											<li><a href="/404.html">Tutorial 1</a></li>
-											<li><a href="/404.html">Tutorial 2</a></li>
-											<li><a href="/404.html">Tutorial 3</a></li>
-											<li><a href="/404.html">Tutorial 4</a></li>
-										</ul>
-									</section>-->
-
-							</div>
-							<div class="6u 12u(mobile)">
-
-								<!-- About -->
-									<section>
-										<h2><strong>FAKE 5</strong> is a community effort.</h2>
-										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
-										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
-                                        discuss new features, fix bugs and send pull requests!</p>
-										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
-									</section>
-
-								<!-- Contact -->
-									<section>
-										<h2>Get in touch</h2>
-										<div>
-											<div class="row">
-												<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Twitter</dt>
-														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
-														<dt>WWW</dt>
-														<dd><a href="https://fake.build">fake.build</a></dd>
-														<dt>Github</dt>
-														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
-														<dt>F# Slack</dt>
-														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
-													</dl>
-												</div>
-												<!--<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Address</dt>
-														<dd>
-															1234 Fictional Rd<br />
-															Nashville, TN 00000-0000<br />
-															USA
-														</dd>
-														<dt>Phone</dt>
-														<dd>(000) 000-0000</dd>
-													</dl>
-												</div>-->
-											</div>
-										</div>
-									</section>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="12u">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li>
-										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.3</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
-
+			</div>
 		</div>
+	</footer>
 
-		<!-- Scripts -->
-			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
-			<script src="/assets/js/tips.js" type="text/javascript"></script>
-			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-fsharp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-bash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-batch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+	<script src="/assets/js/tips.js" type="text/javascript"></script>
+	<script src="/assets/js/bulma.js"></script>
+</body>
 
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/skel-viewport.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/assets/js/main.js"></script>
-                  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
-
-        <script src="/assets/js/clipboardTooltip.js"></script>
-	</body>
-	</body>
 </html>

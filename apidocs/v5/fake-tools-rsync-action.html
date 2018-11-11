@@ -1,293 +1,306 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en" class="has-navbar-fixed-top">
 
-<html>
-	<head>
-		<title>Action - FAKE - F# Make</title>
-		<meta charset="utf-8" />
-		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
-		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<body class="no-sidebar">
-		<div id="page-wrapper">
+<head>
+	<title>Action - FAKE - F# Make</title>
+	<meta charset="utf-8" />
+
+	<!-- from https://realfavicongenerator.net -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="theme-color" content="#ffffff">
 
 
-			<!-- Header Wrapper -->
-				<div id="header-wrapper">
-					<div class="container">
-						<!-- Header -->
-							<header id="header">
-								<div class="inner">
+	<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+	<link rel="stylesheet" href="/assets/css/bulmaswatch.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-tomorrow.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+</head>
 
-									<!-- Logo -->
-										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+<body>
+	<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item no-hover" href="/">
+				<img src="/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28">
+				<span class="p-l-sm">FAKE</span>
+			</a>
 
-									<!-- Nav -->
-										<nav id="nav">
-											<ul>
-												<li >
-													<a href="/legacy-index.html">FAKE 4</a>
-													<ul>
-														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
-														<li><a href="/help-docs.html">Where is XYZ???</a></li>
-														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
-														<li><a href="/legacy-core-targets.html">Targets</a></li>
-													</ul>
-												</li>
-                                                <li >
-                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
-                                                    <ul>
-                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
-                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
-                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
-                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
-                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
-                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
-                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
-                                                    </ul>
-                                                </li>
-												<li >
-													<a href="/fake-what-is-fake.html">Project</a>
-													<ul>
-														<li><a href="/help-users.html">Who is using FAKE?</a></li>
-														<li><a href="/help-supporters.html">Supporters</a></li>
-														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
-														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
-														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
-														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
-														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
-														<li><a href="/contributing.html">Contributing</a></li>
-														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
-													</ul>
-												</li>
-												<li >
-													<a href="/fake-fake5-modules.html">Modules</a>
-													<ul>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
-															<ul>
-																<li><a href="/api-slack.html">Slack</a></li>
-																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
-																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
-																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
-																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
-																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/buildserver.html">BuildServer</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
-																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/core.html">Core</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
-																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
-																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
-																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
-																<li><a href="/core-process.html">Process</a></li>
-																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
-																<li><a href="/apidocs/v5/fake-core-semver.html">SemVer</a></li>
-																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
-																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
-																<li><a href="/core-trace.html">Trace</a></li>
-																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
-																<li><a href="/core-vault.html">Vault</a></li>
-																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
-															<ul>
-																<li><a href="/dotnet-cli.html">Cli</a></li>
-																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
-                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
-																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
-																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
-																<li><a href="/dotnet-nuget.html">NuGet</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
-																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/core-targets.html">DSL</a>
-															<ul>
-																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
-																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
-                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
-																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/index.html#Fake.IO">IO</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
-																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
-																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
-																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
-															<ul>
-																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
-																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
-															<ul>
-																<li><a href="/net-http.html">Http</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
-															<ul>
-																<li><a href="/sql-dacpac.html">DacPac</a></li>
-																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
-															<ul>
-																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
-																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
-															<ul>
-																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
-																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
-																<li><a href="/fake-tools-octo.html">Octo</a></li>
-																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
-															<ul>
-																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
-															</ul>
-                                                            <ul>
-																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
-															</ul>
-														</li>
-														<li>
-															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
-															<ul>
-																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
-																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="/todo-wix.html">Windows.WiX</a></li>
-																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
-																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
-																<li><a href="/todo-iis.html">?.?.IIS</a></li>
-																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
-																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
-																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
-																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
-																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-												<li class="current_page_item">
-                                                    <a href="/apidocs/v5/index.html">API Reference</a>
-                                                    <ul>
-														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
-	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
-	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
-													</ul>
-                                                </li>
-											</ul>
-										</nav>
+			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
 
-								</div>
-							</header>
-
-						<!-- Banner -->
-							
-
+		<div id="navbar" class="navbar-menu">
+			<div class="navbar-start">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">Tutorials</a>
+					<div class="navbar-dropdown">
+						<a href="/fake-gettingstarted.html" class="navbar-item">Getting started</a>
+						<a href="/fake-commandline.html" class="navbar-item">Running FAKE from command line</a>
+						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
+						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
+                        <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
 					</div>
 				</div>
 
-			<!-- Main Wrapper -->
-				<div id="main-wrapper">
-          			
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">About</a>
+					<div class="navbar-dropdown" class="navbar-item">
+						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
+						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
+						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
+						<a href="https://github.com/fsharp/FAKE/blob/master/License.txt" class="navbar-item">License</a>
+						<a href="/RELEASE_NOTES.html" class="navbar-item">Release Notes</a>
+						<a href="/contributing.html" class="navbar-item">Contributing</a>
+						<a href="https://github.com/fsharp/FAKE/issues/new" class="navbar-item">Ask a question or
+							report a bug</a>
+					</div>
+				</div>
 
-					<div class="wrapper style2">
-						<div class="inner">
-							<div class="container">
-								<div id="content">
-                                            <div class="alert alert-info">
-                                                <h5>INFO</h5>
-                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
-                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                                </p>
-                                                <p>
-                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.Tools.Rsync" >Fake.Tools.Rsync</a> module.
-                                                </p>
-                                            </div> 
-                                
-                                   
-                                    
-									<!-- Content -->
-                      <article>
-          			
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a href="/fake-fake5-modules.html" class="navbar-link">Modules</a>
+					<div class="navbar-dropdown" class="navbar-item">
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Api" class="navbar-link">API</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/api-slack.html" class="navbar-item">Slack</a>
+								<a href="/apidocs/v5/fake-api-github.html" class="navbar-item">GitHub</a>
+								<a href="/apidocs/v5/fake-api-hockeyapp.html" class="navbar-item">HockeyApp</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Azure" class="navbar-link">Azure</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-azure-cloudservices.html" class="navbar-item">CloudServices</a>
+								<a href="/apidocs/v5/fake-azure-emulators.html" class="navbar-item">Emulators</a>
+								<a href="/apidocs/v5/fake-azure-kudu.html" class="navbar-item">Kudu</a>
+								<a href="/apidocs/v5/fake-azure-webjobs.html" class="navbar-item">WebJobs</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
+								<a href="/apidocs/v5/fake-buildserver-appveyor.html" class="navbar-item">AppVeyor</a>
+								<a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
+									DevOps</a>
+								<a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
+								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/core.html" class="navbar-link">Core</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-core-buildserver.html" class="navbar-item">BuildServer</a>
+								<a href="/apidocs/v5/fake-core-changelog.html" class="navbar-item">ChangeLog</a>
+								<a href="/core-commandlineparsing.html" class="navbar-item">CommandLineParsing</a>
+								<a href="/apidocs/v5/fake-core-context.html" class="navbar-item">Context</a>
+								<a href="/apidocs/v5/fake-core-environment.html" class="navbar-item">Environment</a>
+								<a href="/core-process.html" class="navbar-item">Process</a>
+								<a href="/apidocs/v5/fake-core-releasenotes.html" class="navbar-item">ReleaseNotes</a>
+								<a href="/apidocs/v5/fake-core-semver.html" class="navbar-item">SemVer</a>
+								<a href="/apidocs/v5/fake-core-string.html" class="navbar-item">String</a>
+								<a href="/core-targets.html" class="navbar-item">Targets</a>
+								<a href="/apidocs/v5/fake-core-taskrunner.html" class="navbar-item">Tasks</a>
+								<a href="/core-trace.html" class="navbar-item">Trace</a>
+								<a href="/apidocs/v5/fake-core-userinput.html" class="navbar-item">UserInput</a>
+								<a href="/core-vault.html" class="navbar-item">Vault</a>
+								<a href="/apidocs/v5/fake-core-xml.html" class="navbar-item">Xml</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Documentation" class="navbar-link">Documentation</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-documentation-docfx.html" class="navbar-item">DocFx</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.DotNet" class="navbar-link">DotNet</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/dotnet-cli.html" class="navbar-item">Cli</a>
+								<a href="/dotnet-assemblyinfo.html" class="navbar-item">AssemblyInfoFile</a>
+								<a href="/apidocs/v5/fake-dotnet-fsc.html" class="navbar-item">Fsc</a>
+								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
+								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
+								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
+									NUnit</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
+									MSpec</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-xunit2.html" class="navbar-item">Testing -
+									XUnit2</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-expecto.html" class="navbar-item">Testing -
+									Expecto</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-vstest.html" class="navbar-item">Testing -
+									VSTest</a>
+								<a href="/fake-dotnet-testing-specflow.html" class="navbar-item">Testing - SpecFlow</a>
+								<a href="/dotnet-testing-opencover.html" class="navbar-item">Testing - OpenCover</a>
+								<a href="/apidocs/v5/fake-dotnet-testing-dotcover.html" class="navbar-item">Testing -
+									DotCover</a>
+								<a href="/dotnet-nuget.html" class="navbar-item">NuGet</a>
+								<a href="/apidocs/v5/fake-dotnet-mage.html" class="navbar-item">Mage</a>
+								<a href="/apidocs/v5/fake-dotnet-paket.html" class="navbar-item">Paket</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/core-targets.html" class="navbar-link">DSL</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md" class="navbar-item">BlackFox.Fake.BuildTask</a>
+								<a href="https://github.com/xakebuild/Xake" class="navbar-item">Xake</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/index.html#Fake.Installer" class="navbar-link">Installer</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-installer-innosetup.html" class="navbar-item">InnoSetup</a>
+								<a href="/fake-installer-squirrel.html" class="navbar-item">Squirrel</a>
+								<a href="/apidocs/v5/fake-installer-wix.html" class="navbar-item">Wix</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/index.html#Fake.IO" class="navbar-link">IO</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.IO" class="navbar-item">FileSystem</a>
+								<a href="/apidocs/v5/fake-io-changewatcher.html" class="navbar-item">Change Watcher</a>
+								<a href="/apidocs/v5/fake-io-globbing-operators.html" class="navbar-item">Globbing</a>
+								<a href="/apidocs/v5/fake-io-zip.html#Functions and values" class="navbar-item">Zip</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.JavaScript" class="navbar-link">JavaScript</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
+								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/net-http.html" class="navbar-item">Http</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+								<a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
+								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
+								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
+								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/index.html#Fake.Windows" class="navbar-link">Windows</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/windows-chocolatey.html" class="navbar-item">Chocolatey</a>
+							</div>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/apidocs/v5/fake-windows-registry.html" class="navbar-item">Registry</a>
+							</div>
+						</div>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a href="/apidocs/v5/legacy/index.html#Fake" class="navbar-link">Legacy / Not Migrated</a>
+							<div class="navbar-dropdown" class="navbar-item">
+								<a href="/todo-fluentmigrator.html" class="navbar-item">?.?.FluentMigrator</a>
+								<a href="/todo-androidpublisher.html" class="navbar-item">?.?.AndroidPublisher</a>
+								<a href="/todo-wix.html" class="navbar-item">Windows.WiX</a>
+								<a href="/todo-msteamsnotification.html" class="navbar-item">API.MsTeams</a>
+								<a href="/todo-stylecop.html" class="navbar-item">DotNet.StyleCop</a>
+								<a href="/todo-deploy.html" class="navbar-item">Fake.Deploy</a>
+								<a href="/todo-iis.html" class="navbar-item">?.?.IIS</a>
+								<a href="/todo-vagrant.html" class="navbar-item">?.?.Vagrant</a>
+								<a href="/todo-fxcop.html" class="navbar-item">DotNet.FxCop</a>
+								<a href="/todo-canopy.html" class="navbar-item">DotNet.Testing.Canopy</a>
+								<a href="/todo-octopusdeploy.html" class="navbar-item">?.?.OctopusDeploy</a>
+								<a href="/todo-typescript.html" class="navbar-item">JavaScript?.TypeScript</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a href="/apidocs/v5/index.html" class="navbar-link">API Reference</a>
+					<div class="navbar-dropdown is-right">
+						<a href="/apidocs/v5/index.html" class="navbar-item">FAKE 5 API Reference</a>
+						<a href="/apidocs/v5/legacy/index.html" class="navbar-item">FAKE 5 Migration API</a>
+						<a href="/apidocs/v4/index.html" class="navbar-item">FAKE 4 API Reference</a>
+					</div>
+				</div>
+
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">FAKE 4</a>
+					<div class="navbar-dropdown is-right">
+						<a href="/fake-migrate-to-fake-5.html" class="navbar-item">FAKE migration</a>
+						<a href="/legacy-gettingstarted.html" class="navbar-item">Getting started</a>
+						<a href="/help-docs.html" class="navbar-item">Where is XYZ???</a>
+						<a href="/legacy-commandline.html" class="navbar-item">Running FAKE from command line</a>
+						<a href="/legacy-core-targets.html" class="navbar-item">Targets</a>
+						<a href="/fake-cache.html" class="navbar-item">Build script caching</a>
+					</div>
+				</div>
+				<div class="navbar-item no-hover">
+					<div class="buttons">
+						<a href="https://github.com/fsharp/FAKE" class="m-r-sm">
+							<i class="fab fa-github fa-lg fa-fw"></i>
+						</a>
+						<a href="https://twitter.com/fsharpMake" class="m-r-sm">
+							<i class="fab fa-twitter fa-lg fa-fw"></i>
+						</a>
+						<a href="https://fsharp.slack.com/" class="m-r-sm">
+							<i class="fab fa-slack fa-lg fa-fw"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	
+
+<section id="content" class="section">
+	<div class="columns">
+		<div class="column is-9-desktop is-12-mobile">
+			<article class="content">
+                
 
 
 <p>
 
 </p>
-<a name="Action" class="anchor" href="#Action" ><h1>Action</h1></a>
+<h1><a name="Action" class="anchor" href="#Action">Action</a></h1>
 <div class="xmldoc">
 </div>
-  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
+  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
   <table class="table table-bordered member-list">
     <thead>
       <tr><td>Union Case</td><td>Description</td></tr>
@@ -296,17 +309,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3464', 3464)" onmouseover="showTip(event, '3464', 3464)">
+          <code onmouseout="hideTip(event, '3499', 3499)" onmouseover="showTip(event, '3499', 3499)">
             Address(string)
           </code>
-          <div class="tip" id="3464">
+          <div class="tip" id="3499">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L200-200" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Bind address for outgoing socket to daemon</p>
 
@@ -316,17 +328,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3465', 3465)" onmouseover="showTip(event, '3465', 3465)">
+          <code onmouseout="hideTip(event, '3500', 3500)" onmouseover="showTip(event, '3500', 3500)">
             Append
           </code>
-          <div class="tip" id="3465">
+          <div class="tip" id="3500">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L67-67" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append data onto shorter files</p>
 
@@ -336,17 +347,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3466', 3466)" onmouseover="showTip(event, '3466', 3466)">
+          <code onmouseout="hideTip(event, '3501', 3501)" onmouseover="showTip(event, '3501', 3501)">
             Archive
           </code>
-          <div class="tip" id="3466">
+          <div class="tip" id="3501">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L46-46" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Archive mode; same as -rlptgoD (no -H)</p>
 
@@ -356,17 +366,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3467', 3467)" onmouseover="showTip(event, '3467', 3467)">
+          <code onmouseout="hideTip(event, '3502', 3502)" onmouseover="showTip(event, '3502', 3502)">
             Backup
           </code>
-          <div class="tip" id="3467">
+          <div class="tip" id="3502">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L57-57" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Make backups (see --suffix &amp; --backup-dir)</p>
 
@@ -376,17 +385,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3468', 3468)" onmouseover="showTip(event, '3468', 3468)">
+          <code onmouseout="hideTip(event, '3503', 3503)" onmouseover="showTip(event, '3503', 3503)">
             BackupDir(string)
           </code>
-          <div class="tip" id="3468">
+          <div class="tip" id="3503">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L59-59" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Make backups into hierarchy based in DIR</p>
 
@@ -396,17 +404,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3469', 3469)" onmouseover="showTip(event, '3469', 3469)">
+          <code onmouseout="hideTip(event, '3504', 3504)" onmouseover="showTip(event, '3504', 3504)">
             BlockingIO
           </code>
-          <div class="tip" id="3469">
+          <div class="tip" id="3504">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L206-206" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use blocking I/O for the remote shell</p>
 
@@ -416,17 +423,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3470', 3470)" onmouseover="showTip(event, '3470', 3470)">
+          <code onmouseout="hideTip(event, '3505', 3505)" onmouseover="showTip(event, '3505', 3505)">
             BlockSize(string)
           </code>
-          <div class="tip" id="3470">
+          <div class="tip" id="3505">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L115-115" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Force a fixed checksum block-size</p>
 
@@ -436,17 +442,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3471', 3471)" onmouseover="showTip(event, '3471', 3471)">
+          <code onmouseout="hideTip(event, '3506', 3506)" onmouseover="showTip(event, '3506', 3506)">
             Bwlimit(string)
           </code>
-          <div class="tip" id="3471">
+          <div class="tip" id="3506">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L230-230" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Limit I/O bandwidth; KBytes per second</p>
 
@@ -456,17 +461,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3472', 3472)" onmouseover="showTip(event, '3472', 3472)">
+          <code onmouseout="hideTip(event, '3507', 3507)" onmouseover="showTip(event, '3507', 3507)">
             Cache
           </code>
-          <div class="tip" id="3472">
+          <div class="tip" id="3507">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L242-242" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Disable fcntl(F_NOCACHE)</p>
 
@@ -476,17 +480,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3473', 3473)" onmouseover="showTip(event, '3473', 3473)">
+          <code onmouseout="hideTip(event, '3508', 3508)" onmouseover="showTip(event, '3508', 3508)">
             Checksum
           </code>
-          <div class="tip" id="3473">
+          <div class="tip" id="3508">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L44-44" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Skip based on checksum, not mod-time &amp; size</p>
 
@@ -496,17 +499,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3474', 3474)" onmouseover="showTip(event, '3474', 3474)">
+          <code onmouseout="hideTip(event, '3509', 3509)" onmouseover="showTip(event, '3509', 3509)">
             Chmod(string)
           </code>
-          <div class="tip" id="3474">
+          <div class="tip" id="3509">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L89-89" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Affect file and/or directory permissions</p>
 
@@ -516,17 +518,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3475', 3475)" onmouseover="showTip(event, '3475', 3475)">
+          <code onmouseout="hideTip(event, '3510', 3510)" onmouseover="showTip(event, '3510', 3510)">
             CompareDest(string)
           </code>
-          <div class="tip" id="3475">
+          <div class="tip" id="3510">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L171-171" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Also compare destination files relative to DIR</p>
 
@@ -536,17 +537,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3476', 3476)" onmouseover="showTip(event, '3476', 3476)">
+          <code onmouseout="hideTip(event, '3511', 3511)" onmouseover="showTip(event, '3511', 3511)">
             Compress
           </code>
-          <div class="tip" id="3476">
+          <div class="tip" id="3511">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L177-177" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Compress file data during the transfer</p>
 
@@ -556,17 +556,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3477', 3477)" onmouseover="showTip(event, '3477', 3477)">
+          <code onmouseout="hideTip(event, '3512', 3512)" onmouseover="showTip(event, '3512', 3512)">
             CompressLevel(int)
           </code>
-          <div class="tip" id="3477">
+          <div class="tip" id="3512">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L179-179" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Explicitly set compression level</p>
 
@@ -576,17 +575,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3478', 3478)" onmouseover="showTip(event, '3478', 3478)">
+          <code onmouseout="hideTip(event, '3513', 3513)" onmouseover="showTip(event, '3513', 3513)">
             CopyDest(string)
           </code>
-          <div class="tip" id="3478">
+          <div class="tip" id="3513">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L173-173" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>... and include copies of unchanged files</p>
 
@@ -596,17 +594,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3479', 3479)" onmouseover="showTip(event, '3479', 3479)">
+          <code onmouseout="hideTip(event, '3514', 3514)" onmouseover="showTip(event, '3514', 3514)">
             CopyDirLinks
           </code>
-          <div class="tip" id="3479">
+          <div class="tip" id="3514">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L79-79" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Transform symlink to a dir into referent dir</p>
 
@@ -616,17 +613,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3480', 3480)" onmouseover="showTip(event, '3480', 3480)">
+          <code onmouseout="hideTip(event, '3515', 3515)" onmouseover="showTip(event, '3515', 3515)">
             CopyLinks
           </code>
-          <div class="tip" id="3480">
+          <div class="tip" id="3515">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L73-73" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Transform symlink into referent file/dir</p>
 
@@ -636,17 +632,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3481', 3481)" onmouseover="showTip(event, '3481', 3481)">
+          <code onmouseout="hideTip(event, '3516', 3516)" onmouseover="showTip(event, '3516', 3516)">
             CopyUnsafeLinks
           </code>
-          <div class="tip" id="3481">
+          <div class="tip" id="3516">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L75-75" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Only "unsafe" symlinks are transformed</p>
 
@@ -656,17 +651,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3482', 3482)" onmouseover="showTip(event, '3482', 3482)">
+          <code onmouseout="hideTip(event, '3517', 3517)" onmouseover="showTip(event, '3517', 3517)">
             CvsExclude
           </code>
-          <div class="tip" id="3482">
+          <div class="tip" id="3517">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L181-181" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Auto-ignore files the same way CVS does</p>
 
@@ -676,17 +670,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3483', 3483)" onmouseover="showTip(event, '3483', 3483)">
+          <code onmouseout="hideTip(event, '3518', 3518)" onmouseover="showTip(event, '3518', 3518)">
             D
           </code>
-          <div class="tip" id="3483">
+          <div class="tip" id="3518">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L99-99" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Same as --devices --specials</p>
 
@@ -696,17 +689,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3484', 3484)" onmouseover="showTip(event, '3484', 3484)">
+          <code onmouseout="hideTip(event, '3519', 3519)" onmouseover="showTip(event, '3519', 3519)">
             Del
           </code>
-          <div class="tip" id="3484">
+          <div class="tip" id="3519">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L127-127" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>An alias for --delete-during</p>
 
@@ -716,17 +708,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3485', 3485)" onmouseover="showTip(event, '3485', 3485)">
+          <code onmouseout="hideTip(event, '3520', 3520)" onmouseover="showTip(event, '3520', 3520)">
             DelayUpdates
           </code>
-          <div class="tip" id="3485">
+          <div class="tip" id="3520">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L153-153" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Put all updated files into place at transfer's end</p>
 
@@ -736,17 +727,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3486', 3486)" onmouseover="showTip(event, '3486', 3486)">
+          <code onmouseout="hideTip(event, '3521', 3521)" onmouseover="showTip(event, '3521', 3521)">
             Delete
           </code>
-          <div class="tip" id="3486">
+          <div class="tip" id="3521">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L129-129" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Delete extraneous files from destination dirs</p>
 
@@ -756,17 +746,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3487', 3487)" onmouseover="showTip(event, '3487', 3487)">
+          <code onmouseout="hideTip(event, '3522', 3522)" onmouseover="showTip(event, '3522', 3522)">
             DeleteAfter
           </code>
-          <div class="tip" id="3487">
+          <div class="tip" id="3522">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L135-135" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Receiver deletes after transfer, not before</p>
 
@@ -776,17 +765,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3488', 3488)" onmouseover="showTip(event, '3488', 3488)">
+          <code onmouseout="hideTip(event, '3523', 3523)" onmouseover="showTip(event, '3523', 3523)">
             DeleteBefore
           </code>
-          <div class="tip" id="3488">
+          <div class="tip" id="3523">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L131-131" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Receiver deletes before transfer (default)</p>
 
@@ -796,17 +784,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3489', 3489)" onmouseover="showTip(event, '3489', 3489)">
+          <code onmouseout="hideTip(event, '3524', 3524)" onmouseover="showTip(event, '3524', 3524)">
             DeleteDuring
           </code>
-          <div class="tip" id="3489">
+          <div class="tip" id="3524">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L133-133" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Receiver deletes during transfer, not before</p>
 
@@ -816,17 +803,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3490', 3490)" onmouseover="showTip(event, '3490', 3490)">
+          <code onmouseout="hideTip(event, '3525', 3525)" onmouseover="showTip(event, '3525', 3525)">
             DeleteExcluded
           </code>
-          <div class="tip" id="3490">
+          <div class="tip" id="3525">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L137-137" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Also delete excluded files from destination dirs</p>
 
@@ -836,17 +822,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3491', 3491)" onmouseover="showTip(event, '3491', 3491)">
+          <code onmouseout="hideTip(event, '3526', 3526)" onmouseover="showTip(event, '3526', 3526)">
             Devices
           </code>
-          <div class="tip" id="3491">
+          <div class="tip" id="3526">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L95-95" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve device files (super-user only)</p>
 
@@ -856,17 +841,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3492', 3492)" onmouseover="showTip(event, '3492', 3492)">
+          <code onmouseout="hideTip(event, '3527', 3527)" onmouseover="showTip(event, '3527', 3527)">
             Dirs
           </code>
-          <div class="tip" id="3492">
+          <div class="tip" id="3527">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L69-69" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Transfer directories without recursing</p>
 
@@ -876,17 +860,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3493', 3493)" onmouseover="showTip(event, '3493', 3493)">
+          <code onmouseout="hideTip(event, '3528', 3528)" onmouseover="showTip(event, '3528', 3528)">
             DryRun
           </code>
-          <div class="tip" id="3493">
+          <div class="tip" id="3528">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L109-109" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Show what would have been transferred</p>
 
@@ -896,17 +879,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3494', 3494)" onmouseover="showTip(event, '3494', 3494)">
+          <code onmouseout="hideTip(event, '3529', 3529)" onmouseover="showTip(event, '3529', 3529)">
             Exclude(string)
           </code>
-          <div class="tip" id="3494">
+          <div class="tip" id="3529">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L188-188" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Exclude files matching PATTERN</p>
 
@@ -916,17 +898,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3495', 3495)" onmouseover="showTip(event, '3495', 3495)">
+          <code onmouseout="hideTip(event, '3530', 3530)" onmouseover="showTip(event, '3530', 3530)">
             ExcludeFrom(string)
           </code>
-          <div class="tip" id="3495">
+          <div class="tip" id="3530">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L190-190" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read exclude patterns from FILE</p>
 
@@ -936,17 +917,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3496', 3496)" onmouseover="showTip(event, '3496', 3496)">
+          <code onmouseout="hideTip(event, '3531', 3531)" onmouseover="showTip(event, '3531', 3531)">
             Executability
           </code>
-          <div class="tip" id="3496">
+          <div class="tip" id="3531">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L87-87" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve the file's executability</p>
 
@@ -956,17 +936,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3497', 3497)" onmouseover="showTip(event, '3497', 3497)">
+          <code onmouseout="hideTip(event, '3532', 3532)" onmouseover="showTip(event, '3532', 3532)">
             Existing
           </code>
-          <div class="tip" id="3497">
+          <div class="tip" id="3532">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L121-121" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Skip creating new files on receiver</p>
 
@@ -976,17 +955,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3498', 3498)" onmouseover="showTip(event, '3498', 3498)">
+          <code onmouseout="hideTip(event, '3533', 3533)" onmouseover="showTip(event, '3533', 3533)">
             ExtendedAttributes
           </code>
-          <div class="tip" id="3498">
+          <div class="tip" id="3533">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L240-240" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copy extended attributes</p>
 
@@ -996,17 +974,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3499', 3499)" onmouseover="showTip(event, '3499', 3499)">
+          <code onmouseout="hideTip(event, '3534', 3534)" onmouseover="showTip(event, '3534', 3534)">
             F
           </code>
-          <div class="tip" id="3499">
+          <div class="tip" id="3534">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L186-186" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Same as --filter='dir-merge /.rsync-filter'
 repeated: --filter='- .rsync-filter'</p>
@@ -1017,17 +994,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3500', 3500)" onmouseover="showTip(event, '3500', 3500)">
+          <code onmouseout="hideTip(event, '3535', 3535)" onmouseover="showTip(event, '3535', 3535)">
             FilesFrom(string)
           </code>
-          <div class="tip" id="3500">
+          <div class="tip" id="3535">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L196-196" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read list of source-file names from FILE</p>
 
@@ -1037,17 +1013,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3501', 3501)" onmouseover="showTip(event, '3501', 3501)">
+          <code onmouseout="hideTip(event, '3536', 3536)" onmouseover="showTip(event, '3536', 3536)">
             Filter(string)
           </code>
-          <div class="tip" id="3501">
+          <div class="tip" id="3536">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L183-183" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Add a file-filtering RULE</p>
 
@@ -1057,17 +1032,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3502', 3502)" onmouseover="showTip(event, '3502', 3502)">
+          <code onmouseout="hideTip(event, '3537', 3537)" onmouseover="showTip(event, '3537', 3537)">
             Force
           </code>
-          <div class="tip" id="3502">
+          <div class="tip" id="3537">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L141-141" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Force deletion of directories even if not empty</p>
 
@@ -1077,17 +1051,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3503', 3503)" onmouseover="showTip(event, '3503', 3503)">
+          <code onmouseout="hideTip(event, '3538', 3538)" onmouseover="showTip(event, '3538', 3538)">
             From0
           </code>
-          <div class="tip" id="3503">
+          <div class="tip" id="3538">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L198-198" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>All *-from/filter files are delimited by 0s</p>
 
@@ -1097,17 +1070,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3504', 3504)" onmouseover="showTip(event, '3504', 3504)">
+          <code onmouseout="hideTip(event, '3539', 3539)" onmouseover="showTip(event, '3539', 3539)">
             Fuzzy
           </code>
-          <div class="tip" id="3504">
+          <div class="tip" id="3539">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L169-169" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Find similar file for basis if no dest file</p>
 
@@ -1117,17 +1089,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3505', 3505)" onmouseover="showTip(event, '3505', 3505)">
+          <code onmouseout="hideTip(event, '3540', 3540)" onmouseover="showTip(event, '3540', 3540)">
             Group
           </code>
-          <div class="tip" id="3505">
+          <div class="tip" id="3540">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L93-93" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve group</p>
 
@@ -1137,17 +1108,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3506', 3506)" onmouseover="showTip(event, '3506', 3506)">
+          <code onmouseout="hideTip(event, '3541', 3541)" onmouseover="showTip(event, '3541', 3541)">
             HardLinks
           </code>
-          <div class="tip" id="3506">
+          <div class="tip" id="3541">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L83-83" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve hard links</p>
 
@@ -1157,17 +1127,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3507', 3507)" onmouseover="showTip(event, '3507', 3507)">
+          <code onmouseout="hideTip(event, '3542', 3542)" onmouseover="showTip(event, '3542', 3542)">
             HeightBitsOutput
           </code>
-          <div class="tip" id="3507">
+          <div class="tip" id="3542">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L210-210" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Leave high-bit chars unescaped in output</p>
 
@@ -1177,17 +1146,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3508', 3508)" onmouseover="showTip(event, '3508', 3508)">
+          <code onmouseout="hideTip(event, '3543', 3543)" onmouseover="showTip(event, '3543', 3543)">
             Help
           </code>
-          <div class="tip" id="3508">
+          <div class="tip" id="3543">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L250-250" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Show this help (-h works with no other options)</p>
 
@@ -1197,17 +1165,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3509', 3509)" onmouseover="showTip(event, '3509', 3509)">
+          <code onmouseout="hideTip(event, '3544', 3544)" onmouseover="showTip(event, '3544', 3544)">
             HumanReadable
           </code>
-          <div class="tip" id="3509">
+          <div class="tip" id="3544">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L212-212" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output numbers in a human-readable format</p>
 
@@ -1217,17 +1184,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3510', 3510)" onmouseover="showTip(event, '3510', 3510)">
+          <code onmouseout="hideTip(event, '3545', 3545)" onmouseover="showTip(event, '3545', 3545)">
             IgnoreErrors
           </code>
-          <div class="tip" id="3510">
+          <div class="tip" id="3545">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L139-139" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Delete even if there are I/O errors</p>
 
@@ -1237,17 +1203,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3511', 3511)" onmouseover="showTip(event, '3511', 3511)">
+          <code onmouseout="hideTip(event, '3546', 3546)" onmouseover="showTip(event, '3546', 3546)">
             IgnoreExisting
           </code>
-          <div class="tip" id="3511">
+          <div class="tip" id="3546">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L123-123" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Skip updating files that already exist on receiver</p>
 
@@ -1257,17 +1222,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3512', 3512)" onmouseover="showTip(event, '3512', 3512)">
+          <code onmouseout="hideTip(event, '3547', 3547)" onmouseover="showTip(event, '3547', 3547)">
             IgnoreTimes
           </code>
-          <div class="tip" id="3512">
+          <div class="tip" id="3547">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L161-161" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't skip files that match in size and mod-time</p>
 
@@ -1277,17 +1241,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3513', 3513)" onmouseover="showTip(event, '3513', 3513)">
+          <code onmouseout="hideTip(event, '3548', 3548)" onmouseover="showTip(event, '3548', 3548)">
             Include(string)
           </code>
-          <div class="tip" id="3513">
+          <div class="tip" id="3548">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L192-192" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't exclude files matching PATTERN</p>
 
@@ -1297,17 +1260,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3514', 3514)" onmouseover="showTip(event, '3514', 3514)">
+          <code onmouseout="hideTip(event, '3549', 3549)" onmouseover="showTip(event, '3549', 3549)">
             IncludeFrom(string)
           </code>
-          <div class="tip" id="3514">
+          <div class="tip" id="3549">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L194-194" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read include patterns from FILE</p>
 
@@ -1317,17 +1279,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3515', 3515)" onmouseover="showTip(event, '3515', 3515)">
+          <code onmouseout="hideTip(event, '3550', 3550)" onmouseover="showTip(event, '3550', 3550)">
             InPlace
           </code>
-          <div class="tip" id="3515">
+          <div class="tip" id="3550">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L65-65" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Update destination files in-place (SEE MAN PAGE)</p>
 
@@ -1337,17 +1298,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3516', 3516)" onmouseover="showTip(event, '3516', 3516)">
+          <code onmouseout="hideTip(event, '3551', 3551)" onmouseover="showTip(event, '3551', 3551)">
             Ipv4
           </code>
-          <div class="tip" id="3516">
+          <div class="tip" id="3551">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L244-244" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Prefer IPv4</p>
 
@@ -1357,17 +1317,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3517', 3517)" onmouseover="showTip(event, '3517', 3517)">
+          <code onmouseout="hideTip(event, '3552', 3552)" onmouseover="showTip(event, '3552', 3552)">
             Ipv6
           </code>
-          <div class="tip" id="3517">
+          <div class="tip" id="3552">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L246-246" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Prefer IPv6</p>
 
@@ -1377,17 +1336,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3518', 3518)" onmouseover="showTip(event, '3518', 3518)">
+          <code onmouseout="hideTip(event, '3553', 3553)" onmouseover="showTip(event, '3553', 3553)">
             ItemizeChanges
           </code>
-          <div class="tip" id="3518">
+          <div class="tip" id="3553">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L218-218" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output a change-summary for all updates</p>
 
@@ -1397,17 +1355,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3519', 3519)" onmouseover="showTip(event, '3519', 3519)">
+          <code onmouseout="hideTip(event, '3554', 3554)" onmouseover="showTip(event, '3554', 3554)">
             KeepDirLinks
           </code>
-          <div class="tip" id="3519">
+          <div class="tip" id="3554">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L81-81" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Treat symlinked dir on receiver as dir</p>
 
@@ -1417,17 +1374,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3520', 3520)" onmouseover="showTip(event, '3520', 3520)">
+          <code onmouseout="hideTip(event, '3555', 3555)" onmouseover="showTip(event, '3555', 3555)">
             LinkDest(string)
           </code>
-          <div class="tip" id="3520">
+          <div class="tip" id="3555">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L175-175" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Hardlink to files in DIR when unchanged</p>
 
@@ -1437,17 +1393,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3521', 3521)" onmouseover="showTip(event, '3521', 3521)">
+          <code onmouseout="hideTip(event, '3556', 3556)" onmouseover="showTip(event, '3556', 3556)">
             Links
           </code>
-          <div class="tip" id="3521">
+          <div class="tip" id="3556">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L71-71" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copy symlinks as symlinks</p>
 
@@ -1457,17 +1412,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3522', 3522)" onmouseover="showTip(event, '3522', 3522)">
+          <code onmouseout="hideTip(event, '3557', 3557)" onmouseover="showTip(event, '3557', 3557)">
             ListOnly
           </code>
-          <div class="tip" id="3522">
+          <div class="tip" id="3557">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L228-228" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>List the files instead of copying them</p>
 
@@ -1477,17 +1431,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3523', 3523)" onmouseover="showTip(event, '3523', 3523)">
+          <code onmouseout="hideTip(event, '3558', 3558)" onmouseover="showTip(event, '3558', 3558)">
             LogFile(string)
           </code>
-          <div class="tip" id="3523">
+          <div class="tip" id="3558">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L222-222" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Log what we're doing to the specified FILE</p>
 
@@ -1497,17 +1450,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3524', 3524)" onmouseover="showTip(event, '3524', 3524)">
+          <code onmouseout="hideTip(event, '3559', 3559)" onmouseover="showTip(event, '3559', 3559)">
             LogFileFormat(string)
           </code>
-          <div class="tip" id="3524">
+          <div class="tip" id="3559">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L224-224" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Log updates using the specified FMT</p>
 
@@ -1517,17 +1469,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3525', 3525)" onmouseover="showTip(event, '3525', 3525)">
+          <code onmouseout="hideTip(event, '3560', 3560)" onmouseover="showTip(event, '3560', 3560)">
             MaxDelete(int)
           </code>
-          <div class="tip" id="3525">
+          <div class="tip" id="3560">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L143-143" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't delete more than NUM files</p>
 
@@ -1537,17 +1488,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3526', 3526)" onmouseover="showTip(event, '3526', 3526)">
+          <code onmouseout="hideTip(event, '3561', 3561)" onmouseover="showTip(event, '3561', 3561)">
             MaxSize(string)
           </code>
-          <div class="tip" id="3526">
+          <div class="tip" id="3561">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L145-145" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't transfer any file larger than SIZE</p>
 
@@ -1557,17 +1507,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3527', 3527)" onmouseover="showTip(event, '3527', 3527)">
+          <code onmouseout="hideTip(event, '3562', 3562)" onmouseover="showTip(event, '3562', 3562)">
             MinSize(string)
           </code>
-          <div class="tip" id="3527">
+          <div class="tip" id="3562">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L147-147" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't transfer any file smaller than SIZE</p>
 
@@ -1577,17 +1526,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3528', 3528)" onmouseover="showTip(event, '3528', 3528)">
+          <code onmouseout="hideTip(event, '3563', 3563)" onmouseover="showTip(event, '3563', 3563)">
             ModifyWindow(string)
           </code>
-          <div class="tip" id="3528">
+          <div class="tip" id="3563">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L165-165" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Compare mod-times with reduced accuracy</p>
 
@@ -1597,17 +1545,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3529', 3529)" onmouseover="showTip(event, '3529', 3529)">
+          <code onmouseout="hideTip(event, '3564', 3564)" onmouseover="showTip(event, '3564', 3564)">
             NoImpliedDirs
           </code>
-          <div class="tip" id="3529">
+          <div class="tip" id="3564">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L55-55" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't send implied dirs with --relative</p>
 
@@ -1617,17 +1564,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3530', 3530)" onmouseover="showTip(event, '3530', 3530)">
+          <code onmouseout="hideTip(event, '3565', 3565)" onmouseover="showTip(event, '3565', 3565)">
             NoMotd
           </code>
-          <div class="tip" id="3530">
+          <div class="tip" id="3565">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L42-42" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Suppress daemon-mode MOTD (see manpage caveat)</p>
 
@@ -1637,17 +1583,16 @@ repeated: --filter='- .rsync-filter'</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3531', 3531)" onmouseover="showTip(event, '3531', 3531)">
+          <code onmouseout="hideTip(event, '3566', 3566)" onmouseover="showTip(event, '3566', 3566)">
             NoOption(Action)
           </code>
-          <div class="tip" id="3531">
+          <div class="tip" id="3566">
             <strong>Signature:</strong> Action<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L49-49" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Turn off an implied OPTION (e.g. --no-D)
 NoOption Verbose ==&gt; --no-verbose</p>
@@ -1658,17 +1603,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3532', 3532)" onmouseover="showTip(event, '3532', 3532)">
+          <code onmouseout="hideTip(event, '3567', 3567)" onmouseover="showTip(event, '3567', 3567)">
             NumericIds
           </code>
-          <div class="tip" id="3532">
+          <div class="tip" id="3567">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L157-157" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't map uid/gid values by user/group name</p>
 
@@ -1678,17 +1622,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3533', 3533)" onmouseover="showTip(event, '3533', 3533)">
+          <code onmouseout="hideTip(event, '3568', 3568)" onmouseover="showTip(event, '3568', 3568)">
             OmitDirTimes
           </code>
-          <div class="tip" id="3533">
+          <div class="tip" id="3568">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L103-103" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Omit directories when preserving times</p>
 
@@ -1698,17 +1641,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3534', 3534)" onmouseover="showTip(event, '3534', 3534)">
+          <code onmouseout="hideTip(event, '3569', 3569)" onmouseover="showTip(event, '3569', 3569)">
             OneFileSystem
           </code>
-          <div class="tip" id="3534">
+          <div class="tip" id="3569">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L113-113" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't cross filesystem boundaries</p>
 
@@ -1718,17 +1660,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3535', 3535)" onmouseover="showTip(event, '3535', 3535)">
+          <code onmouseout="hideTip(event, '3570', 3570)" onmouseover="showTip(event, '3570', 3570)">
             OnlyWriteBatch(string)
           </code>
-          <div class="tip" id="3535">
+          <div class="tip" id="3570">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L234-234" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like --write-batch but w/o updating destination</p>
 
@@ -1738,17 +1679,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3536', 3536)" onmouseover="showTip(event, '3536', 3536)">
+          <code onmouseout="hideTip(event, '3571', 3571)" onmouseover="showTip(event, '3571', 3571)">
             OutFormat(string)
           </code>
-          <div class="tip" id="3536">
+          <div class="tip" id="3571">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L220-220" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output updates using the specified FORMAT</p>
 
@@ -1758,17 +1698,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3537', 3537)" onmouseover="showTip(event, '3537', 3537)">
+          <code onmouseout="hideTip(event, '3572', 3572)" onmouseover="showTip(event, '3572', 3572)">
             Owner
           </code>
-          <div class="tip" id="3537">
+          <div class="tip" id="3572">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L91-91" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve owner (super-user only)</p>
 
@@ -1778,17 +1717,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3538', 3538)" onmouseover="showTip(event, '3538', 3538)">
+          <code onmouseout="hideTip(event, '3573', 3573)" onmouseover="showTip(event, '3573', 3573)">
             P
           </code>
-          <div class="tip" id="3538">
+          <div class="tip" id="3573">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L216-216" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Same as --partial --progress</p>
 
@@ -1798,17 +1736,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3539', 3539)" onmouseover="showTip(event, '3539', 3539)">
+          <code onmouseout="hideTip(event, '3574', 3574)" onmouseover="showTip(event, '3574', 3574)">
             Partial
           </code>
-          <div class="tip" id="3539">
+          <div class="tip" id="3574">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L149-149" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Keep partially transferred files</p>
 
@@ -1818,17 +1755,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3540', 3540)" onmouseover="showTip(event, '3540', 3540)">
+          <code onmouseout="hideTip(event, '3575', 3575)" onmouseover="showTip(event, '3575', 3575)">
             PartialDir(string)
           </code>
-          <div class="tip" id="3540">
+          <div class="tip" id="3575">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L151-151" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Put a partially transferred file into DIR</p>
 
@@ -1838,17 +1774,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3541', 3541)" onmouseover="showTip(event, '3541', 3541)">
+          <code onmouseout="hideTip(event, '3576', 3576)" onmouseover="showTip(event, '3576', 3576)">
             PasswordFile(string)
           </code>
-          <div class="tip" id="3541">
+          <div class="tip" id="3576">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L226-226" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read password from FILE</p>
 
@@ -1858,17 +1793,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3542', 3542)" onmouseover="showTip(event, '3542', 3542)">
+          <code onmouseout="hideTip(event, '3577', 3577)" onmouseover="showTip(event, '3577', 3577)">
             Perms
           </code>
-          <div class="tip" id="3542">
+          <div class="tip" id="3577">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L85-85" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve permissions</p>
 
@@ -1878,17 +1812,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3543', 3543)" onmouseover="showTip(event, '3543', 3543)">
+          <code onmouseout="hideTip(event, '3578', 3578)" onmouseover="showTip(event, '3578', 3578)">
             Port(int)
           </code>
-          <div class="tip" id="3543">
+          <div class="tip" id="3578">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L202-202" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify double-colon alternate port number</p>
 
@@ -1898,17 +1831,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3544', 3544)" onmouseover="showTip(event, '3544', 3544)">
+          <code onmouseout="hideTip(event, '3579', 3579)" onmouseover="showTip(event, '3579', 3579)">
             Progress
           </code>
-          <div class="tip" id="3544">
+          <div class="tip" id="3579">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L214-214" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Show progress during transfer</p>
 
@@ -1918,17 +1850,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3545', 3545)" onmouseover="showTip(event, '3545', 3545)">
+          <code onmouseout="hideTip(event, '3580', 3580)" onmouseover="showTip(event, '3580', 3580)">
             Protocol(int)
           </code>
-          <div class="tip" id="3545">
+          <div class="tip" id="3580">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L238-238" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Force an older protocol version to be used</p>
 
@@ -1938,17 +1869,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3546', 3546)" onmouseover="showTip(event, '3546', 3546)">
+          <code onmouseout="hideTip(event, '3581', 3581)" onmouseover="showTip(event, '3581', 3581)">
             PruneEmptyDirs
           </code>
-          <div class="tip" id="3546">
+          <div class="tip" id="3581">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L155-155" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Prune empty directory chains from the file-list</p>
 
@@ -1958,17 +1888,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3547', 3547)" onmouseover="showTip(event, '3547', 3547)">
+          <code onmouseout="hideTip(event, '3582', 3582)" onmouseover="showTip(event, '3582', 3582)">
             Quiet
           </code>
-          <div class="tip" id="3547">
+          <div class="tip" id="3582">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L40-40" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Suppress non-error messages</p>
 
@@ -1978,17 +1907,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3548', 3548)" onmouseover="showTip(event, '3548', 3548)">
+          <code onmouseout="hideTip(event, '3583', 3583)" onmouseover="showTip(event, '3583', 3583)">
             ReadBatch(string)
           </code>
-          <div class="tip" id="3548">
+          <div class="tip" id="3583">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L236-236" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a batched update from FILE</p>
 
@@ -1998,17 +1926,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3549', 3549)" onmouseover="showTip(event, '3549', 3549)">
+          <code onmouseout="hideTip(event, '3584', 3584)" onmouseover="showTip(event, '3584', 3584)">
             Recursive
           </code>
-          <div class="tip" id="3549">
+          <div class="tip" id="3584">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L51-51" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Recurse into directories</p>
 
@@ -2018,17 +1945,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3550', 3550)" onmouseover="showTip(event, '3550', 3550)">
+          <code onmouseout="hideTip(event, '3585', 3585)" onmouseover="showTip(event, '3585', 3585)">
             Relative
           </code>
-          <div class="tip" id="3550">
+          <div class="tip" id="3585">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L53-53" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use relative path names</p>
 
@@ -2038,17 +1964,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3551', 3551)" onmouseover="showTip(event, '3551', 3551)">
+          <code onmouseout="hideTip(event, '3586', 3586)" onmouseover="showTip(event, '3586', 3586)">
             RemoveSourceFiles
           </code>
-          <div class="tip" id="3551">
+          <div class="tip" id="3586">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L125-125" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sender removes synchronized files (non-dirs)</p>
 
@@ -2058,17 +1983,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3552', 3552)" onmouseover="showTip(event, '3552', 3552)">
+          <code onmouseout="hideTip(event, '3587', 3587)" onmouseover="showTip(event, '3587', 3587)">
             Rsh(string)
           </code>
-          <div class="tip" id="3552">
+          <div class="tip" id="3587">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L117-117" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify the remote shell to use</p>
 
@@ -2078,17 +2002,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3553', 3553)" onmouseover="showTip(event, '3553', 3553)">
+          <code onmouseout="hideTip(event, '3588', 3588)" onmouseover="showTip(event, '3588', 3588)">
             RsyncPath(string)
           </code>
-          <div class="tip" id="3553">
+          <div class="tip" id="3588">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L119-119" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify the rsync to run on the remote machine</p>
 
@@ -2098,17 +2021,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3554', 3554)" onmouseover="showTip(event, '3554', 3554)">
+          <code onmouseout="hideTip(event, '3589', 3589)" onmouseover="showTip(event, '3589', 3589)">
             SafeLinks
           </code>
-          <div class="tip" id="3554">
+          <div class="tip" id="3589">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L77-77" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Ignore symlinks that point outside the source tree</p>
 
@@ -2118,17 +2040,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3555', 3555)" onmouseover="showTip(event, '3555', 3555)">
+          <code onmouseout="hideTip(event, '3590', 3590)" onmouseover="showTip(event, '3590', 3590)">
             SizeOnly
           </code>
-          <div class="tip" id="3555">
+          <div class="tip" id="3590">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L163-163" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Skip files that match in size</p>
 
@@ -2138,17 +2059,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3556', 3556)" onmouseover="showTip(event, '3556', 3556)">
+          <code onmouseout="hideTip(event, '3591', 3591)" onmouseover="showTip(event, '3591', 3591)">
             Sockopts(string)
           </code>
-          <div class="tip" id="3556">
+          <div class="tip" id="3591">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L204-204" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify custom TCP options</p>
 
@@ -2158,17 +2078,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3557', 3557)" onmouseover="showTip(event, '3557', 3557)">
+          <code onmouseout="hideTip(event, '3592', 3592)" onmouseover="showTip(event, '3592', 3592)">
             Sparse
           </code>
-          <div class="tip" id="3557">
+          <div class="tip" id="3592">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L107-107" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Handle sparse files efficiently</p>
 
@@ -2178,17 +2097,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3558', 3558)" onmouseover="showTip(event, '3558', 3558)">
+          <code onmouseout="hideTip(event, '3593', 3593)" onmouseover="showTip(event, '3593', 3593)">
             Specials
           </code>
-          <div class="tip" id="3558">
+          <div class="tip" id="3593">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L97-97" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve special files</p>
 
@@ -2198,17 +2116,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3559', 3559)" onmouseover="showTip(event, '3559', 3559)">
+          <code onmouseout="hideTip(event, '3594', 3594)" onmouseover="showTip(event, '3594', 3594)">
             Stats
           </code>
-          <div class="tip" id="3559">
+          <div class="tip" id="3594">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L208-208" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Give some file-transfer stats</p>
 
@@ -2218,17 +2135,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3560', 3560)" onmouseover="showTip(event, '3560', 3560)">
+          <code onmouseout="hideTip(event, '3595', 3595)" onmouseover="showTip(event, '3595', 3595)">
             Suffix(string)
           </code>
-          <div class="tip" id="3560">
+          <div class="tip" id="3595">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L61-61" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set backup suffix (default ~ w/o --backup-dir)</p>
 
@@ -2238,17 +2154,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3561', 3561)" onmouseover="showTip(event, '3561', 3561)">
+          <code onmouseout="hideTip(event, '3596', 3596)" onmouseover="showTip(event, '3596', 3596)">
             Super
           </code>
-          <div class="tip" id="3561">
+          <div class="tip" id="3596">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L105-105" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Receiver attempts super-user activities</p>
 
@@ -2258,17 +2173,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3562', 3562)" onmouseover="showTip(event, '3562', 3562)">
+          <code onmouseout="hideTip(event, '3597', 3597)" onmouseover="showTip(event, '3597', 3597)">
             TempDir(string)
           </code>
-          <div class="tip" id="3562">
+          <div class="tip" id="3597">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L167-167" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create temporary files in directory DIR</p>
 
@@ -2278,17 +2192,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3563', 3563)" onmouseover="showTip(event, '3563', 3563)">
+          <code onmouseout="hideTip(event, '3598', 3598)" onmouseover="showTip(event, '3598', 3598)">
             Timeout(int)
           </code>
-          <div class="tip" id="3563">
+          <div class="tip" id="3598">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L159-159" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set I/O timeout in seconds</p>
 
@@ -2298,17 +2211,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3564', 3564)" onmouseover="showTip(event, '3564', 3564)">
+          <code onmouseout="hideTip(event, '3599', 3599)" onmouseover="showTip(event, '3599', 3599)">
             Times
           </code>
-          <div class="tip" id="3564">
+          <div class="tip" id="3599">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L101-101" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Preserve times</p>
 
@@ -2318,17 +2230,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3565', 3565)" onmouseover="showTip(event, '3565', 3565)">
+          <code onmouseout="hideTip(event, '3600', 3600)" onmouseover="showTip(event, '3600', 3600)">
             Update
           </code>
-          <div class="tip" id="3565">
+          <div class="tip" id="3600">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L63-63" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Skip files that are newer on the receiver</p>
 
@@ -2338,17 +2249,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3566', 3566)" onmouseover="showTip(event, '3566', 3566)">
+          <code onmouseout="hideTip(event, '3601', 3601)" onmouseover="showTip(event, '3601', 3601)">
             Verbose
           </code>
-          <div class="tip" id="3566">
+          <div class="tip" id="3601">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L38-38" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Increase verbosity</p>
 
@@ -2358,17 +2268,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3567', 3567)" onmouseover="showTip(event, '3567', 3567)">
+          <code onmouseout="hideTip(event, '3602', 3602)" onmouseover="showTip(event, '3602', 3602)">
             Version
           </code>
-          <div class="tip" id="3567">
+          <div class="tip" id="3602">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L248-248" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Print version number</p>
 
@@ -2378,17 +2287,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3568', 3568)" onmouseover="showTip(event, '3568', 3568)">
+          <code onmouseout="hideTip(event, '3603', 3603)" onmouseover="showTip(event, '3603', 3603)">
             WholeFile
           </code>
-          <div class="tip" id="3568">
+          <div class="tip" id="3603">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L111-111" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copy files whole (without rsync algorithm)</p>
 
@@ -2398,17 +2306,16 @@ NoOption Verbose ==&gt; --no-verbose</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3569', 3569)" onmouseover="showTip(event, '3569', 3569)">
+          <code onmouseout="hideTip(event, '3604', 3604)" onmouseover="showTip(event, '3604', 3604)">
             WriteBatch(string)
           </code>
-          <div class="tip" id="3569">
+          <div class="tip" id="3604">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Rsync/Rsync.fs#L232-232" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Write a batched update to FILE</p>
 
@@ -2418,143 +2325,92 @@ NoOption Verbose ==&gt; --no-verbose</p>
     </tbody>
   </table>
 
-                      </article>
+			</article>
+		</div>
+
+		<aside class="menu column is-3 is-hidden-touch">
+			<ul class="menu-list"></ul>
+		</aside>
+	</div>
+</section>
+
+
+	<footer>
+		<div class="hero is-dark">
+			<div class="hero-body">
+				<div class="container">
+					<div class="columns">
+						<div class="column is-6">
+							<div class="columns">
+								<div class="column is-6">
+									<h4 class="title is-4">Important links</h4>
+									<ul class="has-text-grey-light">
+										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+										<li><a href="/fake-fake5-modules.html">Modules</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+									</ul>
+								</div>
+								<div class="column is-6">
+									<h4 class="title is-4">Further projects</h4>
+									<ul class="has-text-grey-light">
+										<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+										<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+										<li><a href="http://fsharp.org/">F#</a></li>
+										<li><a href="http://ionide.io/">Ionide</a></li>
+										<li><a href="http://forge.run/">Forge</a></li>
+										<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+						</div>
+						<div class="column is-6">
+							<h4 class="title is-4">FAKE is a community effort</h4>
+							<p>Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+								running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">GitHub</a>,
+								discuss new features, fix bugs and
+								send pull requests!</p>
+							<a href="/contributing.html" class="button is-light is-medium m-t-md">Learn more</a>
+
+							<h4 class="title is-4 m-t-lg">Get in touch</h4>
+
+							<div class="footer-contact">
+								<div class="columns">
+									<div class="column is-2">Twitter</div>
+									<div class="column is-6"><a href="https://twitter.com/fsharpMake">@fsharpMake</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">WWW</div>
+									<div class="column is-6"><a href="https://fake.build">fake.build</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">GitHub</div>
+									<div class="column is-6"><a href="https://github.com/fsharp/FAKE">GitHub</a></div>
+								</div>
+								<div class="columns">
+									<div class="column is-2">F# Slack</div>
+									<div class="column is-6"><a href="https://fsharp.slack.com/">Slack</a></div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
-
-			<!-- Footer Wrapper -->
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row">
-							<div class="3u 12u(mobile)">
-
-								<!-- Links -->
-									<section>
-										<h2>Important Links</h2>
-										<ul class="divided">
-											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
-											<li><a href="/fake-fake5-modules.html">Modules</a></li>
-											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="3u 12u(mobile)">
-
-								<!-- Links -->
-									<section>
-										<h2>Further projects</h2>
-										<ul class="divided">
-											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
-											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
-											<li><a href="http://fsharp.org/">F#</a></li>
-											<li><a href="http://ionide.io/">Ionide</a></li>
-											<li><a href="http://forge.run/">Forge</a></li>
-											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
-										</ul>
-									</section>
-
-								<!-- Links
-									<section>
-										<h2>Learn F#</h2>
-										<ul class="divided">
-											<li><a href="/404.html">Tutorial 1</a></li>
-											<li><a href="/404.html">Tutorial 2</a></li>
-											<li><a href="/404.html">Tutorial 3</a></li>
-											<li><a href="/404.html">Tutorial 4</a></li>
-										</ul>
-									</section>-->
-
-							</div>
-							<div class="6u 12u(mobile)">
-
-								<!-- About -->
-									<section>
-										<h2><strong>FAKE 5</strong> is a community effort.</h2>
-										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
-										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
-                                        discuss new features, fix bugs and send pull requests!</p>
-										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
-									</section>
-
-								<!-- Contact -->
-									<section>
-										<h2>Get in touch</h2>
-										<div>
-											<div class="row">
-												<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Twitter</dt>
-														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
-														<dt>WWW</dt>
-														<dd><a href="https://fake.build">fake.build</a></dd>
-														<dt>Github</dt>
-														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
-														<dt>F# Slack</dt>
-														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
-													</dl>
-												</div>
-												<!--<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Address</dt>
-														<dd>
-															1234 Fictional Rd<br />
-															Nashville, TN 00000-0000<br />
-															USA
-														</dd>
-														<dt>Phone</dt>
-														<dd>(000) 000-0000</dd>
-													</dl>
-												</div>-->
-											</div>
-										</div>
-									</section>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="12u">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li>
-										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.3</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
-
+			</div>
 		</div>
+	</footer>
 
-		<!-- Scripts -->
-			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
-			<script src="/assets/js/tips.js" type="text/javascript"></script>
-			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-fsharp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-bash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-batch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+	<script src="/assets/js/tips.js" type="text/javascript"></script>
+	<script src="/assets/js/bulma.js"></script>
+</body>
 
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/skel-viewport.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/assets/js/main.js"></script>
-                  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
-
-        <script src="/assets/js/clipboardTooltip.js"></script>
-	</body>
-	</body>
 </html>
