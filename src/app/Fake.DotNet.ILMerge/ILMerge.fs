@@ -14,7 +14,7 @@
 ///                                                   [ !!"./bin/Release/Mono.C*.dll"
 ///                                                     !!"./bin/Release/Newton*.dll" ]
 ///                                              AttributeFile = target } out target)
-/// 
+///
 [<RequireQualifiedAccess>]
 module Fake.DotNet.ILMerge
 
@@ -171,11 +171,10 @@ let internal createProcess parameters outputFile primaryAssembly =
 ///  - `outputFile` - Output file path for the merged assembly.
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
 let run parameters outputFile primaryAssembly =
-    use __ = Trace.traceTask "ILMerge" primaryAssembly
-  
     // The type initializer for 'System.Compiler.CoreSystemTypes' throws on Mono.
-    // So let task be a no-op marked as failed on non-Windows platforms  
+    // So let task be a no-op on non-Windows platforms
     if Environment.isWindows then
+        use __ = Trace.traceTask "ILMerge" primaryAssembly
         let run = createProcess parameters outputFile primaryAssembly |> Proc.run
         if 0 <> run.ExitCode then
             let args = getArguments outputFile primaryAssembly parameters
