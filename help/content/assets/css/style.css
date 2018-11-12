@@ -63,6 +63,12 @@ section.is-small {
     text-decoration: none;
 }
 
+@media screen and (max-width: 768px) {
+    .code-toolbar > pre.fssnip {
+        max-width: calc(100vw - 46px);
+    }
+}
+
 @media screen and (min-width: 769px) {
     .same-height-columns {
         display: flex !important;
