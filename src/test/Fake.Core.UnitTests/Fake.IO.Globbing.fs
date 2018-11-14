@@ -63,7 +63,7 @@ let tests =
           Directory.Delete(testDir, true)
   ]
 
-[<FTests>]
+[<Tests>]
 let toolsTests = 
   let currentDir =
     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
