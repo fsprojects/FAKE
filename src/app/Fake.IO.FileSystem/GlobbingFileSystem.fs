@@ -241,12 +241,9 @@ module Tools =
     /// Looks for a tool in all subfolders - returns the folder where the tool was found
     /// or None if not found.
     let tryFindToolFolderInSubPath toolname =
-        try
-            !! ("./**/" @@ toolname)
-            |> Seq.tryHead
-            |> Option.map Path.GetDirectoryName
-        with
-        | _ -> None
+        !! ("./**/" @@ toolname)
+        |> Seq.tryHead
+        |> Option.map Path.GetDirectoryName
 
     /// Looks for a tool in all subfolders - returns the folder where the tool was found.
     let findToolFolderInSubPath toolname defaultPath =
