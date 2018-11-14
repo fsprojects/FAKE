@@ -65,21 +65,22 @@ Placeholder | replaced by (`NuGetParams` record field)
 In the build script you need to create a target which executes the [NuGet task](apidocs/v5/legacy/fake-nugethelper.html):
 
 ```fsharp
-Target "CreatePackage" (fun _ ->
-    // Copy all the package files into a package folder
-    CopyFiles packagingDir allPackageFiles
-    NuGet (fun p ->
-        {p with
-             Authors = authors
-             Project = projectName
-             Description = projectDescription
-             OutputPath = packagingRoot
-             Summary = projectSummary
-             WorkingDir = packagingDir
-             Version = buildVersion
-             AccessKey = myAccesskey
-             Publish = true })
-             "myProject.nuspec"
+open Fake.DotNet.NuGet
+
+Target.create "CreatePackage" (fun _ ->
+    copyFiles packagingOutputDirectory allFilesToPackage
+    NuGet.NuGet (fun p ->
+        { p with
+            Version = buildVersion
+            Authors = authors
+            Project = projectName
+            Summary = projectSummary
+            Description = projectDescription
+            WorkingDir = packagingDirectory
+            OutputPath = artifactOutputDirectory
+            AccessKey = myAccessKey
+            Publish = true })
+        "template.nuspec"
 )
 ```
 
@@ -92,30 +93,33 @@ There are a couple of interesting things happening here. In this sample FAKE cre
 
 ## Handling package dependencies
 
-If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)).
+If your project depends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)).
 Here is a small sample which sets up dependencies for different framework versions:
 
 ```fsharp
-    NuGet (fun p ->
-            {p with
-                    Authors = authors
-                    // ...
-                    Dependencies =  // fallback - for all unspecified frameworks
-                ["Octokit", "0.1"
-                "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
-                    DependenciesByFramework =
-                                    [{ FrameworkVersion  = "net40"
-                                    Dependencies =
-                                            ["Octokit", "0.1"
-                                             "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
-                                             "SignalR", GetPackageVersion "./packages/" "SignalR"]}
-                                    { FrameworkVersion  = "net45"
-                                    Dependencies =
-                                            ["Octokit", "0.1"
-                                             "SignalR", GetPackageVersion "./packages/" "SignalR"]}]
-                    // ...
-                    Publish = true })
-                    "myProject.nuspec"
+open Fake.DotNet.NuGet
+
+NuGet.NuGet (fun p ->
+    { p with
+        Authors = authors
+        // fallback - for all unspecified frameworks
+        Dependencies = [
+            "Octokit", "0.1"
+            "Rx-Main", NuGet.GetPackageVersion "./packages" "Rx-Main"]
+        DependenciesByFramework = [
+            { FrameworkVersion = "net40"
+                Dependencies = [
+                    "Octokit", "0.1"
+                    "Rx-Main", NuGet.GetPackageVersion "./packages/" "Rx-Main"
+                    "SignalR", NuGet.GetPackageVersion "./packages/" "SignalR" ]}
+            { FrameworkVersion  = "net45"
+                Dependencies = [
+                    "Octokit", "0.1"
+                    "SignalR", NuGet.GetPackageVersion "./packages/" "SignalR"]}
+        ]
+        // ...
+        Publish = true })
+    "template.nuspec"
 ```
 
 ## Explicit assembly references
@@ -124,17 +128,19 @@ If you want to have auxiliary assemblies next to the ones that get referenced by
 Here is a code snippet showing how to use these:
 
 ```fsharp
-NuGet (fun p ->
-    {p with
-        Authors = authors
-        // ...
-        References = ["a.dll"]
-        ReferencesByFramework =
-            [{ FrameworkVersion  = "net40"; References = ["b.dll"]}
-             { FrameworkVersion  = "net45"; References = ["c.dll"]}]
-        // ...
-        Publish = false })
-        "template.nuspec"
+open Fake.DotNet.NuGet
+
+NuGet.NuGet (fun p ->
+    { p with
+         Authors = authors
+         // ...
+         References = ["a.dll"]
+         ReferencesByFramework =
+             [{ FrameworkVersion  = "net40"; References = ["b.dll"]}
+              { FrameworkVersion  = "net45"; References = ["c.dll"]}]
+         // ...
+         Publish = false })
+    "template.nuspec"
 ```
 
 ## Explicit file specifications
@@ -143,10 +149,12 @@ If you want to specify exactly what files are packaged and where they are placed
 Here is a code snippet showing how to use this:
 
 ```fsharp
+open Fake.DotNet.NuGet
+
 // Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.
 // Note that the include paths are relative to the location of the .nuspec file
 // See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.
-NuGet (fun p ->
+NuGet.NuGet (fun p ->
     {p with
         // ...
         Files = [
