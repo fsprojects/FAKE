@@ -72,6 +72,7 @@ let toolsTests =
       Directory.CreateDirectory folder |> ignore
       folder
   
+  // Sequenced because otherwise folders conflict with the globbing pattern '!! "./**"' in the impl.
   testSequencedGroup "Find tool paths" <|
     testList "Fake.Core.Globbing.Tools.Tests" [
       testCase "Test try find tool folder in sub path" <| fun _ ->
