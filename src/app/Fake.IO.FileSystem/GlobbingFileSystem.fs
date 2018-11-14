@@ -238,13 +238,15 @@ module Tools =
         with
         | _ -> defaultPath @@ toolname
 
+    /// Looks for a tool in all subfolders - returns the folder where the tool was found
+    /// or None if not found.
+    let tryFindToolFolderInSubPath toolname =
+        !! ("./**/" @@ toolname)
+        |> Seq.tryHead
+        |> Option.map Path.GetDirectoryName
+
     /// Looks for a tool in all subfolders - returns the folder where the tool was found.
     let findToolFolderInSubPath toolname defaultPath =
-        try
-            let tools = !! ("./**/" @@ toolname)
-            if Seq.isEmpty tools then defaultPath
-            else 
-                let fi = FileInfo (Seq.head tools)
-                fi.Directory.FullName
-        with
-        | _ -> defaultPath
+        toolname
+        |> tryFindToolFolderInSubPath 
+        |> Option.defaultValue defaultPath
