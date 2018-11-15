@@ -313,7 +313,15 @@ let testCases =
                              printfn "Unexpected failure %A level=%d index=%d" x level
                                  mapIndex
                              reraise()) ]
-    else []
+    else
+        [ testCase "Test failure on non-Windows platforms" <| fun _ ->
+              let p = FxCop.Params.Create()
+              Expect.throwsC (fun () -> FxCop.run p [])
+                  (fun ex ->
+                  Expect.equal (ex.GetType()) typeof<NotSupportedException>
+                      "Exception type should be as expected"
+                  Expect.equal ex.Message "FxCop is currently not supported on mono"
+                      "Exception message should be as expected") ]
 
 [<Tests>]
 let tests = testList "Fake.DotNet.FxCop.Tests" testCases

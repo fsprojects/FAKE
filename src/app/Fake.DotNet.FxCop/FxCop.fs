@@ -227,3 +227,5 @@ let run param (assemblies : string seq) =
         |> Proc.run
         |> failAsrequired param
         __.MarkSuccess()
+    else
+        raise <| NotSupportedException("FxCop is currently not supported on mono")

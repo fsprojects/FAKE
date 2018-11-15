@@ -207,7 +207,17 @@ let testCases =
                                   libs |> Seq.head
                                   libs |> Seq.last ]
                   "Strings should be assigned as expected" ]
-    else []
+    else
+        [ testCase "Test failure on non-Windows platforms" <| fun _ ->
+              let p = ILMerge.Params.Create()
+              let dummy = Guid.NewGuid().ToString()
+              let dummy2 = Guid.NewGuid().ToString()
+              Expect.throwsC (fun () -> ILMerge.run p dummy dummy2)
+                  (fun ex ->
+                  Expect.equal (ex.GetType()) typeof<NotSupportedException>
+                      "Exception type should be as expected"
+                  Expect.equal ex.Message "ILMerge is currently not supported on mono"
+                      "Exception message should be as expected") ]
 
 [<Tests>]
 let tests = testList "Fake.DotNet.ILMerge.Tests" testCases
