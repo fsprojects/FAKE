@@ -61,6 +61,7 @@ section.is-small {
 
 .content .anchor {
     text-decoration: none;
+    padding-top: 50px;
 }
 
 @media screen and (max-width: 768px) {
