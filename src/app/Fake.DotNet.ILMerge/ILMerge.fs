@@ -180,3 +180,5 @@ let run parameters outputFile primaryAssembly =
             let args = getArguments outputFile primaryAssembly parameters
             failwithf "'ILMerge %s' failed." (String.separated " " args)
         __.MarkSuccess()
+    else
+        raise <| NotSupportedException("ILMerge is currently not supported on mono")
