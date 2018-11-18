@@ -181,6 +181,7 @@ group netcore
     nuget System.Security.Cryptography.Algorithms
     nuget MSBuild.StructuredLogger
     nuget BlackFox.VsWhere
+    nuget BlackFox.CommandLine
 
     // Testing
     nuget Expecto >= 5.0

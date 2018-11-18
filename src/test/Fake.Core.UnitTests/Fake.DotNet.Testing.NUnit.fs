@@ -22,8 +22,8 @@ let tests =
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
       Expect.equal file "mynunit.exe" "Expected mynunit.exe"
-      Expect.equal args.Args.Length 1 "expected a single argument"
-      let arg = args.Args.[0]
+      Expect.equal (args |> CommandLine.toArray).Length 1 "expected a single argument"
+      let arg = (args |> CommandLine.toArray).[0]
       Expect.stringStarts arg "@" "Expected arg to start with @"
       let argFile = arg.Substring(1)
       
@@ -47,9 +47,9 @@ let tests =
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
       Expect.equal file "mynunit.exe" "Expected mynunit.exe"
-      Expect.equal args.Args.Length 1 "expected a single argument"
-      Expect.equal args.Args.[0] "@some path/with spaces.txt"
-      let argFile = args.Args.[0].Substring(1)
+      Expect.equal (args |> CommandLine.toArray).Length 1 "expected a single argument"
+      Expect.equal (args |> CommandLine.toArray).[0] "@some path/with spaces.txt"
+      let argFile = (args |> CommandLine.toArray).[0].Substring(1)
       
       ( use state = cp.Hook.PrepareState()
         let contents = File.ReadAllText argFile

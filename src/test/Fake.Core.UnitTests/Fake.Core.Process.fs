@@ -41,7 +41,7 @@ let tests =
             | ShellCommand cmd -> failwithf "Expected RawCommand"
             | RawCommand (f, a) -> f, a
         Expect.equal file "cmd" "Expected correct command"
-        Expect.sequenceEqual ["/C"; "echo 1&& echo 2"] args.Args "Expected correct args"
+        Expect.sequenceEqual ["/C"; "echo 1&& echo 2"] (args |> CommandLine.toList) "Expected correct args"
         Expect.equal args.ToStartInfo command "Expect proper command (cmd is strange with regards to escaping)"
 
     yield testCase "Test that we can read messages correctly" <| fun _ ->

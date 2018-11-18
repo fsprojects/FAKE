@@ -178,7 +178,7 @@ let testCases =
               let assemblies = [ Guid.NewGuid().ToString() ]
               let proc = FxCop.composeCommandLine p assemblies
               let expected =
-                  sprintf """%s /c "/f:\"%s\"" "/o:\"%s\"" /s /v""" dummy
+                  sprintf """%s /c /f:\"%s\" /o:\"%s\" /s /v""" dummy
                       (Seq.head assemblies) dummy2
               Expect.equal proc.CommandLine expected "composed command line should match"
               Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())

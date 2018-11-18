@@ -6,7 +6,7 @@ open Expecto
 let checkIfMono (file, args) =
     match Environment.isWindows, Process.monoPath with
     | false, Some s when file = s ->
-      match args.Args |> Array.toList with
+      match args |> CommandLine.toList with
       | debugFlag :: file :: rest ->
           Expect.equal debugFlag "--debug" "Expected first flag to be '--debug'"
           file, Arguments.OfArgs rest
