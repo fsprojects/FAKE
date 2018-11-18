@@ -150,8 +150,8 @@ type Arguments =
     member x.ToStartInfo = x.Args |> CmdLine.toString // |>  CmdLineParsing.toProcessStartInfo x.Args
 
 module Arguments =
-    let withPrefix s (a:Arguments) =
-        { Args = CmdLine.concat (CmdLine.fromSeq s) a.Args }
+    let withPrefix (s:string seq) (a:Arguments) =
+        { Args = CmdLine.concat a.Args (CmdLine.fromSeq s) }
         //Arguments.OfArgs(Seq.append s a.Args)
     let append s (a:Arguments) =
         { Args = a.Args |> CmdLine.appendSeq s }

@@ -60,4 +60,8 @@ let tests =
             (sprintf "Messages are not read correctly.\n%s"
                 result.ReportString)
 
+    yield testCase "Test that Arguments.withPrefix works" <| fun _ ->
+        let args = CommandLine.fromList [ "Some" ]
+        let newArgs = Arguments.withPrefix ["--debug"; "test.exe" ] args
+        Expect.sequenceEqual [ "--debug"; "test.exe"; "Some"] (newArgs |> CommandLine.toList) "expected lists to be equal"
   ]
