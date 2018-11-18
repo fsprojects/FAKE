@@ -20,7 +20,9 @@ type private SearchOption =
     | FilePattern of string
 
 let private checkSubDirs absolute (dir : string) root =
-    if dir.Contains "*" then Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+    if dir.Contains "*" then 
+        try Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+        with :? System.IO.DirectoryNotFoundException -> List.empty
     else 
         let path = Path.Combine(root, dir)
         
@@ -40,10 +42,16 @@ let rec private buildPaths acc (input : SearchOption list) =
         let subDirs = List.collect (checkSubDirs true name) acc
         buildPaths subDirs t
     | Recursive :: [] ->
-        let dirs = Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
+        let dirs =
+            Seq.collect (fun dir -> 
+                try Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)
+                with :? System.IO.DirectoryNotFoundException -> Seq.empty) acc
         buildPaths (acc @ Seq.toList dirs) []
     | Recursive :: t ->
-        let dirs = Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
+        let dirs =
+            Seq.collect (fun dir -> 
+                try Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)
+                with :? System.IO.DirectoryNotFoundException -> Seq.empty) acc
         buildPaths (acc @ Seq.toList dirs) t
     | FilePattern pattern :: _ ->
         acc |> List.collect (fun dir ->
@@ -52,7 +60,8 @@ let rec private buildPaths acc (input : SearchOption list) =
                 try
                     Directory.EnumerateFiles (dir, pattern) |> Seq.toList
                 with
-                    | :? System.IO.PathTooLongException -> [])
+                | :? System.IO.DirectoryNotFoundException
+                | :? System.IO.PathTooLongException -> [])
 
 let private driveRegex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
 
