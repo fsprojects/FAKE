@@ -15,13 +15,28 @@ let testCases =
               let p = FxCop.Params.Create()
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p [ dummy ]
+              let pwd = Shell.pwd()
               Expect.isTrue (p.IncludeSummaryReport)
                   "A field should have non-default value for a bool"
               Expect.equal args [ "/c"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + pwd @@ "FXCopResults.html" + ""
                                   "/s"
                                   "/v" ] "The defaults should be simple"
+          testCase "Test that default arguments are processed as expected (containing spaces)" <| fun _ ->
+              let p = FxCop.Params.Create()
+              let dummy = Guid.NewGuid().ToString() + " " + Guid.NewGuid().ToString()
+              let proc = FxCop.composeCommandLine p [ dummy ]
+              Expect.isTrue (p.IncludeSummaryReport)
+                  "A field should have non-default value for a bool"
+              let expected = [ p.ToolPath
+                               "/c"
+                               "\"/f:" + dummy + "\""
+                               "/o:" + Shell.pwd() @@ "FXCopResults.html"
+                               "/s"
+                               "/v" ] |> fun xs -> String.Join(" ", xs)
+                
+              Expect.equal expected proc.CommandLine "The defaults should be simple"                          
           testCase "Test that all arguments are processed as expected" <| fun _ ->
               let p =
                   { FxCop.Params.Create() with DependencyDirectories =
@@ -57,7 +72,9 @@ let testCases =
 
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p [ dummy ]
-              let wrap s a = s + "\"" + a + "\""
+              let wrap s a =
+                s + a
+                //s + "\"" + a + "\""
 
               let expected =
                   [ "/aXsl"
@@ -87,8 +104,8 @@ let testCases =
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p1 [ dummy ]
               Expect.equal args [ "/c"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
                                   "/ignoregeneratedcode"
                                   "/s"
                                   "/v" ] "Generated code should be ignored"
@@ -96,8 +113,8 @@ let testCases =
               let p2 = { FxCop.Params.Create() with DirectOutputToConsole = false }
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p2 [ dummy ]
-              Expect.equal args [ "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+              Expect.equal args [ "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
                                   "/s"
                                   "/v" ] "No output to console expected"
           testCase "Test that summary reporting can be switched off" <| fun _ ->
@@ -105,16 +122,16 @@ let testCases =
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p3 [ dummy ]
               Expect.equal args [ "/c"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
                                   "/v" ] "No summary expected"
           testCase "Test project file update can be enabled" <| fun _ ->
               let p4 = { FxCop.Params.Create() with SaveResultsInProjectFile = true }
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p4 [ dummy ]
               Expect.equal args [ "/c"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
                                   "/s"
                                   "/u"
                                   "/v" ] "results should be in project file"
@@ -124,8 +141,8 @@ let testCases =
               let args = FxCop.createArgs p5 [ dummy ]
               Expect.equal args [ "/c"
                                   "/fo"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
                                   "/s"
                                   "/v" ] "Output should be forced"
           testCase "Test that Xsl is defaulted" <| fun _ ->
@@ -134,11 +151,10 @@ let testCases =
               let args = FxCop.createArgs p0 [ dummy ]
               Expect.equal args [ "/aXsl"
                                   "/c"
-                                  "/f:\"" + dummy + "\""
-                                  "/o:\"" + Shell.pwd() @@ "FXCopResults.html" + "\""
+                                  "/f:" + dummy + ""
+                                  "/o:" + Shell.pwd() @@ "FXCopResults.html" + ""
 
-                                  "/oXsl:\"" + p0.ToolPath
-                                  @@ "Xml" @@ "FxCopReport.xsl" + "\""
+                                  "/oXsl:" + p0.ToolPath @@ "Xml" @@ "FxCopReport.xsl" + ""
                                   "/s"
                                   "/v" ] "Xsl should be defaulted"
 
@@ -178,7 +194,7 @@ let testCases =
               let assemblies = [ Guid.NewGuid().ToString() ]
               let proc = FxCop.composeCommandLine p assemblies
               let expected =
-                  sprintf """%s /c /f:\"%s\" /o:\"%s\" /s /v""" dummy
+                  sprintf """%s /c /f:%s /o:%s /s /v""" dummy
                       (Seq.head assemblies) dummy2
               Expect.equal proc.CommandLine expected "composed command line should match"
               Expect.equal proc.WorkingDirectory (Some <| Shell.pwd())
