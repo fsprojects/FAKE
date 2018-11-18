@@ -1,8 +1,13 @@
 # Release Notes
 
-## 5.10.2-alpha - tbd
+## 5.11.0-alpha - tbd
 
-* tbd
+* DOCUMENTATION: Further fixes on the website - https://github.com/fsharp/FAKE/pull/2196 & https://github.com/fsharp/FAKE/pull/2202
+* DOCUMENTATION: Fix DotNet.NuGet samples - https://github.com/fsharp/FAKE/pull/2198/files
+* NEW: module `Fake.DotNet.ILMerge` - https://github.com/fsharp/FAKE/pull/2195
+* ENHANCEMENT: Support netcore paket (global tool) - https://github.com/fsharp/FAKE/pull/2191
+* BUGFIX: Fail on non-windows - https://github.com/fsharp/FAKE/pull/2200
+* BUGFIX: Globbing fails when directory is deleted at the same time - https://github.com/fsharp/FAKE/issues/2203
 
 ## 5.10.1 - 2018-11-11
 
