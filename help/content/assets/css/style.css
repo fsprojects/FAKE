@@ -61,7 +61,14 @@ section.is-small {
 
 .content .anchor {
     text-decoration: none;
-    padding-top: 70px;
+}
+
+.content .anchor::before {
+    content: "";
+    display: block;
+    height: 50px;
+    margin: -50px 0 0;
+    visibility: hidden;
 }
 
 @media screen and (max-width: 768px) {
