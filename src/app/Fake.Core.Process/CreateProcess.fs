@@ -150,8 +150,8 @@ module CreateProcess =
     ///     |> CreateProcess.fromCmdLine "dotnet.exe"
     ///     |> Proc.run
     ///     |> ignore
-    let fromCmdLine command args =
-        fromCommand <| RawCommand(command, Arguments.OfArgs args)
+    let fromCmdLine command (args:BlackFox.CommandLine.CmdLine) =
+        fromCommand <| RawCommand(command, Arguments.OfCmdLine args)
 
     /// Create a CreateProcess from the given `ProcessStartInfo`
     let ofStartInfo (p:System.Diagnostics.ProcessStartInfo) =
