@@ -41,7 +41,7 @@ let tests =
             | ShellCommand cmd -> failwithf "Expected RawCommand"
             | RawCommand (f, a) -> f, a
         Expect.equal file "cmd" "Expected correct command"
-        Expect.sequenceEqual ["/C"; "echo 1&& echo 2"] (args |> CommandLine.toList) "Expected correct args"
+        Expect.sequenceEqual ["/C"; "echo 1&& echo 2"] (args |> Arguments.toList) "Expected correct args"
         Expect.equal args.ToStartInfo command "Expect proper command (cmd is strange with regards to escaping)"
 
     yield testCase "Test that we can read messages correctly" <| fun _ ->
@@ -61,7 +61,7 @@ let tests =
                 result.ReportString)
 
     yield testCase "Test that Arguments.withPrefix works" <| fun _ ->
-        let args = CommandLine.fromList [ "Some" ]
+        let args = Arguments.ofList [ "Some" ]
         let newArgs = Arguments.withPrefix ["--debug"; "test.exe" ] args
-        Expect.sequenceEqual [ "--debug"; "test.exe"; "Some"] (newArgs |> CommandLine.toList) "expected lists to be equal"
+        Expect.sequenceEqual [ "--debug"; "test.exe"; "Some"] (newArgs |> Arguments.toList) "expected lists to be equal"
   ]

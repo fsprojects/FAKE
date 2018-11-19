@@ -161,5 +161,13 @@ module Arguments =
         { Args = a.Args |> CmdLine.appendSeq s }
         //Arguments.OfArgs(Seq.append a.Args s)
 
+    let toList (a:Arguments) =
+        a.Args |> CmdLine.toList
+
+    let toArray (a:Arguments) =
+        a.Args |> CmdLine.toArray
+
+    let ofList (a:string list) =
+        { Args = a |> CmdLine.fromList }
 
 #endif   
