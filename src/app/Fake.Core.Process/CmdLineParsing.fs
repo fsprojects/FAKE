@@ -144,6 +144,10 @@ type Arguments =
 
     /// Create a new arguments object from the given list of arguments
     static member OfArgs (args:string seq) = { Args = args |> CmdLine.fromSeq }
+
+    /// Create a new arguments object from a given [BlackFox.CmdLine](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine) instance.
+    static member OfCmdLine (cmdLine:CmdLine) = { Args = cmdLine }
+
     /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
     /// Create a new command line string which can be used in a ProcessStartInfo object.
@@ -157,43 +161,5 @@ module Arguments =
         { Args = a.Args |> CmdLine.appendSeq s }
         //Arguments.OfArgs(Seq.append a.Args s)
 
-/// Forward API from https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine
-module CommandLine =
-    let empty = Arguments.Empty
-    let inline internal liftInternal f x (a:Arguments) =
-        { Args = a.Args |> f x }
-    let inline internal liftInternal2 f x y (a:Arguments) =
-        { Args = a.Args |> f x y }
-    let inline internal liftInternal3 f x y z (a:Arguments) =
-        { Args = a.Args |> f x y z }
-
-    let appendRaw = liftInternal CmdLine.appendRaw
-    let append = liftInternal CmdLine.append
-    let appendf f = liftInternal CmdLine.appendf f
-    let appendPrefix = liftInternal2 CmdLine.appendPrefix
-    let appendPrefixf s f = liftInternal2 CmdLine.appendPrefixf s f
-    let appendIf = liftInternal2 CmdLine.appendIf
-    let appendIff b f = liftInternal2 CmdLine.appendIf b f
-    let appendPrefixIf = liftInternal3 CmdLine.appendPrefixIf
-    let appendPrefixIff b s f = liftInternal3 CmdLine.appendPrefixIff b s f
-    let appendIfSome = liftInternal CmdLine.appendIfSome 
-    let appendIfSomef f o = liftInternal2 CmdLine.appendIfSomef f o
-    let appendPrefixIfSome = liftInternal2 CmdLine.appendPrefixIfSome 
-    let appendPrefixIfSomef s f o = liftInternal3 CmdLine.appendPrefixIfSomef s f o
-    let appendSeq se = liftInternal CmdLine.appendSeq se
-    let appendSeqf f s = liftInternal2 CmdLine.appendSeqf f s
-    let appendPrefixSeq se = liftInternal2 CmdLine.appendPrefixSeq se
-    let appendPrefixSeqf s f se = liftInternal3 CmdLine.appendPrefixSeqf s f se
-    let appendIfNotNullOrEmpty = liftInternal CmdLine.appendIfNotNullOrEmpty
-    let appendIfNotNullOrEmptyf f s = liftInternal2 CmdLine.appendIfNotNullOrEmptyf f s
-    let appendPrefixIfNotNullOrEmpty = liftInternal2 CmdLine.appendPrefixIfNotNullOrEmpty
-    let appendPrefixIfNotNullOrEmptyf s f i = liftInternal3 CmdLine.appendPrefixIfNotNullOrEmptyf s f i
-    let fromSeq s =  { Args = CmdLine.fromSeq s }
-    let fromList s =  { Args = CmdLine.fromList s }
-    let fromArray s =  { Args = CmdLine.fromArray s }
-    let toList (a:Arguments) = CmdLine.toList a.Args
-    let toArray (a:Arguments) = CmdLine.toArray a.Args
-    let toStringForMsvcr e (a:Arguments) = CmdLine.toStringForMsvcr e a.Args
-    let toString (a:Arguments) = CmdLine.toString a.Args
 
 #endif   
