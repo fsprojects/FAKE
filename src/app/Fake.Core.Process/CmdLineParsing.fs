@@ -151,7 +151,7 @@ type Arguments =
 
 module Arguments =
     let withPrefix (s:string seq) (a:Arguments) =
-        { Args = CmdLine.concat a.Args (CmdLine.fromSeq s) }
+        { Args = CmdLine.concat [CmdLine.fromSeq s; a.Args] }
         //Arguments.OfArgs(Seq.append s a.Args)
     let append s (a:Arguments) =
         { Args = a.Args |> CmdLine.appendSeq s }
