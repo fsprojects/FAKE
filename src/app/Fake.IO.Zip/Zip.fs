@@ -184,7 +184,7 @@ let unzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 
 /// Unzips a single file from the archive with the given file name.
 /// ## Parameters
-///  - `predicate` - The predictae for the searched file in the archive.
+///  - `predicate` - The predicate for the searched file in the archive.
 ///  - `zipFileName` - The file name of the zip file.
 let unzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 #if DOTNETCORE
