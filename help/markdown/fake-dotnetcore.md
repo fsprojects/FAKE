@@ -7,7 +7,7 @@ Just install the corresponding package for your system:
 
 - Windows (chocolatey)
 
-  - Install chocolatey (a windows package manager) if you have not installed it yet (see https://chocolatey.org).
+  - Install chocolatey (a windows package manager) if you have not installed it yet (see [https://chocolatey.org](https://chocolatey.org)).
     Basically open an admin `cmd.exe` and paste 
 
     <pre>
@@ -181,5 +181,4 @@ Get the latest packages from GitHub: https://github.com/fsharp/FAKE/releases
 
 Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
 
-Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
-
+Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies: https://www.nuget.org/packages/dotnet-fake
