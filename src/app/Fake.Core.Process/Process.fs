@@ -420,7 +420,7 @@ module Process =
     [<RequireQualifiedAccess>]
     module internal Proc =
         open Fake.Core.ProcessHelpers
-        let startRaw (c:CreateProcess<_>) =
+        let startRaw (processStarter:IProcessStarter) (c:CreateProcess<_>) =
           async {
             let hook = c.Hook
             
@@ -460,16 +460,16 @@ module Process =
           // Immediate makes sure we set the ref cell before we return the task...
           |> Async.StartImmediateAsTask
         
-        let start c = 
+        let start (processStarter:IProcessStarter) c = 
             async {
-                let! result = startRaw c
+                let! result = startRaw processStarter c
                 return! result.Result |> Async.AwaitTaskWithoutAggregate
             }
             |> Async.StartImmediateAsTask
-        let startRawSync c = (startRaw c).Result
+        let startRawSync (processStarter:IProcessStarter) c = (startRaw processStarter c).Result
         
-        let startAndAwait c = start c |> Async.AwaitTaskWithoutAggregate
-        let run c = startAndAwait c |> Async.RunSynchronously
+        let startAndAwait (processStarter:IProcessStarter) c = start processStarter c |> Async.AwaitTaskWithoutAggregate
+        let run (processStarter:IProcessStarter) c = startAndAwait processStarter c |> Async.RunSynchronously
 
     /// [omit]
     [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
@@ -595,7 +595,7 @@ module Process =
         let result =
             cp
             |> CreateProcess.withTimeout timeOut
-            |> Proc.run
+            |> Proc.run processStarter
         result.ExitCode
 
     /// Runs the given process and returns the process result.
@@ -660,7 +660,7 @@ module Process =
     [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let fireAndForget configProcessStartInfoF =
         getProcI configProcessStartInfoF
-        |> Proc.startRawSync
+        |> Proc.startRawSync processStarter
         |> ignore
         //rawStartProcess proc
 
@@ -669,14 +669,14 @@ module Process =
     let directExec configProcessStartInfoF = 
         let result =
             getProcI configProcessStartInfoF
-            |> Proc.run
+            |> Proc.run processStarter
         result.ExitCode = 0
 
     /// Starts the given process and forgets about it.
     [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let start configProcessStartInfoF = 
         getProcI configProcessStartInfoF
-        |> Proc.startRawSync
+        |> Proc.startRawSync processStarter
         |> ignore
 
     /// Adds quotes around the string
@@ -1057,64 +1057,19 @@ module Proc =
     /// Note: The `Result` task might finish while the `Raw` task is still running, 
     /// this enables you to work with the result object before the process has exited.
     /// For example consider a long running process where you are only interested in the first couple of output lines
-    let startRaw (c:CreateProcess<_>) = Process.Proc.startRaw c
-(*
-        let o, realResult =
-            match output with
-            | Some f -> f, true
-            | None -> { Output = ""; Error = "" }, false
-
-        let strip (s:string) =
-            let subString (s:string) =
-                let splitMax = 300
-                let half = splitMax / 2
-                if s.Length < splitMax then s
-                else sprintf "%s [...] %s" (s.Substring(0, half)) (s.Substring(s.Length - half))
-                
-            if s.Length < 1000 then
-                s
-            else
-                let splits = s.Split([|"\n"|], System.StringSplitOptions.None)
-                if splits.Length <= 1 then
-                    // We need to use substring
-                    subString s
-                else
-                    splits
-                    |> Seq.take 10
-                    |> fun s -> Seq.append s [" [ ... ] "]
-                    |> fun s -> Seq.append s (splits |> Seq.skip (splits.Length - 10))
-                    |> Seq.map subString
-                    |> fun s -> System.String.Join("\n", s)
-                    
-        let strippedOutput = lazy strip o.Output
-        let strippedError = lazy strip o.Error
-        if realResult then
-            Trace.tracefn "Process Output: %s, Error: %s" strippedOutput.Value strippedError.Value
-
-        let result =
-            try c.GetResult o
-            with e ->
-                let msg =
-                    if realResult then
-                        sprintf "Could not parse output from process, StdOutput: %s, StdError %s" strippedOutput.Value strippedError.Value
-                    else
-                        "Could not parse output from process, but RawOutput was not retrieved."
-                raise <| System.Exception(msg, e)
-        
-        do! hook.ParseSuccess exitCode
-        return { ExitCode = exitCode; CreateProcess = c; Result = result }*)
+    let startRaw (c:CreateProcess<_>) = Process.Proc.startRaw Process.processStarter c
     
     /// Similar to `startRaw` but waits until the process has been started. 
-    let startRawSync c = Process.Proc.startRawSync c
+    let startRawSync c = Process.Proc.startRawSync Process.processStarter c
 
     /// Starts the given process and waits for the `Result` task. (see `startRaw` documentation). 
     /// In most common scenarios the `Result` includes the `Raw` task or the exit-code one way or another.
-    let start c = Process.Proc.start c
+    let start c = Process.Proc.start Process.processStarter c
 
     /// Convenience method when you immediatly want to await the result of 'start', just note that
     /// when used incorrectly this might lead to race conditions 
     /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
-    let startAndAwait c = Process.Proc.startAndAwait c
+    let startAndAwait c = Process.Proc.startAndAwait Process.processStarter c
 
     /// Like `start` but waits for the result synchronously.
-    let run c = Process.Proc.run c
+    let run c = Process.Proc.run Process.processStarter c
