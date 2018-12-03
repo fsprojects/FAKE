@@ -32,9 +32,16 @@ type PaketPackParams =
       MinimumFromLockFile : bool
       PinProjectReferences : bool }
 
+let private findPaketExecutable () =
+    match Tools.tryFindToolFolderInSubPath "paket" with
+    | Some folder ->
+        folder @@ "paket"
+    | None ->
+        (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
+
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
-    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
+    { ToolPath = findPaketExecutable ()
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
       SpecificVersions = []
@@ -64,7 +71,7 @@ type PaketPushParams =
 
 /// Paket push default parameters
 let PaketPushDefaults() : PaketPushParams =
-    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
+    { ToolPath = findPaketExecutable ()
       TimeOut = System.TimeSpan.MaxValue
       PublishUrl = null
       EndPoint =  null
@@ -84,7 +91,7 @@ type PaketRestoreParams =
 
 /// Paket restore default parameters
 let PaketRestoreDefaults() : PaketRestoreParams =
-    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
+    { ToolPath = findPaketExecutable ()
       TimeOut = System.TimeSpan.MaxValue
       WorkingDir = "."
       ForceDownloadOfPackages = false

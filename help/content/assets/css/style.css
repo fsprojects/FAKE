@@ -50,13 +50,6 @@ footer ul li:first-child {
     background: none !important;
 }
 
-aside.menu {
-    position: fixed;
-    top: 65px;
-    right: 0;
-    z-index: 95;
-}
-
 section.is-small {
     padding: 6rem 1.5rem;
 }
@@ -70,13 +63,17 @@ section.is-small {
     text-decoration: none;
 }
 
-@media screen and (max-width: 768px) {
-    table.pre pre.fssnip.highlighted {
-        width: calc(100vw - 6rem);
-    }
+.content .anchor::before {
+    content: "";
+    display: block;
+    height: 50px;
+    margin: -50px 0 0;
+    visibility: hidden;
+}
 
-    .section .fssnip.line-numbers {
-        width: calc(100vw - 3rem);
+@media screen and (max-width: 768px) {
+    .code-toolbar > pre.fssnip {
+        max-width: calc(100vw - 46px);
     }
 }
 
@@ -211,17 +208,6 @@ div.tip strong {
     color: #d1d1d1;
 }
 
-table.module-list {
-    overflow: auto;
-    display: block;
-}
-
-table.pre pre {
-    padding: 0px;
-    margin: 0px;
-    border: none;
-}
-
 table.pre,
 pre.fssnip,
 pre {
@@ -236,10 +222,11 @@ pre {
 }
 
 table.pre pre {
-    padding: 0px;
-    margin: 0px;
-    border-radius: 0px;
     width: 100%;
+    padding: 0 0 5px 0;
+    margin: 0;
+    border: none;
+    border-radius: 0px;
 }
 
 table.pre code {

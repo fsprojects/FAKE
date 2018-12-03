@@ -178,16 +178,16 @@ let internal createArgs fxparams assemblies =
     [ Flag param.ApplyOutXsl "/aXsl"
       Flag param.DirectOutputToConsole "/c"
       Flag param.ForceOutput "/fo"
-      Item "/cXsl:\"%s\"" param.ConsoleXslFileName
-      ItemList "/d:\"%s\"" param.DependencyDirectories
-      ItemList "/f:\"%s\"" assemblies
-      ItemList "/i:\"%s\"" param.ImportFiles
-      Item "/o:\"%s\"" param.ReportFileName
-      Item "/oXsl:\"%s\"" param.OutputXslFileName
-      Item "/plat:\"%s\"" param.PlatformDirectory
-      Item "/p:\"%s\"" param.ProjectFile
-      Item "/ruleset:=\"%s\"" param.CustomRuleset
-      ItemList "/r:\"%s\"" rules
+      Item "/cXsl:%s" param.ConsoleXslFileName
+      ItemList "/d:%s" param.DependencyDirectories
+      ItemList "/f:%s" assemblies
+      ItemList "/i:%s" param.ImportFiles
+      Item "/o:%s" param.ReportFileName
+      Item "/oXsl:%s" param.OutputXslFileName
+      Item "/plat:%s" param.PlatformDirectory
+      Item "/p:%s" param.ProjectFile
+      Item "/ruleset:=%s" param.CustomRuleset
+      ItemList "/r:%s" rules
       ItemList "/rid:%s" param.Rules
       Flag param.IgnoreGeneratedCode "/ignoregeneratedcode"
       Flag param.IncludeSummaryReport "/s"
@@ -195,7 +195,7 @@ let internal createArgs fxparams assemblies =
       Flag param.SaveResultsInProjectFile "/u"
       Flag param.Verbose "/v"
       Flag param.UseGAC "/gac"
-      Item "/dic:\"%s\"" param.CustomDictionary ]
+      Item "/dic:%s" param.CustomDictionary ]
     |> List.concat
 
 let internal failAsrequired param result =
@@ -227,3 +227,5 @@ let run param (assemblies : string seq) =
         |> Proc.run
         |> failAsrequired param
         __.MarkSuccess()
+    else
+        raise <| NotSupportedException("FxCop is currently not supported on mono")

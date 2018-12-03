@@ -1,5 +1,18 @@
 # Release Notes
 
+## 5.11.0 - 2018-12-03
+
+* DOCUMENTATION: Further fixes on the website - https://github.com/fsharp/FAKE/pull/2196 & https://github.com/fsharp/FAKE/pull/2202
+* DOCUMENTATION: Fix DotNet.NuGet samples - https://github.com/fsharp/FAKE/pull/2198/files
+* DOCUMENTATION: Smaller fixes - https://github.com/fsharp/FAKE/pull/2211 & https://github.com/fsharp/FAKE/pull/2213 & https://github.com/fsharp/FAKE/pull/2212 &  https://github.com/fsharp/FAKE/pull/2217 & https://github.com/fsharp/FAKE/pull/2208 & https://github.com/fsharp/FAKE/pull/2209
+* NEW: module `Fake.DotNet.ILMerge` - https://github.com/fsharp/FAKE/pull/2195
+* ENHANCEMENT: Support netcore paket (global tool) - https://github.com/fsharp/FAKE/pull/2191
+* ENHANCEMENT: Properly fail when using FxCop on non-windows
+* (Minor) BREAKING: Drop support for `netstandard1.6` (please open an issue if that actually hits you).
+* BUGFIX: Fail on non-windows - https://github.com/fsharp/FAKE/pull/2200
+* BUGFIX: Globbing fails when directory is deleted at the same time - https://github.com/fsharp/FAKE/issues/2203
+* BUGFIX: Custom escaping was not working with `fromRawWindowsCommandLine` - https://github.com/fsharp/FAKE/issues/2197
+
 ## 5.10.1 - 2018-11-11
 
 * DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
