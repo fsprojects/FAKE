@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.11.1-alpha - tbd
+
+* tbd
+
 ## 5.11.0 - 2018-12-03
 
 * DOCUMENTATION: Further fixes on the website - https://github.com/fsharp/FAKE/pull/2196 & https://github.com/fsharp/FAKE/pull/2202
