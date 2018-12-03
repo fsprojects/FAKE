@@ -34,10 +34,27 @@ Or a properly escaped command line:
 
 ```fsharp
 
-CreateProcess.fromRawWindowsCommandLine "./folder/mytool.exe" "arg1 arg2 arg3"
+CreateProcess.fromRawCommandLine "./folder/mytool.exe" "arg1 arg2 arg3"
 |> Proc.run // start with the above configuration
 |> ignore // ignore exit code
 
+```
+
+Or use helper libraries like [`BlackFox.CommandLine`](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine):
+
+```fsharp
+
+open BlackFox.CommandLine
+
+CmdLine.empty
+|> CmdLine.append "build"
+|> CmdLine.appendIf noRestore "--no-restore"
+|> CmdLine.appendPrefixIfSome "--framework" framework
+|> CmdLine.appendPrefixf "--configuration" "%A" configuration
+|> CmdLine.toString
+|> CreateProcess.fromRawCommandLine "dotnet.exe"
+|> Proc.run
+|> ignore
 ```
 
 ## Evaluate exit code

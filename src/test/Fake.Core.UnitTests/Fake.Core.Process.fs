@@ -6,6 +6,22 @@ open Fake.Core
 open Expecto
 open FsCheck
 
+let getRawCommandLine (c:CreateProcess<'a>) =
+    let mutable result = None
+    let starter =
+        { new IProcessStarter with
+            member x.Start (r: RawCreateProcess) =
+                async {
+                    let si = r.ToStartInfo
+                    result <- Some si.Arguments                                    
+                    return System.Threading.Tasks.Task.FromResult { RawExitCode = 0 }
+                } }
+        
+    Process.Proc.startRaw starter c
+    match result with
+    | Some args -> args
+    | None -> failwithf "Expected to retrieve arguments"
+
 let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000  }
 
 [<Tests>]
@@ -64,4 +80,12 @@ let tests =
         let args = Arguments.ofList [ "Some" ]
         let newArgs = Arguments.withPrefix ["--debug"; "test.exe" ] args
         Expect.sequenceEqual [ "--debug"; "test.exe"; "Some"] (newArgs |> Arguments.toList) "expected lists to be equal"
+
+    yield testCase "Test we can workaround #2197" <| fun _ ->
+        let original = """-source:iisapp="C:\some\path\"""
+        let actual =
+            original
+            |> CreateProcess.fromRawCommandLine "./folder/mytool.exe"
+            |> getRawCommandLine
+        Expect.equal original actual "Expected to retrieve exact match"
   ]

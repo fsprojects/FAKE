@@ -64,7 +64,7 @@ module internal CmdLineParsing =
                 i <- i + 1
                 backslashCount <- backslashCount + 1
             if backslashCount > 0 then
-                if i > arguments.Length || arguments.[i] <> '"' then
+                if i >= arguments.Length || arguments.[i] <> '"' then
                     // Backslashes not followed by a double quote:
                     // they should all be treated as literal backslashes.
                     currentArgument.Append('\\', backslashCount) |> ignore
@@ -132,34 +132,34 @@ open BlackFox.CommandLine
 
 /// Represents a list of arguments
 type Arguments = 
-    internal { Args : CmdLine }
-    static member Empty = { Args = CmdLine.empty }
+    internal { Args : CmdLine; Original : string option }
+    static member Empty = { Args = CmdLine.empty; Original = None }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
-        { Args = Args.fromWindowsCommandLine cmd |> Array.toList |> CmdLine.fromList }
+        { Args = Args.fromWindowsCommandLine cmd |> Array.toList |> CmdLine.fromList; Original = Some cmd }
 
     /// This is the reverse of https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     member x.ToWindowsCommandLine = x.Args |> CmdLine.toString
     member x.ToLinuxShellCommandLine = x.Args |> CmdLine.toList |> Args.toLinuxShellCommandLine
 
     /// Create a new arguments object from the given list of arguments
-    static member OfArgs (args:string seq) = { Args = args |> CmdLine.fromSeq }
-
-    /// Create a new arguments object from a given [BlackFox.CmdLine](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine) instance.
-    static member OfCmdLine (cmdLine:CmdLine) = { Args = cmdLine }
+    static member OfArgs (args:string seq) = { Args = args |> CmdLine.fromSeq; Original = None }
 
     /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
+
     /// Create a new command line string which can be used in a ProcessStartInfo object.
-    member x.ToStartInfo = x.Args |> CmdLine.toString // |>  CmdLineParsing.toProcessStartInfo x.Args
+    member x.ToStartInfo =
+        match x.Original with
+        | Some orig -> orig
+        | None ->
+            x.Args |> CmdLine.toString // |>  CmdLineParsing.toProcessStartInfo x.Args
 
 module Arguments =
     let withPrefix (s:string seq) (a:Arguments) =
-        { Args = CmdLine.concat [CmdLine.fromSeq s; a.Args] }
-        //Arguments.OfArgs(Seq.append s a.Args)
+        { Args = CmdLine.concat [CmdLine.fromSeq s; a.Args]; Original = None }
     let append s (a:Arguments) =
-        { Args = a.Args |> CmdLine.appendSeq s }
-        //Arguments.OfArgs(Seq.append a.Args s)
+        { Args = a.Args |> CmdLine.appendSeq s; Original = None }
 
     let toList (a:Arguments) =
         a.Args |> CmdLine.toList
@@ -168,6 +168,6 @@ module Arguments =
         a.Args |> CmdLine.toArray
 
     let ofList (a:string list) =
-        { Args = a |> CmdLine.fromList }
+        { Args = a |> CmdLine.fromList; Original = None }
 
 #endif   

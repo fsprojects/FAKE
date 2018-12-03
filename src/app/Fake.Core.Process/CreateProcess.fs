@@ -120,9 +120,32 @@ module CreateProcess =
     /// 
     /// ### Example
     /// 
-    ///     CreateProcess.fromRawWindowsCommandLine "cmd" "/C \"echo test\""
+    ///     CreateProcess.fromRawCommandLine "cmd" "/C \"echo test\""
     ///     |> Proc.run
     ///     |> ignore
+    /// 
+    /// ### Using BlackFox.CommandLine
+    /// 
+    /// See [`BlackFox.CommandLine`](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine) for details
+    /// 
+    ///     open BlackFox.CommandLine
+    /// 
+    ///     CmdLine.empty
+    ///     |> CmdLine.append "build"
+    ///     |> CmdLine.appendIf noRestore "--no-restore"
+    ///     |> CmdLine.appendPrefixIfSome "--framework" framework
+    ///     |> CmdLine.appendPrefixf "--configuration" "%A" configuration
+    ///     |> CmdLine.toString
+    ///     |> CreateProcess.fromRawCommandLine "dotnet.exe"
+    ///     |> Proc.run
+    ///     |> ignore
+    /// 
+    let fromRawCommandLine command windowsCommandLine =
+        fromCommand <| RawCommand(command, Arguments.OfWindowsCommandLine windowsCommandLine)
+
+
+    /// Create a CreateProcess from the given file and arguments
+    [<Obsolete("Use fromRawCommandLine instead.")>]
     let fromRawWindowsCommandLine command windowsCommandLine =
         fromCommand <| RawCommand(command, Arguments.OfWindowsCommandLine windowsCommandLine)
 
@@ -135,23 +158,6 @@ module CreateProcess =
     ///     |> ignore
     let fromRawCommand command args =
         fromCommand <| RawCommand(command, Arguments.OfArgs args)
-
-    /// Create a CreateProcess by using [BlackFox.CommandLine](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine) library
-    /// 
-    /// ### Example
-    /// 
-    ///     open BlackFox.CommandLine
-    /// 
-    ///     CmdLine.empty
-    ///     |> CmdLine.append "build"
-    ///     |> CmdLine.appendIf noRestore "--no-restore"
-    ///     |> CmdLine.appendPrefixIfSome "--framework" framework
-    ///     |> CmdLine.appendPrefixf "--configuration" "%A" configuration
-    ///     |> CreateProcess.fromCmdLine "dotnet.exe"
-    ///     |> Proc.run
-    ///     |> ignore
-    let fromCmdLine command (args:BlackFox.CommandLine.CmdLine) =
-        fromCommand <| RawCommand(command, Arguments.OfCmdLine args)
 
     /// Create a CreateProcess from the given `ProcessStartInfo`
     let ofStartInfo (p:System.Diagnostics.ProcessStartInfo) =
