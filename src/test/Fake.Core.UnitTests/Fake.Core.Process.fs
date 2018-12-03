@@ -6,6 +6,22 @@ open Fake.Core
 open Expecto
 open FsCheck
 
+let getRawCommandLine (c:CreateProcess<'a>) =
+    let mutable result = None
+    let starter =
+        { new IProcessStarter with
+            member x.Start (r: RawCreateProcess) =
+                async {
+                    let si = r.ToStartInfo
+                    result <- Some si.Arguments                                    
+                    return System.Threading.Tasks.Task.FromResult { RawExitCode = 0 }
+                } }
+        
+    Process.Proc.startRaw starter c
+    match result with
+    | Some args -> args
+    | None -> failwithf "Expected to retrieve arguments"
+
 let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000  }
 
 [<Tests>]
@@ -41,7 +57,7 @@ let tests =
             | ShellCommand cmd -> failwithf "Expected RawCommand"
             | RawCommand (f, a) -> f, a
         Expect.equal file "cmd" "Expected correct command"
-        Expect.sequenceEqual ["/C"; "echo 1&& echo 2"] args.Args "Expected correct args"
+        Expect.sequenceEqual (args |> Arguments.toList) ["/C"; "echo 1&& echo 2"] "Expected correct args"
         Expect.equal args.ToStartInfo command "Expect proper command (cmd is strange with regards to escaping)"
 
     yield testCase "Test that we can read messages correctly" <| fun _ ->
@@ -60,4 +76,16 @@ let tests =
             (sprintf "Messages are not read correctly.\n%s"
                 result.ReportString)
 
+    yield testCase "Test that Arguments.withPrefix works" <| fun _ ->
+        let args = Arguments.ofList [ "Some" ]
+        let newArgs = Arguments.withPrefix ["--debug"; "test.exe" ] args
+        Expect.sequenceEqual (newArgs |> Arguments.toList) [ "--debug"; "test.exe"; "Some"] "expected lists to be equal"
+
+    yield testCase "Test we can workaround #2197" <| fun _ ->
+        let original = """-source:iisapp="C:\some\path\"""
+        let actual =
+            original
+            |> CreateProcess.fromRawCommandLine "./folder/mytool.exe"
+            |> getRawCommandLine
+        Expect.equal actual original "Expected to retrieve exact match"
   ]
