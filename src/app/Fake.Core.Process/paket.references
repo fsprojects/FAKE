@@ -3,4 +3,3 @@ group netcore
 FSharp.Core
 System.Diagnostics.Process
 NETStandard.Library
-BlackFox.CommandLine

@@ -128,22 +128,20 @@ module Args =
     /// Read a windows command line string into its arguments
     let fromWindowsCommandLine cmd = CmdLineParsing.windowsCommandLineToArgv cmd
 
-open BlackFox.CommandLine
-
 /// Represents a list of arguments
 type Arguments = 
-    internal { Args : CmdLine; Original : string option }
-    static member Empty = { Args = CmdLine.empty; Original = None }
+    internal { Args : string array; Original : string option }
+    static member Empty = { Args = [||]; Original = None }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
-        { Args = Args.fromWindowsCommandLine cmd |> Array.toList |> CmdLine.fromList; Original = Some cmd }
+        { Args = Args.fromWindowsCommandLine cmd; Original = Some cmd }
 
     /// This is the reverse of https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
-    member x.ToWindowsCommandLine = x.Args |> CmdLine.toString
-    member x.ToLinuxShellCommandLine = x.Args |> CmdLine.toList |> Args.toLinuxShellCommandLine
+    member x.ToWindowsCommandLine = Args.toWindowsCommandLine x.Args// |> CmdLine.toString
+    member x.ToLinuxShellCommandLine = Args.toLinuxShellCommandLine x.Args// |> CmdLine.toList |> Args.toLinuxShellCommandLine
 
     /// Create a new arguments object from the given list of arguments
-    static member OfArgs (args:string seq) = { Args = args |> CmdLine.fromSeq; Original = None }
+    static member OfArgs (args:string seq) = { Args = args |> Seq.toArray; Original = None }
 
     /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
@@ -153,21 +151,21 @@ type Arguments =
         match x.Original with
         | Some orig -> orig
         | None ->
-            x.Args |> CmdLine.toString // |>  CmdLineParsing.toProcessStartInfo x.Args
+            CmdLineParsing.toProcessStartInfo x.Args
 
 module Arguments =
     let withPrefix (s:string seq) (a:Arguments) =
-        { Args = CmdLine.concat [CmdLine.fromSeq s; a.Args]; Original = None }
+        Arguments.OfArgs(Seq.append s a.Args)
     let append s (a:Arguments) =
-        { Args = a.Args |> CmdLine.appendSeq s; Original = None }
+        Arguments.OfArgs(Seq.append a.Args s)
 
     let toList (a:Arguments) =
-        a.Args |> CmdLine.toList
+        a.Args |> Array.toList
 
     let toArray (a:Arguments) =
-        a.Args |> CmdLine.toArray
+        a.Args |> Array.toList |> Seq.toArray
 
     let ofList (a:string list) =
-        { Args = a |> CmdLine.fromList; Original = None }
+        { Args = a |> Seq.toArray; Original = None }
 
 #endif   

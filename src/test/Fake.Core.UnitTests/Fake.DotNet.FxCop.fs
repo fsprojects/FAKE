@@ -32,11 +32,11 @@ let testCases =
               let expected = [ p.ToolPath
                                "/c"
                                "\"/f:" + dummy + "\""
-                               "/o:" + Shell.pwd() @@ "FXCopResults.html"
+                               "\"/o:" + Shell.pwd() @@ "FXCopResults.html\""
                                "/s"
                                "/v" ] |> fun xs -> String.Join(" ", xs)
                 
-              Expect.equal expected proc.CommandLine "The defaults should be simple"                          
+              Expect.equal proc.CommandLine expected "The defaults should be simple"                          
           testCase "Test that all arguments are processed as expected" <| fun _ ->
               let p =
                   { FxCop.Params.Create() with DependencyDirectories =
