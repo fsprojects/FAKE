@@ -138,6 +138,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -321,7 +322,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L159-159" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -331,14 +332,65 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '175', 175)" onmouseover="showTip(event, '175', 175)">
-            withPrefix s a
+            ofList(a)
           </code>
           <div class="tip" id="175">
+            <strong>Signature:</strong> a:string list -&gt; Arguments<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L168-168" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '176', 176)" onmouseover="showTip(event, '176', 176)">
+            toArray(a)
+          </code>
+          <div class="tip" id="176">
+            <strong>Signature:</strong> a:Arguments -&gt; string []<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L165-165" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '177', 177)" onmouseover="showTip(event, '177', 177)">
+            toList(a)
+          </code>
+          <div class="tip" id="177">
+            <strong>Signature:</strong> a:Arguments -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L162-162" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
+            withPrefix s a
+          </code>
+          <div class="tip" id="178">
             <strong>Signature:</strong> s:seq&lt;string&gt; -&gt; a:Arguments -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L151-151" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L157-157" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -369,7 +421,7 @@
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -384,7 +436,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

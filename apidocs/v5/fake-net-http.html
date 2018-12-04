@@ -138,6 +138,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -346,10 +347,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1021', 1021)" onmouseover="showTip(event, '1021', 1021)">
+          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
             downloadFile localFilePath uri
           </code>
-          <div class="tip" id="1021">
+          <div class="tip" id="1027">
             <strong>Signature:</strong> localFilePath:string -&gt; uri:string -&gt; string<br />
                                   </div>
         </td>
@@ -375,10 +376,10 @@ string -&gt; string -&gt; string</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1022', 1022)" onmouseover="showTip(event, '1022', 1022)">
+          <code onmouseout="hideTip(event, '1028', 1028)" onmouseover="showTip(event, '1028', 1028)">
             downloadFiles(input)
           </code>
-          <div class="tip" id="1022">
+          <div class="tip" id="1028">
             <strong>Signature:</strong> input:DownloadParameters list -&gt; string list<br />
                                   </div>
         </td>
@@ -403,10 +404,10 @@ DownloadParameters -&gt; string list</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1023', 1023)" onmouseover="showTip(event, '1023', 1023)">
+          <code onmouseout="hideTip(event, '1029', 1029)" onmouseover="showTip(event, '1029', 1029)">
             get userName password url
           </code>
-          <div class="tip" id="1023">
+          <div class="tip" id="1029">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                                   </div>
         </td>
@@ -429,10 +430,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1024', 1024)" onmouseover="showTip(event, '1024', 1024)">
+          <code onmouseout="hideTip(event, '1030', 1030)" onmouseover="showTip(event, '1030', 1030)">
             getWithHeaders(...)
           </code>
-          <div class="tip" id="1024">
+          <div class="tip" id="1030">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; Map&lt;string,string list&gt; * string<br />
                                   </div>
         </td>
@@ -448,10 +449,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1025', 1025)" onmouseover="showTip(event, '1025', 1025)">
+          <code onmouseout="hideTip(event, '1031', 1031)" onmouseover="showTip(event, '1031', 1031)">
             post url userName password data
           </code>
-          <div class="tip" id="1025">
+          <div class="tip" id="1031">
             <strong>Signature:</strong> url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -475,10 +476,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1026', 1026)" onmouseover="showTip(event, '1026', 1026)">
+          <code onmouseout="hideTip(event, '1032', 1032)" onmouseover="showTip(event, '1032', 1032)">
             postCommand(...)
           </code>
-          <div class="tip" id="1026">
+          <div class="tip" id="1032">
             <strong>Signature:</strong> headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -504,10 +505,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
+          <code onmouseout="hideTip(event, '1033', 1033)" onmouseover="showTip(event, '1033', 1033)">
             upload url file
           </code>
-          <div class="tip" id="1027">
+          <div class="tip" id="1033">
             <strong>Signature:</strong> url:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -545,7 +546,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -560,7 +561,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

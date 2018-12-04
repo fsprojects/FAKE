@@ -138,6 +138,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -1847,6 +1848,45 @@ See <a href="https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-comma
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-dotnet-ilmerge.html">ILMerge</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains task a task which allows to merge .NET assemblies with <a href="http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx">ILMerge</a>.</p>
+<h3>Sample</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;ILMerge&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+        <span class="k">let</span> <span class="id">target</span> <span class="o">=</span> <span class="o">!!./</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/*.</span><span class="id">exe</span><span class="s">&quot; |&gt; Seq.head</span>
+<span class="s">        let out = &quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="s">&quot; @@ (Path.GetFileName target)</span>
+<span class="s">        ILMerge.run</span>
+<span class="s">          { ILMerge.Params.Create() with DebugInfo = true</span>
+<span class="s">                                         TargetKind = ILMerge.TargetKind.Exe</span>
+<span class="s">                                         Internalize = ILMerge.InternalizeTypes.Internalize</span>
+<span class="s">                                         Libraries =</span>
+<span class="s">                                            Seq.concat</span>
+<span class="s">                                              [ !!&quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/</span><span class="id">Mono</span><span class="pn">.</span><span class="id">C</span><span class="o">*.</span><span class="id">dll</span><span class="s">&quot;</span>
+<span class="s">                                                !!&quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/</span><span class="id">Newton</span><span class="o">*.</span><span class="id">dll</span><span class="s">&quot; ]</span>
+<span class="s">                                         AttributeFile = target } out target)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-dotnet-mage.html">Mage</a>
           </td>
           <td class="xmldoc">
@@ -3033,7 +3073,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -3048,7 +3088,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

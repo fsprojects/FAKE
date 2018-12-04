@@ -138,6 +138,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -313,15 +314,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '969', 969)" onmouseover="showTip(event, '969', 969)">
+          <code onmouseout="hideTip(event, '974', 974)" onmouseover="showTip(event, '974', 974)">
             Tools.findToolFolderInSubPath(...)
           </code>
-          <div class="tip" id="969">
+          <div class="tip" id="974">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L242-242" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L249-249" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool in all subfolders - returns the folder where the tool was found.</p>
@@ -332,10 +333,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '970', 970)" onmouseover="showTip(event, '970', 970)">
+          <code onmouseout="hideTip(event, '975', 975)" onmouseover="showTip(event, '975', 975)">
             Tools.findToolInSubPath(...)
           </code>
-          <div class="tip" id="970">
+          <div class="tip" id="975">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
                                   </div>
         </td>
@@ -345,6 +346,26 @@
             </a>
           <p>Looks for a tool first in its default path, if not found the in ./packages/ and then
 in all subfolders of the root folder - returns the tool file name.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '976', 976)" onmouseover="showTip(event, '976', 976)">
+            Tools.tryFindToolFolderInSubPath(...)
+          </code>
+          <div class="tip" id="976">
+            <strong>Signature:</strong> toolname:string -&gt; string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L243-243" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Looks for a tool in all subfolders - returns the folder where the tool was found
+or None if not found.</p>
 
 
         </td>
@@ -374,7 +395,7 @@ in all subfolders of the root folder - returns the tool file name.</p>
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -389,7 +410,7 @@ in all subfolders of the root folder - returns the tool file name.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

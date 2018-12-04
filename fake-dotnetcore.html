@@ -139,6 +139,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -301,9 +302,8 @@ Just install the corresponding package for your system:</p>
 <p>Windows (chocolatey)</p>
 <ul>
 <li>
-<p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org).
-Basically">https://chocolatey.org).
-Basically</a> open an admin <code>cmd.exe</code> and paste</p>
+<p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org"><a href="https://chocolatey.org">https://chocolatey.org</a></a>).
+Basically open an admin <code>cmd.exe</code> and paste</p>
 <p><pre>
 <code class="lang-batch">
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('<a href="https://chocolatey.org/install.ps1'))"">https://chocolatey.org/install.ps1'))"</a> &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
@@ -496,7 +496,7 @@ fake run build.fsx
 <h2><a name="Downloads" class="anchor" href="#Downloads">Downloads</a></h2>
 <p>Get the latest packages from GitHub: <a href="https://github.com/fsharp/FAKE/releases">https://github.com/fsharp/FAKE/releases</a></p>
 <p>Get the latest binaries from chocolatey: <a href="https://chocolatey.org/packages/fake">https://chocolatey.org/packages/fake</a></p>
-<p>Get the latest dotnet-fake cli tool by adding <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies (<a href="https://www.nuget.org/packages/dotnet-fake)">https://www.nuget.org/packages/dotnet-fake)</a></p>
+<p>Get the latest dotnet-fake cli tool by adding <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies: <a href="https://www.nuget.org/packages/dotnet-fake">https://www.nuget.org/packages/dotnet-fake</a></p>
 
 				
 			</article>
@@ -520,7 +520,7 @@ fake run build.fsx
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -535,7 +535,7 @@ fake run build.fsx
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

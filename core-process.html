@@ -139,6 +139,7 @@
 								<a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
 								<a href="/apidocs/v5/fake-dotnet-fxcop.html" class="navbar-item">FxCop</a>
 								<a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+								<a href="/apidocs/v5/fake-dotnet-ilmerge.html" class="navbar-item">ILMerge</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
 									NUnit</a>
 								<a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
@@ -335,9 +336,36 @@
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawWindowsCommandLine</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="s">&quot;arg1 arg2 arg3&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommandLine</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="s">&quot;arg1 arg2 arg3&quot;</span>
 <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span> <span class="c">// start with the above configuration</span>
 <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="fn">ignore</span> <span class="c">// ignore exit code</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Or use helper libraries like <a href="https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine"><code>BlackFox.CommandLine</code></a>:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">BlackFox</span><span class="pn">.</span><span class="id">CommandLine</span>
+
+<span class="id">CmdLine</span><span class="pn">.</span><span class="id">empty</span>
+<span class="o">|&gt;</span> <span class="id">CmdLine</span><span class="pn">.</span><span class="id">append</span> <span class="s">&quot;build&quot;</span>
+<span class="o">|&gt;</span> <span class="id">CmdLine</span><span class="pn">.</span><span class="id">appendIf</span> <span class="id">noRestore</span> <span class="s">&quot;--no-restore&quot;</span>
+<span class="o">|&gt;</span> <span class="id">CmdLine</span><span class="pn">.</span><span class="id">appendPrefixIfSome</span> <span class="s">&quot;--framework&quot;</span> <span class="id">framework</span>
+<span class="o">|&gt;</span> <span class="id">CmdLine</span><span class="pn">.</span><span class="id">appendPrefixf</span> <span class="s">&quot;--configuration&quot;</span> <span class="s">&quot;%A&quot;</span> <span class="id">configuration</span>
+<span class="o">|&gt;</span> <span class="id">CmdLine</span><span class="pn">.</span><span class="id">toString</span>
+<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommandLine</span> <span class="s">&quot;dotnet.exe&quot;</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="fn">ignore</span>
 </code></pre></td>
 </tr>
 </table>
@@ -350,12 +378,12 @@
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">result</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">result</span> <span class="o">=</span>
     <span class="pn">[</span> <span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">;</span> <span class="s">&quot;arg3&quot;</span> <span class="pn">]</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span>
     <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
 
-<span class="k">if</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="fn">failwith</span> <span class="s">&quot;Command failed&quot;</span>
+<span class="k">if</span> <span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="fn">failwith</span> <span class="s">&quot;Command failed&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -383,7 +411,7 @@
 <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span>
 <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">ensureExitCode</span> <span class="c">// will make sure to throw on error</span>
 <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="fn">ignore</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="fn">ignore</span>
 
 <span class="c">// The above is roughly equivalent to the following (which you can copy and edit to customize):</span>
 
@@ -392,11 +420,11 @@
 <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">addOnExited</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">data</span> <span class="id">exitCode</span> <span class="k">-&gt;</span>
     <span class="k">if</span> <span class="id">exitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span>
         <span class="c">// TODO: throw your own exception here</span>
-        <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="id">failwithf</span> <span class="s">&quot;Process exit code &#39;%d&#39; &lt;&gt; 0. Command Line: %s&quot;</span> <span class="id">exitCode</span> <span class="id">r</span><span class="pn">.</span><span class="id">CommandLine</span>
+        <span onmouseout="hideTip(event, 'fs4', 9)" onmouseover="showTip(event, 'fs4', 9)" class="id">failwithf</span> <span class="s">&quot;Process exit code &#39;%d&#39; &lt;&gt; 0. Command Line: %s&quot;</span> <span class="id">exitCode</span> <span class="id">r</span><span class="pn">.</span><span class="id">CommandLine</span>
     <span class="k">else</span>
         <span class="id">data</span><span class="pn">)</span>
 <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="fn">ignore</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="fn">ignore</span>
 </code></pre></td>
 </tr>
 </table>
@@ -414,7 +442,7 @@
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="id">result</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">result</span> <span class="o">=</span>
     <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">redirectOutput</span>
     <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
@@ -428,10 +456,10 @@
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">if</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span>
-    <span onmouseout="hideTip(event, 'fs5', 12)" onmouseover="showTip(event, 'fs5', 12)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs2', 13)" onmouseover="showTip(event, 'fs2', 13)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Output</span>
-    <span onmouseout="hideTip(event, 'fs4', 14)" onmouseover="showTip(event, 'fs4', 14)" class="fn">failwithf</span> <span class="s">&quot;FAKE Process exited with </span><span class="pf">%d</span><span class="s">: </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span onmouseout="hideTip(event, 'fs2', 16)" onmouseover="showTip(event, 'fs2', 16)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Error</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="id">output</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Output</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">if</span> <span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span>
+    <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs2', 14)" onmouseover="showTip(event, 'fs2', 14)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Output</span>
+    <span onmouseout="hideTip(event, 'fs4', 15)" onmouseover="showTip(event, 'fs4', 15)" class="fn">failwithf</span> <span class="s">&quot;FAKE Process exited with </span><span class="pf">%d</span><span class="s">: </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs2', 16)" onmouseover="showTip(event, 'fs2', 16)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Error</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 18)" onmouseover="showTip(event, 'fs6', 18)" class="id">output</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 19)" onmouseover="showTip(event, 'fs2', 19)" class="id">result</span><span class="pn">.</span><span class="id">Result</span><span class="pn">.</span><span class="id">Output</span>
 <span class="c">// Parse output?</span>
 </code></pre></td>
 </tr>
@@ -451,18 +479,18 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs7', 19)" onmouseover="showTip(event, 'fs7', 19)" class="if">MySafeOutput</span> <span class="o">=</span> <span class="c">// ...</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 20)" onmouseover="showTip(event, 'fs8', 20)" class="fn">parseOutput</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs9', 21)" onmouseover="showTip(event, 'fs9', 21)" class="id">r</span><span class="pn">:</span><span class="id">ProcessResult</span><span class="pn">&lt;</span><span class="id">ProcessOutput</span><span class="pn">&gt;</span><span class="pn">)</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 22)" onmouseover="showTip(event, 'fs7', 22)" class="if">MySafeOutput</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="if">MySafeOutput</span> <span class="o">=</span> <span class="c">// ...</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 21)" onmouseover="showTip(event, 'fs8', 21)" class="fn">parseOutput</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs9', 22)" onmouseover="showTip(event, 'fs9', 22)" class="id">r</span><span class="pn">:</span><span class="id">ProcessResult</span><span class="pn">&lt;</span><span class="id">ProcessOutput</span><span class="pn">&gt;</span><span class="pn">)</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="if">MySafeOutput</span> <span class="o">=</span>
     <span class="c">// use r.Result.Output, r.ExitCode and create MySafeOutput</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 23)" onmouseover="showTip(event, 'fs10', 23)" class="fn">startProcess</span> <span class="pn">(</span><span class="pn">)</span> <span class="c">(*args*)</span><span class="o">=</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 24)" onmouseover="showTip(event, 'fs10', 24)" class="fn">startProcess</span> <span class="pn">(</span><span class="pn">)</span> <span class="c">(*args*)</span><span class="o">=</span>
     <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">redirectOutput</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">ensureExitCode</span> <span class="c">// optional, if your parse function can handle output from failures as well</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">map</span> <span class="id">parseOutput</span>
 
 <span class="c">// Usage:</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 24)" onmouseover="showTip(event, 'fs11', 24)" class="id">myOutput</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 25)" onmouseover="showTip(event, 'fs7', 25)" class="if">MySafeOutput</span> <span class="o">=</span>
-    <span onmouseout="hideTip(event, 'fs10', 26)" onmouseover="showTip(event, 'fs10', 26)" class="fn">startProcess</span><span class="pn">(</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 25)" onmouseover="showTip(event, 'fs11', 25)" class="id">myOutput</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 26)" onmouseover="showTip(event, 'fs7', 26)" class="if">MySafeOutput</span> <span class="o">=</span>
+    <span onmouseout="hideTip(event, 'fs10', 27)" onmouseover="showTip(event, 'fs10', 27)" class="fn">startProcess</span><span class="pn">(</span><span class="pn">)</span>
         <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
 </code></pre></td>
 </tr>
@@ -477,7 +505,7 @@ For example if you want that the user continuously "sees" the output as the proc
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 27)" onmouseover="showTip(event, 'fs6', 27)" class="id">output</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 28)" onmouseover="showTip(event, 'fs6', 28)" class="id">output</span> <span class="o">=</span>
     <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">redirectOutput</span>
     <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withOutputEventsNotNull</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">traceError</span>
@@ -500,15 +528,15 @@ For example if you want that the user continuously "sees" the output as the proc
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 28)" onmouseover="showTip(event, 'fs12', 28)" class="id">input</span> <span class="o">=</span> <span class="id">StreamRef</span><span class="pn">.</span><span class="id">Empty</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 29)" onmouseover="showTip(event, 'fs13', 29)" class="id">p1</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 29)" onmouseover="showTip(event, 'fs12', 29)" class="id">input</span> <span class="o">=</span> <span class="id">StreamRef</span><span class="pn">.</span><span class="id">Empty</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 30)" onmouseover="showTip(event, 'fs13', 30)" class="id">p1</span> <span class="o">=</span>
     <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;processIn.exe&quot;</span> <span class="pn">[</span><span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withStandardInput</span> <span class="pn">(</span><span class="id">CreatePipe</span> <span onmouseout="hideTip(event, 'fs12', 30)" onmouseover="showTip(event, 'fs12', 30)" class="id">input</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withStandardInput</span> <span class="pn">(</span><span class="id">CreatePipe</span> <span onmouseout="hideTip(event, 'fs12', 31)" onmouseover="showTip(event, 'fs12', 31)" class="id">input</span><span class="pn">)</span>
     <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">start</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs14', 31)" onmouseover="showTip(event, 'fs14', 31)" class="id">p2</span> <span class="o">=</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs14', 32)" onmouseover="showTip(event, 'fs14', 32)" class="id">p2</span> <span class="o">=</span>
     <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;outgen.exe&quot;</span> <span class="pn">[</span><span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withStandardOutput</span> <span class="pn">(</span><span class="id">UseStream</span><span class="pn">(</span><span class="k">false</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs12', 32)" onmouseover="showTip(event, 'fs12', 32)" class="id">input</span><span class="pn">.</span><span class="id">Value</span><span class="pn">)</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withStandardOutput</span> <span class="pn">(</span><span class="id">UseStream</span><span class="pn">(</span><span class="k">false</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="id">input</span><span class="pn">.</span><span class="id">Value</span><span class="pn">)</span><span class="pn">)</span>
     <span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
 </code></pre></td>
 </tr>
@@ -550,7 +578,7 @@ For example if you want that the user continuously "sees" the output as the proc
 									<ul class="has-text-grey-light">
 										<li><a href="/fake-gettingstarted.html">Getting started</a></li>
 										<li><a href="/fake-fake5-modules.html">Modules</a></li>
-										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-dependencies-within-the-script">FAKE Header</a></li>
 									</ul>
 								</div>
 								<div class="column is-6">
@@ -565,7 +593,7 @@ For example if you want that the user continuously "sees" the output as the proc
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.10.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
