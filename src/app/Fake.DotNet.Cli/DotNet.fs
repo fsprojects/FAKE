@@ -487,9 +487,17 @@ module DotNet =
         }
         static member Create() = {
             DotNetCliPath =
+                let version = try Some <| getSDKVersionFromGlobalJson() with _ -> None                              
                 findPossibleDotnetCliPaths None
-                |> Seq.tryHead
-                // shouldn't hit this one because the previous two probe PATH...
+                |> Seq.tryFind (fun cliPath -> 
+                    match version with 
+                    | Some version -> 
+                            version 
+                            |> Path.combine "sdk"
+                            |> Path.combine (Path.getDirectory cliPath)
+                            |> Directory.Exists
+                    | None -> true
+                )
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
