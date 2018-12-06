@@ -1,6 +1,8 @@
 module Fake.Core.GlobbingTests
 
+open System
 open System.IO
+open System.Reflection
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
@@ -60,3 +62,48 @@ let tests =
         finally
           Directory.Delete(testDir, true)
   ]
+
+[<Tests>]
+let toolsTests = 
+  let currentDir =
+    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+  let createUniqueDirectory () =
+      let folder = currentDir </> ((Guid.NewGuid ()).ToString())
+      Directory.CreateDirectory folder |> ignore
+      folder
+  
+  // Sequenced because otherwise folders conflict with the globbing pattern '!! "./**"' in the impl.
+  testSequencedGroup "Find tool paths" <|
+    testList "Fake.Core.Globbing.Tools.Tests" [
+      testCase "Test try find tool folder in sub path" <| fun _ ->
+        let folder = createUniqueDirectory ()
+
+        try
+          let filepath = folder </> "sometool"
+          File.create filepath |> ignore
+
+          Tools.tryFindToolFolderInSubPath "sometool"
+          |> Flip.Expect.equal "Expected tools folder to be found" (Some folder)
+        finally
+          Directory.Delete(folder, true)
+
+      testCase "Test cannot find tool folder in sub path" <| fun _ ->
+        Tools.tryFindToolFolderInSubPath "SomeMissingTool"
+        |> Flip.Expect.isNone "Expected tools folder not to be found"
+
+      testCase "Test find tool folder in sub path" <| fun _ ->
+        let folder = createUniqueDirectory ()
+
+        try
+          let filepath = folder </> "sometool"
+          File.create filepath |> ignore
+
+          Tools.findToolFolderInSubPath "sometool" "defaultToolsPath"
+          |> Flip.Expect.equal "Expected tools folder to be found" folder
+        finally
+          Directory.Delete(folder, true)
+
+      testCase "Test cannot find tool folder in sub path returns default" <| fun _ ->
+        Tools.findToolFolderInSubPath "SomeMissingTool" "defaultpath"
+        |> Flip.Expect.equal "Expected default path to be returned" "defaultpath"
+    ]

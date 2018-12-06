@@ -14,7 +14,7 @@ open Paket.FolderScanner
 let sw = System.Diagnostics.Stopwatch.StartNew()
 
 let printVersion() =
-    traceFAKE "%s" fakeVersionStr
+    traceFAKE "%s (this line is written to standard error, see https://github.com/fsharp/FAKE/issues/2066)" fakeVersionStr
 
 let printFakePath() =
     traceFAKE "FakePath: %s" fakePath
@@ -88,7 +88,7 @@ let reportExn (verb:VerboseLevel) exn =
     else { new IDisposable with member __.Dispose () = () }      
   if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
       Paket.Logging.printErrorExt true true true exn
-  else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose false exn
+  else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose verb.PrintVerbose exn
 
 let runOrBuild (args : RunArguments) =
   if args.VerboseLevel.PrintVerbose then
@@ -152,7 +152,8 @@ let runOrBuild (args : RunArguments) =
     let useCache = not args.NoCache
     try
       let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup
-      let runResult, cache, context = FakeRuntime.prepareAndRunScriptExt config
+      let prepared = FakeRuntime.prepareFakeScript config
+      let runResult, cache, context = FakeRuntime.runScript prepared
       let result =
         match runResult with
         | Runners.RunResult.SuccessRun warnings ->
@@ -179,8 +180,8 @@ let runOrBuild (args : RunArguments) =
           ErrorMessage "Script reported an error:" |> forceWrite
           reportExn args.VerboseLevel err
           false
-      if Environment.GetEnvironmentVariable "FAKE_DISABLE_HINTS" <> "true" then
-        for hint in FakeRuntime.retrieveHintsExt context runResult cache do
+      if args.VerboseLevel.PrintNormal && Environment.GetEnvironmentVariable "FAKE_DISABLE_HINTS" <> "true" then
+        for hint in FakeRuntimeHints.retrieveHints prepared context runResult cache do
           if hint.Important then
             traceFAKE "Warning: %s" hint.Text
           else

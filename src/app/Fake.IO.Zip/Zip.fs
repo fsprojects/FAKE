@@ -184,7 +184,7 @@ let unzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 
 /// Unzips a single file from the archive with the given file name.
 /// ## Parameters
-///  - `predicate` - The predictae for the searched file in the archive.
+///  - `predicate` - The predicate for the searched file in the archive.
 ///  - `zipFileName` - The file name of the zip file.
 let unzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 #if DOTNETCORE
@@ -248,7 +248,7 @@ let internal filesAsSpecsExt flatten workingDir (files:IGlobbingPattern) =
 ///                 |> Zip.moveToFolder "project3"
 ///         ]
 ///         |> Seq.concat
-///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion) "" Zip.DefaultZipLevel
+///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
 ///     )
 ///
 let filesAsSpecs workingDir files = filesAsSpecsExt false workingDir files

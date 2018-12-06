@@ -17,7 +17,6 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-let github_release_user = Environment.environVarOrDefault "github_release_user" "fsharp"
 
 // The name of the project on GitHub
 let gitName = "FAKE"
@@ -62,8 +61,33 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
+let vault =
+    match Vault.fromFakeEnvironmentOrNone() with
+    | Some v -> v
+    | None -> TeamFoundation.variables
 
-let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let getVarOrDefault name def =
+    match vault.TryGet name with
+    | Some v -> v
+    | None -> Environment.environVarOrDefault name def
+
+let mutable secrets = []
+let releaseSecret replacement name =
+    let secret =
+        lazy
+            let env = 
+                match getVarOrDefault name "default_unset" with
+                | "default_unset" -> failwithf "variable '%s' is not set" name
+                | s -> s
+            if BuildServer.buildServer <> BuildServer.TeamFoundation then
+                // on TFS/VSTS the build will take care of this.
+                TraceSecrets.register replacement env
+            env
+    secrets <- secret :: secrets
+    secret
+let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let version =
     let segToString = function
         | PreReleaseSegment.AlphaNumeric n -> n
@@ -184,13 +208,7 @@ let legacyAssemblyInfos =
         AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
 
 let publish f =
-    // Workaround
-    let path = Path.GetFullPath f
-    let name = Path.GetFileName path
-    let target = Path.Combine("artifacts", name)
-    let targetDir = Path.GetDirectoryName target
-    Directory.ensure targetDir
-    Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
+    Trace.publish ImportData.BuildArtifact f
 
 Target.create "_Legacy_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
@@ -375,11 +393,13 @@ Target.create "Legacy_CreateNuGet" (fun _ ->
 Target.create "Legacy_PublishNuget" (fun _ ->
     // uses NugetKey environment variable.
     // Timeout atm
+    Environment.setEnvironVar "nugetkey" apikey.Value
     Paket.push(fun p ->
         { p with
             PublishUrl = nugetsource
             DegreeOfParallelism = 2
             WorkingDir = nugetLegacyDir })
+    Environment.setEnvironVar "nugetkey" ""
     //!! (nugetLegacyDir </> "**/*.nupkg")
     //|> Seq.iter nugetPush
 )

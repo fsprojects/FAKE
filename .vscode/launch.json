@@ -4,17 +4,38 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Debug Build Script",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "dotnet:build:fake.sln",
+            "preLaunchTask": "dotnet:build:fake-netcore.fsproj",
             "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
             "args": [
                 "run",
-                "build.fsx",
                 "--fsiargs",
-                "--debug:portable --optimize-"
+                "--debug:portable --optimize-",
+                "build.fsx",
+                "-st",
+                "DownloadPaket"
+            ],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Debug testbuild PrintColors",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet:build:fake-netcore.fsproj",
+            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
+            "args": [
+                "run",
+                "--fsiargs",
+                "--debug:portable --optimize-",
+                "testbuild.fsx",
+                "-t",
+                "PrintColors"
             ],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
@@ -24,9 +45,21 @@
             "name": "Run Tests",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "dotnet:build:fake.sln",
+            "preLaunchTask": "dotnet:build:fake-unittests.fsproj",
             "program": "${workspaceRoot}/src/test/Fake.Core.UnitTests/bin/Debug/netcoreapp2.1/Fake.Core.UnitTests.dll",
             "args": [],
+            "cwd": "${workspaceRoot}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Run Specific Test",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet:build:fake-unittests.fsproj",
+            "program": "${workspaceRoot}/src/test/Fake.Core.UnitTests/bin/Debug/netcoreapp2.1/Fake.Core.UnitTests.dll",
+            "args": ["--run", "Fake.Core.Target.Tests/basic performance #2036"],
             "cwd": "${workspaceRoot}",
             "console": "internalConsole",
             "stopAtEntry": false,

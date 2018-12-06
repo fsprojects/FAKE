@@ -273,7 +273,8 @@ let getWorkingDir parameters =
                                        "." ]
     |> Path.GetFullPath
 
-let internal buildNUnit3Args parameters assemblies =
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+let buildArgs (parameters:NUnit3Params) (assemblies: string seq) =
     let appendResultString results sb =
         match results, sb with
         | [], sb -> StringBuilder.append "--noresult" sb
@@ -308,35 +309,49 @@ let internal buildNUnit3Args parameters assemblies =
     |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.toText
 
-let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
-    let details = assemblies |> String.separated ", "
-    use __ = Trace.traceTask "NUnit" details
+let internal createProcess createTempFile (setParams : NUnit3Params -> NUnit3Params) (assemblies : string[]) =
     let parameters = NUnit3Defaults |> setParams
-    let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
-    let args = buildNUnit3Args parameters assemblies
-    Trace.trace (tool + " " + args)
-    let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
-    let result =
-        Process.execSimple ((fun info ->
-        { info with
-            FileName = tool
-            WorkingDirectory = getWorkingDir parameters
-            Arguments = args }) >> Process.withFramework) processTimeout
-    let errorDescription error =
-        match error with
-        | OK -> "OK"
-        | TestsFailed -> sprintf "NUnit test failed (%d)." error
-        | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
+    let generatedArgs = buildArgs parameters assemblies
+    //let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
+    
+    let path = createTempFile()
+    let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
+    CreateProcess.fromRawWindowsCommandLine tool argLine
+    |> CreateProcess.withFramework
+    |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
+    //|> CreateProcess.withTimeout processTimeout
+    |> CreateProcess.addOnSetup (fun () ->
+        File.WriteAllText(path, generatedArgs)
+        Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
+    )
+    |> CreateProcess.addOnFinally (fun () ->
+        File.Delete(path)
+    )
+    |> CreateProcess.addOnExited (fun result exitCode ->
+        let errorDescription error =
+            match error with
+            | OK -> "OK"
+            | TestsFailed -> sprintf "NUnit test failed (%d)." error
+            | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
 
-    match parameters.ErrorLevel with
-    | NUnit3ErrorLevel.DontFailBuild ->
-        match result with
-        | OK | TestsFailed -> ()
-        | _ -> raise (FailedTestsException(errorDescription result))
-    | NUnit3ErrorLevel.Error | FailOnFirstError ->
-        match result with
-        | OK -> ()
-        | _ -> raise (FailedTestsException(errorDescription result))
+        match parameters.ErrorLevel with
+        | NUnit3ErrorLevel.DontFailBuild ->
+            match exitCode with
+            | OK | TestsFailed -> ()
+            | _ -> raise (FailedTestsException(errorDescription exitCode))
+        | NUnit3ErrorLevel.Error | FailOnFirstError ->
+            match exitCode with
+            | OK -> ()
+            | _ -> raise (FailedTestsException(errorDescription exitCode))
+    )
+
+let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details = assemblies |> String.separated ", "
+    use __ = Trace.traceTask "NUnit" details
+    createProcess Path.GetTempFileName setParams assemblies
+    |> Proc.run
+
     __.MarkSuccess()

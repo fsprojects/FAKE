@@ -16,20 +16,28 @@
 module Fake.Testing.ReportGenerator
 
 open System
-open System.Text
 open System.IO
 
 open Fake.Core
 open Fake.IO
+open Fake.IO.Globbing
+open Fake.IO.FileSystemOperators
 
 type ReportType =
-    | Html = 0
-    | HtmlSummary = 1
-    | Xml = 2
-    | XmlSummary = 3
-    | Latex = 4
-    | LatexSummary = 5
-    | Badges = 6
+    | Html
+    | HtmlChart
+    | HtmlInline
+    | HtmlSummary
+    | MHtml
+    | PngChart
+    | TextSummary
+    | Xml
+    | XmlSummary
+    | Latex
+    | LatexSummary
+    | Badges
+    | CsvSummary
+    | Cobertura
 
 type LogVerbosity =
     | Verbose = 0
@@ -38,7 +46,8 @@ type LogVerbosity =
 
 /// ReportGenerator parameters, for more details see: https://github.com/danielpalme/ReportGenerator.
 type ReportGeneratorParams =
-    { /// (Required) Path to the ReportGenerator exe file.
+    { 
+      /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
       /// (Required) The directory where the generated report should be saved.
       TargetDir : string
@@ -50,9 +59,22 @@ type ReportGeneratorParams =
       /// Can be used in future reports to show coverage evolution.
       HistoryDir : string
       /// Optional list of assemblies that should be included or excluded
-      /// in the report. Exclusion filters take precedence over inclusion
+      /// in the report  e.g. "-Foo.Test" (default is "+*")
+      /// Exclusion filters take precedence over inclusion
       /// filters. Wildcards are allowed.
       Filters : string list
+      /// Optional list of files that should be included or excluded
+      /// in the report e.g. "-*.xaml.cs" or "+*.cs" (default is "+*")
+      /// Exclusion filters take precedence over inclusion
+      /// filters. Wildcards are allowed.
+      FileFilters: string list
+      /// Optional list of classes that should be included or excluded
+      /// in the report  e.g. "-*Tests" (default is "+*")
+      /// Exclusion filters take precedence over inclusion
+      /// filters. Wildcards are allowed.
+      ClassFilters: string list
+      /// Optional tag or build version
+      Tag: string option
       /// The verbosity level of the log messages.
       LogVerbosity : LogVerbosity
       /// The directory where the ReportGenerator process will be started.
@@ -61,35 +83,71 @@ type ReportGeneratorParams =
       TimeOut : TimeSpan }
 
 let private currentDirectory = Directory.GetCurrentDirectory ()
+let private toolname = "ReportGenerator.exe"
 
 /// ReportGenerator default parameters
 let private ReportGeneratorDefaultParams =
-    { ExePath = "./tools/ReportGenerator/bin/ReportGenerator.exe"
+    { ExePath = Tools.findToolInSubPath toolname (currentDirectory </> "tools" </> "ReportGenerator")
       TargetDir = currentDirectory
       ReportTypes = [ ReportType.Html ]
       SourceDirs = []
-      HistoryDir = String.Empty
+      HistoryDir = null
       Filters = []
+      FileFilters = []
+      ClassFilters = []
+      Tag = None
       LogVerbosity = LogVerbosity.Verbose
       WorkingDir = currentDirectory
       TimeOut = TimeSpan.FromMinutes 5. }
 
-/// Builds the report generator command line arguments from the given parameters and reports
+/// Builds the report generator command line arguments and process from the given parameters and reports
 /// [omit]
-let private buildReportGeneratorArgs parameters (reports : string seq) =
-    let reportTypes = parameters.ReportTypes |> List.map (fun rt -> rt.ToString())
-    let sourceDirs = sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs))
-    let filters = sprintf "-filters:%s" (String.Join(";", parameters.Filters))
+let internal createProcess setParams (reports : string seq) =
+    let parameters = setParams ReportGeneratorDefaultParams
+    let tool = parameters.ExePath
 
-    new StringBuilder()
-    |> StringBuilder.append (sprintf "-reports:%s" (String.Join(";", reports)))
-    |> StringBuilder.append (sprintf "-targetdir:%s" parameters.TargetDir)
-    |> StringBuilder.appendWithoutQuotes (sprintf "-reporttypes:%s" (String.Join(";", reportTypes)))
-    |> StringBuilder.appendIfTrue (parameters.SourceDirs.Length > 0) sourceDirs
-    |> StringBuilder.appendStringIfValueIsNotNullOrEmpty (parameters.HistoryDir) (sprintf "-historydir:%s" parameters.HistoryDir)
-    |> StringBuilder.appendIfTrue (parameters.Filters.Length > 0) filters
-    |> StringBuilder.appendWithoutQuotes (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
-    |> StringBuilder.toText
+    let joinWithSemicolon (xs: string seq) = String.Join(";", xs)
+
+    let yieldIfSome paramName (value: string option) =
+        seq { match value with
+              | None -> ()
+              | Some v -> yield sprintf "-%s:%s" paramName v }
+
+    let yieldIfNotEmpty paramName (value: string seq) =
+        seq { match value |> Seq.toList with
+              | [] -> ()
+              | xs -> yield sprintf "-%s:%s" paramName (xs |> joinWithSemicolon) }
+
+    let yieldIfNotNullOrEmpty paramName value =
+        seq { if String.isNotNullOrEmpty value
+              then yield sprintf "-%s:%s" paramName value }
+
+    let args = 
+        [
+            yield! reports |> yieldIfNotEmpty "reports"
+            yield sprintf "-targetdir:%s" parameters.TargetDir
+            
+            yield! parameters.ReportTypes 
+                   |> List.map (fun rt -> rt.ToString()) 
+                   |> yieldIfNotEmpty "reporttypes"
+
+            yield! parameters.SourceDirs |> yieldIfNotEmpty "sourcedirs"
+            yield! parameters.HistoryDir |> yieldIfNotNullOrEmpty "historydir"
+            yield! parameters.Filters |> yieldIfNotEmpty "assemblyfilters"
+            yield! parameters.ClassFilters |> yieldIfNotEmpty "classfilters"
+            yield! parameters.FileFilters |> yieldIfNotEmpty "filefilters"
+            yield! parameters.Tag |> yieldIfSome "tag"
+            yield sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString())
+        ]
+        |> Arguments.OfArgs
+
+    CreateProcess.fromCommand (RawCommand(tool, args))
+    |> CreateProcess.withFramework
+    |> CreateProcess.withWorkingDirectory parameters.WorkingDir
+    |> CreateProcess.ensureExitCode
+    |> fun command -> 
+        Trace.trace command.CommandLine
+        command
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
@@ -97,20 +155,15 @@ let private buildReportGeneratorArgs parameters (reports : string seq) =
 ///  - `setParams` - Function used to overwrite the default ReportGenerator parameters.
 ///  - `reports` - Coverage reports.
 let generateReports setParams (reports : string list) =
-    let taskName = "ReportGenerator"
-    let description = "Generating reports"
-    
-    use __ = Trace.traceTask taskName description
-    let param = setParams ReportGeneratorDefaultParams
+    use __ = Trace.traceTask "ReportGenerator" "Generating reports"
 
-    let processArgs = buildReportGeneratorArgs param reports
-    Trace.tracefn "ReportGenerator command\n%s %s" param.ExePath processArgs
+    match reports with
+    | [] -> 
+        Trace.trace "No reports given. Ignoring task"
+    | reports ->
+        reports
+        |> createProcess setParams
+        |> Proc.run
+        |> ignore
 
-    let processStartInfo info = 
-      { info with FileName = param.ExePath
-                  WorkingDirectory = if param.WorkingDir |> String.isNullOrEmpty then info.WorkingDirectory else param.WorkingDir
-                  Arguments = processArgs } |> Process.withFramework
-    match Process.execSimple processStartInfo param.TimeOut with
-    | 0 -> ()
-    | v -> failwithf "ReportGenerator reported errors: %i" v
     __.MarkSuccess()

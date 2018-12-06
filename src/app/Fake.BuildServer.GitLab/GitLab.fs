@@ -37,6 +37,10 @@ module GitLabImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.Xunit -> "xunit"
 
+/// native support for GitLab specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
 [<RequireQualifiedAccess>]
 module GitLab =
 
@@ -187,7 +191,7 @@ module GitLab =
                     | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
-                | TraceData.BuildState state ->
+                | TraceData.BuildState (state, _) ->
                     write false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.ImportData (typ, path) ->
                     let name = Path.GetFileName path

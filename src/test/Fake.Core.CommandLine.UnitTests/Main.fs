@@ -3,4 +3,6 @@ open Expecto
 
 [<EntryPoint>]
 let main argv =
-    Tests.runTestsInAssembly { defaultConfig with parallel = false } argv
+    let writeResults = TestResults.writeNUnitSummary ("Fake_Core_CommandLine_UnitTests.TestResults.xml", "Fake.Core.CommandLine.UnitTests")
+    let config = defaultConfig.appendSummaryHandler writeResults
+    Tests.runTestsInAssembly { config with parallel = false } argv

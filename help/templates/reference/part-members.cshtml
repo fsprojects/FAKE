@@ -1,5 +1,5 @@
 @if (Enumerable.Count(Model.Members) > 0) {
-  <a name="@Model.Header" class="anchor" href="#@Model.Header"><h3>@Model.Header</h3></a>
+  <h2><a name="@Model.Header" class="anchor" href="#@Model.Header">@Model.Header</a></h2>
   <table class="table table-bordered member-list">
     <thead>
       <tr><td>@Model.TableHeader</td><td>Description</td></tr>
@@ -34,7 +34,7 @@
         </td>
         <td class="xmldoc">
         @if (it.IsObsolete) {
-            <div class="alert alert-warning">
+            <div class="notification is-warning">
                 <h5>OBSOLETE</h5>
                 <p>@Html.Encode(@it.ObsoleteMessage)</p>
             </div> 
@@ -42,8 +42,7 @@
           @if (!String.IsNullOrEmpty(it.Details.FormatSourceLocation))
           {
             <a href="@it.Details.FormatSourceLocation" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
+              <i class="fab fa-github fa-fw"></i>
             </a>
           }
           @it.Comment.FullText

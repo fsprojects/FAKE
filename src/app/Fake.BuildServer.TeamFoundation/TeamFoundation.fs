@@ -6,25 +6,67 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+/// native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html)
+/// 
+/// ### Secret Variables
+/// 
+/// This CI server supports the concept of secret variables and uses the [Vault](/core-vault.html) to store them.
+/// In order to access secret variables you need to use one of the fake 5 tasks from [vsts-fsharp](https://github.com/isaacabraham/vsts-fsharp).
+/// 
+/// #### Example implementation (supports runner and vault tasks)
+///
+///        // Either use a local vault filled by the 'FAKE_VAULT_VARIABLES' environment variable
+///        // or fall back to the build process if none is given
+///        let vault =
+///            match Vault.fromFakeEnvironmentOrNone() with
+///            | Some v -> v // fake 5 vault task, uses 'FAKE_VAULT_VARIABLES' by default
+///            | None -> TeamFoundation.variables // fake 5 runner task
+///        
+///        // Only needed if you want to fallback to 'normal' environment variables (locally for example)
+///        let getVarOrDefault name =
+///            match vault.TryGet name with
+///            | Some v -> v
+///            | None -> Environment.environVarOrFail name
+///        Target.create "Deploy" (fun _ ->
+///            let token = getVarOrDefault "github_token"
+///            // Use token to deploy to github
+/// 
+///            let apiKey = getVarOrDefault "nugetkey"
+///            // Use apiKey to deploy to nuget
+///            ()
+///        )
+///
 [<RequireQualifiedAccess>]
 module TeamFoundation =
     // See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
     
     let write action properties message =
-        let ensureProp (s:string) =
-            // TODO: Escaping!
+        // https://github.com/Microsoft/vsts-task-lib/blob/3a7905b99d698a535d9f5a477efc124894b8d2ae/node/taskcommand.ts
+        let ensurePropVal (s:string) =
+            s.Replace("\r", "%0D")
+             .Replace("\n", "%0A")
+             .Replace("]", "%5D")
+             .Replace(";", "%3B")
+        let ensurePropName (s:string)=
             if s.Contains ";" || s.Contains "=" || s.Contains "]" then
-                failwithf "property name or value cannot contain ';', '=' or ']'"
-            s            
+                failwithf "property name cannot contain ';', '=' or ']'"
+            s
+        let ensureMsg (s:string) =
+            s.Replace("\r", "%0D").Replace("\n", "%0A");                  
         let formattedProperties =
             let temp =
                 properties  
-                |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
+                |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensurePropName prop) (ensurePropVal value))
                 |> String.separated ""
             if String.isNullOrWhiteSpace temp then "" else " " + temp
         sprintf "##vso[%s%s]%s" action formattedProperties message
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
+
+    let private seqToPropValue (args:_ seq) = System.String.Join(",", args)
+    let setVariable variableName value =
+        write "task.setvariable" ["variable", variableName] value
         
     let private toType t o =
         o |> Option.map (fun value -> t, value)
@@ -41,13 +83,32 @@ module TeamFoundation =
 
     let private publishArtifact artifactFolder artifactName path =
         let parameters = ["containerfolder", artifactFolder] @ toList "artifactname" artifactName
-        write "artifact.upload" parameters path
+        write "artifact.upload" parameters (Path.GetFullPath path)
 
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
 
     let setBuildState state message =
         write "task.complete" ["result", state] message
+
+    // undocumented API: https://github.com/Microsoft/vsts-task-lib/blob/3a7905b99d698a535d9f5a477efc124894b8d2ae/node/task.ts#L1717
+    let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool) (platform:string) (config:string) (runTitle:string) (publishRunAttachments:bool) =
+        write "results.publish"
+            [ yield "type", runnerType
+              if mergeResults then
+                yield "mergeResults", "true"
+              if String.isNotNullOrEmpty platform then
+                yield "platform", platform
+              if String.isNotNullOrEmpty config then
+                yield "config", config
+              if String.isNotNullOrEmpty runTitle then
+                yield "runTitle", runTitle
+              if publishRunAttachments then
+                yield "publishRunAttachments", "true"
+              if not (Seq.isEmpty resultsFiles) then
+                yield "resultFiles", resultsFiles |> Seq.map Path.GetFullPath |> seqToPropValue
+              yield "testRunSystem", "VSTSTask" ]
+            ""
 
     type internal LogDetailState =
         | Unknown
@@ -82,11 +143,63 @@ module TeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    /// Access (secret) build variables
+    let variables = Vault.fromEnvironmentVariable "FAKE_VSTS_VAULT_VARIABLES"  
+
+    type BuildReason =
+        | Manual
+        | IndividualCI
+        | BatchedCI
+        | Schedule
+        | ValidateShelveset
+        | CheckInShelvset
+        | PullRequest
+        | BuildCompletion
+        | Other of string
+
+
     type Environment =
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
         static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
         static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
         static member BuildId = Environment.environVar "BUILD_BUILDID"
+        static member BuildReason =
+            match Environment.environVar "BUILD_REASON" with
+            | "Manual" -> BuildReason.Manual
+            | "IndividualCI" -> BuildReason.IndividualCI
+            | "BatchedCI" -> BuildReason.BatchedCI
+            | "Schedule" -> BuildReason.Schedule
+            | "ValidateShelveset" -> BuildReason.ValidateShelveset
+            | "CheckInShelvset" -> BuildReason.CheckInShelvset
+            | "PullRequest" -> BuildReason.PullRequest
+            | "BuildCompletion" -> BuildReason.BuildCompletion
+            | s -> BuildReason.Other s
+
+        static member SystemPullRequestIsFork =
+            let s = Environment.environVar "SYSTEM_PULLREQUEST_ISFORK"
+            if String.IsNullOrEmpty s  then None
+            else
+                match bool.TryParse(s) with
+                | true, v -> Some v
+                | _ -> None
+        static member SystemPullRequestPullRequestId = Environment.environVar "SYSTEM_PULLREQUEST_PULLREQUESTID"
+        static member SystemPullRequestSourceBranch = Environment.environVar "SYSTEM_PULLREQUEST_SOURCEBRANCH"
+        static member SystemPullRequestSourceRepositoryURI = Environment.environVar "SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"
+        static member SystemPullRequestTargetBranch = Environment.environVar "SYSTEM_PULLREQUEST_TARGETBRANCH"
+
+
+    let private publishArtifactIfOk artifactFolder artifactName path =
+        let pushAnyWay = Environment.environVarAsBoolOrDefault "FAKE_VSO_PUSH_ALWAYS" false
+        let canPush =
+            match Environment.SystemPullRequestIsFork with
+            | Some true when Environment.BuildReason = BuildReason.PullRequest -> false
+            | _ -> true
+        if pushAnyWay || canPush then
+            publishArtifact artifactFolder artifactName path    
+        else
+            logIssue true None None None None 
+                (sprintf "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
+                    path)
 
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
@@ -102,7 +215,9 @@ module TeamFoundation =
                 let color = ConsoleWriter.colorMap msg
                 let writeConsole = ConsoleWriter.write
                 match msg with
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                | TraceData.ErrorMessage text ->
+                    logIssue false None None None None text
+                | TraceData.ImportantMessage text ->
                     logIssue true None None None None text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     writeConsole false color newLine text
@@ -133,17 +248,25 @@ module TeamFoundation =
                         | TagStatus.Failed -> LogDetailResult.Failed
                         | TagStatus.Success -> LogDetailResult.Succeeded               
                     setLogDetailFinished id result
-                | TraceData.BuildState state ->
+                | TraceData.BuildState (state, _) ->
                     let vsoState, msg =
                         match state with
                         | TagStatus.Success -> "Succeeded", "OK" 
                         | TagStatus.Warning -> "SucceededWithIssues", "WARN"
                         | TagStatus.Failed -> "Failed", "ERROR"
                     setBuildState vsoState msg
+                | TraceData.ImportData (ImportData.Junit _, path) ->
+                    publishTests "JUnit" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Nunit _, path) ->
+                    publishTests "NUnit" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Mstest _, path) ->
+                    publishTests "VSTest" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Xunit _, path) ->
+                    publishTests "XUnit" [path] false "" "" "" true
                 | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
-                    publishArtifact name (Some name) path
+                    publishArtifactIfOk name (Some name) path
                 | TraceData.ImportData (typ, path) ->
-                    publishArtifact typ.Name (Some "fake-artifacts") path
+                    publishArtifactIfOk typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->

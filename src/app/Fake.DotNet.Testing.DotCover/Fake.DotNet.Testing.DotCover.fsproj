@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
+    <AssemblyName>Fake.DotNet.Testing.DotCover</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="DotCover.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.DotNet.Testing.MSpec\Fake.DotNet.Testing.MSpec.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.Testing.MSTest\Fake.DotNet.Testing.MSTest.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.Testing.NUnit\Fake.DotNet.Testing.NUnit.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.Testing.XUnit2\Fake.DotNet.Testing.XUnit2.fsproj" />
+    <ProjectReference Include="..\Fake.Testing.Common\Fake.Testing.Common.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>

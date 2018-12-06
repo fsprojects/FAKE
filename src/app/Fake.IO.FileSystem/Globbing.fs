@@ -20,7 +20,9 @@ type private SearchOption =
     | FilePattern of string
 
 let private checkSubDirs absolute (dir : string) root =
-    if dir.Contains "*" then Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+    if dir.Contains "*" then 
+        try Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+        with :? System.IO.DirectoryNotFoundException -> List.empty
     else 
         let path = Path.Combine(root, dir)
         
@@ -30,42 +32,36 @@ let private checkSubDirs absolute (dir : string) root =
         if di.Exists then [ di.FullName ]
         else []
 
-let rec private buildPaths acc (input : SearchOption list) = 
+let rec private buildPaths acc (input : SearchOption list) =
     match input with
     | [] -> acc
-    | Directory(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs false name)
-            |> List.concat
+    | Directory name :: t ->
+        let subDirs = List.collect (checkSubDirs false name) acc
         buildPaths subDirs t
-    | Drive(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs true name)
-            |> List.concat
+    | Drive name :: t ->
+        let subDirs = List.collect (checkSubDirs true name) acc
         buildPaths subDirs t
-    | Recursive :: [] -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) []
-    | Recursive :: t -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) t
-    | FilePattern(pattern) :: t -> 
-         Seq.collect (fun dir -> 
-                            if Directory.Exists(Path.Combine(dir, pattern))
-                            then seq { yield Path.Combine(dir, pattern) }
-                            else 
-                                try
-                                    Directory.EnumerateFiles(dir, pattern)
-                                with
-                                    | :? System.IO.PathTooLongException as ex ->
-                                        Array.toSeq [| |]
-                            ) acc |> Seq.toList
+    | Recursive :: [] ->
+        let dirs =
+            Seq.collect (fun dir -> 
+                try Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)
+                with :? System.IO.DirectoryNotFoundException -> Seq.empty) acc
+        buildPaths (acc @ Seq.toList dirs) []
+    | Recursive :: t ->
+        let dirs =
+            Seq.collect (fun dir -> 
+                try Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)
+                with :? System.IO.DirectoryNotFoundException -> Seq.empty) acc
+        buildPaths (acc @ Seq.toList dirs) t
+    | FilePattern pattern :: _ ->
+        acc |> List.collect (fun dir ->
+            if Directory.Exists (Path.Combine (dir, pattern)) then [Path.Combine (dir, pattern)]
+            else
+                try
+                    Directory.EnumerateFiles (dir, pattern) |> Seq.toList
+                with
+                | :? System.IO.DirectoryNotFoundException
+                | :? System.IO.PathTooLongException -> [])
 
 let private driveRegex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
 
@@ -98,9 +94,9 @@ let internal getRoot (baseDirectory : string) (pattern : string) =
     if Path.IsPathRooted globRoot then globRoot
     else Path.Combine(baseDirectory, globRoot)
 
-let internal search (baseDir : string) (input : string) = 
+let internal search (baseDir : string) (originalInput : string) =
     let baseDir = normalizePath baseDir
-    let input = normalizePath input
+    let input = normalizePath originalInput
     let input =
         if String.IsNullOrEmpty baseDir
         then input
@@ -126,7 +122,11 @@ let internal search (baseDir : string) (input : string) =
             elif splits.Length >= 2 && Path.IsPathRooted input && input.StartsWith "/" then
                 [ Directory("/") ], splits |> Array.toSeq
             else
-                if Path.IsPathRooted input then failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" input
+                if Path.IsPathRooted input then
+                    if input.StartsWith "\\"
+                    then // https://github.com/fsharp/FAKE/issues/2073
+                         failwithf "Please remove the leading '\\' or '/' and replace them with '.\\' or './' if you want to use a relative path. Leading slashes are considered an absolute path (input was '%s')!" originalInput
+                    else failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" originalInput
                 [], splits |> Array.toSeq
         let restList =
             rest    

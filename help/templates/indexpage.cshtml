@@ -1,114 +1,249 @@
 ﻿@{
-  Layout = "template";
-  Title = Properties["page-title"];
-  //Description = Properties["project-summary"];
-  
-  // Properties["current-page"] = "APIReference";
-  ViewBag.CurrentPage = "Home";
-  ViewBag.HasBanner = true;
+	Layout = "template";
+	Title = Properties["page-title"];
+	ViewBag.CurrentPage = "Home";
 }
 
-@section Banner {
-							<div id="banner">
-								<h2><strong>F# Make 5</strong> - A DSL for build tasks and more
-								<br />
-								The power of F# - anywhere - anytime</h2>
-								<p>FAKE 5 is stable, but as a community project we always have work to do ... PLEASE HELP
-                                </p>
-								<a href="fake-fake5-learn-more.html" class="button big icon fa-check-circle">Learn more</a>
-							</div>
-}
+<div class="hero is-dark is-medium">
+	<div class="hero-body has-text-centered">
+		<div class="container">
+			<h1 class="title is-1 is-spaced is-1">
+				FAKE
+			</h1>
 
+			<h2 class="subtitle is-2 is-uppercase">
+				<div>A DSL for build tasks and more</div>
+				<div>The power of F# - anywhere - anytime</div>
+			</h2>
 
-					<div class="wrapper style1">
-						<div class="inner">
+			<a href="fake-gettingstarted.html" class="button is-primary is-large">Learn more</a>
+		</div>
+	</div>
+</div>
 
-							<!-- Feature 1 -->
-								<section class="container box feature1">
-									<div class="row">
-										<div class="12u">
-											<header class="first major">
-												<h2>What's new in FAKE 5?</h2>
-												<p>FAKE 5 was built on several key <strong>design principles</strong> ...</p>
-											</header>
-										</div>
-									</div>
-									<div class="row">
-										<div class="4u 12u(mobile)">
-											<section>
-                                                <!-- from https://iconmonstr.com/cube-18/?font with help from https://css-tricks.com/examples/IconFont/ -->
-												<a href="fake-fake5-modules.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-cubes" ></i><!--<img src="images/modularization.svg" alt="" />--></a>
-												<header class="second icon fa-user">
-													<h3>Modularization</h3>
-													<p>Only pay for what you need</p>
-												</header>
-											</section>
-										</div>
-										<div class="4u 12u(mobile)">
-											<section>
-												<a href="fake-fake5-custom-modules.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-code"></i></a>
-												<header class="second icon fa-cog">
-													<h3>Extensibility</h3>
-													<p>Integrate your own modules</p>
-												</header>
-											</section>
-										</div>
-										<div class="4u 12u(mobile)">
-											<section>
-												<a href="fake-gettingstarted.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-timer"></i></a>
-												<header class="second icon fa-bar-chart-o">
-													<h3>Quickstart</h3>
-													<p>Get started as fast as possible</p>
-												</header>
-											</section>
-										</div>
-									</div>
-									<div class="row">
-										<div class="12u">
-											<p>All these principles lead to a new level of usability in FAKE 5. 
-                                            This will open up a lot of opportunities for FAKE to go where it has never gone before.</p>
-										</div>
-									</div>
-								</section>
+<div class="container">
+	<section class="section is-small">
+		<div class="hero">
+			<div class="hero-body">
+				<div class="container">
+					<h2 class="title is-2 is-uppercase">Why use Fake?</h2>
+					<h3 class="subtitle is-3 is-uppercase">Fake is built on several key design principles ...</h3>
+				</div>
+			</div>
+		</div>
 
+		<div class="container is-fluid columns">
+			<div class="column">
+				<a href="/fake-fake5-modules.html">
+					<div class="media">
+						<div class="media-left">
+							<i class="fa fa-3x fa-cubes fa-fw"></i>
+						</div>
+						<div class="media-content">
+							<h5 class="title is-5 is-uppercase">Modularization</h5>
+							<h6 class="subtitle is-6">Only pay for what you need</h6>
 						</div>
 					</div>
-					<div class="wrapper style2">
-						<div class="inner">
-
-							<!-- Feature 2 -->
-								<section class="container box feature2">
-									<div class="row">
-										<div class="6u 12u(mobile)">
-											<section>
-												<header class="major">
-													<h2>Migration</h2>
-													<p>There is a clear migration path to FAKE 5</p>
-												</header>
-												<p>No, your current build scripts will not break, but the development
-                                                of new features for FAKE 4 and the old way of using FAKE are no longer supported.</p>
-												<footer>
-													<a href="fake-migrate-to-fake-5.html" class="button medium icon fa-arrow-circle-right">Start Migrating</a>
-												</footer>
-											</section>
-										</div>
-										<div class="6u 12u(mobile)">
-											<section>
-												<header class="major">
-													<h2>Bootstrapping</h2>
-													<p>FAKE 5 now supports a lot more bootstrapping options</p>
-												</header>
-												<p>Every project has different needs. Therefore, FAKE 5 supports 
-                                                several ways to bootstrap the build process.
-                                                From an assumed installation - for example via chocolatey - to
-                                                automatically updated bootstrapping scripts.</p>
-												<footer>
-													<a href="fake-gettingstarted.html" class="button medium alt icon fa-info-circle">Read on</a>
-												</footer>
-											</section>
-										</div>
-									</div>
-								</section>
-
-							</div>
+				</a>
+			</div>
+			<div class="column">
+				<a href="/fake-fake5-custom-modules.html">
+					<div class="media">
+						<div class="media-left">
+							<i class="fa fa-3x fa-cogs fa-fw"></i>
+						</div>
+						<div class="media-content">
+							<h5 class="title is-5 is-uppercase">Extensibility</h5>
+							<h6 class="subtitle is-6">Integrate your own modules</h6>
+						</div>
 					</div>
+				</a>
+			</div>
+			<div class="column">
+				<a href="/fake-gettingstarted.html">
+					<div class="media">
+						<div class="media-left">
+							<i class="fa fa-3x fa-stopwatch fa-fw"></i>
+						</div>
+						<div class="media-content">
+							<h5 class="title is-5 is-uppercase">Quickstart</h5>
+							<h6 class="subtitle is-6">Get started as fast as possible</h6>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section is-small">
+		<div class="columns same-height-columns">
+			<div class="column is-6 same-height-column">
+				<h2 class="title is-2 is-spaced">
+					Bootstrapping
+				</h2>
+				<h4 class="subtitle is-4">
+					Every project has different needs. Therefore, FAKE supports several ways to
+					bootstrap the build process. From an assumed installation - for example via
+					chocolatey - to automatically updated bootstrapping scripts.
+				</h4>
+
+				<a href="fake-gettingstarted.html" class="button is-primary is-large at-bottom">Start now</a>
+			</div>
+
+			<div class="column is-6 same-height-column">
+				<h2 class="title is-2 is-spaced">
+					Migration
+				</h2>
+
+				<h4 class="subtitle is-4">
+					Still using FAKE 4? No, your current build scripts will not break, but the
+					development of new features for FAKE 4 and the old way of using FAKE are no longer
+					supported.
+				</h4>
+
+				<a href="fake-migrate-to-fake-5.html" class="button is-primary is-large at-bottom">Migrate now</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="columns">
+			<div class="column is-6">
+				<h3 class="title is-3 is-spaced">A simple build script</h3>
+				<h5 class="subtitle is-5">This is a simple build script in FAKE. Build scripts can contain multiple
+					targets which can do different things like building your app or publishing it. They are written
+					in F# and can contain references to third party library by including them directly or via
+					Paket.</h5>
+			</div>
+
+			<div class="column is-6">
+
+				<pre class="fssnip highlighted line-numbers">
+					<code class="language-fsharp">
+						#r "paket:
+						nuget Fake.Core.Target //"
+						#load "./.fake/build.fsx/intellisense.fsx"
+
+						open Fake.Core
+
+						// Default target
+						Target.create "Default" (fun _ ->
+							Trace.trace "Hello World from FAKE"
+						)
+
+						// start build
+						Target.runOrDefault "Default"
+					</code>
+				</pre>
+			</div>
+
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="columns">
+			<div class="column is-6">
+				<h3 class="title is-3 is-spaced">Target dependencies</h3>
+				<h5 class="subtitle is-5">Targets in your build script might have dependencies on other targets
+					like cleaning up your output folder before building your app. FAKE supports specifing
+					dependenies between your targets. While it might look a bit strange at first, just read it from
+					the bottom to the top.</h5>
+			</div>
+
+			<div class="column is-6">
+				<pre class="fssnip highlighted line-numbers">
+					<code class="language-fsharp">
+							#r "paket:
+							nuget Fake.IO.FileSystem
+							nuget Fake.Core.Target //"
+							#load "./.fake/build.fsx/intellisense.fsx"
+
+							open Fake.Core
+							open Fake.IO
+
+							// Properties
+							let buildDir = "./build/"
+
+							// Targets
+							Target.create "Clean" (fun _ ->
+								Shell.cleanDir buildDir
+							)
+
+							Target.create "Default" (fun _ ->
+								Trace.trace "Hello World from FAKE"
+							)
+
+							// Dependencies
+							open Fake.Core.TargetOperators
+
+							"Clean"
+								==> "Default"
+
+							// start build
+							Target.runOrDefault "Default"
+					</code>
+				</pre>
+			</div>
+
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="columns">
+			<div class="column is-6">
+				<h3 class="title is-3 is-spaced">Globbing</h3>
+				<h5 class="subtitle is-5">In order to search for files deep down in your folder structure, FAKE
+					supports globbing. The following build script can search for project files in a given folder
+					path and compile them using MSBuild. To give you even more power, FAKE can exclude and include
+					additional files.</h5>
+			</div>
+
+			<div class="column is-6">
+				<pre class="fssnip highlighted line-numbers">
+					<code class="language-fsharp">
+							#r "paket:
+							nuget Fake.IO.FileSystem
+							nuget Fake.DotNet.MSBuild
+							nuget Fake.Core.Target //"
+							#load "./.fake/build.fsx/intellisense.fsx"
+
+							open Fake.IO
+							open Fake.IO.Globbing.Operators //enables !! and globbing
+							open Fake.DotNet
+							open Fake.Core
+
+							// Properties
+							let buildDir = "./build/"
+
+							// Targets
+							Target.create "Clean" (fun _ ->
+								Shell.cleanDir buildDir
+							)
+
+							Target.create "BuildApp" (fun _ ->
+								!! "src/app/**/*.csproj"
+								++ "src/*/*.target"
+								-- "src/*/*.vbproj"
+								|> MSBuild.runRelease id buildDir "Build"
+								|> Trace.logItems "AppBuild-Output: "
+							)
+
+							Target.create "Default" (fun _ ->
+								Trace.trace "Hello World from FAKE"
+							)
+
+							open Fake.Core.TargetOperators
+
+							"Clean"
+								==> "BuildApp"
+								==> "Default"
+
+							// start build
+							Target.runOrDefault "Default"
+					</code>
+				</pre>
+			</div>
+
+		</div>
+	</section>
+</div>

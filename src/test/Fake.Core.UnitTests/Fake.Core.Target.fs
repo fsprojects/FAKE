@@ -1,21 +1,20 @@
 module Fake.Core.TargetTests
 
+open System
 open Fake.Core
 open Expecto
+open System.Collections
+open System.Collections.Generic
 
 let run targetName =
-    try Target.runAndGetContext 1 targetName []
-    with | :? BuildFailedException as bfe ->
-        match bfe.Info with
-        | Some context -> context
-        | None -> failwithf "No context given!"
+    match (Target.WithContext.run 1 targetName []).Context with
+    | Some c -> c
+    | None -> failwithf "Expected (Some(context)) but got None!"
 
 let runParallel targetName =
-    try Target.runAndGetContext 3 targetName []
-    with | :? BuildFailedException as bfe ->
-        match bfe.Info with
-        | Some context -> context
-        | None -> failwithf "No context given!"
+    match (Target.WithContext.run 3 targetName []).Context with
+    | Some c -> c
+    | None -> failwithf "Expected (Some(context)) but got None!"
 
 open Fake.Core.TargetOperators
 
@@ -35,10 +34,66 @@ let testCaseMultipleRuns name f = [
     Fake.ContextHelper.fakeContextTestCase (sprintf "%s - runParallel" name) <| fun c -> f runParallel c 
 ]
 
+type TestTarget =
+| TestTarget of string
+| TestTargetGroup of TestTarget list
+    member x.TargetNames = seq {
+        match x with
+        | TestTarget s -> yield s
+        | TestTargetGroup g -> yield! g |> Seq.collect (fun g -> g.TargetNames)
+    }
+
+module TestTarget =
+    let create name body =
+        Target.create name body
+        TestTarget name
+
 [<Tests>]
 let tests =
   testList "Fake.Core.Target.Tests" (
     [
+    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 10.0) "basic performance #2036" <| fun _ ->
+        let counter = 2500
+        CoreTracing.setTraceListeners [] // silence
+        let all_Pipelines = Dictionary<string,TestTarget>(System.StringComparer.OrdinalIgnoreCase :> IEqualityComparer<string>)
+
+        /// The last target is the name of the pipeline
+        let SetPipelineRelations (targets:TestTarget list) : unit =
+            let targetNames = targets |> Seq.collect (fun t -> t.TargetNames)
+            let last = targetNames |> Seq.last
+            all_Pipelines.[last] <- TestTargetGroup targets
+            for (a,b) in targetNames |> Seq.pairwise do
+                a ?=> b |> ignore
+                a ==> last |> ignore
+
+        let CreatePipeline name (targets: TestTarget list) : unit =    
+            let p = TestTarget.create name ignore
+            SetPipelineRelations [ yield (TestTargetGroup targets); yield p ]
+
+        let t_targets =
+            TestTargetGroup [
+                for i in 0 .. counter ->
+                    TestTarget.create (sprintf "Target_%i" i) ignore
+            ]
+            
+        [ t_targets ] |> CreatePipeline "Run.1"
+        //Target.printDependencyGraph true "Run.1"
+        Target.runOrDefaultWithArguments "Run.1"
+
+    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 10.0) "basic performance (1)" <| fun _ ->
+        let counter = 5000
+        CoreTracing.setTraceListeners [] // silence
+        Target.create "A" ignore
+        Target.create "U" ignore
+        for i in 1 .. counter do
+            let n = sprintf "T%d" i
+            Target.create n ignore
+            "A" ==> n ==> "U" |> ignore
+            
+        let context = run "U"
+        ignore context
+
+    
     Fake.ContextHelper.fakeContextTestCase "handle casing in target runner" <| fun _ ->
         Target.create "aA" ignore
         Target.create "bB" ignore

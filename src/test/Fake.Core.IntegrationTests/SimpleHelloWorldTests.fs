@@ -11,7 +11,7 @@ let fail s = Expect.isTrue s false
 
 [<Tests>]
 let tests = 
-  testList "Fake.Core.CommandLineParsing.Tests" [
+  testList "Fake.Core.IntegrationTests" [
     testCase "no dependencies hello world" <| fun _ ->
         let result = fakeRunAndCheck "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
         let stdOut = String.Join("\n", result.Messages)

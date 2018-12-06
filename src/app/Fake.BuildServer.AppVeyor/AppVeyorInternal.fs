@@ -10,19 +10,47 @@ module internal AppVeyorInternal =
     let environVar = Environment.environVar
     let getJobId () = environVar "APPVEYOR_JOB_ID"
     let internal sendToAppVeyor args =
-        Process.execSimple (fun info ->
-            { info with 
-                FileName = "appveyor"
-                Arguments = args}) (System.TimeSpan.MaxValue)
+        let argsList = Arguments.OfStartInfo args
+        CreateProcess.fromCommand <| RawCommand("appveyor", argsList)
+        |> CreateProcess.disableTraceCommand
+        |> Proc.run
         |> ignore
 
-    let private add msg category =
+    type MessageCategory =
+        | Information
+        | Warning
+        | Error
+        | NoCategory
+        member x.AsString =
+            match x with
+            | Information -> Some "Information"
+            | Warning -> Some "Warning"
+            | Error -> Some "Error"
+            | NoCategory -> None
+
+    let AddMessage (category:MessageCategory) details msg =
         if not <| String.isNullOrEmpty msg then
             //let enableProcessTracingPreviousValue = Process.enableProcessTracing
             //Process.enableProcessTracing <- false
-            sprintf "AddMessage %s -Category %s" (Process.quoteIfNeeded msg) (Process.quoteIfNeeded category) |> sendToAppVeyor
+            try
+                [ yield "AddMessage"
+                  yield msg
+                  match category.AsString with
+                  | Some cat ->
+                      yield "-Category"
+                      yield cat
+                  | None -> ()
+                  if not (System.String.IsNullOrEmpty details) then
+                      yield "-Details"
+                      yield details ]
+                |> Args.toWindowsCommandLine
+                |> sendToAppVeyor
+            with e ->
+                // because otherwise there might be recursive failure...
+                eprintfn "AppVeyor 'AddMessage' failed: %O" e             
+            //sprintf "AddMessage %s -Category %s" (Process.quoteIfNeeded msg) (category.ToString())
             //Process.enableProcessTracing <- enableProcessTracingPreviousValue
-    let private addNoCategory msg = sprintf "AddMessage %s" (Process.quoteIfNeeded msg) |> sendToAppVeyor
+    //let private addNoCategory msg = sprintf "AddMessage %s" (Process.quoteIfNeeded msg) |> sendToAppVeyor
 
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =

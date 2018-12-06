@@ -38,6 +38,10 @@ module AppVeyorImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.Xunit -> "xunit"
 
+/// native support for AppVeyor specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
 [<RequireQualifiedAccess>]
 module AppVeyor =
     // See https://www.appveyor.com/docs/build-worker-api/#update-tests
@@ -271,7 +275,7 @@ module AppVeyor =
                     currentTestSuite <- Some name
                 | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
                     currentTestSuite <- None
-                | TraceData.BuildState state ->
+                | TraceData.BuildState (state, _) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.OpenTag (tag, descr) ->
                     match descr with
@@ -279,8 +283,12 @@ module AppVeyor =
                     | _ -> ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                | TraceData.ImportantMessage text ->
                     ConsoleWriter.writeAnsiColor false color true text
+                    AppVeyorInternal.AddMessage AppVeyorInternal.MessageCategory.Warning "" text
+                | TraceData.ErrorMessage text ->
+                    ConsoleWriter.writeAnsiColor false color true text
+                    AppVeyorInternal.AddMessage AppVeyorInternal.MessageCategory.Error "" text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.writeAnsiColor false color newLine text
                 | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit, path) ->

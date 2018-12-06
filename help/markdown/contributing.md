@@ -132,7 +132,7 @@ e.g: Using dotnet cli
   
     e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 
-        #r "paket: 
+        #r "paket:
         source path/to/Fake.DotNet.NuGet/bin/Debug/
         source https://api.nuget.org/v3/index.json
         ...Other Dependencies...
@@ -155,6 +155,8 @@ If you ever need a release/bugfix fast, make sure to mention that in your PR, we
      Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
      Those bits should be considered for "unblocking"-purposes or testing only.
 </div>
+
+The [release process](https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&view=mine&_a=releases) is publicly available as well.
 
 ## General considerations
 

@@ -1,8 +1,144 @@
 # Release Notes
 
-## 5.4.2-alpha tbd
+## 5.11.1-alpha - tbd
 
-* Tbd.
+* tbd
+
+## 5.11.0 - 2018-12-03
+
+* DOCUMENTATION: Further fixes on the website - https://github.com/fsharp/FAKE/pull/2196 & https://github.com/fsharp/FAKE/pull/2202
+* DOCUMENTATION: Fix DotNet.NuGet samples - https://github.com/fsharp/FAKE/pull/2198/files
+* DOCUMENTATION: Smaller fixes - https://github.com/fsharp/FAKE/pull/2211 & https://github.com/fsharp/FAKE/pull/2213 & https://github.com/fsharp/FAKE/pull/2212 &  https://github.com/fsharp/FAKE/pull/2217 & https://github.com/fsharp/FAKE/pull/2208 & https://github.com/fsharp/FAKE/pull/2209
+* NEW: module `Fake.DotNet.ILMerge` - https://github.com/fsharp/FAKE/pull/2195
+* ENHANCEMENT: Support netcore paket (global tool) - https://github.com/fsharp/FAKE/pull/2191
+* ENHANCEMENT: Properly fail when using FxCop on non-windows
+* (Minor) BREAKING: Drop support for `netstandard1.6` (please open an issue if that actually hits you).
+* BUGFIX: Fail on non-windows - https://github.com/fsharp/FAKE/pull/2200
+* BUGFIX: Globbing fails when directory is deleted at the same time - https://github.com/fsharp/FAKE/issues/2203
+* BUGFIX: Custom escaping was not working with `fromRawWindowsCommandLine` - https://github.com/fsharp/FAKE/issues/2197
+
+## 5.10.1 - 2018-11-11
+
+* DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
+* ICON: Fake has a new icon (again huge thanks to @FlorianBaderDE)
+* NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
+* NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
+* ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* ENHANCEMENT: the fake template now supports the buildtask-dsl - https://github.com/fsharp/FAKE/pull/2177
+* ENHANCEMENT: add new fake hints for https://github.com/fsharp/FAKE/issues/2097, https://github.com/fsharp/FAKE/issues/2099 and https://github.com/fsharp/FAKE/issues/2181
+* BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* BUGFIX: NuGet.Version.getLastNuGetVersion failed for some servers - https://github.com/fsharp/FAKE/pull/2170
+* BUGFIX: Fake.DotNet.Tesing.NUnit failed to work when temporary-directory contains spaces (for example if windows username contains spaces) - https://github.com/fsharp/FAKE/pull/2180
+* BUGFIX: `--silent` now disables fake hints as well
+* (Minor) BREAKING: Refactor & cleanup `Fake.Runtime` internals - make sure to open an issue if you are hit by this.
+* OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
+
+## 5.10.0 - 2018-11-11
+
+* DOCUMENTATION: New homepage design for fake.build, huge thanks to @FlorianBaderDE (with help from @JarnoNijboer) - https://github.com/fsharp/FAKE/pull/2164 https://github.com/fsharp/FAKE/pull/2175 https://github.com/fsharp/FAKE/pull/2178 https://github.com/fsharp/FAKE/pull/2179
+* ICON: Fake has a new icon (again huge thanks to @FlorianBaderDE)
+* NEW: Add tab-completion for powershell and bash - https://github.com/fsharp/FAKE/pull/2157
+* NEW: module `Fake.DotNet.FxCop` - https://github.com/fsharp/FAKE/pull/2174
+* ENHANCEMENT: add new ReportType "Cobertura" to `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/2163
+* ENHANCEMENT: the fake template now supports the buildtask-dsl - https://github.com/fsharp/FAKE/pull/2177
+* ENHANCEMENT: add new fake hints for https://github.com/fsharp/FAKE/issues/2097, https://github.com/fsharp/FAKE/issues/2099 and https://github.com/fsharp/FAKE/issues/2181
+* BUGFIX: Dispose streams created by File.create - https://github.com/fsharp/FAKE/pull/2184/files
+* BUGFIX: NuGet.Version.getLastNuGetVersion failed for some servers - https://github.com/fsharp/FAKE/pull/2170
+* BUGFIX: Fake.DotNet.Tesing.NUnit failed to work when temporary-directory contains spaces (for example if windows username contains spaces) - https://github.com/fsharp/FAKE/pull/2180
+* BUGFIX: `--silent` now disables fake hints as well
+* (Minor) BREAKING: Refactor & cleanup `Fake.Runtime` internals - make sure to open an issue if you are hit by this.
+* OTHER: Internal code cleanup - https://github.com/fsharp/FAKE/pull/2162
+
+## 5.9.3 - 2018-10-15
+
+* BUGFIX: `/restore` was missing from msbuild command line - https://github.com/fsharp/FAKE/issues/2160
+
+## 5.9.2 - 2018-10-14
+
+* BUGFIX: `Fake.Core.Target` module no longer crashes with stackoverflow on some occations - https://github.com/fsharp/FAKE/pull/2156
+* PERFORMANCE: The `Fake.Core.Target` module is now several orders of magnitude faster when using lots of targets - https://github.com/fsharp/FAKE/pull/2156
+
+## 5.9.1 - 2018-10-14
+
+* BUGFIX: Add a null-check to remove fake warning
+
+## 5.9.0 - 2018-10-13
+
+* ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
+* ENHANCEMENT: Added `SpecFlowNext` module to `Fake.DotNet.Testing.SpecFlow` with improved API and missing arguments - https://github.com/fsharp/FAKE/pull/2143
+* ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - https://github.com/fsharp/FAKE/pull/2131 
+* ENHANCEMENT: Updated `Fake.Testing.ReportGenerator` to include `ClassFilter` and `FileFilter` - https://github.com/fsharp/FAKE/pull/2120
+* ENHANCEMENT: Improve TeamCity integrations - https://github.com/fsharp/FAKE/pull/2138
+* ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
+* ENHANCEMENT: The `Trace` module can now report build-state with a message - https://github.com/fsharp/FAKE/pull/2139
+* ENHANCEMENT: The target module not supports a `Trace.WithContext` mode to retrieve the context and handle potenial problems manually - https://github.com/fsharp/FAKE/pull/2140
+* ENHANCEMENT: The target module now allows to set the build-state by using the new `WithContext`-mode - https://github.com/fsharp/FAKE/pull/2141
+* BUGFIX: Fix TeamCity (named) Artifact upload - https://github.com/fsharp/FAKE/pull/2147
+* BUGFIX: AppVeyor module should not trace `appveyor.exe` calls - https://github.com/fsharp/FAKE/pull/2137
+* BUGFIX: Always print the stack-trace when in verbose mode - https://github.com/fsharp/FAKE/issues/2136
+* DOCUMENTATION: Some smaller fixes
+
+## 5.8.5 - 2018-10-10
+
+* BUGFIX: PATH Variable was overwritten when using the `DotNet.Cli` module - https://github.com/fsharp/FAKE/issues/2134
+* BUGFIX: Fix an instance where TraceSecrets did not work - https://github.com/fsharp/FAKE/issues/2122
+* WORKAROUND: Do not try to publish artifacts on github PRs when using Azure Pipelines - https://github.com/fsharp/FAKE/pull/2129/commits/bb723c41160f60002169246cb70ecbb9aad45fa3
+
+## 5.8.4 - 2018-10-08
+
+* ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
+* ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
+* ENHANCEMENT: Improve TeamCity support - https://github.com/fsharp/FAKE/pull/2111
+* ENHANCEMENT: Update Netstandard.Library package to `2.0.3` - https://github.com/fsharp/FAKE/pull/2106
+* ENHANCEMENT: Add `Process.getFileName` api to retrieve the full-path of a given process
+* ENHANCEMENT: Kill existing running `dotnet.exe` processes before running the dotnet-cli installer
+* BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps
+* BUGFIX: MSBuild properties containing special characters lead to errors - https://github.com/fsharp/FAKE/issues/2112
+* BUGFIX: Improve error message when release notes are invalid - https://github.com/fsharp/FAKE/issues/2085
+* BUGFIX: Improve error message when globbing pattern is invalid - https://github.com/fsharp/FAKE/issues/2073
+* BUGFIX: Do no longer provide the `--parallel` argument by default when running expecto - https://github.com/fsharp/FAKE/issues/2039
+* DOCS: Fix syntax errors in dacpac docs - https://github.com/fsharp/FAKE/pull/2115
+
+## 5.7.2 - 2018-09-24
+
+* ENHANCEMENT: TeamFoundation now reports errors as errors instead of warnings - https://github.com/fsharp/FAKE/pull/2103
+* BUGFIX: Ignore some arguments when running `dotnet msbuild /version` - https://github.com/fsharp/FAKE/issues/2102
+
+## 5.7.0 - 2018-09-23
+
+* ENHANCEMENT: Use VSWhere to detect msbuild location - https://github.com/fsharp/FAKE/pull/2077
+* ENHANCEMENT: Add Dotnet SDK 2.1.400, 2.1.401 and 2.1.402 - https://github.com/fsharp/FAKE/pull/2089
+* ENHANCEMENT: Improve error reporting of msbuild errors across all CI servers - https://github.com/fsharp/FAKE/issues/2096
+* ENHANCEMENT: Add /logger support for MSBuild - https://github.com/fsharp/FAKE/issues/1712
+* ENHANCEMENT: Add /consoleloggerparameters support for MSBuild - https://github.com/fsharp/FAKE/issues/1607
+* ENHANCEMENT: Added `DotNet.msbuild` to call `dotnet msbuild` - https://github.com/fsharp/FAKE/pull/2098
+* ENHANCEMENT: Added `MSBuildParams` to `DotNet.restore`, `DotNet.build`, `DotNet.pack`, `DotNet.publish` and `DotNet.test` in order to add regular msbuild parameters - https://github.com/fsharp/FAKE/pull/2098
+* ENHANCEMENT: AppVeyor now reports errors and warnings to the 'Messages'-tab - https://github.com/fsharp/FAKE/pull/2098
+
+## 5.6.1 - 2018-09-09
+
+* BUGFIX: dotnet restore with configfile did not work - https://github.com/fsharp/FAKE/issues/2082
+* BUGFIX: Fake cache was broken - https://github.com/fsharp/FAKE/issues/2083
+* DOCS: various improvements in the documentation - https://github.com/fsharp/FAKE/pull/2081
+
+## 5.6.0 - 2018-09-09
+
+* NEW: Fake.DotNet.Testing.DotCover module - https://github.com/fsharp/FAKE/pull/2058
+* NEW: Fake.Installer.Squirrel module - https://github.com/fsharp/FAKE/pull/2076
+* ENHANCEMENT: Fake.BuildServer.TeamCity now contains all parameters - https://github.com/fsharp/FAKE/pull/2069
+* BUGFIX: template now contains `storage: none` - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Improve error message when nuget cache is possibly broken - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Invalidate cache if files don't exist - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Vault.fs was not decrypting/encrypting properly - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Fix an issue with empty arguments in command line parsing - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Do not allow tripple quotes in command line - https://github.com/fsharp/FAKE/pull/2070
+
+## 5.5.0 - 2018-08-26
+
+* DOCS: Update core-targets.md - https://github.com/fsharp/FAKE/pull/2067
+* NEW: module Fake.Tools.Octo to use Octopus Deploy - https://github.com/fsharp/FAKE/pull/2048
+* NEW: module Fake.Core.Vault to store secrets - https://github.com/fsharp/FAKE/pull/2068/commits/929ec55bcb05b0d9ece0066c4d2c4f0ad2bce783
+* ENHANCEMENT: Fake.BuildServer.TeamFoundation now supports secret variables - https://github.com/isaacabraham/vsts-fsharp/pull/16
 
 ## 5.4.1 - 2018-08-16
 
@@ -63,7 +199,7 @@
 * NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
 * ENHANCEMENT: Add `traceImportantf` and `traceErrorf` - https://github.com/fsharp/FAKE/pull/1986
 * ENHANCEMENT: Minimalize dependencies between FAKE packages - https://github.com/fsharp/FAKE/pull/1980
-* ENHANCEMENT: Change chocolatey package accoding to feedback - https://github.com/fsharp/FAKE/pull/1983
+* ENHANCEMENT: Change chocolatey package according to feedback - https://github.com/fsharp/FAKE/pull/1983
 * BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - https://github.com/fsharp/FAKE/pull/1995
 * NEW: module Fake.Core.UserInput - https://github.com/fsharp/FAKE/pull/1997
 
@@ -98,7 +234,7 @@
 
 ## 5.0.0-rc017 - 2018-05-22
 
-* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes according to API-Guidelines (Target, Globbing, AssemblyInfoFile)
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
 * BUGFIX: Includes fixes from 4.64.12

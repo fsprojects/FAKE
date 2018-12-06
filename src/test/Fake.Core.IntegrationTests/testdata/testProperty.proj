@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Target Name="Test">
+    <Message Importance="high" Text="$Property1: '$(Property1)'" />
+    <Message Importance="high" Text="$Property2: '$(Property2)'" />
+  </Target>
+</Project>

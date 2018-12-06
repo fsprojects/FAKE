@@ -1,5 +1,6 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.CoreCache
+
 open Fake.Runtime.Environment
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
@@ -19,6 +20,25 @@ open Yaaf.FSharp.Scripting
 open System.Reflection
 open Paket.ProjectFile
 open Mono.Cecil
+
+exception CacheOutdated
+
+let getCached getUncached readFromCache writeToCache checkCacheUpToDate =
+    let inline getUncached () =
+        let data = getUncached()
+        writeToCache data
+        data
+
+    if checkCacheUpToDate () then 
+        try readFromCache()
+        with 
+        | CacheOutdated ->
+            getUncached()
+        | e ->
+            Trace.traceError <| sprintf "Fake cache failed, please consider reporting a bug: %O" e
+            getUncached()
+    else
+        getUncached()
 
 type ICachingProvider =
     abstract TryLoadCache : context:FakeContext -> FakeContext * CoreCacheInfo option
@@ -231,7 +251,10 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                             if logLevel.PrintVerbose then tracefn "Could not get Location from '%s': %O" strName e
                             None
                     Some (location, assembly)
-            with e -> None
+            with
+            | e ->
+                //eprintfn "Exception in LoadFromAssemblyName: %O" e
+                None
         match result with
         | Some r -> true, Some r
         | None ->                
@@ -275,7 +298,24 @@ let findAndLoadInRuntimeDepsCached =
             wasCalled <- true
             findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
         if wasCalled && isNull result then
-            failwithf "Could not load '%A'.\nFull framework assemblies are not supported!\nYou might try to load a legacy-script with the new netcore runner.\nPlease take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html" name
+            failwithf """Could not load '%A'.
+This can happen for various reasons:
+- You are trying to load full-framework assemblies which is not supported
+  -> You might try to load a legacy-script with the new netcore runner.
+    Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
+- The nuget cache (or packages folder) might be broken.
+  -> Please save your state, open an issue and then 
+  - delete '%s' from the '~/.nuget' cache (and the 'packages' folder)
+  - delete 'paket-files/paket.restore.cached' if it exists
+  - delete '<script.fsx>.lock' if it exists
+  - try running fake again
+  - the package should be downloaded again
+- Some package introduced a breaking change in their dependencies and .dll files are missing in the resolution
+  -> Try to compare the lockfile with a previous working version
+  -> Try to lower transitive dependency versions (for example by adding 'strategy: min' to the paket group)
+  see https://github.com/fsharp/FAKE/issues/1966 where this happend for 'System.Reactive' version 4
+
+-> If the above doesn't apply or you need help please open an issue!""" name name.Name
         if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
@@ -346,7 +386,6 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
                let actual = contents |> Seq.choose id |> fun texts -> String.Join("", texts)
                let cached = File.ReadAllText fakeCacheContentsFile
                actual = cached
-
         // TODO: This could be improved in such a way that we only
         // TODO: need to tokenize "changed" files and not everything
         if cacheFilesExist && dependencyCacheUpdated() then

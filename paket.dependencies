@@ -1,4 +1,4 @@
-version 5.176.4
+version 5.186.3
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -7,7 +7,7 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core prerelease
+nuget Paket.Core //prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu >= 3.3.0
@@ -107,6 +107,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
+    // FAKE_MYGET_FEED (don't edit this line)
     //source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
@@ -115,29 +116,29 @@ group NetcoreBuild
     nuget FSharp.Core < 4.5
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core prerelease
-    nuget Fake.Api.GitHub prerelease
-    nuget Fake.Core.Target prerelease
-    nuget Fake.Core.SemVer prerelease
-    nuget Fake.BuildServer.AppVeyor prerelease
-    nuget Fake.BuildServer.TeamCity prerelease
-    nuget Fake.BuildServer.Travis prerelease
-    nuget Fake.BuildServer.TeamFoundation prerelease
-    nuget Fake.BuildServer.GitLab prerelease
-    nuget Fake.IO.FileSystem prerelease
-    nuget Fake.IO.Zip prerelease
-    nuget Fake.Core.ReleaseNotes prerelease
-    nuget Fake.DotNet.AssemblyInfoFile prerelease
-    nuget Fake.DotNet.MsBuild prerelease
-    nuget Fake.DotNet.Cli prerelease
-    nuget Fake.DotNet.NuGet prerelease
-    nuget Fake.DotNet.Paket prerelease
-    nuget Fake.DotNet.FSFormatting prerelease
-    nuget Fake.DotNet.Testing.MSpec prerelease
-    nuget Fake.DotNet.Testing.XUnit2 prerelease
-    nuget Fake.DotNet.Testing.NUnit prerelease
-    nuget Fake.Windows.Chocolatey prerelease
-    nuget Fake.Tools.Git prerelease
+    nuget Paket.Core // prerelease
+    nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.BuildServer.AppVeyor prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.BuildServer.TeamCity prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.BuildServer.Travis prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.BuildServer.TeamFoundation prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.BuildServer.GitLab prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.IO.FileSystem prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.IO.Zip prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.Core.ReleaseNotes prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.AssemblyInfoFile prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.MsBuild prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.Cli prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.NuGet prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.Paket prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.Testing.MSpec prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.Testing.XUnit2 prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.Testing.NUnit prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.Windows.Chocolatey prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.Tools.Git prerelease // FAKE_VERSION (don't edit this line)
     nuget Mono.Cecil prerelease
     nuget Octokit
     nuget Newtonsoft.Json
@@ -153,7 +154,7 @@ group netcorerunner
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
-    nuget Packaging.Targets 
+    nuget Packaging.Targets
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -173,12 +174,19 @@ group netcore
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget Mono.Cecil prerelease
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
+    nuget System.Security.Cryptography.Algorithms
+    nuget MSBuild.StructuredLogger
+    nuget BlackFox.VsWhere
+
     // Testing
     nuget Expecto >= 5.0
+    nuget Expecto.TestResults
+    nuget Expecto.FsCheck
+    nuget FsCheck
 
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath
@@ -191,4 +199,6 @@ group netcore
     nuget System.IO.Compression.ZipFile
     nuget System.Runtime.Loader
     nuget System.IO.FileSystem.Watcher
-    
+    nuget System.Data.SqlClient
+    nuget Microsoft.SqlServer.SqlManagementObjects
+

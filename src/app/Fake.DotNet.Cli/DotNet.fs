@@ -337,6 +337,36 @@ module DotNet =
                 Version = Version "2.1.302"
             }
 
+        let Release_2_1_400 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.400"
+            }
+
+        let Release_2_1_401 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.401"
+            }
+
+        let Release_2_1_402 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.402"
+            }
+
         let FromGlobalJson option =
             { option with
                 InstallerOptions = id
@@ -518,25 +548,31 @@ module DotNet =
     /// [omit]
     let private argList2 name values =
         values
-        |> Seq.collect (fun v -> ["--" + name; sprintf @"""%s""" v])
-        |> String.concat " "
+        |> List.collect (fun v -> ["--" + name; v])
 
     /// [omit]
     let private argOption name value =
         match value with
-            | true -> sprintf "--%s" name
-            | false -> ""
+            | true -> [ sprintf "--%s" name ]
+            | false -> []
 
     /// [omit]
     let private buildCommonArgs (param: Options) =
-        [   defaultArg param.CustomParams ""
-            param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString().ToLowerInvariant()) |> argList2 "verbosity"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        [   defaultArg param.CustomParams "" |> Args.fromWindowsCommandLine |> Seq.toList
+            param.Verbosity
+                |> Option.toList
+                |> List.map (fun v -> v.ToString().ToLowerInvariant())
+                |> argList2 "verbosity"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
     /// [omit]
     let private buildSdkOptionsArgs (param: Options) =
         [   param.Diagnostics |> argOption "--diagostics"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
     let internal withGlobalJson workDir version f =
         let globalJsonPath =
@@ -566,7 +602,7 @@ module DotNet =
     /// - 'options' - common execution options
     /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
     /// - 'args' - command arguments
-    let exec (buildOptions: Options -> Options) command args =
+    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
         let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
@@ -581,21 +617,28 @@ module DotNet =
         let options = buildOptions (Options.Create())
         let sdkOptions = buildSdkOptionsArgs options
         let commonOptions = buildCommonArgs options
-        let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args
+        let cmdArgs = 
+            [ sdkOptions
+              command |> Args.fromWindowsCommandLine |> Seq.toList
+              commonOptions
+              args |> Args.fromWindowsCommandLine |> Seq.toList ]
+            |> List.concat          
 
         let result =
             let f (info:ProcStartInfo) =
                 let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
                 let oldPath =
-                    match options.Environment |> Map.tryFind "PATH" with
-                    | None -> ""
-                    | Some s -> s
+                    options
+                    |> Process.getEnvironmentVariable "PATH"
                 { info with
                     FileName = options.DotNetCliPath
                     WorkingDirectory = options.WorkingDirectory
-                    Arguments = cmdArgs }
+                    Arguments = Args.toWindowsCommandLine cmdArgs }
                 |> Process.setEnvironment options.Environment
-                |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
+                |> Process.setEnvironmentVariable "PATH" (
+                    match oldPath with
+                    | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+                    | None -> dir)
 
 
             withGlobalJson options.WorkingDirectory options.Version (fun () ->
@@ -736,7 +779,7 @@ module DotNet =
                             let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet; Version = None}))
                             result = version
                         with e ->
-                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %s" e.Message
+                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %O" e
                             false
                     )
                 ), passVersion
@@ -753,6 +796,21 @@ module DotNet =
         let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
 
+        // check if existing processes exists:
+        let dotnetExe = Path.Combine(dir, if Environment.isUnix then "dotnet" else "dotnet.exe")
+        if Environment.isWindows && File.Exists(dotnetExe) then
+            System.Diagnostics.Process.GetProcesses()
+            |> Seq.filter (fun p -> 
+                   try 
+                       not p.HasExited
+                   with _ -> false)
+            |> Seq.filter (fun p -> 
+                   try 
+                       Path.GetFullPath(Process.getFileName p).ToLowerInvariant() =
+                            Path.GetFullPath(dotnetExe)
+                   with _ -> false)
+            |> Seq.iter Process.kill              
+            ()
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then
@@ -786,6 +844,117 @@ module DotNet =
         (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion})
 
     /// dotnet restore command options
+    type MSBuildOptions =
+        {
+            /// Common tool options
+            Common: Options
+            MSBuildParams : MSBuild.CliArguments
+        }
+
+        /// Parameter default values.
+        static member Create() =
+          {  Common = Options.Create()
+             MSBuildParams = MSBuild.CliArguments.Create()
+          }
+
+        /// Gets the current environment
+        member x.Environment = x.Common.Environment
+        /// Sets the current environment variables.
+        member x.WithEnvironment map =
+            { x with Common = { x.Common with Environment = map } }
+
+        /// Sets a value indicating whether the output for the given process is redirected.
+        member x.WithRedirectOutput shouldRedirect =
+            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
+    
+        /// Changes the "MSBuildParams" properties according to the given function
+        member inline x.WithMSBuildParams f =
+            { x with MSBuildParams = f x.MSBuildParams }
+
+    let internal addBinaryLogger disableFakeBinLog args (common:Options) =
+        // used for detection
+        let callMsBuildExe args =
+            let result =
+                exec (fun _ ->
+                    { RedirectOutput = true
+                      DotNetCliPath = common.DotNetCliPath
+                      Version = common.Version
+                      Environment = common.Environment
+                      WorkingDirectory = common.WorkingDirectory
+                      CustomParams = None
+                      Verbosity = None
+                      Diagnostics = false }) "msbuild" args
+            if not result.OK then
+                failwithf "msbuild failed with exitcode '%d'" result.ExitCode
+            String.Join("\n", result.Messages)
+        MSBuild.addBinaryLogger (common.DotNetCliPath + " msbuild") callMsBuildExe args disableFakeBinLog
+   
+    let internal execWithBinLog project common command args msBuildArgs =
+        let argString = MSBuild.fromCliArguments msBuildArgs
+        let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
+        let result = exec (fun _ -> common) command args
+        MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+
+    let internal tryExecWithBinLog project common command args msBuildArgs =
+        let argString = MSBuild.fromCliArguments msBuildArgs
+        let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
+        let result = exec (fun _ -> common) command args
+        try
+            MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+            Choice1Of2 result
+        with e -> Choice2Of2 (e, result)
+
+    /// Runs a MSBuild project
+    /// ## Parameters
+    ///  - `setParams` - A function that overwrites the default MSBuildOptions
+    ///  - `project` - A string with the path to the project file to build.
+    ///
+    /// ## Sample
+    ///
+    ///     open Fake.DotNet
+    ///     let setMsBuildParams (defaults:MSBuild.CliArguments) =
+    ///             { defaults with
+    ///                 Verbosity = Some(Quiet)
+    ///                 Targets = ["Build"]
+    ///                 Properties =
+    ///                     [
+    ///                         "Optimize", "True"
+    ///                         "DebugSymbols", "True"
+    ///                         "Configuration", "Release"
+    ///                     ]
+    ///              }
+    ///     let setParams (defaults:DotNet.MSBuildOptions) =
+    ///             { defaults with
+    ///                 MSBuildParams = setMsBuildParams defaults.MSBuildParams
+    ///              }
+    ///     
+    ///     DotNet.msbuild setParams "./MySolution.sln"
+    let msbuild setParams project =
+        use __ = Trace.traceTask "DotNet:msbuild" project
+        
+        let param = MSBuildOptions.Create() |> setParams
+        let args = [project]
+        let args = Args.toWindowsCommandLine args
+        execWithBinLog project param.Common "msbuild" args param.MSBuildParams
+        __.MarkSuccess()
+
+    // TODO: Make this API public? change return code?
+    let internal msbuildWithResult setParams project =
+        //use __ = Trace.traceTask "DotNet:msbuild" project
+        
+        let param = MSBuildOptions.Create() |> setParams
+        let args = [project]
+        let args = Args.toWindowsCommandLine args
+        let r = tryExecWithBinLog project param.Common "msbuild" args param.MSBuildParams
+        //__.MarkSuccess()
+        r  
+
+
+    /// dotnet restore command options
     type RestoreOptions =
         {
             /// Common tool options
@@ -804,6 +973,8 @@ module DotNet =
             IgnoreFailedSources: bool
             /// Disables restoring multiple projects in parallel (--disable-parallel)
             DisableParallel: bool
+            /// Other msbuild specific parameters
+            MSBuildParams : MSBuild.CliArguments
         }
 
         /// Parameter default values.
@@ -816,6 +987,7 @@ module DotNet =
             NoCache = false
             IgnoreFailedSources = false
             DisableParallel = false
+            MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use Options.Create instead")>]
         static member Default = Options.Create()
@@ -838,12 +1010,14 @@ module DotNet =
     let private buildRestoreArgs (param: RestoreOptions) =
         [   param.Sources |> argList2 "source"
             param.Packages |> argList2 "packages"
-            param.ConfigFile |> Option.toList |> argList2 "configFile"
+            param.ConfigFile |> Option.toList |> argList2 "configfile"
             param.NoCache |> argOption "no-cache"
             param.Runtime |> Option.toList |> argList2 "runtime"
             param.IgnoreFailedSources |> argOption "ignore-failed-sources"
             param.DisableParallel |> argOption "disable-parallel"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet restore command
@@ -854,9 +1028,8 @@ module DotNet =
     let restore setParams project =
         use __ = Trace.traceTask "DotNet:restore" project
         let param = RestoreOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildRestoreArgs param)
-        let result = exec (fun _ -> param.Common) "restore" args
-        if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
+        let args = Args.toWindowsCommandLine(project :: buildRestoreArgs param)
+        execWithBinLog project param.Common "restore" args param.MSBuildParams
         __.MarkSuccess()
 
     /// build configuration
@@ -864,7 +1037,6 @@ module DotNet =
         | Debug
         | Release
         | Custom of string
-    with
         /// Convert the build configuration to a string that can be passed to the .NET CLI
         override this.ToString() =
             match this with
@@ -890,7 +1062,7 @@ module DotNet =
 
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
-        sprintf "--configuration %O" param
+        argList2 "configuration" [param.ToString()]
 
     /// dotnet pack command options
     type PackOptions =
@@ -907,6 +1079,8 @@ module DotNet =
             OutputPath: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Other msbuild specific parameters
+            MSBuildParams : MSBuild.CliArguments
         }
 
         /// Parameter default values.
@@ -917,6 +1091,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             NoBuild = false
+            MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PackOptions.Create instead")>]
         static member Default = PackOptions.Create()
@@ -941,7 +1116,9 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.NoBuild |> argOption "no-build"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet pack command
@@ -952,9 +1129,8 @@ module DotNet =
     let pack setParams project =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPackArgs param)
-        let result = exec (fun _ -> param.Common) "pack" args
-        if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+        let args = Args.toWindowsCommandLine(project :: buildPackArgs param)
+        execWithBinLog project param.Common "pack" args param.MSBuildParams
         __.MarkSuccess()
 
     /// dotnet publish command options
@@ -976,6 +1152,8 @@ module DotNet =
             VersionSuffix: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Other msbuild specific parameters
+            MSBuildParams : MSBuild.CliArguments
         }
 
         /// Parameter default values.
@@ -988,6 +1166,7 @@ module DotNet =
             OutputPath = None
             VersionSuffix = None
             NoBuild = false
+            MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PublishOptions.Create instead")>]
         static member Default = PublishOptions.Create()
@@ -1014,7 +1193,9 @@ module DotNet =
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.NoBuild |> argOption "no-build"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet publish command
@@ -1025,9 +1206,8 @@ module DotNet =
     let publish setParams project =
         use __ = Trace.traceTask "DotNet:publish" project
         let param = PublishOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPublishArgs param)
-        let result = exec (fun _ -> param.Common) "publish" args
-        if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
+        let args = Args.toWindowsCommandLine(project :: buildPublishArgs param)
+        execWithBinLog project param.Common "publish" args param.MSBuildParams
         __.MarkSuccess()
 
     /// dotnet build command options
@@ -1047,6 +1227,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Other msbuild specific parameters
+            MSBuildParams : MSBuild.CliArguments
         }
 
         /// Parameter default values.
@@ -1058,6 +1240,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use BuildOptions.Create instead")>]
         static member Default = BuildOptions.Create()
@@ -1083,8 +1266,10 @@ module DotNet =
             param.Runtime |> Option.toList |> argList2 "runtime"
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
-            (if param.Native then "--native" else "")
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+            (if param.Native then [ "--native" ] else [])
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet build command
@@ -1095,12 +1280,11 @@ module DotNet =
     let build setParams project =
         use __ = Trace.traceTask "DotNet:build" project
         let param = BuildOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildBuildArgs param)
-        let result = exec (fun _ -> param.Common) "build" args
-        if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
+        let args = Args.toWindowsCommandLine(project :: buildBuildArgs param)
+        execWithBinLog project param.Common "build" args param.MSBuildParams
         __.MarkSuccess()
 
-    /// dotnet build command options
+    /// dotnet test command options
     type TestOptions =
         {
             /// Common tool options
@@ -1138,6 +1322,8 @@ module DotNet =
             NoRestore: bool
             /// Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
             RunSettingsArguments : string option
+            /// Other msbuild specific parameters
+            MSBuildParams : MSBuild.CliArguments
         }
 
         /// Parameter default values.
@@ -1157,6 +1343,7 @@ module DotNet =
             Collect = None
             NoRestore = false
             RunSettingsArguments = None
+            MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use TestOptions.Create instead")>]
         static member Default = TestOptions.Create()
@@ -1189,19 +1376,20 @@ module DotNet =
             param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
             param.Collect |> Option.toList |> argList2 "collect"
             param.NoRestore |> argOption "no-restore"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
-    /// Execute dotnet build command
+    /// Execute dotnet test command
     /// ## Parameters
     ///
-    /// - 'setParams' - set compile command parameters
-    /// - 'project' - project to compile
+    /// - 'setParams' - set test command parameters
+    /// - 'project' - project to test
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildTestArgs param)
-        let result = exec (fun _ -> param.Common) "test" args
-        if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
+        let args = Args.toWindowsCommandLine(project :: buildTestArgs param)
+        execWithBinLog project param.Common "test" args param.MSBuildParams
         __.MarkSuccess()
 

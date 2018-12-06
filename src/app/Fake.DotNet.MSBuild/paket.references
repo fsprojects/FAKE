@@ -2,3 +2,5 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
+MSBuild.StructuredLogger
+BlackFox.VsWhere

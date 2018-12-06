@@ -170,8 +170,11 @@ let traceTag tag description =
     openTagUnsafe tag description
     asSafeDisposable (fun state -> closeTagUnsafeEx state tag)
 
+let setBuildStateWithMessage tag message =
+    TraceData.BuildState(tag, Some(message)) |> CoreTracing.postMessage
+
 let setBuildState tag =
-    TraceData.BuildState tag |> CoreTracing.postMessage
+    TraceData.BuildState(tag, None) |> CoreTracing.postMessage
 
 let testStatus testName testStatus =
     // TODO: Check if the given test is opened in openTags-stack?

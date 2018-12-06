@@ -38,7 +38,7 @@ CoreTracing.ensureConsoleListener ()
 Target.create "Test" (fun _ ->
     File.WriteAllText("myfile.txt", "some content")
 
-    // traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization supported.
+    // traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization if supported.
     ( use testsuite = Trace.traceTag (KnownTags.TestSuite "some-testsuite") "Starting unit test"
       ( use _ = Trace.traceTag (KnownTags.Test "some-test") "Starting unit test 1"
         // Scope of the test
@@ -49,6 +49,11 @@ Target.create "Test" (fun _ ->
 
     // Uploads an artifact no matter the build-server
     Trace.publish ImportData.BuildArtifact "myfile.txt"
+
+    // Uploads test results no matter the build-server
+    // Note: There might be limitations on some system with some imports.
+    // Please help by testing, submitting issues and pull requests.
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
 
     Trace.setBuildNumber "my-build-number"
 
@@ -64,3 +69,19 @@ Target.create "Test" (fun _ ->
 ## Implementing support for a build-server
 
 Please look at the existing implementations. Please contribute new implementations to the repository. Some changes like adding new cases to the `TraceListener` module are not considered breaking changes. Using these types (using `match` on these types to be exact) outside the fake repository is not considered good practice.
+
+## Example FAKE repository
+
+Fake itself uses AppVeyor and TeamFoundation support for importing and displaying test results:
+
+```fsharp
+// import test result
+Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+
+// upload artifacts
+Trace.publish ImportData.BuildArtifact ("release/dotnetcore/fake-dotnetcore-win7-x64.zip")
+```
+
+Look at this [CI-build](https://fakebuild.visualstudio.com/FSProjects/FSProjects%20Team/_build/results?buildId=425) for an example on how it looks in VSTS.
+
+![AppVeyor test import](/pics/buildserver/AppVeyor_imported_tests.png)

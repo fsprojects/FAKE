@@ -76,7 +76,7 @@ type Params =
     static member DefaultParams =
         {
             Debug = false
-            Parallel = true
+            Parallel = false
             ParallelWorkers = 0
             Filter = ""
             FilterTestCase = ""

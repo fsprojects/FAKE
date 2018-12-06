@@ -14,6 +14,7 @@ nuget Fake.BuildServer.TeamFoundation prerelease
 nuget Fake.BuildServer.GitLab prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
+nuget Fake.Core.Vault prerelease
 nuget Fake.IO.FileSystem prerelease
 nuget Fake.IO.Zip prerelease
 nuget Fake.Core.ReleaseNotes prerelease
@@ -66,7 +67,6 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-let github_release_user = Environment.environVarOrDefault "github_release_user" "fsharp"
 
 // The name of the project on GitHub
 let gitName = "FAKE"
@@ -95,22 +95,19 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
-let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
-let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
-let buildLegacy = Environment.environVarAsBoolOrDefault "BuildLegacy" false
+
+let vault = ``Legacy-build``.vault
+let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
+let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
+
+let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
+let artifactsDir = getVarOrDefault "artifactsdirectory" ""
+let docsDomain = getVarOrDefault "docs_domain" "fake.build"
+let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
-let mutable secrets = []
-let releaseSecret replacement name =
-    let secret =
-        lazy
-            let env = Environment.environVarOrFail name
-            TraceSecrets.register replacement env
-            env
-    secrets <- secret :: secrets
-    secret
 
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
@@ -142,14 +139,13 @@ let chocoVersion =
         failwithf "%s" msg
     result
 
-Trace.setBuildNumber nugetVersion
+match TeamFoundation.Environment.SystemPullRequestIsFork with
+| None | Some false ->
+    Trace.setBuildNumber nugetVersion
+| _ ->
+    Trace.traceFAKE "Not setting buildNumber to '%s', because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html" nugetVersion
 
-//let current = CoreTracing.getListeners()
-//if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
-//    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
-
-
-let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -197,11 +193,31 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     |> File.deleteAll
 )
 
+let callpaket wd args =
+    if 0 <> Process.execSimple (fun info ->
+            { info with
+                FileName = wd </> ".paket/paket.exe"
+                WorkingDirectory = wd
+                Arguments = args }
+            |> Process.withFramework
+            ) (System.TimeSpan.FromMinutes 5.0) then
+        failwith "paket failed to start"
+
 // Targets
 Target.create "Clean" (fun _ ->
     !! "src/*/*/bin"
     //++ "src/*/*/obj"
     |> Shell.cleanDirs
+
+    let fakeRuntimeVersion = typeof<Fake.Core.Context.FakeExecutionContext>.Assembly.GetName().Version
+    printfn "fake runtime %O" fakeRuntimeVersion
+    if fakeRuntimeVersion < new System.Version(5, 10, 0) then
+        printfn "deleting obj directories because of https://github.com/fsprojects/Paket/issues/3404"
+        !! "src/*/*/obj"
+        |> Shell.cleanDirs
+        // Allow paket to do a full-restore (to improve performance)
+        Shell.rm ("paket-files" </> "paket.restore.cached")
+        callpaket "." "restore"
 
     Shell.cleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -242,27 +258,32 @@ let dotnetAssemblyInfos =
       "Fake.Core.Tasks", "Repeating and managing Tasks"
       "Fake.Core.Trace", "Core Logging functionality"
       "Fake.Core.UserInput", "User input helpers"
+      "Fake.Core.Vault", "Encrypt secrets and prevent accidental disclosure"
       "Fake.Core.Xml", "Core Xml functionality"
       "Fake.Documentation.DocFx", "Documentation with DocFx"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
       "Fake.DotNet.Fsc", "Running the f# compiler - fsc"
-      "Fake.DotNet.Fsi", "FSharp Interactive - fsi"
       "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
+      "Fake.DotNet.Fsi", "FSharp Interactive - fsi"
+      "Fake.DotNet.FxCop", "Running FxCop for static analysis"
+      "Fake.DotNet.ILMerge", "Running the ILMerge static linker tool"
       "Fake.DotNet.Mage", "Manifest Generation and Editing Tool"
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
+      "Fake.DotNet.Testing.DotCover", "Code coverage with DotCover"
       "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
-      "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
+      "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
+      "Fake.Installer.Squirrel", "Squirrel for windows Squirrel.exe tool helper"
       "Fake.Installer.Wix", "WiX helper to create msi installers"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
@@ -272,6 +293,7 @@ let dotnetAssemblyInfos =
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
+      "Fake.Sql.SqlServer", "Helpers around interacting with SQL Server databases"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
@@ -300,14 +322,96 @@ Target.create "SetAssemblyInfo" (fun _ ->
         ()
 )
 
+Target.create "StartBootstrapBuild" (fun _ ->
+    // Prepare stuff
+    let token = githubtoken.Value
+    let auth = sprintf "%s:x-oauth-basic@" token
+    let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
+    let gitDirectory = getVarOrDefault "git_directory" "."
+    let remoteUrl =
+        if not BuildServer.isLocalBuild then
+            Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
+            Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
+            url
+        else "origin"
+    if BuildServer.buildServer = BuildServer.TeamFoundation then
+        Trace.trace "Prepare git directory"
+        Git.Branches.checkout gitDirectory false TeamFoundation.Environment.BuildSourceVersion
+
+    let oldBranch = Git.Information.getBranchName gitDirectory
+    let branchName = sprintf "release-stage/%s" nugetVersion
+    Git.Branches.checkout gitDirectory true branchName
+
+    // update paket.dependencies
+    let depsFile = File.ReadAllText (gitDirectory </> "paket.dependencies")
+    let replacedFile =
+        depsFile
+            .Replace("// FAKE_MYGET_FEED (don't edit this line)", "source https://www.myget.org/F/fake-vsts/api/v3/index.json")
+            .Replace("prerelease // FAKE_VERSION (don't edit this line)", nugetVersion)
+    File.WriteAllText(gitDirectory </> "paket.dependencies", replacedFile)
+
+    // paket update
+    callpaket gitDirectory "update --group NetcoreBuild"
+
+    // push to branch
+    Git.Staging.stageAll gitDirectory
+    Git.Commit.exec gitDirectory (sprintf "Bootstrap check for %s" simpleVersion)
+    Git.Branches.pushBranch gitDirectory remoteUrl branchName
+    let sha = Git.Information.getCurrentSHA1 gitDirectory
+
+    // check status API
+    let startTime = System.Diagnostics.Stopwatch.StartNew()
+    let maxTime = System.TimeSpan.FromMinutes 60.0
+    let formatState (state:Octokit.CommitStatus) =
+        sprintf "{ State: %O, Description: %O, TargetUrl: %O }"
+            state.State state.Description state.TargetUrl
+    let result = 
+        async {
+            let! client = GitHub.createClientWithToken token
+            let mutable whileResult = None
+            while startTime.Elapsed < maxTime && whileResult.IsNone do
+                let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
+                let doWait () =
+                    async {
+                        Trace.trace "GitHub state is still pending:"
+                        for status in combStatus.Statuses do
+                            Trace.trace (sprintf " - %s" (formatState status))
+                        do! Async.Sleep (1000 * 60 * 2) // wait 2 minutes
+                    }
+
+                match combStatus.State.Value with
+                | _ when combStatus.TotalCount < 2 -> // not yet notified
+                    do! doWait()
+                | Octokit.CommitState.Success ->
+                    whileResult <- Some <| Result.Ok ()
+                    ()
+                | Octokit.CommitState.Error | Octokit.CommitState.Failure ->
+                    whileResult <- Some <| Result.Error combStatus
+                    ()
+                | _ -> // pending
+                    do! doWait()
+            match whileResult with
+            | Some r -> return r
+            | None ->                
+                // time is up                                                    
+                let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
+                return
+                    match combStatus.State.Value with
+                    | Octokit.CommitState.Error | Octokit.CommitState.Failure ->
+                        Result.Error combStatus
+                    | _ -> // if pending then some ci is just crasy slow
+                        Result.Ok ()
+        } |> Async.RunSynchronously
+    match result with
+    | Result.Ok () ->
+        Trace.trace "All CI systems returned OK or pending... -> OK"
+    | Result.Error combStatus ->
+        System.String.Join("\n - ", combStatus.Statuses |> Seq.map formatState)
+        |> failwithf "At least one CI failed:\n - %s"
+)
+
 Target.create "DownloadPaket" (fun _ ->
-    if 0 <> Process.execSimple (fun info ->
-            { info with
-                FileName = ".paket/paket.exe"
-                Arguments = "--version" }
-            |> Process.withFramework
-            ) (System.TimeSpan.FromMinutes 5.0) then
-        failwith "paket failed to start"
+    callpaket "." "--version"
 )
 
 Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
@@ -483,7 +587,7 @@ Target.create "GenerateDocs" (fun _ ->
                 ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
                 SourceRepository = githubLink + "/blob/master" })
     else
-        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")        
+        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")
 
     // FAKE 4 legacy documentation
     buildLegacyFromDocsDir fake4LayoutRoots (apidocsDir @@ "v4") "/apidocs/v4/" "/blob/hotfix_fake4" ("packages/docslegacyv4/FAKE/tools")
@@ -528,14 +632,16 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
+    let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
     let processResult =
-        DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -544,12 +650,14 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -691,7 +799,7 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
     Environment.setEnvironVar "SourceLinkCreate" "false"
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
-    Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/fee4f05a2ee3c646979bf753f3b1f02d927bfde9/help/content/pics/logo.png"
+    Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
@@ -790,21 +898,23 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
-    for secret in secrets do
+    for secret in ``Legacy-build``.secrets do
         secret.Force() |> ignore
 )
 
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework =  "netcoreapp2.1" 
-    let args = 
+    let targetFramework =  "netcoreapp2.1"
+    // See https://github.com/dotnet/cli/issues/9823
+    let args =
         [
-            sprintf "/t:%s" "Restore;CreateDeb"  
+            sprintf "/restore"
+            sprintf "/t:%s" "CreateDeb"
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release" 
+            sprintf "/p:Configuration=%s" "Release"
             sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
     let result =
@@ -815,7 +925,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    
+
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
     let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
     Directory.ensure nugetDncDir
@@ -823,7 +933,6 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     File.Copy(sourceFile, target, true)
     publish target
 )
-
 
 let rec nugetPush tries nugetpackage =
     let ignore_conflict = Environment.environVar "IGNORE_CONFLICT" = "true"
@@ -890,7 +999,7 @@ Target.create "FastRelease" (fun _ ->
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 
-    let gitDirectory = Environment.environVarOrDefault "git_directory" ""
+    let gitDirectory = getVarOrDefault "git_directory" ""
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
@@ -925,21 +1034,6 @@ Target.create "FastRelease" (fun _ ->
 Target.create "Release_Staging" (fun _ -> ())
 
 open System.IO.Compression
-let unzip target (fileName : string) =
-    use stream = new FileStream(fileName, FileMode.Open)
-    use zipFile = new ZipArchive(stream)
-    for zipEntry in zipFile.Entries do
-        let unzipPath = Path.Combine(target, zipEntry.FullName)
-        let directoryPath = Path.GetDirectoryName(unzipPath)
-        if unzipPath.EndsWith "/" then
-            Directory.CreateDirectory(unzipPath) |> ignore
-        else
-            // unzip the file
-            Directory.ensure directoryPath
-            let zipStream = zipEntry.Open()
-            if unzipPath.EndsWith "/" |> not then
-                use unzippedFileStream = File.Create(unzipPath)
-                zipStream.CopyTo(unzippedFileStream)
 
 Target.create "PrepareArtifacts" (fun _ ->
     if not fromArtifacts then
@@ -954,23 +1048,23 @@ Target.create "PrepareArtifacts" (fun _ ->
         files
         |> Shell.copy (nugetDncDir </> "Fake.netcore")
 
-        unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
+        Zip.unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
 
         if Environment.isWindows then
             Directory.ensure chocoReleaseDir
             let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
             Shell.copyFile (sprintf "%s/%s" chocoReleaseDir name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
-            unzip "." (artifactsDir </> "chocolatey-requirements.zip")
+            Zip.unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
         if buildLegacy then
             Directory.ensure nugetLegacyDir
-            unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
+            Zip.unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
 
             Directory.ensure "temp/build"
             !! (nugetLegacyDir </> "*.nupkg")
             |> Seq.iter (fun pack ->
-                unzip "temp/build" pack
+                Zip.unzip "temp/build" pack
             )
             Shell.copyDir "build" "temp/build" (fun _ -> true)
 
@@ -983,7 +1077,7 @@ Target.create "PrepareArtifacts" (fun _ ->
         let unzipIfExists dir file =
             Directory.ensure dir
             if File.Exists file then
-                unzip dir file
+                Zip.unzip dir file
 
         // File is not available in case we already have build the full docs
         unzipIfExists "help" (artifactsDir </> "help-markdown.zip")
@@ -1234,5 +1328,6 @@ if buildLegacy then
 // A 'Release' includes a 'CheckReleaseSecrets'
 "CheckReleaseSecrets"
     ==> "Release"
+
 //start build
 Target.runOrDefault "Default"
