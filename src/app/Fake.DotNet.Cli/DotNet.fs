@@ -92,9 +92,9 @@ module DotNet =
     let private downloadDotNetInstallerFromUrl (url:string) fileName =
         //let url = getDotNetCliInstallerUrl branch
     #if USE_HTTPCLIENT
-        let h = new System.Net.Http.HttpClient();
-        use f = File.Open(fileName, FileMode.Create);
-        h.GetStreamAsync(url).Result.CopyTo(f);
+        let h = new System.Net.Http.HttpClient()
+        use f = File.Open(fileName, FileMode.Create)
+        h.GetStreamAsync(url).Result.CopyTo(f)
     #else
         use w = new System.Net.WebClient()
         w.DownloadFile(url, fileName) // Http.RequestStream url
