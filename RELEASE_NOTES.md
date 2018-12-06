@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.11.1-alpha - tbd
+## 5.11.1 - 2018-12-07
 
-* tbd
+* Update dependencies
 
 ## 5.11.0 - 2018-12-03
 
