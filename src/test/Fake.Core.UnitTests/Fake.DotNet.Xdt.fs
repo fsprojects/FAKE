@@ -36,40 +36,50 @@ module TestData =
 
 [<Tests>]
 let tests =
-    testSequenced <| testList "Fake.DotNet.Xdt.Tests" [
+    testList "Fake.DotNet.Xdt.Tests" [
         test "when transforming file explicitly" {
+            let testFile = "web.new.config"
             try
                 let expected = TestData.read "web.transformed.config"
                 Xdt.transformFile (TestData.fileName "web.config")
                                   (TestData.fileName "web.test.config")
-                                  (TestData.fileName "web.new.config")
-                let actual = TestData.read "web.new.config"
+                                  (TestData.fileName testFile)
+                let actual = TestData.read testFile
                 Expect.equal actual expected "Expected the transformed file to match"
             finally
-                TestData.delete "web.new.config"
+                TestData.delete testFile
         }
 
         test "when transforming file with config name" {
+            let confFile = "web.transformFile.config"
+            let testFile = "web.transformFile.test.config"
             try
                 let expected = TestData.read "web.transformed.config"
-                Xdt.transformFileWithConfigName "test" (TestData.fileName "web.config")
-                let actual = TestData.read "web.config"
+                TestData.copy "web.config" confFile
+                TestData.copy "web.test.config" testFile
+                Xdt.transformFileWithConfigName "test" (TestData.fileName confFile)
+                let actual = TestData.read confFile
                 Expect.equal actual expected "Expected the transformed file to match"
             finally
-                TestData.copy "web.original.config" "web.config"
+                TestData.delete confFile
+                TestData.delete testFile
         }
 
         test "when transforming files with config name" {
+            let confFile = "web.transformFiles.config"
+            let testFile = "web.transformFiles.test.config"
             try
                 let expected = TestData.read "web.transformed.config"
+                TestData.copy "web.config" confFile
+                TestData.copy "web.test.config" testFile
                 let files =
-                    TestData.fileName "web.config"
-                    |> GlobbingPattern.create
+                    GlobbingPattern.create confFile
                     |> GlobbingPattern.setBaseDir (Path.Combine(__SOURCE_DIRECTORY__, "TestFiles", "Fake.DotNet.Xdt.Files"))
                 Xdt.transformFilesWithConfigName "test" files
-                let actual = TestData.read "web.config"
+                let actual = TestData.read confFile
                 Expect.equal actual expected "Expected the transformed file to match"
             finally
-                TestData.copy "web.original.config" "web.config"
+                TestData.delete confFile
+                TestData.delete testFile
         }
     ]
