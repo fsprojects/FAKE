@@ -69,7 +69,7 @@ type StreamRef = DataRef<System.IO.Stream>
 type StreamSpecification =
     /// Do not redirect, or use normal process inheritance
     | Inherit
-    /// Redirect to the given stream (the stream must be provided by the user and be write-only for 'stdout' & 'stderr' and read-only for 'stdin')
+    /// Redirect to the given stream (the stream must be provided by the user and be writeable for 'stdout' & 'stderr' and readable for 'stdin')
     | UseStream of closeOnExit:bool * stream:System.IO.Stream
     /// Retrieve the raw pipe from the process (the StreamRef is set with a stream you can write into for 'stdin' and read from for 'stdout' and 'stderr')
     | CreatePipe of StreamRef // The underlying framework creates pipes already
