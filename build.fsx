@@ -282,6 +282,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
+      "Fake.DotNet.Xdt", "Running XML Transforms"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
       "Fake.Installer.Squirrel", "Squirrel for windows Squirrel.exe tool helper"
       "Fake.Installer.Wix", "WiX helper to create msi installers"
