@@ -1184,7 +1184,7 @@ module DotNet =
     ///
     /// - 'setParams' - set nuget push command parameters
     /// - 'nupkg' - nupkg to publish
-    let push setParams nupkg =
+    let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NugetPushOptions.Create() |> setParams
         let args = Args.toWindowsCommandLine(nupkg :: buildNugetPushArgs param)
