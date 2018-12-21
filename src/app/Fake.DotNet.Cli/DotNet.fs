@@ -29,8 +29,8 @@ module DotNet =
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
 
-    /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
-    let internal getSDKVersionFromGlobalJsonDir startDir : string =
+    /// Tries to get the DotNet SDK from the global.json, starts searching in the given directory. Returns None if global.json is not found
+    let internal tryGetSDKVersionFromGlobalJsonDir startDir : string option =
         let globalJsonPaths rootDir =
             let rec loop (dir: DirectoryInfo) = seq {
                 match dir.GetFiles "global.json" with
@@ -43,21 +43,35 @@ module DotNet =
 
         match Seq.tryHead (globalJsonPaths startDir) with
         | None ->
-            failwithf "global.json not found"
+            None
         | Some globalJson ->
             try
                 let content = File.ReadAllText globalJson.FullName
                 let json = JObject.Parse content
                 let sdk = json.Item("sdk") :?> JObject
                 let version = sdk.Property("version").Value.ToString()
-                version
+                Some version
             with
             | exn -> failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
 
+
+     /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
+    let internal getSDKVersionFromGlobalJsonDir startDir : string =
+        tryGetSDKVersionFromGlobalJsonDir startDir
+        |> function
+        | Some version -> version
+        | None -> failwithf "global.json not found"
+
+    /// Tries the DotNet SDK from the global.json
+    /// This file can exist in the working directory or any of the parent directories
+    /// Returns None if global.json is not found
+    let tryGetSDKVersionFromGlobalJson() : string option = 
+        tryGetSDKVersionFromGlobalJsonDir "."
+    
     /// Gets the DotNet SDK from the global.json
     /// This file can exist in the working directory or any of the parent directories
-    let getSDKVersionFromGlobalJson() : string = getSDKVersionFromGlobalJsonDir "."
-
+    let getSDKVersionFromGlobalJson() : string = 
+        getSDKVersionFromGlobalJsonDir "."
 
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     /// ## Parameters
@@ -487,7 +501,7 @@ module DotNet =
         }
         static member Create() = {
             DotNetCliPath =
-                let version = try Some <| getSDKVersionFromGlobalJson() with _ -> None                              
+                let version = tryGetSDKVersionFromGlobalJson()                              
                 findPossibleDotnetCliPaths None
                 |> Seq.tryFind (fun cliPath -> 
                     match version with 
