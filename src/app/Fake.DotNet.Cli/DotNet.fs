@@ -1393,3 +1393,67 @@ module DotNet =
         execWithBinLog project param.Common "test" args param.MSBuildParams
         __.MarkSuccess()
 
+    /// dotnet nuget push command options
+    type NugetPushOptions =
+        {
+            /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
+            DisableBuffering: bool
+            /// The API key for the server
+            ApiKey: string option
+            /// Doesn't push symbols (even if present).
+            NoSymbols: bool
+            /// Doesn't append "api/v2/package" to the source URL.
+            NoServiceEndpoint: bool
+            /// Specifies the server URL. This option is required unless DefaultPushSource config value is set in the NuGet config file.
+            Source: string option
+            /// The API key for the symbol server.
+            SymbolApiKey: string option
+            /// Specifies the symbol server URL.
+            SymbolSource: string option
+            /// Specifies the timeout for pushing to a server in seconds.
+            Timeout: int option
+        }
+
+        static member Create() = {
+            DisableBuffering = false
+            ApiKey = None
+            NoSymbols = false
+            NoServiceEndpoint = false
+            Source = None
+            SymbolApiKey = None
+            SymbolSource = None
+            Timeout = None
+        }
+
+    let private buildNugetPushArgs (param : NugetPushOptions) =
+        [
+            param.DisableBuffering |> argOption "disable-buffering"
+            param.ApiKey |> Option.toList |> argList2 "api-key"
+            param.NoSymbols |> argOption "no-symbols"
+            param.NoServiceEndpoint |> argOption "no-service-endpoint"
+            param.Source |> Option.toList |> argList2 "source"
+            param.SymbolApiKey |> Option.toList |> argList2 "symbol-api-key"
+            param.SymbolSource |> Option.toList |> argList2 "symbol-source"
+            param.Timeout |> Option.map string |> Option.toList |> argList2 "timeout"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// Execute dotnet nuget push command
+    /// ## Parameters
+    ///
+    /// - 'setParams' - set nuget push command parameters
+    /// - 'nupkg' - nupkg to publish
+    let nugetPush setParams nupkg =
+        use __ = Trace.traceTask "DotNet:nuget:push" nupkg
+        let param = NugetPushOptions.Create() |> setParams
+        let args = Args.toWindowsCommandLine(nupkg :: buildNugetPushArgs param)
+        exec id "nuget push" args
+        |> function
+        | p when p.ExitCode <> 0 ->
+            p.Errors
+            |> String.concat System.Environment.NewLine
+            |> Trace.traceErrorfn "Failed to push NuGet package '%s'. Exit code '%d'. Error(s): %s" nupkg p.ExitCode
+            __.MarkFailed()
+        | _ ->
+            __.MarkSuccess()
