@@ -1,3 +1,6 @@
+#### 4.64.14 - 07.01.2019
+* Add DynamicsNAV 365 Business Central support - https://github.com/fsharp/FAKE/pull/2224
+
 #### 4.64.13 - 02.05.2018
 * Download x86 version of dotnet core on win x86 - https://github.com/SAFE-Stack/SAFE-BookStore/issues/328
 
