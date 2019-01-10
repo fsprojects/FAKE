@@ -11,7 +11,7 @@ open Fake.Core
 let private xdtTag = KnownTags.Task "XDT"
 
 /// Integrates XDT logging into FAKE logging.
-type FakeXmlTransformationLogger() =
+type internal FakeXmlTransformationLogger() =
     interface IXmlTransformationLogger with
         member x.EndSection(message, messageArgs) = 
             Trace.log(String.Format(message, messageArgs))
