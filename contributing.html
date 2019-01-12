@@ -157,6 +157,7 @@
 								<a href="/dotnet-nuget.html" class="navbar-item">NuGet</a>
 								<a href="/apidocs/v5/fake-dotnet-mage.html" class="navbar-item">Mage</a>
 								<a href="/apidocs/v5/fake-dotnet-paket.html" class="navbar-item">Paket</a>
+								<a href="/apidocs/v5/fake-dotnet-xdt.html" class="navbar-item">XML Transforms</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -294,34 +295,50 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Contributing-to-FAKE" class="anchor" href="#Contributing-to-FAKE">Contributing to FAKE</a></h1>
-<p>This page should provide you with some basic information if you're thinking about contributing to FAKE.</p>
+<p>Thank you for your interest in contributing to FAKE! This guide explains everything you'll need to know to get started.</p>
+<p><strong>Before diving in</strong>, please note:</p>
 <ul>
-<li><p>This page can be edited by sending a pull request to the FAKE project on GitHub, so if you learn something when playing with FAKE please record your <a href="https://github.com/fsharp/FAKE/blob/master/help/markdown/contributing.md">findings here</a>!</p></li>
+<li><p>You are encouraged to <strong>improve this document</strong> by sending a pull request to the FAKE project on GitHub. If you learn something while playing with FAKE, please record your <a href="https://github.com/fsharp/FAKE/blob/master/help/markdown/contributing.md">findings here</a>!</p></li>
 <li>
-<p>If you want to discuss a feature (a good idea!), or if you want to look at suggestions how you might contribute, check out:</p>
+<p>If you'd like to discuss a feature (a good idea!) or are looking for suggestions on how to to contribute:</p>
 <ul>
-<li><p>the <a href="https://github.com/fsharp/FAKE/issues">Issue list</a> on GitHub,</p></li>
-<li><p><a href="https://gitter.im/fsharp/FAKE">Gitter room</a></p></li>
+<li><p><strong>Check the <a href="https://github.com/fsharp/FAKE/issues">Issue list</a></strong> on GitHub,</p></li>
+<li><p><strong>Visit the <a href="https://gitter.im/fsharp/FAKE">Gitter room</a></strong></p></li>
 </ul>
 </li>
-<li>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the Apache 2.0 license. See License.txt for details.</li>
-<li><p>TLDR: Send a pull request with either documentation (<code>/help</code> folder) or code changes.</p></li>
+<li><p>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the <strong>Apache 2.0 license</strong>. See <a href="https://github.com/fsharp/FAKE/tree/master/License.txt"><code>/License.txt</code></a> for details.</p></li>
 </ul>
-<h2><a name="Documentation" class="anchor" href="#Documentation">Documentation</a></h2>
-<p>The documentation for FAKE is automatically generated using the amazing <a href="https://github.com/tpetricek/FSharp.Formatting">F# Formatting</a> library.
-It turns <code>*.md</code> (Markdown with embedded code snippets) and <code>*.fsx</code> files (F# script file with embedded Markdown documentation) into a nice HTML documentation.</p>
+<h2><a name="Prerequisites" class="anchor" href="#Prerequisites">Prerequisites</a></h2>
+<p>Before building and developing FAKE, you must:</p>
+<h3><a name="Install-F" class="anchor" href="#Install-F">Install F#</a></h3>
+<p><strong>Linux and Mac</strong> users should install the .NET Core SDK and Mono per this guide, "<a href="http://fsharp.org/guides/mac-linux-cross-platform/">Cross-Platform Development with F#</a>".</p>
+<p><strong>Windows</strong> users can install <strong>Visual Studio 2017</strong>. The <a href="https://www.visualstudio.com/de/vs/community/">Community Edition</a>
+is freely available for open-source projects.</p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    When developing on Windows, make sure to have long paths enabled (<a target="_blank" rel="noopener noreferrer" href="https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing">instructions available here</a>), otherwise the test-suite will fail -- although, the build should work.
+</div> 
+<h3><a name="Install-an-Editor" class="anchor" href="#Install-an-Editor">Install an Editor</a></h3>
+<p>For FAKE development, <a href="https://code.visualstudio.com/Download">Visual Studio Code</a> with <a href="https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp">Ionide</a> is highly recommended. The following IDEs are also excellent choices:</p>
 <ul>
-<li><p>The code for all the documents can be found in the <code>help</code> directory <a href="https://github.com/fsharp/FAKE/tree/master/help">on GitHub</a>. If you find a bug or add a new feature, make sure you document it!</p></li>
-<li><p>If you want to build the documentation, simply run the build script (<a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">GitHub link</a>) which builds the documentation.</p></li>
+<li>JetBrains Rider [<a href="https://www.jetbrains.com/rider/download">download</a>]</li>
+<li>Visual Studio for Mac [<a href="https://visualstudio.microsoft.com/vs/mac/">download</a>]</li>
+<li>Visual Studio for Windows [<a href="https://www.jetbrains.com/rider/download">download</a>]</li>
 </ul>
-<h2><a name="Creating-pull-requests" class="anchor" href="#Creating-pull-requests">Creating pull requests</a></h2>
-<h3><a name="Prerequisites" class="anchor" href="#Prerequisites">Prerequisites</a></h3>
-<h4><a name="Git-GitHub" class="anchor" href="#Git-GitHub">Git / GitHub</a></h4>
-<ul>
-<li><p>Fork the <a href="https://github.com/fsharp/FAKE">FAKE repo on GitHub</a>.</p></li>
-<li>Clone your personal fork locally.</li>
+<h3><a name="Install-FAKE" class="anchor" href="#Install-FAKE">Install FAKE</a></h3>
+<p>You can quickly install FAKE using the dotnet SDK:
+<pre>
+<code class="lang-bash">
+dotnet tool install fake-cli -g
+</code>
+</pre></p>
+<p>For alternative methods of installing FAKE, please see the <a href="fake-gettingstarted.html#Install-FAKE">Getting Started guide</a>.</p>
+<h2><a name="Creating-Pull-Requests" class="anchor" href="#Creating-Pull-Requests">Creating Pull Requests</a></h2>
+<ol>
+<li><p><strong>Fork</strong> the <a href="https://github.com/fsharp/FAKE">FAKE repo on GitHub</a>.</p></li>
+<li><p><strong>Clone</strong> your personal fork locally.</p></li>
 <li>
-<p>Add a new git remote in order to retrieve upstream changes.
+<p><strong>Add a new git remote</strong> in order to retrieve upstream changes.
 <pre>
 <code class="lang-bash">
 git remote add upstream <a href="https://github.com/fsharp/FAKE.git
@@ -330,83 +347,43 @@ git remote add upstream <a href="https://github.com/fsharp/FAKE.git
 </code>
 </pre></a></p>
 </li>
-</ul>
-<h4><a name="Build-tools" class="anchor" href="#Build-tools">Build tools</a></h4>
-<ul>
 <li>
-<p>Windows users can install Visual Studio 2017 (the <a href="https://www.visualstudio.com/de/vs/community/">Community Edition</a>
-is freely available for open-source projects).</p>
-<p><div class="alert alert-info">
-<h5>INFO</h5>
-Make sure to have long path enabled: <a href="https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-Otherwise">https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-Otherwise</a> the test-suite will fail (However, the build should work)
-</div></p>
-</li>
-</ul>
-<ul>
-<li>
-<p>Linux and Mac users can read "<a href="http://fsharp.org/guides/mac-linux-cross-platform/">Guide - Cross-Platform Development with F#</a>"
-to find out the required tools.</p>
-</li>
-<li>
-<p>Install FAKE</p>
-<ul>
-<li><p>For example on windows run <code>choco install fake -pre</code> (remember to update from time to time with <code>choco update fake -pre</code>)</p></li>
-<li><p>On unix we don't have fake properly packaged yet (please HELP!). You can use the steps outlined in <a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml#L14-L18"><code>.travis.yml</code></a></p></li>
-<li><p>alternatively you can install the dotnet-sdk and use <code>dotnet restore build.proj</code> and <code>dotnet fake &lt;arguments&gt;</code> instead of <code>fake &lt;arguments&gt;</code></p></li>
-</ul>
-</li>
-<li>
-<p>Alternately, you can use <a href="https://www.vagrantup.com/">Vagrant</a> in-pair with <a href="https://www.virtualbox.org/">VirtualBox</a>
-to automatically deploy a preconfigured virtual machine. See the <a href="vagrant.html">Vagrant docs</a> to get in touch with the tool.</p>
-<p><div class="alert alert-warning">
-<h5>WARNING</h5>
-The vagrant file might be outdated at this time, please help updating it and removing this banner.
-</div></p>
-</li>
-<li>
-<p>Ubuntu / Windows Subsystem for Linux:</p>
-<ul>
-<li><p>Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (<a href="http://www.mono-project.com/download/beta/#download-lin)">http://www.mono-project.com/download/beta/#download-lin)</a></p></li>
-<li>
-<p>Run the following
+<p><strong>Checkout</strong> the <code>master</code> branch.
 <pre>
 <code class="lang-bash">
-apt-get install msbuild mono-complete
-apt-cache search libunwind</p>
-<h1><a name="apt-get-Install-the-libunwind-runtime-one-of-the-search-results" class="anchor" href="#apt-get-Install-the-libunwind-runtime-one-of-the-search-results">apt-get Install the libunwind runtime (one of the search results)</a></h1>
-<p>apt-cache search libcurl # Install</p>
-<h1><a name="apt-get-Install-the-libcurl-library-one-of-the-search-results" class="anchor" href="#apt-get-Install-the-libcurl-library-one-of-the-search-results">apt-get Install the libcurl library (one of the search results)</a></h1>
-<p>./build.sh
+git checkout master
 </code>
 </pre></p>
 </li>
-</ul>
-</li>
-</ul>
-<h3><a name="Programming" class="anchor" href="#Programming">Programming</a></h3>
-<ul>
-<li><p>Checkout the <code>master</code> branch.</p></li>
-<li><p>Run the build via <code>fake run build.fsx</code> in order to check if everything works.</p></li>
 <li>
-<p>Create a new feature branch.
+<p>To verify that everything works, <strong>build</strong> <code>master</code> via:
+<pre>
+<code class="lang-bash">
+fake run build.fsx
+</code>
+</pre></p>
+</li>
+<li>
+<p>Create a new <strong>feature branch</strong>.
 <pre>
 <code class="lang-bash">
 git checkout -b myfeature
 </code>
 </pre></p>
 </li>
-<li>Implement your bugfix/feature.</li>
-<li>Add a bit of documentation (see above).</li>
-<li>Run the build script again, to confirm that all tests pass.</li>
-<li>Commit and push to your fork.</li>
+<li><p><strong>Implement</strong> your bugfix/feature.</p></li>
+<li><p>Add a bit of <strong>documentation</strong> (see the section on <a href="#Contributing-Documentation">Contributing Documentation</a>).</p></li>
 <li>
-<p>Use GitHub's UI to create a pull request.
-Write "WIP" into the pull request description if it's not completely ready</p>
+<p>Re-run the build script to <strong>confirm that all tests pass</strong>.
+<pre>
+<code class="lang-bash">
+fake run build.fsx
+</code>
+</pre></p>
 </li>
+<li><p><strong>Commit</strong> your changes, and <strong>push</strong> them to your fork.</p></li>
 <li>
-<p>If you need to rebase you can do:
+<p>Use GitHub's UI to <a href="https://github.com/fsharp/FAKE/pulls" target="_blank" rel="noopener noreferrer"><strong>create a pull request</strong></a>. (Write "WIP" into the pull request description if it's not completely ready.)<br/><br/>If you need to rebase you can do:
 <pre>
 <code class="lang-bash">
 git fetch upstream
@@ -414,12 +391,37 @@ git rebase upstream/master
 git push origin myfeature -f
 </code>
 </pre></p>
+<p>The pull request will be updated automatically.</p>
 </li>
-<li>The pull request will be updated automatically.</li>
-</ul>
-<h3><a name="A-note-on-module-testing" class="anchor" href="#A-note-on-module-testing">A note on module testing</a></h3>
-<ul>
-<li>If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a local nuget package and reference it in your script. To do this, follow the steps below</li>
+</ol>
+<h2><a name="Contributing-Documentation" class="anchor" href="#Contributing-Documentation">Contributing Documentation</a></h2>
+<p>The code for all documentation can be found in the <a href="https://github.com/fsharp/FAKE/tree/master/help"><code>help</code> directory on GitHub</a>. If you find a bug or add a new feature, <em>make sure you document it</em>!</p>
+<h3><a name="Building-the-Documentation" class="anchor" href="#Building-the-Documentation">Building the Documentation</a></h3>
+<p>Documentation for FAKE is automatically generated using <strong>the amazing <a href="https://github.com/tpetricek/FSharp.Formatting">F# Formatting</a> library</strong>.
+It turns Markdown files <code>*.md</code> with embedded code snippets and F# script <code>*.fsx</code> files containing embedded Markdown documentation into nice HTML documentation.</p>
+<p>To build the documentation from scratch, simply run:
+<pre>
+<code class="lang-bash">
+fake build target GenerateDocs
+</code>
+</pre></p>
+<p>To save time, you may skip the prerequisite build steps and run the <code>GenerateDocs</code> target directly using the single target <code>-s</code> switch:
+<pre>
+<code class="lang-bash">
+fake build -s target GenerateDocs
+</code>
+</pre>
+(Note: this assumes binaries are already built and have not been modified.)</p>
+<h3><a name="Viewing-the-Documentation" class="anchor" href="#Viewing-the-Documentation">Viewing the Documentation</a></h3>
+<p>Running the following target spins up a webserver on localhost and opens the newly built docs in a browser window:
+<pre>
+<code class="lang-bash">
+fake build target HostDocs
+</code>
+</pre></p>
+<h2><a name="Testing-Modules" class="anchor" href="#Testing-Modules">Testing Modules</a></h2>
+<p>If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a local nuget package and reference it in your script per the steps below:</p>
+<ol>
 <li>
 <p>Create a local nuget package for the module you've changed.<br />
 e.g: Using dotnet cli
@@ -431,7 +433,7 @@ dotnet pack
 </pre></p>
 </li>
 <li>
-<p>Dotnet pack will create a default nuget package with version of 1.0.0 in the <code>bin/Debug</code> of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references</p>
+<p><code>dotnet pack</code> will create a default nuget package with version of 1.0.0 in the <code>bin/Debug</code> of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references.</p>
 <p>e.g: If you wanted to test a local build of Fake.DotNet.NuGet</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -448,53 +450,27 @@ dotnet pack
 </tr>
 </table>
 </li>
-</ul>
-<h2><a name="Staging-environment" class="anchor" href="#Staging-environment">Staging environment</a></h2>
-<p>In order to test and preview our changes faster we have a fully automated release process in place.
-This staging environment is based on VSTS and MyGet.</p>
-<p>If you ever need a release/bugfix fast, make sure to mention that in your PR, we can quickly provide a build on the following infrastructure:</p>
+</ol>
+<h2><a name="Style-Guidlines" class="anchor" href="#Style-Guidlines">Style Guidlines</a></h2>
 <ul>
-<li>Website: <a href="https://staging.fake.build">https://staging.fake.build</a></li>
-<li>Chocolatey package: <code>choco install fake --version &lt;version&gt; --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2</code></li>
-<li>NuGet feed: <a href="https://www.myget.org/F/fake-vsts/api/v3/index.json">https://www.myget.org/F/fake-vsts/api/v3/index.json</a></li>
-<li>GitHub Releases: <a href="https://github.com/fake-staging/FAKE/releases">https://github.com/fake-staging/FAKE/releases</a> (if needed)</li>
-</ul>
-<div class="alert alert-info">
-  <h5>INFO</h5>
-     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
-     Those bits should be considered for "unblocking"-purposes or testing only.
-</div>
-<p>The <a href="https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&amp;view=mine&amp;_a=releases">release process</a> is publicly available as well.</p>
-<h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
-<ul>
-<li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
-<li>
-<p>Fake 4 still allows hotfixes, please send the PR against the <a href="https://github.com/fsharp/FAKE/tree/hotfix_fake4">https://github.com/fsharp/FAKE/tree/hotfix_fake4</a></p>
-<p>It would be helpful if a second PR against master is sent which merges the hotfix into master and adds the hotfix to the FAKE 5 code as well.</p>
-</li>
-</ul>
-<h2><a name="Text-editor-Code-style" class="anchor" href="#Text-editor-Code-style">Text editor / Code style</a></h2>
-<ul>
-<li><p>When working on FAKE 5 core stuff <a href="https://code.visualstudio.com/">Visual Studio Code</a> with <a href="http://ionide.io/">Ionide</a> help a lot!</p></li>
+<li><p>When working on FAKE 5 core, <a href="https://code.visualstudio.com/">Visual Studio Code</a> with <a href="http://ionide.io/">Ionide</a> helps a lot!</p></li>
 <li><p>Read the <a href="http://fsharp.org/specs/component-design-guidelines/">F# component design guidelines</a>.</p></li>
-<li>Read the API-Design-Guidelines below.</li>
+<li><p>Read the <a href="#API-Design-Guidelines">API Design Guidelines</a> below.</p></li>
+<li>Add documentation for your feature</li>
+<li><p>If you add new markdown documentation, make sure to link if from an existing site. Ideally, add it to the <a href="https://github.com/fsharp/FAKE/blob/master/help/templates/template.cshtml">menu</a></p></li>
+<li>If you write API documentation but no extra markdown, please consider adding it to the menu as well.</li>
 </ul>
-<h2><a name="Testing-Documentation-locally" class="anchor" href="#Testing-Documentation-locally">"Testing" Documentation locally</a></h2>
+<h3><a name="API-Design-Guidelines" class="anchor" href="#API-Design-Guidelines">API Design Guidelines</a></h3>
+<p><a href="fake-fake5-learn-more.html">We've learned from our mistakes</a> and adopted new API design guidelines. <strong>Please read them very carefully</strong>, and please ask if you don't understand any of the following rules:</p>
 <ul>
-<li><code>fake build target GenerateDocs</code> to build everything including the documentation or <code>fake build -s target GenerateDocs</code> to only build the docs (assumes binaries are already build and not modified)</li>
-<li><code>fake build target HostDocs</code> spins up a webserver for the documentation folder and opens the browser.</li>
-</ul>
-<h2><a name="API-Design" class="anchor" href="#API-Design">API-Design</a></h2>
-<p>We <a href="fake-fake5-learn-more.html">learned from our mistakes</a>, so we use the following guidelines, <strong>please read them very carefully</strong> (ask if you don't understand any rule):</p>
-<ul>
-<li><p><code>AutoOpen</code> is no longer used</p></li>
+<li><p><code>[&lt;AutoOpen&gt;]</code> is no longer used</p></li>
 <li>
 <p>We replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p>
 <ul>
 <li>Use Verbs as much as possible for functions</li>
-<li>In order, to have a more consistent API we propose to always use camelCase naming for functions</li>
-<li>For historic reasons we allow constants and values in PascalCase (they will not have a "verb" as they don't do anything)</li>
-<li><p>If we provide optional parameters (via <code>static member</code>) we use PascalCase as well (Example: <code>Shell</code>-module)</p></li>
+<li>In order to have a more consistent API, we propose to always use camelCase naming for functions</li>
+<li>For historic reasons, we allow constants and values in PascalCase. (They will not have a "verb" as they don't do anything)</li>
+<li><p>If we provide optional parameters (via <code>static member</code>), we use PascalCase as well (Example: <code>Shell</code>-module)</p></li>
 </ul>
 </li>
 <li>
@@ -502,7 +478,7 @@ This staging environment is based on VSTS and MyGet.</p>
 and make sure the code looks nice and structured on the caller side.</p>
 </li>
 <li>
-<p>For compatibility reasons (migration from legacy). We assume the user doesn't open the global <code>Fake</code> namespace.</p>
+<p>For compatibility reasons (migration from legacy), we assume the user doesn't open the global <code>Fake</code> namespace.</p>
 <p>-&gt; This means we don't add anything in there in the new API.</p>
 </li>
 <li>
@@ -516,17 +492,19 @@ and make sure the code looks nice and structured on the caller side.</p>
 </li>
 <li><p>Operators are opened seperatly with a separate <code>Operators</code> module</p></li>
 <li><p>We avoid the <code>Helpers</code> suffix (because we now expect users to write <code>&lt;module&gt;.&lt;function&gt;</code>)</p></li>
-<li><p>We generally use the <code>RequireQualifiedAccess</code> attribute on modules.</p></li>
+<li><p>We generally use the <code>[&lt;RequireQualifiedAccess&gt;]</code> attribute on modules.</p></li>
 </ul>
-<h2><a name="Guidelines" class="anchor" href="#Guidelines">Guidelines</a></h2>
+<h2><a name="Considerations-Regarding-FAKE-4" class="anchor" href="#Considerations-Regarding-FAKE-4">Considerations Regarding FAKE 4</a></h2>
 <ul>
-<li>Add documentation for your feature</li>
-<li>If you add new markdown documentation make sure to link if from an existing site, ideally add it to the <a href="https://github.com/fsharp/FAKE/blob/master/help/templates/template.cshtml">menu</a></li>
-<li>If you write API-Documentation but no extra markdown please consider adding it to the menu as well.</li>
+<li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
+<li>
+<p>Fake 4 still allows hotfixes. Please send the PR against the <a href="https://github.com/fsharp/FAKE/tree/hotfix_fake4">hotfix_fake4 branch</a>.</p>
+<p>It would be helpful if a second PR against <code>master</code> is sent that merges the hotfix into <code>master</code> and adds the hotfix to the FAKE 5 code as well.</p>
+</li>
 </ul>
-<h2><a name="Porting-a-module-to-FAKE-5" class="anchor" href="#Porting-a-module-to-FAKE-5">Porting a module to FAKE 5</a></h2>
-<p>As mentioned in the <a href="fake-fake5-learn-more.html">"Fake 5 learn more"</a> section we have a large list to choose from to help the project. One of these things is porting modules to FAKE 5. To save you from some pitfalls this sections guides you in migrating modules with an (at least for me) working approach.</p>
-<p>Tooling in netcore it not optimal yet so some things have to be done by hand, but with these steps you have pretty good IDE support:</p>
+<h2><a name="Porting-Modules-to-FAKE-5" class="anchor" href="#Porting-Modules-to-FAKE-5">Porting Modules to FAKE 5</a></h2>
+<p>As mentioned in the <a href="fake-fake5-learn-more.html">"Fake 5 learn more"</a> section, we could use your help porting modules to FAKE 5. To save you from some pitfalls, this section provides a working approach to migrating modules.</p>
+<p>Tooling in netcore is not optimal yet, so some things have to be done by hand. These steps will enable pretty good IDE support:</p>
 <ul>
 <li>Copy one of the existing netcore projects and edit the project file by hand (rename)</li>
 <li>Copy the old implementation files from <code>src/app/FakeLib</code> to <code>/src/app/Fake.&lt;ModuleType&gt;.&lt;Name&gt;</code> (update project file again if required)</li>
@@ -548,6 +526,22 @@ Mark the old module with the <code>Obsolete</code> attribute.
 <li>The new API is part of FakeLib (deprecated)</li>
 <li>The new API is available as separate module</li>
 </ul>
+<h2><a name="Staging-environment" class="anchor" href="#Staging-environment">Staging environment</a></h2>
+<p>In order to test and preview our changes faster, we have a fully automated release process in place.
+This staging environment is based on VSTS and MyGet.</p>
+<p>If you ever need a release/bugfix, make sure to mention that in your PR. We can quickly provide a build on the following infrastructure:</p>
+<ul>
+<li>Website: <a href="https://staging.fake.build">https://staging.fake.build</a></li>
+<li>Chocolatey package: <code>choco install fake --version &lt;version&gt; --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2</code></li>
+<li>NuGet feed: <a href="https://www.myget.org/F/fake-vsts/api/v3/index.json">https://www.myget.org/F/fake-vsts/api/v3/index.json</a></li>
+<li>GitHub Releases: <a href="https://github.com/fake-staging/FAKE/releases">https://github.com/fake-staging/FAKE/releases</a> (if needed)</li>
+</ul>
+<div class="alert alert-info">
+  <h5>INFO</h5>
+     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
+     Those bits should be considered for "unblocking"-purposes or testing only.
+</div>
+<p>The <a href="https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&amp;view=mine&amp;_a=releases">release process</a> is publicly available as well.</p>
 
 				
 			</article>
@@ -586,7 +580,7 @@ Mark the old module with the <code>Obsolete</code> attribute.
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.11.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
