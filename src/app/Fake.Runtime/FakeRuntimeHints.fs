@@ -13,6 +13,11 @@ type Hint =
  { Important : bool
    Text : string }
 
+let paketVersion =
+    let paketCoreVersion = typeof<Paket.DependenciesFile>.Assembly.GetName().Version
+    let semVerPaketCore = SemVer.Parse (paketCoreVersion.ToString())
+    semVerPaketCore.Normalize()
+
 let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (runResult:Runners.RunResult) (cache:ResultCoreCacheInfo) =
     let config = context.Config
     // https://github.com/fsharp/FAKE/issues/2001
@@ -60,9 +65,7 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
         match prepareInfo.DependencyType with
         | FakeRuntime.PaketInline -> None
         | FakeRuntime.PaketDependenciesRef ->
-            let paketCoreVersion = typeof<Paket.DependenciesFile>.Assembly.GetName().Version
-            let semVerPaketCore = SemVer.Parse (paketCoreVersion.ToString())
-            let paketCoreVersionString = semVerPaketCore.Normalize()
+            let paketCoreVersionString = paketVersion
             match prepareInfo._Section with
             | FakeHeader.PaketDependencies(_, d, _, _) ->
                 match getBootstrapperArgs d.DependenciesFile with

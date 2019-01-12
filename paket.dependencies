@@ -162,6 +162,7 @@ group netcore
     storage: none
     framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
+    nuget DotNet.Xdt
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget FSharp.Compiler.Service storage: packages, content: none
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
@@ -201,4 +202,3 @@ group netcore
     nuget System.IO.FileSystem.Watcher
     nuget System.Data.SqlClient
     nuget Microsoft.SqlServer.SqlManagementObjects
-

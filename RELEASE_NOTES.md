@@ -1,5 +1,13 @@
 # Release Notes
 
+## 5.12.0 - 2019-01-12
+
+* NEW: module `Fake.DotNet.Xdt` - https://github.com/fsharp/FAKE/pull/2218
+* IMPROVEMENT: DotNet take version into account when determining dotnet cli path - https://github.com/fsharp/FAKE/pull/2220
+  Usages of the `DotNet` might yield different results than what you would get in the command line to ensure the given version is used.
+* DOCUMENTATION: `StreamSpecification` doc improvements - https://github.com/fsharp/FAKE/pull/2222
+* DOCUMENTATION: Various improvements to the contributors guide - https://github.com/fsharp/FAKE/pull/2232
+
 ## 5.11.1 - 2018-12-07
 
 * Update dependencies

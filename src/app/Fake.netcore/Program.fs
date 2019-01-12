@@ -226,6 +226,7 @@ let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
   | ShowVersion ->
     printVersion()
     printFakePath()
+    traceFAKE "Paket.Core: %s" Fake.Runtime.FakeRuntimeHints.paketVersion
     0
   | ShowHelp ->
     printf "%s" Cli.fakeUsage
