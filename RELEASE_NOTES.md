@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.12.1-alpha - tbd
+
+* tbd
+
 ## 5.12.0 - 2019-01-12
 
 * NEW: module `Fake.DotNet.Xdt` - https://github.com/fsharp/FAKE/pull/2218
