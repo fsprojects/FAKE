@@ -80,7 +80,7 @@ module DotNet =
     let private findPossibleDotnetCliPaths dotnetCliDir = seq {
         let fileName = if Environment.isUnix then "dotnet" else "dotnet.exe"
         yield!
-            Process.findFilesOnPath "dotnet"
+            ProcessUtils.findFilesOnPath "dotnet"
             |> Seq.filter File.Exists
         let userInstalldir = defaultUserInstallDir </> fileName
         if File.exists userInstalldir then yield userInstalldir
@@ -499,6 +499,10 @@ module DotNet =
             /// NOTE: This field is ignored when UseShellExecute is true.
             Environment : Map<string, string>
         }
+
+        /// Create a default setup for executing the `dotnet` command line.
+        /// This function tries to take current `global.json` into account and tries to find the correct installation.
+        /// To overwrite this behavior set `DotNetCliPath` manually (for example to the first result of `ProcessUtils.findFilesOnPath "dotnet"`)
         static member Create() = {
             DotNetCliPath =
                 let version = tryGetSDKVersionFromGlobalJson()                              
