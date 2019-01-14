@@ -144,7 +144,7 @@ module GlobbingPattern =
             directoryIncludes
             |> Seq.filter (fun d ->
                             directoryIncludes
-                            |> Seq.exists (fun p -> d.StartsWith p && p <> d)
+                            |> Seq.exists (fun p -> d.StartsWith (p + "\\") && p <> d)
                             |> not)
             |> Seq.toList
 
