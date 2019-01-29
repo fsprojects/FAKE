@@ -379,16 +379,16 @@
 * [BREAKING] New runner is not compatible with old `Fake.Core.Target` package. Make sure to upgrade your packages before updating the runner!
 * [BREAKING] Fix inconsistent naming of MSBuild package (MsBuild -> MSBuild), add setParams to run* methods - https://github.com/fsharp/FAKE/pull/1837
 * [BREAKING] Update to the CLI, see https://fake.build/fake-commandline.html
-* [FAKE 5] Implement MSBuild /nowarn command line option (https://github.com/fsharp/FAKE/pull/1840)
-* [FAKE 5] Target Parameters (closes https://github.com/fsharp/FAKE/issues/1830)
+* [FAKE 5] Implement MSBuild /nowarn command line option - https://github.com/fsharp/FAKE/pull/1840
+* [FAKE 5] Target Parameters (closes [https://github.com/fsharp/FAKE/issues/1830](https://github.com/fsharp/FAKE/issues/1830))
 * [FAKE 5] Scripts can now have/use their own CLI.
-* [FAKE 5] Performance numbers (closes https://github.com/fsharp/FAKE/issues/1831)
+* [FAKE 5] Performance numbers (closes [https://github.com/fsharp/FAKE/issues/1831](https://github.com/fsharp/FAKE/issues/1831))
 * [FAKE 5] new module `Fake.Core.CommandLineParsing`, see https://fake.build/core-commandlineparsing.html
 * [DOCS] fixes https://github.com/fsharp/FAKE/issues/1845
 * [BUGFIX] fix various migration messages and fix ChangeWatcher according to API-Guideline
 * [BUGFIX] Remove content-disposition from Azure.Webjobs - https://github.com/fsharp/FAKE/pull/1844
 * [BUGFIX] Don't alter global shell var $cur - https://github.com/fsharp/FAKE/pull/1844
-* [BUGFIX] Fix docs and traces for dotnet version (https://github.com/fsharp/FAKE/pull/1835)
+* [BUGFIX] Fix docs and traces for dotnet version - https://github.com/fsharp/FAKE/pull/1835
 
 ## 5.0.0-beta029
 
@@ -454,7 +454,7 @@
 
 * BUGFIX: Fake now works without `.paket` folder - https://github.com/fsharp/FAKE/issues/1778 and https://github.com/fsharp/FAKE/issues/1564
 * BUGFIX: https://github.com/fsharp/FAKE/issues/1744
-* ENHANCEMENT: Fake now supports Credential Providers (like paket, see https://fsprojects.github.io/Paket/credential-providers.html)
+* ENHANCEMENT: Fake now supports Credential Providers (like paket, see [https://fsprojects.github.io/Paket/credential-providers.html](https://fsprojects.github.io/Paket/credential-providers.html))
 
 ## 5.0.0-beta019
 
@@ -495,7 +495,7 @@
 ## 5.0.0-beta013 - 2018-02-03
 
 * FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
-  This adds support for writing `#r "paket: nuget Fake.Module prerelease"` in your scripts, see https://github.com/fsharp/FAKE/pull/1770.
+  This adds support for writing `#r "paket: nuget Fake.Module prerelease"` in your scripts, see https://github.com/fsharp/FAKE/pull/1770
 * FAKE5: Self-Contained scripts (not using/referencing external paket.dependencies) will now write a `<script>.fsx.lock` file for the dependencies, see https://github.com/fsharp/FAKE/issues/1769
 * FAKE5: `fake build <target>` is now a shortcut for `fake run build.fsx -t <target>`, see https://github.com/fsharp/FAKE/issues/1569
 
@@ -537,10 +537,10 @@
 ## 5.0.0-beta006 - 2017-10-22
 
 * BUGFIX: Add `Process.withFramework` to indicate that a process might need to be started with mono and use it in kown wrappers like test-runners - https://github.com/fsharp/FAKE/pull/1697
-* DOCS: Typo (https://github.com/fsharp/FAKE/pull/1701), Canopy docs (https://github.com/fsharp/FAKE/pull/1704), some Urls (https://github.com/fsharp/FAKE/pull/1708)
-* DOCS: Migrate Slack API documentation for FAKE 5 - (https://github.com/fsharp/FAKE/pull/1706)
-* ENHANCEMENT: Provide full fidelity of build options in Xamarin helpers - (https://github.com/fsharp/FAKE/pull/1702)
-* ENHANCEMENT: Added WarnAsError to MSBuild options - (https://github.com/fsharp/FAKE/pull/1691)
+* DOCS: Typo ([https://github.com/fsharp/FAKE/pull/1701](https://github.com/fsharp/FAKE/pull/1701)), Canopy docs ([https://github.com/fsharp/FAKE/pull/1704](https://github.com/fsharp/FAKE/pull/1704)), some Urls ([https://github.com/fsharp/FAKE/pull/1708](https://github.com/fsharp/FAKE/pull/1708))
+* DOCS: Migrate Slack API documentation for FAKE 5 - https://github.com/fsharp/FAKE/pull/1706
+* ENHANCEMENT: Provide full fidelity of build options in Xamarin helpers - https://github.com/fsharp/FAKE/pull/1702
+* ENHANCEMENT: Added WarnAsError to MSBuild options - https://github.com/fsharp/FAKE/pull/1691
 
 ## 5.0.0-beta005 - 2017-10-02
 
@@ -623,10 +623,10 @@
 
 ## 5.0.0-alpha011 - 2017-07-24
 
-* BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
-* FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
-* ENHANCEMENT: Rename intellisense script (https://github.com/fsharp/FAKE/pull/1594)
-* NEW MODULE: Opencover migration (https://github.com/fsharp/FAKE/pull/1586)
+* BUGFIX: Restore console encoding on .NET Framework - https://github.com/fsharp/FAKE/pull/1587
+* FAKE5: Copy missing changes from legacy NuGet helpers - https://github.com/fsharp/FAKE/pull/1596
+* ENHANCEMENT: Rename intellisense script - https://github.com/fsharp/FAKE/pull/1594
+* NEW MODULE: Opencover migration - https://github.com/fsharp/FAKE/pull/1586
 * PERFORMANCE: Fake 5 - Update Paket
 * PERFORMANCE: Use Paket cache to increase warm start (with existing cache)
 * PERFORMANCE: Remove runtime dependency resolution be default.
@@ -665,8 +665,8 @@
 * New CLI interface - The netcore version has a new cleaned-up CLI interface
 * No more 'build.sh' and 'build.cmd' files required (though you still can use them of you want a 'zero' dependency build)
 * Chocolatey Helper now supports Self-Contained packages
-* Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
-* Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
+* Fix NuGet key leak if push fails - https://github.com/matthid/FAKE/pull/2
+* Coreclr nunit3 params - https://github.com/matthid/FAKE/pull/3
 
 #### 4.64.11 - 2018-03-09
 * Added SynchronizeSchemaChanges for DynamicsNAV
@@ -735,7 +735,7 @@
 * New StyleCode helper - https://github.com/fsharp/FAKE/pull/1526
 * BUGFIX: Fixed FtpHelper.isFolderPresent - https://github.com/fsharp/FAKE/pull/1529
 * BUGFIX: Fixed NuGet key leak if publish fails - https://github.com/fsharp/FAKE/pull/1530
-* BUGFIX: Disable caching for now - mono 5 bug - https://github.com/fsharp/FAKE/pull/1535, https://github.com/fsharp/FAKE/pull/1536
+* BUGFIX: Disable caching for now - mono 5 bug - [https://github.com/fsharp/FAKE/pull/1535](https://github.com/fsharp/FAKE/pull/1535), https://github.com/fsharp/FAKE/pull/1536
 
 ## 4.59.0 - 2017-04-27
 
@@ -865,7 +865,7 @@
 
 ## 4.41.1 - 2016-10-06
 
-* Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
+* Add all assembly metadata to AssemblyVersionInformation type - https://github.com/fsharp/FAKE/pull/1392
 * Allow additional properties to be specified when running the SQL dacpac tooling - https://github.com/fsharp/FAKE/pull/1386
 * Support for dotnet publish
 * BUGFIX: wixHelper AllowDowngrades - https://github.com/fsharp/FAKE/pull/1389
@@ -897,7 +897,7 @@
 * BUGFIX: Trim assembly info attribute value - https://github.com/fsharp/FAKE/pull/1361
 * BUGFIX: Not printing MSBUILD command line twice - https://github.com/fsharp/FAKE/pull/1359
 * BUGFIX: Semver parse fix to handle prereleases and build parts - https://github.com/fsharp/FAKE/pull/1325
-* BUGFIX: Fixed FSCHelper -https://github.com/fsharp/FAKE/pull/1351, https://github.com/fsharp/FAKE/pull/1352
+* BUGFIX: Fixed FSCHelper - [https://github.com/fsharp/FAKE/pull/1351](https://github.com/fsharp/FAKE/pull/1351), https://github.com/fsharp/FAKE/pull/1352
 
 ## 4.37.0 - 2016-08-09
 
@@ -1321,7 +1321,7 @@
 * New task `NuGetPackDirectly` works without template files.
 * Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
 * New tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
-* REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see https://github.com/fsharp/FAKE/issues/715)
+* REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see [https://github.com/fsharp/FAKE/issues/715](https://github.com/fsharp/FAKE/issues/715))
 * BUGFIX: Use DocumentNamespace for Nuspec files - https://github.com/fsharp/FAKE/pull/736
 * BUGFIX: Display agent success / error messages in UI for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/735
 * BUGFIX: Add build directory for doc generation - https://github.com/fsharp/FAKE/pull/734
