@@ -50,7 +50,7 @@ let getAllFiles repositoryDir =
 /// Gets changed files in the current revision
 let getModifiedFiles repositoryDir = 
     listAllFiles repositoryDir "--modified"
-      |> Seq.map (fun line -> Added,line)
+      |> Seq.map (fun line -> Modified,line)
 
 /// Gets the changed files since the given revision incl. changes in the working copy
 let getChangedFilesInWorkingCopy repositoryDir revision = getChangedFiles repositoryDir revision ""
