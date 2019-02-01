@@ -47,8 +47,8 @@ let getAllFiles repositoryDir =
     listAllFiles repositoryDir ""
       |> Seq.map (fun line -> Added,line)
 
-/// Gets all changed files in the current revision
-let getAllModifiedFiles repositoryDir = 
+/// Gets changed files in the current revision
+let getModifiedFiles repositoryDir = 
     listAllFiles repositoryDir "--modified"
       |> Seq.map (fun line -> Added,line)
 
