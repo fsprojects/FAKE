@@ -1,4 +1,4 @@
-﻿/// Contains helper functions which can be used to retrieve file status information from git.
+/// Contains helper functions which can be used to retrieve file status information from git.
 module Fake.Tools.Git.FileStatus
 
 open Fake.Tools.Git.CommandHelper
@@ -38,10 +38,18 @@ let getChangedFiles repositoryDir revision1 revision2 =
             let a = line.Split('\t')
             FileStatus.Parse a.[0],a.[1])
 
-/// Gets all changed files in the current revision
-let getAllFiles repositoryDir =
-    let _,msg,_ = runGitCommand repositoryDir <| sprintf "ls-files"
+let private listAllFiles repositoryDir args = 
+    let _,msg,_ = runGitCommand repositoryDir <| sprintf "ls-files %s" args
     msg
+
+/// Gets all files in the current repository
+let getAllFiles repositoryDir =
+    listAllFiles repositoryDir ""
+      |> Seq.map (fun line -> Added,line)
+
+/// Gets all changed files in the current revision
+let getAllModifiedFiles repositoryDir = 
+    listAllFiles repositoryDir "--modified"
       |> Seq.map (fun line -> Added,line)
 
 /// Gets the changed files since the given revision incl. changes in the working copy
@@ -49,8 +57,7 @@ let getChangedFilesInWorkingCopy repositoryDir revision = getChangedFiles reposi
 
 /// Gets all conflicted files
 let getConflictedFiles repositoryDir =
-    let _,msg,_ = runGitCommand repositoryDir "ls-files --unmerged"
-    msg
+    listAllFiles repositoryDir "--unmerged"
       |> Seq.map (fun file -> file.LastIndexOfAny([| ' '; '\t'|]),file)
       |> Seq.filter (fun (index,file) -> index > 0)
       |> Seq.map (fun (index,file) -> file.Substring(index + 1))
