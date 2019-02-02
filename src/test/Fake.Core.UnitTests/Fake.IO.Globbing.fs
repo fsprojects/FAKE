@@ -40,6 +40,11 @@ let tests =
         Expect.equal dirIncludes.Length 1 "Should have only 1 directory"
         Expect.contains  dirIncludes (Glob.normalizePath(@"C:\Project\tests")) "Should contain tests folder"
 
+    testCase "base directory includes should include two when one's name include the other #2230 " <| fun _ ->
+        let fileIncludes = getFileIncludeWithKnownBaseDir [@"test1\*.dll"; @"test\*.dll"]
+        let dirIncludes = GlobbingPattern.getBaseDirectoryIncludes(fileIncludes)
+        Expect.equal dirIncludes.Length 2 "Should have only 2 directory"
+
     testCase "glob should handle substring directories properly" <| fun _ ->
         let testDir = Path.GetTempFileName()
         File.Delete testDir
@@ -61,6 +66,7 @@ let tests =
           |> Flip.Expect.equal "Expected equal lists." ["match1.txt"; "match2.txt"; "match3.txt"]
         finally
           Directory.Delete(testDir, true)
+        
   ]
 
 [<Tests>]
