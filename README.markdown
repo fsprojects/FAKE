@@ -2,9 +2,9 @@
 
 [![Join the chat at https://gitter.im/fsharp/FAKE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsharp/FAKE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-"FAKE - F# Make" is a cross platform build automation system. Due to its integration 
-in F#, all benefits of the .NET Framework and functional programming can be used, including 
-the extensive class library, powerful debuggers and integrated development environments like 
+"FAKE - F# Make" is a cross platform build automation system. Due to its integration
+in F#, all benefits of the .NET Framework and functional programming can be used, including
+the extensive class library, powerful debuggers and integrated development environments like
 Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
@@ -13,8 +13,26 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 
 # Build the project
 
-* Quick: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet build build.proj`
-* Fake5: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
+-   Quick: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet build build.proj`
+-   Fake5: Install FAKE 5
+
+We recommend installing `fake` via the `fake-cli` as a dotnet tool:
+
+-   `$ dotnet tool install fake-cli -g`
+
+On Windows you can install fake directly via [chocolatey package manager](https://chocolatey.org/):
+
+-   `$ choco install fake -pre`
+
+Check that the `fake` binary is installed and accessible
+
+-   `$ fake --version`
+
+If you get `unknown command 'fake'` try the [Troubleshoot guide](./Troubleshoot.markdown)
+
+If the terminal prints the version of fake installed, try to run a build inside a project with a fake script (typically with a `build.fsx` file)
+
+-   `$ fake build`
 
 [![Azure Pipelines build status](https://dev.azure.com/fakebuild/FSProjects/_apis/build/status/FAKE-CI?branchName=release/next)](https://dev.azure.com/fakebuild/FSProjects/_build/latest?definitionId=1&branchName=release/next)
 [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
@@ -22,8 +40,8 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 
 > Note: The build of the "legacy" parts (FAKE 4) will most likely fail
 >
-> - when you are on linux and do not have mono installed
-> - when you are on windows and do not have Visual Studio installed
+> -   when you are on linux and do not have mono installed
+> -   when you are on windows and do not have Visual Studio installed
 >
 > Either build only the `netcore` parts via `fake build target FullDotNetCore` or install the requirements according to the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
 
