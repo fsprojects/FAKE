@@ -1105,6 +1105,8 @@ module DotNet =
             OutputPath: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Doesn't execute an implicit restore when running the command. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1117,6 +1119,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             NoBuild = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PackOptions.Create instead")>]
@@ -1142,6 +1145,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.NoBuild |> argOption "no-build"
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1178,6 +1182,8 @@ module DotNet =
             VersionSuffix: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Doesn't execute an implicit restore when running the command. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1192,6 +1198,7 @@ module DotNet =
             OutputPath = None
             VersionSuffix = None
             NoBuild = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PublishOptions.Create instead")>]
@@ -1219,6 +1226,7 @@ module DotNet =
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.NoBuild |> argOption "no-build"
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1253,6 +1261,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Doesn't execute an implicit restore during build. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1266,6 +1276,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use BuildOptions.Create instead")>]
@@ -1293,6 +1304,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             (if param.Native then [ "--native" ] else [])
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1348,6 +1360,8 @@ module DotNet =
             NoRestore: bool
             /// Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
             RunSettingsArguments : string option
+            /// Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as Sequence.xml that captures the order of tests execution before the crash.  (--blame)
+            Blame: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1369,6 +1383,7 @@ module DotNet =
             Collect = None
             NoRestore = false
             RunSettingsArguments = None
+            Blame = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use TestOptions.Create instead")>]
@@ -1402,6 +1417,7 @@ module DotNet =
             param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
             param.Collect |> Option.toList |> argList2 "collect"
             param.NoRestore |> argOption "no-restore"
+            param.Blame |> argOption "blame"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
