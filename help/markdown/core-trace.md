@@ -74,7 +74,7 @@ open Fake.Core
 
 // Register your secrets at the start
 let secret = Environment.environVarOrDefault "nugetkey" ""
-TraceSecrets.register secret "<REPLACEMENT>"
+TraceSecrets.register "<REPLACEMENT>" secret
 
 // Later FAKE will replace them and not output them (when using the FAKE-Tracing capabilites)
 let cmdLine = sprintf "nuget.exe push -ApiKey %s" secret
