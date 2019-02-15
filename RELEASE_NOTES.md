@@ -1,8 +1,13 @@
 # Release Notes
 
-## 5.12.1-alpha - tbd
+## 5.12.1 - 2019-02-15
 
-* tbd
+* ENHANCEMENT: Add dotnet cli options (--no-restore) and (--blame) - https://github.com/fsharp/FAKE/pull/2250
+* ENHANCEMENT: Update FSharp.Core and Paket to latest. - https://github.com/fsharp/FAKE/pull/2253
+* BUGFIX: Correct quoting used by sendPublishNamedArtifact - https://github.com/fsharp/FAKE/pull/2240
+* BUGFIX: Fixed getBaseDirectoryInclude when one directory name include the oth…  - https://github.com/fsharp/FAKE/pull/2235
+* DOCS: Resort TraceSecrets.register indexed parameters - https://github.com/fsharp/FAKE/pull/2254
+* DOCS: fix broken links #2241 - https://github.com/fsharp/FAKE/pull/2241
 
 ## 5.12.0 - 2019-01-12
 
