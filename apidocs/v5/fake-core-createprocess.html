@@ -331,6 +331,49 @@ You can manage:</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-createprocess-combinedstate-1.html">CombinedState<'a></a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-createprocess-disposablewrapper-1.html">DisposableWrapper<'a></a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-createprocess-processstate.html">ProcessState</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-createprocess-timeoutstate.html">TimeoutState</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
@@ -341,10 +384,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '179', 179)" onmouseover="showTip(event, '179', 179)">
+          <code onmouseout="hideTip(event, '335', 335)" onmouseover="showTip(event, '335', 335)">
             addOnExited f c
           </code>
-          <div class="tip" id="179">
+          <div class="tip" id="335">
             <strong>Signature:</strong> f:(&#39;?9242 -&gt; int -&gt; &#39;?9243) -&gt; c:CreateProcess&lt;&#39;?9242&gt; -&gt; CreateProcess&lt;&#39;?9243&gt;<br />
                           <strong>Type parameters:</strong> '?9242, '?9243                      </div>
         </td>
@@ -360,10 +403,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
+          <code onmouseout="hideTip(event, '336', 336)" onmouseover="showTip(event, '336', 336)">
             addOnFinally f c
           </code>
-          <div class="tip" id="180">
+          <div class="tip" id="336">
             <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?9212&gt; -&gt; CreateProcess&lt;&#39;?9212&gt;<br />
                           <strong>Type parameters:</strong> '?9212                      </div>
         </td>
@@ -379,10 +422,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
+          <code onmouseout="hideTip(event, '337', 337)" onmouseover="showTip(event, '337', 337)">
             addOnSetup f c
           </code>
-          <div class="tip" id="181">
+          <div class="tip" id="337">
             <strong>Signature:</strong> f:(unit -&gt; &#39;?9209) -&gt; c:CreateProcess&lt;&#39;?9210&gt; -&gt; CreateProcess&lt;&#39;?9210&gt;<br />
                           <strong>Type parameters:</strong> '?9209, '?9210                      </div>
         </td>
@@ -398,10 +441,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
+          <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
             addOnStarted f c
           </code>
-          <div class="tip" id="182">
+          <div class="tip" id="338">
             <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?9214&gt; -&gt; CreateProcess&lt;&#39;?9214&gt;<br />
                           <strong>Type parameters:</strong> '?9214                      </div>
         </td>
@@ -417,10 +460,44 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
+          <code onmouseout="hideTip(event, '339', 339)" onmouseover="showTip(event, '339', 339)">
+            appendFuncs(...)
+          </code>
+          <div class="tip" id="339">
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?9195) -&gt; prepareStreams:(&#39;?9195 -&gt; StreamSpecs -&gt; StreamSpecs) -&gt; onStart:(&#39;?9195 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;?9196&gt; -&gt; &#39;?9195 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?9197&gt;) -&gt; c:CreateProcess&lt;&#39;?9196&gt; -&gt; CreateProcess&lt;&#39;?9197&gt;<br />
+                          <strong>Type parameters:</strong> '?9195, '?9196, '?9197                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L282-282" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '340', 340)" onmouseover="showTip(event, '340', 340)">
+            appendFuncsDispose(...)
+          </code>
+          <div class="tip" id="340">
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?9201) -&gt; prepareStreams:(&#39;?9201 -&gt; StreamSpecs -&gt; StreamSpecs) -&gt; onStart:(&#39;?9201 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;?9202&gt; -&gt; &#39;?9201 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?9203&gt;) -&gt; onDispose:(&#39;?9201 -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?9202&gt; -&gt; CreateProcess&lt;&#39;?9203&gt;<br />
+                          <strong>Type parameters:</strong> '?9201, '?9202, '?9203                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L294-294" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '341', 341)" onmouseover="showTip(event, '341', 341)">
             appendSimpleFuncs(...)
           </code>
-          <div class="tip" id="183">
+          <div class="tip" id="341">
             <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?9205) -&gt; onStart:(&#39;?9205 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;?9206&gt; -&gt; &#39;?9205 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?9207&gt;) -&gt; onDispose:(&#39;?9205 -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?9206&gt; -&gt; CreateProcess&lt;&#39;?9207&gt;<br />
                           <strong>Type parameters:</strong> '?9205, '?9206, '?9207                      </div>
         </td>
@@ -436,10 +513,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
+          <code onmouseout="hideTip(event, '342', 342)" onmouseover="showTip(event, '342', 342)">
             copyRedirectedProcessOutputsToStandardOutputs(...)
           </code>
-          <div class="tip" id="184">
+          <div class="tip" id="342">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9156&gt; -&gt; CreateProcess&lt;&#39;?9156&gt;<br />
                           <strong>Type parameters:</strong> '?9156                      </div>
         </td>
@@ -455,10 +532,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
+          <code onmouseout="hideTip(event, '343', 343)" onmouseover="showTip(event, '343', 343)">
             disableTraceCommand(c)
           </code>
-          <div class="tip" id="185">
+          <div class="tip" id="343">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9160&gt; -&gt; CreateProcess&lt;&#39;?9160&gt;<br />
                           <strong>Type parameters:</strong> '?9160                      </div>
         </td>
@@ -474,10 +551,27 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
+          <code onmouseout="hideTip(event, '344', 344)" onmouseover="showTip(event, '344', 344)">
+            emptyHook
+          </code>
+          <div class="tip" id="344">
+            <strong>Signature:</strong> IProcessHook&lt;ProcessResult&lt;unit&gt;&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L73-73" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '345', 345)" onmouseover="showTip(event, '345', 345)">
             ensureExitCode(r)
           </code>
-          <div class="tip" id="186">
+          <div class="tip" id="345">
             <strong>Signature:</strong> r:CreateProcess&lt;&#39;?9248&gt; -&gt; CreateProcess&lt;&#39;?9248&gt;<br />
                           <strong>Type parameters:</strong> '?9248                      </div>
         </td>
@@ -493,10 +587,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
+          <code onmouseout="hideTip(event, '346', 346)" onmouseover="showTip(event, '346', 346)">
             ensureExitCodeWithMessage msg r
           </code>
-          <div class="tip" id="187">
+          <div class="tip" id="346">
             <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;&#39;?9245&gt; -&gt; CreateProcess&lt;&#39;?9245&gt;<br />
                           <strong>Type parameters:</strong> '?9245                      </div>
         </td>
@@ -512,10 +606,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '188', 188)" onmouseover="showTip(event, '188', 188)">
+          <code onmouseout="hideTip(event, '347', 347)" onmouseover="showTip(event, '347', 347)">
             fromCommand(command)
           </code>
-          <div class="tip" id="188">
+          <div class="tip" id="347">
             <strong>Signature:</strong> command:Command -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                   </div>
         </td>
@@ -545,10 +639,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '189', 189)" onmouseover="showTip(event, '189', 189)">
+          <code onmouseout="hideTip(event, '348', 348)" onmouseover="showTip(event, '348', 348)">
             fromRawCommand command args
           </code>
-          <div class="tip" id="189">
+          <div class="tip" id="348">
             <strong>Signature:</strong> command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                   </div>
         </td>
@@ -576,10 +670,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '190', 190)" onmouseover="showTip(event, '190', 190)">
+          <code onmouseout="hideTip(event, '349', 349)" onmouseover="showTip(event, '349', 349)">
             fromRawCommandLine(...)
           </code>
-          <div class="tip" id="190">
+          <div class="tip" id="349">
             <strong>Signature:</strong> command:FilePath -&gt; windowsCommandLine:string -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                   </div>
         </td>
@@ -635,10 +729,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '191', 191)" onmouseover="showTip(event, '191', 191)">
+          <code onmouseout="hideTip(event, '350', 350)" onmouseover="showTip(event, '350', 350)">
             fromRawWindowsCommandLine(...)
           </code>
-          <div class="tip" id="191">
+          <div class="tip" id="350">
             <strong>Signature:</strong> command:FilePath -&gt; windowsCommandLine:string -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -662,10 +756,10 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '192', 192)" onmouseover="showTip(event, '192', 192)">
+          <code onmouseout="hideTip(event, '351', 351)" onmouseover="showTip(event, '351', 351)">
             getEnvironmentMap(c)
           </code>
-          <div class="tip" id="192">
+          <div class="tip" id="351">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9220&gt; -&gt; EnvMap<br />
                           <strong>Type parameters:</strong> '?9220                      </div>
         </td>
@@ -681,10 +775,44 @@ You can manage:</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '193', 193)" onmouseover="showTip(event, '193', 193)">
+          <code onmouseout="hideTip(event, '352', 352)" onmouseover="showTip(event, '352', 352)">
+            getProcess(c)
+          </code>
+          <div class="tip" id="352">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9265&gt; -&gt; CreateProcess&lt;Process * Async&lt;&#39;?9265&gt; * Task&lt;RawProcessResult&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?9265                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L595-595" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '353', 353)" onmouseover="showTip(event, '353', 353)">
+            hookAppendFuncs(...)
+          </code>
+          <div class="tip" id="353">
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?9191) -&gt; prepareStreams:(&#39;?9191 -&gt; StreamSpecs -&gt; StreamSpecs) -&gt; onStart:(&#39;?9191 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;TRes&gt; -&gt; &#39;?9191 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?9193&gt;) -&gt; c:IProcessHook&lt;&#39;TRes&gt; -&gt; IProcessHookImpl&lt;CombinedState&lt;&#39;?9191&gt;,&#39;?9193&gt;<br />
+                          <strong>Type parameters:</strong> '?9191, 'TRes, '?9193                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L263-263" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '354', 354)" onmouseover="showTip(event, '354', 354)">
             interceptStream target s
           </code>
-          <div class="tip" id="193">
+          <div class="tip" id="354">
             <strong>Signature:</strong> target:Stream -&gt; s:StreamSpecification -&gt; StreamSpecification<br />
                                   </div>
         </td>
@@ -701,10 +829,27 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '194', 194)" onmouseover="showTip(event, '194', 194)">
+          <code onmouseout="hideTip(event, '355', 355)" onmouseover="showTip(event, '355', 355)">
+            interceptStreamFallback(...)
+          </code>
+          <div class="tip" id="355">
+            <strong>Signature:</strong> onInherit:(unit -&gt; StreamSpecification) -&gt; target:Stream -&gt; s:StreamSpecification -&gt; StreamSpecification<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L179-179" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '356', 356)" onmouseover="showTip(event, '356', 356)">
             map f c
           </code>
-          <div class="tip" id="194">
+          <div class="tip" id="356">
             <strong>Signature:</strong> f:(&#39;?9230 -&gt; &#39;?9231) -&gt; c:CreateProcess&lt;&#39;?9230&gt; -&gt; CreateProcess&lt;&#39;?9231&gt;<br />
                           <strong>Type parameters:</strong> '?9230, '?9231                      </div>
         </td>
@@ -720,10 +865,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '195', 195)" onmouseover="showTip(event, '195', 195)">
+          <code onmouseout="hideTip(event, '357', 357)" onmouseover="showTip(event, '357', 357)">
             mapFilePath f c
           </code>
-          <div class="tip" id="195">
+          <div class="tip" id="357">
             <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?9166&gt; -&gt; CreateProcess&lt;&#39;?9166&gt;<br />
                           <strong>Type parameters:</strong> '?9166                      </div>
         </td>
@@ -739,10 +884,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '196', 196)" onmouseover="showTip(event, '196', 196)">
+          <code onmouseout="hideTip(event, '358', 358)" onmouseover="showTip(event, '358', 358)">
             mapResult f c
           </code>
-          <div class="tip" id="196">
+          <div class="tip" id="358">
             <strong>Signature:</strong> f:(&#39;a -&gt; &#39;b) -&gt; c:CreateProcess&lt;ProcessResult&lt;&#39;a&gt;&gt; -&gt; CreateProcess&lt;ProcessResult&lt;&#39;b&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
@@ -758,10 +903,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
+          <code onmouseout="hideTip(event, '359', 359)" onmouseover="showTip(event, '359', 359)">
             ofStartInfo(p)
           </code>
-          <div class="tip" id="197">
+          <div class="tip" id="359">
             <strong>Signature:</strong> p:ProcessStartInfo -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                   </div>
         </td>
@@ -777,10 +922,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
+          <code onmouseout="hideTip(event, '360', 360)" onmouseover="showTip(event, '360', 360)">
             redirectOutput(c)
           </code>
-          <div class="tip" id="198">
+          <div class="tip" id="360">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;ProcessResult&lt;ProcessOutput&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -796,10 +941,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
+          <code onmouseout="hideTip(event, '361', 361)" onmouseover="showTip(event, '361', 361)">
             replaceFilePath newFilePath c
           </code>
-          <div class="tip" id="199">
+          <div class="tip" id="361">
             <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?9164&gt; -&gt; CreateProcess&lt;&#39;?9164&gt;<br />
                           <strong>Type parameters:</strong> '?9164                      </div>
         </td>
@@ -815,10 +960,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '200', 200)" onmouseover="showTip(event, '200', 200)">
+          <code onmouseout="hideTip(event, '362', 362)" onmouseover="showTip(event, '362', 362)">
             setEnvironmentVariable envKey envVar c
           </code>
-          <div class="tip" id="200">
+          <div class="tip" id="362">
             <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; c:CreateProcess&lt;&#39;?9222&gt; -&gt; CreateProcess&lt;&#39;?9222&gt;<br />
                           <strong>Type parameters:</strong> '?9222                      </div>
         </td>
@@ -834,10 +979,44 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '201', 201)" onmouseover="showTip(event, '201', 201)">
+          <code onmouseout="hideTip(event, '363', 363)" onmouseover="showTip(event, '363', 363)">
+            simpleHook(...)
+          </code>
+          <div class="tip" id="363">
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?9175) -&gt; prepareStreams:(&#39;?9175 -&gt; StreamSpecs -&gt; StreamSpecs) -&gt; onStart:(&#39;?9175 -&gt; Process -&gt; unit) -&gt; onResult:(&#39;?9175 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?9176&gt;) -&gt; IProcessHookImpl&lt;&#39;?9175,&#39;?9176&gt;<br />
+                          <strong>Type parameters:</strong> '?9175, '?9176                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L245-245" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '364', 364)" onmouseover="showTip(event, '364', 364)">
+            tryGetOutput(data)
+          </code>
+          <div class="tip" id="364">
+            <strong>Signature:</strong> data:obj -&gt; ProcessOutput option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L512-512" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '365', 365)" onmouseover="showTip(event, '365', 365)">
             warnOnExitCode msg r
           </code>
-          <div class="tip" id="201">
+          <div class="tip" id="365">
             <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;unit&gt; -&gt; CreateProcess&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -853,10 +1032,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '202', 202)" onmouseover="showTip(event, '202', 202)">
+          <code onmouseout="hideTip(event, '366', 366)" onmouseover="showTip(event, '366', 366)">
             withCommand command c
           </code>
-          <div class="tip" id="202">
+          <div class="tip" id="366">
             <strong>Signature:</strong> command:Command -&gt; c:CreateProcess&lt;&#39;?9162&gt; -&gt; CreateProcess&lt;&#39;?9162&gt;<br />
                           <strong>Type parameters:</strong> '?9162                      </div>
         </td>
@@ -872,10 +1051,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '203', 203)" onmouseover="showTip(event, '203', 203)">
+          <code onmouseout="hideTip(event, '367', 367)" onmouseover="showTip(event, '367', 367)">
             withEnvironment env c
           </code>
-          <div class="tip" id="203">
+          <div class="tip" id="367">
             <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?9216&gt; -&gt; CreateProcess&lt;&#39;?9216&gt;<br />
                           <strong>Type parameters:</strong> '?9216                      </div>
         </td>
@@ -891,10 +1070,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '204', 204)" onmouseover="showTip(event, '204', 204)">
+          <code onmouseout="hideTip(event, '368', 368)" onmouseover="showTip(event, '368', 368)">
             withEnvironmentMap env c
           </code>
-          <div class="tip" id="204">
+          <div class="tip" id="368">
             <strong>Signature:</strong> env:EnvMap -&gt; c:CreateProcess&lt;&#39;?9218&gt; -&gt; CreateProcess&lt;&#39;?9218&gt;<br />
                           <strong>Type parameters:</strong> '?9218                      </div>
         </td>
@@ -910,10 +1089,44 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '205', 205)" onmouseover="showTip(event, '205', 205)">
+          <code onmouseout="hideTip(event, '369', 369)" onmouseover="showTip(event, '369', 369)">
+            withHook h c
+          </code>
+          <div class="tip" id="369">
+            <strong>Signature:</strong> h:IProcessHook&lt;&#39;?9168&gt; -&gt; c:CreateProcess&lt;&#39;?9169&gt; -&gt; CreateProcess&lt;&#39;?9168&gt;<br />
+                          <strong>Type parameters:</strong> '?9168, '?9169                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L234-234" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '370', 370)" onmouseover="showTip(event, '370', 370)">
+            withHookImpl h c
+          </code>
+          <div class="tip" id="370">
+            <strong>Signature:</strong> h:IProcessHookImpl&lt;&#39;?9171,&#39;?9172&gt; -&gt; c:CreateProcess&lt;&#39;?9173&gt; -&gt; CreateProcess&lt;&#39;?9172&gt;<br />
+                          <strong>Type parameters:</strong> '?9171, '?9172, '?9173                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L241-241" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '371', 371)" onmouseover="showTip(event, '371', 371)">
             withOutputEvents onStdOut onStdErr c
           </code>
-          <div class="tip" id="205">
+          <div class="tip" id="371">
             <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -929,10 +1142,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '206', 206)" onmouseover="showTip(event, '206', 206)">
+          <code onmouseout="hideTip(event, '372', 372)" onmouseover="showTip(event, '372', 372)">
             withOutputEventsNotNull(...)
           </code>
-          <div class="tip" id="206">
+          <div class="tip" id="372">
             <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?9240&gt; -&gt; CreateProcess&lt;&#39;?9240&gt;<br />
                           <strong>Type parameters:</strong> '?9240                      </div>
         </td>
@@ -948,10 +1161,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '207', 207)" onmouseover="showTip(event, '207', 207)">
+          <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
             withStandardError stdErr c
           </code>
-          <div class="tip" id="207">
+          <div class="tip" id="373">
             <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?9226&gt; -&gt; CreateProcess&lt;&#39;?9226&gt;<br />
                           <strong>Type parameters:</strong> '?9226                      </div>
         </td>
@@ -967,10 +1180,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '208', 208)" onmouseover="showTip(event, '208', 208)">
+          <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
             withStandardInput stdIn c
           </code>
-          <div class="tip" id="208">
+          <div class="tip" id="374">
             <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?9228&gt; -&gt; CreateProcess&lt;&#39;?9228&gt;<br />
                           <strong>Type parameters:</strong> '?9228                      </div>
         </td>
@@ -986,10 +1199,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
+          <code onmouseout="hideTip(event, '375', 375)" onmouseover="showTip(event, '375', 375)">
             withStandardOutput stdOut c
           </code>
-          <div class="tip" id="209">
+          <div class="tip" id="375">
             <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?9224&gt; -&gt; CreateProcess&lt;&#39;?9224&gt;<br />
                           <strong>Type parameters:</strong> '?9224                      </div>
         </td>
@@ -1005,10 +1218,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '210', 210)" onmouseover="showTip(event, '210', 210)">
+          <code onmouseout="hideTip(event, '376', 376)" onmouseover="showTip(event, '376', 376)">
             withTimeout timeout c
           </code>
-          <div class="tip" id="210">
+          <div class="tip" id="376">
             <strong>Signature:</strong> timeout:TimeSpan -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -1024,10 +1237,10 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '211', 211)" onmouseover="showTip(event, '211', 211)">
+          <code onmouseout="hideTip(event, '377', 377)" onmouseover="showTip(event, '377', 377)">
             withWorkingDirectory workDir c
           </code>
-          <div class="tip" id="211">
+          <div class="tip" id="377">
             <strong>Signature:</strong> workDir:string -&gt; c:CreateProcess&lt;&#39;?9158&gt; -&gt; CreateProcess&lt;&#39;?9158&gt;<br />
                           <strong>Type parameters:</strong> '?9158                      </div>
         </td>
@@ -1080,7 +1293,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

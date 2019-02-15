@@ -328,10 +328,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1851', 1851)" onmouseover="showTip(event, '1851', 1851)">
+          <code onmouseout="hideTip(event, '2528', 2528)" onmouseover="showTip(event, '2528', 2528)">
+            addArgs commit file
+          </code>
+          <div class="tip" id="2528">
+            <strong>Signature:</strong> commit:string -&gt; file:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L10-10" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2529', 2529)" onmouseover="showTip(event, '2529', 2529)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="1851">
+          <div class="tip" id="2529">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -362,10 +379,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1852', 1852)" onmouseover="showTip(event, '1852', 1852)">
+          <code onmouseout="hideTip(event, '2530', 2530)" onmouseover="showTip(event, '2530', 2530)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="1852">
+          <div class="tip" id="2530">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -396,10 +413,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1853', 1853)" onmouseover="showTip(event, '1853', 1853)">
+          <code onmouseout="hideTip(event, '2531', 2531)" onmouseover="showTip(event, '2531', 2531)">
             ResetHard(repositoryDir)
           </code>
-          <div class="tip" id="1853">
+          <div class="tip" id="2531">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -428,10 +445,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1854', 1854)" onmouseover="showTip(event, '1854', 1854)">
+          <code onmouseout="hideTip(event, '2532', 2532)" onmouseover="showTip(event, '2532', 2532)">
             ResetMixed(repositoryDir)
           </code>
-          <div class="tip" id="1854">
+          <div class="tip" id="2532">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -460,10 +477,30 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1855', 1855)" onmouseover="showTip(event, '1855', 1855)">
+          <code onmouseout="hideTip(event, '2533', 2533)" onmouseover="showTip(event, '2533', 2533)">
+            resetOrCheckout file mode
+          </code>
+          <div class="tip" id="2533">
+            <strong>Signature:</strong> file:string -&gt; mode:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L17-17" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>the intent of the 'reset' helper is to either set a repo to a certain point, or set a file to a certain point.  Git reset doesn't take file paths in the hard/mixed/soft modes, and so you have to use checkout instead for that.
+This function encapsulates caring about that so you don't have to.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2534', 2534)" onmouseover="showTip(event, '2534', 2534)">
             ResetSoft(repositoryDir)
           </code>
-          <div class="tip" id="1855">
+          <div class="tip" id="2534">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -492,10 +529,10 @@ Does not touch the index file nor the working tree at all.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
+          <code onmouseout="hideTip(event, '2535', 2535)" onmouseover="showTip(event, '2535', 2535)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="1856">
+          <div class="tip" id="2535">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -562,7 +599,7 @@ Does not touch the index file nor the working tree at all.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

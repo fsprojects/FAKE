@@ -899,10 +899,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '957', 957)" onmouseover="showTip(event, '957', 957)">
+          <code onmouseout="hideTip(event, '1233', 1233)" onmouseover="showTip(event, '1233', 1233)">
             attachServiceControlToComponent(...)
           </code>
-          <div class="tip" id="957">
+          <div class="tip" id="1233">
             <strong>Signature:</strong> comp:WiXDirectoryComponent -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceControls:seq&lt;WiXServiceControl&gt; -&gt; WiXDirectoryComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -924,10 +924,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '958', 958)" onmouseover="showTip(event, '958', 958)">
+          <code onmouseout="hideTip(event, '1234', 1234)" onmouseover="showTip(event, '1234', 1234)">
             attachServiceControlToComponents(...)
           </code>
-          <div class="tip" id="958">
+          <div class="tip" id="1234">
             <strong>Signature:</strong> components:seq&lt;WiXDirectoryComponent&gt; -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceControls:seq&lt;WiXServiceControl&gt; -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                   </div>
         </td>
@@ -941,10 +941,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
+          <code onmouseout="hideTip(event, '1235', 1235)" onmouseover="showTip(event, '1235', 1235)">
             attachServiceInstallToComponent(...)
           </code>
-          <div class="tip" id="959">
+          <div class="tip" id="1235">
             <strong>Signature:</strong> comp:WiXDirectoryComponent -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceInstalls:seq&lt;WiXServiceInstall&gt; -&gt; WiXDirectoryComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -968,10 +968,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '960', 960)" onmouseover="showTip(event, '960', 960)">
+          <code onmouseout="hideTip(event, '1236', 1236)" onmouseover="showTip(event, '1236', 1236)">
             attachServiceInstallToComponents(...)
           </code>
-          <div class="tip" id="960">
+          <div class="tip" id="1236">
             <strong>Signature:</strong> components:seq&lt;WiXDirectoryComponent&gt; -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceInstalls:seq&lt;WiXServiceInstall&gt; -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                   </div>
         </td>
@@ -985,10 +985,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '961', 961)" onmouseover="showTip(event, '961', 961)">
+          <code onmouseout="hideTip(event, '1237', 1237)" onmouseover="showTip(event, '1237', 1237)">
             bulkComponentCreation(...)
           </code>
-          <div class="tip" id="961">
+          <div class="tip" id="1237">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1016,10 +1016,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '962', 962)" onmouseover="showTip(event, '962', 962)">
+          <code onmouseout="hideTip(event, '1238', 1238)" onmouseover="showTip(event, '1238', 1238)">
             bulkComponentCreationAsSubDir(...)
           </code>
-          <div class="tip" id="962">
+          <div class="tip" id="1238">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1047,10 +1047,10 @@ The components are embedded into the passed in root directory.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '963', 963)" onmouseover="showTip(event, '963', 963)">
+          <code onmouseout="hideTip(event, '1239', 1239)" onmouseover="showTip(event, '1239', 1239)">
             bulkComponentTreeCreation(...)
           </code>
-          <div class="tip" id="963">
+          <div class="tip" id="1239">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryFilter:(DirectoryInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1079,10 +1079,46 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '964', 964)" onmouseover="showTip(event, '964', 964)">
+          <code onmouseout="hideTip(event, '1240', 1240)" onmouseover="showTip(event, '1240', 1240)">
+            bulkComponentTreeSubCreation(...)
+          </code>
+          <div class="tip" id="1240">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryFilter:(DirectoryInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; directoryName:string -&gt; architecture:Architecture -&gt; WiXDirectoryComponent<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L850-850" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
+            calcSHA1(text)
+          </code>
+          <div class="tip" id="1241">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L794-794" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Calculates the SHA1 for a given string.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1242', 1242)" onmouseover="showTip(event, '1242', 1242)">
             Candle parameters wixScript
           </code>
-          <div class="tip" id="964">
+          <div class="tip" id="1242">
             <strong>Signature:</strong> parameters:WiXParams -&gt; wixScript:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1106,10 +1142,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '965', 965)" onmouseover="showTip(event, '965', 965)">
+          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
             compName(comp)
           </code>
-          <div class="tip" id="965">
+          <div class="tip" id="1243">
             <strong>Signature:</strong> comp:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1131,10 +1167,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '966', 966)" onmouseover="showTip(event, '966', 966)">
+          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
             compRefName(compRef)
           </code>
-          <div class="tip" id="966">
+          <div class="tip" id="1244">
             <strong>Signature:</strong> compRef:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1156,10 +1192,61 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '967', 967)" onmouseover="showTip(event, '967', 967)">
+          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
+            compRefs
+          </code>
+          <div class="tip" id="1245">
+            <strong>Signature:</strong> Dictionary&lt;string,int&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L28-28" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
+            comps
+          </code>
+          <div class="tip" id="1246">
+            <strong>Signature:</strong> Dictionary&lt;string,int&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L40-40" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
+            createComponents(...)
+          </code>
+          <div class="tip" id="1247">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; directoryName:string -&gt; architecture:Architecture -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L812-812" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1248', 1248)" onmouseover="showTip(event, '1248', 1248)">
             dirName(dir)
           </code>
-          <div class="tip" id="967">
+          <div class="tip" id="1248">
             <strong>Signature:</strong> dir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1181,10 +1268,27 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '968', 968)" onmouseover="showTip(event, '968', 968)">
+          <code onmouseout="hideTip(event, '1249', 1249)" onmouseover="showTip(event, '1249', 1249)">
+            dirs
+          </code>
+          <div class="tip" id="1249">
+            <strong>Signature:</strong> Dictionary&lt;string,int&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L16-16" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1250', 1250)" onmouseover="showTip(event, '1250', 1250)">
             FeatureDefaults
           </code>
-          <div class="tip" id="968">
+          <div class="tip" id="1250">
             <strong>Signature:</strong> Feature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1208,10 +1312,27 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '969', 969)" onmouseover="showTip(event, '969', 969)">
+          <code onmouseout="hideTip(event, '1251', 1251)" onmouseover="showTip(event, '1251', 1251)">
+            fileCount
+          </code>
+          <div class="tip" id="1251">
+            <strong>Signature:</strong> int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L15-15" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1252', 1252)" onmouseover="showTip(event, '1252', 1252)">
             FillInWixScript wiXPath setParams
           </code>
-          <div class="tip" id="969">
+          <div class="tip" id="1252">
             <strong>Signature:</strong> wiXPath:string -&gt; setParams:(WiXScript -&gt; WiXScript) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1279,10 +1400,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '970', 970)" onmouseover="showTip(event, '970', 970)">
+          <code onmouseout="hideTip(event, '1253', 1253)" onmouseover="showTip(event, '1253', 1253)">
             FillInWiXTemplate wiXPath setParams
           </code>
-          <div class="tip" id="970">
+          <div class="tip" id="1253">
             <strong>Signature:</strong> wiXPath:string -&gt; setParams:(Script -&gt; Script) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1352,10 +1473,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '971', 971)" onmouseover="showTip(event, '971', 971)">
+          <code onmouseout="hideTip(event, '1254', 1254)" onmouseover="showTip(event, '1254', 1254)">
             generateComponent(setParams)
           </code>
-          <div class="tip" id="971">
+          <div class="tip" id="1254">
             <strong>Signature:</strong> setParams:(WiXComponent -&gt; WiXComponent) -&gt; WiXComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1379,10 +1500,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '972', 972)" onmouseover="showTip(event, '972', 972)">
+          <code onmouseout="hideTip(event, '1255', 1255)" onmouseover="showTip(event, '1255', 1255)">
             generateComponentRef(setParams)
           </code>
-          <div class="tip" id="972">
+          <div class="tip" id="1255">
             <strong>Signature:</strong> setParams:(WiXComponentRef -&gt; WiXComponentRef) -&gt; WiXComponentRef option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1406,10 +1527,10 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '973', 973)" onmouseover="showTip(event, '973', 973)">
+          <code onmouseout="hideTip(event, '1256', 1256)" onmouseover="showTip(event, '1256', 1256)">
             generateCustomAction(setParams)
           </code>
-          <div class="tip" id="973">
+          <div class="tip" id="1256">
             <strong>Signature:</strong> setParams:(WiXCustomAction -&gt; WiXCustomAction) -&gt; WiXCustomAction<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1464,10 +1585,10 @@ ExeCommand are the parameters passed to your executable</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '974', 974)" onmouseover="showTip(event, '974', 974)">
+          <code onmouseout="hideTip(event, '1257', 1257)" onmouseover="showTip(event, '1257', 1257)">
             generateCustomActionExecution(setParams)
           </code>
-          <div class="tip" id="974">
+          <div class="tip" id="1257">
             <strong>Signature:</strong> setParams:(WiXCustomActionExecution -&gt; WiXCustomActionExecution) -&gt; WiXCustomActionExecution<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1516,10 +1637,10 @@ Condition in sample makes execute only on install</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '975', 975)" onmouseover="showTip(event, '975', 975)">
+          <code onmouseout="hideTip(event, '1258', 1258)" onmouseover="showTip(event, '1258', 1258)">
             generateDirectory(setParams)
           </code>
-          <div class="tip" id="975">
+          <div class="tip" id="1258">
             <strong>Signature:</strong> setParams:(WiXDir -&gt; WiXDir) -&gt; WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1543,10 +1664,10 @@ Condition in sample makes execute only on install</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '976', 976)" onmouseover="showTip(event, '976', 976)">
+          <code onmouseout="hideTip(event, '1259', 1259)" onmouseover="showTip(event, '1259', 1259)">
             generateDirectoryRef(setParams)
           </code>
-          <div class="tip" id="976">
+          <div class="tip" id="1259">
             <strong>Signature:</strong> setParams:(WiXDirectoryRef -&gt; WiXDirectoryRef) -&gt; WiXDirectoryRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1570,10 +1691,10 @@ Condition in sample makes execute only on install</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '977', 977)" onmouseover="showTip(event, '977', 977)">
+          <code onmouseout="hideTip(event, '1260', 1260)" onmouseover="showTip(event, '1260', 1260)">
             generateFeature(setParams)
           </code>
-          <div class="tip" id="977">
+          <div class="tip" id="1260">
             <strong>Signature:</strong> setParams:(WiXFeature -&gt; WiXFeature) -&gt; WiXFeature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1626,10 +1747,10 @@ You can pass other features into InnerContent for making a hierarchy</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '978', 978)" onmouseover="showTip(event, '978', 978)">
+          <code onmouseout="hideTip(event, '1261', 1261)" onmouseover="showTip(event, '1261', 1261)">
             generateFeatureElement(setParams)
           </code>
-          <div class="tip" id="978">
+          <div class="tip" id="1261">
             <strong>Signature:</strong> setParams:(Feature -&gt; Feature) -&gt; Feature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1682,10 +1803,10 @@ You can pass other features into InnerContent for making a hierarchy</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '979', 979)" onmouseover="showTip(event, '979', 979)">
+          <code onmouseout="hideTip(event, '1262', 1262)" onmouseover="showTip(event, '1262', 1262)">
             generateMajorUpgradeVersion(setParams)
           </code>
-          <div class="tip" id="979">
+          <div class="tip" id="1262">
             <strong>Signature:</strong> setParams:(WiXMajorUpgrade -&gt; WiXMajorUpgrade) -&gt; WiXMajorUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1727,10 +1848,10 @@ You can pass other features into InnerContent for making a hierarchy</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '980', 980)" onmouseover="showTip(event, '980', 980)">
+          <code onmouseout="hideTip(event, '1263', 1263)" onmouseover="showTip(event, '1263', 1263)">
             generateRegistryKey(setParams)
           </code>
-          <div class="tip" id="980">
+          <div class="tip" id="1263">
             <strong>Signature:</strong> setParams:(WiXRegistryKey -&gt; WiXRegistryKey) -&gt; WiXRegistryKey<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1770,10 +1891,10 @@ Values = someChildValues
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '981', 981)" onmouseover="showTip(event, '981', 981)">
+          <code onmouseout="hideTip(event, '1264', 1264)" onmouseover="showTip(event, '1264', 1264)">
             generateRegistryValue(setParams)
           </code>
-          <div class="tip" id="981">
+          <div class="tip" id="1264">
             <strong>Signature:</strong> setParams:(WiXRegistryValue -&gt; WiXRegistryValue) -&gt; WiXRegistryValue<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1812,10 +1933,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '982', 982)" onmouseover="showTip(event, '982', 982)">
+          <code onmouseout="hideTip(event, '1265', 1265)" onmouseover="showTip(event, '1265', 1265)">
             generateServiceConfig(setParams)
           </code>
-          <div class="tip" id="982">
+          <div class="tip" id="1265">
             <strong>Signature:</strong> setParams:(WiXServiceConfig -&gt; WiXServiceConfig) -&gt; WiXServiceConfig<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1839,10 +1960,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '983', 983)" onmouseover="showTip(event, '983', 983)">
+          <code onmouseout="hideTip(event, '1266', 1266)" onmouseover="showTip(event, '1266', 1266)">
             generateServiceControl(setParams)
           </code>
-          <div class="tip" id="983">
+          <div class="tip" id="1266">
             <strong>Signature:</strong> setParams:(WiXServiceControl -&gt; WiXServiceControl) -&gt; WiXServiceControl<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1866,10 +1987,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '984', 984)" onmouseover="showTip(event, '984', 984)">
+          <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
             generateServiceDependency(setParams)
           </code>
-          <div class="tip" id="984">
+          <div class="tip" id="1267">
             <strong>Signature:</strong> setParams:(WiXServiceDependency -&gt; WiXServiceDependency) -&gt; WiXServiceDependency<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1893,10 +2014,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '985', 985)" onmouseover="showTip(event, '985', 985)">
+          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
             generateServiceInstall(setParams)
           </code>
-          <div class="tip" id="985">
+          <div class="tip" id="1268">
             <strong>Signature:</strong> setParams:(WiXServiceInstall -&gt; WiXServiceInstall) -&gt; WiXServiceInstall<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1920,10 +2041,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '986', 986)" onmouseover="showTip(event, '986', 986)">
+          <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
             generateUIRef(setParams)
           </code>
-          <div class="tip" id="986">
+          <div class="tip" id="1269">
             <strong>Signature:</strong> setParams:(WiXUIRef -&gt; WiXUIRef) -&gt; WiXUIRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1965,10 +2086,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '987', 987)" onmouseover="showTip(event, '987', 987)">
+          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
             generateUpgrade(setParams)
           </code>
-          <div class="tip" id="987">
+          <div class="tip" id="1270">
             <strong>Signature:</strong> setParams:(WiXUpgrade -&gt; WiXUpgrade) -&gt; WiXUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2010,10 +2131,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '988', 988)" onmouseover="showTip(event, '988', 988)">
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
             generateUpgradeVersion(setParams)
           </code>
-          <div class="tip" id="988">
+          <div class="tip" id="1271">
             <strong>Signature:</strong> setParams:(WiXUpgradeVersion -&gt; WiXUpgradeVersion) -&gt; WiXUpgradeVersion<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2057,10 +2178,10 @@ Value = "2"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '989', 989)" onmouseover="showTip(event, '989', 989)">
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
             generateWiXScript(fileName)
           </code>
-          <div class="tip" id="989">
+          <div class="tip" id="1272">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2096,10 +2217,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '990', 990)" onmouseover="showTip(event, '990', 990)">
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
             getComponentIdsFromWiXString(wiXString)
           </code>
-          <div class="tip" id="990">
+          <div class="tip" id="1273">
             <strong>Signature:</strong> wiXString:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2138,10 +2259,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '991', 991)" onmouseover="showTip(event, '991', 991)">
+          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
             getComponentRefs(elements)
           </code>
-          <div class="tip" id="991">
+          <div class="tip" id="1274">
             <strong>Signature:</strong> elements:seq&lt;WiXDirectoryComponent&gt; -&gt; seq&lt;WiXComponentRef option&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2163,10 +2284,44 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '992', 992)" onmouseover="showTip(event, '992', 992)">
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
+            getDirectoryId(directoryName)
+          </code>
+          <div class="tip" id="1275">
+            <strong>Signature:</strong> directoryName:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L801-801" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
+            getFileId(fileName)
+          </code>
+          <div class="tip" id="1276">
+            <strong>Signature:</strong> fileName:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L804-804" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             getFileIdFromWiXString(...)
           </code>
-          <div class="tip" id="992">
+          <div class="tip" id="1277">
             <strong>Signature:</strong> wiXString:string -&gt; fileRegex:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2206,10 +2361,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '993', 993)" onmouseover="showTip(event, '993', 993)">
+          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
             getFilesAsWiXString(files)
           </code>
-          <div class="tip" id="993">
+          <div class="tip" id="1278">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2233,10 +2388,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '994', 994)" onmouseover="showTip(event, '994', 994)">
+          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
             HarvestDirectory(...)
           </code>
-          <div class="tip" id="994">
+          <div class="tip" id="1279">
             <strong>Signature:</strong> setParams:(HeatParams -&gt; HeatParams) -&gt; directory:string -&gt; outputFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2266,10 +2421,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '995', 995)" onmouseover="showTip(event, '995', 995)">
+          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
             HeatDefaulParams
           </code>
-          <div class="tip" id="995">
+          <div class="tip" id="1280">
             <strong>Signature:</strong> HeatParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2293,10 +2448,27 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '996', 996)" onmouseover="showTip(event, '996', 996)">
+          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
+            IsWin64(architecture)
+          </code>
+          <div class="tip" id="1281">
+            <strong>Signature:</strong> architecture:Architecture -&gt; YesOrNo<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L807-807" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
             Light parameters outputFile wixObj
           </code>
-          <div class="tip" id="996">
+          <div class="tip" id="1282">
             <strong>Signature:</strong> parameters:WiXParams -&gt; outputFile:string -&gt; wixObj:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2320,10 +2492,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '997', 997)" onmouseover="showTip(event, '997', 997)">
+          <code onmouseout="hideTip(event, '1283', 1283)" onmouseover="showTip(event, '1283', 1283)">
             ScriptDefaults
           </code>
-          <div class="tip" id="997">
+          <div class="tip" id="1283">
             <strong>Signature:</strong> Script<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2347,10 +2519,10 @@ You need to run this once every build an then use FillInWiXScript to replace pla
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '998', 998)" onmouseover="showTip(event, '998', 998)">
+          <code onmouseout="hideTip(event, '1284', 1284)" onmouseover="showTip(event, '1284', 1284)">
             setComponentsNeverOverwrite(components)
           </code>
-          <div class="tip" id="998">
+          <div class="tip" id="1284">
             <strong>Signature:</strong> components:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2375,10 +2547,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '999', 999)" onmouseover="showTip(event, '999', 999)">
+          <code onmouseout="hideTip(event, '1285', 1285)" onmouseover="showTip(event, '1285', 1285)">
             WiX setParams outputFile wixScript
           </code>
-          <div class="tip" id="999">
+          <div class="tip" id="1285">
             <strong>Signature:</strong> setParams:(WiXParams -&gt; WiXParams) -&gt; outputFile:string -&gt; wixScript:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2465,10 +2637,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1000', 1000)" onmouseover="showTip(event, '1000', 1000)">
+          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
             WiXComponentDefaults
           </code>
-          <div class="tip" id="1000">
+          <div class="tip" id="1286">
             <strong>Signature:</strong> WiXComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2492,10 +2664,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1001', 1001)" onmouseover="showTip(event, '1001', 1001)">
+          <code onmouseout="hideTip(event, '1287', 1287)" onmouseover="showTip(event, '1287', 1287)">
             WiXComponentRefDefaults
           </code>
-          <div class="tip" id="1001">
+          <div class="tip" id="1287">
             <strong>Signature:</strong> WiXComponentRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2519,10 +2691,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1002', 1002)" onmouseover="showTip(event, '1002', 1002)">
+          <code onmouseout="hideTip(event, '1288', 1288)" onmouseover="showTip(event, '1288', 1288)">
             wixComponentRefs(directoryInfo)
           </code>
-          <div class="tip" id="1002">
+          <div class="tip" id="1288">
             <strong>Signature:</strong> directoryInfo:DirectoryInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2546,10 +2718,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1003', 1003)" onmouseover="showTip(event, '1003', 1003)">
+          <code onmouseout="hideTip(event, '1289', 1289)" onmouseover="showTip(event, '1289', 1289)">
             WiXCustomActionDefaults
           </code>
-          <div class="tip" id="1003">
+          <div class="tip" id="1289">
             <strong>Signature:</strong> WiXCustomAction<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2573,10 +2745,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1004', 1004)" onmouseover="showTip(event, '1004', 1004)">
+          <code onmouseout="hideTip(event, '1290', 1290)" onmouseover="showTip(event, '1290', 1290)">
             WixCustomActionExecutionDefaults
           </code>
-          <div class="tip" id="1004">
+          <div class="tip" id="1290">
             <strong>Signature:</strong> WiXCustomActionExecution<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2600,10 +2772,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1005', 1005)" onmouseover="showTip(event, '1005', 1005)">
+          <code onmouseout="hideTip(event, '1291', 1291)" onmouseover="showTip(event, '1291', 1291)">
             WiXDefaults
           </code>
-          <div class="tip" id="1005">
+          <div class="tip" id="1291">
             <strong>Signature:</strong> WiXParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2627,10 +2799,10 @@ This is useful for config files, since they are not replaced on upgrade like tha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1006', 1006)" onmouseover="showTip(event, '1006', 1006)">
+          <code onmouseout="hideTip(event, '1292', 1292)" onmouseover="showTip(event, '1292', 1292)">
             wixDir fileFilter asSubDir directoryInfo
           </code>
-          <div class="tip" id="1006">
+          <div class="tip" id="1292">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; directoryInfo:DirectoryInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2658,10 +2830,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1007', 1007)" onmouseover="showTip(event, '1007', 1007)">
+          <code onmouseout="hideTip(event, '1293', 1293)" onmouseover="showTip(event, '1293', 1293)">
             WiXDirDefaults
           </code>
-          <div class="tip" id="1007">
+          <div class="tip" id="1293">
             <strong>Signature:</strong> WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2685,10 +2857,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1008', 1008)" onmouseover="showTip(event, '1008', 1008)">
+          <code onmouseout="hideTip(event, '1294', 1294)" onmouseover="showTip(event, '1294', 1294)">
             WiXDirectoryRefDefaults
           </code>
-          <div class="tip" id="1008">
+          <div class="tip" id="1294">
             <strong>Signature:</strong> WiXDirectoryRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2712,10 +2884,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1009', 1009)" onmouseover="showTip(event, '1009', 1009)">
+          <code onmouseout="hideTip(event, '1295', 1295)" onmouseover="showTip(event, '1295', 1295)">
             WiXFeatureDefaults
           </code>
-          <div class="tip" id="1009">
+          <div class="tip" id="1295">
             <strong>Signature:</strong> WiXFeature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2739,10 +2911,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1010', 1010)" onmouseover="showTip(event, '1010', 1010)">
+          <code onmouseout="hideTip(event, '1296', 1296)" onmouseover="showTip(event, '1296', 1296)">
             wixFile(fileInfo)
           </code>
-          <div class="tip" id="1010">
+          <div class="tip" id="1296">
             <strong>Signature:</strong> fileInfo:FileInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2766,10 +2938,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1011', 1011)" onmouseover="showTip(event, '1011', 1011)">
+          <code onmouseout="hideTip(event, '1297', 1297)" onmouseover="showTip(event, '1297', 1297)">
             WiXFileDefaults
           </code>
-          <div class="tip" id="1011">
+          <div class="tip" id="1297">
             <strong>Signature:</strong> WiXFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2793,10 +2965,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1012', 1012)" onmouseover="showTip(event, '1012', 1012)">
+          <code onmouseout="hideTip(event, '1298', 1298)" onmouseover="showTip(event, '1298', 1298)">
             WiXMajorUpgradeDefaults
           </code>
-          <div class="tip" id="1012">
+          <div class="tip" id="1298">
             <strong>Signature:</strong> WiXMajorUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2820,10 +2992,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1013', 1013)" onmouseover="showTip(event, '1013', 1013)">
+          <code onmouseout="hideTip(event, '1299', 1299)" onmouseover="showTip(event, '1299', 1299)">
             wixRegistryKeyDefaults
           </code>
-          <div class="tip" id="1013">
+          <div class="tip" id="1299">
             <strong>Signature:</strong> WiXRegistryKey<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2845,10 +3017,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1014', 1014)" onmouseover="showTip(event, '1014', 1014)">
+          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
             wixRegistryValueDefaults
           </code>
-          <div class="tip" id="1014">
+          <div class="tip" id="1300">
             <strong>Signature:</strong> WiXRegistryValue<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2870,10 +3042,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1015', 1015)" onmouseover="showTip(event, '1015', 1015)">
+          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
             WiXScriptDefaults
           </code>
-          <div class="tip" id="1015">
+          <div class="tip" id="1301">
             <strong>Signature:</strong> WiXScript<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2897,10 +3069,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1016', 1016)" onmouseover="showTip(event, '1016', 1016)">
+          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
             WiXServiceConfigDefaults
           </code>
-          <div class="tip" id="1016">
+          <div class="tip" id="1302">
             <strong>Signature:</strong> WiXServiceConfig<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2922,10 +3094,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1017', 1017)" onmouseover="showTip(event, '1017', 1017)">
+          <code onmouseout="hideTip(event, '1303', 1303)" onmouseover="showTip(event, '1303', 1303)">
             WiXServiceControlDefaults
           </code>
-          <div class="tip" id="1017">
+          <div class="tip" id="1303">
             <strong>Signature:</strong> WiXServiceControl<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2949,10 +3121,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1018', 1018)" onmouseover="showTip(event, '1018', 1018)">
+          <code onmouseout="hideTip(event, '1304', 1304)" onmouseover="showTip(event, '1304', 1304)">
             WiXServiceDependencyDefaults
           </code>
-          <div class="tip" id="1018">
+          <div class="tip" id="1304">
             <strong>Signature:</strong> WiXServiceDependency<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2974,10 +3146,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1019', 1019)" onmouseover="showTip(event, '1019', 1019)">
+          <code onmouseout="hideTip(event, '1305', 1305)" onmouseover="showTip(event, '1305', 1305)">
             WiXServiceInstallDefaults
           </code>
-          <div class="tip" id="1019">
+          <div class="tip" id="1305">
             <strong>Signature:</strong> WiXServiceInstall<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -3001,10 +3173,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1020', 1020)" onmouseover="showTip(event, '1020', 1020)">
+          <code onmouseout="hideTip(event, '1306', 1306)" onmouseover="showTip(event, '1306', 1306)">
             WiXUIRefDefaults
           </code>
-          <div class="tip" id="1020">
+          <div class="tip" id="1306">
             <strong>Signature:</strong> WiXUIRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -3028,10 +3200,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1021', 1021)" onmouseover="showTip(event, '1021', 1021)">
+          <code onmouseout="hideTip(event, '1307', 1307)" onmouseover="showTip(event, '1307', 1307)">
             WiXUpgradeDefaults
           </code>
-          <div class="tip" id="1021">
+          <div class="tip" id="1307">
             <strong>Signature:</strong> WiXUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -3055,10 +3227,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1022', 1022)" onmouseover="showTip(event, '1022', 1022)">
+          <code onmouseout="hideTip(event, '1308', 1308)" onmouseover="showTip(event, '1308', 1308)">
             WiXUpgradeVersionDefaults
           </code>
-          <div class="tip" id="1022">
+          <div class="tip" id="1308">
             <strong>Signature:</strong> WiXUpgradeVersion<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -3082,10 +3254,10 @@ You can use the getComponentIdsFromWiXString function for getting all created co
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1023', 1023)" onmouseover="showTip(event, '1023', 1023)">
+          <code onmouseout="hideTip(event, '1309', 1309)" onmouseover="showTip(event, '1309', 1309)">
             WiXVariableDefaults
           </code>
-          <div class="tip" id="1023">
+          <div class="tip" id="1309">
             <strong>Signature:</strong> WiXVariable<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -3145,7 +3317,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

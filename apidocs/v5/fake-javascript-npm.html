@@ -372,10 +372,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1014', 1014)" onmouseover="showTip(event, '1014', 1014)">
+          <code onmouseout="hideTip(event, '1595', 1595)" onmouseover="showTip(event, '1595', 1595)">
             Npm.defaultNpmParams
           </code>
-          <div class="tip" id="1014">
+          <div class="tip" id="1595">
             <strong>Signature:</strong> NpmParams<br />
                                   </div>
         </td>
@@ -391,10 +391,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1015', 1015)" onmouseover="showTip(event, '1015', 1015)">
+          <code onmouseout="hideTip(event, '1596', 1596)" onmouseover="showTip(event, '1596', 1596)">
             Npm.exec command setParams
           </code>
-          <div class="tip" id="1015">
+          <div class="tip" id="1596">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -422,10 +422,29 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1016', 1016)" onmouseover="showTip(event, '1016', 1016)">
+          <code onmouseout="hideTip(event, '1597', 1597)" onmouseover="showTip(event, '1597', 1597)">
+            Npm.execute npmParams command
+          </code>
+          <div class="tip" id="1597">
+            <strong>Signature:</strong> npmParams:NpmParams -&gt; command:NpmCommand -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L71-71" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Runs the given process and returns the process result.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1598', 1598)" onmouseover="showTip(event, '1598', 1598)">
             Npm.install(setParams)
           </code>
-          <div class="tip" id="1016">
+          <div class="tip" id="1598">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -452,10 +471,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1017', 1017)" onmouseover="showTip(event, '1017', 1017)">
+          <code onmouseout="hideTip(event, '1599', 1599)" onmouseover="showTip(event, '1599', 1599)">
             Npm.installForced(setParams)
           </code>
-          <div class="tip" id="1017">
+          <div class="tip" id="1599">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -482,10 +501,80 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1018', 1018)" onmouseover="showTip(event, '1018', 1018)">
+          <code onmouseout="hideTip(event, '1600', 1600)" onmouseover="showTip(event, '1600', 1600)">
+            Npm.npm(setParams)
+          </code>
+          <div class="tip" id="1600">
+            <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; NpmCommand -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L98-98" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1601', 1601)" onmouseover="showTip(event, '1601', 1601)">
+            Npm.npmFileName
+          </code>
+          <div class="tip" id="1601">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L21-21" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Default paths to Npm</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1602', 1602)" onmouseover="showTip(event, '1602', 1602)">
+            Npm.parse(_arg1)
+          </code>
+          <div class="tip" id="1602">
+            <strong>Signature:</strong> _arg1:NpmCommand -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L62-62" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1603', 1603)" onmouseover="showTip(event, '1603', 1603)">
+            Npm.parseInstallArgs(_arg1)
+          </code>
+          <div class="tip" id="1603">
+            <strong>Signature:</strong> _arg1:InstallArgs -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L58-58" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1604', 1604)" onmouseover="showTip(event, '1604', 1604)">
             Npm.run command setParams
           </code>
-          <div class="tip" id="1018">
+          <div class="tip" id="1604">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -513,10 +602,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1019', 1019)" onmouseover="showTip(event, '1019', 1019)">
+          <code onmouseout="hideTip(event, '1605', 1605)" onmouseover="showTip(event, '1605', 1605)">
             Npm.runSilent command setParams
           </code>
-          <div class="tip" id="1019">
+          <div class="tip" id="1605">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -544,10 +633,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1020', 1020)" onmouseover="showTip(event, '1020', 1020)">
+          <code onmouseout="hideTip(event, '1606', 1606)" onmouseover="showTip(event, '1606', 1606)">
             Npm.runTest command setParams
           </code>
-          <div class="tip" id="1020">
+          <div class="tip" id="1606">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -575,10 +664,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1021', 1021)" onmouseover="showTip(event, '1021', 1021)">
+          <code onmouseout="hideTip(event, '1607', 1607)" onmouseover="showTip(event, '1607', 1607)">
             Npm.test(setParams)
           </code>
-          <div class="tip" id="1021">
+          <div class="tip" id="1607">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -642,7 +731,7 @@ WorkingDirectory = "./src/FAKESimple.Web/"
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

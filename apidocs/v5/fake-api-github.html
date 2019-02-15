@@ -370,6 +370,14 @@
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-api-github-httpclientwithtimeout.html">HttpClientWithTimeout</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-api-github-release.html">Release</a>
           </td>
           <td class="xmldoc">
@@ -390,10 +398,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
+          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
+            GitHub.captureAndReraise(ex)
+          </code>
+          <div class="tip" id="8">
+            <strong>Signature:</strong> ex:exn -&gt; &#39;?8419<br />
+                          <strong>Type parameters:</strong> '?8419                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L71-71" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>A version of 'reraise' that can work inside computation expressions</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
             GitHub.createClient user password
           </code>
-          <div class="tip" id="7">
+          <div class="tip" id="9">
             <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                                   </div>
         </td>
@@ -409,10 +436,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
+          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
             GitHub.createClientWithToken(token)
           </code>
-          <div class="tip" id="8">
+          <div class="tip" id="10">
             <strong>Signature:</strong> token:string -&gt; Async&lt;GitHubClient&gt;<br />
                                   </div>
         </td>
@@ -428,10 +455,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
             GitHub.createGHEClient url user password
           </code>
-          <div class="tip" id="9">
+          <div class="tip" id="11">
             <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                                   </div>
         </td>
@@ -447,10 +474,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
             GitHub.createGHEClientWithToken(...)
           </code>
-          <div class="tip" id="10">
+          <div class="tip" id="12">
             <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
                                   </div>
         </td>
@@ -466,10 +493,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
             GitHub.createRelease(...)
           </code>
-          <div class="tip" id="11">
+          <div class="tip" id="13">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -493,10 +520,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
             GitHub.downloadAsset(...)
           </code>
-          <div class="tip" id="12">
+          <div class="tip" id="14">
             <strong>Signature:</strong> id:int -&gt; destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -512,10 +539,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
             GitHub.downloadAssets(...)
           </code>
-          <div class="tip" id="13">
+          <div class="tip" id="15">
             <strong>Signature:</strong> destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -531,10 +558,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
             GitHub.draftNewRelease(...)
           </code>
-          <div class="tip" id="14">
+          <div class="tip" id="16">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -559,10 +586,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
             GitHub.getLastRelease(...)
           </code>
-          <div class="tip" id="15">
+          <div class="tip" id="17">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -578,10 +605,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
             GitHub.getReleaseByTag(...)
           </code>
-          <div class="tip" id="16">
+          <div class="tip" id="18">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -597,10 +624,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
             GitHub.publishDraft(release)
           </code>
-          <div class="tip" id="17">
+          <div class="tip" id="19">
             <strong>Signature:</strong> release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -616,10 +643,48 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+            GitHub.retry count asyncF
+          </code>
+          <div class="tip" id="20">
+            <strong>Signature:</strong> count:int -&gt; asyncF:Async&lt;&#39;?8421&gt; -&gt; Async&lt;&#39;?8421&gt;<br />
+                          <strong>Type parameters:</strong> '?8421                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L76-76" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Retry the Octokit action count times</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+            GitHub.retryWithArg count input asycnF
+          </code>
+          <div class="tip" id="21">
+            <strong>Signature:</strong> count:int -&gt; input:Async&lt;&#39;?8423&gt; -&gt; asycnF:(&#39;?8423 -&gt; Async&lt;&#39;?8424&gt;) -&gt; Async&lt;&#39;?8424&gt;<br />
+                          <strong>Type parameters:</strong> '?8423, '?8424                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L89-89" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Retry the Octokit action count times after input succeed</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
             GitHub.uploadFile fileName release
           </code>
-          <div class="tip" id="18">
+          <div class="tip" id="22">
             <strong>Signature:</strong> fileName:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -635,10 +700,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
             GitHub.uploadFiles fileNames release
           </code>
-          <div class="tip" id="19">
+          <div class="tip" id="23">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                                   </div>
         </td>
@@ -691,7 +756,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

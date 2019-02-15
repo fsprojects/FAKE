@@ -307,6 +307,27 @@
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-azure-emulators-azureemulatorparams.html">AzureEmulatorParams</a>
+          </td>
+          <td class="xmldoc">
+            <p>A type for the controlling parameter</p>
+
+
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
@@ -317,10 +338,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
+          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
+            Emulators.AzureEmulatorDefaults
+          </code>
+          <div class="tip" id="45">
+            <strong>Signature:</strong> AzureEmulatorParams<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L21-21" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>The default parameters for Azure emulators</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
             Emulators.msSdkBasePath
           </code>
-          <div class="tip" id="41">
+          <div class="tip" id="46">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -336,10 +376,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '42', 42)" onmouseover="showTip(event, '42', 42)">
+          <code onmouseout="hideTip(event, '47', 47)" onmouseover="showTip(event, '47', 47)">
             Emulators.resetDevStorage(_arg1)
           </code>
-          <div class="tip" id="42">
+          <div class="tip" id="47">
             <strong>Signature:</strong> _arg1:&#39;?10401 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?10401                      </div>
         </td>
@@ -355,10 +395,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '43', 43)" onmouseover="showTip(event, '43', 43)">
+          <code onmouseout="hideTip(event, '48', 48)" onmouseover="showTip(event, '48', 48)">
             Emulators.startComputeEmulator(_arg1)
           </code>
-          <div class="tip" id="43">
+          <div class="tip" id="48">
             <strong>Signature:</strong> _arg1:&#39;?10399 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?10399                      </div>
         </td>
@@ -374,10 +414,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '44', 44)" onmouseover="showTip(event, '44', 44)">
+          <code onmouseout="hideTip(event, '49', 49)" onmouseover="showTip(event, '49', 49)">
             Emulators.startStorageEmulator(_arg1)
           </code>
-          <div class="tip" id="44">
+          <div class="tip" id="49">
             <strong>Signature:</strong> _arg1:&#39;?10395 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?10395                      </div>
         </td>
@@ -393,10 +433,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
+          <code onmouseout="hideTip(event, '50', 50)" onmouseover="showTip(event, '50', 50)">
             Emulators.stopComputeEmulator(_arg1)
           </code>
-          <div class="tip" id="45">
+          <div class="tip" id="50">
             <strong>Signature:</strong> _arg1:&#39;?10397 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?10397                      </div>
         </td>
@@ -412,10 +452,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
+          <code onmouseout="hideTip(event, '51', 51)" onmouseover="showTip(event, '51', 51)">
             Emulators.stopStorageEmulator(_arg1)
           </code>
-          <div class="tip" id="46">
+          <div class="tip" id="51">
             <strong>Signature:</strong> _arg1:&#39;?10393 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?10393                      </div>
         </td>
@@ -426,6 +466,31 @@
           <p>Stops the storage emulator</p>
 
 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2><a name="Active patterns" class="anchor" href="#Active patterns">Active patterns</a></h2>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Active pattern</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '52', 52)" onmouseover="showTip(event, '52', 52)">
+            Emulators.( |StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError| )(...)
+          </code>
+          <div class="tip" id="52">
+            <strong>Signature:</strong> _arg1:int -&gt; Choice&lt;unit,unit,unit,unit&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L31-31" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
         </td>
       </tr>
     </tbody>
@@ -468,7 +533,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

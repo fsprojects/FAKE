@@ -414,7 +414,7 @@
 
 <span class="c">// Register your secrets at the start</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 7)" onmouseover="showTip(event, 'fs4', 7)" class="id">secret</span> <span class="o">=</span> <span class="id">Environment</span><span class="pn">.</span><span class="id">environVarOrDefault</span> <span class="s">&quot;nugetkey&quot;</span> <span class="s">&quot;&quot;</span>
-<span class="id">TraceSecrets</span><span class="pn">.</span><span class="id">register</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="id">secret</span> <span class="s">&quot;&lt;REPLACEMENT&gt;&quot;</span>
+<span class="id">TraceSecrets</span><span class="pn">.</span><span class="id">register</span> <span class="s">&quot;&lt;REPLACEMENT&gt;&quot;</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="id">secret</span>
 
 <span class="c">// Later FAKE will replace them and not output them (when using the FAKE-Tracing capabilites)</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 9)" onmouseover="showTip(event, 'fs5', 9)" class="id">cmdLine</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="fn">sprintf</span> <span class="s">&quot;nuget.exe push -ApiKey </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs4', 11)" onmouseover="showTip(event, 'fs4', 11)" class="id">secret</span>
@@ -466,7 +466,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

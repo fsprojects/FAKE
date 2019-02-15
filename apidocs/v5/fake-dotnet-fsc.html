@@ -442,10 +442,10 @@ e.g. <code>resource.dat,rezName,public</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '682', 682)" onmouseover="showTip(event, '682', 682)">
+          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
             Fsc.compile fscParams inputFiles
           </code>
-          <div class="tip" id="682">
+          <div class="tip" id="1104">
             <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; unit<br />
                                   </div>
         </td>
@@ -485,10 +485,10 @@ e.g. <code>resource.dat,rezName,public</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '683', 683)" onmouseover="showTip(event, '683', 683)">
+          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
             Fsc.compileExternal(...)
           </code>
-          <div class="tip" id="683">
+          <div class="tip" id="1105">
             <strong>Signature:</strong> fscTool:string -&gt; fscParams:FscParam list -&gt; inputFiles:string list -&gt; unit<br />
                                   </div>
         </td>
@@ -532,10 +532,10 @@ using an existing fsc.exe installed on the system</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '684', 684)" onmouseover="showTip(event, '684', 684)">
+          <code onmouseout="hideTip(event, '1106', 1106)" onmouseover="showTip(event, '1106', 1106)">
             Fsc.compileExternalWithResult(...)
           </code>
-          <div class="tip" id="684">
+          <div class="tip" id="1106">
             <strong>Signature:</strong> fscTool:string -&gt; fscParams:FscParam list -&gt; inputFiles:string list -&gt; int<br />
                                   </div>
         </td>
@@ -580,10 +580,32 @@ using an existing fsc.exe installed on the system</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '685', 685)" onmouseover="showTip(event, '685', 685)">
+          <code onmouseout="hideTip(event, '1107', 1107)" onmouseover="showTip(event, '1107', 1107)">
+            Fsc.compileFiles compiler srcFiles opts
+          </code>
+          <div class="tip" id="1107">
+            <strong>Signature:</strong> compiler:CompilerFunc -&gt; srcFiles:string list -&gt; opts:string list -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L339-339" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Compiles the given source files with the given options using either
+the internal FCS or an external fsc.exe. If no options
+given (i.e. the second argument is an empty list), by default tries
+to behave the same way as would the command-line 'fsc.exe' tool.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1108', 1108)" onmouseover="showTip(event, '1108', 1108)">
             Fsc.compileWithResult(...)
           </code>
-          <div class="tip" id="685">
+          <div class="tip" id="1108">
             <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; int<br />
                                   </div>
         </td>
@@ -625,10 +647,86 @@ using an existing fsc.exe installed on the system</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '686', 686)" onmouseover="showTip(event, '686', 686)">
+          <code onmouseout="hideTip(event, '1109', 1109)" onmouseover="showTip(event, '1109', 1109)">
+            Fsc.doCompile(...)
+          </code>
+          <div class="tip" id="1109">
+            <strong>Signature:</strong> compiler:CompilerFunc -&gt; fscParams:FscParam list -&gt; inputFiles:string list -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L349-349" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Common compiler arg prep code</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1110', 1110)" onmouseover="showTip(event, '1110', 1110)">
+            Fsc.extFscCompile fscTool optsArr
+          </code>
+          <div class="tip" id="1110">
+            <strong>Signature:</strong> fscTool:string -&gt; optsArr:string [] -&gt; FscResultMessage [] * int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L427-427" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>An external fsc.exe compiler</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1111', 1111)" onmouseover="showTip(event, '1111', 1111)">
+            Fsc.makeArgsList opts srcFiles
+          </code>
+          <div class="tip" id="1111">
+            <strong>Signature:</strong> opts:string list -&gt; srcFiles:string list -&gt; string []<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L313-313" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Computes output type and appends source files to argument list</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1112', 1112)" onmouseover="showTip(event, '1112', 1112)">
+            Fsc.reportErrors(errors)
+          </code>
+          <div class="tip" id="1112">
+            <strong>Signature:</strong> errors:FscResultMessage [] -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L329-329" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Reports Fsc compile errors to the console using Fake.Core.Trace</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1113', 1113)" onmouseover="showTip(event, '1113', 1113)">
             Fsc.resourceStr(arg1, arg2, arg3)
           </code>
-          <div class="tip" id="686">
+          <div class="tip" id="1113">
             <strong>Signature:</strong> (string * string option * Access option) -&gt; string<br />
                                   </div>
         </td>
@@ -637,6 +735,25 @@ using an existing fsc.exe installed on the system</p>
               <i class="fab fa-github fa-fw"></i>
             </a>
           
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1114', 1114)" onmouseover="showTip(event, '1114', 1114)">
+            Fsc.scsCompile(optsArr)
+          </code>
+          <div class="tip" id="1114">
+            <strong>Signature:</strong> optsArr:string [] -&gt; FscResultMessage [] * int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsc/Fsc.fs#L365-365" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>The internal FCS Compiler</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -679,7 +796,7 @@ using an existing fsc.exe installed on the system</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

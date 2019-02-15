@@ -369,6 +369,25 @@
         </tr>
     </tbody>
   </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-testing-xunit2-resulthandling.html">ResultHandling</a>
+          </td>
+          <td class="xmldoc">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>use Fake.DotNet.Testing.XUnit2 instead</p>
+            </div> 
+          
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
@@ -381,10 +400,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
+          <code onmouseout="hideTip(event, '3019', 3019)" onmouseover="showTip(event, '3019', 3019)">
             buildXUnit2Args assemblies parameters
           </code>
-          <div class="tip" id="2234">
+          <div class="tip" id="3019">
             <strong>Signature:</strong> assemblies:seq&lt;string&gt; -&gt; parameters:XUnit2Params -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -406,10 +425,39 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
+          <code onmouseout="hideTip(event, '3020', 3020)" onmouseover="showTip(event, '3020', 3020)">
+            discoverNoAppDomainExists(parameters)
+          </code>
+          <div class="tip" id="3020">
+            <strong>Signature:</strong> parameters:XUnit2Params -&gt; XUnit2Params<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use Fake.DotNet.Testing.XUnit2 instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>use Fake.DotNet.Testing.XUnit2 instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnit2.fs#L228-228" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Helper method to detect if the xunit console runner supports the -noappdomain flag.
+If the xunit console runner does not support this flag, it will change the value to false
+so it does not interfere with older versions.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3021', 3021)" onmouseover="showTip(event, '3021', 3021)">
             xUnit2 setParams assemblies
           </code>
-          <div class="tip" id="2235">
+          <div class="tip" id="3021">
             <strong>Signature:</strong> setParams:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -455,10 +503,10 @@ in the given assembly fail.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
+          <code onmouseout="hideTip(event, '3022', 3022)" onmouseover="showTip(event, '3022', 3022)">
             XUnit2Defaults
           </code>
-          <div class="tip" id="2236">
+          <div class="tip" id="3022">
             <strong>Signature:</strong> XUnit2Params<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -541,7 +589,7 @@ in the given assembly fail.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -328,6 +328,18 @@ manifests for registration free deployment of Com-.net interop projects</p>
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-sxshelper-ilparsingresult.html">ILparsingResult</a>
+          </td>
+          <td class="xmldoc">
+            <p>Represents status of attempted parsing
+of IL file created from executing <code>ildasm.exe</code>
+on a binary</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-sxshelper-interopapplicationdata.html">InteropApplicationData</a>
           </td>
           <td class="xmldoc">
@@ -368,10 +380,10 @@ manifests for registration free deployment of Com-.net interop projects</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '775', 775)" onmouseover="showTip(event, '775', 775)">
+          <code onmouseout="hideTip(event, '988', 988)" onmouseover="showTip(event, '988', 988)">
             AddEmbeddedApplicationManifest(...)
           </code>
-          <div class="tip" id="775">
+          <div class="tip" id="988">
             <strong>Signature:</strong> workingDir:string -&gt; applications:seq&lt;InteropApplicationData&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -400,10 +412,10 @@ manifests for registration free deployment of Com-.net interop projects</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '776', 776)" onmouseover="showTip(event, '776', 776)">
+          <code onmouseout="hideTip(event, '989', 989)" onmouseover="showTip(event, '989', 989)">
             AddEmbeddedAssemblyManifest(...)
           </code>
-          <div class="tip" id="776">
+          <div class="tip" id="989">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -439,10 +451,131 @@ The important info is then put into a valid base manifest and embedded into the 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '777', 777)" onmouseover="showTip(event, '777', 777)">
+          <code onmouseout="hideTip(event, '990', 990)" onmouseover="showTip(event, '990', 990)">
+            copyAssemblyIdAttributeValue(...)
+          </code>
+          <div class="tip" id="990">
+            <strong>Signature:</strong> attributeName:string -&gt; toManifest:XContainer -&gt; fromManifest:XContainer -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L91-91" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '991', 991)" onmouseover="showTip(event, '991', 991)">
+            copyAssemblyIdName
+          </code>
+          <div class="tip" id="991">
+            <strong>Signature:</strong> XDocument -&gt; XDocument -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L96-96" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '992', 992)" onmouseover="showTip(event, '992', 992)">
+            copyAssemblyIdVersion
+          </code>
+          <div class="tip" id="992">
+            <strong>Signature:</strong> XDocument -&gt; XDocument -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L99-99" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '993', 993)" onmouseover="showTip(event, '993', 993)">
+            copyClrClasses toManifest fromManifest
+          </code>
+          <div class="tip" id="993">
+            <strong>Signature:</strong> toManifest:XContainer -&gt; fromManifest:XContainer -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L105-105" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '994', 994)" onmouseover="showTip(event, '994', 994)">
+            copyElements(...)
+          </code>
+          <div class="tip" id="994">
+            <strong>Signature:</strong> (toManifest:XContainer * toElement:string) -&gt; (fromManifest:XContainer * elementName:string) -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L102-102" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '995', 995)" onmouseover="showTip(event, '995', 995)">
+            embedManiFestAsync workingDir asyncData
+          </code>
+          <div class="tip" id="995">
+            <strong>Signature:</strong> workingDir:string -&gt; asyncData:Async&lt;string * string&gt; -&gt; Async&lt;unit&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L109-109" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Embeds a manifest file in a binary using <code>mt.exe</code></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '996', 996)" onmouseover="showTip(event, '996', 996)">
+            getAssemblyIdAttributeValue(...)
+          </code>
+          <div class="tip" id="996">
+            <strong>Signature:</strong> attributeName:string -&gt; manifest:XContainer -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L79-79" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '997', 997)" onmouseover="showTip(event, '997', 997)">
             GetInteropAssemblyData(...)
           </code>
-          <div class="tip" id="777">
+          <div class="tip" id="997">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; InteropAssemblyData list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -477,6 +610,155 @@ I ended up using the windows sdk dissasembler <code>ildasm.exe</code> (ref: <a h
 to">https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx)
 to</a> create the smallest dissasembly I could (Really only need the manifest part), and the parse the IL file to get the metadata
 (If anyone knows a cleaner / better way, pls improve on the code)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '998', 998)" onmouseover="showTip(event, '998', 998)">
+            ildasmPath
+          </code>
+          <div class="tip" id="998">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L62-62" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Path to `ildasm.exe
+.net fx dissasembly tool
+ref: <a href="https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx">https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx</a></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '999', 999)" onmouseover="showTip(event, '999', 999)">
+            manifestNamespace
+          </code>
+          <div class="tip" id="999">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L66-66" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>XLM namespace of manifest files</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1000', 1000)" onmouseover="showTip(event, '1000', 1000)">
+            mtToolPath
+          </code>
+          <div class="tip" id="1000">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L56-56" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Path to <code>mt.exe</code>
+ref: <a href="https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx</a></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1001', 1001)" onmouseover="showTip(event, '1001', 1001)">
+            nsXn(s)
+          </code>
+          <div class="tip" id="1001">
+            <strong>Signature:</strong> s:string -&gt; XName<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L69-69" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>create XName from string with manifest namepace</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1002', 1002)" onmouseover="showTip(event, '1002', 1002)">
+            setAssemblyIdAttributeValue(...)
+          </code>
+          <div class="tip" id="1002">
+            <strong>Signature:</strong> attributeName:string -&gt; attributeValue:&#39;?9469 -&gt; manifest:XContainer -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?9469                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L73-73" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1003', 1003)" onmouseover="showTip(event, '1003', 1003)">
+            setAssemblyName manifest name
+          </code>
+          <div class="tip" id="1003">
+            <strong>Signature:</strong> manifest:XContainer -&gt; name:&#39;?9472 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?9472                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L85-85" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1004', 1004)" onmouseover="showTip(event, '1004', 1004)">
+            setAssemblyVersion manifest version
+          </code>
+          <div class="tip" id="1004">
+            <strong>Signature:</strong> manifest:XContainer -&gt; version:&#39;?9474 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?9474                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L88-88" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1005', 1005)" onmouseover="showTip(event, '1005', 1005)">
+            xn(s)
+          </code>
+          <div class="tip" id="1005">
+            <strong>Signature:</strong> s:string -&gt; XName<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Sxshelper.fs#L71-71" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>create XName from string <strong>without</strong> manifest namespace</p>
 
 
         </td>
@@ -520,7 +802,7 @@ to</a> create the smallest dissasembly I could (Really only need the manifest pa
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

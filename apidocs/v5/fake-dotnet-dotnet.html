@@ -529,15 +529,32 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '622', 622)" onmouseover="showTip(event, '622', 622)">
+          <code onmouseout="hideTip(event, '996', 996)" onmouseover="showTip(event, '996', 996)">
+            DotNet.addBinaryLogger(...)
+          </code>
+          <div class="tip" id="996">
+            <strong>Signature:</strong> disableFakeBinLog:bool -&gt; args:string -&gt; common:Options -&gt; string option * string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L904-904" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '997', 997)" onmouseover="showTip(event, '997', 997)">
             DotNet.build setParams project
           </code>
-          <div class="tip" id="622">
+          <div class="tip" id="997">
             <strong>Signature:</strong> setParams:(BuildOptions -&gt; BuildOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1306-1306" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1318-1318" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute dotnet build command</p>
@@ -553,10 +570,67 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '623', 623)" onmouseover="showTip(event, '623', 623)">
+          <code onmouseout="hideTip(event, '998', 998)" onmouseover="showTip(event, '998', 998)">
+            DotNet.defaultSystemInstallDir
+          </code>
+          <div class="tip" id="998">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L27-27" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>.NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet))</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '999', 999)" onmouseover="showTip(event, '999', 999)">
+            DotNet.defaultUserInstallDir
+          </code>
+          <div class="tip" id="999">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L21-21" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>.NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1000', 1000)" onmouseover="showTip(event, '1000', 1000)">
+            DotNet.downloadDotNetInstallerFromUrl(...)
+          </code>
+          <div class="tip" id="1000">
+            <strong>Signature:</strong> url:string -&gt; fileName:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L106-106" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Download .NET Core SDK installer</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1001', 1001)" onmouseover="showTip(event, '1001', 1001)">
             DotNet.downloadInstaller(setParams)
           </code>
-          <div class="tip" id="623">
+          <div class="tip" id="1001">
             <strong>Signature:</strong> setParams:(InstallerOptions -&gt; InstallerOptions) -&gt; string<br />
                                   </div>
         </td>
@@ -576,10 +650,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '624', 624)" onmouseover="showTip(event, '624', 624)">
+          <code onmouseout="hideTip(event, '1002', 1002)" onmouseover="showTip(event, '1002', 1002)">
             DotNet.exec buildOptions command args
           </code>
-          <div class="tip" id="624">
+          <div class="tip" id="1002">
             <strong>Signature:</strong> buildOptions:(Options -&gt; Options) -&gt; command:string -&gt; args:string -&gt; ProcessResult<br />
                                   </div>
         </td>
@@ -601,10 +675,103 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '625', 625)" onmouseover="showTip(event, '625', 625)">
+          <code onmouseout="hideTip(event, '1003', 1003)" onmouseover="showTip(event, '1003', 1003)">
+            DotNet.execWithBinLog(...)
+          </code>
+          <div class="tip" id="1003">
+            <strong>Signature:</strong> project:string -&gt; common:Options -&gt; command:string -&gt; args:string -&gt; msBuildArgs:CliArguments -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L922-922" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1004', 1004)" onmouseover="showTip(event, '1004', 1004)">
+            DotNet.findPossibleDotnetCliPaths(...)
+          </code>
+          <div class="tip" id="1004">
+            <strong>Signature:</strong> dotnetCliDir:string option -&gt; seq&lt;string&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L80-80" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH</p>
+<h2>Parameters</h2>
+<ul>
+<li>'dotnetCliDir' - the path to check else will probe system PATH</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1005', 1005)" onmouseover="showTip(event, '1005', 1005)">
+            DotNet.getBashDotNetCliInstallerUrl(...)
+          </code>
+          <div class="tip" id="1005">
+            <strong>Signature:</strong> branch:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L102-102" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1006', 1006)" onmouseover="showTip(event, '1006', 1006)">
+            DotNet.getGenericDotNetCliInstallerUrl(...)
+          </code>
+          <div class="tip" id="1006">
+            <strong>Signature:</strong> branch:string -&gt; installerName:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L98-98" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Get .NET Core SDK download uri</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1007', 1007)" onmouseover="showTip(event, '1007', 1007)">
+            DotNet.getPowershellDotNetCliInstallerUrl(...)
+          </code>
+          <div class="tip" id="1007">
+            <strong>Signature:</strong> branch:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L101-101" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1008', 1008)" onmouseover="showTip(event, '1008', 1008)">
             DotNet.getSDKVersionFromGlobalJson()
           </code>
-          <div class="tip" id="625">
+          <div class="tip" id="1008">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
@@ -621,10 +788,29 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '626', 626)" onmouseover="showTip(event, '626', 626)">
+          <code onmouseout="hideTip(event, '1009', 1009)" onmouseover="showTip(event, '1009', 1009)">
+            DotNet.getSDKVersionFromGlobalJsonDir(...)
+          </code>
+          <div class="tip" id="1009">
+            <strong>Signature:</strong> startDir:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L59-59" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Gets the DotNet SDK from the global.json, starts searching in the given directory.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1010', 1010)" onmouseover="showTip(event, '1010', 1010)">
             DotNet.getVersion(setParams)
           </code>
-          <div class="tip" id="626">
+          <div class="tip" id="1010">
             <strong>Signature:</strong> setParams:(VersionOptions -&gt; VersionOptions) -&gt; string<br />
                                   </div>
         </td>
@@ -644,10 +830,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '627', 627)" onmouseover="showTip(event, '627', 627)">
+          <code onmouseout="hideTip(event, '1011', 1011)" onmouseover="showTip(event, '1011', 1011)">
             DotNet.info(setParams)
           </code>
-          <div class="tip" id="627">
+          <div class="tip" id="1011">
             <strong>Signature:</strong> setParams:(InfoOptions -&gt; InfoOptions) -&gt; InfoResult<br />
                                   </div>
         </td>
@@ -667,10 +853,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
+          <code onmouseout="hideTip(event, '1012', 1012)" onmouseover="showTip(event, '1012', 1012)">
             DotNet.install(setParams)
           </code>
-          <div class="tip" id="628">
+          <div class="tip" id="1012">
             <strong>Signature:</strong> setParams:(CliInstallOptions -&gt; CliInstallOptions) -&gt; Options -&gt; Options<br />
                                   </div>
         </td>
@@ -690,10 +876,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '629', 629)" onmouseover="showTip(event, '629', 629)">
+          <code onmouseout="hideTip(event, '1013', 1013)" onmouseover="showTip(event, '1013', 1013)">
             DotNet.LatestPreview4ToolingOptions(...)
           </code>
-          <div class="tip" id="629">
+          <div class="tip" id="1013">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -717,10 +903,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '630', 630)" onmouseover="showTip(event, '630', 630)">
+          <code onmouseout="hideTip(event, '1014', 1014)" onmouseover="showTip(event, '1014', 1014)">
             DotNet.msbuild setParams project
           </code>
-          <div class="tip" id="630">
+          <div class="tip" id="1014">
             <strong>Signature:</strong> setParams:(MSBuildOptions -&gt; MSBuildOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
@@ -797,15 +983,32 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '631', 631)" onmouseover="showTip(event, '631', 631)">
+          <code onmouseout="hideTip(event, '1015', 1015)" onmouseover="showTip(event, '1015', 1015)">
+            DotNet.msbuildWithResult(...)
+          </code>
+          <div class="tip" id="1015">
+            <strong>Signature:</strong> setParams:(MSBuildOptions -&gt; MSBuildOptions) -&gt; project:string -&gt; Choice&lt;ProcessResult,(exn * ProcessResult)&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L972-972" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1016', 1016)" onmouseover="showTip(event, '1016', 1016)">
             DotNet.pack setParams project
           </code>
-          <div class="tip" id="631">
+          <div class="tip" id="1016">
             <strong>Signature:</strong> setParams:(PackOptions -&gt; PackOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1155-1155" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1159-1159" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute dotnet pack command</p>
@@ -821,10 +1024,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '632', 632)" onmouseover="showTip(event, '632', 632)">
+          <code onmouseout="hideTip(event, '1017', 1017)" onmouseover="showTip(event, '1017', 1017)">
             DotNet.Preview2ToolingOptions(options)
           </code>
-          <div class="tip" id="632">
+          <div class="tip" id="1017">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -848,15 +1051,15 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '633', 633)" onmouseover="showTip(event, '633', 633)">
+          <code onmouseout="hideTip(event, '1018', 1018)" onmouseover="showTip(event, '1018', 1018)">
             DotNet.publish setParams project
           </code>
-          <div class="tip" id="633">
+          <div class="tip" id="1018">
             <strong>Signature:</strong> setParams:(PublishOptions -&gt; PublishOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1232-1232" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1240-1240" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute dotnet publish command</p>
@@ -872,10 +1075,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '634', 634)" onmouseover="showTip(event, '634', 634)">
+          <code onmouseout="hideTip(event, '1019', 1019)" onmouseover="showTip(event, '1019', 1019)">
             DotNet.RC4_004771ToolingOptions(options)
           </code>
-          <div class="tip" id="634">
+          <div class="tip" id="1019">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -899,10 +1102,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '635', 635)" onmouseover="showTip(event, '635', 635)">
+          <code onmouseout="hideTip(event, '1020', 1020)" onmouseover="showTip(event, '1020', 1020)">
             DotNet.RC4_004973ToolingOptions(options)
           </code>
-          <div class="tip" id="635">
+          <div class="tip" id="1020">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -926,10 +1129,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '636', 636)" onmouseover="showTip(event, '636', 636)">
+          <code onmouseout="hideTip(event, '1021', 1021)" onmouseover="showTip(event, '1021', 1021)">
             DotNet.Release_1_0_4(options)
           </code>
-          <div class="tip" id="636">
+          <div class="tip" id="1021">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -951,10 +1154,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '637', 637)" onmouseover="showTip(event, '637', 637)">
+          <code onmouseout="hideTip(event, '1022', 1022)" onmouseover="showTip(event, '1022', 1022)">
             DotNet.Release_2_0_0(options)
           </code>
-          <div class="tip" id="637">
+          <div class="tip" id="1022">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -976,10 +1179,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '638', 638)" onmouseover="showTip(event, '638', 638)">
+          <code onmouseout="hideTip(event, '1023', 1023)" onmouseover="showTip(event, '1023', 1023)">
             DotNet.Release_2_0_3(options)
           </code>
-          <div class="tip" id="638">
+          <div class="tip" id="1023">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1001,10 +1204,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '639', 639)" onmouseover="showTip(event, '639', 639)">
+          <code onmouseout="hideTip(event, '1024', 1024)" onmouseover="showTip(event, '1024', 1024)">
             DotNet.Release_2_1_300(option)
           </code>
-          <div class="tip" id="639">
+          <div class="tip" id="1024">
             <strong>Signature:</strong> option:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1026,10 +1229,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '640', 640)" onmouseover="showTip(event, '640', 640)">
+          <code onmouseout="hideTip(event, '1025', 1025)" onmouseover="showTip(event, '1025', 1025)">
             DotNet.Release_2_1_300_RC1(option)
           </code>
-          <div class="tip" id="640">
+          <div class="tip" id="1025">
             <strong>Signature:</strong> option:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1051,10 +1254,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '641', 641)" onmouseover="showTip(event, '641', 641)">
+          <code onmouseout="hideTip(event, '1026', 1026)" onmouseover="showTip(event, '1026', 1026)">
             DotNet.Release_2_1_4(options)
           </code>
-          <div class="tip" id="641">
+          <div class="tip" id="1026">
             <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1076,10 +1279,10 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '642', 642)" onmouseover="showTip(event, '642', 642)">
+          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
             DotNet.restore setParams project
           </code>
-          <div class="tip" id="642">
+          <div class="tip" id="1027">
             <strong>Signature:</strong> setParams:(RestoreOptions -&gt; RestoreOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
@@ -1100,15 +1303,15 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '643', 643)" onmouseover="showTip(event, '643', 643)">
+          <code onmouseout="hideTip(event, '1028', 1028)" onmouseover="showTip(event, '1028', 1028)">
             DotNet.test setParams project
           </code>
-          <div class="tip" id="643">
+          <div class="tip" id="1028">
             <strong>Signature:</strong> setParams:(TestOptions -&gt; TestOptions) -&gt; project:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1415-1415" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1431-1431" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute dotnet test command</p>
@@ -1124,10 +1327,27 @@ This file can exist in the working directory or any of the parent directories</p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '644', 644)" onmouseover="showTip(event, '644', 644)">
+          <code onmouseout="hideTip(event, '1029', 1029)" onmouseover="showTip(event, '1029', 1029)">
+            DotNet.tryExecWithBinLog(...)
+          </code>
+          <div class="tip" id="1029">
+            <strong>Signature:</strong> project:string -&gt; common:Options -&gt; command:string -&gt; args:string -&gt; msBuildArgs:CliArguments -&gt; Choice&lt;ProcessResult,(exn * ProcessResult)&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L928-928" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1030', 1030)" onmouseover="showTip(event, '1030', 1030)">
             DotNet.tryGetSDKVersionFromGlobalJson()
           </code>
-          <div class="tip" id="644">
+          <div class="tip" id="1030">
             <strong>Signature:</strong> unit -&gt; string option<br />
                                   </div>
         </td>
@@ -1140,6 +1360,42 @@ This file can exist in the working directory or any of the parent directories
 Returns None if global.json is not found</p>
 
 
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1031', 1031)" onmouseover="showTip(event, '1031', 1031)">
+            DotNet.tryGetSDKVersionFromGlobalJsonDir(...)
+          </code>
+          <div class="tip" id="1031">
+            <strong>Signature:</strong> startDir:string -&gt; string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L33-33" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Tries to get the DotNet SDK from the global.json, starts searching in the given directory. Returns None if global.json is not found</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1032', 1032)" onmouseover="showTip(event, '1032', 1032)">
+            DotNet.withGlobalJson workDir version f
+          </code>
+          <div class="tip" id="1032">
+            <strong>Signature:</strong> workDir:string -&gt; version:string option -&gt; f:(unit -&gt; &#39;?12656) -&gt; &#39;?12656<br />
+                          <strong>Type parameters:</strong> '?12656                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L603-603" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
         </td>
       </tr>
     </tbody>
@@ -1182,7 +1438,7 @@ Returns None if global.json is not found</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

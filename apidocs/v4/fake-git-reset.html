@@ -323,10 +323,24 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1175', 1175)" onmouseover="showTip(event, '1175', 1175)">
+          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
+            addArgs commit file
+          </code>
+          <div class="tip" id="1471">
+            <strong>Signature:</strong> commit:string -&gt; file:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="1175">
+          <div class="tip" id="1472">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -346,10 +360,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1176', 1176)" onmouseover="showTip(event, '1176', 1176)">
+          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="1176">
+          <div class="tip" id="1473">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -369,10 +383,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1177', 1177)" onmouseover="showTip(event, '1177', 1177)">
+          <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
             ResetHard(repositoryDir)
           </code>
-          <div class="tip" id="1177">
+          <div class="tip" id="1474">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -390,10 +404,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1178', 1178)" onmouseover="showTip(event, '1178', 1178)">
+          <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
             ResetMixed(repositoryDir)
           </code>
-          <div class="tip" id="1178">
+          <div class="tip" id="1475">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -411,10 +425,27 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1179', 1179)" onmouseover="showTip(event, '1179', 1179)">
+          <code onmouseout="hideTip(event, '1476', 1476)" onmouseover="showTip(event, '1476', 1476)">
+            resetOrCheckout file mode
+          </code>
+          <div class="tip" id="1476">
+            <strong>Signature:</strong> file:string -&gt; mode:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>the intent of the 'reset' helper is to either set a repo to a certain point, or set a file to a certain point.  Git reset doesn't take file paths in the hard/mixed/soft modes, and so you have to use checkout instead for that.
+This function encapsulates caring about that so you don't have to.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1477', 1477)" onmouseover="showTip(event, '1477', 1477)">
             ResetSoft(repositoryDir)
           </code>
-          <div class="tip" id="1179">
+          <div class="tip" id="1477">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -432,10 +463,10 @@ Does not touch the index file nor the working tree at all.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1180', 1180)" onmouseover="showTip(event, '1180', 1180)">
+          <code onmouseout="hideTip(event, '1478', 1478)" onmouseover="showTip(event, '1478', 1478)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="1180">
+          <div class="tip" id="1478">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -491,7 +522,7 @@ Does not touch the index file nor the working tree at all.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -440,10 +440,60 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '539', 539)" onmouseover="showTip(event, '539', 539)">
+          <code onmouseout="hideTip(event, '699', 699)" onmouseover="showTip(event, '699', 699)">
+            createNuSpecFromTemplate(...)
+          </code>
+          <div class="tip" id="699">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; templateNuSpec:FileInfo -&gt; string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L160-160" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '700', 700)" onmouseover="showTip(event, '700', 700)">
+            createNuSpecFromTemplateIfNotProjFile(...)
+          </code>
+          <div class="tip" id="700">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; nuSpecOrProjFile:string -&gt; string option<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L263-263" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '701', 701)" onmouseover="showTip(event, '701', 701)">
             feedUrl
           </code>
-          <div class="tip" id="539">
+          <div class="tip" id="701">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -467,10 +517,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '540', 540)" onmouseover="showTip(event, '540', 540)">
+          <code onmouseout="hideTip(event, '702', 702)" onmouseover="showTip(event, '702', 702)">
             getDependencies(packagesFile)
           </code>
-          <div class="tip" id="540">
+          <div class="tip" id="702">
             <strong>Signature:</strong> packagesFile:string -&gt; (string * string) list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -494,10 +544,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '541', 541)" onmouseover="showTip(event, '541', 541)">
+          <code onmouseout="hideTip(event, '703', 703)" onmouseover="showTip(event, '703', 703)">
             GetMetaDataFromPackageFile(...)
           </code>
-          <div class="tip" id="541">
+          <div class="tip" id="703">
             <strong>Signature:</strong> packageFileName:string -&gt; NuSpecPackage<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -525,10 +575,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '542', 542)" onmouseover="showTip(event, '542', 542)">
+          <code onmouseout="hideTip(event, '704', 704)" onmouseover="showTip(event, '704', 704)">
             getNuspecProperties(nuspec)
           </code>
-          <div class="tip" id="542">
+          <div class="tip" id="704">
             <strong>Signature:</strong> nuspec:string -&gt; NuSpecPackage<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -556,10 +606,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '543', 543)" onmouseover="showTip(event, '543', 543)">
+          <code onmouseout="hideTip(event, '705', 705)" onmouseover="showTip(event, '705', 705)">
             GetPackageVersion deploymentsDir package
           </code>
-          <div class="tip" id="543">
+          <div class="tip" id="705">
             <strong>Signature:</strong> deploymentsDir:string -&gt; package:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -583,10 +633,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '544', 544)" onmouseover="showTip(event, '544', 544)">
+          <code onmouseout="hideTip(event, '706', 706)" onmouseover="showTip(event, '706', 706)">
             NuGet setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="544">
+          <div class="tip" id="706">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -616,10 +666,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '545', 545)" onmouseover="showTip(event, '545', 545)">
+          <code onmouseout="hideTip(event, '707', 707)" onmouseover="showTip(event, '707', 707)">
             NuGetDefaults()
           </code>
-          <div class="tip" id="545">
+          <div class="tip" id="707">
             <strong>Signature:</strong> unit -&gt; NuGetParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -643,10 +693,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '546', 546)" onmouseover="showTip(event, '546', 546)">
+          <code onmouseout="hideTip(event, '708', 708)" onmouseover="showTip(event, '708', 708)">
             NuGetPack setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="546">
+          <div class="tip" id="708">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -676,10 +726,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
+          <code onmouseout="hideTip(event, '709', 709)" onmouseover="showTip(event, '709', 709)">
             NuGetPackDirectly(...)
           </code>
-          <div class="tip" id="547">
+          <div class="tip" id="709">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -709,10 +759,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '548', 548)" onmouseover="showTip(event, '548', 548)">
+          <code onmouseout="hideTip(event, '710', 710)" onmouseover="showTip(event, '710', 710)">
             NuGetPublish(setParams)
           </code>
-          <div class="tip" id="548">
+          <div class="tip" id="710">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -740,10 +790,166 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '549', 549)" onmouseover="showTip(event, '549', 549)">
+          <code onmouseout="hideTip(event, '711', 711)" onmouseover="showTip(event, '711', 711)">
+            pack parameters nuspecFile
+          </code>
+          <div class="tip" id="711">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; nuspecFile:string -&gt; unit<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L280-280" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Creates a NuGet package without templating (including symbols package if enabled)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '712', 712)" onmouseover="showTip(event, '712', 712)">
+            packageFileName(parameters)
+          </code>
+          <div class="tip" id="712">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L124-124" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
+            propertiesParam(_arg1)
+          </code>
+          <div class="tip" id="713">
+            <strong>Signature:</strong> _arg1:(string * string) list -&gt; string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L271-271" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '714', 714)" onmouseover="showTip(event, '714', 714)">
+            publish(parameters)
+          </code>
+          <div class="tip" id="714">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; unit<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L321-321" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>push package (and try again if something fails)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '715', 715)" onmouseover="showTip(event, '715', 715)">
+            publishSymbols(parameters)
+          </code>
+          <div class="tip" id="715">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; unit<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L352-352" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>push package to symbol server (and try again if something fails)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '716', 716)" onmouseover="showTip(event, '716', 716)">
+            replaceAccessKeys parameters text
+          </code>
+          <div class="tip" id="716">
+            <strong>Signature:</strong> parameters:NuGetParams -&gt; text:string -&gt; string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L152-152" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
             RequireExactly(version)
           </code>
-          <div class="tip" id="549">
+          <div class="tip" id="717">
             <strong>Signature:</strong> version:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -762,6 +968,31 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
           <p>Creates a string which tells NuGet that you require exactly this package version.</p>
 
 
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
+            webClient
+          </code>
+          <div class="tip" id="718">
+            <strong>Signature:</strong> WebClient<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.DotNet.NuGet.NuGet instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.DotNet.NuGet.NuGet instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L541-541" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
         </td>
       </tr>
     </tbody>
@@ -803,7 +1034,7 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

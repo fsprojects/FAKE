@@ -315,6 +315,25 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-io-globbing-glob-searchoption.html">SearchOption</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
@@ -325,10 +344,112 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2043', 2043)" onmouseover="showTip(event, '2043', 2043)">
+          <code onmouseout="hideTip(event, '2735', 2735)" onmouseover="showTip(event, '2735', 2735)">
+            Glob.buildPaths acc input
+          </code>
+          <div class="tip" id="2735">
+            <strong>Signature:</strong> acc:string list -&gt; input:SearchOption list -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L33-33" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2736', 2736)" onmouseover="showTip(event, '2736', 2736)">
+            Glob.checkSubDirs absolute dir root
+          </code>
+          <div class="tip" id="2736">
+            <strong>Signature:</strong> absolute:bool -&gt; dir:string -&gt; root:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L22-22" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2737', 2737)" onmouseover="showTip(event, '2737', 2737)">
+            Glob.compileGlobToRegex(pattern)
+          </code>
+          <div class="tip" id="2737">
+            <strong>Signature:</strong> pattern:string -&gt; Regex<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L148-148" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2738', 2738)" onmouseover="showTip(event, '2738', 2738)">
+            Glob.driveRegex
+          </code>
+          <div class="tip" id="2738">
+            <strong>Signature:</strong> Regex<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L70-70" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2739', 2739)" onmouseover="showTip(event, '2739', 2739)">
+            Glob.getRoot baseDirectory pattern
+          </code>
+          <div class="tip" id="2739">
+            <strong>Signature:</strong> baseDirectory:string -&gt; pattern:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L76-76" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2740', 2740)" onmouseover="showTip(event, '2740', 2740)">
+            Glob.globRegexCache
+          </code>
+          <div class="tip" id="2740">
+            <strong>Signature:</strong> ConcurrentDictionary&lt;string,Regex&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L175-175" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2741', 2741)" onmouseover="showTip(event, '2741', 2741)">
             Glob.isMatch pattern path
           </code>
-          <div class="tip" id="2043">
+          <div class="tip" id="2741">
             <strong>Signature:</strong> pattern:string -&gt; path:string -&gt; bool<br />
                                   </div>
         </td>
@@ -342,15 +463,49 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2044', 2044)" onmouseover="showTip(event, '2044', 2044)">
+          <code onmouseout="hideTip(event, '2742', 2742)" onmouseover="showTip(event, '2742', 2742)">
+            Glob.normalizeOutputPath(p)
+          </code>
+          <div class="tip" id="2742">
+            <strong>Signature:</strong> p:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L72-72" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2743', 2743)" onmouseover="showTip(event, '2743', 2743)">
             Glob.normalizePath(path)
           </code>
-          <div class="tip" id="2044">
+          <div class="tip" id="2743">
             <strong>Signature:</strong> path:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L13-13" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2744', 2744)" onmouseover="showTip(event, '2744', 2744)">
+            Glob.search baseDir originalInput
+          </code>
+          <div class="tip" id="2744">
+            <strong>Signature:</strong> baseDir:string -&gt; originalInput:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Globbing.fs#L101-101" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -395,7 +550,7 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -345,10 +345,32 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
+            checkInExistingDirList(...)
+          </code>
+          <div class="tip" id="577">
+            <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; fname:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Given a folder name, will check if that folder is present at a given root directory of a FTP server.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>server</code> - FTP Server name (ex: "ftp://10.100.200.300:21/")</li>
+<li><code>user</code> - FTP Server login name (ex: "joebloggs")</li>
+<li><code>pwd</code> - FTP Server login password (ex: "J0Eblogg5")</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
             createAFolder server user pwd destPath
           </code>
-          <div class="tip" id="451">
+          <div class="tip" id="578">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -368,10 +390,10 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '452', 452)" onmouseover="showTip(event, '452', 452)">
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
             deleteAFile server user pwd destPath
           </code>
-          <div class="tip" id="452">
+          <div class="tip" id="579">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -391,10 +413,10 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
             deleteAFolder server user pwd destPath
           </code>
-          <div class="tip" id="453">
+          <div class="tip" id="580">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -414,10 +436,54 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
+          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
+            deleteEmptyFolder(...)
+          </code>
+          <div class="tip" id="581">
+            <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
+            dirNameIsValid(dirName)
+          </code>
+          <div class="tip" id="582">
+            <strong>Signature:</strong> dirName:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Partial validation for folder name, based on <a href="http://msdn.microsoft.com/en-us/library/aa365247.aspx">http://msdn.microsoft.com/en-us/library/aa365247.aspx</a></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
+            getFolderContents(...)
+          </code>
+          <div class="tip" id="583">
+            <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
             getFtpDirContents(...)
           </code>
-          <div class="tip" id="454">
+          <div class="tip" id="584">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; dirPath:string -&gt; string<br />
                                   </div>
         </td>
@@ -437,10 +503,10 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
+          <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
             getServerInfo(...)
           </code>
-          <div class="tip" id="455">
+          <div class="tip" id="585">
             <strong>Signature:</strong> serverNameIp:string -&gt; user:string -&gt; password:string -&gt; ftpMethod:string -&gt; FtpServerInfo<br />
                                   </div>
         </td>
@@ -453,10 +519,24 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
+          <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
+            getSubstring fromPos str toPos
+          </code>
+          <div class="tip" id="586">
+            <strong>Signature:</strong> fromPos:int -&gt; str:string -&gt; toPos:int -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
             isFolderPresent server user pwd destPath
           </code>
-          <div class="tip" id="456">
+          <div class="tip" id="587">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; bool<br />
                                   </div>
         </td>
@@ -476,10 +556,24 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
+          <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
+            lastSlashPos(str)
+          </code>
+          <div class="tip" id="588">
+            <strong>Signature:</strong> str:string -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '589', 589)" onmouseover="showTip(event, '589', 589)">
             regexCheck fname ftpContents
           </code>
-          <div class="tip" id="457">
+          <div class="tip" id="589">
             <strong>Signature:</strong> fname:string -&gt; ftpContents:string -&gt; bool<br />
                                   </div>
         </td>
@@ -492,10 +586,24 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
+          <code onmouseout="hideTip(event, '590', 590)" onmouseover="showTip(event, '590', 590)">
+            upload server user pwd fsi rootDir
+          </code>
+          <div class="tip" id="590">
+            <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; fsi:FileSystemInfo -&gt; rootDir:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
             uploadAFile(...)
           </code>
-          <div class="tip" id="458">
+          <div class="tip" id="591">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; srcPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -516,10 +624,10 @@ Does not support FTPS and SFTP.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
+          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
             uploadAFolder(...)
           </code>
-          <div class="tip" id="459">
+          <div class="tip" id="592">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; srcPath:string -&gt; rootDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -533,6 +641,22 @@ Does not support FTPS and SFTP.</p>
 <li><code>user</code> - FTP Server login name (ex: "joebloggs")</li>
 <li><code>pwd</code> - FTP Server login password (ex: "J0Eblogg5")</li>
 </ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '593', 593)" onmouseover="showTip(event, '593', 593)">
+            writeChunkToReqStream chunk reqStrm br
+          </code>
+          <div class="tip" id="593">
+            <strong>Signature:</strong> chunk:byte [] -&gt; reqStrm:Stream -&gt; br:BinaryReader -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Writes given byte array into the given stream</p>
 
 
         </td>
@@ -576,7 +700,7 @@ Does not support FTPS and SFTP.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

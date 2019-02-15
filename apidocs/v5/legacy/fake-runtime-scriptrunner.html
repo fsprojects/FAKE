@@ -324,10 +324,30 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2183', 2183)" onmouseover="showTip(event, '2183', 2183)">
+          <code onmouseout="hideTip(event, '2956', 2956)" onmouseover="showTip(event, '2956', 2956)">
+            handleCoreCaching(...)
+          </code>
+          <div class="tip" id="2956">
+            <strong>Signature:</strong> context:FakeContext -&gt; session:IFsiSession -&gt; fsiErrorOutput:string -&gt; ResultCoreCacheInfo<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/ScriptRunner.fs#L23-23" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Handles a cache store operation, this should not throw as it is executed in a finally block and
+therefore might eat other exceptions. And a caching error is not critical.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2957', 2957)" onmouseover="showTip(event, '2957', 2957)">
             nameParser(scriptFileName)
           </code>
-          <div class="tip" id="2183">
+          <div class="tip" id="2957">
             <strong>Signature:</strong> scriptFileName:string -&gt; string * (string -&gt; string) * (string -&gt; string option)<br />
                                   </div>
         </td>
@@ -343,10 +363,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2184', 2184)" onmouseover="showTip(event, '2184', 2184)">
+          <code onmouseout="hideTip(event, '2958', 2958)" onmouseover="showTip(event, '2958', 2958)">
             runFakeScript cache context
           </code>
-          <div class="tip" id="2184">
+          <div class="tip" id="2958">
             <strong>Signature:</strong> cache:CoreCacheInfo option -&gt; context:FakeContext -&gt; ResultCoreCacheInfo * RunResult<br />
                                   </div>
         </td>
@@ -360,10 +380,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2185', 2185)" onmouseover="showTip(event, '2185', 2185)">
+          <code onmouseout="hideTip(event, '2959', 2959)" onmouseover="showTip(event, '2959', 2959)">
             runUncached(context)
           </code>
-          <div class="tip" id="2185">
+          <div class="tip" id="2959">
             <strong>Signature:</strong> context:FakeContext -&gt; ResultCoreCacheInfo * RunResult<br />
                                   </div>
         </td>
@@ -377,10 +397,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2186', 2186)" onmouseover="showTip(event, '2186', 2186)">
+          <code onmouseout="hideTip(event, '2960', 2960)" onmouseover="showTip(event, '2960', 2960)">
             tryRunCached c context
           </code>
-          <div class="tip" id="2186">
+          <div class="tip" id="2960">
             <strong>Signature:</strong> c:CoreCacheInfo -&gt; context:FakeContext -&gt; RunResult<br />
                                   </div>
         </td>
@@ -430,7 +450,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

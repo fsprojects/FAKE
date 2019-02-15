@@ -318,10 +318,29 @@ Make sure to read the documentation in the <a href="fake-core-semverinfo.html">S
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
+          <code onmouseout="hideTip(event, '762', 762)" onmouseover="showTip(event, '762', 762)">
+            SemVer.expand delimiter text
+          </code>
+          <div class="tip" id="762">
+            <strong>Signature:</strong> delimiter:char list -&gt; text:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L259-259" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Splits the given version string by possible delimiters but keeps them as parts of resulting list.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '763', 763)" onmouseover="showTip(event, '763', 763)">
             SemVer.isValid(version)
           </code>
-          <div class="tip" id="493">
+          <div class="tip" id="763">
             <strong>Signature:</strong> version:string -&gt; bool<br />
                                   </div>
         </td>
@@ -337,10 +356,10 @@ Make sure to read the documentation in the <a href="fake-core-semverinfo.html">S
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
+          <code onmouseout="hideTip(event, '764', 764)" onmouseover="showTip(event, '764', 764)">
             SemVer.parse(version)
           </code>
-          <div class="tip" id="494">
+          <div class="tip" id="764">
             <strong>Signature:</strong> version:string -&gt; SemVerInfo<br />
                                   </div>
         </td>
@@ -365,6 +384,69 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 </code></pre></td>
 </tr>
 </table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '765', 765)" onmouseover="showTip(event, '765', 765)">
+            SemVer.validContent
+          </code>
+          <div class="tip" id="765">
+            <strong>Signature:</strong> Regex<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L276-276" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2><a name="Active patterns" class="anchor" href="#Active patterns">Active patterns</a></h2>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Active pattern</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '766', 766)" onmouseover="showTip(event, '766', 766)">
+            SemVer.( |Big|_| )(str)
+          </code>
+          <div class="tip" id="766">
+            <strong>Signature:</strong> str:string -&gt; BigInteger option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L253-253" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Matches if str is convertible to big int and not less than zero, and returns the bigint value.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '767', 767)" onmouseover="showTip(event, '767', 767)">
+            SemVer.( |Int|_| )(str)
+          </code>
+          <div class="tip" id="767">
+            <strong>Signature:</strong> str:string -&gt; int option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L247-247" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Matches if str is convertible to Int and not less than zero, and returns the value as UInt.</p>
 
 
         </td>
@@ -409,7 +491,7 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
