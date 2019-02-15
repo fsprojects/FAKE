@@ -290,6 +290,29 @@ let CompileAll connectionInfo =
     then reportError "CompileAll failed." connectionInfo.TempLogFile
     tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
 
+/// Compiles all uncompiled objects in the Dynamics NAV client.
+let FullCompile connectionInfo = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
+    let details = ""
+    use __ = traceStartTaskUsing "CompileAll" details
+    let args = 
+        sprintf "command=compileobjects, logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
+            (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+                    
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- connectionInfo.ToolPath
+                info.WorkingDirectory <- connectionInfo.WorkingDir
+                info.Arguments <- args) connectionInfo.TimeOut
+    then reportError "CompileAll failed." connectionInfo.TempLogFile
+    tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
+
 /// The parameter type allows to interact with Dynamics NAV RTC.
 type RTCParams = 
     { ToolPath : string

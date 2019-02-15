@@ -1,3 +1,6 @@
+#### 4.64.15 - 15.02.2019
+* Add Dynamics NAV FullCompile function
+
 #### 4.64.14 - 07.01.2019
 * Add DynamicsNAV 365 Business Central support - https://github.com/fsharp/FAKE/pull/2224
 
