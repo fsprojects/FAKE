@@ -290,7 +290,7 @@ let CompileAll connectionInfo =
     then reportError "CompileAll failed." connectionInfo.TempLogFile
     tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
 
-/// Compiles all uncompiled objects in the Dynamics NAV client.
+/// Compiles all objects in the Dynamics NAV client including already compiled ones.
 let FullCompile connectionInfo = 
     let sw = System.Diagnostics.Stopwatch() 
     sw.Start()
