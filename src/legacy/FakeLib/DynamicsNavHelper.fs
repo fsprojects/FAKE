@@ -111,6 +111,7 @@ let getNAVClassicPath navClientVersion =
         | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\RoleTailored Client"
         | "1000" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\100\RoleTailored Client"
         | "1100" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\110\RoleTailored Client"
+        | "1300" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\130\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
         | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
@@ -133,11 +134,12 @@ let getNAVServicePath navClientVersion =
             | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\Service"
             | "1000" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\100\Service"
             | "1100" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\110\Service"
+            | "1300" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\130\Service"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
 
         match navClientVersion with
         | "601" | "602" -> getRegistryValue HKEYLocalMachine subKey "Path"
-        | "700"| "701"| "800" | "900" | "1000" | "1100" -> getRegistryValue64 HKEYLocalMachine subKey "Path"
+        | "700"| "701"| "800" | "900" | "1000" | "1100" | "1300" -> getRegistryValue64 HKEYLocalMachine subKey "Path"
         | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
 
     (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
@@ -297,6 +299,29 @@ let CompileAll connectionInfo =
     use __ = traceStartTaskUsing "CompileAll" details
     let args = 
         sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
+            (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+                    
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- connectionInfo.ToolPath
+                info.WorkingDirectory <- connectionInfo.WorkingDir
+                info.Arguments <- args) connectionInfo.TimeOut
+    then reportError "CompileAll failed." connectionInfo.TempLogFile
+    tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
+
+/// Compiles all objects in the Dynamics NAV client including already compiled ones.
+let FullCompile connectionInfo = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
+    let details = ""
+    use __ = traceStartTaskUsing "CompileAll" details
+    let args = 
+        sprintf "command=compileobjects, logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
     let args =
@@ -549,6 +574,8 @@ let StartNavServiceTier serverMode navClientVersion =
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV100"
         | "1100" ->
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV110"
+        | "1300" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV130"
         | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
 
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
@@ -563,3 +590,4 @@ let StopNavServiceTier serverMode navClientVersion =
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV90"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV100"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV110"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV130"
