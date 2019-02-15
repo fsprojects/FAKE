@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.12.2-alpha - tbd
+
+* tbd.
+
 ## 5.12.1 - 2019-02-15
 
 * ENHANCEMENT: Add dotnet cli options (--no-restore) and (--blame) - https://github.com/fsharp/FAKE/pull/2250
