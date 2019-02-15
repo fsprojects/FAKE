@@ -1083,15 +1083,6 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
-      <ItemGroup>
-        <Reference Include="System.Memory">
-          <HintPath>..\..\..\packages\System.Memory\ref\netstandard2.0\System.Memory.dll</HintPath>
-          <Private>False</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
   </Choose>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == 'Xamarin.Mac'">
@@ -2002,15 +1993,6 @@
         <Reference Include="System.Text.Encoding.CodePages">
           <HintPath>..\..\..\packages\System.Text.Encoding.CodePages\lib\netstandard2.0\System.Text.Encoding.CodePages.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1' Or $(TargetFrameworkVersion) == 'v2.2' Or $(TargetFrameworkVersion) == 'v3.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
-      <ItemGroup>
-        <Reference Include="System.Text.Encoding.CodePages">
-          <HintPath>..\..\..\packages\System.Text.Encoding.CodePages\ref\netstandard2.0\System.Text.Encoding.CodePages.dll</HintPath>
-          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
