@@ -117,7 +117,7 @@ module internal TeamCityWriter =
     let internal sendComparisonFailed name message details expected actual = sendToTeamCity(TeamCityMessage.FiveParamSingleLineParam1("##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']", name, message, details, expected, actual))
 
     /// Message
-    let internal sendMessage status text = sendToTeamCity(TeamCityMessage.TwoParamSingleLineParam1("##teamcity[message status='%s' text='%s']", text, status))
+    let internal sendMessage status text = sendToTeamCity(TeamCityMessage.TwoParamSingleLineParam1("##teamcity[message status='%s' text='%s']", status, text))
     
 module private JavaPropertiesFile =
     open System.Text
