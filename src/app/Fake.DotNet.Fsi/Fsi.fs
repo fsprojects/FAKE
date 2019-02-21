@@ -75,8 +75,10 @@ type FsiParams = {
 (* - LANGUAGE - *)
     /// Generate overflow checks
     Checked: bool option
-    /// Define a conditional compilation symbols
+    /// Define a conditional compilation symbol
     Define: string
+    /// Define a list of conditional compilation symbols
+    Definitions: string list
     /// Ignore ML compatibility warnings
     MLCompatibility: bool 
 
@@ -147,6 +149,8 @@ with
         /// format a compiler arg that ends with "+" or "-" with string parameters  "--%s%s:\"%s\""
         let inline toglls s b (ls:'a list) = 
             stringEmptyMap (sprintf "--%s%s:%s" s  (chk b)) (String.concat ";" (List.map string ls))
+        /// format a list of short form complier args using the same symbol 
+        let sargmap sym ls = ls |> List.map (sargp sym)
 
         [
             argp "use" p.Use
@@ -193,7 +197,8 @@ with
             togl "readline" p.ReadLine
             togl "quotations-debug" p.QuotationsDebug       
             togl "shadowcopyreferences" p.ShadowCopyReferences
-        ]
+        ] @ (sargmap "d" p.Definitions)
+
         |> List.filter String.isNotNullOrEmpty
 
     static member Create() =
@@ -218,6 +223,7 @@ with
             ConsoleColors = None
             Checked = None
             Define = null
+            Definitions = []
             MLCompatibility = false 
             NoLogo = false
             Help = false
