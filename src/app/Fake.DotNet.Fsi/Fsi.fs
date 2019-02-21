@@ -285,7 +285,7 @@ module internal ExternalFsi =
                 { info.WithEnvironmentVariables defaultEnvironmentVars with
                     FileName = fsiExe
                     Arguments = args
-                    WorkingDirectory = ""
+                    WorkingDirectory = parameters.WorkingDirectory
                 }.WithEnvironmentVariables (parameters.Environment |> Map.toSeq)) TimeSpan.MaxValue        
 
         if r.ExitCode <> 0 then
