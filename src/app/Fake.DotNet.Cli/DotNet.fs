@@ -29,8 +29,8 @@ module DotNet =
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
 
-    /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
-    let internal getSDKVersionFromGlobalJsonDir startDir : string =
+    /// Tries to get the DotNet SDK from the global.json, starts searching in the given directory. Returns None if global.json is not found
+    let internal tryGetSDKVersionFromGlobalJsonDir startDir : string option =
         let globalJsonPaths rootDir =
             let rec loop (dir: DirectoryInfo) = seq {
                 match dir.GetFiles "global.json" with
@@ -43,21 +43,35 @@ module DotNet =
 
         match Seq.tryHead (globalJsonPaths startDir) with
         | None ->
-            failwithf "global.json not found"
+            None
         | Some globalJson ->
             try
                 let content = File.ReadAllText globalJson.FullName
                 let json = JObject.Parse content
                 let sdk = json.Item("sdk") :?> JObject
                 let version = sdk.Property("version").Value.ToString()
-                version
+                Some version
             with
             | exn -> failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
 
+
+     /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
+    let internal getSDKVersionFromGlobalJsonDir startDir : string =
+        tryGetSDKVersionFromGlobalJsonDir startDir
+        |> function
+        | Some version -> version
+        | None -> failwithf "global.json not found"
+
+    /// Tries the DotNet SDK from the global.json
+    /// This file can exist in the working directory or any of the parent directories
+    /// Returns None if global.json is not found
+    let tryGetSDKVersionFromGlobalJson() : string option = 
+        tryGetSDKVersionFromGlobalJsonDir "."
+    
     /// Gets the DotNet SDK from the global.json
     /// This file can exist in the working directory or any of the parent directories
-    let getSDKVersionFromGlobalJson() : string = getSDKVersionFromGlobalJsonDir "."
-
+    let getSDKVersionFromGlobalJson() : string = 
+        getSDKVersionFromGlobalJsonDir "."
 
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     /// ## Parameters
@@ -66,7 +80,7 @@ module DotNet =
     let private findPossibleDotnetCliPaths dotnetCliDir = seq {
         let fileName = if Environment.isUnix then "dotnet" else "dotnet.exe"
         yield!
-            Process.findFilesOnPath "dotnet"
+            ProcessUtils.findFilesOnPath "dotnet"
             |> Seq.filter File.Exists
         let userInstalldir = defaultUserInstallDir </> fileName
         if File.exists userInstalldir then yield userInstalldir
@@ -485,11 +499,23 @@ module DotNet =
             /// NOTE: This field is ignored when UseShellExecute is true.
             Environment : Map<string, string>
         }
+
+        /// Create a default setup for executing the `dotnet` command line.
+        /// This function tries to take current `global.json` into account and tries to find the correct installation.
+        /// To overwrite this behavior set `DotNetCliPath` manually (for example to the first result of `ProcessUtils.findFilesOnPath "dotnet"`)
         static member Create() = {
             DotNetCliPath =
+                let version = tryGetSDKVersionFromGlobalJson()                              
                 findPossibleDotnetCliPaths None
-                |> Seq.tryHead
-                // shouldn't hit this one because the previous two probe PATH...
+                |> Seq.tryFind (fun cliPath -> 
+                    match version with 
+                    | Some version -> 
+                            version 
+                            |> Path.combine "sdk"
+                            |> Path.combine (Path.getDirectory cliPath)
+                            |> Directory.Exists
+                    | None -> true
+                )
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
@@ -1079,6 +1105,8 @@ module DotNet =
             OutputPath: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Doesn't execute an implicit restore when running the command. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1091,6 +1119,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             NoBuild = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PackOptions.Create instead")>]
@@ -1116,6 +1145,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.NoBuild |> argOption "no-build"
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1152,6 +1182,8 @@ module DotNet =
             VersionSuffix: string option
             /// No build flag (--no-build)
             NoBuild: bool
+            /// Doesn't execute an implicit restore when running the command. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1166,6 +1198,7 @@ module DotNet =
             OutputPath = None
             VersionSuffix = None
             NoBuild = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PublishOptions.Create instead")>]
@@ -1193,6 +1226,7 @@ module DotNet =
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.NoBuild |> argOption "no-build"
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1227,6 +1261,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Doesn't execute an implicit restore during build. (--no-restore)
+            NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1240,6 +1276,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use BuildOptions.Create instead")>]
@@ -1267,6 +1304,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             (if param.Native then [ "--native" ] else [])
+            param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1322,6 +1360,8 @@ module DotNet =
             NoRestore: bool
             /// Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
             RunSettingsArguments : string option
+            /// Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as Sequence.xml that captures the order of tests execution before the crash.  (--blame)
+            Blame: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1343,6 +1383,7 @@ module DotNet =
             Collect = None
             NoRestore = false
             RunSettingsArguments = None
+            Blame = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use TestOptions.Create instead")>]
@@ -1376,6 +1417,7 @@ module DotNet =
             param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
             param.Collect |> Option.toList |> argList2 "collect"
             param.NoRestore |> argOption "no-restore"
+            param.Blame |> argOption "blame"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
+    <AssemblyName>Fake.DotNet.Xdt</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Xdt.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
+    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
+    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);FX_NO_SYSTEM_CONFIGURATION;NO_MSBUILD_AVAILABLE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>
