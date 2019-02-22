@@ -75,7 +75,7 @@ type FsiParams = {
 (* - LANGUAGE - *)
     /// Generate overflow checks
     Checked: bool option
-    /// Define a conditional compilation symbol
+    /// (Obsolete) Define a conditional compilation symbol (use FsiParams.Definitions instead)
     Define: string
     /// Define a list of conditional compilation symbols
     Definitions: string list
