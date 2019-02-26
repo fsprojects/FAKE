@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.12.2 - 2019-02-26
+
+* ENHANCEMENT: Allow multiple FSI Defines - https://github.com/fsharp/FAKE/pull/2260
+* BUGFIX: Fix TeamCity logging. - https://github.com/fsharp/FAKE/pull/2258
+
 ## 5.12.1 - 2019-02-15
 
 * ENHANCEMENT: Add dotnet cli options (--no-restore) and (--blame) - https://github.com/fsharp/FAKE/pull/2250
@@ -8,6 +13,12 @@
 * BUGFIX: Fixed getBaseDirectoryInclude when one directory name include the oth…  - https://github.com/fsharp/FAKE/pull/2235
 * DOCS: Resort TraceSecrets.register indexed parameters - https://github.com/fsharp/FAKE/pull/2254
 * DOCS: fix broken links #2241 - https://github.com/fsharp/FAKE/pull/2241
+
+## 4.64.16 - 2019-02-15
+* Add Dynamics NAV FullCompile function
+
+## 4.64.14 - 2019-01-07
+* Add DynamicsNAV 365 Business Central support - https://github.com/fsharp/FAKE/pull/2224
 
 ## 5.12.0 - 2019-01-12
 
@@ -317,6 +328,11 @@
 * BUGFIX: API-Reference documentation showing invalid tool-tips - https://github.com/fsharp/FAKE/pull/1912
 * BUGFIX: Fake being unable to compile when `intellisense.fsx` doesn't exist - https://github.com/fsharp/FAKE/issues/1908
 * ENHANCEMENT: Some improvements to the target build order algorithm - https://github.com/fsharp/FAKE/pull/1903
+
+## 4.64.13 - 2019-05-02
+
+* Download x86 version of dotnet core on win x86 - https://github.com/SAFE-Stack/SAFE-BookStore/issues/328
+
 
 ## 5.0.0-rc010 - 2018-05-01
 
