@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.12.3 - tbd
+
+* tbd
+
 ## 5.12.2 - 2019-02-26
 
 * ENHANCEMENT: Allow multiple FSI Defines - https://github.com/fsharp/FAKE/pull/2260
