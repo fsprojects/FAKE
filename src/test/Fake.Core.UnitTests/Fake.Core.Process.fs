@@ -9,9 +9,7 @@ let testCaseWithProcessTracing name test =
     testCase name <| fun arg ->
         Fake.ContextHelper.withFakeContext name (fun() ->
             Process.setEnableProcessTracing true
-            try test arg
-            finally
-                Process.setEnableProcessTracing false)
+            test arg)
 
 let getRawCommandLine (c:CreateProcess<'a>) =
     let mutable result = None
