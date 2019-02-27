@@ -1,6 +1,10 @@
 # Release Notes
 
-## 5.12.3 - 2019-02-26
+## 5.12.4 - 2019-02-27
+
+* Update dependencies
+
+## 5.12.3 - 2019-02-27
 
 * Re-release of 5.12.2 (which failed)
 * ENHANCEMENT: Allow multiple FSI Defines - https://github.com/fsharp/FAKE/pull/2260
