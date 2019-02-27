@@ -1,8 +1,11 @@
 # Release Notes
 
-## 5.12.3 - tbd
+## 5.12.3 - 2019-02-26
 
-* tbd
+* Re-release of 5.12.2 (which failed)
+* ENHANCEMENT: Allow multiple FSI Defines - https://github.com/fsharp/FAKE/pull/2260
+* BUGFIX: Fix TeamCity logging. - https://github.com/fsharp/FAKE/pull/2258
+* TESTSUITE improvements - https://github.com/fsharp/FAKE/pull/2264
 
 ## 5.12.2 - 2019-02-26
 
