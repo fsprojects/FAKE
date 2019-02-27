@@ -1,10 +1,15 @@
-
 module Fake.Core.ProcessTests
 
 open System
 open Fake.Core
 open Expecto
 open FsCheck
+
+let testCaseWithProcessTracing name test = 
+    testCase name <| fun arg ->
+        Fake.ContextHelper.withFakeContext name (fun() ->
+            Process.setEnableProcessTracing true
+            test arg)
 
 let getRawCommandLine (c:CreateProcess<'a>) =
     let mutable result = None
@@ -13,7 +18,7 @@ let getRawCommandLine (c:CreateProcess<'a>) =
             member x.Start (r: RawCreateProcess) =
                 async {
                     let si = r.ToStartInfo
-                    result <- Some si.Arguments                                    
+                    result <- Some si.Arguments
                     return System.Threading.Tasks.Task.FromResult { RawExitCode = 0 }
                 } }
         
@@ -27,7 +32,6 @@ let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000  }
 [<Tests>]
 let tests = 
   testList "Fake.Core.Process.Tests" [
-    //Process.setEnableProcessTracing true
     yield testPropertyWithConfig fsCheckConfig "toWindowsCommandLine is the inverse of fromWindowsCommandLine" <|
         fun (x: NonNull<string> list) ->
             let input = x |> List.map (fun (NonNull s) -> s)
@@ -35,7 +39,7 @@ let tests =
             let backAgain = Args.fromWindowsCommandLine escaped
             Expect.sequenceEqual backAgain input (sprintf "Expect argument lists to be equal, intermediate was '%s'" escaped)
 
-    yield testCase "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
+    yield testCaseWithProcessTracing "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
         try
             Process.start(fun proc ->
                 { proc with
@@ -46,6 +50,7 @@ let tests =
         with e ->
             let s = e.Message.Contains "FileDoesntExist.exe"
             Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'")
+
     yield testCase "Test that CreateProcess.ofStartInfo works (1)" <| fun _ ->
         let shell, command = "cmd", "/C \"echo 1&& echo 2\""
         let cb = Process.getProcI (fun proc ->
@@ -60,7 +65,7 @@ let tests =
         Expect.sequenceEqual (args |> Arguments.toList) ["/C"; "echo 1&& echo 2"] "Expected correct args"
         Expect.equal args.ToStartInfo command "Expect proper command (cmd is strange with regards to escaping)"
 
-    yield testCase "Test that we can read messages correctly" <| fun _ ->
+    yield testCaseWithProcessTracing "Test that we can read messages correctly" <| fun _ ->
         let shell, command =
             if Environment.isWindows then
                 "cmd", "/C \"echo 1&& echo 2\""
