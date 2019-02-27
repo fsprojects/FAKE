@@ -348,10 +348,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1102', 1102)" onmouseover="showTip(event, '1102', 1102)">
+          <code onmouseout="hideTip(event, '1103', 1103)" onmouseover="showTip(event, '1103', 1103)">
             isHex(c)
           </code>
-          <div class="tip" id="1102">
+          <div class="tip" id="1103">
             <strong>Signature:</strong> c:char -&gt; bool<br />
                                   </div>
         </td>
@@ -362,10 +362,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1103', 1103)" onmouseover="showTip(event, '1103', 1103)">
+          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
             parseWithReader(reader)
           </code>
-          <div class="tip" id="1103">
+          <div class="tip" id="1104">
             <strong>Signature:</strong> reader:CharReader -&gt; seq&lt;PropertiesFileEntry&gt;<br />
                                   </div>
         </td>
@@ -376,25 +376,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
+          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
             readComment reader buffer
           </code>
-          <div class="tip" id="1104">
-            <strong>Signature:</strong> reader:CharReader -&gt; buffer:StringBuilder -&gt; PropertiesFileEntry option * IsEof<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
-            readEscapeSequence c reader
-          </code>
           <div class="tip" id="1105">
-            <strong>Signature:</strong> c:char -&gt; reader:CharReader -&gt; char<br />
+            <strong>Signature:</strong> reader:CharReader -&gt; buffer:StringBuilder -&gt; PropertiesFileEntry option * IsEof<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -405,10 +391,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1106', 1106)" onmouseover="showTip(event, '1106', 1106)">
-            readKey c reader buffer
+            readEscapeSequence c reader
           </code>
           <div class="tip" id="1106">
-            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; buffer:StringBuilder -&gt; string * bool * char option * IsEof<br />
+            <strong>Signature:</strong> c:char -&gt; reader:CharReader -&gt; char<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -419,10 +405,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1107', 1107)" onmouseover="showTip(event, '1107', 1107)">
-            readLine reader buffer
+            readKey c reader buffer
           </code>
           <div class="tip" id="1107">
-            <strong>Signature:</strong> reader:CharReader -&gt; buffer:StringBuilder -&gt; PropertiesFileEntry option * IsEof<br />
+            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; buffer:StringBuilder -&gt; string * bool * char option * IsEof<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -433,10 +419,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1108', 1108)" onmouseover="showTip(event, '1108', 1108)">
-            readToFirstChar c reader
+            readLine reader buffer
           </code>
           <div class="tip" id="1108">
-            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; char option * IsEof<br />
+            <strong>Signature:</strong> reader:CharReader -&gt; buffer:StringBuilder -&gt; PropertiesFileEntry option * IsEof<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -447,10 +433,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1109', 1109)" onmouseover="showTip(event, '1109', 1109)">
-            readValue c reader buffer
+            readToFirstChar c reader
           </code>
           <div class="tip" id="1109">
-            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; buffer:StringBuilder -&gt; string * IsEof<br />
+            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; char option * IsEof<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -461,9 +447,23 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1110', 1110)" onmouseover="showTip(event, '1110', 1110)">
-            textReaderToReader(reader)
+            readValue c reader buffer
           </code>
           <div class="tip" id="1110">
+            <strong>Signature:</strong> c:char option -&gt; reader:CharReader -&gt; buffer:StringBuilder -&gt; string * IsEof<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1111', 1111)" onmouseover="showTip(event, '1111', 1111)">
+            textReaderToReader(reader)
+          </code>
+          <div class="tip" id="1111">
             <strong>Signature:</strong> reader:TextReader -&gt; unit -&gt; char option<br />
                                   </div>
         </td>
@@ -482,10 +482,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1111', 1111)" onmouseover="showTip(event, '1111', 1111)">
+          <code onmouseout="hideTip(event, '1112', 1112)" onmouseover="showTip(event, '1112', 1112)">
             ( |EscapeSequence|_| )(c)
           </code>
-          <div class="tip" id="1111">
+          <div class="tip" id="1112">
             <strong>Signature:</strong> c:char option -&gt; char option<br />
                                   </div>
         </td>
@@ -496,10 +496,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1112', 1112)" onmouseover="showTip(event, '1112', 1112)">
+          <code onmouseout="hideTip(event, '1113', 1113)" onmouseover="showTip(event, '1113', 1113)">
             ( |IsWhitespace|_| )(c)
           </code>
-          <div class="tip" id="1112">
+          <div class="tip" id="1113">
             <strong>Signature:</strong> c:char option -&gt; char option<br />
                                   </div>
         </td>
@@ -546,7 +546,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.4</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -324,22 +324,8 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1113', 1113)" onmouseover="showTip(event, '1113', 1113)">
-            all
-          </code>
-          <div class="tip" id="1113">
-            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '1114', 1114)" onmouseover="showTip(event, '1114', 1114)">
-            configuration
+            all
           </code>
           <div class="tip" id="1114">
             <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
@@ -353,10 +339,10 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1115', 1115)" onmouseover="showTip(event, '1115', 1115)">
-            configurationFile
+            configuration
           </code>
           <div class="tip" id="1115">
-            <strong>Signature:</strong> Lazy&lt;string option&gt;<br />
+            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -367,10 +353,10 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1116', 1116)" onmouseover="showTip(event, '1116', 1116)">
-            get(fileName)
+            configurationFile
           </code>
           <div class="tip" id="1116">
-            <strong>Signature:</strong> fileName:string option -&gt; Map&lt;string,string&gt;<br />
+            <strong>Signature:</strong> Lazy&lt;string option&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -381,9 +367,23 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1117', 1117)" onmouseover="showTip(event, '1117', 1117)">
-            getAll()
+            get(fileName)
           </code>
           <div class="tip" id="1117">
+            <strong>Signature:</strong> fileName:string option -&gt; Map&lt;string,string&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1118', 1118)" onmouseover="showTip(event, '1118', 1118)">
+            getAll()
+          </code>
+          <div class="tip" id="1118">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
                                   </div>
         </td>
@@ -397,10 +397,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1118', 1118)" onmouseover="showTip(event, '1118', 1118)">
+          <code onmouseout="hideTip(event, '1119', 1119)" onmouseover="showTip(event, '1119', 1119)">
             getAllConfiguration()
           </code>
-          <div class="tip" id="1118">
+          <div class="tip" id="1119">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
                                   </div>
         </td>
@@ -413,10 +413,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1119', 1119)" onmouseover="showTip(event, '1119', 1119)">
+          <code onmouseout="hideTip(event, '1120', 1120)" onmouseover="showTip(event, '1120', 1120)">
             getAllRunner()
           </code>
-          <div class="tip" id="1119">
+          <div class="tip" id="1120">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
                                   </div>
         </td>
@@ -429,10 +429,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1120', 1120)" onmouseover="showTip(event, '1120', 1120)">
+          <code onmouseout="hideTip(event, '1121', 1121)" onmouseover="showTip(event, '1121', 1121)">
             getAllSystem()
           </code>
-          <div class="tip" id="1120">
+          <div class="tip" id="1121">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
                                   </div>
         </td>
@@ -445,25 +445,11 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1121', 1121)" onmouseover="showTip(event, '1121', 1121)">
+          <code onmouseout="hideTip(event, '1122', 1122)" onmouseover="showTip(event, '1122', 1122)">
             runner
           </code>
-          <div class="tip" id="1121">
-            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1122', 1122)" onmouseover="showTip(event, '1122', 1122)">
-            runnerFile
-          </code>
           <div class="tip" id="1122">
-            <strong>Signature:</strong> Lazy&lt;string option&gt;<br />
+            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -474,10 +460,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1123', 1123)" onmouseover="showTip(event, '1123', 1123)">
-            system
+            runnerFile
           </code>
           <div class="tip" id="1123">
-            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
+            <strong>Signature:</strong> Lazy&lt;string option&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -488,10 +474,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1124', 1124)" onmouseover="showTip(event, '1124', 1124)">
-            systemFile
+            system
           </code>
           <div class="tip" id="1124">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> Lazy&lt;Map&lt;string,string&gt;&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -502,9 +488,23 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1125', 1125)" onmouseover="showTip(event, '1125', 1125)">
-            tryGet(name)
+            systemFile
           </code>
           <div class="tip" id="1125">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1126', 1126)" onmouseover="showTip(event, '1126', 1126)">
+            tryGet(name)
+          </code>
+          <div class="tip" id="1126">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
@@ -518,10 +518,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1126', 1126)" onmouseover="showTip(event, '1126', 1126)">
+          <code onmouseout="hideTip(event, '1127', 1127)" onmouseover="showTip(event, '1127', 1127)">
             tryGetConfiguration(name)
           </code>
-          <div class="tip" id="1126">
+          <div class="tip" id="1127">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
@@ -534,10 +534,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1127', 1127)" onmouseover="showTip(event, '1127', 1127)">
+          <code onmouseout="hideTip(event, '1128', 1128)" onmouseover="showTip(event, '1128', 1128)">
             tryGetRunner(name)
           </code>
-          <div class="tip" id="1127">
+          <div class="tip" id="1128">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
@@ -550,10 +550,10 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1128', 1128)" onmouseover="showTip(event, '1128', 1128)">
+          <code onmouseout="hideTip(event, '1129', 1129)" onmouseover="showTip(event, '1129', 1129)">
             tryGetSystem(name)
           </code>
-          <div class="tip" id="1128">
+          <div class="tip" id="1129">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
@@ -602,7 +602,7 @@ System ones are prefixed with 'system.', runner ones with 'runner.' and environm
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.4</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -413,8 +413,8 @@
             addEntry(...)
           </code>
           <div class="tip" id="79">
-            <strong>Signature:</strong> prepareEntry:(FileInfo -&gt; string -&gt; string) -&gt; afterEntry:(&#39;?11730 -&gt; &#39;?11731) -&gt; outStream:&#39;?11730 -&gt; ArchiveFileSpec -&gt; &#39;?11731<br />
-                          <strong>Type parameters:</strong> '?11730, '?11731                      </div>
+            <strong>Signature:</strong> prepareEntry:(FileInfo -&gt; string -&gt; string) -&gt; afterEntry:(&#39;?11731 -&gt; &#39;?11732) -&gt; outStream:&#39;?11731 -&gt; ArchiveFileSpec -&gt; &#39;?11732<br />
+                          <strong>Type parameters:</strong> '?11731, '?11732                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -487,8 +487,8 @@
             copyFileBuffered(...)
           </code>
           <div class="tip" id="84">
-            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?11727 -&gt; inStream:&#39;?11728 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11727, '?11728                      </div>
+            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?11728 -&gt; inStream:&#39;?11729 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?11728, '?11729                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -501,8 +501,8 @@
             copyStreamBuffered(...)
           </code>
           <div class="tip" id="85">
-            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?11724 -&gt; inStream:&#39;?11725 -&gt; length:int64 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11724, '?11725                      </div>
+            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?11725 -&gt; inStream:&#39;?11726 -&gt; length:int64 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?11725, '?11726                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -515,8 +515,8 @@
             createArchive(...)
           </code>
           <div class="tip" id="86">
-            <strong>Signature:</strong> streamCreator:(FileInfo -&gt; &#39;?11739) -&gt; addEntry:(&#39;?11739 -&gt; &#39;?11740 -&gt; unit) -&gt; archiveFile:FileInfo -&gt; items:seq&lt;&#39;?11740&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11739, '?11740                      </div>
+            <strong>Signature:</strong> streamCreator:(FileInfo -&gt; &#39;?11740) -&gt; addEntry:(&#39;?11740 -&gt; &#39;?11741 -&gt; unit) -&gt; archiveFile:FileInfo -&gt; items:seq&lt;&#39;?11741&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?11740, '?11741                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -529,8 +529,8 @@
             createArchiveStream(...)
           </code>
           <div class="tip" id="87">
-            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?11735) -&gt; archiveFile:FileInfo -&gt; &#39;?11735<br />
-                          <strong>Type parameters:</strong> '?11735                      </div>
+            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?11736) -&gt; archiveFile:FileInfo -&gt; &#39;?11736<br />
+                          <strong>Type parameters:</strong> '?11736                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -561,8 +561,8 @@
             doCompression(...)
           </code>
           <div class="tip" id="89">
-            <strong>Signature:</strong> compressor:(&#39;?11746 -&gt; seq&lt;&#39;?11747&gt; -&gt; &#39;?11748) -&gt; archivePath:&#39;?11746 -&gt; fileSpecGenerator:(&#39;?11749 -&gt; &#39;?11747) -&gt; seq&lt;&#39;?11749&gt; -&gt; &#39;?11748<br />
-                          <strong>Type parameters:</strong> '?11746, '?11747, '?11748, '?11749                      </div>
+            <strong>Signature:</strong> compressor:(&#39;?11747 -&gt; seq&lt;&#39;?11748&gt; -&gt; &#39;?11749) -&gt; archivePath:&#39;?11747 -&gt; fileSpecGenerator:(&#39;?11750 -&gt; &#39;?11748) -&gt; seq&lt;&#39;?11750&gt; -&gt; &#39;?11749<br />
+                          <strong>Type parameters:</strong> '?11747, '?11748, '?11749, '?11750                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -575,8 +575,8 @@
             extractEntries getNextEntry inStream
           </code>
           <div class="tip" id="90">
-            <strong>Signature:</strong> getNextEntry:(&#39;?11742 -&gt; ExtractEntrySpec option) -&gt; inStream:&#39;?11742 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11742                      </div>
+            <strong>Signature:</strong> getNextEntry:(&#39;?11743 -&gt; ExtractEntrySpec option) -&gt; inStream:&#39;?11743 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?11743                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -589,8 +589,8 @@
             extractEntry inStream entry
           </code>
           <div class="tip" id="91">
-            <strong>Signature:</strong> inStream:&#39;?11733 -&gt; entry:ExtractEntrySpec -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11733                      </div>
+            <strong>Signature:</strong> inStream:&#39;?11734 -&gt; entry:ExtractEntrySpec -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?11734                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -603,8 +603,8 @@
             openArchiveStream(...)
           </code>
           <div class="tip" id="92">
-            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?11737) -&gt; archiveFile:FileInfo -&gt; &#39;?11737<br />
-                          <strong>Type parameters:</strong> '?11737                      </div>
+            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?11738) -&gt; archiveFile:FileInfo -&gt; &#39;?11738<br />
+                          <strong>Type parameters:</strong> '?11738                      </div>
         </td>
         <td class="xmldoc">
                     
@@ -649,7 +649,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.4</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

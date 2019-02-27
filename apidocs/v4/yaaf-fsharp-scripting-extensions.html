@@ -321,10 +321,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1635', 1635)" onmouseover="showTip(event, '1635', 1635)">
+          <code onmouseout="hideTip(event, '1636', 1636)" onmouseover="showTip(event, '1636', 1636)">
             x.ChangeCurrentDirectory(dir)
           </code>
-          <div class="tip" id="1635">
+          <div class="tip" id="1636">
             <strong>Signature:</strong> dir:string -&gt; IDisposable<br />
                                   </div>
         </td>
@@ -339,10 +339,10 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1636', 1636)" onmouseover="showTip(event, '1636', 1636)">
+          <code onmouseout="hideTip(event, '1637', 1637)" onmouseover="showTip(event, '1637', 1637)">
             x.DynamicAssemblyBuilder
           </code>
-          <div class="tip" id="1636">
+          <div class="tip" id="1637">
             <strong>Signature:</strong> AssemblyBuilder<br />
                                   </div>
         </td>
@@ -353,10 +353,10 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1637', 1637)" onmouseover="showTip(event, '1637', 1637)">
+          <code onmouseout="hideTip(event, '1638', 1638)" onmouseover="showTip(event, '1638', 1638)">
             x.DynamicAssemblyBuilder
           </code>
-          <div class="tip" id="1637">
+          <div class="tip" id="1638">
             <strong>Signature:</strong> AssemblyBuilder<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -368,10 +368,10 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1638', 1638)" onmouseover="showTip(event, '1638', 1638)">
+          <code onmouseout="hideTip(event, '1639', 1639)" onmouseover="showTip(event, '1639', 1639)">
             x.EvalExpression(text)
           </code>
-          <div class="tip" id="1638">
+          <div class="tip" id="1639">
             <strong>Signature:</strong> text:string -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -384,10 +384,10 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1639', 1639)" onmouseover="showTip(event, '1639', 1639)">
+          <code onmouseout="hideTip(event, '1640', 1640)" onmouseover="showTip(event, '1640', 1640)">
             x.EvalExpressionWithOutput(text)
           </code>
-          <div class="tip" id="1639">
+          <div class="tip" id="1640">
             <strong>Signature:</strong> text:string -&gt; InteractionResult * &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -398,22 +398,8 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1640', 1640)" onmouseover="showTip(event, '1640', 1640)">
-            x.EvalInteraction(s)
-          </code>
-          <div class="tip" id="1640">
-            <strong>Signature:</strong> s:string -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '1641', 1641)" onmouseover="showTip(event, '1641', 1641)">
-            x.EvalScript(s)
+            x.EvalInteraction(s)
           </code>
           <div class="tip" id="1641">
             <strong>Signature:</strong> s:string -&gt; unit<br />
@@ -427,23 +413,21 @@ Returns a handle to change the current directory back to it's initial state
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1642', 1642)" onmouseover="showTip(event, '1642', 1642)">
-            x.EvalScriptAsInteraction(s)
+            x.EvalScript(s)
           </code>
           <div class="tip" id="1642">
             <strong>Signature:</strong> s:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                    <p>See <a href="https://github.com/Microsoft/visualfsharp/issues/1392">https://github.com/Microsoft/visualfsharp/issues/1392</a></p>
-
-
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1643', 1643)" onmouseover="showTip(event, '1643', 1643)">
-            x.EvalScriptAsInteractionWithOutput(s)
+            x.EvalScriptAsInteraction(s)
           </code>
           <div class="tip" id="1643">
             <strong>Signature:</strong> s:string -&gt; unit<br />
@@ -459,11 +443,27 @@ Returns a handle to change the current directory back to it's initial state
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1644', 1644)" onmouseover="showTip(event, '1644', 1644)">
-            x.Handle f text
+            x.EvalScriptAsInteractionWithOutput(s)
           </code>
           <div class="tip" id="1644">
-            <strong>Signature:</strong> (f:(string -&gt; &#39;?13902)) -&gt; text:string -&gt; HandledResult&lt;&#39;?13902&gt;<br />
-                          <strong>Type parameters:</strong> '?13902                      </div>
+            <strong>Signature:</strong> s:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>See <a href="https://github.com/Microsoft/visualfsharp/issues/1392">https://github.com/Microsoft/visualfsharp/issues/1392</a></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1645', 1645)" onmouseover="showTip(event, '1645', 1645)">
+            x.Handle f text
+          </code>
+          <div class="tip" id="1645">
+            <strong>Signature:</strong> (f:(string -&gt; &#39;?13903)) -&gt; text:string -&gt; HandledResult&lt;&#39;?13903&gt;<br />
+                          <strong>Type parameters:</strong> '?13903                      </div>
         </td>
         <td class="xmldoc">
                     <p>Handle the given evaluation function</p>
@@ -474,10 +474,10 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1645', 1645)" onmouseover="showTip(event, '1645', 1645)">
+          <code onmouseout="hideTip(event, '1646', 1646)" onmouseover="showTip(event, '1646', 1646)">
             x.Let varName obj
           </code>
-          <div class="tip" id="1645">
+          <div class="tip" id="1646">
             <strong>Signature:</strong> varName:string -&gt; obj:&#39;a -&gt; unit<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -490,25 +490,11 @@ Returns a handle to change the current directory back to it's initial state
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1646', 1646)" onmouseover="showTip(event, '1646', 1646)">
+          <code onmouseout="hideTip(event, '1647', 1647)" onmouseover="showTip(event, '1647', 1647)">
             x.Load(file)
           </code>
-          <div class="tip" id="1646">
-            <strong>Signature:</strong> file:string -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1647', 1647)" onmouseover="showTip(event, '1647', 1647)">
-            x.Open(ns)
-          </code>
           <div class="tip" id="1647">
-            <strong>Signature:</strong> ns:string -&gt; unit<br />
+            <strong>Signature:</strong> file:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -519,10 +505,10 @@ Returns a handle to change the current directory back to it's initial state
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1648', 1648)" onmouseover="showTip(event, '1648', 1648)">
-            x.Reference(file)
+            x.Open(ns)
           </code>
           <div class="tip" id="1648">
-            <strong>Signature:</strong> file:string -&gt; unit<br />
+            <strong>Signature:</strong> ns:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -533,10 +519,10 @@ Returns a handle to change the current directory back to it's initial state
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1649', 1649)" onmouseover="showTip(event, '1649', 1649)">
-            x.TryEvalExpression(s)
+            x.Reference(file)
           </code>
           <div class="tip" id="1649">
-            <strong>Signature:</strong> s:string -&gt; (obj * Type) option<br />
+            <strong>Signature:</strong> file:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -547,11 +533,25 @@ Returns a handle to change the current directory back to it's initial state
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1650', 1650)" onmouseover="showTip(event, '1650', 1650)">
-            x.WithCurrentDirectory dir f
+            x.TryEvalExpression(s)
           </code>
           <div class="tip" id="1650">
-            <strong>Signature:</strong> dir:string -&gt; (f:(unit -&gt; &#39;?13900)) -&gt; &#39;?13900<br />
-                          <strong>Type parameters:</strong> '?13900                      </div>
+            <strong>Signature:</strong> s:string -&gt; (obj * Type) option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1651', 1651)" onmouseover="showTip(event, '1651', 1651)">
+            x.WithCurrentDirectory dir f
+          </code>
+          <div class="tip" id="1651">
+            <strong>Signature:</strong> dir:string -&gt; (f:(unit -&gt; &#39;?13901)) -&gt; &#39;?13901<br />
+                          <strong>Type parameters:</strong> '?13901                      </div>
         </td>
         <td class="xmldoc">
                     <p>Same as ChangeCurrentDirectory but takes a function for the scope.</p>
@@ -598,7 +598,7 @@ Returns a handle to change the current directory back to it's initial state
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.4</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
