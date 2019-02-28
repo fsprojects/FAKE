@@ -409,11 +409,10 @@ let rec private push (options : Options) (parameters : NugetPushOptions) nupkg =
                 |> CreateProcess.withWorkingDirectory options.WorkingDir
                 |> CreateProcess.withFramework
                 |> CreateProcess.withTimeout (parameters.Timeout |> Option.defaultValue (TimeSpan.FromMinutes 5.0))
-                |> CreateProcess.addOnExited (fun _ exitCode -> exitCode)
                 |> Proc.run
 
             finally Process.setEnableProcessTracing tracing
-        if result <> 0 then
+        if result.ExitCode <> 0 then
             sprintf "Error during NuGet push. %s %s" options.ToolPath args
             |> TraceSecrets.guardMessage
             |> failwith
