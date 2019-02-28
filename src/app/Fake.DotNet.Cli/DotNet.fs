@@ -10,6 +10,7 @@ module DotNet =
     open Fake.Core
     open Fake.IO
     open Fake.IO.FileSystemOperators
+    open Fake.DotNet.NuGet
     open System
     open System.IO
     open System.Security.Cryptography
@@ -1435,39 +1436,7 @@ module DotNet =
         execWithBinLog project param.Common "test" args param.MSBuildParams
         __.MarkSuccess()
 
-    /// dotnet nuget push command options
-    type NugetPushOptions =
-        {
-            /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
-            DisableBuffering: bool
-            /// The API key for the server
-            ApiKey: string option
-            /// Doesn't push symbols (even if present).
-            NoSymbols: bool
-            /// Doesn't append "api/v2/package" to the source URL.
-            NoServiceEndpoint: bool
-            /// Specifies the server URL. This option is required unless DefaultPushSource config value is set in the NuGet config file.
-            Source: string option
-            /// The API key for the symbol server.
-            SymbolApiKey: string option
-            /// Specifies the symbol server URL.
-            SymbolSource: string option
-            /// Specifies the timeout for pushing to a server in seconds.
-            Timeout: int option
-        }
-
-        static member Create() = {
-            DisableBuffering = false
-            ApiKey = None
-            NoSymbols = false
-            NoServiceEndpoint = false
-            Source = None
-            SymbolApiKey = None
-            SymbolSource = None
-            Timeout = None
-        }
-
-    let private buildNugetPushArgs (param : NugetPushOptions) =
+    let private buildNugetPushArgs (param : NuGet.NugetPushOptions) =
         [
             param.DisableBuffering |> argOption "disable-buffering"
             param.ApiKey |> Option.toList |> argList2 "api-key"
@@ -1482,13 +1451,14 @@ module DotNet =
         |> List.filter (not << String.IsNullOrEmpty)
 
     /// Execute dotnet nuget push command
+
     /// ## Parameters
     ///
     /// - 'setParams' - set nuget push command parameters
     /// - 'nupkg' - nupkg to publish
     let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
-        let param = NugetPushOptions.Create() |> setParams
+        let param = NuGet.NugetPushOptions.Create() |> setParams
         let args = Args.toWindowsCommandLine(nupkg :: buildNugetPushArgs param)
         exec id "nuget push" args
         |> function
