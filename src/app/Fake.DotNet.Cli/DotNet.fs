@@ -1450,6 +1450,10 @@ module DotNet =
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
+    type Options with
+        member internal x.ToNuGetToolOptions () =
+            NuGet.ToolOptions.Create x.DotNetCliPath "nuget push" x.WorkingDirectory false
+
     /// Execute dotnet nuget push command
 
     /// ## Parameters
@@ -1459,13 +1463,8 @@ module DotNet =
     let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGet.NugetPushOptions.Create() |> setParams
-        let args = Args.toWindowsCommandLine(nupkg :: buildNugetPushArgs param)
-        exec id "nuget push" args
-        |> function
-        | p when p.ExitCode <> 0 ->
-            p.Errors
-            |> String.concat System.Environment.NewLine
-            |> Trace.traceErrorfn "Failed to push NuGet package '%s'. Exit code '%d'. Error(s): %s" nupkg p.ExitCode
-            __.MarkFailed()
-        | _ ->
-            __.MarkSuccess()
+        let toCliArgs param = Args.toWindowsCommandLine(buildNugetPushArgs param)
+        let toolOptions = Options.Create().ToNuGetToolOptions()
+
+        NuGet.Private.push toolOptions param toCliArgs nupkg
+        __.MarkSuccess()
