@@ -328,7 +328,7 @@ let private pack parameters nuspecFile =
         |> execute
 
 /// dotnet nuget push command options
-type NugetPushOptions =
+type NuGetPushParams =
     { /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
       DisableBuffering: bool
       /// The API key for the server
@@ -396,7 +396,7 @@ let private toPushCliArgs param =
 
 module Private =
     /// For internal use
-    let rec push (options : ToolOptions) (parameters : NugetPushOptions) (toCliArgs : NugetPushOptions -> string) nupkg =
+    let rec push (options : ToolOptions) (parameters : NuGetPushParams) (toCliArgs : NuGetPushParams -> string) nupkg =
         parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
         parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
     

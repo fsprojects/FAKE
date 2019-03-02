@@ -1436,7 +1436,7 @@ module DotNet =
         execWithBinLog project param.Common "test" args param.MSBuildParams
         __.MarkSuccess()
 
-    let private buildNugetPushArgs (param : NuGet.NugetPushOptions) =
+    let private buildNugetPushArgs (param : NuGet.NuGetPushParams) =
         [
             param.DisableBuffering |> argOption "disable-buffering"
             param.ApiKey |> Option.toList |> argList2 "api-key"
@@ -1454,6 +1454,13 @@ module DotNet =
         member internal x.ToNuGetToolOptions () =
             NuGet.ToolOptions.Create x.DotNetCliPath "nuget push" x.WorkingDirectory false
 
+    type NuGetPushOptions =
+        { Common: Options
+          Options: NuGet.NuGetPushParams }
+        static member Create() =
+            { Common = Options.Create()
+              Options = NuGet.NuGetPushParams.Create() }
+
     /// Execute dotnet nuget push command
 
     /// ## Parameters
@@ -1462,9 +1469,10 @@ module DotNet =
     /// - 'nupkg' - nupkg to publish
     let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
-        let param = NuGet.NugetPushOptions.Create() |> setParams
-        let toCliArgs param = Args.toWindowsCommandLine(buildNugetPushArgs param)
-        let toolOptions = Options.Create().ToNuGetToolOptions()
+        let param = NuGetPushOptions.Create() |> setParams
+        let toolOptions = param.Common.ToNuGetToolOptions()
+        
+        let toCliArgs nugetParam = Args.toWindowsCommandLine(buildNugetPushArgs nugetParam)
 
-        NuGet.Private.push toolOptions param toCliArgs nupkg
+        NuGet.Private.push toolOptions param.Options toCliArgs nupkg
         __.MarkSuccess()
