@@ -105,7 +105,7 @@ let private ProduceRelativePath baseLocation targetLocation =
             (!resultPath).Substring(2, (!resultPath).Length - 3)
         else (!resultPath).Substring(0, (!resultPath).Length - 1)
 
-let toRelativeFrom =
+let toRelativeFrom basePath value =
     /// A cache of relative path names.
     /// [omit]
     let relativePaths = new Dictionary<_, _>()
@@ -120,7 +120,7 @@ let toRelativeFrom =
             relativePaths.Add(key, x)
             x
 
-    toRelativePath
+    toRelativePath basePath value
 
 let toRelativeFromCurrent path =
     let currentDir = normalizeFileName <| Directory.GetCurrentDirectory()
