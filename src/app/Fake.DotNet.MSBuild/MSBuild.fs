@@ -9,7 +9,6 @@ open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
-open Fake.Core
 
 /// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
@@ -90,22 +89,23 @@ type MSBuildLoggerConfig = MSBuildDistributedLoggerConfig
 #if !NO_VSWHERE // legacy fakelib
 module private MSBuildExeFromVsWhere =
     open BlackFox.VsWhere
-    open System.Text.RegularExpressions
+    open System.Diagnostics
 
     let private getAllVsPath () =
-        VsInstances.getWithPackage "Microsoft.Component.MSBuild" false
+        VsInstances.getWithPackage "Microsoft.Component.MSBuild" true
         |> List.map (fun vs -> vs.InstallationPath)
 
-    let private re = lazy(Regex(@"^\d+\.\d+$", RegexOptions.Compiled))
-
     let private getAllMsBuildPaths vsPath =
-        let versionsDir = Path.Combine(vsPath, "MSBuild")
-        if Directory.Exists(versionsDir) then
-            Directory.EnumerateDirectories(versionsDir)
-            |> Seq.map (fun d -> Path.GetFileName(d), d)
-            |> Seq.filter (fun (v, _) -> re.Value.IsMatch v)
-            |> Seq.map (fun (v, d) -> v, Path.Combine(d, "Bin"))
-            |> Seq.filter (fun (_, f) -> Directory.Exists(f))
+        let msBuildDir = Path.Combine(vsPath, "MSBuild")
+        if Directory.Exists(msBuildDir) then
+            Directory.EnumerateDirectories(msBuildDir)
+            |> Seq.map (fun dir -> Path.Combine(dir, "Bin", "MSBuild.exe"))
+            |> Seq.choose(fun exe ->
+               if File.Exists(exe) then
+                   let v = FileVersionInfo.GetVersionInfo(exe)
+                   Some (sprintf "%d.0" v.FileMajorPart, Path.GetDirectoryName(exe))
+               else
+                   None)
             |> List.ofSeq
         else
             []
