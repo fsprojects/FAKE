@@ -23,6 +23,11 @@ type MsBuildEntry = {
 
 let knownMsBuildEntries =
     [
+        { Version = "16.0"; Paths = [@"\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
+                                     @"\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"] }
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
@@ -120,6 +125,8 @@ let msBuildExe =
         traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
     elif foundExe.Contains @"\2017\" then
         logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
+    elif foundExe.Contains @"\2019\" then
+        logVerbosefn "Using msbuild of VS2019 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe        
     foundExe
 
 /// [omit]
