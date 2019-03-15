@@ -92,7 +92,7 @@ module private MSBuildExeFromVsWhere =
     open System.Diagnostics
 
     let private getAllVsPath () =
-        VsInstances.getWithPackage "Microsoft.Component.MSBuild" true
+        VsInstances.getWithPackage "Microsoft.Component.MSBuild" false
         |> List.map (fun vs -> vs.InstallationPath)
 
     let private getAllMsBuildPaths vsPath =
@@ -245,6 +245,8 @@ module private MSBuildExe =
         Trace.traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
     elif foundExe.Contains @"\2017\" then
         Trace.logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
+    elif foundExe.Contains @"\2019\" then
+        Trace.logVerbosefn "Using msbuild of VS2019 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
     foundExe
 
 /// A type for MSBuild task parameters
