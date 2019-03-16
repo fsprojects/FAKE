@@ -32,16 +32,17 @@
   var nestModules = (IEnumerable<Module>)Model.Module.NestedModules;
   var nestTypes = (IEnumerable<FSharp.MetadataFormat.Type>)Model.Module.NestedTypes;
 }
-<p>
-    @if (Model.Module.IsObsolete)
-    {
-        <div class="alert alert-warning">
-        <h5>OBSOLETE</h5>
-        <p>@Html.Encode(@Model.Module.ObsoleteMessage)</p>
-        </div> 
-    }
 
-</p>
+@if (Model.Module.IsObsolete)
+{
+  <p>
+    <div class="alert alert-warning">
+    <h5>OBSOLETE</h5>
+    <p>@Html.Encode(@Model.Module.ObsoleteMessage)</p>
+    </div> 
+  </p>
+}
+
 <h1><a name="@Model.Module.Name" class="anchor" href="#@Model.Module.Name">@Model.Module.Name</a></h1>
 
 <div class="xmldoc">

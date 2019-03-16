@@ -28,16 +28,17 @@
       Name = String.IsNullOrEmpty(g.Key) ? "Other type members" : g.Key 
     });
 }
-<p>
 
-    @if (Model.Type.IsObsolete)
-    {
-        <div class="alert alert-warning">
-        <h5>OBSOLETE</h5>
-        <p>@Html.Encode(@Model.Type.ObsoleteMessage)</p>
-        </div> 
-    }
-</p>
+@if (Model.Type.IsObsolete)
+{
+  <p>
+    <div class="alert alert-warning">
+    <h5>OBSOLETE</h5>
+    <p>@Html.Encode(@Model.Type.ObsoleteMessage)</p>
+    </div> 
+  </p>
+}
+
 <h1><a name="@Model.Type.Name" class="anchor" href="#@Model.Type.Name">@Model.Type.Name</a></h1>
 <div class="xmldoc">
   @foreach (var sec in comment.Sections) {
