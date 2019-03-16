@@ -2,6 +2,10 @@
 
 ## 5.12.6-alpha - tbd
 
+* ENHANCEMENT: Add Support for MSBuild 16 / VS 2019 - https://github.com/fsharp/FAKE/pull/2274
+* ENHANCEMENT: Throw more helpful exception when directory not a git repository - https://github.com/fsharp/FAKE/pull/2275
+* DOCS: Re-Add NuGet link - https://github.com/fsharp/FAKE/issues/2278
+* DOCS: Fix broken link in getting-started - https://github.com/fsharp/FAKE/issues/2276
 * tbd
 
 ## 5.12.4 - 2019-02-27

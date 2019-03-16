@@ -1,4 +1,14 @@
-/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests in parallel.
+/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
+///
+/// ### Sample
+///
+///        Target.create "Test" (fun _ ->
+///            !! (testDir + "/NUnit.Test.*.dll")
+///              |> NUnit3.run (fun p ->
+///                  {p with
+///                        ShadowCopy = false })
+///        )
+///
 module Fake.DotNet.Testing.NUnit3
 
 open Fake.Testing.Common
@@ -281,7 +291,7 @@ let buildArgs (parameters:NUnit3Params) (assemblies: string seq) =
         | x, sb when x = NUnit3Defaults.ResultSpecs -> sb
         | results, sb -> (sb, results) ||> Seq.fold (fun builder str -> StringBuilder.append (sprintf "--result=%s" str) builder)
 
-    new StringBuilder()
+    StringBuilder()
     |> StringBuilder.append "--noheader"
     |> StringBuilder.appendIfNotNullOrEmpty parameters.Testlist "--testlist="
     |> StringBuilder.appendIfNotNullOrEmpty parameters.Where "--where="
@@ -318,7 +328,7 @@ let internal createProcess createTempFile (setParams : NUnit3Params -> NUnit3Par
     
     let path = createTempFile()
     let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
-    CreateProcess.fromRawWindowsCommandLine tool argLine
+    CreateProcess.fromRawCommandLine tool argLine
     |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
     //|> CreateProcess.withTimeout processTimeout
