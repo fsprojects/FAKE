@@ -39,17 +39,17 @@ type NugetSymbolPackage =
     /// Build a symbol package using the nuspec file
     | Nuspec = 2
 
-type ToolOptions =
+type internal ToolOptions =
     { ToolPath : string
       Command : string
       WorkingDir : string
       IsFullFramework : bool }
 
     static member Create toolPath command workingDir isFullFramework =
-    { ToolPath = toolPath
-      Command = command
-      WorkingDir = workingDir
-      IsFullFramework = isFullFramework }
+        { ToolPath = toolPath
+          Command = command
+          WorkingDir = workingDir
+          IsFullFramework = isFullFramework }
 
 /// Nuget parameter type
 type NuGetParams =
@@ -392,48 +392,41 @@ let private toPushCliArgs param =
         param.Timeout |> Option.map string |> Option.map (sprintf "-Timeout %s")
     ]
     |> List.choose id
-    |> String.concat " "
+    |> Arguments.ofList
 
-module Private =
-    /// For internal use
-    let rec push (options : ToolOptions) (parameters : NuGetPushParams) (toCliArgs : NuGetPushParams -> string) nupkg =
-        parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
-        parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
-    
-        let args = sprintf "%s \"%s\" %s" options.Command nupkg (toCliArgs parameters)
+let rec private push (options : ToolOptions) (parameters : NuGetPushParams) nupkg =
+    parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
+    parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
 
-        sprintf "%s %s in WorkingDir: %s Trials left: %d" options.ToolPath args (Path.getFullName options.WorkingDir) parameters.PushTrials
-        |> TraceSecrets.guardMessage
-        |> Trace.trace
-    
-        try
-            let result =
-                let tracing = Process.shouldEnableProcessTracing()
-                try
-                    Process.setEnableProcessTracing false
+    let args =
+        sprintf "%s \"%s\" %s" options.Command nupkg (toPushCliArgs parameters).ToWindowsCommandLine
 
-                    CreateProcess.fromRawCommandLine options.ToolPath args
-                    |> CreateProcess.withWorkingDirectory options.WorkingDir
-                    |> CreateProcess.withTimeout (parameters.Timeout |> Option.defaultValue (TimeSpan.FromMinutes 5.0))
-                    |> (fun p -> 
-                        if options.IsFullFramework then
-                            p |> CreateProcess.withFramework
-                        else
-                            p)
-                    |> Proc.run
+    sprintf "%s %s in WorkingDir: %s Trials left: %d" options.ToolPath args (Path.getFullName options.WorkingDir) parameters.PushTrials
+    |> TraceSecrets.guardMessage
+    |> Trace.trace
 
-                finally Process.setEnableProcessTracing tracing
+    try
+        let result =
+            CreateProcess.fromRawCommandLine options.ToolPath args
+            |> CreateProcess.withWorkingDirectory options.WorkingDir
+            |> CreateProcess.withTimeout (parameters.Timeout |> Option.defaultValue (TimeSpan.FromMinutes 5.0))
+            |> (fun p -> 
+                if options.IsFullFramework then
+                    p |> CreateProcess.withFramework
+                else
+                    p)
+            |> Proc.run
 
-            if result.ExitCode <> 0 then
-                sprintf "Error during NuGet push. %s %s" options.ToolPath args
-                |> TraceSecrets.guardMessage
-                |> failwith
+        if result.ExitCode <> 0 then
+            sprintf "Error during NuGet push. %s %s" options.ToolPath args
+            |> TraceSecrets.guardMessage
+            |> failwith
 
-        with _ when parameters.PushTrials > 0 ->
-            push options { parameters with PushTrials = parameters.PushTrials - 1 } toCliArgs nupkg
+    with _ when parameters.PushTrials > 0 ->
+        push options { parameters with PushTrials = parameters.PushTrials - 1 } nupkg
 
 let private publish (parameters : NuGetParams) =
-    Private.push parameters.ToolOptions parameters.NuGetPushOptions toPushCliArgs parameters.Nupkg
+    push parameters.ToolOptions parameters.NuGetPushOptions parameters.Nupkg
 
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =

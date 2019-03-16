@@ -1450,16 +1450,16 @@ module DotNet =
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
-    type Options with
-        member internal x.ToNuGetToolOptions () =
-            NuGet.ToolOptions.Create x.DotNetCliPath "nuget push" x.WorkingDirectory false
-
     type NuGetPushOptions =
         { Common: Options
           Options: NuGet.NuGetPushParams }
         static member Create() =
             { Common = Options.Create()
               Options = NuGet.NuGetPushParams.Create() }
+        member this.WithCommon (common : Options) =
+            { this with Common = common }
+        member this.WithOptions (options : NuGet.NuGetPushParams) =
+            { this with Options = options }
 
     /// Execute dotnet nuget push command
 
@@ -1470,9 +1470,7 @@ module DotNet =
     let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGetPushOptions.Create() |> setParams
-        let toolOptions = param.Common.ToNuGetToolOptions()
-        
-        let toCliArgs nugetParam = Args.toWindowsCommandLine(buildNugetPushArgs nugetParam)
-
-        NuGet.Private.push toolOptions param.Options toCliArgs nupkg
+        let args = param.Options |> buildNugetPushArgs |> Args.toWindowsCommandLine
+        let result = exec (fun _ -> param.Common) "nuget push" args
+        if not result.OK then failwithf "dotnet nuget push failed with code %i" result.ExitCode
         __.MarkSuccess()
