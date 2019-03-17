@@ -293,12 +293,15 @@
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.Runtime" >Fake.Runtime</a> module.
+								</p>
                 
+							
 
 
-<p>
 
-</p>
+
 <h1><a name="CompilerServiceExtensions" class="anchor" href="#CompilerServiceExtensions">CompilerServiceExtensions</a></h1>
 
 <div class="xmldoc">
@@ -350,10 +353,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2223', 2223)" onmouseover="showTip(event, '2223', 2223)">
+          <code onmouseout="hideTip(event, '2222', 2222)" onmouseover="showTip(event, '2222', 2222)">
             x.FindType(t)
           </code>
-          <div class="tip" id="2223">
+          <div class="tip" id="2222">
             <strong>Signature:</strong> t:Type -&gt; FSharpEntity option<br />
                                   </div>
         </td>
@@ -367,10 +370,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2224', 2224)" onmouseover="showTip(event, '2224', 2224)">
+          <code onmouseout="hideTip(event, '2223', 2223)" onmouseover="showTip(event, '2223', 2223)">
             FSharpAssembly.FromAssembly(assembly)
           </code>
-          <div class="tip" id="2224">
+          <div class="tip" id="2223">
             <strong>Signature:</strong> assembly:Assembly -&gt; FSharpAssembly option<br />
                                   </div>
         </td>
@@ -379,6 +382,25 @@
               <i class="fab fa-github fa-fw"></i>
             </a>
           
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2224', 2224)" onmouseover="showTip(event, '2224', 2224)">
+            x.FSharpFullName
+          </code>
+          <div class="tip" id="2224">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L402-402" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Gets the FullName of the current type in F# source code.</p>
+
+
         </td>
       </tr>
       <tr>
@@ -404,17 +426,17 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2226', 2226)" onmouseover="showTip(event, '2226', 2226)">
-            x.FSharpFullName
+            x.FSharpFullNameWithTypeArgs
           </code>
           <div class="tip" id="2226">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L402-402" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L427-427" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Gets the FullName of the current type in F# source code.</p>
+          <p>Gets a string that can be used in F# source code to reference the current type instance.</p>
 
 
         </td>
@@ -442,17 +464,17 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2228', 2228)" onmouseover="showTip(event, '2228', 2228)">
-            x.FSharpFullNameWithTypeArgs
+            x.FSharpName
           </code>
           <div class="tip" id="2228">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L427-427" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L400-400" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Gets a string that can be used in F# source code to reference the current type instance.</p>
+          <p>The name of the current type instance in F# source code.</p>
 
 
         </td>
@@ -480,17 +502,17 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2230', 2230)" onmouseover="showTip(event, '2230', 2230)">
-            x.FSharpName
+            x.FSharpParamList
           </code>
           <div class="tip" id="2230">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L400-400" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L425-425" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>The name of the current type instance in F# source code.</p>
+          <p>The parameter list of the current type, sets "_" if the current instance is a generic definition.</p>
 
 
         </td>
@@ -518,28 +540,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
-            x.FSharpParamList
-          </code>
-          <div class="tip" id="2232">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs#L425-425" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The parameter list of the current type, sets "_" if the current instance is a generic definition.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
             FSharpAssembly.LoadFiles(...)
           </code>
-          <div class="tip" id="2233">
+          <div class="tip" id="2232">
             <strong>Signature:</strong> (dllFiles:seq&lt;string&gt; * libDirs:seq&lt;string&gt; option * otherFlags:seq&lt;string&gt; option * manualResolve:bool option) -&gt; seq&lt;string * FSharpAssembly option&gt;<br />
                                   </div>
         </td>
@@ -553,10 +556,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
+          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
             x.NamespaceName
           </code>
-          <div class="tip" id="2234">
+          <div class="tip" id="2233">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -572,10 +575,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
+          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
             x.NamespaceName
           </code>
-          <div class="tip" id="2235">
+          <div class="tip" id="2234">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -628,7 +631,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.6</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
