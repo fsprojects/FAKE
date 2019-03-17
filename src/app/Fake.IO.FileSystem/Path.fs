@@ -7,6 +7,7 @@ open Fake.Core.String.Operators
 open System
 open System.IO
 open System.Collections.Generic
+open System.Collections.Concurrent
 
 /// Combines two path strings using Path.Combine
 let inline combineTrimEnd path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
@@ -105,22 +106,19 @@ let private ProduceRelativePath baseLocation targetLocation =
             (!resultPath).Substring(2, (!resultPath).Length - 3)
         else (!resultPath).Substring(0, (!resultPath).Length - 1)
 
-let toRelativeFrom basePath value =
+let toRelativeFrom =
     /// A cache of relative path names.
     /// [omit]
-    let relativePaths = new Dictionary<_, _>()
+    let relativePaths = new ConcurrentDictionary<string * string, string>()
 
     /// Replaces the absolute path to a relative path.
     let inline toRelativePath basePath value =
         let key = (basePath, value)
-        match relativePaths.TryGetValue key with
-        | true, x -> x
-        | _ -> 
-            let x = ProduceRelativePath basePath value
-            relativePaths.Add(key, x)
-            x
+        relativePaths.GetOrAdd(key, fun _ ->
+            ProduceRelativePath basePath value
+        )
 
-    toRelativePath basePath value
+    toRelativePath
 
 let toRelativeFromCurrent path =
     let currentDir = normalizeFileName <| Directory.GetCurrentDirectory()
