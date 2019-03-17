@@ -1,6 +1,12 @@
 # Release Notes
 
-## 5.12.5 - tbd
+## 5.12.6 - 2019-03-17
+
+* ENHANCEMENT: Add Support for MSBuild 16 / VS 2019 - https://github.com/fsharp/FAKE/pull/2274
+* ENHANCEMENT: Throw more helpful exception when directory not a git repository - https://github.com/fsharp/FAKE/pull/2275
+* BUGFIX: Thread safe for `Path.toRelativeFrom` - https://github.com/fsharp/FAKE/pull/2268
+* DOCS: Re-Add NuGet link - https://github.com/fsharp/FAKE/issues/2278
+* DOCS: Fix broken link in getting-started - https://github.com/fsharp/FAKE/issues/2276
 
 ## 5.12.4 - 2019-02-27
 

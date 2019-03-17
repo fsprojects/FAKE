@@ -93,13 +93,17 @@ let fixPath (path:string) =
     let path = path.Trim()
     if "\\\\" <* path then path.Trim() else path.Replace('\\', '/').Trim()
 
-/// Searches the .git directory recursivly up to the root.
+/// Searches for a .git directory in the specified directory or any parent directory.
+/// <exception href="System.InvalidOperationException">Thrown when no .git directory is found.</exception>
 let findGitDir repositoryDir =
     let rec findGitDir (dirInfo:DirectoryInfo) =
         let gitDir = dirInfo.FullName + Path.directorySeparator + ".git" |> DirectoryInfo.ofPath
-        if gitDir.Exists then gitDir else findGitDir dirInfo.Parent
-
+        if gitDir.Exists then gitDir
+        elif isNull dirInfo.Parent then
+            invalidOp "Not a git repository: no .git directory found in the specified directory or any parent directory."
+        else
+            findGitDir dirInfo.Parent
 
     if String.isNullOrEmpty repositoryDir then "." else repositoryDir
-      |> DirectoryInfo.ofPath
-      |> findGitDir
+    |> DirectoryInfo.ofPath
+    |> findGitDir

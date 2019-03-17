@@ -338,7 +338,7 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Default"
 ```
 
-Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/v5/fake-nunitsequential.html) if you need to specify the tool path explicitly.
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit3 task documentation](apidocs/v5/fake-dotnet-testing-nunit3.html) if you need to specify the tool path explicitly.
 
 The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
 
