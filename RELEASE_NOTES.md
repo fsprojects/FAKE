@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.12.7-alpha - tbd
+
+* tbd
+
 ## 5.12.6 - 2019-03-17
 
 * ENHANCEMENT: Add Support for MSBuild 16 / VS 2019 - https://github.com/fsharp/FAKE/pull/2274
