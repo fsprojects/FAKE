@@ -1,3 +1,6 @@
+#### 4.64.17 - 19.03.2019
+* Add support for MSBuild16 
+
 #### 4.64.16 - 15.02.2019
 * Add Dynamics NAV FullCompile function
 
