@@ -19,9 +19,8 @@ let tests =
                 DotNet.NuGetPushOptions.Create().PushParams
                 |> DotNet.buildNugetPushArgs
                 |> Args.toWindowsCommandLine
-    
                   
-            Expect.equal cli "" "Empty push args."
+            Expect.isEmpty cli "Empty push args."
           
         testCase "Test that the dotnet nuget push arguments with all params setreturns correct string" <| fun _ ->
             let param =
