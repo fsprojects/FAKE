@@ -1462,15 +1462,20 @@ module DotNet =
             { this with PushParams = options }
 
     /// Execute dotnet nuget push command
-
     /// ## Parameters
     ///
     /// - 'setParams' - set nuget push command parameters
     /// - 'nupkg' - nupkg to publish
-    let nugetPush setParams nupkg =
+    let rec nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGetPushOptions.Create() |> setParams
-        let args = Args.toWindowsCommandLine (nupkg :: buildNugetPushArgs param.PushParams)
+        let pushParams = param.PushParams
+        let args = Args.toWindowsCommandLine (nupkg :: buildNugetPushArgs pushParams)
         let result = exec (fun _ -> param.Common) "nuget push" args
-        if not result.OK then failwithf "dotnet nuget push failed with code %i" result.ExitCode
-        __.MarkSuccess()
+
+        if result.OK then
+            __.MarkSuccess()
+        elif pushParams.PushTrials > 0 then
+            nugetPush (fun _ -> param.WithPushParams { pushParams with PushTrials = pushParams.PushTrials - 1 }) nupkg
+        else
+            failwithf "dotnet nuget push failed with code %i" result.ExitCode

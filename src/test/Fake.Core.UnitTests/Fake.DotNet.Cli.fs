@@ -32,7 +32,8 @@ let tests =
                     Source = Some "MyNuGetSource"
                     SymbolApiKey = Some "MySymbolApiKey"
                     SymbolSource = Some "MySymbolSource"
-                    Timeout = Some <| System.TimeSpan.FromMinutes 5.0 }
+                    Timeout = Some <| System.TimeSpan.FromMinutes 5.0
+                    PushTrials = 5 }
           
             let cli =
                 param
