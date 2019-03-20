@@ -1436,7 +1436,7 @@ module DotNet =
         execWithBinLog project param.Common "test" args param.MSBuildParams
         __.MarkSuccess()
 
-    let private buildNugetPushArgs (param : NuGet.NuGetPushParams) =
+    let internal buildNugetPushArgs (param : NuGet.NuGetPushParams) =
         [
             param.DisableBuffering |> argOption "disable-buffering"
             param.ApiKey |> Option.toList |> argList2 "api-key"
@@ -1445,21 +1445,21 @@ module DotNet =
             param.Source |> Option.toList |> argList2 "source"
             param.SymbolApiKey |> Option.toList |> argList2 "symbol-api-key"
             param.SymbolSource |> Option.toList |> argList2 "symbol-source"
-            param.Timeout |> Option.map string |> Option.toList |> argList2 "timeout"
+            param.Timeout |> Option.map (fun t -> t.TotalSeconds |> int |> string) |> Option.toList |> argList2 "timeout"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
     type NuGetPushOptions =
         { Common: Options
-          Options: NuGet.NuGetPushParams }
+          PushParams: NuGet.NuGetPushParams }
         static member Create() =
             { Common = Options.Create()
-              Options = NuGet.NuGetPushParams.Create() }
+              PushParams = NuGet.NuGetPushParams.Create() }
         member this.WithCommon (common : Options) =
             { this with Common = common }
-        member this.WithOptions (options : NuGet.NuGetPushParams) =
-            { this with Options = options }
+        member this.WithPushParams (options : NuGet.NuGetPushParams) =
+            { this with PushParams = options }
 
     /// Execute dotnet nuget push command
 
@@ -1470,7 +1470,7 @@ module DotNet =
     let nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGetPushOptions.Create() |> setParams
-        let args = param.Options |> buildNugetPushArgs |> Args.toWindowsCommandLine
+        let args = Args.toWindowsCommandLine (nupkg :: buildNugetPushArgs param.PushParams)
         let result = exec (fun _ -> param.Common) "nuget push" args
         if not result.OK then failwithf "dotnet nuget push failed with code %i" result.ExitCode
         __.MarkSuccess()
