@@ -101,11 +101,11 @@ module private MSBuildExeFromVsWhere =
             Directory.EnumerateDirectories(msBuildDir)
             |> Seq.map (fun dir -> Path.Combine(dir, "Bin", "MSBuild.exe"))
             |> Seq.choose(fun exe ->
-               if File.Exists(exe) then
-                   let v = FileVersionInfo.GetVersionInfo(exe)
-                   Some (sprintf "%d.0" v.FileMajorPart, Path.GetDirectoryName(exe))
-               else
-                   None)
+                if File.Exists(exe) then
+                    let v = FileVersionInfo.GetVersionInfo(exe)
+                    Some (v.FileMajorPart, Path.GetDirectoryName(exe))
+                else
+                    None)
             |> List.ofSeq
         else
             []
@@ -114,13 +114,17 @@ module private MSBuildExeFromVsWhere =
         getAllVsPath ()
         |> List.collect getAllMsBuildPaths
         |> List.groupBy fst
-        |> List.map (fun (v, dirs) -> v, dirs |> List.map snd)
-        |> Map.ofList)
+        |> List.sortByDescending fst
+        |> List.map (fun (v, dirs) ->
+            {
+                Version = sprintf "%d.0" v
+                Paths = dirs |> List.map snd
+            }))
 
-    let get () = all.Value
+    let getOrdered (): MSBuildEntry list = all.Value
 #else
 module private MSBuildExeFromVsWhere =
-    let get() = Map.empty
+    let getOrdered(): MSBuildEntry list = List.empty
 #endif
 
 module private MSBuildExe =
@@ -226,8 +230,9 @@ module private MSBuildExe =
                     defaultArg (visualStudioVersion |> Option.bind dict.TryFind) getAllKnownPaths
                     |> List.map ((@@) Environment.ProgramFilesX86)
                 let vsWhereVersionPaths =
-                    let dict = MSBuildExeFromVsWhere.get()
-                    let all = dict |> Map.toList |> List.collect snd
+                    let orderedVersions = MSBuildExeFromVsWhere.getOrdered()
+                    let all = orderedVersions |> List.collect (fun e -> e.Paths)
+                    let dict = toDict orderedVersions
                     defaultArg (visualStudioVersion |> Option.bind dict.TryFind) all
                 let fullList = vsWhereVersionPaths @ vsVersionPaths |> List.distinct
 
@@ -402,7 +407,7 @@ module MSBuild =
         DoRestore = x.DoRestore
         NoLogo = x.NoLogo
         NodeReuse = x.NodeReuse
-        RestorePackagesFlag = 
+        RestorePackagesFlag =
             x.Properties
             |> Seq.tryFind (fun (p,v) -> p = "RestorePackages")
             |> (function
@@ -419,7 +424,7 @@ module MSBuild =
         FileLoggers = x.FileLoggers
         BinaryLoggers = x.BinaryLoggers
         DistributedLoggers = x.DistributedLoggers }
-    
+
   type MSBuildParams with
     member internal x.CliArguments = asCliArguments x
     member internal oldObj.WithCliArguments (x:CliArguments) = withCliArguments oldObj x
@@ -587,7 +592,7 @@ module MSBuild =
         match p.ConsoleLogParameters with
         | [] -> None
         | ps -> Some ("clp", loggerParams ps)
-    
+
     let fileLoggers =
         let serializeLogger fl =
             sprintf "%s%s%s"
@@ -613,7 +618,7 @@ module MSBuild =
         | Some bls ->
             bls
             |> List.map (fun bl -> Some ("bl", bl) )
-    
+
     let serializeLogger (dlogger : MSBuildLoggerConfig) =
         sprintf "%s%s%s"
             (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name)
@@ -666,7 +671,7 @@ module MSBuild =
                "/" + k + (if String.isNullOrEmpty v then ""
                           else ":" + v))
     |> Args.toWindowsCommandLine
-    
+
   let buildArgs (setParams : MSBuildParams -> MSBuildParams) =
     let p =
         MSBuildParams.Create()
@@ -693,7 +698,7 @@ module MSBuild =
                 Trace.traceFAKE "Could not detect msbuild version from '%s': %O" exePath e
                 new Version(13,0,0,0)
           cache.GetOrAdd(exePath, System.Func<string,_> (fun _ -> getFromCall()))
-      
+
   let private versionToUseBinLog = System.Version("15.3")
   let private versionToUseStructuredLogger = System.Version("14.0")
   let internal addBinaryLogger (exePath:string) (callMsbuildExe: string -> string) (args:string) (disableFakeBinLoger:bool) =
@@ -735,9 +740,9 @@ module MSBuild =
                 r
             else
                 Trace.traceFAKE "msbuild has not created the binlog file as expected, no warnings or errors are reported using native CI capabilities. Use 'DisableInternalBinLog' to 'true' to disable this warning."
-                []            
+                []
         | None ->
-#endif    
+#endif
             []
 
 #if !NO_MSBUILD_BINLOG
@@ -782,7 +787,7 @@ module MSBuild =
             WorkingDirectory = msBuildParams.WorkingDirectory
             Arguments = args }
         |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
-    try 
+    try
         handleAfterRun "msbuild" binlogPath result.ExitCode project
         Choice1Of2 result
     with e -> Choice2Of2 (e, result)
