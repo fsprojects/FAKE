@@ -13,10 +13,14 @@ do_build:
     - rm /etc/apt/sources.list
     - echo "deb http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
     - echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
+    - echo "deb http://cdn-fastly.deb.debian.org/debian/ jessie main" | tee -a /etc/apt/sources.list
+    - echo "deb-src deb-src http://cdn-fastly.deb.debian.org/debian/ jessie main" | tee -a /etc/apt/sources.list
+    - echo "deb http://security.debian.org/ jessie/updates main" | tee -a /etc/apt/sources.list
+    - echo "deb-src http://security.debian.org/ jessie/updates main" | tee -a /etc/apt/sources.list
     - echo "Acquire::Check-Valid-Until false;" | tee -a /etc/apt/apt.conf.d/10-nocheckvalid
     - "echo 'Package: *\nPin: origin \"archive.debian.org\"\nPin-Priority: 500' | tee -a /etc/apt/preferences.d/10-archive-pin"
     - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - apt-get install -y libunwind8 libicu55 unzip wget git
     - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
     - mkdir fake-dotnetcore
     - unzip -n /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
