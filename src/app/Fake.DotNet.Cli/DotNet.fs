@@ -1450,6 +1450,7 @@ module DotNet =
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
+    /// nuget push paramters for `dotnet nuget push`
     type NuGetPushOptions =
         { Common: Options
           PushParams: NuGet.NuGetPushParams }
@@ -1466,6 +1467,21 @@ module DotNet =
     ///
     /// - 'setParams' - set nuget push command parameters
     /// - 'nupkg' - nupkg to publish
+    /// 
+    /// ## Sample
+    ///
+    ///     open Fake.DotNet
+    ///     let setNugetPushParams (defaults:NuGet.NuGetPushParams) =
+    ///             { defaults with
+    ///                 DisableBuffering = true
+    ///                 ApiKey = Some "abc123"
+    ///              }
+    ///     let setParams (defaults:DotNet.NuGetPushOptions) =
+    ///             { defaults with
+    ///                 PushParams = setNugetPushParams defaults.PushParams
+    ///              }
+    ///     
+    ///     DotNet.nugetPush setParams "./My.Package.nupkg"
     let rec nugetPush setParams nupkg =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGetPushOptions.Create() |> setParams
