@@ -14,7 +14,7 @@ do_build:
     - echo "deb http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
     - echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
     - echo "deb http://cdn-fastly.deb.debian.org/debian/ jessie main" | tee -a /etc/apt/sources.list
-    - echo "deb-src deb-src http://cdn-fastly.deb.debian.org/debian/ jessie main" | tee -a /etc/apt/sources.list
+    - echo "deb-src http://cdn-fastly.deb.debian.org/debian/ jessie main" | tee -a /etc/apt/sources.list
     - echo "deb http://security.debian.org/ jessie/updates main" | tee -a /etc/apt/sources.list
     - echo "deb-src http://security.debian.org/ jessie/updates main" | tee -a /etc/apt/sources.list
     - echo "Acquire::Check-Valid-Until false;" | tee -a /etc/apt/apt.conf.d/10-nocheckvalid
