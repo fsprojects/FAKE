@@ -9,6 +9,12 @@ do_build:
   stage: build
   image: mono:5.18.1
   before_script:
+    # from https://discuss.circleci.com/t/failed-to-fetch-debian/29258/2
+    - rm /etc/apt/sources.list
+    - echo "deb http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
+    - echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | tee -a /etc/apt/sources.list
+    - echo "Acquire::Check-Valid-Until false;" | sudo tee -a /etc/apt/apt.conf.d/10-nocheckvalid
+    - echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | tee -a /etc/apt/preferences.d/10-archive-pin
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
     - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
