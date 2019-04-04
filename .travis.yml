@@ -15,7 +15,7 @@ before_install:
   - gem install --no-ri --no-rdoc fpm
 
 mono:
-  - 5.0.1
+  - 5.12.0
 
 script: 
   - dotnet build build.proj /nologo /verbosity:minimal /p:Parallel=true
