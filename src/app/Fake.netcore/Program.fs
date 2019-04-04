@@ -303,13 +303,12 @@ let main (args:string[]) =
                     profile.Frameworks
                     |> List.filter (function
                         | Paket.MonoTouch
-                        | Paket.DNXCore _
                         | Paket.UAP _
                         | Paket.MonoAndroid _
                         | Paket.XamariniOS
                         | Paket.XamarinTV
                         | Paket.XamarinWatch
-                        | Paket.XamarinMac 
+                        | Paket.XamarinMac
                         | Paket.DotNetCoreApp _
                         | Paket.DotNetStandard _
                         | Paket.Tizen _ -> false
