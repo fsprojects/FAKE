@@ -8,7 +8,7 @@ jobs:
   build:
     working_directory: /build
     docker:
-      - image: mono:5.12.0
+      - image: mono:5.18.1
     steps:
       - checkout
       - run:
