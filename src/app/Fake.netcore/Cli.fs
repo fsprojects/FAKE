@@ -13,8 +13,8 @@ General:
   Runtime arguments control compilation and processing of the script,
   while script arguments are specific for the script or provided by
   a NuGet package.
-  In most use cases you use the "Fake.Core.Target"-Module and therefore
-  inherit the correspondig command line interface. While these arguments
+  In most use cases you use the "Fake.Core.Target"-Package and therefore
+  inherit the corresponding command line interface. While these arguments
   are not strictly part of the runtime we still show both below to
   make it easier for newcomers.
 
@@ -61,8 +61,7 @@ let fakeAdditionalHelp =
 
  -- SCRIPT ARGUMENTS SECTION --
 
-THIS SECTION ONLY APPLIES IF YOU USE THE
-'Fake.Core.Target' PACKAGE!
+THIS SECTION ONLY APPLIES IF YOU USE THE 'Fake.Core.Target' PACKAGE!
 You can use the following arguments in place of `<scriptargs>`:
 
 Usage:
