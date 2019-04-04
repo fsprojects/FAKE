@@ -5,6 +5,23 @@ module Cli
 open System
 open Fake.Core.CommandLineParsing
 
+let fakeArgsHint =
+  """
+General:
+
+  Fake command line is devided into runtime and script arguments.
+  Runtime arguments control compilation and processing of the script,
+  while script arguments are specific for the script or provided by
+  a NuGet package.
+  In most use cases you use the "Fake.Core.Target"-Module and therefore
+  inherit the correspondig command line interface. While these arguments
+  are not strictly part of the runtime we still show both below to
+  make it easier for newcomers.
+
+ -- RUNTIME ARGUMENTS SECTION --
+
+"""
+
 let fakeUsage =
   """
 Usage:
@@ -37,4 +54,37 @@ Fake Build Options [build_opts]:
   --fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
   -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
+"""
+
+let fakeAdditionalHelp =
   """
+
+ -- SCRIPT ARGUMENTS SECTION --
+
+THIS SECTION ONLY APPLIES IF YOU USE THE
+'Fake.Core.Target' PACKAGE!
+You can use the following arguments in place of `<scriptargs>`:
+
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
+
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional
+argument 'target' is given)
+    -e, --environment-variable <keyval> [*]
+                          Set an environment variable. Use 'key=val'.
+Consider using regular arguments, see https://fake.build/core-targets.html
+    -s, --single-target    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
+
+Example:
+
+To use verbose mode (from [fake_opts]) and print all
+targets use "fake -v build -- --list". Because "--list" 
+doesn't conflict with any of the [build_opts], you can use 
+"fake -v build --list"
+"""

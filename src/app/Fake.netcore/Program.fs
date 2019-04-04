@@ -229,12 +229,15 @@ let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
     traceFAKE "Paket.Core: %s" Fake.Runtime.FakeRuntimeHints.paketVersion
     0
   | ShowHelp ->
+    printf "%s" Cli.fakeArgsHint
     printf "%s" Cli.fakeUsage
-    printfn "Hint: Run 'fake run <script.fsx> --help' to get help from your script."
+    printf "%s" Cli.fakeAdditionalHelp
     0
   | InvalidUsage str ->
     eprintfn "%s" str
-    printfn "%s" Cli.fakeUsage
+    printf "%s" Cli.fakeArgsHint
+    printf "%s" Cli.fakeUsage
+    printf "%s" Cli.fakeAdditionalHelp
     1
   | RunOrBuild arg ->
     let success = runOrBuild arg
@@ -334,7 +337,16 @@ let main (args:string[]) =
     exitCode <- handleAction verbLevel results
   with
   | exn ->
-    printfn "Error while parsing command line, usage is:\n%s" Cli.fakeUsage
+    printfn "Error while parsing command line, usage is:"
+    printf "%s" Cli.fakeArgsHint
+    printf "%s" Cli.fakeUsage 
+    printf "%s" Cli.fakeAdditionalHelp
+
+    // need to enable this as otherwise no proper error is reported
+    use consoleTrace =
+      // When silent we don't want Paket output
+      Paket.Logging.event.Publish
+      |> Observable.subscribe Paket.Logging.traceToConsole
     reportExn VerboseLevel.Normal exn
     exitCode <- 1
   Console.OutputEncoding <- encoding
