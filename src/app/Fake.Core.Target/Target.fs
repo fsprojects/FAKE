@@ -121,7 +121,7 @@ module Target =
     let private lastDescriptionVar = "Fake.Core.Target.LastDescription"
     let private getLastDescription, removeLastDescription, setLastDescription =
         Fake.Core.FakeVar.define lastDescriptionVar
-
+    
     /// Sets the Description for the next target.
     /// [omit]
     let description text =
@@ -149,7 +149,7 @@ module Target =
                 let d = f () // new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
                 setVar d
                 d
-
+    
     let internal getTargetDict =
         getVarWithInit "TargetDict" (fun () -> new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
@@ -824,8 +824,21 @@ module Target =
     /// Runs a target and its dependencies and returns a `TargetContext`
     [<Obsolete "Use Target.WithContext.run instead">]
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
-    let internal getRunFunction allowArgs defaultTarget =
+    
+    type internal ArgResults =
+        | ListTargets
+        | NoAction
+        | ExecuteTarget of target:string option * arguments:string list * parallelJobs:int * singleTarget:bool
+    
+    /// [omit]
+    let private argResultsVar = "Fake.Core.Target.ArgResults"
+    /// [omit]
+    let private getArgResults, private removeArgResults, private setArgResults =
+        Fake.Core.FakeVar.define argResultsVar
+
+    let internal parseArgsAndSetEnvironment () =
         let ctx = Fake.Core.Context.forceFakeContext ()
+        
         let trySplitEnvArg (arg:string) =
             let idx = arg.IndexOf('=')
             if idx < 0 then
@@ -848,15 +861,14 @@ module Target =
             for (key, value) in envs do Environment.setEnvironVar key value
 
             if DocoptResult.hasFlag "--list" results then
-                listAvailable()
-                None
+                ListTargets
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
-                None
+                NoAction
             elif DocoptResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
-                None
+                NoAction
             else
                 let target =
                     match DocoptResult.tryGetArgument "<target>" results with
@@ -893,16 +905,30 @@ module Target =
                     match DocoptResult.tryGetArguments "<targetargs>" results with
                     | Some args -> args
                     | None -> []
-                if not allowArgs && arguments <> [] then
-                    failwithf "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault" arguments
-                match target, defaultTarget with
-                | Some t, _ -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
-                | None, Some t -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
-                | None, None -> Some (fun () -> listAvailable()
-                                                None)
+                ExecuteTarget(target, arguments, parallelJobs, singleTarget)
         | Choice2Of2 e ->
             // To ensure exit code.
             raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
+
+    let internal getRunFunction allowAdditionalArgs defaultTarget =
+        let argResults =
+            match getArgResults () with
+            | Some s -> s
+            | None -> parseArgsAndSetEnvironment()
+        match argResults with
+        | ListTargets -> 
+            listAvailable()
+            None
+        | NoAction ->
+            None
+        | ExecuteTarget(target, arguments, parallelJobs, singleTarget) ->
+            if not allowAdditionalArgs && arguments <> [] then
+                failwithf "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault" arguments
+            match target, defaultTarget with
+            | Some t, _ -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
+            | None, Some t -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
+            | None, None -> Some (fun () -> listAvailable()
+                                            None)
 
     let private runFunction (targetFunction:(unit -> TargetContext option) Option) = 
         match targetFunction with
@@ -927,6 +953,12 @@ module Target =
         let runOrList() =
             getRunFunction false None |> runFunction
     
+    /// allows to initialize the environment before defining targets
+    /// This function should be used at the start of your fake script
+    /// see https://github.com/fsharp/FAKE/issues/2283
+    let initEnvironment () =
+        setArgResults (parseArgsAndSetEnvironment())
+
     /// Runs a target and its dependencies
     let run parallelJobs targetName args : unit =
         WithContext.run parallelJobs targetName args |> raiseIfError
