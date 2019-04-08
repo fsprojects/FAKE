@@ -61,6 +61,7 @@ FAKE has a special param "target" which can be used to run specific targets in a
 nuget Fake.Core.Target //"
 
 open Fake.Core
+Target.initEnvironment()
 
 // *** Define Targets ***
 Target.create "Clean" (fun p ->
@@ -137,6 +138,7 @@ Example:
 nuget Fake.Core.Target //"
 
 open Fake.Core
+Target.initEnvironment()
 
 // *** Define Targets ***
 Target.create "Clean" (fun p ->
