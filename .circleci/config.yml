@@ -24,6 +24,7 @@ jobs:
             echo "Acquire::Check-Valid-Until false;" | tee -a /etc/apt/apt.conf.d/10-nocheckvalid
             echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | tee -a /etc/apt/preferences.d/10-archive-pin
             apt-get update
+            apt-get install -y openssh-client git
 
       - checkout
       - run:
