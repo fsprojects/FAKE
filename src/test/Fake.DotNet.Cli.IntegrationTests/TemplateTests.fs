@@ -53,7 +53,7 @@ let shouldSucceed message (r: ProcessResult) =
         r.Results
         |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message)
         |> fun s -> String.Join("\n", s)
-    Expect.isTrue r.OK (sprintf "%s. Exit code '%d' Results:\n:\n%s\n" message r.ExitCode errorStr)
+    Expect.isTrue r.OK (sprintf "%s. Exit code '%d' Results:\n%s\n" message r.ExitCode errorStr)
 
 let timeout = (System.TimeSpan.FromMinutes 10.)
 
