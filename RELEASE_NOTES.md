@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.13.0-alpha - tbd
+## 5.13.0 - 2019-04-14
 
 * NEW: Add dotnet nuget push command and arguments - https://github.com/fsharp/FAKE/pull/2229
 * NEW: Add `Target.initEnvironment()` in order to initialize environment - https://github.com/fsharp/FAKE/issues/2283
