@@ -39,6 +39,18 @@ type NugetSymbolPackage =
     /// Build a symbol package using the nuspec file
     | Nuspec = 2
 
+type internal ToolOptions =
+    { ToolPath : string
+      Command : string
+      WorkingDir : string
+      IsFullFramework : bool }
+
+    static member Create toolPath command workingDir isFullFramework =
+        { ToolPath = toolPath
+          Command = command
+          WorkingDir = workingDir
+          IsFullFramework = isFullFramework }
+
 /// Nuget parameter type
 type NuGetParams =
     { ToolPath : string
@@ -315,40 +327,106 @@ let private pack parameters nuspecFile =
             parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties basePath
         |> execute
 
-/// push package (and try again if something fails)
-let rec private publish parameters =
-    TraceSecrets.register parameters.AccessKey "<NuGetKey>"
-    TraceSecrets.register parameters.SymbolAccessKey "<NuGetSymbolKey>"
-    // Newer NuGet requires source to be always specified, so if PublishUrl is empty,
-    // ignore symbol source - the produced source is broken anyway.
-    let normalize str = if String.isNullOrEmpty str then None else Some str
-    let source = match parameters.PublishUrl |> normalize, parameters.SymbolPublishUrl |> normalize with
-                 | None, _                     -> ""
-                 | Some source, None           -> sprintf "-source %s" source
-                 | Some source, Some symSource -> sprintf "-source %s -SymbolSource %s -SymbolApiKey %s"
-                                                          source symSource parameters.SymbolAccessKey
+/// dotnet nuget push command options
+type NuGetPushParams =
+    { /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
+      DisableBuffering: bool
+      /// The API key for the server
+      ApiKey: string option
+      /// Doesn't push symbols (even if present).
+      NoSymbols: bool
+      /// Doesn't append "api/v2/package" to the source URL.
+      NoServiceEndpoint: bool
+      /// Specifies the server URL. This option is required unless DefaultPushSource config value is set in the NuGet config file.
+      Source: string option
+      /// The API key for the symbol server.
+      SymbolApiKey: string option
+      /// Specifies the symbol server URL.
+      SymbolSource: string option
+      /// Specifies the timeout for pushing to a server.
+      Timeout: TimeSpan option
+      /// Number of times to retry pushing the package
+      PushTrials: int}
 
-    let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters |> Path.getFullName)
-                                           parameters.AccessKey source
-    Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath args
-                                                            (Path.getFullName parameters.WorkingDir) parameters.PublishTrials
+    static member Create() =
+        { DisableBuffering = false
+          ApiKey = None
+          NoSymbols = false
+          NoServiceEndpoint = false
+          Source = None
+          SymbolApiKey = None
+          SymbolSource = None
+          Timeout = None
+          PushTrials = 5 }
+
+type NuGetParams with
+    member internal x.NuGetPushOptions = 
+        let normalize str = if String.isNullOrEmpty str then None else Some str
+    
+        { DisableBuffering = false
+          ApiKey = normalize x.AccessKey
+          NoSymbols = false
+          NoServiceEndpoint = false
+          Source = normalize x.PublishUrl
+          SymbolApiKey = normalize x.SymbolAccessKey
+          SymbolSource = normalize x.SymbolPublishUrl
+          Timeout = Some x.TimeOut
+          PushTrials = x.PublishTrials }
+
+    member internal x.ToolOptions = ToolOptions.Create x.ToolPath "push" x.WorkingDir true
+    member internal x.Nupkg = (x.OutputPath @@ packageFileName x |> Path.getFullName)
+
+let private toPushCliArgs param =
+    let ifTrue x b =
+        if b then Some x
+        else None
+
+    [
+        param.ApiKey
+        param.DisableBuffering |> ifTrue "-DisableBuffering"
+        param.NoSymbols |> ifTrue "-NoSymbols"
+        param.NoServiceEndpoint |> ifTrue "-NoServiceEndpoint"
+        param.Source |> Option.map (sprintf "-Source %s")
+        param.SymbolApiKey |> Option.map (sprintf "-SymbolApiKey %s")
+        param.SymbolSource |> Option.map (sprintf "-SymbolSource %s")
+        param.Timeout |> Option.map string |> Option.map (sprintf "-Timeout %s")
+    ]
+    |> List.choose id
+    |> Arguments.ofList
+
+let rec private push (options : ToolOptions) (parameters : NuGetPushParams) nupkg =
+    parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
+    parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
+
+    let args =
+        sprintf "%s \"%s\" %s" options.Command nupkg (toPushCliArgs parameters).ToWindowsCommandLine
+
+    sprintf "%s %s in WorkingDir: %s Trials left: %d" options.ToolPath args (Path.getFullName options.WorkingDir) parameters.PushTrials
+    |> TraceSecrets.guardMessage
+    |> Trace.trace
+
     try
         let result =
-            let tracing = Process.shouldEnableProcessTracing()
-            try
-                Process.setEnableProcessTracing false
-                Process.execSimple ((fun info ->
-                { info with
-                    FileName = parameters.ToolPath
-                    WorkingDirectory = Path.getFullName parameters.WorkingDir
-                    Arguments = args }) >> Process.withFramework) parameters.TimeOut
-            finally Process.setEnableProcessTracing tracing
-        if result <> 0 then
-            sprintf "Error during NuGet push. %s %s" parameters.ToolPath args
+            CreateProcess.fromRawCommandLine options.ToolPath args
+            |> CreateProcess.withWorkingDirectory options.WorkingDir
+            |> CreateProcess.withTimeout (parameters.Timeout |> Option.defaultValue (TimeSpan.FromMinutes 5.0))
+            |> (fun p -> 
+                if options.IsFullFramework then
+                    p |> CreateProcess.withFramework
+                else
+                    p)
+            |> Proc.run
+
+        if result.ExitCode <> 0 then
+            sprintf "Error during NuGet push. %s %s" options.ToolPath args
             |> TraceSecrets.guardMessage
             |> failwith
-    with exn when parameters.PublishTrials > 0 ->
-        publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
+
+    with _ when parameters.PushTrials > 0 ->
+        push options { parameters with PushTrials = parameters.PushTrials - 1 } nupkg
+
+let private publish (parameters : NuGetParams) =
+    push parameters.ToolOptions parameters.NuGetPushOptions parameters.Nupkg
 
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =

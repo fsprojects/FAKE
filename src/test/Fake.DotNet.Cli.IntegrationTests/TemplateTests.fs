@@ -22,11 +22,14 @@ let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
     
+let inline redirect () =
+    DotNet.Options.lift (fun opts -> { opts with RedirectOutput = true })
+
 let uninstallTemplate () =
-    DotNet.exec (opts()) "new" (sprintf "-u %s" templatePackageName)
+    DotNet.exec (opts() >> redirect()) "new" (sprintf "-u %s" templatePackageName)
 
 let installTemplateFrom pathToNupkg =
-    DotNet.exec (opts()) "new" (sprintf "-i %s" pathToNupkg)
+    DotNet.exec (opts() >> redirect()) "new" (sprintf "-i %s" pathToNupkg)
 
 type BootstrapKind =
 | Tool
@@ -50,14 +53,21 @@ let shouldSucceed message (r: ProcessResult) =
         r.Results
         |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message)
         |> fun s -> String.Join("\n", s)
-    Expect.isTrue r.OK (sprintf "%s. Results:\n:%s" message errorStr)
+    Expect.isTrue r.OK (sprintf "%s. Exit code '%d' Results:\n:\n%s\n" message r.ExitCode errorStr)
 
 let timeout = (System.TimeSpan.FromMinutes 10.)
 
 let runTemplate rootDir kind dependencies dsl =
     Directory.ensure rootDir
-    DotNet.exec (dtntWorkDir rootDir) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s --dependencies %s --dsl %s" templateName (string kind) (string dependencies) (string dsl))   
-    |> shouldSucceed "should have run the template successfully"
+    try
+        DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s --dependencies %s --dsl %s" templateName (string kind) (string dependencies) (string dsl))   
+        |> shouldSucceed "should have run the template successfully"
+    with e ->
+        if e.Message.Contains "Command succeeded" && 
+           e.Message.Contains "was created successfully" then
+           printfn "Ignoring exit-code while template creation: %O" e
+        else reraise()       
+
 
 let invokeScript dir scriptName args =
     let fullScriptPath = Path.Combine(dir, scriptName)

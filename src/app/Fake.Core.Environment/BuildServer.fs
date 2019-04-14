@@ -73,7 +73,15 @@ module BuildServer =
 
     /// Build number retrieved from GitLab CI
     /// [omit]
-    let gitlabCIBuildNumber = if isGitlabCI then Environment.environVar "CI_BUILD_ID" else ""
+    let gitlabCIBuildNumber =
+        if isGitlabCI then
+            // https://github.com/fsharp/FAKE/issues/2290
+            let s = Environment.environVar "CI_PIPELINE_ID"
+            if String.IsNullOrEmpty s then
+                let id = Environment.environVar "CI_BUILD_ID"
+                if isNull id then "" else id
+            else s
+        else ""
 
     /// Build number retrieved from Jenkins
     /// [omit]

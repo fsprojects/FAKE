@@ -1,5 +1,19 @@
 # Release Notes
 
+## 5.13.1-alpha - tbd
+
+* tbd
+
+## 5.13.0 - 2019-04-14
+
+* NEW: Add dotnet nuget push command and arguments - https://github.com/fsharp/FAKE/pull/2229
+* NEW: Add `Target.initEnvironment()` in order to initialize environment - https://github.com/fsharp/FAKE/issues/2283
+* ENHANCEMENT: Update dependencies - https://github.com/fsharp/FAKE/pull/2286
+* ENHANCEMENT: Return the latest msbuild version by default when using vswhere - https://github.com/fsharp/FAKE/pull/2287
+* ENHANCEMENT: Improve help message - https://github.com/fsharp/FAKE/issues/2282
+* BUGFIX: Retry GitHub asset upload on failure
+* BUGFIX: No such variable `CI_BUILD_ID` - https://github.com/fsharp/FAKE/issues/2290
+
 ## 5.12.6 - 2019-03-17
 
 * ENHANCEMENT: Add Support for MSBuild 16 / VS 2019 - https://github.com/fsharp/FAKE/pull/2274

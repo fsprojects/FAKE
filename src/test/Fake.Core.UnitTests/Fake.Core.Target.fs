@@ -52,7 +52,7 @@ module TestTarget =
 let tests =
   testList "Fake.Core.Target.Tests" (
     [
-    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 13.0) "basic performance #2036" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 18.0) "basic performance #2036" <| fun _ ->
         let counter = 2500
         CoreTracing.setTraceListeners [] // silence
         let all_Pipelines = Dictionary<string,TestTarget>(System.StringComparer.OrdinalIgnoreCase :> IEqualityComparer<string>)
@@ -80,7 +80,7 @@ let tests =
         //Target.printDependencyGraph true "Run.1"
         Target.runOrDefaultWithArguments "Run.1"
 
-    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 10.0) "basic performance (1)" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 13.0) "basic performance (1)" <| fun _ ->
         let counter = 5000
         CoreTracing.setTraceListeners [] // silence
         Target.create "A" ignore

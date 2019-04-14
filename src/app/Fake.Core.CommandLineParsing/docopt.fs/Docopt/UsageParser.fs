@@ -1,7 +1,7 @@
 ﻿namespace Fake.Core
 
 exception DocoptException of string
-  with override x.Message = sprintf "DocoptException: %s" x.Data0
+  with override x.Message = sprintf "%s" x.Data0
 
 namespace Fake.Core.CommandLineParsing
 
@@ -12,13 +12,17 @@ open System.Text
 
 exception private InternalException of ErrorMessageList
 exception UsageException of string
-  with override x.Message = sprintf "UsageException: %s" x.Data0
+  with override x.Message = sprintf "%s" x.Data0
 
 module private Helpers =
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
       raise (DocoptException(perror.ToString()))
+    let improveErrorText (lnNr:int64) (colNr:int64) (arg:string) (oldText:string) =
+      oldText.Replace(
+        sprintf "argv: Ln: %d Col: %d" lnNr colNr,
+        sprintf "Argument %d ('%s')" (colNr + 1L) arg)    
     let unexpectedShort = string
                           >> ( + ) "short option -"
                           >> unexpected
@@ -851,11 +855,14 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
       let state = ArgumentStream.create argv Map.empty
       let reply = pAstParser state
       let errors = ErrorMessageList.ToSortedArray(reply.Error)
-      let parseError = ParserError(Position("argv", int64 state.Position.ArgIndex,0L,int64 state.Position.ArgIndex), state.UserState, reply.Error)
+      let argIdx = int64 state.Position.ArgIndex
+      let parseError = ParserError(Position("argv", argIdx,0L,argIdx), state.UserState, reply.Error)
       let errorText =
         use sw = new System.IO.StringWriter()
         parseError.WriteTo(sw)
         sw.ToString()
+        |> Helpers.improveErrorText 0L argIdx (if argIdx >= 0L && int argIdx < argv.Length then argv.[int argIdx] else "<>")
+            
       match reply.Status = ReplyStatus.Ok, errors, state.IsEnd with
       | true, [||], true -> reply.Result
       | _, _ , true -> raise <| DocoptException (sprintf "errors %s: %s" (printReplyStatus reply.Status) errorText)

@@ -81,7 +81,9 @@ module GitHub =
                 return!
                     match (ex, ex.InnerException) with
                     | (:? AggregateException, (:? AuthorizationException as ex)) -> captureAndReraise ex
-                    | _ when count > 0 -> retry (count - 1) asyncF
+                    | _ when count > 0 ->
+                        printfn "Something failed, trying again: %O" ex
+                        retry (count - 1) asyncF
                     | (ex, _) -> captureAndReraise ex
         }
 
@@ -191,8 +193,18 @@ module GitHub =
     let uploadFile fileName (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let fi = FileInfo(fileName)
+            // remove existing asset if it exists
+            let! assets =
+                Async.AwaitTask <| release'.Client.Repository.Release.GetAllAssets(release'.Owner, release'.RepoName, release'.Release.Id)
+            match assets |> Seq.tryFind (fun a -> a.Size <= 0 && a.Name = fi.Name) with
+            | Some s ->
+                printfn "removing asset '%s' as previous upload failed" s.Name
+                do! Async.AwaitTask(release'.Client.Repository.Release.DeleteAsset(release'.Owner, release'.RepoName, s.Id))
+            | None -> ()                        
+
             let archiveContents = File.OpenRead(fi.FullName)
             let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
+            
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload)
             printfn "Uploaded %s" asset.Name
             return release'

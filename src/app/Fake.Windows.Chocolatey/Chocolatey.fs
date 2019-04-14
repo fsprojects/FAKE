@@ -831,7 +831,13 @@ module Fake.Windows.Choco
                 |> StringBuilder.appendIfTrueWithoutQuotes (parameters.AdditionalArgs |> String.isNotNullOrEmpty) parameters.AdditionalArgs
                 |> StringBuilder.toText
 
-        callChoco parameters.ToolPath args parameters.Timeout
+        let rec tries n = 
+            try
+                callChoco parameters.ToolPath args parameters.Timeout
+            with e when n > 1 ->
+                eprintf "pushing to chocolatey server failed, trying again: %O"
+                tries (n - 1)
+        tries 3         
                 
     /// Call custom choco command
     /// ## Parameters
