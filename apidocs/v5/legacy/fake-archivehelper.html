@@ -340,14 +340,6 @@
 
           </td>
         </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-archivehelper-extractentryspec.html">ExtractEntrySpec</a>
-          </td>
-          <td class="xmldoc">
-            
-          </td>
-        </tr>
     </tbody>
   </table>
   <table class="table table-bordered module-list">
@@ -439,44 +431,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
-            addEntry(...)
-          </code>
-          <div class="tip" id="79">
-            <strong>Signature:</strong> prepareEntry:(FileInfo -&gt; string -&gt; &#39;?12077) -&gt; afterEntry:(&#39;?12078 -&gt; &#39;?12079) -&gt; outStream:&#39;?12078 -&gt; ArchiveFileSpec -&gt; &#39;?12079<br />
-                          <strong>Type parameters:</strong> '?12077, '?12078, '?12079                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
-            allFilesInDirectory(baseDir)
-          </code>
-          <div class="tip" id="80">
-            <strong>Signature:</strong> baseDir:DirectoryInfo -&gt; seq&lt;FileInfo&gt;<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
+          <code onmouseout="hideTip(event, '54', 54)" onmouseover="showTip(event, '54', 54)">
             archiveFileSpec(file)
           </code>
-          <div class="tip" id="81">
+          <div class="tip" id="54">
             <strong>Signature:</strong> file:FileInfo -&gt; ArchiveFileSpec<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -500,10 +458,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
+          <code onmouseout="hideTip(event, '55', 55)" onmouseover="showTip(event, '55', 55)">
             archiveFileSpecWithBaseDir baseDir file
           </code>
-          <div class="tip" id="82">
+          <div class="tip" id="55">
             <strong>Signature:</strong> baseDir:DirectoryInfo -&gt; file:FileInfo -&gt; ArchiveFileSpec<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -522,185 +480,6 @@
           <p>Constructs a file specification which will archive the file with a path relative to the <code>baseDir</code>.</p>
 
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
-            buildFileSpec flatten baseDir
-          </code>
-          <div class="tip" id="83">
-            <strong>Signature:</strong> flatten:bool -&gt; baseDir:DirectoryInfo -&gt; FileInfo -&gt; ArchiveFileSpec<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
-            copyFileBuffered(...)
-          </code>
-          <div class="tip" id="84">
-            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?12074 -&gt; inStream:&#39;?12075 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12074, '?12075                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
-            copyStreamBuffered(...)
-          </code>
-          <div class="tip" id="85">
-            <strong>Signature:</strong> bufferSize:int -&gt; outStream:&#39;?12071 -&gt; inStream:&#39;?12072 -&gt; length:int64 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12071, '?12072                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
-            createArchive(...)
-          </code>
-          <div class="tip" id="86">
-            <strong>Signature:</strong> streamCreator:(FileInfo -&gt; &#39;?12087) -&gt; addEntry:(&#39;?12087 -&gt; &#39;?12088 -&gt; unit) -&gt; archiveFile:FileInfo -&gt; items:seq&lt;&#39;?12088&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12087, '?12088                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
-            createArchiveStream(...)
-          </code>
-          <div class="tip" id="87">
-            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?12083) -&gt; archiveFile:FileInfo -&gt; &#39;?12083<br />
-                          <strong>Type parameters:</strong> '?12083                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
-            DefaultBufferSize
-          </code>
-          <div class="tip" id="88">
-            <strong>Signature:</strong> int<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Literal&gt;]<br />
-[&lt;Obsolete(&quot;Please use Fake.IO.Zip instead and extend it via Pull Request if required&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L9-9" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '89', 89)" onmouseover="showTip(event, '89', 89)">
-            doCompression(...)
-          </code>
-          <div class="tip" id="89">
-            <strong>Signature:</strong> compressor:(&#39;?12094 -&gt; seq&lt;&#39;?12095&gt; -&gt; &#39;?12096) -&gt; archivePath:&#39;?12094 -&gt; fileSpecGenerator:(&#39;?12097 -&gt; &#39;?12095) -&gt; seq&lt;&#39;?12097&gt; -&gt; &#39;?12096<br />
-                          <strong>Type parameters:</strong> '?12094, '?12095, '?12096, '?12097                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '90', 90)" onmouseover="showTip(event, '90', 90)">
-            extractEntries getNextEntry inStream
-          </code>
-          <div class="tip" id="90">
-            <strong>Signature:</strong> getNextEntry:(&#39;?12090 -&gt; ExtractEntrySpec option) -&gt; inStream:&#39;?12090 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12090                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '91', 91)" onmouseover="showTip(event, '91', 91)">
-            extractEntry inStream entry
-          </code>
-          <div class="tip" id="91">
-            <strong>Signature:</strong> inStream:&#39;?12081 -&gt; entry:ExtractEntrySpec -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12081                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '92', 92)" onmouseover="showTip(event, '92', 92)">
-            openArchiveStream(...)
-          </code>
-          <div class="tip" id="92">
-            <strong>Signature:</strong> streamCreator:(Stream -&gt; &#39;?12085) -&gt; archiveFile:FileInfo -&gt; &#39;?12085<br />
-                          <strong>Type parameters:</strong> '?12085                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
         </td>
       </tr>
     </tbody>
@@ -742,7 +521,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.12.6</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.13.0-alpha.975</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
