@@ -8,7 +8,7 @@
 * ENHANCEMENT: Return the latest msbuild version by default when using vswhere - https://github.com/fsharp/FAKE/pull/2287
 * ENHANCEMENT: Improve help message - https://github.com/fsharp/FAKE/issues/2282
 * BUGFIX: Retry GitHub asset upload on failure
-
+* BUGFIX: No such variable `CI_BUILD_ID` - https://github.com/fsharp/FAKE/issues/2290
 
 ## 5.12.6 - 2019-03-17
 
