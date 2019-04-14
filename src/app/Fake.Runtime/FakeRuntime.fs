@@ -240,7 +240,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
     
     // Restore
     if config.RestoreOnlyGroup then 
-        paketApi.Restore(false,group,[],false,false,false,None)
+        paketApi.Restore(false,group,[],false,false,false,None,None)
     else
         paketApi.Restore()
     
