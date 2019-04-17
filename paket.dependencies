@@ -168,6 +168,7 @@ group netcore
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     nuget NETStandard.Library ~> 2.0
+    
     // Starting from 2018-07-08 this needs to be <4.5 to not break 5.0 and 5.1 releases
     // After some time we can upgrade this (and consolidate the netcore and netcorerunner groups)
     // but not before 2018-11
