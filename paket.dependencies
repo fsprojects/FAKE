@@ -176,6 +176,11 @@ group netcore
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core // prerelease
+    nuget NuGet.Protocol < 5 // support net462
+    nuget NuGet.Configuration < 5 // support net462
+    nuget NuGet.Packaging < 5 // support net462
+    nuget NuGet.Versioning < 5
+    nuget NuGet.Common < 5
     nuget Mono.Cecil prerelease
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility

@@ -5,6 +5,7 @@ open Fake.Core
 open Fake.Net
 open Newtonsoft.Json
 open System
+open System.Threading
 open System.Xml.Linq
 
 type NuGetSearchItemResult =
@@ -45,9 +46,47 @@ type NuGetVersionArg =
           Increment=IncMinor
           DefaultVersion="1.0" }
 
+type internal NuGetLogger () =
+    interface NuGet.Common.ILogger with
+        member x.Log(data) = () // printf "DEBUG: {data}".Dump();
+        member x.Log(level, date) = () // printf "DEBUG: {data}".Dump();
+        member x.LogAsync(data) = System.Threading.Tasks.Task.FromResult 1 :> System.Threading.Tasks.Task // printf "DEBUG: {data}".Dump();
+        member x.LogAsync(level, date) = System.Threading.Tasks.Task.FromResult 1 :> System.Threading.Tasks.Task // printf "DEBUG: {data}".Dump();
+        member x.LogDebug(data) = () // printf "DEBUG: {data}".Dump();
+        member x.LogVerbose(data) = () // $"VERBOSE: {data}".Dump();
+        member x.LogInformation(data) = () // $"INFORMATION: {data}".Dump();
+        member x.LogMinimal(data) = () // $"MINIMAL: {data}".Dump();
+        member x.LogWarning(data) = eprintf "WARNING: %s" data
+        member x.LogError(data) = eprintf "ERROR: %s" data
+        member x.LogInformationSummary(data) = () // eprintf "SUMMARY: %s" data
+
+open global.NuGet.Protocol.Core
+open global.NuGet.Protocol.Core.Types
+open global.NuGet.Protocol
+
 
 /// Retrieve current NuGet version number
-let getLastNuGetVersion server (packageName:string) =
+let getLastNuGetVersion server (packageName:string) : SemVerInfo option =
+
+    async {
+        let logger = new NuGetLogger()
+        let providers = new ResizeArray<Lazy<NuGet.Protocol.Core.Types.INuGetResourceProvider>>()
+        
+        providers.AddRange(global.NuGet.Protocol.Core.Types.Repository.Provider.GetCoreV3())
+        let packageSource = new NuGet.Configuration.PackageSource(server)
+        let sourceRepository = new NuGet.Protocol.Core.Types.SourceRepository(packageSource, providers)
+        let! packageMetadataResource =  sourceRepository.GetResourceAsync<NuGet.Protocol.Core.Types.PackageMetadataResource>() |> Async.AwaitTask
+        let cacheContext = new SourceCacheContext()
+        let! searchMetadata =  packageMetadataResource.GetMetadataAsync(packageName, true, true, cacheContext, logger, CancellationToken.None) |> Async.AwaitTask
+        return
+            searchMetadata
+            |> Seq.tryPick (fun m -> Some <| SemVer.parse m.Identity.Version.OriginalVersion)
+    }
+    |> Async.RunSynchronously
+    
+    // maybe enable again after https://github.com/NuGet/NuGetGallery/issues/7085
+    // This enables us to remove Paket.Core...
+    (*
     let escape = Uri.EscapeDataString
     let url =
       sprintf "%s/Search()?$filter=IsLatestVersion&searchTerm='%s'&includePrerelease=false"
@@ -95,7 +134,7 @@ let getLastNuGetVersion server (packageName:string) =
                           | Some n -> Some (SemVer.parse n.Value)
                           | None -> None
               | None -> None
-    version
+    version*)
 
 
 /// Compute next NuGet version number
