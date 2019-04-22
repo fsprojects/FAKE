@@ -102,13 +102,30 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
                             else None
 
         | FakeRuntime.DefaultDependencies -> None
-                                  
+
+    let versionUpgradeHint =
+        match DateTime.TryParseExact
+                (AssemblyVersionInformation.AssemblyMetadata_BuildDate,
+                 "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
+                 System.Globalization.DateTimeStyles.AssumeUniversal) with
+        // around 6 months old.              
+        | true, dt when DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 6.) ->
+            let atLeast12 = DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 12.)
+            { Important = atLeast12
+              Text = 
+                sprintf "The fake-runner has not been updated for at least %d months. Please consider upgrading to get latest bugfixes, improved suggestions and F# features."
+                  (if atLeast12 then 12 else 6) }
+            |> Some
+        | _ -> None                              
 
     let globalHints =
         [ match fsCoreHint with
           | Some hint -> yield hint
           | None -> ()
           match paketVersionHint with
+          | Some hint -> yield hint
+          | None -> ()
+          match versionUpgradeHint with
           | Some hint -> yield hint
           | None -> ()
         ]

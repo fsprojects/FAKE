@@ -57,8 +57,8 @@ module internal CompilerServiceExtensions =
 #endif
   open System
   open System.Reflection
-  open Microsoft.FSharp.Compiler
-  open Microsoft.FSharp.Compiler.SourceCodeServices
+  open FSharp.Compiler
+  open FSharp.Compiler.SourceCodeServices
   open System.IO
 
   module internal FSharpAssemblyHelper =
@@ -129,7 +129,7 @@ module internal CompilerServiceExtensions =
                      |> Seq.singleton
                  with :? NotSupportedException -> Seq.empty
           yield! try Path.GetDirectoryName
-                        (typeof<Microsoft.FSharp.Compiler.Interactive
+                        (typeof<FSharp.Compiler.Interactive
                          .Shell.Settings.InteractiveSettings>.Assembly.Location)
                      |> Seq.singleton
                  with :? NotSupportedException -> Seq.empty
@@ -140,11 +140,8 @@ module internal CompilerServiceExtensions =
         ]
 
       let tryCheckFsCore fscorePath =
-        let lib = fscorePath
-        let opt = Path.ChangeExtension (lib, "optdata")
-        let sig' = Path.ChangeExtension(lib, "sigdata")
-        if [ lib; opt; sig' ] |> Seq.forall File.Exists then
-          Some lib
+        if File.Exists fscorePath then
+          Some fscorePath
         else None
 
       let findFSCore dllFiles libDirs =
@@ -156,8 +153,8 @@ module internal CompilerServiceExtensions =
         | Some s -> s
         | None ->
             let paths = Log.formatPaths tried
-            Log.critf "Could not find a FSharp.Core.dll (with bundled .optdata and .sigdata) in %s" paths
-            failwithf "Could not find a FSharp.Core.dll (with bundled .optdata and .sigdata) in %s" paths
+            Log.critf "Could not find a FSharp.Core.dll in %s" paths
+            failwithf "Could not find a FSharp.Core.dll in %s" paths
       let hasAssembly asm l =
         l |> Seq.exists (fun a -> Path.GetFileNameWithoutExtension a =? asm)
       let sysLibBlackList =
@@ -175,7 +172,11 @@ module internal CompilerServiceExtensions =
       let getCheckerArguments frameworkVersion defaultReferences (fsCoreLib: _ option) dllFiles libDirs otherFlags =
           ignore frameworkVersion
           ignore defaultReferences
-          let base1 = Path.GetTempFileName()
+          let base1 =
+            try
+              Path.GetTempFileName()
+            with
+              exn -> raise (new IOException("Could not create TEMP file in: " + Path.GetTempPath(), exn))
           let dllName = Path.ChangeExtension(base1, ".dll")
           let xmlName = Path.ChangeExtension(base1, ".xml")
           let fileName1 = Path.ChangeExtension(base1, ".fs")
@@ -329,7 +330,6 @@ module internal CompilerServiceExtensions =
           |> Seq.map Path.GetFullPath
           // Filter files already referenced directly
           |> Seq.filter (fun file -> dllFiles |> Seq.map Path.GetFileName |> Seq.exists ((=?) (Path.GetFileName file)) |> not)
-          // Filter FSharp.Core.dll when there is no sigdata and optdata
           |> Seq.filter (fun file ->
             if Path.GetFileName file =? "FSharp.Core.dll" then
               FSharpAssemblyHelper.tryCheckFsCore file |> Option.isSome
@@ -937,7 +937,6 @@ type internal FsiOptions =
       ScriptArgs  = [] }
   static member Default =
 #if !NETSTANDARD1_5
-    // find a FSharp.Core.dll with optdata and sigdata
     let runtimeDir = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory()
     let includes =
       if isMono then
@@ -1174,7 +1173,7 @@ type internal FsiOptions =
 
 module internal Helper =
   open System
-  open Microsoft.FSharp.Compiler.Interactive.Shell
+  open FSharp.Compiler.Interactive.Shell
   open System.IO
   open System.Text
   type ForwardTextWriter (f) =
@@ -1339,7 +1338,7 @@ module internal Helper =
       // This works around a FCS bug, I would expect "fsi" to be defined already...
       // This is probably not the case because we do not have any type with the correct signature loaded
       // We just compile ourself a forwarder to fix that.
-      //session.Reference (typeof<Microsoft.FSharp.Compiler.Interactive.Shell.Settings.InteractiveSettings>.Assembly.Location)
+      //session.Reference (typeof<FSharp.Compiler.Interactive.Shell.Settings.InteractiveSettings>.Assembly.Location)
       //session.Let "fsi" fsi
 #if !NETSTANDARD1_5 // Currently this is broken on netcore
       session.Let "__rawfsi" (box fsi)
@@ -1491,7 +1490,7 @@ type internal ScriptHost private() =
      ?errWriter : TextWriter, ?fsiErrWriter : TextWriter,
      ?preventStdOut) =
     Helper.getSession(
-      defaultArg fsiObj (Microsoft.FSharp.Compiler.Interactive.Shell.Settings.fsi :> obj),
+      defaultArg fsiObj (FSharp.Compiler.Interactive.Shell.Settings.fsi :> obj),
       opts,
       defaultArg reportGlobal false, outWriter, fsiOutWriter, errWriter, fsiErrWriter,
       defaultArg preventStdOut false)

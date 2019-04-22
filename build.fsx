@@ -229,7 +229,8 @@ let common = [
     AssemblyInfo.Product "FAKE - F# Make"
     AssemblyInfo.Version release.AssemblyVersion
     AssemblyInfo.InformationalVersion nugetVersion
-    AssemblyInfo.FileVersion nugetVersion]
+    AssemblyInfo.FileVersion nugetVersion
+    AssemblyInfo.Metadata("BuildDate", System.DateTime.UtcNow.ToString("yyyy-MM-dd")) ]
 
 // New FAKE libraries
 let dotnetAssemblyInfos =

@@ -16,7 +16,7 @@ open System.Threading.Tasks
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 
 module internal ExnHelper =
    let formatError (e:FSharpErrorInfo) =
