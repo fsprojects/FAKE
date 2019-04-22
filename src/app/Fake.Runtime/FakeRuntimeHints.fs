@@ -151,7 +151,7 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
         let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
         if containsNotDefined then
           yield { Important = false; Text = sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath }
-          yield { Important = false; Text = sprintf "If this doesn't help but you are sure this should work try to clean your nuget cache and delete the .fake directory." config.ScriptFilePath }
+          yield { Important = false; Text = "If this doesn't help but you are sure this should work try to clean your nuget cache and delete the .fake directory. If this helps please report this problem to Paket." }
         if containsNotSupportOperator then
           yield { Important = false; Text = "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators" }
         yield! globalHints

@@ -44,8 +44,7 @@
     <None Include="paket.references" />
     <Compile Include="Utils.fs" />
     <Compile Include="..\..\app\Fake.Runtime\YaafFSharpScripting.fs">
-      <Paket>True</Paket>
-      <Link>paket-files/YaafFSharpScripting.fs</Link>
+      <Link>extern/YaafFSharpScripting.fs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="..\..\app\Fake.Core.Context\Context.fs">

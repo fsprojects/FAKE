@@ -156,6 +156,13 @@ group netcorerunner
     nuget FSharp.Compiler.Service content: none
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
+    // Testing
+    nuget Expecto >= 5.0
+    nuget Expecto.TestResults
+    nuget Expecto.FsCheck
+    nuget FsCheck
+    nuget FParsec // commandline tests
+
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
@@ -186,12 +193,6 @@ group netcore
         nuget Microsoft.Build.Tasks.Core < 16
         nuget Microsoft.Build.Utilities.Core < 16
     nuget BlackFox.VsWhere
-
-    // Testing
-    nuget Expecto >= 5.0
-    nuget Expecto.TestResults
-    nuget Expecto.FsCheck
-    nuget FsCheck
 
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath
