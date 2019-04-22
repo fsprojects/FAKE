@@ -1148,9 +1148,6 @@ NUGET
       NETStandard.Library (>= 1.6.1) - restriction: && (< net452) (>= netstandard1.1)
       xunit.extensibility.core (2.4.1) - restriction: >= netstandard1.1
     xunit.runner.console (2.4.1)
-GITHUB
-  remote: matthid/Yaaf.FSharp.Scripting
-    src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs (f99c04bde0d3cd071475b023acf61fef6b8e8da1)
 GROUP Build
 CONTENT: NONE
 NUGET

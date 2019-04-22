@@ -1,4 +1,4 @@
-﻿namespace Yaaf.FSharp.Scripting
+namespace Yaaf.FSharp.Scripting
 
 #nowarn "25" // Binding incomplete: let [ t ] = list
 

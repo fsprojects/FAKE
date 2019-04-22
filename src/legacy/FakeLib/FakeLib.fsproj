@@ -43,7 +43,7 @@
   <ItemGroup>
     <None Include="paket.references" />
     <Compile Include="Utils.fs" />
-    <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs">
+    <Compile Include="..\..\app\Fake.Runtime\YaafFSharpScripting.fs">
       <Paket>True</Paket>
       <Link>paket-files/YaafFSharpScripting.fs</Link>
     </Compile>

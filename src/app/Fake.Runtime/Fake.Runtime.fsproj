@@ -11,7 +11,7 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs" />
+    <Compile Include="YaafFSharpScripting.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
     <Compile Include="Profile.fs" />
