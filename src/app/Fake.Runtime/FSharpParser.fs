@@ -1,6 +1,6 @@
 module Fake.Runtime.FSharpParser
 
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 type Token = { Representation : string; LineNumber : int; TokenInfo : FSharpTokenInfo option }
 type TokenizedScript = private { Tokens : Token list }
     
@@ -28,7 +28,7 @@ let getTokenized (filePath:string) defines lines =
             { Representation = line.Substring(token.LeftColumn, token.RightColumn - token.LeftColumn + 1)
               LineNumber = lineNr
               TokenInfo = Some token })
-        |> (fun l -> { Representation = "\n"; LineNumber = lineNr; TokenInfo = None } :: l), newState) ([], 0L)
+        |> (fun l -> { Representation = "\n"; LineNumber = lineNr; TokenInfo = None } :: l), newState) ([], FSharpTokenizerLexState.Initial)
     |> Seq.collect (fst)
     |> Seq.toList
     |> fun t -> { Tokens = t }

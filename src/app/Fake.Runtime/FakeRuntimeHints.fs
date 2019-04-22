@@ -102,13 +102,30 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
                             else None
 
         | FakeRuntime.DefaultDependencies -> None
-                                  
+
+    let versionUpgradeHint =
+        match DateTime.TryParseExact
+                (AssemblyVersionInformation.AssemblyMetadata_BuildDate,
+                 "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
+                 System.Globalization.DateTimeStyles.AssumeUniversal) with
+        // around 6 months old.              
+        | true, dt when DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 6.) ->
+            let atLeast12 = DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 12.)
+            { Important = atLeast12
+              Text = 
+                sprintf "The fake-runner has not been updated for at least %d months. Please consider upgrading to get latest bugfixes, improved suggestions and F# features."
+                  (if atLeast12 then 12 else 6) }
+            |> Some
+        | _ -> None                              
 
     let globalHints =
         [ match fsCoreHint with
           | Some hint -> yield hint
           | None -> ()
           match paketVersionHint with
+          | Some hint -> yield hint
+          | None -> ()
+          match versionUpgradeHint with
           | Some hint -> yield hint
           | None -> ()
         ]
@@ -134,6 +151,7 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
         let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
         if containsNotDefined then
           yield { Important = false; Text = sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath }
+          yield { Important = false; Text = "If this doesn't help but you are sure this should work try to clean your nuget cache and delete the .fake directory. If this helps please report this problem to Paket." }
         if containsNotSupportOperator then
           yield { Important = false; Text = "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators" }
         yield! globalHints

@@ -1,4 +1,4 @@
-group netcore
+group netcorerunner
 
 FSharp.Core
 NETStandard.Library
