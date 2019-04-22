@@ -743,7 +743,7 @@ module DotNet =
             |> Seq.tryFind (fun m -> m.Contains "RID:")
             |> Option.map (fun line -> line.Split([|':'|]).[1].Trim())
 
-        if rid.IsNone then failwithf "could not read rid from output: \n%s" rawOutput)
+        if rid.IsNone then failwithf "could not read rid from output: \n%s" rawOutput
 
         __.MarkSuccess()
         { RID = rid.Value }
