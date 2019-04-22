@@ -2,6 +2,7 @@
 
 ## 5.13.2-alpha - tbd
 
+* ENHANCEMENT: Update .NET Core runtime
 * tbd
 
 ## 5.13.1 - 2019-04-22
