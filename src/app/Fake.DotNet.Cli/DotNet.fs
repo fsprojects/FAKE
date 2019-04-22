@@ -928,6 +928,7 @@ module DotNet =
             let result =
                 exec (fun _ ->
                     { RedirectOutput = true
+                      PrintRedirectedOutput = true
                       DotNetCliPath = common.DotNetCliPath
                       Version = common.Version
                       Environment = common.Environment
