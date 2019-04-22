@@ -1,6 +1,10 @@
 # Release Notes
 
-## 5.13.2-alpha - 2019-04-22
+## 5.13.2-alpha - tbd
+
+* tbd
+
+## 5.13.1 - 2019-04-22
 
 * ENHANCEMENT: Support F# 4.6 syntax in scripts
 * ENHANCEMENT: Add hint when runner is older than 6 months and warning after 12 months
