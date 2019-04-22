@@ -495,6 +495,9 @@ module DotNet =
             Diagnostics: bool
             /// If true the function will redirect the output of the called process (but will disable colors, false by default)
             RedirectOutput : bool
+            /// If RedirectOutput is true this flag decides if FAKE emits the output into the standard output/error otherwise the flag is ignored.
+            /// True by default.
+            PrintRedirectedOutput : bool
             /// Gets the environment variables that apply to this process and its child processes.
             /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
             /// NOTE: This field is ignored when UseShellExecute is true.
@@ -524,6 +527,7 @@ module DotNet =
             Verbosity = None
             Diagnostics = false
             RedirectOutput = false
+            PrintRedirectedOutput = true
             Environment =
                 Process.createEnvironmentMap()
                 |> Map.remove "MSBUILD_EXE_PATH"
@@ -543,6 +547,10 @@ module DotNet =
         member x.WithRedirectOutput shouldRedirect =
             { x with RedirectOutput = shouldRedirect }
 
+        /// Sets a value indicating whether the redirected output should be printed to standard-output/error stream.
+        member x.WithPrintRedirectedOutput shouldPrint =
+            { x with PrintRedirectedOutput = shouldPrint }
+
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = f x
 
@@ -556,6 +564,9 @@ module DotNet =
 
         let inline withRedirectOutput shouldRedirect x =
             lift (fun o -> o.WithRedirectOutput shouldRedirect) x
+
+        let inline withRedirectedOutput shouldPrint x =
+            lift (fun o -> o.WithPrintRedirectedOutput shouldPrint) x
 
         let inline withWorkingDirectory wd x =
             lift (fun o -> { o with WorkingDirectory = wd}) x
@@ -633,15 +644,17 @@ module DotNet =
         let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
+        let options = buildOptions (Options.Create())
         let errorF msg =
-            Trace.traceError msg
+            if options.PrintRedirectedOutput then
+                Trace.traceError msg
             results.Add (ConsoleMessage.CreateError msg)
 
         let messageF msg =
-            Trace.trace msg
+            if options.PrintRedirectedOutput then
+                Trace.trace msg
             results.Add (ConsoleMessage.CreateOut msg)
 
-        let options = buildOptions (Options.Create())
         let sdkOptions = buildSdkOptionsArgs options
         let commonOptions = buildCommonArgs options
         let cmdArgs = 
@@ -684,7 +697,7 @@ module DotNet =
         }
         /// Parameter default values.
         static member Create() = {
-            Common = Options.Create().WithRedirectOutput true
+            Common = Options.Create().WithRedirectOutput(true).WithPrintRedirectedOutput(false)
         }
         [<Obsolete("Use InfoOptions.Create instead")>]
         static member Default = InfoOptions.Create()
@@ -717,14 +730,20 @@ module DotNet =
         let param = InfoOptions.Create() |> setParams
         let args = "--info" // project (buildPackArgs param)
         let result = exec (fun _ -> param.Common) "" args
-        if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
+        let rawOutput =
+            result.Results
+            |> Seq.map (fun c -> sprintf "%s: %s" (if c.IsError then "stderr: " else "stdout: ") c.Message)
+            |> fun s -> System.String.Join("\n", s)
+        
+        if not result.OK then
+            failwithf "dotnet --info failed with code '%i': \n%s" result.ExitCode rawOutput
 
         let rid =
             result.Messages
             |> Seq.tryFind (fun m -> m.Contains "RID:")
             |> Option.map (fun line -> line.Split([|':'|]).[1].Trim())
 
-        if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
+        if rid.IsNone then failwithf "could not read rid from output: \n%s" rawOutput)
 
         __.MarkSuccess()
         { RID = rid.Value }
@@ -806,7 +825,8 @@ module DotNet =
                             let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet; Version = None}))
                             result = version
                         with e ->
-                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %O" e
+                            if not (e.Message.Contains "dotnet --info failed with code") || not (e.Message.Contains "global.json") then
+                                Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %O" e
                             false
                     )
                 ), passVersion
