@@ -416,6 +416,13 @@ Target.create "DownloadPaket" (fun _ ->
     callpaket "." "--version"
 )
 
+Target.create "UnskipAssemblyInfo" (fun _ ->
+    for assemblyFile, _ in assemblyInfos do
+        // Unskip assemblyinfos, needed if you want to checkin changes...
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
+        ()
+)
+
 Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
         // While the files are skipped in can be hard to switch between branches

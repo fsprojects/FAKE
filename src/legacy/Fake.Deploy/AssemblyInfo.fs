@@ -6,15 +6,17 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Deploy tool")>]
 [<assembly: GuidAttribute("413E2050-BECC-4FA6-87AA-5A74ACE9B8E1")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0.0")>]
-[<assembly: AssemblyFileVersionAttribute("5.0.0")>]
+[<assembly: AssemblyVersionAttribute("5.13.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.13.1")>]
+[<assembly: AssemblyFileVersionAttribute("5.13.1")>]
+[<assembly: AssemblyMetadataAttribute("BuildDate","2019-04-22")>]
 do ()
 
 module internal AssemblyVersionInformation =
     let [<Literal>] AssemblyTitle = "FAKE - F# Make Deploy tool"
     let [<Literal>] Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
-    let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0.0"
-    let [<Literal>] AssemblyFileVersion = "5.0.0"
+    let [<Literal>] AssemblyVersion = "5.13.1"
+    let [<Literal>] AssemblyInformationalVersion = "5.13.1"
+    let [<Literal>] AssemblyFileVersion = "5.13.1"
+    let [<Literal>] AssemblyMetadata_BuildDate = "2019-04-22"
