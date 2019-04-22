@@ -1,7 +1,7 @@
 language: csharp
 sudo: required
 dist: trusty # Ubuntu 14.04
-dotnet : 2.1.402
+dotnet : 2.1.506
 env:
  - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
