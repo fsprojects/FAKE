@@ -155,6 +155,8 @@ group netcorerunner
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
     nuget Packaging.Targets
+    nuget FSharp.Compiler.Service content: none
+    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -163,9 +165,7 @@ group netcore
     framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
-    nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
-    nuget FSharp.Compiler.Service storage: packages, content: none
-    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
+    nuget FSharp.Compiler.Service content: none
 
     nuget NETStandard.Library ~> 2.0
     

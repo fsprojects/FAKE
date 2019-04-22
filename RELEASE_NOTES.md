@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.13.1-alpha - tbd
+## 5.13.1 - 2019-04-22
 
-* tbd
+* ENHANCEMENT: Support F# 4.6 syntax in scripts
 
 ## 5.13.0 - 2019-04-14
 
