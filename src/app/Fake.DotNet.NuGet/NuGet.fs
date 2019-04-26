@@ -376,7 +376,7 @@ type NuGetParams with
     member internal x.ToolOptions = ToolOptions.Create x.ToolPath "push" x.WorkingDir true
     member internal x.Nupkg = (x.OutputPath @@ packageFileName x |> Path.getFullName)
 
-let private toPushCliArgs param =
+let internal toPushCliArgs param =
     let ifTrue x b =
         if b then Some x
         else None
@@ -392,14 +392,14 @@ let private toPushCliArgs param =
         param.Timeout |> Option.map string |> Option.map (sprintf "-Timeout %s")
     ]
     |> List.choose id
-    |> Arguments.ofList
 
 let rec private push (options : ToolOptions) (parameters : NuGetPushParams) nupkg =
     parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
     parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
 
-    let args =
-        sprintf "%s \"%s\" %s" options.Command nupkg (toPushCliArgs parameters).ToWindowsCommandLine
+    let pushArgs =  (parameters |> toPushCliArgs |> Arguments.ofList).ToWindowsCommandLine
+
+    let args = sprintf "%s \"%s\" %s" options.Command nupkg pushArgs
 
     sprintf "%s %s in WorkingDir: %s Trials left: %d" options.ToolPath args (Path.getFullName options.WorkingDir) parameters.PushTrials
     |> TraceSecrets.guardMessage
