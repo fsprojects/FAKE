@@ -1,5 +1,5 @@
 
-group netcore
+group netcorerunner
 
 Paket.Core
 Mono.Cecil

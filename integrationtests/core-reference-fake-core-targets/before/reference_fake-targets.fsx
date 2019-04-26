@@ -21,7 +21,7 @@ printfn "test_before targets"
 Target.create "Start" (fun _ -> ())
 
 Target.create "TestTarget" (fun p ->
-    printfn "Starting Build."
+    printfn "Starting Build %A." {| test = "anon_record_f#-4.6" |}
     Trace.traceFAKE "Some Info from FAKE"
     printfn "Arguments: %A" p.Context.Arguments
     printfn "Ending Build."

@@ -72,8 +72,6 @@ nuget System.Reactive.Compatibility
 // From FSharp.Compiler.Service, but manually managed because of rename
 nuget System.ValueTuple copy_local: true, redirects:force
 
-github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
-
 group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
     nuget FAKE ~> 4.0
@@ -155,6 +153,15 @@ group netcorerunner
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
     nuget Packaging.Targets
+    nuget FSharp.Compiler.Service content: none
+    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
+
+    // Testing
+    nuget Expecto >= 5.0
+    nuget Expecto.TestResults
+    nuget Expecto.FsCheck
+    nuget FsCheck
+    nuget FParsec // commandline tests
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -163,11 +170,10 @@ group netcore
     framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
-    nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
-    nuget FSharp.Compiler.Service storage: packages, content: none
-    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
+    nuget FSharp.Compiler.Service content: none
 
     nuget NETStandard.Library ~> 2.0
+    
     // Starting from 2018-07-08 this needs to be <4.5 to not break 5.0 and 5.1 releases
     // After some time we can upgrade this (and consolidate the netcore and netcorerunner groups)
     // but not before 2018-11
@@ -192,12 +198,6 @@ group netcore
         nuget Microsoft.Build.Tasks.Core < 16
         nuget Microsoft.Build.Utilities.Core < 16
     nuget BlackFox.VsWhere
-
-    // Testing
-    nuget Expecto >= 5.0
-    nuget Expecto.TestResults
-    nuget Expecto.FsCheck
-    nuget FsCheck
 
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath

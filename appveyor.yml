@@ -1,13 +1,20 @@
 image: Visual Studio 2017
 install:
   - cinst fake
-build_script:
-# See https://stackoverflow.com/a/12866669/1269722
-# Problem is that colors are lost
-# Don't blame me but powershell is the bigest crap on earth
-  - cmd: fake.exe run build.fsx --parallel 3
+  # from https://stackoverflow.com/questions/33897161/appveyor-build-error-msb3774-could-not-find-sdk-microsoft-admediator-universal/33897162#33897162
+  - ps: |
+      Write-Host "Installing .NET SDK..."
+      $msiPath = "$($env:USERPROFILE)\dotnet-SDK.exe"
+      (New-Object Net.WebClient).DownloadFile('https://download.visualstudio.microsoft.com/download/pr/4690d405-11c6-488e-b1ba-4f2e9b247b25/7c70d9003e02997b66d843ec54ba53d1/dotnet-sdk-2.1.505-win-x64.exe', $msiPath)
+      cmd /c start /wait $msiPath /quiet /norestart
+      Write-Host "Installed" -ForegroundColor green
 
-#  - ps: .\build.cmd
+build_script:
+  # See https://stackoverflow.com/a/12866669/1269722
+  # Problem is that colors are lost
+  # Don't blame me but powershell is the bigest crap on earth
+  - cmd: fake.exe run build.fsx --parallel 3
+  #- ps: .\build.cmd
 on_failure:
   - appveyor PushArtifact FAKE.svclog
 test: off

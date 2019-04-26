@@ -229,7 +229,8 @@ let common = [
     AssemblyInfo.Product "FAKE - F# Make"
     AssemblyInfo.Version release.AssemblyVersion
     AssemblyInfo.InformationalVersion nugetVersion
-    AssemblyInfo.FileVersion nugetVersion]
+    AssemblyInfo.FileVersion nugetVersion
+    AssemblyInfo.Metadata("BuildDate", System.DateTime.UtcNow.ToString("yyyy-MM-dd")) ]
 
 // New FAKE libraries
 let dotnetAssemblyInfos =
@@ -413,6 +414,13 @@ Target.create "StartBootstrapBuild" (fun _ ->
 
 Target.create "DownloadPaket" (fun _ ->
     callpaket "." "--version"
+)
+
+Target.create "UnskipAssemblyInfo" (fun _ ->
+    for assemblyFile, _ in assemblyInfos do
+        // Unskip assemblyinfos, needed if you want to checkin changes...
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
+        ()
 )
 
 Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->

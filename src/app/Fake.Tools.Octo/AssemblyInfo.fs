@@ -4,14 +4,16 @@ open System.Reflection
 
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Octopus Deploy octo.exe tool helper")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("5.3.1")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.3.1-alpha")>]
-[<assembly: AssemblyFileVersionAttribute("5.3.1")>]
+[<assembly: AssemblyVersionAttribute("5.13.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.13.1")>]
+[<assembly: AssemblyFileVersionAttribute("5.13.1")>]
+[<assembly: AssemblyMetadataAttribute("BuildDate","2019-04-22")>]
 do ()
 
 module internal AssemblyVersionInformation =
     let [<Literal>] AssemblyTitle = "FAKE - F# Make Octopus Deploy octo.exe tool helper"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
-    let [<Literal>] AssemblyVersion = "5.3.1"
-    let [<Literal>] AssemblyInformationalVersion = "5.3.1-alpha"
-    let [<Literal>] AssemblyFileVersion = "5.3.1"
+    let [<Literal>] AssemblyVersion = "5.13.1"
+    let [<Literal>] AssemblyInformationalVersion = "5.13.1"
+    let [<Literal>] AssemblyFileVersion = "5.13.1"
+    let [<Literal>] AssemblyMetadata_BuildDate = "2019-04-22"

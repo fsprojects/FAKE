@@ -1,18 +1,29 @@
 language: csharp
 sudo: required
-dist: trusty # Ubuntu 14.04
-dotnet : 2.1.402
+dist: xenial # Ubuntu 16.04
+
+dotnet : 2.1.505
+
+addons:
+  apt:
+    packages:
+      - build-essential
+      - ruby
+      - ruby-dev
+      - rubygems-integration
+
+before_install:
+  - gem install --no-ri --no-rdoc fpm 
+  
+  #- wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+  #- sudo dpkg -i packages-microsoft-prod.deb
+  #- sudo apt-get install apt-transport-https -y
+  #- sudo apt-get update -y
+  #- sudo apt-get install dotnet-sdk-2.1=2.1.505* -y
+
 env:
  - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
-
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update               ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl      ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force openssl ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gnu-tar      ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt update; sudo apt install ruby ruby-dev rubygems-integration build-essential -y ; fi 
-  - gem install --no-ri --no-rdoc fpm
 
 mono:
   - 5.18.1

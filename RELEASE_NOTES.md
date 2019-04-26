@@ -1,8 +1,18 @@
 # Release Notes
 
-## 5.13.1-alpha - tbd
+## 5.13.3-alpha - tbd
 
-* tbd
+* tbd.
+
+## 5.13.2 - 2019-04-23
+
+* ENHANCEMENT: Update .NET Core runtime
+* BUGFIX: Do not print dotnet --version errors - https://github.com/fsharp/FAKE/issues/2295
+
+## 5.13.1 - 2019-04-22
+
+* ENHANCEMENT: Support F# 4.6 syntax in scripts
+* ENHANCEMENT: Add hint when runner is older than 6 months and warning after 12 months
 
 ## 5.13.0 - 2019-04-14
 

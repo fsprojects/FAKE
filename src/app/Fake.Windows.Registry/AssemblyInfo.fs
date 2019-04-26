@@ -2,16 +2,18 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("FAKE - F# CRUD functionality for Windows registry")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# Make CRUD functionality for Windows registry")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0.0")>]
-[<assembly: AssemblyFileVersionAttribute("5.0.0")>]
+[<assembly: AssemblyVersionAttribute("5.13.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.13.1")>]
+[<assembly: AssemblyFileVersionAttribute("5.13.1")>]
+[<assembly: AssemblyMetadataAttribute("BuildDate","2019-04-22")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "FAKE - F# CRUD functionality for Windows registry"
+    let [<Literal>] AssemblyTitle = "FAKE - F# Make CRUD functionality for Windows registry"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
-    let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0.0"
-    let [<Literal>] AssemblyFileVersion = "5.0.0"
+    let [<Literal>] AssemblyVersion = "5.13.1"
+    let [<Literal>] AssemblyInformationalVersion = "5.13.1"
+    let [<Literal>] AssemblyFileVersion = "5.13.1"
+    let [<Literal>] AssemblyMetadata_BuildDate = "2019-04-22"

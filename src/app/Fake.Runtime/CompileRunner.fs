@@ -11,7 +11,7 @@ open System.Reflection
 open System
 open System.IO
 open Yaaf.FSharp.Scripting
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
