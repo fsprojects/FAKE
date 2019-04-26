@@ -595,6 +595,10 @@ module DotNet =
             | false -> []
 
     /// [omit]
+    let private argOptionExplicit name value =
+        [ sprintf "--%s=%A" name value ]
+        
+    /// [omit]
     let private buildCommonArgs (param: Options) =
         [   defaultArg param.CustomParams "" |> Args.fromWindowsCommandLine |> Seq.toList
             param.Verbosity
@@ -1202,10 +1206,18 @@ module DotNet =
             OutputPath: string option
             /// Defines what `*` should be replaced with in version field in project.json (--version-suffix)
             VersionSuffix: string option
+            /// The path to a target manifest file that contains the list of packages to be excluded from the publish step. (--manifest)
+            Manifest: string option
+            /// Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
+            /// The default is 'true' if a runtime identifier is specified. (--self-contained)
+            SelfContained: bool option
             /// No build flag (--no-build)
             NoBuild: bool
             /// Doesn't execute an implicit restore when running the command. (--no-restore)
             NoRestore: bool
+            /// Force all dependencies to be resolved even if the last restore was successful.
+            /// This is equivalent to deleting project.assets.json. (--force)
+            Force: bool option
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1221,6 +1233,9 @@ module DotNet =
             VersionSuffix = None
             NoBuild = false
             NoRestore = false
+            Force = None
+            SelfContained = None
+            Manifest = None
             MSBuildParams = MSBuild.CliArguments.Create()
         }
         [<Obsolete("Use PublishOptions.Create instead")>]
@@ -1239,7 +1254,7 @@ module DotNet =
             { x with Common = f x.Common }
 
     /// [omit]
-    let private buildPublishArgs (param: PublishOptions) =
+    let internal buildPublishArgs (param: PublishOptions) =
         [
             buildConfigurationArg param.Configuration
             param.Framework |> Option.toList |> argList2 "framework"
@@ -1247,8 +1262,11 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
+            param.Manifest |> Option.toList |> argList2 "manifest"
             param.NoBuild |> argOption "no-build"
             param.NoRestore |> argOption "no-restore"
+            param.SelfContained |> Option.map (argOptionExplicit "self-contained") |> Option.defaultValue []
+            param.Force |> Option.map (argOptionExplicit "force") |> Option.defaultValue []
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)

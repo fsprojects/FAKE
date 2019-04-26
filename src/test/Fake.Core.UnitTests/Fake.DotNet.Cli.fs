@@ -43,4 +43,17 @@ let tests =
             let expected = "--disable-buffering --api-key abc123 --no-symbols --no-service-endpoint --source MyNuGetSource --symbol-api-key MySymbolApiKey --symbol-source MySymbolSource --timeout 300"
                 
             Expect.equal cli expected "Push args generated correctly."
+
+        testCase "Test that the dotnet publish self-contained works as expected" <| fun _ ->
+            let param =
+                { DotNet.PublishOptions.Create() with
+                    SelfContained = Some false }
+            let cli =
+                param
+                |> DotNet.buildPublishArgs
+                |> Args.toWindowsCommandLine
+    
+            let expected = "--configuration Release --self-contained=false"
+                
+            Expect.equal cli expected "Push args generated correctly."
     ]
