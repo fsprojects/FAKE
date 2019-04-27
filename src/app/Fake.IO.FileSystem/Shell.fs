@@ -646,4 +646,4 @@ module Shell =
     /// Like "mv" in a shell. Moves/renames a file
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
-    let mv src dest = moveFile src dest
+    let mv src dest = moveFile dest src
