@@ -1,12 +1,11 @@
 # Release Notes
 
-## 5.13.3-alpha - tbd
+## 5.13.3 - 2019-04-29
 
 * ENHANCEMENT: Use NuGet Libraries for `getLastNuGetVersion` - see https://github.com/NuGet/NuGetGallery/issues/7085
 * ENHANCEMENT: TeamCitySummary, added in ReportGenerator 4.1.3 Fixes #2300 - https://github.com/fsharp/FAKE/pull/2301
 * BUGFIX: `Shell.mv` now has the correct documented behavior, consistent with parameter names - https://github.com/fsharp/FAKE/issues/2293
 * BUGFIX: NuGet Push command syntax. Fixes #2299 - https://github.com/fsharp/FAKE/pull/2304
-
 
 ## 5.13.2 - 2019-04-23
 
