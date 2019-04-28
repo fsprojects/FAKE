@@ -38,6 +38,7 @@ type ReportType =
     | Badges
     | CsvSummary
     | Cobertura
+    | TeamCitySummary
 
 type LogVerbosity =
     | Verbose = 0
