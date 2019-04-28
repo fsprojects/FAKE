@@ -4,5 +4,4 @@ FSharp.Core
 NETStandard.Library
 System.Net.Http
 Newtonsoft.Json
-// maybe remove after https://github.com/NuGet/NuGetGallery/issues/7085
 NuGet.Protocol
