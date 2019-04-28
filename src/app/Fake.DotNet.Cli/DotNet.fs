@@ -1206,8 +1206,10 @@ module DotNet =
             OutputPath: string option
             /// Defines what `*` should be replaced with in version field in project.json (--version-suffix)
             VersionSuffix: string option
-            /// The path to a target manifest file that contains the list of packages to be excluded from the publish step. (--manifest)
-            Manifest: string option
+            /// Specifies one or several target manifests to use to trim the set of packages published with the app.
+            /// The manifest file is part of the output of the dotnet store command.
+            /// This option is available starting with .NET Core 2.0 SDK. (--manifest)
+            Manifest: string list option
             /// Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
             /// The default is 'true' if a runtime identifier is specified. (--self-contained)
             SelfContained: bool option
@@ -1262,11 +1264,11 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
-            param.Manifest |> Option.toList |> argList2 "manifest"
+            param.Manifest |> Option.toList |> List.collect id |> argList2 "manifest"
             param.NoBuild |> argOption "no-build"
             param.NoRestore |> argOption "no-restore"
             param.SelfContained |> Option.map (argOptionExplicit "self-contained") |> Option.defaultValue []
-            param.Force |> Option.map (argOptionExplicit "force") |> Option.defaultValue []
+            param.Force |> Option.map (argOption "force") |> Option.defaultValue []
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
