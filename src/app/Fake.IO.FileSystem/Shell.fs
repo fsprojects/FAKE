@@ -646,4 +646,15 @@ module Shell =
     /// Like "mv" in a shell. Moves/renames a file
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
-    let mv src dest = moveFile dest src
+    let mv src dest =
+        Directory.
+        let fi = FileSystemInfo.ofPath fileName
+        match fi with
+        | FileSystemInfo.File f ->
+            let targetName = target @@ fi.Name
+            let targetInfo = FileInfo.ofPath targetName
+            if targetInfo.Exists then targetInfo.Delete()
+            () //TODO: logVerbosefn "Move %s to %s" fileName targetName
+            f.MoveTo(targetName) |> ignore
+        | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
+    moveFile dest src
