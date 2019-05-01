@@ -339,6 +339,14 @@ module Shell =
             f.MoveTo(targetName) |> ignore
         | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
 
+    let private moveDir target fileName =
+        let fi = FileSystemInfo.ofPath fileName
+        match fi with
+        | FileSystemInfo.Directory (d, _) ->
+            let targetName = target @@ fi.Name
+            d.MoveTo(targetName) |> ignore
+        | FileSystemInfo.File _ -> ()
+
     /// Creates a config file with the parameters as "key;value" lines
     let writeConfigFile configFileName parameters =
         if String.isNullOrEmpty configFileName then ()
@@ -660,5 +668,8 @@ module Shell =
                     fi_dest.Delete()
                     rename dest src
                 | FileSystemInfo.Directory _ -> failwithf "Cannot move a directory %s to a file %s" src dest
-            | FileSystemInfo.Directory _ -> moveFile dest src
+            | FileSystemInfo.Directory _ ->
+                match fi_src with
+                | FileSystemInfo.File _ -> moveFile dest src
+                | FileSystemInfo.Directory _ -> moveDir dest src
         end
