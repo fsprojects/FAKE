@@ -107,7 +107,9 @@ module Shell =
     ///
     ///  - `target` - The target file or directory name.
     ///  - `fileName` - The orginal file or directory name.
-    let rename target fileName = (FileInfo.ofPath fileName).MoveTo target
+    let rename target fileName =
+        let fsi = FileSystemInfo.ofPath fileName
+        FileSystemInfo.moveTo fsi target
 
     /// Copies a list of files to the specified directory without any output.
     /// ## Parameters
@@ -334,8 +336,16 @@ module Shell =
             let targetInfo = FileInfo.ofPath targetName
             if targetInfo.Exists then targetInfo.Delete()
             () //TODO: logVerbosefn "Move %s to %s" fileName targetName
-            f.MoveTo(targetName) |> ignore
+            f.MoveTo(targetName) |> ignore<DirectoryInfo>
         | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
+
+    let private moveDir target fileName =
+        let fi = FileSystemInfo.ofPath fileName
+        match fi with
+        | FileSystemInfo.Directory (d, _) ->
+            let targetName = target @@ fi.Name
+            d.MoveTo(targetName) |> ignore
+        | FileSystemInfo.File _ -> ()
 
     /// Creates a config file with the parameters as "key;value" lines
     let writeConfigFile configFileName parameters =
@@ -646,4 +656,19 @@ module Shell =
     /// Like "mv" in a shell. Moves/renames a file
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
-    let mv src dest = moveFile dest src
+    let mv src dest =
+        let fi_src = FileSystemInfo.ofPath src
+        let fi_dest = FileSystemInfo.ofPath dest
+        if not fi_dest.Exists then rename dest src
+        else
+            match fi_dest with
+            | FileSystemInfo.File _ ->
+                match fi_src with
+                | FileSystemInfo.File _ ->
+                    fi_dest.Delete()
+                    rename dest src
+                | FileSystemInfo.Directory _ -> failwithf "Cannot move a directory %s to a file %s" src dest
+            | FileSystemInfo.Directory _ ->
+                match fi_src with
+                | FileSystemInfo.File _ -> moveFile dest src
+                | FileSystemInfo.Directory _ -> moveDir dest src
