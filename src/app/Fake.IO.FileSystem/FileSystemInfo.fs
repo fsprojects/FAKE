@@ -26,7 +26,7 @@ module FileSystemInfo =
         | :? DirectoryInfo as dir -> Directory(dir, dir.EnumerateFileSystemInfos())
         | _ -> failwith "No file or directory given."
 
-    let moveTo (fileSysInfo: FileSystemInfo) dest =
+    let internal moveTo (fileSysInfo: FileSystemInfo) dest =
         match fileSysInfo with
         | :? FileInfo as file -> file.MoveTo(dest)
         | :? DirectoryInfo as dir -> dir.MoveTo(dest)
