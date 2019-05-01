@@ -1,8 +1,13 @@
 # Release Notes
 
-## 5.13.4 - tbd
+## 5.13.6-alpha - tbd
 
 * tbd
+
+## 5.13.5 - 2019-05-01
+
+* BUGFIX: `Shell.mv` now has the correct documented behavior (5.13.3 was still broken) - https://github.com/fsharp/FAKE/pull/2309
+* BUGFIX: `Shell.rename` now works for files and directories as documented - https://github.com/fsharp/FAKE/pull/2309
 
 ## 5.13.3 - 2019-04-29
 

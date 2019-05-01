@@ -107,7 +107,9 @@ module Shell =
     ///
     ///  - `target` - The target file or directory name.
     ///  - `fileName` - The orginal file or directory name.
-    let rename target fileName = (FileInfo.ofPath fileName).MoveTo target
+    let rename target fileName =
+        let fsi = FileSystemInfo.ofPath fileName
+        FileSystemInfo.moveTo fsi target
 
     /// Copies a list of files to the specified directory without any output.
     /// ## Parameters
@@ -322,6 +324,7 @@ module Shell =
         | Filter(f) -> copyRecursiveWithFilter f
 
     /// Moves a single file to the target and overwrites the existing file.
+    /// If `fileName` is a directory the functions does nothing.
     /// ## Parameters
     ///
     ///  - `target` - The target directory.
@@ -333,9 +336,19 @@ module Shell =
             let targetName = target @@ fi.Name
             let targetInfo = FileInfo.ofPath targetName
             if targetInfo.Exists then targetInfo.Delete()
-            () //TODO: logVerbosefn "Move %s to %s" fileName targetName
-            f.MoveTo(targetName) |> ignore
-        | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
+            f.MoveTo(targetName)
+        | FileSystemInfo.Directory _ ->
+            // HISTORIC: Ideally we would throw here.
+            ()
+
+    let private moveDir target fileName =
+        let fi = FileSystemInfo.ofPath fileName
+        match fi with
+        | FileSystemInfo.Directory (d, _) ->
+            let targetName = target @@ fi.Name
+            d.MoveTo(targetName)
+        | FileSystemInfo.File _ ->
+            failwithf "moveDir only works on directories but '%s' was a file." fileName
 
     /// Creates a config file with the parameters as "key;value" lines
     let writeConfigFile configFileName parameters =
@@ -646,4 +659,15 @@ module Shell =
     /// Like "mv" in a shell. Moves/renames a file
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
-    let mv src dest = moveFile dest src
+    let mv src dest =
+        match FileSystemInfo.ofPath src, FileSystemInfo.ofPath dest with
+        | _, destFi when not destFi.Exists -> rename dest src
+        | FileSystemInfo.File _, FileSystemInfo.File destFi ->
+            destFi.Delete()
+            rename dest src
+        | FileSystemInfo.Directory _, FileSystemInfo.File _ ->
+            failwithf "Cannot move a directory %s to a file %s" src dest
+        | FileSystemInfo.File srcFi, FileSystemInfo.Directory _ ->
+            moveFile dest src
+        | FileSystemInfo.Directory srcFi, FileSystemInfo.Directory _ ->
+            moveDir dest src
