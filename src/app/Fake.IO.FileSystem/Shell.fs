@@ -336,7 +336,7 @@ module Shell =
             let targetInfo = FileInfo.ofPath targetName
             if targetInfo.Exists then targetInfo.Delete()
             () //TODO: logVerbosefn "Move %s to %s" fileName targetName
-            f.MoveTo(targetName) |> ignore<DirectoryInfo>
+            f.MoveTo(targetName)
         | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
 
     let private moveDir target fileName =
