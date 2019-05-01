@@ -660,7 +660,7 @@ module Shell =
         let fi_src = FileSystemInfo.ofPath src
         let fi_dest = FileSystemInfo.ofPath dest
         if not fi_dest.Exists then rename dest src
-        else begin
+        else
             match fi_dest with
             | FileSystemInfo.File _ ->
                 match fi_src with
@@ -672,4 +672,3 @@ module Shell =
                 match fi_src with
                 | FileSystemInfo.File _ -> moveFile dest src
                 | FileSystemInfo.Directory _ -> moveDir dest src
-        end
