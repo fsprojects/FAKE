@@ -107,7 +107,9 @@ module Shell =
     ///
     ///  - `target` - The target file or directory name.
     ///  - `fileName` - The orginal file or directory name.
-    let rename target fileName = (FileInfo.ofPath fileName).MoveTo target
+    let rename target fileName =
+        let fsi = FileSystemInfo.ofPath fileName
+        FileSystemInfo.moveTo fsi target
 
     /// Copies a list of files to the specified directory without any output.
     /// ## Parameters
