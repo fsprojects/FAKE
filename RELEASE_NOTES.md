@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.13.8 - tbd
+
+* tbd
+
 ## 5.13.7 - 2019-05-11
 
 * BUGFIX: Xamarin Android x86_64 build fails - https://github.com/fsharp/FAKE/issues/2313
