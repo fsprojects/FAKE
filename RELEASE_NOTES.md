@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.13.7 - 2019-05-11
+
+* BUGFIX: Xamarin Android x86_64 build fails - https://github.com/fsharp/FAKE/issues/2313
+
 ## 5.13.6 - 2019-05-11
 
 * BUGFIX: update dependencies (Paket.Core update to 5.206)
