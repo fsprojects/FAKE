@@ -313,7 +313,7 @@ let AndroidBuildPackages setParams =
                        | AndroidAbiTarget.ArmEabi _ -> "armeabi"
                        | AndroidAbiTarget.ArmEabiV7a _ -> "armeabi-v7a"
                        | AndroidAbiTarget.Arm64V8a _ -> "arm64-v8a"
-                       | AndroidAbiTarget.X86And64 _ -> "X86_64"
+                       | AndroidAbiTarget.X86And64 _ -> "x86_64"
                        | _ -> ""
 
     let createTargetPackage param (manifestFile:string) (target:AndroidAbiTarget) transformVersion =
