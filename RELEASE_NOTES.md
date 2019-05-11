@@ -2,6 +2,7 @@
 
 ## 5.13.6-alpha - tbd
 
+* Paket.Core update to 5.206
 * tbd
 
 ## 5.13.5 - 2019-05-01
