@@ -1,9 +1,8 @@
 # Release Notes
 
-## 5.13.6-alpha - tbd
+## 5.13.6 - 2019-05-11
 
-* Paket.Core update to 5.206
-* tbd
+* BUGFIX: update dependencies (Paket.Core update to 5.206)
 
 ## 5.13.5 - 2019-05-01
 
