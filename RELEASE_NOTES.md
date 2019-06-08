@@ -2,7 +2,7 @@
 
 ## 5.13.8-alpha - tbd
 
-* tbd
+* DOCS: Document difference between `@@` and `</>` as well as `Path.combineTrimEnd` and `Path.combine` - https://github.com/fsharp/FAKE/issues/2329
 
 ## 5.13.7 - 2019-05-11
 
