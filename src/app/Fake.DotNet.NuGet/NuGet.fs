@@ -626,7 +626,10 @@ let getNuspecProperties (nuspec : string) =
 //    |> getNuspecProperties
 
 /// Default NuGet feed
-let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
+[<Obsolete "This V1 NuGet feed url most likely doesn't work. Please consider using v3 nuget feed via `NuGet.galleryV3`.">]
+let galleryV1 = "http://go.microsoft.com/fwlink/?LinkID=206669"
+let galleryV2 = "https://www.nuget.org/api/v2/"
+let galleryV3 = "https://api.nuget.org/v3/index.json"
 
 // TODO: Note that this is stolen from paket code. We might want to move that into a shared FAKE library..., see https://github.com/fsprojects/Paket/blob/06ef22ba79896cd9f2a2e2eefccde08b09ab7656/src/Paket.Core/Utils.fs
 #if NETSTANDARD
@@ -735,7 +738,7 @@ let private webClient = new WebClient()
 
 /// [omit]
 let discoverRepoUrl =
-    lazy (let resp = webClient.DownloadString(feedUrl)
+    lazy (let resp = webClient.DownloadString(galleryV1)
           let doc = Xml.createDoc resp
           doc.["service"].GetAttribute("xml:base"))
 

@@ -3,6 +3,7 @@
 ## 5.13.8-alpha - tbd
 
 * DOCS: Document difference between `@@` and `</>` as well as `Path.combineTrimEnd` and `Path.combine` - https://github.com/fsharp/FAKE/issues/2329
+* BREAKING: Renamed `NuGet.feedUrl` to `NuGet.galleryV1` and marked it as obsolete. Added `galleryV2` and `galleryV3` - https://github.com/fsharp/FAKE/issues/2323
 
 ## 5.13.7 - 2019-05-11
 
