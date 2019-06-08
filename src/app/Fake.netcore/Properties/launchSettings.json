@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Fake.netcore": {
+      "commandName": "Project",
+      "commandLineArgs": "build",
+      "workingDirectory": "C:\\proj\\FAKE\\temp\\native-lib"
+    }
+  }
+}

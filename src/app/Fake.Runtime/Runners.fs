@@ -45,13 +45,17 @@ type AssemblyInfo =
     let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
     { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
 
+type NativeLibrary =
+    { File : string }
 type CompileOptions = 
-    internal { FsiOptions : FsiOptions; RuntimeDependencies : AssemblyInfo list }
-
+    internal { FsiOptions : FsiOptions; }
+type RuntimeOptions =
+    internal { RuntimeDependencies : AssemblyInfo list; NativeLibraries : NativeLibrary list }
 type FakeConfig =
   { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
     ScriptTokens : Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
+    RuntimeOptions : RuntimeOptions
     CompileOptions : CompileOptions
     UseCache : bool
     RestoreOnlyGroup : bool

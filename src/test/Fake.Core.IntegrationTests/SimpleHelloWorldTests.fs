@@ -71,5 +71,9 @@ let tests =
     testCase "issue #2025" <| fun _ ->
         handleAndFormat <| fun () ->
             fakeRunAndCheckInPath "build.fsx" "build.fsx" "i002025" "script" |> ignore
+
+    testCase "issue #2007 - native libs work" <| fun _ ->
+        handleAndFormat <| fun () ->
+            fakeRunAndCheck "build.fsx" "build.fsx" "i002007-native-libs" |> ignore
     
   ]
