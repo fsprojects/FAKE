@@ -130,15 +130,18 @@ module DotNet =
     type InstallerOptions =
         {
             /// Always download install script (otherwise install script is cached in temporary folder)
-            AlwaysDownload: bool;
+            AlwaysDownload: bool
             /// Download installer from this github branch
-            Branch: string;
+            Branch: string
+            // Use the given directory to download the script into. If None the temp-dir is used
+            CustomDownloadDir: string option
         }
 
         /// Parameter default values.
         static member Default = {
             AlwaysDownload = false
             Branch = "master"
+            CustomDownloadDir = None
         }
 
     /// Download .NET Core SDK installer
@@ -152,14 +155,16 @@ module DotNet =
         let getInstallerUrl = if Environment.isUnix then getBashDotNetCliInstallerUrl else getPowershellDotNetCliInstallerUrl
         let scriptName =
             sprintf "dotnet_install_%s.%s" (md5 (Encoding.ASCII.GetBytes(param.Branch))) ext
-        let tempInstallerScript = Path.GetTempPath() @@ scriptName
+        let tempDir =
+            match param.CustomDownloadDir with
+            | None -> Path.GetTempPath()
+            | Some d -> d
+        let tempInstallerScript = tempDir @@ scriptName
 
         // maybe download installer script
-        match param.AlwaysDownload || not(File.Exists(tempInstallerScript)) with
-            | true ->
-                let url = getInstallerUrl param.Branch
-                downloadDotNetInstallerFromUrl url tempInstallerScript
-            | _ -> ()
+        if param.AlwaysDownload || not(File.Exists(tempInstallerScript)) then
+            let url = getInstallerUrl param.Branch
+            downloadDotNetInstallerFromUrl url tempInstallerScript
 
         tempInstallerScript
 
@@ -195,6 +200,8 @@ module DotNet =
             Version: CliVersion
             /// Custom installation directory (for local build installation)
             CustomInstallDir: string option
+            /// Always download and run the installer, ignore potentiall existing installations.
+            ForceInstall : bool
             /// Architecture
             Architecture: CliArchitecture
             /// Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet)
@@ -211,6 +218,7 @@ module DotNet =
             Channel = None
             Version = Latest
             CustomInstallDir = None
+            ForceInstall = false
             Architecture = Auto
             DebugSymbols = false
             DryRun = false
@@ -441,7 +449,7 @@ module DotNet =
         let versionParamValue =
             match param.Version with
             | Latest -> "latest"
-            | Lkg -> "lkg"
+            | Lkg -> "coherent"
             | Version ver -> ver
             | GlobalJson -> getSDKVersionFromGlobalJson()
 
@@ -458,17 +466,16 @@ module DotNet =
             | Auto -> None
             | X86 -> Some "x86"
             | X64 -> Some "x64"
-        [
-            Process.boolParam ("Verbose", true)
-            Process.stringParam ("Channel", channelParamValue)
-            Process.stringParam ("Version", versionParamValue)
-            Process.optionParam ("Architecture", architectureParamValue)
-            Process.stringParam ("InstallDir", defaultArg param.CustomInstallDir defaultUserInstallDir)
-            Process.boolParam ("DebugSymbols", param.DebugSymbols)
-            Process.boolParam ("DryRun", param.DryRun)
-            Process.boolParam ("NoPath", param.NoPath)
-        ] |> Process.parametersToString "-" " "
 
+        Arguments.Empty
+        |> Arguments.appendIf true "-Verbose"
+        |> Arguments.appendNotEmpty "-Channel" channelParamValue
+        |> Arguments.appendNotEmpty "-Version" versionParamValue
+        |> Arguments.appendOption "-Architecture" architectureParamValue
+        |> Arguments.appendNotEmpty "-InstallDir" (defaultArg param.CustomInstallDir defaultUserInstallDir)
+        |> Arguments.appendIf param.DebugSymbols "-DebugSymbols"
+        |> Arguments.appendIf param.DryRun "-DryRun"
+        |> Arguments.appendIf param.NoPath "-NoPath"
 
     /// dotnet restore verbosity
     type Verbosity =
@@ -816,7 +823,8 @@ module DotNet =
             | CliVersion.Latest -> None, false
             | CliVersion.GlobalJson -> Some (getSDKVersionFromGlobalJson()), true
 
-        let dotnetInstallations = findPossibleDotnetCliPaths (Some dir)
+        let dotnetInstallations =
+            if param.ForceInstall then Seq.empty else findPossibleDotnetCliPaths (Some dir)
 
         let existingDotNet =
             match checkVersion with
@@ -864,21 +872,28 @@ module DotNet =
             ()
         let exitCode =
             let args, fileName =
+                let installArgs = buildDotNetCliInstallArgs param
                 if Environment.isUnix then
-                    let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs param)
+                    let args = installArgs |> Arguments.withPrefix [ installScript ]
+                    //let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs param)
                     args, "bash" // Otherwise we need to set the executable flag!
                 else
+                    let command = installArgs |> Arguments.withPrefix [ installScript ]
                     let args =
-                        sprintf
-                            "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\""
-                            installScript
-                            (buildDotNetCliInstallArgs param)
+                        Arguments.Empty
+                        |> Arguments.appendNotEmpty "-ExecutionPolicy" "ByPass"
+                        |> Arguments.appendIf true "-NoProfile"
+                        |> Arguments.appendIf true "-NoLogo"
+                        |> Arguments.appendIf true "-NonInteractive"
+                        // Note: The & is required when the script path contains spaces, see https://stackoverflow.com/questions/45760457/how-to-run-a-powershell-script-with-white-spaces-in-path-from-command-line
+                        // powershell really is a waste of time
+                        |> Arguments.appendNotEmpty "-Command" (sprintf "& %s; if (-not $?) { exit -1 };" command.ToWindowsCommandLine)
                     args, "powershell"
             Process.execSimple (fun info ->
             { info with
                 FileName = fileName
-                WorkingDirectory = Path.GetTempPath()
-                Arguments = args }
+                WorkingDirectory = Path.GetDirectoryName fileName
+                Arguments = args.ToStartInfo }
             ) TimeSpan.MaxValue
 
         if exitCode <> 0 then

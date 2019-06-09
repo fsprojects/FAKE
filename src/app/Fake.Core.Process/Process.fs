@@ -709,7 +709,7 @@ module Process =
     let UseDefaults = id
 
     /// [omit]
-    [<Obsolete "Use the Arguments and Args modules/types instead">]
+    [<Obsolete "Use the Arguments.appendNotEmpty and the Args modules/types instead.">]
     let stringParam (paramName, paramValue) = 
         if String.isNullOrEmpty paramValue then None
         else Some(paramName, paramValue)
@@ -719,14 +719,14 @@ module Process =
     let multipleStringParams paramName = Seq.map (fun x -> stringParam (paramName, x)) >> Seq.toList
 
     /// [omit]
-    [<Obsolete "Use the Arguments and Args modules/types instead">]
+    [<Obsolete "Use the Arguments.appendOption and Args modules/types instead">]
     let optionParam (paramName, paramValue) = 
         match paramValue with
         | Some x -> Some(paramName, x.ToString())
         | None -> None
 
     /// [omit]
-    [<Obsolete "Use the Arguments and Args modules/types instead">]
+    [<Obsolete "Use the Arguments.appendIf and Args modules/types instead">]
     let boolParam (paramName, paramValue) = 
         if paramValue then Some(paramName, null)
         else None

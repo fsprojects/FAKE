@@ -154,10 +154,30 @@ type Arguments =
             CmdLineParsing.toProcessStartInfo x.Args
 
 module Arguments =
+    let toWindowsCommandLine (a:Arguments) = a.ToWindowsCommandLine
+    let toLinuxShellCommandLine (a:Arguments) = a.ToLinuxShellCommandLine
+    let toStartInfo (a:Arguments) = a.ToStartInfo
+
     let withPrefix (s:string seq) (a:Arguments) =
         Arguments.OfArgs(Seq.append s a.Args)
     let append s (a:Arguments) =
         Arguments.OfArgs(Seq.append a.Args s)
+
+    /// Append an argument prefixed by another if the value is Some.
+    let appendOption (paramName:string) (paramValue:string option) (a:Arguments) =
+        match paramValue with
+        | Some x -> a |> append [ paramName; x ]
+        | None -> a
+
+    /// Append an argument to a command line if a condition is true.
+    let appendIf value paramName (a:Arguments) =
+        if value then a |> append [ paramName ]
+        else a
+
+    /// Append an argument prefixed by another if the value is not null or empty
+    let appendNotEmpty paramName paramValue (a:Arguments) =
+        if String.isNullOrEmpty paramValue then a
+        else a |> append [ paramName; paramValue ]
 
     let toList (a:Arguments) =
         a.Args |> Array.toList
