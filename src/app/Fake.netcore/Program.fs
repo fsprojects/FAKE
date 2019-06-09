@@ -326,6 +326,8 @@ let main (args:string[]) =
     reportExn VerboseLevel.Normal exn
     exitCode <- 1
   Console.OutputEncoding <- encoding
+  // Potential fix for https://github.com/fsharp/FAKE/issues/2173
+  Console.ResetColor()
 #if !NETSTANDARD1_6
   //if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
   if Environment.ExitCode <> 0 then exitCode <- Environment.ExitCode

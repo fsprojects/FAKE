@@ -6,6 +6,7 @@
 * ENHANCEMENT: Fake 5 now supports native libraries (like SQL and SQLite NuGet packages) - https://github.com/fsharp/FAKE/issues/2007
 * BUGFIX: DotNet.exec (dotnet installer) fails when username has a blank - https://github.com/fsharp/FAKE/issues/2319
 * BUGFIX: Error when invoking fake run with different casings - https://github.com/fsharp/FAKE/issues/2314
+* BUGFIX: Potential fix for incorrect console colors after running fake - https://github.com/fsharp/FAKE/issues/2173
 * DOCS: Document difference between `@@` and `</>` as well as `Path.combineTrimEnd` and `Path.combine` - https://github.com/fsharp/FAKE/issues/2329
 
 ## 5.13.7 - 2019-05-11
