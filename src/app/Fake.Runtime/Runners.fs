@@ -91,7 +91,7 @@ and CoreCacheInfo =
         Warnings = x.Warnings }
 type FakeContext =
   { Config : FakeConfig
-    AssemblyContext : AssemblyLoadContext
+    CreateAssemblyContext : unit -> AssemblyLoadContext
     FakeDirectory : string
     Hash : string }
     member x.FileName = Path.GetFileNameWithoutExtension x.Config.ScriptFilePath

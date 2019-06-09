@@ -296,32 +296,8 @@ let main (args:string[]) =
   let paketPerfTask =
       async {
         try
-            // TODO: Use new Paket API for this after update
-            // do! PublicAPI.PreCalculateMaps() |> Async.AwaitTask
             Paket.Constants.NuGetCacheFolder |> ignore // make sure to call ..cctor
-            Paket.KnownTargetProfiles.AllProfiles
-            |> Seq.iter (fun profile -> 
-                Paket.SupportCalculation.getPlatformsSupporting profile |> ignore
-                let fws =
-                    profile.Frameworks
-                    |> List.filter (function
-                        | Paket.MonoTouch
-                        | Paket.UAP _
-                        | Paket.MonoAndroid _
-                        | Paket.XamariniOS
-                        | Paket.XamarinTV
-                        | Paket.XamarinWatch
-                        | Paket.XamarinMac
-                        | Paket.DotNetCoreApp _
-                        | Paket.DotNetStandard _
-                        | Paket.Tizen _ -> false
-                        | _ -> true)
-                if fws.Length > 0 then Paket.SupportCalculation.findPortable false fws |> ignore
-                // Paket.PlatformMatching.getSupportedTargetProfiles
-            )
-            // calculated as part of the above...
-            Paket.SupportCalculation.getSupportedPreCalculated (Paket.PortableProfileType.Profile259) |> ignore
-            
+            do! Paket.PublicAPI.PreCalculateMaps() |> Async.AwaitTask
         with e -> eprintfn "Building paket performance maps failed: %O" e
       }
       |> Async.StartAsTask

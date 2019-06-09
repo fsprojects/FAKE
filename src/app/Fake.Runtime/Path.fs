@@ -4,6 +4,8 @@ module Fake.Runtime.Path
 open System
 open System.IO
 
+let internal isCaseInSensitive = Paket.Utils.isWindows
+
 // Normalizes path for different OS
 let inline normalizePath (path : string) = 
     path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
@@ -15,7 +17,7 @@ let private nugetDir = Path.GetFullPath(Paket.Constants.UserNuGetPackagesFolder)
 let fixPathForCache scriptPath (s:string) =
     let norm = Path.GetFullPath s
     let scriptDir = Path.GetDirectoryName (Path.GetFullPath scriptPath) + "/"
-    if norm.StartsWith(nugetDir, if Paket.Utils.isWindows then StringComparison.OrdinalIgnoreCase else StringComparison.Ordinal) then
+    if norm.StartsWith(nugetDir, if isCaseInSensitive then StringComparison.OrdinalIgnoreCase else StringComparison.Ordinal) then
       sprintf "nugetcache:///%s" (norm.Substring(nugetDir.Length).Replace("\\", "/"))
     else
       let scriptDir = Uri(scriptDir)

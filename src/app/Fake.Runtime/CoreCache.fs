@@ -380,6 +380,7 @@ This can happen for various reasons:
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
 type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list, nativeLibraries:NativeLibrary list) =
+  // Mark as Collectible once supported: https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
   inherit AssemblyLoadContext()
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
@@ -455,17 +456,18 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
 
     let context =
       { FakeContext.Config = config
-        AssemblyContext = Unchecked.defaultof<_>
+        CreateAssemblyContext = fun () -> failwithf "No context creation function set yet."
         FakeDirectory = fakeDir
         Hash = scriptHash }
     let context, cache = cache.TryLoadCache context
 #if NETSTANDARD1_6
     // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = FakeLoadContext(context.Config.VerboseLevel, context.Config.RuntimeOptions.RuntimeDependencies, context.Config.RuntimeOptions.NativeLibraries)
+    let fakeLoadContext () : AssemblyLoadContext =
+        FakeLoadContext(context.Config.VerboseLevel, context.Config.RuntimeOptions.RuntimeDependencies, context.Config.RuntimeOptions.NativeLibraries) :> _
 #else
-    let fakeLoadContext = new AssemblyLoadContext()
+    let fakeLoadContext () : AssemblyLoadContext = new AssemblyLoadContext()
 #endif
-    { context with AssemblyContext = fakeLoadContext }, cache
+    { context with CreateAssemblyContext = fakeLoadContext }, cache
 
 let setupAssemblyResolverLogger (context:FakeContext) =
 #if NETSTANDARD1_6

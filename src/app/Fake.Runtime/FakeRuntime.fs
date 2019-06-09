@@ -532,6 +532,13 @@ If you know what you are doing you can silence this warning by setting the envir
 
 
 let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
+  let scriptPath =
+    if Path.isCaseInSensitive then
+      // fixes https://github.com/fsharp/FAKE/issues/2314
+      let dir = Path.GetDirectoryName scriptPath
+      let name = Path.GetFileName scriptPath
+      Path.Combine(dir, name.ToLowerInvariant())
+    else scriptPath
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
   let newFsiOptions =

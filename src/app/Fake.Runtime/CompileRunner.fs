@@ -44,39 +44,48 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath context.Config.ScriptArgs
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+    let assemblyContext = context.CreateAssemblyContext()
     let result =
-      Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
-        let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
-        let ass = context.AssemblyContext.LoadFromAssemblyPath fullPath
-        let types =
-            try ass.GetTypes()
-            with :? ReflectionTypeLoadException as ref ->
-                traceFAKE "Could not load types of compiled script:"
-                for err in ref.LoaderExceptions do
-                    if context.Config.VerboseLevel.PrintVerbose then
-                        traceFAKE " - %O" err
-                    else
-                        traceFAKE " - %s" err.Message
-                ref.Types
-        match types
-              |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
-              |> Seq.map (fun t -> t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
-              |> Seq.filter (isNull >> not)
-              |> Seq.tryHead with
-        | Some mainMethod ->
-          untilInvoke.Dispose()
-          try use __  = Fake.Profile.startCategory Fake.Profile.Category.UserTime
-              mainMethod.Invoke(null, [||]) |> ignore
-              None
-          with
-          | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
-              Some targetInvocation.InnerException
-          | ex ->
-              Some ex
-        | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
+      try
+        let result =
+          Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+            let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
+            let ass = assemblyContext.LoadFromAssemblyPath fullPath
+            let types =
+                try ass.GetTypes()
+                with :? ReflectionTypeLoadException as ref ->
+                    traceFAKE "Could not load types of compiled script:"
+                    for err in ref.LoaderExceptions do
+                        if context.Config.VerboseLevel.PrintVerbose then
+                            traceFAKE " - %O" err
+                        else
+                            traceFAKE " - %s" err.Message
+                    ref.Types
+            match types
+                  |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
+                  |> Seq.map (fun t -> t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
+                  |> Seq.filter (isNull >> not)
+                  |> Seq.tryHead with
+            | Some mainMethod ->
+              untilInvoke.Dispose()
+              try use __  = Fake.Profile.startCategory Fake.Profile.Category.UserTime
+                  mainMethod.Invoke(null, [||]) |> ignore
+                  None
+              with
+              | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
+                  Some targetInvocation.InnerException
+              | ex ->
+                  Some ex
+            | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
-    use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
-    (execContext :> System.IDisposable).Dispose()
+        use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
+        (execContext :> System.IDisposable).Dispose()
+        result
+      finally
+          ()
+          // When we have netcore 3 unload assemblies to fix https://github.com/fsharp/FAKE/issues/2314
+          // https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
+          //assemblyContext.Unload()
     match result with
     | None -> RunResult.SuccessRun c.Warnings
     | Some e -> RunResult.RuntimeError e

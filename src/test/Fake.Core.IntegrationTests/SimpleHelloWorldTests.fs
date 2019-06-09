@@ -12,8 +12,14 @@ let fail s = Expect.isTrue s false
 [<Tests>]
 let tests = 
   testList "Fake.Core.IntegrationTests" [
-    testCase "no dependencies hello world" <| fun _ ->
-        let result = fakeRunAndCheck "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
+    testCase "no dependencies hello world and casing #2314" <| fun _ ->
+        let result =
+            if Paket.Utils.isWindows then
+                // #2314
+                fakeRunAndCheck "HELLO_world.fsx" "HELLO_world.fsx" "core-no-dependencies-hello-world"
+                |> ignore
+                directFake "run hello_world.fsx" "core-no-dependencies-hello-world"
+            else fakeRunAndCheck "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
 
