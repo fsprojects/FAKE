@@ -18,7 +18,7 @@ let tests =
                 // #2314
                 fakeRunAndCheck "HELLO_world.fsx" "HELLO_world.fsx" "core-no-dependencies-hello-world"
                 |> ignore
-                directFake "run hello_world.fsx" "core-no-dependencies-hello-world"
+                directFake "--silent run hello_world.fsx" "core-no-dependencies-hello-world"
             else fakeRunAndCheck "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
