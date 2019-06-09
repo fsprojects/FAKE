@@ -3,7 +3,7 @@
 /// ### Sample
 ///
 ///        Target.create "ILMerge" (fun _ ->
-///             let target = !!./bin/Release/*.exe" |> Seq.head
+///             let target = !!"./bin/Release/*.exe" |> Seq.head
 ///             let out = "./bin" @@ (Path.GetFileName target)
 ///             ILMerge.run
 ///               { ILMerge.Params.Create() with DebugInfo = true
