@@ -485,7 +485,7 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         ))
 
 let runScriptWithCacheProviderExt (config:FakeConfig) (cache:ICachingProvider) : RunResult * ResultCoreCacheInfo * FakeContext =
-    let newContext, cacheInfo =  prepareContext config cache
+    let newContext, cacheInfo = prepareContext config cache
 
     setupAssemblyResolverLogger newContext
     // Create an env var that only contains the build script args part from the --fsiargs (or "").

@@ -438,8 +438,7 @@ type PrepareInfo =
     { _CacheDir : string
       _Config : FakeConfig
       _Section : FakeHeader.FakeSection
-      _DependencyType : PreparedDependencyType
-      _CachingProvider : CoreCache.ICachingProvider }
+      _DependencyType : PreparedDependencyType }
   member x.CacheDir = x._CacheDir
   member x.DependencyType = x._DependencyType
 
@@ -507,8 +506,7 @@ let prepareFakeScript (config:FakeConfig) =
           _DependencyType =
             match section with
             | FakeHeader.PaketDependencies(FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
-            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef
-          _CachingProvider = restoreDependencies config cacheDir section }
+            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef }
     | None ->
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
@@ -527,9 +525,10 @@ If you know what you are doing you can silence this warning by setting the envir
         { _CacheDir = cacheDir
           _Config = config
           _Section = section
-          _DependencyType = PreparedDependencyType.DefaultDependencies
-          _CachingProvider = restoreDependencies config cacheDir section }
+          _DependencyType = PreparedDependencyType.DefaultDependencies }
 
+let restoreAndCreateCachingProvider (p:PrepareInfo) =
+    restoreDependencies p._Config p._CacheDir p._Section
 
 let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
   let scriptPath =
@@ -570,4 +569,5 @@ let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) sc
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
 let runScript (preparedScript:PrepareInfo) : RunResult * ResultCoreCacheInfo * FakeContext =
-  CoreCache.runScriptWithCacheProviderExt preparedScript._Config preparedScript._CachingProvider
+    let cachingProvider = restoreAndCreateCachingProvider preparedScript
+    CoreCache.runScriptWithCacheProviderExt preparedScript._Config cachingProvider
