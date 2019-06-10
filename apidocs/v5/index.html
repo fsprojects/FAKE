@@ -1869,20 +1869,23 @@ See <a href="https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-comma
 <span class="l">12: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;ILMerge&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-        <span class="k">let</span> <span class="id">target</span> <span class="o">=</span> <span class="o">!!./</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/*.</span><span class="id">exe</span><span class="s">&quot; |&gt; Seq.head</span>
-<span class="s">        let out = &quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="s">&quot; @@ (Path.GetFileName target)</span>
-<span class="s">        ILMerge.run</span>
-<span class="s">          { ILMerge.Params.Create() with DebugInfo = true</span>
-<span class="s">                                         TargetKind = ILMerge.TargetKind.Exe</span>
-<span class="s">                                         Internalize = ILMerge.InternalizeTypes.Internalize</span>
-<span class="s">                                         Libraries =</span>
-<span class="s">                                            Seq.concat</span>
-<span class="s">                                              [ !!&quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/</span><span class="id">Mono</span><span class="pn">.</span><span class="id">C</span><span class="o">*.</span><span class="id">dll</span><span class="s">&quot;</span>
-<span class="s">                                                !!&quot;</span><span class="pn">.</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">Release</span><span class="o">/</span><span class="id">Newton</span><span class="o">*.</span><span class="id">dll</span><span class="s">&quot; ]</span>
-<span class="s">                                         AttributeFile = target } out target)</span>
+        <span class="k">let</span> <span class="id">target</span> <span class="o">=</span> <span class="o">!!</span><span class="s">&quot;./bin/Release/*.exe&quot;</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">head</span>
+        <span class="k">let</span> <span class="id">out</span> <span class="o">=</span> <span class="s">&quot;./bin&quot;</span> <span class="id">@@</span> <span class="pn">(</span><span class="id">Path</span><span class="pn">.</span><span class="id">GetFileName</span> <span class="id">target</span><span class="pn">)</span>
+        <span class="id">ILMerge</span><span class="pn">.</span><span class="id">run</span>
+          <span class="pn">{</span> <span class="id">ILMerge</span><span class="pn">.</span><span class="id">Params</span><span class="pn">.</span><span class="id">Create</span><span class="pn">(</span><span class="pn">)</span> <span class="k">with</span> <span class="id">DebugInfo</span> <span class="o">=</span> <span class="k">true</span>
+                                         <span class="id">TargetKind</span> <span class="o">=</span> <span class="id">ILMerge</span><span class="pn">.</span><span class="id">TargetKind</span><span class="pn">.</span><span class="id">Exe</span>
+                                         <span class="id">Internalize</span> <span class="o">=</span> <span class="id">ILMerge</span><span class="pn">.</span><span class="id">InternalizeTypes</span><span class="pn">.</span><span class="id">Internalize</span>
+                                         <span class="id">Libraries</span> <span class="o">=</span>
+                                            <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">concat</span>
+                                              <span class="pn">[</span> <span class="o">!!</span><span class="s">&quot;./bin/Release/Mono.C*.dll&quot;</span>
+                                                <span class="o">!!</span><span class="s">&quot;./bin/Release/Newton*.dll&quot;</span> <span class="pn">]</span>
+                                         <span class="id">AttributeFile</span> <span class="o">=</span> <span class="id">target</span> <span class="pn">}</span> <span class="id">out</span> <span class="id">target</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
+<div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs2">val head : source:seq&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs3">val concat : sources:seq&lt;#seq&lt;&#39;T&gt;&gt; -&gt; seq&lt;&#39;T&gt;</div>
 
 
           </td>
@@ -3117,7 +3120,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.13.7</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.14.0-alpha.1085</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
