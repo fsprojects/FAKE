@@ -80,6 +80,15 @@ let tests =
 
     testCase "issue #2007 - native libs work" <| fun _ ->
         handleAndFormat <| fun () ->
-            fakeRunAndCheck "build.fsx" "build.fsx" "i002007-native-libs" |> ignore
+            //if Environment.isWindows then
+                let scriptName = "build.fsx"
+                let runArgs = sprintf "-v run %s" "build.fsx"
+                let scenario = "i002007-native-libs"
+                let path = scenarioTempPath scenario
+
+                let result = fakeInPath runArgs scenario path
+                checkIntellisenseInPath scriptName (resolvePath scenario path)
+                ignore result
+                
     
   ]
