@@ -5,6 +5,7 @@
     <AssemblyName>Fake.Runtime</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
+    <!-- NOTE: The defines are required to still build legacy Fakelib (where the same files are used) -->
     <DefineConstants>$(DefineConstants);NETSTANDARD1_6;NETSTANDARD1_5</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

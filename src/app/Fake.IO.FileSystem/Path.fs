@@ -9,7 +9,7 @@ open System.IO
 open System.Collections.Generic
 open System.Collections.Concurrent
 
-/// Combines two path strings using Path.Combine
+/// Combines two path strings using Path.Combine. Trims leading slashes of path2. This makes `combineTrimEnd "/test" "/sub"` return `/test/sub`
 let inline combineTrimEnd path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
 /// Combines two path strings using Path.Combine
 let inline combine path1 path2 = Path.Combine(path1, path2)

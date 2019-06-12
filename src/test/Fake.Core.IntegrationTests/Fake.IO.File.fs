@@ -3,22 +3,7 @@
 open Fake.IO
 open System.IO
 open Expecto
-
-type TestDir =
-    { Dir : string }
-    interface System.IDisposable with
-        member x.Dispose() =
-            try
-                Directory.Delete(x.Dir, true)
-            with e ->
-                eprintf "Failed to delete '%s': %O" x.Dir e
-                ()
-
- let createTestDir () =
-    let testFile = Path.combine (Path.GetTempPath ()) (Path.GetRandomFileName ())
-    Directory.CreateDirectory(testFile)
-        |> ignore<DirectoryInfo>
-    { Dir = testFile }
+open Fake.Core.IntegrationTests.TestHelpers
 
 [<Tests>]
 let tests =

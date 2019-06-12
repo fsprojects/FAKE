@@ -110,8 +110,11 @@ module internal Cache =
                           { context.Config with
                               CompileOptions =
                                 { context.Config.CompileOptions with
-                                    RuntimeDependencies = context.Config.CompileOptions.RuntimeDependencies @ readXml
                                     FsiOptions = { fsiOpts with References = fsiOpts.References @ (readXml |> List.map (fun x -> x.Location)) }
+                                }
+                              RuntimeOptions =
+                                { context.Config.RuntimeOptions with
+                                    RuntimeDependencies = context.Config.RuntimeOptions.RuntimeDependencies @ readXml
                                 }
                           }
                     }, Some config
@@ -175,17 +178,16 @@ module internal Cache =
                               CompileOptions =
                                 { context.Config.CompileOptions with
                                     FsiOptions = newAdditionalArgs
-                                    RuntimeDependencies = references @ context.Config.CompileOptions.RuntimeDependencies
+                                }
+                              RuntimeOptions =
+                                { context.Config.RuntimeOptions with
+                                    RuntimeDependencies = references @ context.Config.RuntimeOptions.RuntimeDependencies
                                 }
                           }
                     }, None
                 else context, None
             member x.SaveCache (context, cache) = () }
 #endif
-
-
-
-
 
 let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel) (assemInfo:AssemblyInfo) =
     let realLoadAssembly (assemInfo:AssemblyInfo) =
@@ -247,13 +249,16 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                 else                                
                     let location =
                         try Some assembly.Location 
-                        with e -> 
-                            if logLevel.PrintVerbose then tracefn "Could not get Location from '%s': %O" strName e
+                        with
+                        | :? NotSupportedException -> None // When this is a dynamic assembly
+                        | e ->
+                            if logLevel.PrintVerbose then tracefn "(DEBUG: Specify Exception Type) Could not get Location from '%s': %O" strName e
                             None
                     Some (location, assembly)
             with
+            | :? FileNotFoundException -> None // because the parameter is a an assembly name...
             | e ->
-                //eprintfn "Exception in LoadFromAssemblyName: %O" e
+                if logLevel.PrintVerbose then tracefn "(DEBUG: Specify Exception Type) Exception in LoadFromAssemblyName: %O" e
                 None
         match result with
         | Some r -> true, Some r
@@ -278,7 +283,7 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                     false, None
     match result with
     | Some (location, a) ->
-        if logLevel.PrintVerbose then 
+        if logLevel.PrintVerbose then
             if isPerfectMatch then
                 tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
             else
@@ -287,7 +292,7 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
     | _ ->
         if not (strName.StartsWith("FSharp.Compiler.Service.resources"))
         && not (strName.StartsWith("FSharp.Compiler.Service.MSBuild")) then
-            if logLevel.PrintVerbose then tracefn "Could not resolve: %s" strName
+            if logLevel.PrintVerbose then tracefn "Could not resolve assembly: %s" strName
         null
 
 let findAndLoadInRuntimeDepsCached =
@@ -326,13 +331,65 @@ This can happen for various reasons:
                     tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
         result
 
+let findAndLoadUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
+    if logLevel.PrintVerbose then tracefn "Trying to resolve native library: %s" unmanagedDllName
+    match nativeLibraries |> Seq.tryFind (fun l ->
+            let fnExt = Path.GetFileName l.File
+            let fn = Path.GetFileNameWithoutExtension l.File
+            unmanagedDllName = fn || unmanagedDllName = fnExt) with
+    | Some lib ->
+        let path = lib.File
+        let ptr = loadFromPath path
+        if logLevel.PrintVerbose then tracefn "Redirect native library '%s' to known path: %s" unmanagedDllName path
+        ptr, path
+    | None ->
+        // will failwithf later anyway.
+        if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s'!" unmanagedDllName
+        IntPtr.Zero, null
+
+let resolveUnmanagedDependencyCached =
+    let libCache = System.Collections.Concurrent.ConcurrentDictionary<_,nativeint * string>()
+    fun (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) ->
+        let mutable wasCalled = false
+        let ptr, path = libCache.GetOrAdd(unmanagedDllName, (fun _ ->
+            wasCalled <- true
+            findAndLoadUnmanagedInRuntimeDeps loadFromPath unmanagedDllName logLevel nativeLibraries))
+        if wasCalled && ptr = IntPtr.Zero then
+            let available =
+                if nativeLibraries.Length > 0 then
+                    "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
+                else "No native libraries found!"
+            failwithf """Could not resolve native library '%s'.
+%s
+
+This can happen for various reasons:
+- The nuget cache (or packages folder) might be broken.
+  -> Please save your state, open an issue and then
+  - delete the source package of '%s' from the '~/.nuget' cache (and the 'packages' folder)
+  - delete 'paket-files/paket.restore.cached' if it exists
+  - delete '<script.fsx>.lock' if it exists
+  - try running fake again
+  - the package should be downloaded again
+
+-> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName
+        if not wasCalled && not (ptr = IntPtr.Zero) then
+            if logLevel.PrintVerbose then
+                tracefn "Redirect native library '%s' to previous loaded library '%s'" unmanagedDllName path
+        ptr
+
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
-type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list) =
+type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list, nativeLibraries:NativeLibrary list) =
+  // Mark as Collectible once supported: https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
   inherit AssemblyLoadContext()
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
        findAndLoadInRuntimeDepsCached x assem printDetails allReferences
+  // Helper for FS0408, FS0419, FS0405
+  member private x.LoadUnmanagedDllFromPathHelper s = base.LoadUnmanagedDllFromPath s
+  // Support for unmanaged dlls, see https://github.com/fsharp/FAKE/issues/2007
+  override x.LoadUnmanagedDll(unmanagedDllName) =
+       resolveUnmanagedDependencyCached x.LoadUnmanagedDllFromPathHelper unmanagedDllName printDetails nativeLibraries
 #endif
 
 let fakeDirectoryName = ".fake"
@@ -399,29 +456,28 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
 
     let context =
       { FakeContext.Config = config
-        AssemblyContext = Unchecked.defaultof<_>
+        CreateAssemblyContext = fun () -> failwithf "No context creation function set yet."
         FakeDirectory = fakeDir
         Hash = scriptHash }
     let context, cache = cache.TryLoadCache context
 #if NETSTANDARD1_6
     // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = FakeLoadContext(context.Config.VerboseLevel, context.Config.CompileOptions.RuntimeDependencies)
+    let fakeLoadContext () : AssemblyLoadContext =
+        FakeLoadContext(context.Config.VerboseLevel, context.Config.RuntimeOptions.RuntimeDependencies, context.Config.RuntimeOptions.NativeLibraries) :> _
 #else
-    let fakeLoadContext = new AssemblyLoadContext()
+    let fakeLoadContext () : AssemblyLoadContext = new AssemblyLoadContext()
 #endif
-    { context with AssemblyContext = fakeLoadContext }, cache
+    { context with CreateAssemblyContext = fakeLoadContext }, cache
 
 let setupAssemblyResolverLogger (context:FakeContext) =
 #if NETSTANDARD1_6
     let globalLoadContext = AssemblyLoadContext.Default
     globalLoadContext.add_Resolving(new Func<AssemblyLoadContext, AssemblyName, Assembly>(fun _ name ->
         let strName = name.FullName
-        //fakeLoadContext.LoadFromAssemblyName(name)
 #else
     AppDomain.CurrentDomain.add_AssemblyResolve(new ResolveEventHandler(fun _ ev ->
         let strName = ev.Name
         let name = AssemblyName(strName)
-        //findAndLoadInRuntimeDeps loadContext name context.Config.PrintDetails context.Config.CompileOptions.RuntimeDependencies
 #endif
         if context.Config.VerboseLevel.PrintVerbose then
             printfn "Global resolve event: %s" name.FullName
@@ -429,7 +485,7 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         ))
 
 let runScriptWithCacheProviderExt (config:FakeConfig) (cache:ICachingProvider) : RunResult * ResultCoreCacheInfo * FakeContext =
-    let newContext, cacheInfo =  prepareContext config cache
+    let newContext, cacheInfo = prepareContext config cache
 
     setupAssemblyResolverLogger newContext
     // Create an env var that only contains the build script args part from the --fsiargs (or "").

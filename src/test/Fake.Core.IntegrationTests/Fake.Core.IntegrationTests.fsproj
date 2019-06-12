@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,10 +13,11 @@
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestHelpers.fs" />
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.NuGet.fs" />
     <Compile Include="Fake.IO.File.fs" />
-    <Compile Include="TestHelpers.fs" />
+    <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="SimpleHelloWorldTests.fs" />
     <Compile Include="Main.fs" />
     <None Include="testdata/testProperty.proj" CopyToOutputDirectory="PreserveNewest" />

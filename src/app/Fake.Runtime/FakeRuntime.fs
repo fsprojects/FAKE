@@ -12,6 +12,15 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
+[<RequireQualifiedAccess>]
+type DependencyFile =
+    | Assembly of AssemblyData
+    | Library of Runners.NativeLibrary
+    member x.Location =
+        match x with
+        | Assembly ass -> ass.Info.Location
+        | Library lib -> lib.File
+
 let internal filterValidAssembly (logLevel:VerboseLevel) (isSdk, isReferenceAssembly, fi:FileInfo) =
     let fullName = fi.FullName
     try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
@@ -39,8 +48,8 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketApi.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
-  let assemblyCacheHashFile = Path.Combine(cacheDir, "assemblies.cached")
-  let assemblyCacheFile = Path.Combine(cacheDir, "assemblies.txt")
+  let dependencyCacheHashFile = Path.Combine(cacheDir, "dependencies.cached")
+  let dependencyCacheFile = Path.Combine(cacheDir, "dependencies.txt")
 
 #if DOTNETCORE
   let getCurrentSDKReferenceFiles() =
@@ -153,9 +162,13 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let result =
           orderedGroup
           |> Seq.choose (fun p ->
-            RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
+            let r = RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved
+            if logLevel.PrintVerbose && r.IsSome then
+                printfn "Loaded runtime json from: %s-%s" p.Name.CompareString p.Version.AsString
+            r)
           |> RuntimeGraph.mergeSeq
         runtimeGraphProfile.Dispose()
+
         return result
       }
       |> Async.StartAsTask
@@ -174,23 +187,31 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       match cache.InstallModelTask groupName p.Name with
       | None -> return failwith "InstallModel not cached?"
       | Some installModelTask ->
-        let! installModel = installModelTask |> Async.AwaitTask
+        let! orig = installModelTask |> Async.AwaitTask
         let installModel =
-          installModel
+          orig
             .ApplyFrameworkRestrictions(Paket.Requirements.getExplicitRestriction p.Settings.FrameworkRestrictions)
         let targetProfile = Paket.TargetProfile.SinglePlatform framework
   
         let refAssemblies =
           installModel.GetCompileReferences targetProfile
           |> Seq.map (fun fi -> true, FileInfo fi.Path)
+        let! graph = graph |> Async.AwaitTask
         let runtimeAssemblies =
-          installModel.GetRuntimeAssemblies graph.Result rid targetProfile
+          installModel.GetRuntimeAssemblies graph rid targetProfile
           |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
+          |> Seq.toList
+        let runtimeLibraries =
+          installModel.GetRuntimeLibraries graph rid targetProfile
+          |> Seq.map (fun fi -> DependencyFile.Library { File = fi.Library.Path })
+          |> Seq.toList
         let result =
           Seq.append runtimeAssemblies refAssemblies
           |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
           |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
           |> Seq.choose (filterValidAssembly logLevel)
+          |> Seq.map DependencyFile.Assembly
+          |> Seq.append runtimeLibraries
           |> Seq.toList
         return result })
     |> Async.Parallel
@@ -201,6 +222,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
             (getCurrentSDKReferenceFiles()
                  |> Seq.map (fun file -> true, true, FileInfo file)
                  |> Seq.choose (filterValidAssembly logLevel))
+                 |> Seq.map DependencyFile.Assembly
 #endif  
         work.Result
         |> Seq.collect id
@@ -209,8 +231,12 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         |> Seq.append sdkRefs
 #endif  
     // If we have multiple select one
-    |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
-    |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
+    |> Seq.groupBy (function
+        | DependencyFile.Assembly ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name
+        | DependencyFile.Library lib -> false, lib.File)
+    |> Seq.map (fun (_, group) -> group |> Seq.maxBy (function
+        | DependencyFile.Assembly ass -> Version.Parse ass.Info.Version
+        | DependencyFile.Library lib -> new Version()))
     |> Seq.toList
 
   let restoreOrUpdate () =
@@ -257,48 +283,70 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       |> Async.StartAsTask
 
   let readFromCache () =
-      File.ReadLines(assemblyCacheFile)
+      File.ReadLines(dependencyCacheFile)
       |> Seq.map (fun line ->
         let splits = line.Split(';')
-        let isRef = bool.Parse splits.[0]
-        let ver = splits.[1]
-        let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
-        let fullName = splits.[3]
-        if not (File.Exists loc) then
-            failwithf "Cache is invalid as '%s' doesn't exist" fullName
-        { IsReferenceAssembly = isRef
-          Info =
-            { Runners.AssemblyInfo.FullName = fullName
-              Runners.AssemblyInfo.Version = ver
-              Runners.AssemblyInfo.Location = loc } })
+        let typ = splits.[0]
+        let (|Library|Assembly|) (input:string) =
+            match input.ToUpperInvariant() with
+            | "LIBRARY" -> Library
+            | "RUNTIMEASSEMBLY" -> Assembly false
+            | "REFERENCEASSEMBLY" -> Assembly true
+            | _ -> failwithf "Cache is invalid as '%s' is not a valid type" input
+        match typ.ToUpperInvariant() with
+        | Library ->
+            let loc = Path.readPathFromCache config.ScriptFilePath splits.[1]
+            if not (File.Exists loc) then
+                failwithf "Cache is invalid as '%s' doesn't exist" loc
+            DependencyFile.Library { File = loc }
+        | Assembly isRef ->
+            let ver = splits.[1]
+            let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
+            let fullName = splits.[3]
+            if not (File.Exists loc) then
+                failwithf "Cache is invalid as '%s' doesn't exist" fullName
+            DependencyFile.Assembly
+              { IsReferenceAssembly = isRef
+                Info =
+                  { Runners.AssemblyInfo.FullName = fullName
+                    Runners.AssemblyInfo.Version = ver
+                    Runners.AssemblyInfo.Location = loc } })
       |> Seq.toList
       
-  let writeToCache (list:AssemblyData list) =
+  let writeToCache (list:DependencyFile list) =
       list
-      |> Seq.map (fun item -> 
-        sprintf "%b;%s;%s;%s" 
-            item.IsReferenceAssembly
-            item.Info.Version
-            (Path.fixPathForCache config.ScriptFilePath item.Info.Location)
-            item.Info.FullName)
-      |> fun lines -> File.WriteAllLines(assemblyCacheFile, lines)
-      File.Copy(lockFilePath.FullName, assemblyCacheHashFile, true)
+      |> Seq.map (function
+        | DependencyFile.Assembly item ->
+            sprintf "%s;%s;%s;%s"
+                (if item.IsReferenceAssembly then "REFERENCEASSEMBLY" else "RUNTIMEASSEMBLY")
+                item.Info.Version
+                (Path.fixPathForCache config.ScriptFilePath item.Info.Location)
+                item.Info.FullName
+        | DependencyFile.Library lib ->
+            sprintf "%s;%s" "LIBRARY" (Path.fixPathForCache config.ScriptFilePath lib.File))
+      |> fun lines -> File.WriteAllLines(dependencyCacheFile, lines)
+      File.Copy(lockFilePath.FullName, dependencyCacheHashFile, true)
       ()
       
-  let getKnownAssemblies () =
+  let getKnownDependencies () =
       CoreCache.getCached
           (fun () -> let list = retrieveInfosUncached() in writeIntellisenseTask.Value |> ignore; list)
           readFromCache
           writeToCache
-          (fun _ -> File.Exists assemblyCacheHashFile && File.Exists assemblyCacheFile && File.ReadAllText assemblyCacheHashFile = File.ReadAllText lockFilePath.FullName)
+          (fun _ -> File.Exists dependencyCacheHashFile && File.Exists dependencyCacheFile && File.ReadAllText dependencyCacheHashFile = File.ReadAllText lockFilePath.FullName)
   
   // Restore or update immediatly, because or everything might be OK -> cached path.
   //let knownAssemblies, writeIntellisenseTask = restoreOrUpdate()
   do restoreOrUpdate()
-  let knownAssemblies = lazy getKnownAssemblies()
+  let knownDependencies = lazy getKnownDependencies()
 
   if logLevel.PrintVerbose then
-    Trace.tracefn "Known assemblies: \n\t%s" (System.String.Join("\n\t", knownAssemblies.Value |> Seq.map (fun a -> sprintf " - %s: %s (%s)" (if a.IsReferenceAssembly then "ref" else "lib") a.Info.Location a.Info.Version)))
+    Trace.tracefn "Known dependencies: \n\t%s" (System.String.Join("\n\t", knownDependencies.Value |> Seq.map (fun d ->
+        let typ, ver =
+            match d with
+            | DependencyFile.Assembly a -> (if a.IsReferenceAssembly then "ref" else "lib"), sprintf " (%s)" a.Info.Version
+            | DependencyFile.Library _ -> "native", ""
+        sprintf " - %s: %s%s" (typ) d.Location ver)))
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
         if logLevel.PrintVerbose then Trace.log "Invalidating cache..."
@@ -307,13 +355,16 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         with e -> Trace.traceError (sprintf "Failed to delete cached files: %O" e)
       member __.TryLoadCache (context) =
           let references =
-              knownAssemblies.Value
-              |> List.filter (fun a -> a.IsReferenceAssembly)
+              knownDependencies.Value
+              |> List.choose (function DependencyFile.Assembly a when a.IsReferenceAssembly -> Some a | _ -> None)
               |> List.map (fun (a:AssemblyData) -> a.Info.Location)
           let runtimeAssemblies =
-              knownAssemblies.Value
-              |> List.filter (fun a -> not a.IsReferenceAssembly)
+              knownDependencies.Value
+              |> List.choose (function DependencyFile.Assembly a when not a.IsReferenceAssembly -> Some a | _ -> None)
               |> List.map (fun a -> a.Info)
+          let nativeLibraries =
+              knownDependencies.Value
+              |> List.choose (function DependencyFile.Library a -> Some a | _ -> None)
           let newAdditionalArgs =
               { context.Config.CompileOptions.FsiOptions with
                   NoFramework = true
@@ -324,8 +375,12 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
                 { context.Config with
                     CompileOptions = 
                       { context.Config.CompileOptions with 
-                         FsiOptions = newAdditionalArgs
-                         RuntimeDependencies = runtimeAssemblies @ context.Config.CompileOptions.RuntimeDependencies }
+                         FsiOptions = newAdditionalArgs}
+                    RuntimeOptions =
+                      { context.Config.RuntimeOptions with
+                         RuntimeDependencies = runtimeAssemblies @ context.Config.RuntimeOptions.RuntimeDependencies
+                         NativeLibraries = nativeLibraries @ context.Config.RuntimeOptions.NativeLibraries }
+
                 }
           },
           let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
@@ -383,8 +438,7 @@ type PrepareInfo =
     { _CacheDir : string
       _Config : FakeConfig
       _Section : FakeHeader.FakeSection
-      _DependencyType : PreparedDependencyType
-      _CachingProvider : CoreCache.ICachingProvider }
+      _DependencyType : PreparedDependencyType }
   member x.CacheDir = x._CacheDir
   member x.DependencyType = x._DependencyType
 
@@ -452,8 +506,7 @@ let prepareFakeScript (config:FakeConfig) =
           _DependencyType =
             match section with
             | FakeHeader.PaketDependencies(FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
-            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef
-          _CachingProvider = restoreDependencies config cacheDir section }
+            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef }
     | None ->
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
@@ -472,11 +525,19 @@ If you know what you are doing you can silence this warning by setting the envir
         { _CacheDir = cacheDir
           _Config = config
           _Section = section
-          _DependencyType = PreparedDependencyType.DefaultDependencies
-          _CachingProvider = restoreDependencies config cacheDir section }
+          _DependencyType = PreparedDependencyType.DefaultDependencies }
 
+let restoreAndCreateCachingProvider (p:PrepareInfo) =
+    restoreDependencies p._Config p._CacheDir p._Section
 
 let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
+  let scriptPath =
+    if Path.isCaseInSensitive then
+      // fixes https://github.com/fsharp/FAKE/issues/2314
+      let dir = Path.GetDirectoryName scriptPath
+      let name = Path.GetFileName scriptPath
+      Path.Combine(dir, name.ToLowerInvariant())
+    else scriptPath
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
   let newFsiOptions =
@@ -494,8 +555,10 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
   { Runners.FakeConfig.VerboseLevel = logLevel
     Runners.FakeConfig.ScriptFilePath = Path.GetFullPath scriptPath
     Runners.FakeConfig.ScriptTokens = tokenized
-    Runners.FakeConfig.CompileOptions = 
-      { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
+    Runners.FakeConfig.CompileOptions =
+      { FsiOptions = newFsiOptions }
+    Runners.FakeConfig.RuntimeOptions =
+      { RuntimeDependencies = []; NativeLibraries = [] }
     Runners.FakeConfig.UseCache = useCache
     Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
     Runners.FakeConfig.Out = out
@@ -506,4 +569,5 @@ let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) sc
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
 let runScript (preparedScript:PrepareInfo) : RunResult * ResultCoreCacheInfo * FakeContext =
-  CoreCache.runScriptWithCacheProviderExt preparedScript._Config preparedScript._CachingProvider
+    let cachingProvider = restoreAndCreateCachingProvider preparedScript
+    CoreCache.runScriptWithCacheProviderExt preparedScript._Config cachingProvider

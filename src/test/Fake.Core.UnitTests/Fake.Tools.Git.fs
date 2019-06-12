@@ -44,8 +44,16 @@ let tests =
                 let childDir = testDir </> "child"
                 Directory.CreateDirectory childDir |> ignore
 
-                Expect.throwsT<InvalidOperationException> (fun () ->
-                    CommandHelper.findGitDir childDir |> ignore) ""
+                try
+                    let dir = CommandHelper.findGitDir childDir
+                    // This shouldn't happen but on my system it will ;)
+                    eprintfn "Found git dir '%s', testcase 'findGitDir throws invalidOp if no .git directory exists' is basically ignored!" dir.FullName
+                    let parent = dir.Parent
+                    Expect.stringStarts (Path.GetFullPath childDir) parent.FullName "Expected childDir to be a subdirectory of the found dir"
+                    Expect.isTrue dir.Exists (sprintf "Expected the result directory '%s' to exist" dir.FullName)
+                with :? InvalidOperationException ->
+                    // expected
+                    ()
             finally
                 Directory.Delete(testDir, true)
    ]

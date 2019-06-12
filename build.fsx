@@ -1299,7 +1299,7 @@ if buildLegacy then
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
-    =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows && chocosource <> "disabled")
     ==> "FastRelease"
 "EnsureTestsRun" ?=> "DotNetCorePushChocolateyPackage"
 
@@ -1309,9 +1309,11 @@ if buildLegacy then
 "EnsureTestsRun" ?=> "ReleaseDocs"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
-    ==> "DotNetCorePushNuGet"
+    =?> ("DotNetCorePushNuGet", nugetsource <> "disabled")
     ==> "FastRelease"
-"EnsureTestsRun" ?=> "DotNetCorePushNuGet"
+
+if nugetsource <> "disabled" then
+    ignore ("EnsureTestsRun" ?=> "DotNetCorePushNuGet")
 
 
 // Gitlab staging (myget release)
