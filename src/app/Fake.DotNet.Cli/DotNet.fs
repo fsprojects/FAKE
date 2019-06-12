@@ -178,11 +178,11 @@ module DotNet =
 
     /// .NET Core SDK version (used to specify version when installing .NET Core SDK)
     type CliVersion =
-        /// most latest build on specific channel
+        ///  Latest build on the channel (used with the -Channel option).
         | Latest
-        ///  last known good version on specific channel (Note: LKG work is in progress. Once the work is finished, this will become new default)
-        | Lkg
-        /// 4-part version in a format A.B.C.D - represents specific version of build
+        /// Latest coherent build on the channel; uses the latest stable package combination (used with Branch name -Channel options).
+        | Coherent
+        /// Three-part version in X.Y.Z format representing a specific build version; supersedes the -Channel option. For example: 2.0.0-preview2-006120.
         | Version of string
         /// Take version from global.json and fail if it is not found.
         | GlobalJson
@@ -194,7 +194,13 @@ module DotNet =
         {
             /// Custom installer obtain (download) options
             InstallerOptions: InstallerOptions -> InstallerOptions
-            /// .NET Core SDK channel (defaults to normalized installer branch)
+            /// Specifies the source channel for the installation. The possible values are:
+            /// - `Current` - Most current release.
+            /// - `LTS` - Long-Term Support channel (most current supported release).
+            /// - Two-part version in `X.Y` format representing a specific release (for example, `2.0` or `1.0`).
+            /// - Branch name. For example, release/2.0.0, release/2.0.0-preview2, or master (for nightly releases).
+            /// 
+            /// The default value is `LTS`. For more information on .NET support channels, see the .NET Support Policy page.
             Channel: string option
             /// .NET Core SDK version
             Version: CliVersion
@@ -449,7 +455,7 @@ module DotNet =
         let versionParamValue =
             match param.Version with
             | Latest -> "latest"
-            | Lkg -> "coherent"
+            | Coherent -> "coherent"
             | Version ver -> ver
             | GlobalJson -> getSDKVersionFromGlobalJson()
 
@@ -819,7 +825,7 @@ module DotNet =
         let checkVersion, fromGlobalJson =
             match param.Version with
             | Version version -> Some version, false
-            | CliVersion.Lkg -> None, false
+            | CliVersion.Coherent -> None, false
             | CliVersion.Latest -> None, false
             | CliVersion.GlobalJson -> Some (getSDKVersionFromGlobalJson()), true
 
@@ -875,7 +881,6 @@ module DotNet =
                 let installArgs = buildDotNetCliInstallArgs param
                 if Environment.isUnix then
                     let args = installArgs |> Arguments.withPrefix [ installScript ]
-                    //let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs param)
                     args, "bash" // Otherwise we need to set the executable flag!
                 else
                     let command = installArgs |> Arguments.withPrefix [ installScript ]

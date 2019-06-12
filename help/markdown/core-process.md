@@ -40,6 +40,22 @@ CreateProcess.fromRawCommandLine "./folder/mytool.exe" "arg1 arg2 arg3"
 
 ```
 
+Or use some FAKE helpers:
+
+```fsharp
+open Fake.Core
+
+Arguments.Empty
+|> Arguments.appendIf true "-Verbose"
+|> Arguments.appendNotEmpty "-Channel" channelParamValue
+|> Arguments.appendNotEmpty "-Version" versionParamValue
+|> Arguments.appendOption "-Architecture" architectureParamValue
+|> Arguments.appendNotEmpty "-InstallDir" (defaultArg param.CustomInstallDir defaultUserInstallDir)
+|> Arguments.appendIf param.DebugSymbols "-DebugSymbols"
+|> Arguments.appendIf param.DryRun "-DryRun"
+|> Arguments.appendIf param.NoPath "-NoPath"
+```
+
 Or use helper libraries like [`BlackFox.CommandLine`](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine):
 
 ```fsharp

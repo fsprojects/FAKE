@@ -234,7 +234,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
     |> Seq.groupBy (function
         | DependencyFile.Assembly ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name
         | DependencyFile.Library lib -> false, lib.File)
-    |> Seq.map (fun (_, group) -> group |> Seq.maxBy(function
+    |> Seq.map (fun (_, group) -> group |> Seq.maxBy (function
         | DependencyFile.Assembly ass -> Version.Parse ass.Info.Version
         | DependencyFile.Library lib -> new Version()))
     |> Seq.toList

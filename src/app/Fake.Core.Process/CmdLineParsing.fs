@@ -138,28 +138,38 @@ type Arguments =
 
     /// This is the reverse of https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     member x.ToWindowsCommandLine = Args.toWindowsCommandLine x.Args// |> CmdLine.toString
+    /// Escape the given argument list according to a unix shell (bash)
     member x.ToLinuxShellCommandLine = Args.toLinuxShellCommandLine x.Args// |> CmdLine.toList |> Args.toLinuxShellCommandLine
 
     /// Create a new arguments object from the given list of arguments
     static member OfArgs (args:string seq) = { Args = args |> Seq.toArray; Original = None }
 
     /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
+    /// Same as `OfWindowsCommandLine`.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
 
     /// Create a new command line string which can be used in a ProcessStartInfo object.
+    /// If given, returns the exact input of `OfWindowsCommandLine` otherwise `ToWindowsCommandLine` (with some special code for `mono`) is used.
     member x.ToStartInfo =
         match x.Original with
         | Some orig -> orig
         | None ->
             CmdLineParsing.toProcessStartInfo x.Args
 
+/// Module for working with an `Arguments` instance
 module Arguments =
+    /// This is the reverse of https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     let toWindowsCommandLine (a:Arguments) = a.ToWindowsCommandLine
+    /// Escape the given argument list according to a unix shell (bash)
     let toLinuxShellCommandLine (a:Arguments) = a.ToLinuxShellCommandLine
+    /// Create a new command line string which can be used in a ProcessStartInfo object.
+    /// If given, returns the exact input of `OfWindowsCommandLine` otherwise `ToWindowsCommandLine` (with some special code for `mono`) is used.
     let toStartInfo (a:Arguments) = a.ToStartInfo
 
+    /// Append the given arguments before all current arguments 
     let withPrefix (s:string seq) (a:Arguments) =
         Arguments.OfArgs(Seq.append s a.Args)
+    /// Append all arguments after the current arguments    
     let append s (a:Arguments) =
         Arguments.OfArgs(Seq.append a.Args s)
 
@@ -179,12 +189,15 @@ module Arguments =
         if String.isNullOrEmpty paramValue then a
         else a |> append [ paramName; paramValue ]
 
+    /// Convert the arguments instance to a string list
     let toList (a:Arguments) =
         a.Args |> Array.toList
 
+    /// Convert the arguments instance to a string array
     let toArray (a:Arguments) =
         a.Args |> Array.toList |> Seq.toArray
 
+    /// Create a arguments instance from a list.
     let ofList (a:string list) =
         { Args = a |> Seq.toArray; Original = None }
 

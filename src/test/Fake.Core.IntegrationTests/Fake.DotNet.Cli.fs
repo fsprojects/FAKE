@@ -23,7 +23,7 @@ let tests =
                             CustomDownloadDir = Some installerDir }
                     ForceInstall = true
                     CustomInstallDir = Some preparedDir
-                    Version = DotNet.CliVersion.Lkg })
+                    Version = DotNet.CliVersion.Coherent })
 
             let opts = f (DotNet.Options.Create())
             Expect.isTrue (File.Exists opts.DotNetCliPath) "Expected dotnet executable to exist"
@@ -36,7 +36,7 @@ let tests =
                 { option with
                     ForceInstall = true
                     CustomInstallDir = Some preparedDir
-                    Version = DotNet.CliVersion.Lkg })
+                    Version = DotNet.CliVersion.Coherent })
 
             let opts = f (DotNet.Options.Create())
             Expect.isTrue (File.Exists opts.DotNetCliPath) "Expected dotnet executable to exist"
@@ -49,7 +49,7 @@ let tests =
                 { option with
                     ForceInstall = true
                     CustomInstallDir = Some preparedDir
-                    Version = DotNet.CliVersion.Lkg })
+                    Version = DotNet.CliVersion.Coherent })
 
             let opts = f (DotNet.Options.Create())
             Expect.isTrue (File.Exists opts.DotNetCliPath) "Expected dotnet executable to exist"
