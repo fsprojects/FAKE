@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.14.0-alpha - tbd
+## 5.14.0 - 2019-06-12
 
 * BREAKING: Renamed `NuGet.feedUrl` to `NuGet.galleryV1` and marked it as obsolete. Added `galleryV2` and `galleryV3` - https://github.com/fsharp/FAKE/issues/2323
 * ENHANCEMENT: Fake 5 now supports native libraries (like SQL and SQLite NuGet packages) - https://github.com/fsharp/FAKE/issues/2007
