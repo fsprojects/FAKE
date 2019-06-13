@@ -1,9 +1,8 @@
 # Release Notes
 
-## 5.14.1-alpha - 2019-06-13
+## 5.14.1 - 2019-06-13
 
 * BUGFIX: Fake 5 native libraries support now works on unix - https://github.com/fsharp/FAKE/pull/2334
-* tbd
 
 ## 5.14.0 - 2019-06-12
 
