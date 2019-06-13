@@ -331,7 +331,7 @@ This can happen for various reasons:
                     tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
         result
 
-let findAndLoadUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
+let findUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
     if logLevel.PrintVerbose then tracefn "Trying to resolve native library: %s" unmanagedDllName
     match nativeLibraries |> Seq.tryFind (fun l ->
             let fnExt = Path.GetFileName l.File
@@ -339,22 +339,22 @@ let findAndLoadUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmana
             unmanagedDllName = fn || unmanagedDllName = fnExt) with
     | Some lib ->
         let path = lib.File
-        let ptr = loadFromPath path
         if logLevel.PrintVerbose then tracefn "Redirect native library '%s' to known path: %s" unmanagedDllName path
-        ptr, path
+        path
     | None ->
         // will failwithf later anyway.
         if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s'!" unmanagedDllName
-        IntPtr.Zero, null
+        null
 
 let resolveUnmanagedDependencyCached =
-    let libCache = System.Collections.Concurrent.ConcurrentDictionary<_,nativeint * string>()
+    let libCache = System.Collections.Concurrent.ConcurrentDictionary<_,string>()
     fun (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) ->
         let mutable wasCalled = false
-        let ptr, path = libCache.GetOrAdd(unmanagedDllName, (fun _ ->
+        let path = libCache.GetOrAdd(unmanagedDllName, (fun _ ->
             wasCalled <- true
-            findAndLoadUnmanagedInRuntimeDeps loadFromPath unmanagedDllName logLevel nativeLibraries))
-        if wasCalled && ptr = IntPtr.Zero then
+            findUnmanagedInRuntimeDeps loadFromPath unmanagedDllName logLevel nativeLibraries))
+        
+        if wasCalled && isNull path then
             let available =
                 if nativeLibraries.Length > 0 then
                     "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
@@ -372,10 +372,10 @@ This can happen for various reasons:
   - the package should be downloaded again
 
 -> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName
-        if not wasCalled && not (ptr = IntPtr.Zero) then
+        if not wasCalled && not (isNull path) then
             if logLevel.PrintVerbose then
                 tracefn "Redirect native library '%s' to previous loaded library '%s'" unmanagedDllName path
-        ptr
+        loadFromPath path
 
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411

@@ -81,5 +81,4 @@ let tests =
     testCase "issue #2007 - native libs work" <| fun _ ->
         handleAndFormat <| fun () ->
             fakeRunAndCheck "build.fsx" "build.fsx" "i002007-native-libs" |> ignore
-    
   ]
