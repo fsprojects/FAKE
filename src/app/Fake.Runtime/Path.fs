@@ -6,6 +6,15 @@ open System.IO
 
 let internal isCaseInSensitive = Paket.Utils.isWindows
 
+let internal normalizeFileName fileName =
+    if isCaseInSensitive then
+        // fixes https://github.com/fsharp/FAKE/issues/2314
+        let dir = Path.GetDirectoryName fileName
+        let name = Path.GetFileName fileName
+        if String.IsNullOrEmpty dir then name.ToLowerInvariant()
+        else Path.Combine(dir, name.ToLowerInvariant())
+    else fileName
+
 // Normalizes path for different OS
 let inline normalizePath (path : string) = 
     path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)

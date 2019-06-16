@@ -162,6 +162,7 @@ group netcorerunner
     nuget Expecto.FsCheck
     nuget FsCheck
     nuget FParsec // commandline tests
+    nuget Newtonsoft.Json
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket

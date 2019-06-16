@@ -155,11 +155,11 @@ let publish f =``Legacy-build``.publish f
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
-    let cacheFolders = [ Paket.Constants.UserNuGetPackagesFolder; Paket.Constants.NuGetCacheFolder ]
-    for f in cacheFolders do
-        printfn "Clearing FAKE-NuGet packages in %s" f
-        !! (f </> "Fake.*")
-        |> Seq.iter (Shell.rm_rf)
+    //let cacheFolders = [ Paket.Constants.UserNuGetPackagesFolder; Paket.Constants.NuGetCacheFolder ]
+    //for f in cacheFolders do
+    //    printfn "Clearing FAKE-NuGet packages in %s" f
+    //    !! (f </> "Fake.*")
+    //    |> Seq.iter (Shell.rm_rf)
 
     let run workingDir fileName args =
         printfn "CWD: %s" workingDir
