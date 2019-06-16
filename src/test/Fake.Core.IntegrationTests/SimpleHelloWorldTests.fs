@@ -99,7 +99,7 @@ let tests =
         let tempFile = Path.GetTempFileName()
         try
             handleAndFormat <| fun () ->
-                directFake (sprintf "run reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
+                directFake (sprintf "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
             let json = File.ReadAllText tempFile
             let obj = JObject.Parse json
             let targets = obj.["targets"] :?> JArray
@@ -123,13 +123,13 @@ let tests =
             Expect.equal "Expected correct number of targets" 2 dict.Count
 
             let startTarget = dict.["Start"]
-            Expect.equal "Expected correct declaration of 'Start'" startTarget.Declaration { File = ""; Line = 25; Column = 0 }
+            Expect.equal "Expected correct declaration of 'Start'" startTarget.Declaration { File = ""; Line = 25; Column = 1 }
             Expect.equal "Expected correct hard dependencies of 'Start'" startTarget.HardDependencies []
             Expect.equal "Expected correct soft dependencies of 'Start'" startTarget.SoftDependencies []
             Expect.equal "Expected correct description of 'Start'" startTarget.Description "Test description"
             let testTarget = dict.["TestTarget"]
-            Expect.equal "Expected correct declaration of 'TestTarget'" testTarget.Declaration { File = ""; Line = 27; Column = 0 }
-            Expect.equal "Expected correct hard dependencies of 'TestTarget'" testTarget.HardDependencies [ { Name = "Start"; Declaration = { File = ""; Line = 35; Column = 0 } } ]
+            Expect.equal "Expected correct declaration of 'TestTarget'" testTarget.Declaration { File = ""; Line = 27; Column = 1 }
+            Expect.equal "Expected correct hard dependencies of 'TestTarget'" testTarget.HardDependencies [ { Name = "Start"; Declaration = { File = ""; Line = 34; Column = 1 } } ]
             Expect.equal "Expected correct description of 'TestTarget'" testTarget.Description ""
         finally
             try File.Delete tempFile with e -> ()

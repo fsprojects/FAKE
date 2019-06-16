@@ -166,7 +166,7 @@ module Target =
     let internal getDeclaration () =
         if shouldCollectStack () then
             let ctx = Fake.Core.Context.forceFakeContext ()
-            let st1 = new System.Diagnostics.StackTrace(new System.Diagnostics.StackFrame(1, true))
+            let st1 = new System.Diagnostics.StackTrace(1, true)
             let frames =
                 st1.GetFrames()
                 |> Seq.map (fun sf -> sf.GetFileName(), sf)

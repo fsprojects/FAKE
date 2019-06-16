@@ -2,7 +2,7 @@
   "profiles": {
     "Fake.netcore": {
       "commandName": "Project",
-      "commandLineArgs": "run --debug reference_fake-targets.fsx -- --write-info testfile.json",
+      "commandLineArgs": "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info testfile.json",
       "workingDirectory": "C:\\proj\\FAKE\\integrationtests\\core-reference-fake-core-targets\\temp"
     }
   }
