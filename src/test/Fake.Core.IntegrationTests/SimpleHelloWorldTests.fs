@@ -128,14 +128,14 @@ let tests =
             Expect.equal "Expected correct number of targets" 2 dict.Count
 
             let startTarget = dict.["Start"]
-            Expect.equal "Expected correct declaration of 'Start'" startTarget.Declaration { File = scriptFile; Line = 25; Column = 1 }
-            Expect.equal "Expected correct hard dependencies of 'Start'" startTarget.HardDependencies []
-            Expect.equal "Expected correct soft dependencies of 'Start'" startTarget.SoftDependencies []
-            Expect.equal "Expected correct description of 'Start'" startTarget.Description "Test description"
+            Expect.equal "Expected correct declaration of 'Start'" { File = scriptFile; Line = 25; Column = 1 } startTarget.Declaration
+            Expect.equal "Expected correct hard dependencies of 'Start'" [] startTarget.HardDependencies
+            Expect.equal "Expected correct soft dependencies of 'Start'" [] startTarget.SoftDependencies
+            Expect.equal "Expected correct description of 'Start'" "Test description" startTarget.Description
             let testTarget = dict.["TestTarget"]
-            Expect.equal "Expected correct declaration of 'TestTarget'" testTarget.Declaration { File = scriptFile; Line = 27; Column = 1 }
-            Expect.equal "Expected correct hard dependencies of 'TestTarget'" testTarget.HardDependencies [ { Name = "Start"; Declaration = { File = scriptFile; Line = 34; Column = 1 } } ]
-            Expect.equal "Expected correct description of 'TestTarget'" testTarget.Description ""
+            Expect.equal "Expected correct declaration of 'TestTarget'" { File = scriptFile; Line = 27; Column = 1 } testTarget.Declaration
+            Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { File = scriptFile; Line = 34; Column = 1 } } ] testTarget.HardDependencies
+            Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
         finally
             try File.Delete tempFile with e -> ()
 
