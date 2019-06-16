@@ -168,7 +168,8 @@ module Target =
             let ctx = Fake.Core.Context.forceFakeContext ()
             let st1 = new System.Diagnostics.StackTrace(1, true)
             let frames =
-                st1.GetFrames()
+                [ 0 .. st1.FrameCount - 1 ]
+                |> Seq.map (fun idx -> st1.GetFrame idx)
                 |> Seq.map (fun sf -> sf.GetFileName(), sf)
                 |> Seq.cache
             let fn =
@@ -179,10 +180,12 @@ module Target =
                 |> Option.orElseWith (fun _ ->
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
+                        // fallback to first script file
                         not (String.IsNullOrEmpty fn) && fn.EndsWith ".fsx"))
                 |> Option.orElseWith (fun _ ->
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
+                        // fallback to any information we might have...
                         not (String.IsNullOrEmpty fn)))
             fn
             |> Option.map (fun (fn, sf) ->
