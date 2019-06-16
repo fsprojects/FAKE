@@ -100,6 +100,7 @@ let tests =
         try
             let tmpPath = scenarioTempPath "core-reference-fake-core-targets"
             let fakeDir = Path.Combine(tmpPath, ".fake", "reference_fake-targets.fsx")
+            let scriptFile = Path.Combine(tmpPath, "reference_fake-targets.fsx")
             Directory.EnumerateFiles (fakeDir, "reference_fake-targets*")
                 |> Seq.iter File.Delete
             handleAndFormat <| fun () ->
@@ -127,13 +128,13 @@ let tests =
             Expect.equal "Expected correct number of targets" 2 dict.Count
 
             let startTarget = dict.["Start"]
-            Expect.equal "Expected correct declaration of 'Start'" startTarget.Declaration { File = ""; Line = 25; Column = 1 }
+            Expect.equal "Expected correct declaration of 'Start'" startTarget.Declaration { File = scriptFile; Line = 25; Column = 1 }
             Expect.equal "Expected correct hard dependencies of 'Start'" startTarget.HardDependencies []
             Expect.equal "Expected correct soft dependencies of 'Start'" startTarget.SoftDependencies []
             Expect.equal "Expected correct description of 'Start'" startTarget.Description "Test description"
             let testTarget = dict.["TestTarget"]
-            Expect.equal "Expected correct declaration of 'TestTarget'" testTarget.Declaration { File = ""; Line = 27; Column = 1 }
-            Expect.equal "Expected correct hard dependencies of 'TestTarget'" testTarget.HardDependencies [ { Name = "Start"; Declaration = { File = ""; Line = 34; Column = 1 } } ]
+            Expect.equal "Expected correct declaration of 'TestTarget'" testTarget.Declaration { File = scriptFile; Line = 27; Column = 1 }
+            Expect.equal "Expected correct hard dependencies of 'TestTarget'" testTarget.HardDependencies [ { Name = "Start"; Declaration = { File = scriptFile; Line = 34; Column = 1 } } ]
             Expect.equal "Expected correct description of 'TestTarget'" testTarget.Description ""
         finally
             try File.Delete tempFile with e -> ()
