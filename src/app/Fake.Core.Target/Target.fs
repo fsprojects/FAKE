@@ -12,6 +12,7 @@ module internal TargetCli =
         """
 Usage:
   fake-run --list
+  fake-run --write-info <file>
   fake-run --version
   fake-run --help | -h
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
@@ -66,15 +67,38 @@ and [<NoComparison>] [<NoEquality>] TargetParameter =
 
 /// [omit]
 and [<NoComparison>] [<NoEquality>] Target =
-    { Name: string;
-      Dependencies: string list;
-      SoftDependencies: string list;
-      Description: TargetDescription option;
+    { Name: string
+      Dependencies: string list
+      SoftDependencies: string list
+      Description: TargetDescription option
       Function : TargetParameter -> unit}
-    member x.DescriptionAsString = 
-        match x.Description with 
-        | Some d -> d 
+    member x.DescriptionAsString =
+        match x.Description with
+        | Some d -> d
         | _ -> null
+
+type internal DeclarationInfo =
+    { File: string; Line: int; Column: int }
+type internal Dependency =
+    { Name: string; Declaration: DeclarationInfo }
+type [<NoComparison>] [<NoEquality>] internal InternalTarget =
+    { Name: string
+      Dependencies: Dependency list
+      SoftDependencies: Dependency list
+      Description: TargetDescription option
+      DefinitionOrder : int
+      Declaration : DeclarationInfo
+      Function : TargetParameter -> unit }
+    member x.DescriptionAsString =
+        match x.Description with
+        | Some d -> d
+        | _ -> null
+    member x.AsTarget =
+        { Name = x.Name
+          Dependencies = x.Dependencies |> List.map (fun d -> d.Name)
+          SoftDependencies = x.SoftDependencies |> List.map (fun d -> d.Name)
+          Description = x.Description
+          Function = x.Function }
 
 /// Exception for request errors
 #if !NETSTANDARD1_6
@@ -122,6 +146,54 @@ module Target =
     let private getLastDescription, removeLastDescription, setLastDescription =
         Fake.Core.FakeVar.define lastDescriptionVar
     
+    /// [omit]
+    //let mutable LastDescription = null
+    let private collectStackVar = "Fake.Core.Target.CollectStack"
+    let private getCollectStack, removeCollectStack, (setCollectStack : bool -> unit) =
+        Fake.Core.FakeVar.define collectStackVar
+
+    let private shouldCollectStack() =
+        match getCollectStack () with
+        | Some b -> b
+        | None -> false
+
+    let internal isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
+    let internal getNormalizedFileName fileName =
+        let fn = System.IO.Path.GetFileName fileName
+        if isWindows then if isNull fn then null else fn.ToLowerInvariant()
+        else fn
+
+    let internal getDeclaration () =
+        if shouldCollectStack () then
+            let ctx = Fake.Core.Context.forceFakeContext ()
+            let st1 = new System.Diagnostics.StackTrace(1, true)
+            let frames =
+                [ 0 .. st1.FrameCount - 1 ]
+                |> Seq.map (fun idx -> st1.GetFrame idx)
+                |> Seq.map (fun sf -> sf.GetFileName(), sf)
+                |> Seq.cache
+            let normalizedScriptFile = getNormalizedFileName(ctx.ScriptFile)
+            let fn =
+                frames
+                |> Seq.tryFind (fun (fn, sf) ->
+                    let scriptName = getNormalizedFileName fn
+                    not (String.IsNullOrEmpty fn) && scriptName = normalizedScriptFile)
+                |> Option.orElseWith (fun _ ->
+                    frames
+                    |> Seq.tryFind (fun (fn, sf) ->
+                        // fallback to first script file
+                        not (String.IsNullOrEmpty fn) && fn.EndsWith ".fsx"))
+                |> Option.orElseWith (fun _ ->
+                    frames
+                    |> Seq.tryFind (fun (fn, sf) ->
+                        // fallback to any information we might have...
+                        not (String.IsNullOrEmpty fn)))
+            fn
+            |> Option.map (fun (fn, sf) ->
+                 { File = fn; Line = sf.GetFileLineNumber(); Column = sf.GetFileColumnNumber() })
+            |> Option.defaultValue { File = null; Line = 0; Column = 0 }
+        else { File = null; Line = 0; Column = 0}
+
     /// Sets the Description for the next target.
     /// [omit]
     let description text =
@@ -151,7 +223,7 @@ module Target =
                 d
     
     let internal getTargetDict =
-        getVarWithInit "TargetDict" (fun () -> new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
+        getVarWithInit "TargetDict" (fun () -> new Dictionary<string,InternalTarget>(StringComparer.OrdinalIgnoreCase))
 
     /// Final Targets - stores final targets and if they are activated.
     let internal getFinalTargets =
@@ -173,7 +245,7 @@ module Target =
     let internal getAllTargetsNames() = getTargetDict() |> Seq.map (fun t -> t.Key) |> Seq.toList
 
     /// Gets a target with the given name from the target dictionary.
-    let get name =
+    let internal getInternal name : InternalTarget =
         let d = getTargetDict()
         match d.TryGetValue (name) with
         | true, target -> target
@@ -182,16 +254,18 @@ module Target =
             for target in d do
                 Trace.traceError  <| sprintf "  - %s" target.Value.Name
             failwithf "Target \"%s\" is not defined." name
+    let get name : Target =
+        (getInternal name).AsTarget
 
     /// Returns the DependencyString for the given target.
-    let internal dependencyString target =
+    let internal dependencyString (target :Target) =
         if target.Dependencies.IsEmpty then String.Empty else
         target.Dependencies
-          |> Seq.map (fun d -> (get d).Name)
+          |> Seq.map (fun d -> (getInternal d).Name)
           |> String.separated ", "
           |> sprintf "(==> %s)"
 
-    let internal runSimpleInternal context target =
+    let internal runSimpleInternal context (target:Target) =
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
             try
@@ -203,7 +277,7 @@ module Target =
         watch.Stop()
         { Error = error; Time = watch.Elapsed; Target = target; WasSkipped = false }
     
-    let internal runSimpleContextInternal (traceStart: string -> string -> string -> Trace.ISafeDisposable) context target =
+    let internal runSimpleContextInternal (traceStart: string -> string -> string -> Trace.ISafeDisposable) context (target:Target) =
         use t = traceStart target.Name target.DescriptionAsString (dependencyString target)
         let result = runSimpleInternal context target
         if result.Error.IsSome then 
@@ -228,7 +302,7 @@ module Target =
     let internal softDependencyString target =
         if target.SoftDependencies.IsEmpty then String.Empty else
         target.SoftDependencies
-          |> Seq.map (fun d -> (get d).Name)
+          |> Seq.map (fun d -> (get d.Name).Name)
           |> String.separated ", "
           |> sprintf "(?=> %s)"
 
@@ -239,17 +313,17 @@ module Target =
     /// Checks whether the dependency (soft or normal) can be added.
     /// [omit]
     let internal checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetName =
-        let target = get targetName
-        let dependentTarget = get dependentTargetName
+        let target = getInternal targetName
+        let dependentTarget = getInternal dependentTargetName
         let visited = HashSet<string>(StringComparer.OrdinalIgnoreCase)
 
-        let rec checkDependencies dependentTarget =
+        let rec checkDependencies (dependentTarget:InternalTarget) =
             if visited.Add dependentTarget.Name then
                 fGetDependencies dependentTarget
-                |> List.iter (fun dep ->
-                    if String.Equals(dep, targetName, StringComparison.OrdinalIgnoreCase) then
+                |> List.iter (fun (dep : Dependency) ->
+                    if String.Equals(dep.Name, targetName, StringComparison.OrdinalIgnoreCase) then
                         failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
-                    checkDependencies (get dep))
+                    checkDependencies (getInternal dep.Name))
 
         checkDependencies dependentTarget
         target,dependentTarget
@@ -271,14 +345,15 @@ module Target =
 
         let hasDependency =
            target.Dependencies
-           |> Seq.exists (fun d -> String.Equals(d, dependentTargetName, StringComparison.OrdinalIgnoreCase))
+           |> Seq.exists (fun d -> String.Equals(d.Name, dependentTargetName, StringComparison.OrdinalIgnoreCase))
         if not hasDependency then
+            let decl = getDeclaration()
             getTargetDict().[targetName] <- 
                 { target with 
-                    Dependencies = dependentTargetName :: target.Dependencies
+                    Dependencies = { Name = dependentTargetName; Declaration = decl } :: target.Dependencies
                     SoftDependencies =
                         target.SoftDependencies
-                        |> List.filter (fun d -> not (String.Equals(d, dependentTargetName, StringComparison.OrdinalIgnoreCase)))
+                        |> List.filter (fun d -> not (String.Equals(d.Name, dependentTargetName, StringComparison.OrdinalIgnoreCase)))
                 }
 
     /// Appends the dependency to the list of soft dependencies.
@@ -288,15 +363,16 @@ module Target =
 
         let hasDependency =
            target.Dependencies
-           |> Seq.exists (fun d -> String.Equals(d, dependentTargetName, StringComparison.OrdinalIgnoreCase))
+           |> Seq.exists (fun d -> String.Equals(d.Name, dependentTargetName, StringComparison.OrdinalIgnoreCase))
         let hasSoftDependency =
            target.SoftDependencies
-           |> Seq.exists (fun d -> String.Equals(d, dependentTargetName, StringComparison.OrdinalIgnoreCase))
+           |> Seq.exists (fun d -> String.Equals(d.Name, dependentTargetName, StringComparison.OrdinalIgnoreCase))
         match hasDependency, hasSoftDependency with
         | true, _ -> ()
         | false, true -> ()
         | false, false ->
-            getTargetDict().[targetName] <- { target with SoftDependencies = dependentTargetName :: target.SoftDependencies }
+            let decl = getDeclaration()
+            getTargetDict().[targetName] <- { target with SoftDependencies = { Name = dependentTargetName; Declaration = decl } :: target.SoftDependencies }
 
     /// Adds the dependency to the list of dependencies.
     /// [omit]
@@ -321,7 +397,7 @@ module Target =
     /// [omit]
     let internal addTarget target name =
         getTargetDict().Add(name, target)
-        name <== target.Dependencies
+        name <== (target.Dependencies |> List.map (fun d -> d.Name))
         removeLastDescription()
 
     /// add a target with dependencies
@@ -332,6 +408,8 @@ module Target =
               Dependencies = dependencies
               SoftDependencies = []
               Description = getLastDescription()
+              DefinitionOrder = getTargetDict().Count
+              Declaration = getDeclaration()
               Function = body }
         addTarget template name
 
@@ -360,6 +438,54 @@ module Target =
         for t in getTargetDict().Values |> Seq.sortBy (fun t -> t.Name) do
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
 
+    /// List all targets available.
+    let internal writeInfoFile(file) =
+        let escapeJson (s:string) =
+            let sb = System.Text.StringBuilder(s.Length)
+            for c in s do
+                // https://stackoverflow.com/a/27516892
+                match c with
+                | '"' -> sb.Append "\\\"" |> ignore
+                | '\\' -> sb.Append "\\\\" |> ignore
+                | '/' -> sb.Append "\\/" |> ignore
+                | '\b' -> sb.Append "\\b" |> ignore
+                | '\f' -> sb.Append "\\f" |> ignore
+                | '\n' -> sb.Append "\\n" |> ignore
+                | '\r' -> sb.Append "\\r" |> ignore
+                | '\t' -> sb.Append "\\t" |> ignore
+                | _ -> sb.Append c |> ignore
+            sb.ToString()
+        let createJsonString s =
+            match s with
+            | null -> "null"
+            | s -> "\"" + escapeJson s + "\""
+        let createDeclJson (decl:DeclarationInfo) =
+            sprintf "{ \"file\": %s, \"line\": %d, \"column\": %d }"
+                (createJsonString decl.File)
+                decl.Line decl.Column
+        let createDepJson (dep:Dependency) =
+            sprintf "{ \"name\": %s, \"declaration\": %s }"
+                (createJsonString dep.Name)
+                (createDeclJson dep.Declaration)
+        let joinJsonObjects createObj (objs:_ seq) =
+            objs
+            |> Seq.map createObj
+            |> fun s -> "[ " + String.Join(", ", s) + " ]"
+        let createTargetJson (t:InternalTarget) =
+            sprintf
+                "{ \"name\": %s, \"hardDependencies\": %s, \"softDependencies\": %s, \"declaration\": %s, \"order\": %d, \"description\": %s }"
+                (createJsonString t.Name)
+                (joinJsonObjects createDepJson t.Dependencies)
+                (joinJsonObjects createDepJson t.SoftDependencies)
+                (createDeclJson t.Declaration)
+                t.DefinitionOrder
+                (createJsonString t.DescriptionAsString)
+
+        getTargetDict().Values
+        |> Seq.sortBy (fun t -> t.DefinitionOrder)
+        |> joinJsonObjects createTargetJson
+        |> fun targets ->
+            System.IO.File.WriteAllText(file, sprintf "{ \"targets\": %s }" targets)
 
     // Maps the specified dependency type into the list of targets
     let private withDependencyType (depType:DependencyType) targets =
@@ -571,7 +697,7 @@ module Target =
                 let inResolution (t:string) = resolution.Contains (String.toLower t)
                 let mutable ctx = ctx
                 let mutable waitList = []
-                let mutable runningTasks = []
+                let mutable runningTasks : Target list = []
                 //let mutable remainingOrders = order
                 try
                     while true do
@@ -612,7 +738,7 @@ module Target =
                                     |> Seq.filter isRunnable
                                     |> Seq.toList
 
-                                let rec getNextFreeRunableTarget (r) =
+                                let rec getNextFreeRunableTarget (r : Target list) =
                                     match r with
                                     | t :: rest ->
                                         match waitList with
@@ -827,6 +953,7 @@ module Target =
     
     type internal ArgResults =
         | ListTargets
+        | WriteInfo of file:string
         | NoAction
         | ExecuteTarget of target:string option * arguments:string list * parallelJobs:int * singleTarget:bool
     
@@ -862,6 +989,12 @@ module Target =
 
             if DocoptResult.hasFlag "--list" results then
                 ListTargets
+            elif DocoptResult.hasFlag "--write-info" results then
+                match DocoptResult.tryGetArgument "<file>" results with
+                | None -> failwithf "--write-info needs an file argument"
+                | Some arg ->
+                    setCollectStack true
+                    WriteInfo (arg)
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
@@ -916,8 +1049,11 @@ module Target =
             | Some s -> s
             | None -> parseArgsAndSetEnvironment()
         match argResults with
-        | ListTargets -> 
+        | ListTargets ->
             listAvailable()
+            None
+        | WriteInfo file ->
+            writeInfoFile file
             None
         | NoAction ->
             None

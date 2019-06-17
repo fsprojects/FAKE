@@ -5,3 +5,4 @@ NETStandard.Library
 Expecto
 Expecto.TestResults
 FParsec
+Newtonsoft.Json

@@ -48,7 +48,7 @@ type AssemblyInfo =
 type NativeLibrary =
     { File : string }
 type CompileOptions = 
-    internal { FsiOptions : FsiOptions; }
+    internal { FsiOptions : FsiOptions }
     member x.AsArgs = x.FsiOptions.AsArgs
 
 type RuntimeOptions =

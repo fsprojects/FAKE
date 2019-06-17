@@ -114,7 +114,40 @@ let version =
             [ yield! firstSegment
               yield PreReleaseSegment.Numeric buildId
             ], sprintf "vsts.%s" TeamFoundation.Environment.BuildSourceVersion
-        | _ -> [], ""
+        | _ ->
+            // from paket, increase versions even locally, this forces integration tests to always use latest packages.
+            let GlobalPackagesFolderEnvironmentKey = "NUGET_PACKAGES"
+            let getEnVar variable =
+                let envar = System.Environment.GetEnvironmentVariable variable
+                if System.String.IsNullOrEmpty envar then None else Some envar
+
+            let getEnvDir specialPath =
+                let dir = System.Environment.GetFolderPath specialPath
+                if System.String.IsNullOrEmpty dir then None else Some dir
+            let LocalRootForTempData =
+                getEnvDir System.Environment.SpecialFolder.UserProfile
+                |> Option.orElse (getEnvDir System.Environment.SpecialFolder.LocalApplicationData)
+                |> Option.defaultWith (fun _ ->
+                    let fallback = Path.GetFullPath ".paket"
+                    if not (Directory.Exists fallback) then
+                        Directory.CreateDirectory fallback |> ignore
+                    fallback
+            )
+            let UserNuGetPackagesFolder =
+                getEnVar GlobalPackagesFolderEnvironmentKey
+                |> Option.map (fun path ->
+                    path.Replace (Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+                ) |> Option.defaultWith (fun _ ->
+                    Path.Combine (LocalRootForTempData,".nuget","packages")
+            )
+
+            let currentVer =
+                Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local.*")
+                |> Seq.map (fun n -> n.Substring(release.NugetVersion.Length + ".local.".Length))
+                |> Seq.choose (fun v -> match System.Numerics.BigInteger.TryParse(v) with | true, v -> Some v | _ -> None)
+                |> Seq.append [ 0I ]
+                |> Seq.max
+            [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], ""
 
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =

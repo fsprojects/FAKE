@@ -66,6 +66,7 @@ You can use the following arguments in place of `<scriptargs>`:
 
 Usage:
   fake-run --list
+  fake-run --write-info <file>
   fake-run --version
   fake-run --help | -h
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]

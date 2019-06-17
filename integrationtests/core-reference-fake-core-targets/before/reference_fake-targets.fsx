@@ -15,9 +15,13 @@ printfn "before load"
 printfn "test_before open"
 
 open Fake.Core
+
+Target.initEnvironment()
+
 open Fake.Core.TargetOperators
 
 printfn "test_before targets"
+Target.description "Test description"
 Target.create "Start" (fun _ -> ())
 
 Target.create "TestTarget" (fun p ->

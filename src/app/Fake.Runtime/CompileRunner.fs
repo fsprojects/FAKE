@@ -90,9 +90,8 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     | None -> RunResult.SuccessRun c.Warnings
     | Some e -> RunResult.RuntimeError e
 
-let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
-    use untilCompileFinished  = Fake.Profile.startCategory Fake.Profile.Category.Compiling
-    let wishPath = context.CachedAssemblyFilePath + ".dll"
+let compile (context:FakeContext) outDll =
+    use _untilCompileFinished = Fake.Profile.startCategory Fake.Profile.Category.Compiling
 
     if not <| Directory.Exists context.FakeDirectory then
         let di = Directory.CreateDirectory context.FakeDirectory
@@ -110,7 +109,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     let options =
         { co.FsiOptions with
             FullPaths = true
-            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: wishPath :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s:string list) =
@@ -142,12 +141,16 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
 
     let fsc = FSharpChecker.Create()
     let errors, returnCode = fsc.Compile (("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
-    untilCompileFinished.Dispose()
     let errors =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
         |> Seq.toList
     let compileErrors = CompilationErrors.ofErrors errors
+    compileErrors, returnCode
+
+let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
+    let wishPath = context.CachedAssemblyFilePath + ".dll"
+    let compileErrors, returnCode = compile context wishPath
     let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
     if returnCode = 0 then
         use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
