@@ -99,10 +99,7 @@ let tests =
         let tempFile = Path.GetTempFileName()
         try
             let tmpPath = scenarioTempPath "core-reference-fake-core-targets"
-            let fakeDir = Path.Combine(tmpPath, ".fake", "reference_fake-targets.fsx")
             let scriptFile = Path.Combine(tmpPath, "reference_fake-targets.fsx")
-            Directory.EnumerateFiles (fakeDir, "reference_fake-targets*")
-                |> Seq.iter File.Delete
             handleAndFormat <| fun () ->
                 directFake (sprintf "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
             let json = File.ReadAllText tempFile

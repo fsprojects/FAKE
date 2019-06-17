@@ -149,6 +149,8 @@ let runOrBuild (args : RunArguments) =
         //Noooo script anywhere!
         | None, [], true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
 
+    if scriptArgs <> [] then
+        traceFAKE "FAKE 5 ignores script args given via --fsiargs, given was %A" scriptArgs
     let useCache = not args.NoCache
     try
       let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup

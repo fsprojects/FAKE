@@ -110,8 +110,17 @@ let getStringHash (s:string) =
     |> BitConverter.ToString
     |> fun s -> s.Replace("-", "")
 
+let getCombinedString pathsAndContents compileOptions =
+    let sb = new System.Text.StringBuilder()
+    let inline appendSeq sequence =
+        for s in sequence do sb.AppendLine s |> ignore
+    appendSeq (getAllScriptContents pathsAndContents)
+    appendSeq (pathsAndContents |> Seq.map(fun x -> x.Location |> Path.normalizePath))
+    appendSeq compileOptions
+    // remove last \n
+    sb.Length <- sb.Length - 1
+    sb.ToString()
+
 let getScriptHash pathsAndContents compileOptions =
-    (getAllScriptContents pathsAndContents |> String.concat "\n")
-    + (pathsAndContents |> Seq.map(fun x -> x.Location |> Path.normalizePath) |> String.concat "\n")
-    + (compileOptions |> String.concat "\n")
+    getCombinedString pathsAndContents compileOptions
     |> getStringHash
