@@ -160,7 +160,7 @@ module Target =
     let internal isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
     let internal getNormalizedFileName fileName =
         let fn = System.IO.Path.GetFileName fileName
-        if isWindows then fn.ToLowerInvariant()
+        if isWindows then if isNull fn then null else fn.ToLowerInvariant()
         else fn
 
     let internal getDeclaration () =
@@ -172,11 +172,12 @@ module Target =
                 |> Seq.map (fun idx -> st1.GetFrame idx)
                 |> Seq.map (fun sf -> sf.GetFileName(), sf)
                 |> Seq.cache
+            let normalizedScriptFile = getNormalizedFileName(ctx.ScriptFile)
             let fn =
                 frames
                 |> Seq.tryFind (fun (fn, sf) ->
                     let scriptName = getNormalizedFileName fn
-                    not (String.IsNullOrEmpty fn) && scriptName = getNormalizedFileName(ctx.ScriptFile))
+                    not (String.IsNullOrEmpty fn) && scriptName = normalizedScriptFile)
                 |> Option.orElseWith (fun _ ->
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
@@ -190,8 +191,8 @@ module Target =
             fn
             |> Option.map (fun (fn, sf) ->
                  { File = fn; Line = sf.GetFileLineNumber(); Column = sf.GetFileColumnNumber() })
-            |> Option.defaultValue { File= ""; Line = 0; Column = 0 }
-        else { File= ""; Line = 0; Column = 0}
+            |> Option.defaultValue { File = null; Line = 0; Column = 0 }
+        else { File = null; Line = 0; Column = 0}
 
     /// Sets the Description for the next target.
     /// [omit]
