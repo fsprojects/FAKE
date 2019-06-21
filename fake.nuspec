@@ -11,7 +11,7 @@
     <licenseUrl>https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt</licenseUrl>
     <iconUrl>https://raw.githubusercontent.com/fsharp/FAKE/fee4f05a2ee3c646979bf753f3b1f02d927bfde9/help/content/pics/logo.png</iconUrl>
     <releaseNotes>@releaseNotes@</releaseNotes>
-    <tags>build, fake, f#</tags>
+    <tags>build, fake, f#, automation, make, scripting</tags>
     @dependencies@
   </metadata>
 </package>
