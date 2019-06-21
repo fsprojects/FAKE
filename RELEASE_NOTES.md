@@ -2,7 +2,7 @@
 
 ## 5.15.1-alpha tbd
 
-* tbd
+* ENHANCEMENT: Some internal improvements for Ionide - https://github.com/fsharp/FAKE/pull/2341
 
 ## 5.15.0 - 2019-06-17
 

@@ -181,7 +181,7 @@ module internal Cache =
                                 }
                               RuntimeOptions =
                                 { context.Config.RuntimeOptions with
-                                    RuntimeDependencies = references @ context.Config.RuntimeOptions.RuntimeDependencies
+                                    _RuntimeDependencies = references @ context.Config.RuntimeOptions._RuntimeDependencies
                                 }
                           }
                     }, None
