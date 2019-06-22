@@ -253,9 +253,11 @@
 
     <ItemGroup>
       <_NuspecFiles Include="$(AdjustedNuspecOutputPath)\*.$(PackageVersion).nuspec"/>
+      <_AllNuspecFiles Include="$(AdjustedNuspecOutputPath)\*.nuspec"/>
     </ItemGroup>
 
     <Exec Command='$(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)" ' Condition="@(_NuspecFiles) != ''" />
+    <Warning Text='TEST: "@(_AllNuspecFiles)", $(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)"  ' />
 
     <ConvertToAbsolutePath Condition="@(_NuspecFiles) != ''" Paths="@(_NuspecFiles)">
       <Output TaskParameter="AbsolutePaths" PropertyName="NuspecFileAbsolutePath" />
