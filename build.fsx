@@ -1195,7 +1195,7 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage"
 
 let mutable prev = None
-for runtime in "current" :: [] (* "portable" :: runtimes *) do
+for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
     Target.description (sprintf "publish fake 5 runner for %s" runtime)
