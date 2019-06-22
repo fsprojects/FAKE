@@ -257,7 +257,7 @@
     </ItemGroup>
 
     <Exec Command='$(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)" ' Condition="@(_NuspecFiles) != ''" />
-    <Error Condition=" @(_NuspecFiles) == '' AND @(_AllNuspecFiles) != '' " Text="Paket can not find the nuspec file PackageVersion='$(PackageVersion)', Nuspec files='@(_AllNuspecFiles)'." />
+    <Error Condition=" @(_NuspecFiles) == '' " Text="Paket can not find the nuspec file PackageVersion='$(PackageVersion)', Nuspec files='@(_AllNuspecFiles)'." />
 
     <ConvertToAbsolutePath Condition="@(_NuspecFiles) != ''" Paths="@(_NuspecFiles)">
       <Output TaskParameter="AbsolutePaths" PropertyName="NuspecFileAbsolutePath" />
