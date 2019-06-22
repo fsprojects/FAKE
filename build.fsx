@@ -693,7 +693,7 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
-                    Arguments = sprintf "-vv run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target }
+                    Arguments = sprintf "run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target }
                 |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 )
                 timeout
@@ -1235,9 +1235,9 @@ if buildLegacy then
 
 // Create artifacts when build is finished
 "_AfterBuild"
-    //=?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-    //==> "DotNetCoreCreateDebianPackage"
-    //=?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
+    ==> "DotNetCoreCreateDebianPackage"
+    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
@@ -1263,7 +1263,7 @@ if buildLegacy then
     ==> "RunTests"
 
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
-   // =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 "_DotNetPublish_current" ?=> "DotNetCoreIntegrationTests"
 
@@ -1283,15 +1283,15 @@ if buildLegacy then
     ==> "RunTests"
 
 "DotNetPackage"
-    //==> "TemplateIntegrationTests"
+    ==> "TemplateIntegrationTests"
     ==> "FullDotNetCore"
     ==> "Default"
 
 // Artifacts & Tests
 "Default" ==> "Release_BuildAndTest"
-//"Release_GenerateDocs" ?=> "BuildArtifacts"
-//"BuildArtifacts" ==> "Release_BuildAndTest"
-//"Release_GenerateDocs" ==> "Release_BuildAndTest"
+"Release_GenerateDocs" ?=> "BuildArtifacts"
+"BuildArtifacts" ==> "Release_BuildAndTest"
+"Release_GenerateDocs" ==> "Release_BuildAndTest"
 
 
 // Release stuff ('FastRelease' is to release after running 'Default')
