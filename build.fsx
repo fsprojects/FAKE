@@ -145,6 +145,8 @@ match TeamFoundation.Environment.SystemPullRequestIsFork with
 | _ ->
     Trace.traceFAKE "Not setting buildNumber to '%s', because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html" nugetVersion
 
+do Git.CommandHelper.gitCommand "." "checkout .paket/Paket.Restore.targets"
+
 let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
