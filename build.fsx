@@ -806,9 +806,10 @@ Target.create "_DotNetPublish_portable" (fun _ ->
 
 Target.create "_DotNetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
-    // This line actually ensures we get the correct version checked in
-    // instead of the one previously bundled with 'fake`
-    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
+    // This lines actually ensures we get the correct version checked in
+    // instead of the one previously bundled with `fake` or `paket`
+    callpaket "." "restore" // first make paket restire its target file if it feels like it.
+    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
 
     //Environment.setEnvironVar "IncludeSource" "true"
