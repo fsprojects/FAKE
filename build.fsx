@@ -742,6 +742,13 @@ module CircleCi =
     let isCircleCi = Environment.environVarAsBool "CIRCLECI"
 
 
+let publishRuntime runtimeName =
+    let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtimeName
+    !! (sprintf "%s/**" runtimeDir)
+    |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName)
+
+    publish (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName)
+
 // Create target for each runtime
 let info = lazy DotNet.info dtntSmpl
 runtimes
@@ -774,6 +781,10 @@ runtimes
                 let target = outDir </> "fake"
                 if File.Exists target then File.Delete target
                 File.Move(source, target)
+
+            // Create zip
+            if runtimeName <> "current" then
+                publishRuntime runtimeName
         )
     )
 )
@@ -789,6 +800,8 @@ Target.create "_DotNetPublish_portable" (fun _ ->
             Framework = Some "netcoreapp2.1"
             OutputPath = Some outDir
         } |> dtntSmpl) netcoreFsproj
+
+    publishRuntime "portable"
 )
 
 Target.create "_DotNetPackage" (fun _ ->
@@ -823,32 +836,18 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
+    // build zip package
+    !! (nugetDncDir </> "*.nupkg")
+    -- (nugetDncDir </> "*.symbols.nupkg")
+    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
+    publish (sprintf "%s/Fake.netcore/fake-dotnetcore-packages.zip" nugetDncDir)
+
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
     !! "src/test/*/bin/Release/netcoreapp2.1/**"
     |> Zip.zip "src/test" testZip
     publish testZip
-)
-
-Target.create "DotNetCoreCreateZipPackages" (fun _ ->
-    Environment.setEnvironVar "Version" nugetVersion
-
-    // build zip packages
-    !! (nugetDncDir </> "*.nupkg")
-    -- (nugetDncDir </> "*.symbols.nupkg")
-    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
-
-    ("portable" :: runtimes)
-    |> Seq.iter (fun runtime ->
-        let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtime
-        !! (sprintf "%s/**" runtimeDir)
-        |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtime)
-    )
-
-    runtimes @ [ "portable"; "packages" ]
-    |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
-    |> List.iter publish
 )
 
 let getChocoWrapper () =
@@ -1195,7 +1194,7 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage"
 
 let mutable prev = None
-for runtime in "current" :: "portable" :: runtimes do
+for runtime in "current" :: [] (* "portable" :: runtimes *) do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
     Target.description (sprintf "publish fake 5 runner for %s" runtime)
@@ -1235,13 +1234,13 @@ if buildLegacy then
 
 // Create artifacts when build is finished
 "_AfterBuild"
-    =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-    ==> "DotNetCoreCreateDebianPackage"
-    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    //=?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
+    //==> "DotNetCoreCreateDebianPackage"
+    //=?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
-    =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
+    //=?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
 "_AfterBuild" ?=> "GenerateDocs"
 
@@ -1251,8 +1250,6 @@ if buildLegacy then
 // Build artifacts only (no testing)
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
-"DotNetCoreCreateZipPackages"
-    ==> "BuildArtifacts"
 
 
 // Test the dotnetcore build
@@ -1265,7 +1262,7 @@ if buildLegacy then
     ==> "RunTests"
 
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
-    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+   // =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 "_DotNetPublish_current" ?=> "DotNetCoreIntegrationTests"
 
@@ -1285,16 +1282,15 @@ if buildLegacy then
     ==> "RunTests"
 
 "DotNetPackage"
-    ==> "TemplateIntegrationTests"
-    ==> "DotNetCoreCreateZipPackages"
+    //==> "TemplateIntegrationTests"
     ==> "FullDotNetCore"
     ==> "Default"
 
 // Artifacts & Tests
 "Default" ==> "Release_BuildAndTest"
-"Release_GenerateDocs" ?=> "BuildArtifacts"
-"BuildArtifacts" ==> "Release_BuildAndTest"
-"Release_GenerateDocs" ==> "Release_BuildAndTest"
+//"Release_GenerateDocs" ?=> "BuildArtifacts"
+//"BuildArtifacts" ==> "Release_BuildAndTest"
+//"Release_GenerateDocs" ==> "Release_BuildAndTest"
 
 
 // Release stuff ('FastRelease' is to release after running 'Default')
