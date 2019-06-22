@@ -693,7 +693,7 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
-                    Arguments = sprintf "run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target }
+                    Arguments = sprintf "-vv run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target }
                 |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 )
                 timeout
