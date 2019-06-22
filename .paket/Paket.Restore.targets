@@ -253,14 +253,10 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <MyPaketNuspecFiles Include="$(AdjustedNuspecOutputPath)\*.nuspec"/>
+      <_NuspecFiles Include="$(AdjustedNuspecOutputPath)\*.nuspec"/>
     </ItemGroup>
 
     <Warning Text='TEST: OutputPath: $(AdjustedNuspecOutputPath), All: "@(MyPaketNuspecFiles)", Version: "$(PackageVersion)", Command: $(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)"  ' />
-
-    <ItemGroup>
-      <_NuspecFiles Include="$(AdjustedNuspecOutputPath)\*.$(PackageVersion).nuspec"/>
-    </ItemGroup>
 
     <Exec Command='$(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)" ' Condition="@(_NuspecFiles) != ''" />
     
