@@ -837,6 +837,7 @@ Target.create "_DotNetPackage" (fun _ ->
         } |> dtntSmpl) "Fake.sln"
 
     // build zip package
+    Directory.ensure (nugetDncDir </> "Fake.netcore")
     !! (nugetDncDir </> "*.nupkg")
     -- (nugetDncDir </> "*.symbols.nupkg")
     |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
