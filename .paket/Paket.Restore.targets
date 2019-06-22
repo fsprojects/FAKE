@@ -230,7 +230,6 @@
   </Target>
 
   <Target Name="PaketOverrideNuspec" AfterTargets="GenerateNuspec" Condition="('$(IsPackable)' == '' Or '$(IsPackable)' == 'true') And Exists('$(PaketIntermediateOutputPath)/$(MSBuildProjectFile).references')" >
-    <Warning Text='TEST: PaketOverrideNuspec ' />
     <ItemGroup>
       <_NuspecFilesNewLocation Include="$(PaketIntermediateOutputPath)\$(Configuration)\*.nuspec"/>
       <MSBuildMajorVersion Include="$(DetectedMSBuildVersion.Replace(`-`, `.`).Split(`.`)[0])" />
@@ -251,15 +250,13 @@
       <AdjustedNuspecOutputPath>$(PaketIntermediateOutputPath)\$(Configuration)</AdjustedNuspecOutputPath>
       <AdjustedNuspecOutputPath Condition="@(_NuspecFilesNewLocation) == ''">$(PaketIntermediateOutputPath)</AdjustedNuspecOutputPath>
     </PropertyGroup>
-    
+
     <ItemGroup>
       <_NuspecFiles Include="$(AdjustedNuspecOutputPath)\*.nuspec"/>
     </ItemGroup>
 
-    <Warning Text='TEST: OutputPath: $(AdjustedNuspecOutputPath), All: "@(MyPaketNuspecFiles)", Version: "$(PackageVersion)", Command: $(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)"  ' />
-
     <Exec Command='$(PaketCommand) fix-nuspecs files "@(_NuspecFiles)" project-file "$(PaketProjectFile)" ' Condition="@(_NuspecFiles) != ''" />
-    
+
     <ConvertToAbsolutePath Condition="@(_NuspecFiles) != ''" Paths="@(_NuspecFiles)">
       <Output TaskParameter="AbsolutePaths" PropertyName="NuspecFileAbsolutePath" />
     </ConvertToAbsolutePath>
