@@ -744,10 +744,11 @@ module CircleCi =
 
 let publishRuntime runtimeName =
     let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtimeName
+    let zipFile = sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName
     !! (sprintf "%s/**" runtimeDir)
-    |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName)
+    |> Zip.zip runtimeDir zipFile
 
-    publish (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName)
+    publish zipFile
 
 // Create target for each runtime
 let info = lazy DotNet.info dtntSmpl
@@ -839,10 +840,11 @@ Target.create "_DotNetPackage" (fun _ ->
 
     // build zip package
     Directory.ensure (nugetDncDir </> "Fake.netcore")
+    let zipFile = nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip"
     !! (nugetDncDir </> "*.nupkg")
     -- (nugetDncDir </> "*.symbols.nupkg")
-    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
-    publish (sprintf "%s/Fake.netcore/fake-dotnetcore-packages.zip" nugetDncDir)
+    |> Zip.zip nugetDncDir zipFile
+    publish zipFile
 
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
@@ -1242,7 +1244,7 @@ if buildLegacy then
     ==> "Default"
 
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
-    //=?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
+    =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
 "_AfterBuild" ?=> "GenerateDocs"
 
