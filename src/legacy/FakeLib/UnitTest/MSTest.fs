@@ -7,7 +7,10 @@ open System.Text
 /// [omit]
 [<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 let mstestPaths = 
-    [| @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\"; 
+    [| @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\"; 
+       @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Professional\Common7\IDE\"; 
+       @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Community\Common7\IDE\"; 
+       @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\"; 
        @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Professional\Common7\IDE\"; 
        @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Community\Common7\IDE\"; 
        @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE"; 

@@ -28,6 +28,11 @@ type MsBuildEntry = {
 [<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let knownMsBuildEntries =
     [
+        { Version = "16.0"; Paths = [@"\Microsoft Visual Studio\2019\Enterprise\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2019\Professional\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2019\Community\MSBuild\15.0\Bin"
+                                     @"\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2019\BuildTools\MSBuild\15.0\Bin"] }
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
