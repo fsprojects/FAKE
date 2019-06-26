@@ -118,7 +118,7 @@ See the [FAKE 5 modules](fake-fake5-modules.html) section.
 
 ## Portable installation
 
-We distrubute a dotnetcore version of FAKE without the dotnetcore runtime.
+We distribute a dotnetcore version of FAKE without the dotnetcore runtime.
 This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.
 
 Just use the `-portable` version of the downloads, extract it and execute.
