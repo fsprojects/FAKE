@@ -443,7 +443,7 @@ The rules are as follows:
                     ;
   option_desc_line  = option_part , ( "  " , ? text ? | whitespace ) , newline ;
   ```
-  You should get the [DFA] for unambigous (and easier) parsing.
+  You should get the [DFA] for unambiguous (and easier) parsing.
 
 * Use two spaces to separate options with their informal description:
   ```
