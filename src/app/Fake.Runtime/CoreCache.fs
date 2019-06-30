@@ -411,7 +411,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
     let getHashUncached () =
         //TODO this is only calculating the hash for the input file, not anything #load-ed
-        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
+        let allScriptContents = getAllScripts true config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
         let combined = getCombinedString allScriptContents (getOpts config.CompileOptions)
         allScriptContents, combined, getStringHash combined
     

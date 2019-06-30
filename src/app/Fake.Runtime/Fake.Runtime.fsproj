@@ -29,6 +29,7 @@
     <Compile Include="CoreCache.fs" />
     <Compile Include="FakeHeader.fs" />
     <Compile Include="FakeRuntime.fs" />
+    <Compile Include="Tooling.fs" />
     <Compile Include="FakeRuntimeHints.fs" />
   </ItemGroup>
   <ItemGroup>
