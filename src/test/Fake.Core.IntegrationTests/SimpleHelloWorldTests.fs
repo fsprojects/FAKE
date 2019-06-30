@@ -125,7 +125,7 @@ let tests =
             let dict =
                 targets |> Seq.map (fun t -> let t = parseTarget t in t.Name, t) |> dict
 
-            Expect.equal "Expected correct number of targets" 2 dict.Count
+            Expect.equal "Expected correct number of targets" 4 dict.Count
 
             let startTarget = dict.["Start"]
             Expect.equal "Expected correct declaration of 'Start'" { File = scriptFile; Line = 25; Column = 1 } startTarget.Declaration
