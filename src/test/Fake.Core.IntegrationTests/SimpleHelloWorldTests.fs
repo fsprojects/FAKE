@@ -144,7 +144,7 @@ let tests =
             Expect.equal "Expected correct hard dependencies of 'OtherScriptTarget'" [ ] scriptTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherScriptTarget'" "" scriptTarget.Description
             let fileTarget = dict.["OtherFileTarget"]
-            Expect.equal "Expected correct declaration of 'OtherFileTarget'" { Declaration.Empty with File = otherFileFile; Line = 7 } fileTarget.Declaration
+            Expect.equal "Expected correct declaration of 'OtherFileTarget'" { Declaration.Empty with File = otherFileFile; Line = 7; Column = 5; } fileTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherFileTarget'" [ ] fileTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherFileTarget'" "" fileTarget.Description
         finally
