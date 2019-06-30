@@ -53,7 +53,13 @@ let prepare scenario =
     if Directory.Exists scenarioPath then
       Directory.Delete(scenarioPath, true)
     Directory.ensure scenarioPath
-    Shell.copyDir scenarioPath originalScenarioPath (fun _ -> true)
+    Shell.copyDir scenarioPath originalScenarioPath (fun file ->
+        // this should be in sync with integrationtests/.gitignore, but CI should ensure that
+        let fp = Path.GetFullPath file
+        let scfp = Path.GetFullPath scenarioPath
+        let isFakeTmp = fp.Substring(scfp.Length).Contains ".fake"
+        let isLockFile = fp.EndsWith ".lock"
+        not isFakeTmp && not isLockFile)
 
 let directFakeInPath command workingDir target =
     let result =

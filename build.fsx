@@ -184,6 +184,8 @@ let cleanForTests () =
     !! "integrationtests/*/temp"
     |> Seq.iter rmdir
 
+Target.initEnvironment()
+
 Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
@@ -395,7 +397,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
             match whileResult with
             | Some r -> return r
             | None ->                
-                // time is up                                                    
+                // time is up
                 let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
                 return
                     match combStatus.State.Value with

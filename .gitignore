@@ -51,7 +51,7 @@ tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
 tools/SourceLink.Fake
 .ionide/
-/integrationtests/*/temp
+/.vscode/settings.json
 /temp
 
 release.cmd
@@ -73,7 +73,6 @@ paket-files/
 mytemp
 Samples/WebNpmGrunt/node_modules
 .fake
-!/integrationtests/*/before/.fake
 project.lock.json
 
 #src/app/*/any

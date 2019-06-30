@@ -93,6 +93,9 @@ let tests =
         let expected = "Arguments: [\"--test\"]"
         stdOut.Contains expected
             |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
+        let expected = "GlobalArgs: [\"--test\"]"
+        stdOut.Contains expected
+            |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
         stdErr.Trim() |> Expect.equal "empty exected" ""
 
         // Check if --write-info <file> works
@@ -100,6 +103,8 @@ let tests =
         try
             let tmpPath = scenarioTempPath "core-reference-fake-core-targets"
             let scriptFile = Path.Combine(tmpPath, "reference_fake-targets.fsx")
+            let otherScriptFile = Path.Combine(tmpPath, "otherscript.fsx")
+            let otherFileFile = Path.Combine(tmpPath, "otherfile.fs")
             handleAndFormat <| fun () ->
                 directFake (sprintf "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
             let json = File.ReadAllText tempFile
@@ -133,6 +138,14 @@ let tests =
             Expect.equal "Expected correct declaration of 'TestTarget'" { File = scriptFile; Line = 27; Column = 1 } testTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { File = scriptFile; Line = 34; Column = 1 } } ] testTarget.HardDependencies
             Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
+            let scriptTarget = dict.["OtherScriptTarget"]
+            Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { File = otherScriptFile; Line = 5; Column = 1 } scriptTarget.Declaration
+            Expect.equal "Expected correct hard dependencies of 'OtherScriptTarget'" [ ] scriptTarget.HardDependencies
+            Expect.equal "Expected correct description of 'OtherScriptTarget'" "" scriptTarget.Description
+            let fileTarget = dict.["OtherFileTarget"]
+            Expect.equal "Expected correct declaration of 'OtherFileTarget'" { File = otherFileFile; Line = 7; Column = 1 } fileTarget.Declaration
+            Expect.equal "Expected correct hard dependencies of 'OtherFileTarget'" [ ] fileTarget.HardDependencies
+            Expect.equal "Expected correct description of 'OtherFileTarget'" "" fileTarget.Description
         finally
             try File.Delete tempFile with e -> ()
 

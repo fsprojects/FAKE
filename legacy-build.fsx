@@ -180,6 +180,7 @@ let nugetVersion =
     then version.AsString
     else sprintf "%s+%s" version.AsString version.BuildMetaData
 
+Target.initEnvironment()
 Target.create "Legacy_RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do
