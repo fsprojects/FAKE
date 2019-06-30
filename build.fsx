@@ -614,9 +614,18 @@ let startWebServer () =
         if portIsTaken then findPort (port + 1) else port
 
     let port = findPort 8083
+    
+    let inline (@@) a b = Suave.WebPart.concatenate a b
+    let mimeTypes =
+        Suave.Writers.defaultMimeTypesMap
+        @@ (function
+            | ".avi" -> Suave.Writers.createMimeType "video/avi" false
+            | ".mp4" -> Suave.Writers.createMimeType "video/mp4" false
+            | _ -> None)    
     let serverConfig =
         { Suave.Web.defaultConfig with
            homeFolder = Some (Path.GetFullPath docsDir)
+           mimeTypesMap = mimeTypes
            bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
         }
     let (>=>) = Suave.Operators.(>=>)

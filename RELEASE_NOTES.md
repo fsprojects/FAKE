@@ -1,10 +1,11 @@
 # Release Notes
 
-## 5.15.1-alpha tbd
+## 5.15.1 - 2019-06-30
 
 * ENHANCEMENT: Some internal improvements in `Fake.Runtime` for Ionide - https://github.com/fsharp/FAKE/pull/2341
 * ENHANCEMENT: Add new `Target.getArguments()` function in order to retrieve arguments globally - https://github.com/fsharp/FAKE/pull/2341
 * BUGFIX: Make sure to detect proper code locations when using `#load` (Ionide tooling, `Fake.Core.Target`) - https://github.com/fsharp/FAKE/pull/2341
+* DOCS: Consolidate getting started, recommend Ionide, add FAQ section to menu and some feature updates - https://github.com/fsharp/FAKE/pull/2341
 
 ## 5.15.0 - 2019-06-17
 
