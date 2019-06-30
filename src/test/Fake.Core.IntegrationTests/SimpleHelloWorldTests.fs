@@ -93,7 +93,7 @@ let tests =
         let expected = "Arguments: [\"--test\"]"
         stdOut.Contains expected
             |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
-        let expected = "GlobalArgs: [\"--test\"]"
+        let expected = "GlobalArgs: [|\"--test\"|]"
         stdOut.Contains expected
             |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
         stdErr.Trim() |> Expect.equal "empty exected" ""
