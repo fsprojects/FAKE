@@ -16,7 +16,10 @@ let ignProc = ignore<Fake.Core.ProcessResult>
 type Declaration =
     { File : string
       Line : int
-      Column : int }
+      Column : int 
+      ErrorDetails : string }
+    static member Empty =
+        { File = ""; Line = 0; Column = 1; ErrorDetails = ""}
 /// a target dependency, either a hard or a soft dependency.
 type Dependency =
     { Name : string
@@ -109,7 +112,7 @@ let tests =
             let obj = JObject.Parse json
             let targets = obj.["targets"] :?> JArray
             let parseDecl (t:JToken) =
-                { File = string t.["file"]; Line = int t.["line"]; Column = int t.["column"] }
+                { File = string t.["file"]; Line = int t.["line"]; Column = int t.["column"]; ErrorDetails = string t.["errorDetails"] }
             let parseDep (t:JToken) =
                 { Name = string t.["name"]; Declaration = parseDecl t.["declaration"] }
             let parseArray parseItem (a:JToken) =
@@ -128,20 +131,20 @@ let tests =
             Expect.equal "Expected correct number of targets" 4 dict.Count
 
             let startTarget = dict.["Start"]
-            Expect.equal "Expected correct declaration of 'Start'" { File = scriptFile; Line = 36; Column = 1 } startTarget.Declaration
+            Expect.equal "Expected correct declaration of 'Start'" { Declaration.Empty with File = scriptFile; Line = 36 } startTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'Start'" [] startTarget.HardDependencies
             Expect.equal "Expected correct soft dependencies of 'Start'" [] startTarget.SoftDependencies
             Expect.equal "Expected correct description of 'Start'" "Test description" startTarget.Description
             let testTarget = dict.["TestTarget"]
-            Expect.equal "Expected correct declaration of 'TestTarget'" { File = scriptFile; Line = 38; Column = 1 } testTarget.Declaration
-            Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { File = scriptFile; Line = 45; Column = 1 } } ] testTarget.HardDependencies
+            Expect.equal "Expected correct declaration of 'TestTarget'" { Declaration.Empty with File = scriptFile; Line = 38 } testTarget.Declaration
+            Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { Declaration.Empty with File = scriptFile; Line = 45 } } ] testTarget.HardDependencies
             Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
             let scriptTarget = dict.["OtherScriptTarget"]
-            Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { File = otherScriptFile; Line = 5; Column = 1 } scriptTarget.Declaration
+            Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { Declaration.Empty with File = otherScriptFile; Line = 5 } scriptTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherScriptTarget'" [ ] scriptTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherScriptTarget'" "" scriptTarget.Description
             let fileTarget = dict.["OtherFileTarget"]
-            Expect.equal "Expected correct declaration of 'OtherFileTarget'" { File = otherFileFile; Line = 7; Column = 1 } fileTarget.Declaration
+            Expect.equal "Expected correct declaration of 'OtherFileTarget'" { Declaration.Empty with File = otherFileFile; Line = 7 } fileTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherFileTarget'" [ ] fileTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherFileTarget'" "" fileTarget.Description
         finally
