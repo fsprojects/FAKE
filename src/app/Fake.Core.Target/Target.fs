@@ -185,9 +185,10 @@ module Target =
                 compiledAssembly
                 // First try to find the first frame with the correct assembly
                 |> Option.bind (fun ass ->
+                    let fullName = ass.FullName
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
-                        not (String.IsNullOrEmpty fn) && sf.GetMethod().DeclaringType.Assembly = ass))
+                        not (String.IsNullOrEmpty fn) && sf.GetMethod().DeclaringType.Assembly.FullName = fullName))
                 // if not found fallback to any script
                 |> Option.orElseWith (fun _ ->
                     frames
