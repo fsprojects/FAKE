@@ -54,6 +54,29 @@
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
+            "name": "Debug IntegrationTest",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet:build:fake-netcore.fsproj",
+            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
+            "args": [
+                "run",
+                "--nocache",
+                "--fsiargs",
+                "--debug:portable --optimize-",
+                "integrationtests/core-reference-fake-core-targets/temp/reference_fake-targets.fsx",
+                "--write-info",
+                "test.json"
+            ],
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "COMPlus_JitNoInline": "1"
+            },
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
             "name": "Run Specific Test",
             "type": "coreclr",
             "request": "launch",
