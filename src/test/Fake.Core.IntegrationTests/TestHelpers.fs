@@ -82,6 +82,16 @@ let handleAndFormat f =
         let stdErr = String.Join("\n", result.Errors)
         Expect.isTrue (sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
         reraise() // for return value
+
+let expectFailure msg f =
+    try
+        f()
+        Expect.isTrue msg false
+        failwithf "%s" msg
+    with FakeExecutionFailed(result) ->
+        result
+
+
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
 

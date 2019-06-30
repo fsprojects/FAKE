@@ -331,7 +331,7 @@ This can happen for various reasons:
                     tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
         result
 
-let findUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
+let findUnmanagedInRuntimeDeps (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
     if logLevel.PrintVerbose then tracefn "Trying to resolve native library: %s" unmanagedDllName
     match nativeLibraries |> Seq.tryFind (fun l ->
             let fnExt = Path.GetFileName l.File
@@ -343,7 +343,7 @@ let findUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllN
         path
     | None ->
         // will failwithf later anyway.
-        if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s'!" unmanagedDllName
+        if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s', fallback to CLR-host!" unmanagedDllName
         null
 
 let resolveUnmanagedDependencyCached =
@@ -352,17 +352,19 @@ let resolveUnmanagedDependencyCached =
         let mutable wasCalled = false
         let path = libCache.GetOrAdd(unmanagedDllName, (fun _ ->
             wasCalled <- true
-            findUnmanagedInRuntimeDeps loadFromPath unmanagedDllName logLevel nativeLibraries))
-        
-        if wasCalled && isNull path then
-            let available =
-                if nativeLibraries.Length > 0 then
-                    "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
-                else "No native libraries found!"
-            failwithf """Could not resolve native library '%s'.
+            findUnmanagedInRuntimeDeps unmanagedDllName logLevel nativeLibraries))
+
+        //if wasCalled && not wasFound then
+            //let available =
+            //    if nativeLibraries.Length > 0 then
+            //        "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
+            //    else "No native libraries found!"
+            // TODO: In the future use the unmanaged assembly resolve event to throw this.            
+            (*failwithf """Could not resolve native library '%s'.
 %s
 
 This can happen for various reasons:
+- The file '%s' could not be found in the PATH environment variable.
 - The nuget cache (or packages folder) might be broken.
   -> Please save your state, open an issue and then
   - delete the source package of '%s' from the '~/.nuget' cache (and the 'packages' folder)
@@ -371,11 +373,12 @@ This can happen for various reasons:
   - try running fake again
   - the package should be downloaded again
 
--> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName
+-> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName unmanagedDllName*)
         if not wasCalled && not (isNull path) then
             if logLevel.PrintVerbose then
                 tracefn "Redirect native library '%s' to previous loaded library '%s'" unmanagedDllName path
-        loadFromPath path
+        // Zero means use CLR-Host strategy, see https://github.com/fsharp/FAKE/issues/2342
+        if isNull path then IntPtr.Zero else loadFromPath path
 
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
