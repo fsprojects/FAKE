@@ -17,9 +17,9 @@ type Declaration =
     { File : string
       Line : int
       Column : int 
-      ErrorDetails : string }
+      ErrorDetail : string }
     static member Empty =
-        { File = ""; Line = 0; Column = 1; ErrorDetails = ""}
+        { File = ""; Line = 0; Column = 1; ErrorDetail = ""}
 /// a target dependency, either a hard or a soft dependency.
 type Dependency =
     { Name : string
@@ -112,7 +112,7 @@ let tests =
             let obj = JObject.Parse json
             let targets = obj.["targets"] :?> JArray
             let parseDecl (t:JToken) =
-                { File = string t.["file"]; Line = int t.["line"]; Column = int t.["column"]; ErrorDetails = string t.["errorDetails"] }
+                { File = string t.["file"]; Line = int t.["line"]; Column = int t.["column"]; ErrorDetail = string t.["errorDetail"] }
             let parseDep (t:JToken) =
                 { Name = string t.["name"]; Declaration = parseDecl t.["declaration"] }
             let parseArray parseItem (a:JToken) =
@@ -140,7 +140,7 @@ let tests =
             Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { Declaration.Empty with File = scriptFile; Line = 45 } } ] testTarget.HardDependencies
             Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
             let scriptTarget = dict.["OtherScriptTarget"]
-            Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { Declaration.Empty with File = otherScriptFile; Line = 5 } scriptTarget.Declaration
+            Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { Declaration.Empty with File = otherScriptFile; Line = 4 } scriptTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherScriptTarget'" [ ] scriptTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherScriptTarget'" "" scriptTarget.Description
             let fileTarget = dict.["OtherFileTarget"]
