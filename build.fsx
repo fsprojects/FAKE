@@ -184,6 +184,8 @@ let cleanForTests () =
     !! "integrationtests/*/temp"
     |> Seq.iter rmdir
 
+Target.initEnvironment()
+
 Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
@@ -395,7 +397,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
             match whileResult with
             | Some r -> return r
             | None ->                
-                // time is up                                                    
+                // time is up
                 let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
                 return
                     match combStatus.State.Value with
@@ -612,9 +614,18 @@ let startWebServer () =
         if portIsTaken then findPort (port + 1) else port
 
     let port = findPort 8083
+    
+    let inline (@@) a b = Suave.WebPart.concatenate a b
+    let mimeTypes =
+        Suave.Writers.defaultMimeTypesMap
+        @@ (function
+            | ".avi" -> Suave.Writers.createMimeType "video/avi" false
+            | ".mp4" -> Suave.Writers.createMimeType "video/mp4" false
+            | _ -> None)    
     let serverConfig =
         { Suave.Web.defaultConfig with
            homeFolder = Some (Path.GetFullPath docsDir)
+           mimeTypesMap = mimeTypes
            bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
         }
     let (>=>) = Suave.Operators.(>=>)
@@ -742,6 +753,14 @@ module CircleCi =
     let isCircleCi = Environment.environVarAsBool "CIRCLECI"
 
 
+let publishRuntime runtimeName =
+    let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtimeName
+    let zipFile = sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName
+    !! (sprintf "%s/**" runtimeDir)
+    |> Zip.zip runtimeDir zipFile
+
+    publish zipFile
+
 // Create target for each runtime
 let info = lazy DotNet.info dtntSmpl
 runtimes
@@ -774,6 +793,10 @@ runtimes
                 let target = outDir </> "fake"
                 if File.Exists target then File.Delete target
                 File.Move(source, target)
+
+            // Create zip
+            if runtimeName <> "current" then
+                publishRuntime runtimeName
         )
     )
 )
@@ -789,13 +812,16 @@ Target.create "_DotNetPublish_portable" (fun _ ->
             Framework = Some "netcoreapp2.1"
             OutputPath = Some outDir
         } |> dtntSmpl) netcoreFsproj
+
+    publishRuntime "portable"
 )
 
 Target.create "_DotNetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
-    // This line actually ensures we get the correct version checked in
-    // instead of the one previously bundled with 'fake`
-    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
+    // This lines actually ensures we get the correct version checked in
+    // instead of the one previously bundled with `fake` or `paket`
+    callpaket "." "restore" // first make paket restire its target file if it feels like it.
+    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
 
     //Environment.setEnvironVar "IncludeSource" "true"
@@ -823,32 +849,20 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
+    // build zip package
+    Directory.ensure (nugetDncDir </> "Fake.netcore")
+    let zipFile = nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip"
+    !! (nugetDncDir </> "*.nupkg")
+    -- (nugetDncDir </> "*.symbols.nupkg")
+    |> Zip.zip nugetDncDir zipFile
+    publish zipFile
+
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
     !! "src/test/*/bin/Release/netcoreapp2.1/**"
     |> Zip.zip "src/test" testZip
     publish testZip
-)
-
-Target.create "DotNetCoreCreateZipPackages" (fun _ ->
-    Environment.setEnvironVar "Version" nugetVersion
-
-    // build zip packages
-    !! (nugetDncDir </> "*.nupkg")
-    -- (nugetDncDir </> "*.symbols.nupkg")
-    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
-
-    ("portable" :: runtimes)
-    |> Seq.iter (fun runtime ->
-        let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtime
-        !! (sprintf "%s/**" runtimeDir)
-        |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtime)
-    )
-
-    runtimes @ [ "portable"; "packages" ]
-    |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
-    |> List.iter publish
 )
 
 let getChocoWrapper () =
@@ -1251,8 +1265,6 @@ if buildLegacy then
 // Build artifacts only (no testing)
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
-"DotNetCoreCreateZipPackages"
-    ==> "BuildArtifacts"
 
 
 // Test the dotnetcore build
@@ -1286,7 +1298,6 @@ if buildLegacy then
 
 "DotNetPackage"
     ==> "TemplateIntegrationTests"
-    ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
 

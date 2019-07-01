@@ -4,7 +4,6 @@ open Fake.Runtime.Environment
 open Fake.Runtime.String
 open Fake.Runtime.Trace
 open Fake.Runtime.ScriptRunner
-open Fake.Runtime.HashGeneration
 open Fake.Runtime.CoreCache
 open Fake.Runtime.FakeRuntime
 open System.IO

@@ -1,5 +1,5 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
-module Fake.Runtime.HashGeneration
+module internal Fake.Runtime.HashGeneration
 
 open System
 open System.IO
@@ -7,7 +7,6 @@ open System.Text.RegularExpressions
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open Fake.Runtime
-
 
 type Script = {
     HashContent : string
@@ -17,7 +16,7 @@ type Script = {
 let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.HashContent)
 
-let getAllScripts defines (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scriptPath : Script list =
+let getAllScripts (ignoreWhitespace:bool) defines (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scriptPath : Script list =
     let rec getAllScriptsRec (tokens:Fake.Runtime.FSharpParser.TokenizedScript) workDir (scriptName:string) parentIncludes : Script list =
         let tryResolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =
@@ -97,7 +96,7 @@ let getAllScripts defines (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scr
             ) 
             |> fun (_, _, c) -> c
         { Location = Path.Combine(workDir, scriptName)
-          HashContent = FSharpParser.getHashableString tokens } :: loadedContents
+          HashContent = FSharpParser.getHashableString ignoreWhitespace tokens } :: loadedContents
     let dir = Path.GetDirectoryName scriptPath
     let name = Path.GetFileName scriptPath
     getAllScriptsRec tokens dir name []

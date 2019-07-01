@@ -1,13 +1,12 @@
-version 5.206.0
+version 5.211.0
 content: none
-// just in case we need some special nuget feature again...
-//source https://ci.appveyor.com/nuget/paket
+//source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
 
 nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core //prerelease
+nuget Paket.Core // prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu >= 3.3.0
@@ -105,10 +104,9 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     // FAKE_MYGET_FEED (don't edit this line)
-    //source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
-    //source https://ci.appveyor.com/nuget/fake
 
     // 2018-07-08: Until we use a runner > 5.1, see https://github.com/fsharp/FAKE/pull/2011
     nuget FSharp.Core < 4.5
@@ -144,6 +142,7 @@ group NetcoreBuild
 // New group because of FSharp.Core 4.5 upgrade, see https://github.com/fsharp/FAKE/pull/2011
 group netcorerunner
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     storage: none
     framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
@@ -165,8 +164,8 @@ group netcorerunner
     nuget Newtonsoft.Json
 
 group netcore
-    //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     storage: none
     framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 

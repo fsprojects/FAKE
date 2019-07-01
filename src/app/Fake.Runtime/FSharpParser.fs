@@ -4,7 +4,7 @@ open FSharp.Compiler.SourceCodeServices
 type Token = { Representation : string; LineNumber : int; TokenInfo : FSharpTokenInfo option }
 type TokenizedScript = private { Tokens : Token list }
     
-let getTokenized (filePath:string) defines lines =
+let internal getTokenized (filePath:string) defines lines =
     let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
     /// Tokenize a single line of F# code
     let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state =
@@ -33,14 +33,14 @@ let getTokenized (filePath:string) defines lines =
     |> Seq.toList
     |> fun t -> { Tokens = t }
 
-let getHashableString { Tokens = tokens } =
+let internal getHashableString (ignoreWhitespace:bool) { Tokens = tokens } =
     let mutable rawS =
         tokens
         |> Seq.filter (fun (token) ->
-            match token.TokenInfo with
-            | Some tok when tok.TokenName = "INACTIVECODE" -> false
-            | Some tok when tok.TokenName = "LINE_COMMENT" -> false
-            | Some tok when tok.TokenName = "COMMENT" -> false
+            match ignoreWhitespace, token.TokenInfo with
+            | true, Some tok when tok.TokenName = "INACTIVECODE" -> false
+            | true, Some tok when tok.TokenName = "LINE_COMMENT" -> false
+            | true, Some tok when tok.TokenName = "COMMENT" -> false
             | _ -> true)
         |> Seq.map (fun token -> token.Representation)
         |> fun s -> System.String.Join("", s).Replace("\r\n", "\n").Replace("\r", "\n")
@@ -50,17 +50,17 @@ let getHashableString { Tokens = tokens } =
         rawS <- rawS.Replace("\n\n\n", "\n\n")
     rawS
 
-type StringKeyword =
+type internal StringKeyword =
     | Unknown of string
     | SourceFile
     | SourceDirectory
-type StringLike =
+type internal StringLike =
     | StringItem of string
     | StringKeyword of StringKeyword
-type PreprocessorDirective =
+type internal PreprocessorDirective =
     { Token : Token; Strings : StringLike list }
 
-let handleRawString (s:string) =
+let internal handleRawString (s:string) =
     if s.StartsWith("\"") then
         s.Substring(1, s.Length - 2).Replace("\\\\", "\\")
     elif s.StartsWith ("@\"") then
@@ -105,7 +105,7 @@ let private handlePreprocessorTokens (tokens:Token list) =
 
     { Token = firstTok; Strings = strings }
 
-let findProcessorDirectives { Tokens = tokens } =
+let internal findProcessorDirectives { Tokens = tokens } =
     tokens
     |> Seq.fold (fun (items, collectDirective) (token) ->
         match items, collectDirective, token.TokenInfo with
@@ -122,15 +122,15 @@ let findProcessorDirectives { Tokens = tokens } =
 
 
 /// Parse #r references for `paket:` lines
-type InterestingItem =
+type internal InterestingItem =
   | Reference of string
  
-type AnalyseState =
+type internal  AnalyseState =
   | NoAnalysis
   | Reference of string option
 
 
-let findInterestingItems { Tokens = tokens }  =
+let internal findInterestingItems { Tokens = tokens }  =
   let rec analyseNextToken (_, state) (tok :Token) =
     match state with
     | NoAnalysis ->

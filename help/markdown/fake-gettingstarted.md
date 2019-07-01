@@ -7,13 +7,15 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 * how to automatically compile your C# or F# projects
 * how to automatically run NUnit tests on your projects
 
+If you are interested in what FAKE actually is, see our [FAQ](fake-what-is-fake.html).
+
 ## Install FAKE
 
 FAKE is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the FAKE syntax is hopefully very easy to learn.
 
 There are various ways to install FAKE 5:
 
-* Install FAKE as a global dotnet tool:
+* Install FAKE as a global `dotnet tool` (easiest, but needs [.NET Core SDK](https://dotnet.microsoft.com/download)):
     * To install FAKE globally, run:
         <pre><code class="lang-bash">
         dotnet tool install fake-cli -g
@@ -24,6 +26,7 @@ There are various ways to install FAKE 5:
         </code></pre>
 
     Use `--version` to specify the version of FAKE. See the [`global_tool`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) branch of `fake-bootstrap` for ideas to bootstrap in your CI process.
+    If you run into issues, see [this](https://github.com/fsharp/FAKE/issues/2346)
 
 * Bootstrap via the `fake dotnet new` [template](fake-template.html). The template bootstraps FAKE and sets up a basic build-script.
     * To install the template run:
@@ -37,11 +40,23 @@ There are various ways to install FAKE 5:
 
     See the [template](fake-template.html) page for more information.
 
-* Install the 'fake' or 'fake-netcore' package for your system (currenty chocolatey).
-  Example `choco install fake`
+* Install the 'fake' or 'fake-netcore' package for your system (currenty [chocolatey](https://chocolatey.org/install)).
+  Example `choco install fake`.
+  We also provide a Debian package at the [releases-page](https://github.com/fsharp/FAKE/releases)
 
-* Use it as a dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Download the portable zip.
+  We distribute a dotnetcore version of FAKE without the dotnetcore runtime.
+  This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.
 
+  Just use the `-portable` version of [the downloads](https://github.com/fsharp/FAKE/releases), extract it and execute.
+
+  <pre><code class="lang-bash">dotnet fake.dll <regular-arguments></code></pre>
+
+  The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
+  The disadvantage is that you need to have a dotnet sdk installed and that you need to prefix all calls with `dotnet /full/path/to/fake.dll <args>` which is equal to `fake <args>` in other installation methods.
+  
+* Download the runtime specific zip.
+  Just use the `-<runtime>` version matching your specific platform of [the downloads](https://github.com/fsharp/FAKE/releases) (for example `fake-dotnetcore-win7-x64.zip`), extract it and execute the `fake` binary. Add the extracted binary to your `PATH` to just execute `fake` from any directory.
 
 * Bootstrap via a shell script (fake.cmd/fake.sh),
   see this [example project](https://github.com/FakeBuild/fake-bootstrap)
@@ -50,17 +65,115 @@ There are various ways to install FAKE 5:
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* Bootstrap via paket `clitool`, this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
+* Use it as a dotnet tool (legacy): Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+
+* Bootstrap via paket `clitool` (legacy), this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
+
+now you can use
+
+<pre><code class="lang-bash">fake --help</code></pre>
+
+This is basically it. You can now execute fake commands.
 
 ## One note on Intellisense
 
-Whenever you update the dependencies (part of the example), you need to delete the `<script>.fsx.lock` file and re-run fake to update all files and intellisense!
+This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the `<script>.fsx.lock` file and re-run fake to update all files).
 
-## Example - Compiling and building your .NET application
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>We recommend [Visual Studio Code](https://code.visualstudio.com/) with the [Ionide extension](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) for best FAKE tooling support, including proper debugging.</p>
+</div>
+
+* Assume you have a script `myscript.fsx` with the following contents:
+
+  ```fsharp
+  #r "paket:
+  nuget Fake.Core.Target prerelease"
+  #load "./.fake/myscript.fsx/intellisense.fsx"
+  ```
+
+  Where you can add all the [fake modules](fake-fake5-modules.html) you need (work through the example below if you see this the first time).
+
+* run the script to restore your dependencies and setup the intellisense support: `fake run myscript.fsx`.
+  This might take some seconds depending on your internet connection  
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
+</div>
+
+* now open the script in VS Code with ionide-fsharp extension or Visual Studio.
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>
+    If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
+    Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
+    </p>
+</div>
+
+## CLI
+
+See [Fake command line](fake-commandline.html)
+
+## Buildserver support
+
+AppVeyor: [https://github.com/fsharp/FAKE/blob/master/appveyor.yml](https://github.com/fsharp/FAKE/blob/master/appveyor.yml)
+Travis: [https://github.com/fsharp/FAKE/blob/master/.travis.yml](https://github.com/fsharp/FAKE/blob/master/.travis.yml)
+
+
+## Examples
+
+- See [https://github.com/fsharp/FAKE/blob/master/build.fsx](https://github.com/fsharp/FAKE/blob/master/build.fsx)
+- See [https://github.com/SAFE-Stack/SAFE-template/blob/master/build.fsx](https://github.com/SAFE-Stack/SAFE-template/blob/master/build.fsx)
+- See [https://github.com/matthid/csharptofsharp/blob/master/build.fsx](https://github.com/matthid/csharptofsharp/blob/master/build.fsx)
+
+### Minimal example
+
+Create a file named `build.fsx` with the following contents:
+
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
+// include Fake modules, see Fake modules section
+
+open Fake.Core
+
+// *** Define Targets ***
+Target.create "Clean" (fun _ ->
+  Trace.log " --- Cleaning stuff --- "
+)
+
+Target.create "Build" (fun _ ->
+  Trace.log " --- Building the app --- "
+)
+
+Target.create "Deploy" (fun _ ->
+  Trace.log " --- Deploying app --- "
+)
+
+open Fake.Core.TargetOperators
+
+// *** Define Dependencies ***
+"Clean"
+  ==> "Build"
+  ==> "Deploy"
+
+// *** Start Build ***
+Target.runOrDefault "Deploy"
+```
+
+Run this file by executing
+
+<pre><code class="lang-bash">
+fake run build.fsx
+</code></pre>
+
+
+
+### Example - Compiling and building your .NET application
 
 This example will guide you by adding a fake script to your existing .NET application.
 
-### Getting started
+#### Getting started
 
 Initially we need to create a file called `build.fsx` where all our build-logic will reside.
 Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:
@@ -101,7 +214,7 @@ The last line runs the "Default" target - which means it executes the defined ac
 
 Try running your new target via `fake run build.fsx` or the shortcut for a file called `build.fsx`: `fake build`
 
-### Cleaning the last build output
+#### Cleaning the last build output
 
 A typical first step in most build scenarios is to clean the output of the last build. We can achieve this in two steps:
 
@@ -163,7 +276,7 @@ In the dependencies section we say that the *Default* target has a dependency on
 
 ![alt text](pics/gettingstarted/afterclean.png "We introduced a Clean target")
 
-### Compiling the application
+#### Compiling the application
 
 In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild.
 
@@ -222,7 +335,7 @@ This means the execution order is: Clean ==> BuildApp ==> Default.
 
 ![alt text](pics/gettingstarted/aftercompile.png "We introduced a Build target")
 
-### Compiling test projects
+#### Compiling test projects
 
 Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:
 
@@ -276,7 +389,7 @@ Target.runOrDefault "Default"
 
 This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we put the target into our build order.
 
-### Running the tests with NUnit
+#### Running the tests with NUnit
 
 Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (we have to add a new module for this: `Fake.DotNet.Testing.NUnit`):
 
@@ -347,7 +460,7 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 ## What's next?
 
 * Add more modules specific to your application and discover the Fake-APIs
-* look at the [quick start guide](fake-dotnetcore.html) which has the same information in a more dense form.
+* look at the [FAQ](fake-what-is-fake.html) for some commonly asked questions.
 * look at some of the samples in [FakeBuild](https://github.com/FakeBuild)
 * look at [FAKEs own build script](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples across the F# ecosystem.
 * Add fake build scripts to your projects and let us know.

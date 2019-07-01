@@ -246,7 +246,7 @@ type private CacheInfo =
 /// gets a cache entry for the given script.
 /// We need to consider fsiOptions as they might contain --defines.
 let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
-    let allScriptContents = getAllScripts scriptPath
+    let allScriptContents = getAllScripts true scriptPath
     let scriptHash = getScriptHash allScriptContents fsiOptions
     //TODO this is only calculating the hash for the input file, not anything #load-ed
 

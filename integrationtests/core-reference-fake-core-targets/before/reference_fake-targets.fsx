@@ -16,13 +16,24 @@ printfn "test_before open"
 
 open Fake.Core
 
-Target.initEnvironment()
+let args : string[] option = Target.getArguments()
+
+match args with
+| Some args -> 
+  printfn "GlobalArgs: %A" args
+| None -> ()
+
+#load "otherfile.fs"
+#load "otherscript.fsx"
+
+OtherFile.createTargets()
+
 
 open Fake.Core.TargetOperators
 
 printfn "test_before targets"
 Target.description "Test description"
-Target.create "Start" (fun _ -> ())
+Target.create "Start" ignore
 
 Target.create "TestTarget" (fun p ->
     printfn "Starting Build %A." {| test = "anon_record_f#-4.6" |}

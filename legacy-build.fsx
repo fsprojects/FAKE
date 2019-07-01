@@ -140,11 +140,16 @@ let version =
                 ) |> Option.defaultWith (fun _ ->
                     Path.Combine (LocalRootForTempData,".nuget","packages")
             )
-
             let currentVer =
                 Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local.*")
-                |> Seq.map (fun n -> n.Substring(release.NugetVersion.Length + ".local.".Length))
-                |> Seq.choose (fun v -> match System.Numerics.BigInteger.TryParse(v) with | true, v -> Some v | _ -> None)
+                |> Seq.choose (fun dir ->
+                    let n = Path.GetFileName dir
+                    let v = n.Substring(release.NugetVersion.Length + ".local.".Length)
+                    match System.Numerics.BigInteger.TryParse(v) with
+                    | true, v -> Some v
+                    | _ ->
+                        eprintfn "Could not parse '%s' to a bigint to retrieve the latest version (from '%s')" v dir
+                        None)
                 |> Seq.append [ 0I ]
                 |> Seq.max
             [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], ""
@@ -175,6 +180,7 @@ let nugetVersion =
     then version.AsString
     else sprintf "%s+%s" version.AsString version.BuildMetaData
 
+Target.initEnvironment()
 Target.create "Legacy_RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do

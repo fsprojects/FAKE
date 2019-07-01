@@ -90,7 +90,7 @@ nuget Fake.Core.SemVer prerelease //"
         File.WriteAllText(tmpDir </> "paket-files" </> "test" </> "octokit.fsx", octokit)
         let tokens =
             Fake.Runtime.FSharpParser.getTokenized "build.fsx" ["DOTNETCORE"; "FAKE"] (scriptText.Split([|'\r';'\n'|]))
-        let scripts = HashGeneration.getAllScripts [] tokens (tmpDir </> "build.fsx")
+        let scripts = HashGeneration.getAllScripts true [] tokens (tmpDir </> "build.fsx")
         let expected = [ 
             tmpDir </> "build.fsx"
             tmpDir </> "paket-files" </> "test" </> "octokit.fsx"
@@ -125,7 +125,7 @@ printfn "other.fsx"
         File.WriteAllText(otherScriptPath, otherScript)
         let tokens =
             Fake.Runtime.FSharpParser.getTokenized "test.fsx" ["DOTNETCORE"; "FAKE"] (testScript.Split([|'\r';'\n'|]))
-        let scripts = HashGeneration.getAllScripts [] tokens testScriptPath
+        let scripts = HashGeneration.getAllScripts true [] tokens testScriptPath
         let expected = [ 
             testScriptPath
             fileScriptPath
@@ -148,7 +148,7 @@ printfn "other.fsx"
         let tokens =
             Fake.Runtime.FSharpParser.getTokenized "test.fsx" ["DOTNETCORE"; "FAKE"] (testScript.Split([|'\r';'\n'|]))
         try
-          let scripts = HashGeneration.getAllScripts [] tokens testScriptPath
+          let scripts = HashGeneration.getAllScripts true [] tokens testScriptPath
           Expect.isTrue false "Expected an exception"
         with e ->
           (e.Message.Contains "test.fsx(2,1): error FS2302: Directory '" && e.Message.Contains "' doesn't exist")
