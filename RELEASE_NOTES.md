@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.15.2-alpha - tbd
+
+* tbd
+
 ## 5.15.1 - 2019-06-30
 
 * ENHANCEMENT: Some internal improvements in `Fake.Runtime` for Ionide - https://github.com/fsharp/FAKE/pull/2341
