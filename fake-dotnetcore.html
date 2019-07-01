@@ -61,6 +61,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -295,209 +296,7 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Fake-dotnetcore" class="anchor" href="#Fake-dotnetcore">Fake dotnetcore</a></h1>
-<h2><a name="Getting-Started" class="anchor" href="#Getting-Started">Getting Started</a></h2>
-<p>Getting started with the Fake dotnetcore version is easy.
-Just install the corresponding package for your system:</p>
-<ul>
-<li>
-<p>Windows (chocolatey)</p>
-<ul>
-<li>
-<p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org"><a href="https://chocolatey.org">https://chocolatey.org</a></a>).
-Basically open an admin <code>cmd.exe</code> and paste</p>
-<p><pre>
-<code class="lang-batch">
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('<a href="https://chocolatey.org/install.ps1'))"">https://chocolatey.org/install.ps1'))"</a> &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-</code>
-</pre></p>
-</li>
-<li>
-<p>Install fake via chocolatey</p>
-<p>In an admin <code>cmd.exe</code> enter:</p>
-<pre>
-    <code class="lang-bash">
-    choco install fake
-    </code>
-</pre>
-</li>
-<li><p>There are <a href="fake-gettingstarted.html#Install-FAKE">other ways to get started</a> if chocolatey / an administrator-cmd or global installation is not an option.</p></li>
-</ul>
-</li>
-<li>
-<p>Dotnet sdk global tool</p>
-<ul>
-<li><p>Install the .NET sdk (at least <code>2.1.300</code>)</p></li>
-<li>
-<p>Install FAKE</p>
-<pre>
-    <code class="lang-bash">
-    dotnet tool install fake-cli -g
-    </code>
-</pre>
-</li>
-</ul>
-</li>
-<li>
-<p>Debian package</p>
-<ul>
-<li><p>the .deb file can be downloaded from the <a href="https://github.com/fsharp/FAKE/releases">releases-page</a></p></li>
-</ul>
-</li>
-<li>
-<p>Others</p>
-<p>We currently do not have packages for the various distributions, look for <a href="fake-gettingstarted.html#Install-FAKE">other ways to install fake</a>.
-Please consider <a href="https://github.com/fsharp/FAKE/issues/1828">helping out!</a>.</p>
-</li>
-</ul>
-<p>now you can use</p>
-<pre><code class="lang-bash">fake --help</code></pre>
-<p>This is basically it. You can now execute fake commands. Follow the <a href="fake-dotnetcore.html#Minimal-example">minimal example below</a> for a quick start.</p>
-<h2><a name="FAKE-Template" class="anchor" href="#FAKE-Template">FAKE Template</a></h2>
-<p>Use the FAKE <code>dotnet new</code> template. See <a href="" title="fake-template.html">FAKE template</a> for more information.</p>
-<ul>
-<li>
-<p>Install the template:</p>
-<pre><code class="lang-bash">
-dotnet new -i "fake-template::*"
-</code></pre
-</li>
-<li>
-<p>Run the template:</p>
-<pre><code class="lang-bash">
-dotnet new fake
-</code></pre>
-</li>
-</ul>
-<h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
-<p>See <a href="fake-commandline.html">Fake command line</a></p>
-<h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
-<p>AppVeyor: <a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml"><a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml">https://github.com/fsharp/FAKE/blob/master/appveyor.yml</a></a>
-Travis: <a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml"><a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml">https://github.com/fsharp/FAKE/blob/master/.travis.yml</a></a></p>
-<h2><a name="One-note-on-Intellisense" class="anchor" href="#One-note-on-Intellisense">One note on Intellisense</a></h2>
-<p>This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files)</p>
-<ul>
-<li>
-<p>Assume you have a script <code>myscript.fsx</code> with the following contents:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need (work through the example below if you see this the first time).</p>
-</li>
-<li>
-<p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
-This might take some seconds depending on your internet connection
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
-</div></p>
-</li>
-<li>
-<p>now open the script in VS Code with ionide-fsharp extension or Visual Studio.
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p>
-If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
-Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
-</p>
-</div></p>
-</li>
-</ul>
-<h2><a name="What-is-the-migration-path" class="anchor" href="#What-is-the-migration-path">What is the migration path?</a></h2>
-<p>See <a href="fake-migrate-to-fake-5.html">Fake 5 Migration Guide</a></p>
-<h2><a name="How-to-specify-dependencies" class="anchor" href="#How-to-specify-dependencies">How to specify dependencies?</a></h2>
-<p>See the <a href="fake-fake5-modules.html">FAKE 5 modules</a> section.</p>
-<h2><a name="Portable-installation" class="anchor" href="#Portable-installation">Portable installation</a></h2>
-<p>We distrubute a dotnetcore version of FAKE without the dotnetcore runtime.
-This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.</p>
-<p>Just use the <code>-portable</code> version of the downloads, extract it and execute.</p>
-<pre><code class="lang-bash">dotnet fake.dll <regular-arguments></code></pre>
-<p>The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
-The disadvantage is that you need to have a dotnet sdk installed.</p>
-<h2><a name="Examples" class="anchor" href="#Examples">Examples</a></h2>
-<ul>
-<li>
-See <a href="https://github.com/fsharp/FAKE/blob/master/build.fsx"><a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">https://github.com/fsharp/FAKE/blob/master/build.fsx</a></a>
-Note that with the "new" API you should call the modules directly instead of opening them.
-Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
-</li>
-</ul>
-<h3><a name="Minimal-example" class="anchor" href="#Minimal-example">Minimal example</a></h3>
-<p>Create a file named <code>build.fsx</code> with the following contents:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.Target //&quot;</span>
-<span class="c">// include Fake modules, see Fake modules section</span>
-
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
-
-<span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
-<span class="pn">)</span>
-
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Building the app --- &quot;</span>
-<span class="pn">)</span>
-
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
-<span class="pn">)</span>
-
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
-
-<span class="c">// *** Define Dependencies ***</span>
-<span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
-
-<span class="c">// *** Start Build ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<p>Run this file by executing</p>
-<pre><code class="lang-bash">
-fake run build.fsx
-</code></pre>
-<h2><a name="Downloads" class="anchor" href="#Downloads">Downloads</a></h2>
-<p>Get the latest packages from GitHub: <a href="https://github.com/fsharp/FAKE/releases">https://github.com/fsharp/FAKE/releases</a></p>
-<p>Get the latest binaries from chocolatey: <a href="https://chocolatey.org/packages/fake">https://chocolatey.org/packages/fake</a></p>
-<p>Get the latest dotnet-fake cli tool by adding <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies: <a href="https://www.nuget.org/packages/dotnet-fake">https://www.nuget.org/packages/dotnet-fake</a></p>
+<p>This page moved to the <a href="fake-gettingstarted.html">getting started page</a></p>
 
 				
 			</article>
@@ -536,7 +335,7 @@ fake run build.fsx
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

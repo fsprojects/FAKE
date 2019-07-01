@@ -61,6 +61,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -302,12 +303,13 @@
 <li>how to automatically compile your C# or F# projects</li>
 <li>how to automatically run NUnit tests on your projects</li>
 </ul>
+<p>If you are interested in what FAKE actually is, see our <a href="fake-what-is-fake.html">FAQ</a>.</p>
 <h2><a name="Install-FAKE" class="anchor" href="#Install-FAKE">Install FAKE</a></h2>
 <p>FAKE is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the FAKE syntax is hopefully very easy to learn.</p>
 <p>There are various ways to install FAKE 5:</p>
 <ul>
 <li>
-<p>Install FAKE as a global dotnet tool:</p>
+<p>Install FAKE as a global <code>dotnet tool</code> (easiest, but needs <a href="https://dotnet.microsoft.com/download">.NET Core SDK</a>):</p>
 <ul>
 <li>
 <p>To install FAKE globally, run:
@@ -320,7 +322,8 @@ dotnet tool install fake-cli -g
 <pre><code class="lang-bash">
 dotnet tool install fake-cli --tool-path your<em>tool</em>path
 </code></pre></p>
-<p>Use <code>--version</code> to specify the version of FAKE. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/global_tool"><code>global_tool</code></a> branch of <code>fake-bootstrap</code> for ideas to bootstrap in your CI process.</p>
+<p>Use <code>--version</code> to specify the version of FAKE. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/global_tool"><code>global_tool</code></a> branch of <code>fake-bootstrap</code> for ideas to bootstrap in your CI process.
+If you run into issues, see <a href="https://github.com/fsharp/FAKE/issues/2346">this</a></p>
 </li>
 </ul>
 </li>
@@ -343,12 +346,23 @@ dotnet new fake
 </ul>
 </li>
 <li>
-<p>Install the 'fake' or 'fake-netcore' package for your system (currenty chocolatey).
-Example <code>choco install fake</code></p>
+<p>Install the 'fake' or 'fake-netcore' package for your system (currenty <a href="https://chocolatey.org/install">chocolatey</a>).
+Example <code>choco install fake</code>.
+We also provide a Debian package at the <a href="https://github.com/fsharp/FAKE/releases">releases-page</a></p>
 </li>
-<li><p>Use it as a dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
-</ul>
-<ul>
+<li>
+<p>Download the portable zip.
+We distribute a dotnetcore version of FAKE without the dotnetcore runtime.
+This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.</p>
+<p>Just use the <code>-portable</code> version of <a href="https://github.com/fsharp/FAKE/releases">the downloads</a>, extract it and execute.</p>
+<pre><code class="lang-bash">dotnet fake.dll <regular-arguments></code></pre>
+<p>The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
+The disadvantage is that you need to have a dotnet sdk installed and that you need to prefix all calls with <code>dotnet /full/path/to/fake.dll &lt;args&gt;</code> which is equal to <code>fake &lt;args&gt;</code> in other installation methods.</p>
+</li>
+<li>
+<p>Download the runtime specific zip.
+Just use the <code>-&lt;runtime&gt;</code> version matching your specific platform of <a href="https://github.com/fsharp/FAKE/releases">the downloads</a> (for example <code>fake-dotnetcore-win7-x64.zip</code>), extract it and execute the <code>fake</code> binary. Add the extracted binary to your <code>PATH</code> to just execute <code>fake</code> from any directory.</p>
+</li>
 <li>
 <p>Bootstrap via a shell script (fake.cmd/fake.sh),
 see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</a>
@@ -357,13 +371,132 @@ see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</
 <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
 </div></p>
 </li>
-<li><p>Bootstrap via paket <code>clitool</code>, this is basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code></a> branch of <code>fake-bootstrap</code> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
+<li><p>Use it as a dotnet tool (legacy): Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+<li><p>Bootstrap via paket <code>clitool</code> (legacy), this is basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code></a> branch of <code>fake-bootstrap</code> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
 </ul>
+<p>now you can use</p>
+<pre><code class="lang-bash">fake --help</code></pre>
+<p>This is basically it. You can now execute fake commands.</p>
 <h2><a name="One-note-on-Intellisense" class="anchor" href="#One-note-on-Intellisense">One note on Intellisense</a></h2>
-<p>Whenever you update the dependencies (part of the example), you need to delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files and intellisense!</p>
-<h2><a name="Example-Compiling-and-building-your-NET-application" class="anchor" href="#Example-Compiling-and-building-your-NET-application">Example - Compiling and building your .NET application</a></h2>
+<p>This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files).</p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>We recommend [Visual Studio Code](https://code.visualstudio.com/) with the [Ionide extension](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) for best FAKE tooling support, including proper debugging.</p>
+</div>
+<ul>
+<li>
+<p>Assume you have a script <code>myscript.fsx</code> with the following contents:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need (work through the example below if you see this the first time).</p>
+</li>
+<li>
+<p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
+This might take some seconds depending on your internet connection
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
+</div></p>
+</li>
+<li>
+<p>now open the script in VS Code with ionide-fsharp extension or Visual Studio.
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>
+If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
+Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
+</p>
+</div></p>
+</li>
+</ul>
+<h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
+<p>See <a href="fake-commandline.html">Fake command line</a></p>
+<h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
+<p>AppVeyor: <a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml"><a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml">https://github.com/fsharp/FAKE/blob/master/appveyor.yml</a></a>
+Travis: <a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml"><a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml">https://github.com/fsharp/FAKE/blob/master/.travis.yml</a></a></p>
+<h2><a name="Examples" class="anchor" href="#Examples">Examples</a></h2>
+<ul>
+<li>See <a href="https://github.com/fsharp/FAKE/blob/master/build.fsx"><a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">https://github.com/fsharp/FAKE/blob/master/build.fsx</a></a></li>
+<li>See <a href="https://github.com/SAFE-Stack/SAFE-template/blob/master/build.fsx"><a href="https://github.com/SAFE-Stack/SAFE-template/blob/master/build.fsx">https://github.com/SAFE-Stack/SAFE-template/blob/master/build.fsx</a></a></li>
+<li>See <a href="https://github.com/matthid/csharptofsharp/blob/master/build.fsx"><a href="https://github.com/matthid/csharptofsharp/blob/master/build.fsx">https://github.com/matthid/csharptofsharp/blob/master/build.fsx</a></a></li>
+</ul>
+<h3><a name="Minimal-example" class="anchor" href="#Minimal-example">Minimal example</a></h3>
+<p>Create a file named <code>build.fsx</code> with the following contents:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="c">// include Fake modules, see Fake modules section</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+<span class="c">// *** Define Targets ***</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">log</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+
+<span class="c">// *** Define Dependencies ***</span>
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+
+<span class="c">// *** Start Build ***</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Run this file by executing</p>
+<pre><code class="lang-bash">
+fake run build.fsx
+</code></pre>
+<h3><a name="Example-Compiling-and-building-your-NET-application" class="anchor" href="#Example-Compiling-and-building-your-NET-application">Example - Compiling and building your .NET application</a></h3>
 <p>This example will guide you by adding a fake script to your existing .NET application.</p>
-<h3><a name="Getting-started-1" class="anchor" href="#Getting-started-1">Getting started</a></h3>
+<h4><a name="Getting-started-1" class="anchor" href="#Getting-started-1">Getting started</a></h4>
 <p>Initially we need to create a file called <code>build.fsx</code> where all our build-logic will reside.
 Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -413,7 +546,7 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 <p>After this header the <em>Default</em> target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
 <p>The last line runs the "Default" target - which means it executes the defined action of the target.</p>
 <p>Try running your new target via <code>fake run build.fsx</code> or the shortcut for a file called <code>build.fsx</code>: <code>fake build</code></p>
-<h3><a name="Cleaning-the-last-build-output" class="anchor" href="#Cleaning-the-last-build-output">Cleaning the last build output</a></h3>
+<h4><a name="Cleaning-the-last-build-output" class="anchor" href="#Cleaning-the-last-build-output">Cleaning the last build output</a></h4>
 <p>A typical first step in most build scenarios is to clean the output of the last build. We can achieve this in two steps:</p>
 <p>First change your header to the following by adding the <code>Fake.IO.FileSystem</code> module:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -499,7 +632,7 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 <p>In the <code>Clean</code> target we use the <code>Shell.cleanDir</code> task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.</p>
 <p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will run before the <em>Default</em> target is executed:</p>
 <p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
-<h3><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h3>
+<h4><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h4>
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild.</p>
 <p>Again we need a new module for this, namely <code>Fake.DotNet.MSBuild</code>.</p>
 <p>Just like before add the required module on top via <code>nuget Fake.DotNet.MSBuild</code>, delete the <code>build.fsx.lock</code> file and run the script.
@@ -587,7 +720,7 @@ Now edit the script so it looks like this:</p>
 <p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
 <p>This means the execution order is: Clean ==&gt; BuildApp ==&gt; Default.</p>
 <p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
-<h3><a name="Compiling-test-projects" class="anchor" href="#Compiling-test-projects">Compiling test projects</a></h3>
+<h4><a name="Compiling-test-projects" class="anchor" href="#Compiling-test-projects">Compiling test projects</a></h4>
 <p>Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -684,7 +817,7 @@ Now edit the script so it looks like this:</p>
 </tr>
 </table>
 <p>This time we defined a new target "BuildTest" which compiles all C# projects below <em>src/test/</em> in Debug mode and we put the target into our build order.</p>
-<h3><a name="Running-the-tests-with-NUnit" class="anchor" href="#Running-the-tests-with-NUnit">Running the tests with NUnit</a></h3>
+<h4><a name="Running-the-tests-with-NUnit" class="anchor" href="#Running-the-tests-with-NUnit">Running the tests with NUnit</a></h4>
 <p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (we have to add a new module for this: <code>Fake.DotNet.Testing.NUnit</code>):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -806,7 +939,7 @@ Now edit the script so it looks like this:</p>
 <h2><a name="What-s-next" class="anchor" href="#What-s-next">What's next?</a></h2>
 <ul>
 <li>Add more modules specific to your application and discover the Fake-APIs</li>
-<li>look at the <a href="fake-dotnetcore.html">quick start guide</a> which has the same information in a more dense form.</li>
+<li>look at the <a href="fake-what-is-fake.html">FAQ</a> for some commonly asked questions.</li>
 <li>look at some of the samples in <a href="https://github.com/FakeBuild">FakeBuild</a></li>
 <li>look at <a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">FAKEs own build script</a> or other examples across the F# ecosystem.</li>
 <li>Add fake build scripts to your projects and let us know.</li>
@@ -855,7 +988,7 @@ Now edit the script so it looks like this:</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

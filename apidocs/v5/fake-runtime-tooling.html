@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>PreprocessorDirective - FAKE - F# Make</title>
+	<title>Tooling - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -60,6 +60,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -302,27 +303,123 @@
 
 
 
-<h1><a name="PreprocessorDirective" class="anchor" href="#PreprocessorDirective">PreprocessorDirective</a></h1>
+<h1><a name="Tooling" class="anchor" href="#Tooling">Tooling</a></h1>
+
 <div class="xmldoc">
+<p>This module is to provide tooling support for FAKE scripts and provide common operations</p>
+
 </div>
-  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-declaration.html">Declaration</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-dependency.html">Dependency</a>
+          </td>
+          <td class="xmldoc">
+            <p>a target dependency, either a hard or a soft dependency.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-detectioninfo.html">DetectionInfo</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-fakecontext.html">FakeContext</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-gettargetsresult.html">GetTargetsResult</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-gettargetswarningorerrortype.html">GetTargetsWarningOrErrorType</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-runtime-tooling-target.html">Target</a>
+          </td>
+          <td class="xmldoc">
+            <p>a FAKE target, its description and its relations to other targets (dependencies), including the declaration lines of the target and the dependencies.</p>
+
+
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3339', 3339)" onmouseover="showTip(event, '3339', 3339)">
-            Strings
+          <code onmouseout="hideTip(event, '1086', 1086)" onmouseover="showTip(event, '1086', 1086)">
+            detectFakeScript(file)
           </code>
-          <div class="tip" id="3339">
-            <strong>Signature:</strong> StringLike list<br />
+          <div class="tip" id="1086">
+            <strong>Signature:</strong> file:string -&gt; DetectionInfo option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L123-123" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Detect if a given file is a FAKE script</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1087', 1087)" onmouseover="showTip(event, '1087', 1087)">
+            getFakeRuntime()
+          </code>
+          <div class="tip" id="1087">
+            <strong>Signature:</strong> unit -&gt; Async&lt;string&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L76-76" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -331,15 +428,49 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3340', 3340)" onmouseover="showTip(event, '3340', 3340)">
-            Token
+          <code onmouseout="hideTip(event, '1088', 1088)" onmouseover="showTip(event, '1088', 1088)">
+            getProjectOptions(arg1)
           </code>
-          <div class="tip" id="3340">
-            <strong>Signature:</strong> Token<br />
+          <div class="tip" id="1088">
+            <strong>Signature:</strong> DetectionInfo -&gt; string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L135-135" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1089', 1089)" onmouseover="showTip(event, '1089', 1089)">
+            getTargets file ctx
+          </code>
+          <div class="tip" id="1089">
+            <strong>Signature:</strong> file:string -&gt; ctx:FakeContext -&gt; Async&lt;GetTargetsResult&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L284-284" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1090', 1090)" onmouseover="showTip(event, '1090', 1090)">
+            setupLogging(printer)
+          </code>
+          <div class="tip" id="1090">
+            <strong>Signature:</strong> printer:(bool -&gt; string -&gt; unit) -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -385,7 +516,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

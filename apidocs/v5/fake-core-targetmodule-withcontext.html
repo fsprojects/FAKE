@@ -60,6 +60,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -320,15 +321,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
+          <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
             run parallelJobs targetName args
           </code>
-          <div class="tip" id="530">
+          <div class="tip" id="531">
             <strong>Signature:</strong> parallelJobs:int -&gt; targetName:string -&gt; args:string list -&gt; OptionalTargetContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1078-1078" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1115-1115" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs a target and its dependencies and returns an <a href="fake-core-targetmodule-optionaltargetcontext.html" title="OptionalTargetContext"><code>OptionalTargetContext</code></a></p>
@@ -339,34 +340,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
-            runOrDefault(defaultTarget)
-          </code>
-          <div class="tip" id="531">
-            <strong>Signature:</strong> defaultTarget:string -&gt; OptionalTargetContext<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1081-1081" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the command given on the command line or the given target when no target is given &amp; get context</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
-            runOrDefaultWithArguments(defaultTarget)
+            runOrDefault(defaultTarget)
           </code>
           <div class="tip" id="532">
             <strong>Signature:</strong> defaultTarget:string -&gt; OptionalTargetContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1085-1085" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1118-1118" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the command given on the command line or the given target when no target is given &amp; get context</p>
@@ -378,14 +360,33 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '533', 533)" onmouseover="showTip(event, '533', 533)">
-            runOrList()
+            runOrDefaultWithArguments(defaultTarget)
           </code>
           <div class="tip" id="533">
+            <strong>Signature:</strong> defaultTarget:string -&gt; OptionalTargetContext<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1122-1122" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Runs the command given on the command line or the given target when no target is given &amp; get context</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
+            runOrList()
+          </code>
+          <div class="tip" id="534">
             <strong>Signature:</strong> unit -&gt; OptionalTargetContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1089-1089" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1126-1126" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the target given by the target parameter or lists the available targets &amp; get context</p>
@@ -433,7 +434,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

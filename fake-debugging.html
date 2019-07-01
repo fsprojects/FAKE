@@ -61,6 +61,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -295,16 +296,23 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Debugging-of-FAKE-5-build-scripts" class="anchor" href="#Debugging-of-FAKE-5-build-scripts">Debugging of FAKE 5 build scripts</a></h1>
-<p>Currently debugging support (and documentation around it) is limited. Please help to improve the situation by improving the code and the docs!</p>
-<div class="alert alert-warning">
-    <h5>WARNING</h5>
-    <p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
-</div>
+<p>We recommend <a href="https://code.visualstudio.com/">Visual Studio Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp">Ionide extension</a> for best FAKE tooling support, including proper debugging.
+The easiest way to debug a script is by using the "Debug" buttons in the FAKE targets outline</p>
+<video loop autoplay>
+  <source src="pics/targets/targets-outline.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<h2><a name="Non-Ionide-or-no-Fake-Core-Targets" class="anchor" href="#Non-Ionide-or-no-Fake-Core-Targets">Non-Ionide or no Fake.Core.Targets</a></h2>
+<p>If you don't use Ionide or if you don't use <code>Fake.Core.Targets</code> the Outline stays empty and you (currently) cannot run or debug via UI. Please see the following sections on how to debug and run.</p>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
 <li>Run with more verbose logging <code>-v</code></li>
 <li>If an error happens while restoring packages (before even running the script), consider using <code>-vv</code> or <code>-v -v</code> to increase the logging even more.</li>
 </ul>
+<div class="alert alert-warning">
+    <h5>WARNING</h5>
+    <p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
+</div>
 <h2><a name="Visual-Studio-Code-amp-amp-portable-zip" class="anchor" href="#Visual-Studio-Code-amp-amp-portable-zip">Visual Studio Code &amp;&amp; portable.zip</a></h2>
 <p>Debugging works (on windows) in the following way:</p>
 <ul>
@@ -318,7 +326,7 @@
   "type": "coreclr",
   "request": "launch",
   "program": "E:\\fake-dotnetcore-portable\\fake.dll",
-  "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
+  "args": ["run", "--nocache", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
   "cwd": "${workspaceRoot}",
   "stopAtEntry": false,
   "console": "internalConsole"
@@ -346,7 +354,7 @@
 </table>
 <ul>
 <li>Delete <code>.fake</code> directory</li>
-<li>Start your build script via <code>dotnet fake run build.fsx --fsiargs "--debug:portable --optimize-"</code> and wait for the <code>Press any key to continue...</code> Message</li>
+<li>Start your build script via <code>dotnet fake run --nocache build.fsx --fsiargs "--debug:portable --optimize-"</code> and wait for the <code>Press any key to continue...</code> Message</li>
 <li>Select ".NET Core Attach" in the Visual Studio Code Debugger View</li>
 <li>Press play and select the <code>dotnet exec --depsfile ".../fake..."</code> process.</li>
 </ul>
@@ -429,7 +437,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

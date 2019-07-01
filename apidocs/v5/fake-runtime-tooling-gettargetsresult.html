@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>HashGeneration - FAKE - F# Make</title>
+	<title>GetTargetsResult - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -60,6 +60,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -302,52 +303,27 @@
 
 
 
-<h1><a name="HashGeneration" class="anchor" href="#HashGeneration">HashGeneration</a></h1>
-
+<h1><a name="GetTargetsResult" class="anchor" href="#GetTargetsResult">GetTargetsResult</a></h1>
 <div class="xmldoc">
-<p>Contains helper functions which allow to interact with the F# Interactive.</p>
-
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-runtime-hashgeneration-script.html">Script</a>
-          </td>
-          <td class="xmldoc">
-            
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
+  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
-            getAllScriptContents(pathsAndContents)
+          <code onmouseout="hideTip(event, '3390', 3390)" onmouseover="showTip(event, '3390', 3390)">
+            Targets
           </code>
-          <div class="tip" id="1074">
-            <strong>Signature:</strong> pathsAndContents:seq&lt;Script&gt; -&gt; seq&lt;string&gt;<br />
+          <div class="tip" id="3390">
+            <strong>Signature:</strong> Target []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/HashGeneration.fs#L17-17" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L280-280" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -356,66 +332,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
-            getAllScripts defines tokens scriptPath
+          <code onmouseout="hideTip(event, '3391', 3391)" onmouseover="showTip(event, '3391', 3391)">
+            WarningsAndErrors
           </code>
-          <div class="tip" id="1075">
-            <strong>Signature:</strong> defines:string list -&gt; tokens:TokenizedScript -&gt; scriptPath:string -&gt; Script list<br />
+          <div class="tip" id="3391">
+            <strong>Signature:</strong> GetTargetsWarningOrErrorType []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/HashGeneration.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
-            getCombinedString(...)
-          </code>
-          <div class="tip" id="1076">
-            <strong>Signature:</strong> pathsAndContents:seq&lt;Script&gt; -&gt; compileOptions:seq&lt;string&gt; -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/HashGeneration.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
-            getScriptHash(...)
-          </code>
-          <div class="tip" id="1077">
-            <strong>Signature:</strong> pathsAndContents:seq&lt;Script&gt; -&gt; compileOptions:seq&lt;string&gt; -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/HashGeneration.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
-            getStringHash(s)
-          </code>
-          <div class="tip" id="1078">
-            <strong>Signature:</strong> s:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/HashGeneration.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Tooling.fs#L280-280" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -461,7 +386,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

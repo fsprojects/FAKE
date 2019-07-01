@@ -61,6 +61,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -299,10 +300,11 @@
 <p>This a general discussion about FAKE, <a href="fake-fake5-learn-more.html">here you can learn about the FAKE 5 upgrade</a> or see <a href="contributing.html">how to contribute</a></p>
 </blockquote>
 <p><a href="https://gitter.im/fsharp/FAKE?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/fsharp/FAKE" /></a></p>
-<p>"FAKE - F# Make" is a cross platform build automation system. Due to its integration
+<p>"FAKE - F# Make" is a cross platform automation system, mainly used for builds and releases. Due to its integration
 in F#, all benefits of the .NET Framework and functional programming can be used, including
 the extensive class library, powerful debuggers and integrated development environments like
-Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.</p>
+Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.
+We recommend <a href="https://code.visualstudio.com/">Visual Studio Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp">Ionide extension</a> for best FAKE tooling support.</p>
 <p>The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.</p>
 <p>See the <a href="index.html">project home page</a> for tutorials and <a href="apidocs/v5/index.html">API documentation</a>.</p>
 <h2><a name="Why-FAKE" class="anchor" href="#Why-FAKE">Why FAKE?</a></h2>
@@ -326,7 +328,7 @@ With FAKE you can choose and switch between multiple system easily while having 
 <li>Make it easy to start external processes through various APIs.</li>
 <li>Add all your automation scripts to your repository.</li>
 </ul>
-<h2><a name="When-should-I-use-FAKE" class="anchor" href="#When-should-I-use-FAKE">When should I use FAKE</a></h2>
+<h2><a name="When-should-I-use-FAKE" class="anchor" href="#When-should-I-use-FAKE">When should I use FAKE?</a></h2>
 <p>Use FAKE in the following ways:</p>
 <ul>
 <li>Remove/reduce dependencies on your CI/CD system</li>
@@ -350,10 +352,37 @@ To replace/rewrite existing tools you currently execute as part of your build pr
 <li><a href="https://www.youtube.com/watch?v=_sZT0CpJ6Vo">(Video) Immutable application deployments with F# Make - Nikolay Norman Andersen</a></li>
 <li><a href="https://www.elastic.co/de/blog/solidifying-releases-with-fsharp-make">(fake 4 API) Elasticsearch.Net</a></li>
 </ul>
-<h2><a name="Get-started" class="anchor" href="#Get-started">Get started</a></h2>
-<p>With our <a href="fake-dotnetcore.html">quickstart</a> and <a href="fake-gettingstarted.html">getting-started</a> guides.</p>
+<h2><a name="How-can-I-get-started" class="anchor" href="#How-can-I-get-started">How can I get started</a></h2>
+<p>With our <a href="fake-gettingstarted.html">getting-started</a> guides.</p>
+<h2><a name="What-is-the-migration-path" class="anchor" href="#What-is-the-migration-path">What is the migration path?</a></h2>
+<p>See <a href="fake-migrate-to-fake-5.html">Fake 5 Migration Guide</a></p>
+<h2><a name="How-to-specify-dependencies" class="anchor" href="#How-to-specify-dependencies">How to specify dependencies?</a></h2>
+<p>See the <a href="fake-fake5-modules.html">FAKE 5 modules</a> section.</p>
+<h2><a name="How-does-debugging-work" class="anchor" href="#How-does-debugging-work">How does debugging work?</a></h2>
+<p>See the <a href="fake-debugging.html">Debugging user guide</a></p>
+<h2><a name="What-is-a-FAKE-package-and-a-FAKE-module" class="anchor" href="#What-is-a-FAKE-package-and-a-FAKE-module">What is a FAKE package and a FAKE module?</a></h2>
+<p>Some of the documentation talk about FAKE packages and some about FAKE modules.
+Strictly speaking there is no difference and both are usually tied to a particular NuGet package.
+The confusion arises as F# talks about modules (static classes) and usually a FAKE NuGet package contains a single F# module.
+So the term <code>module</code> should be used for code fragments while <code>package</code> for NuGet packages.</p>
+<h2><a name="Can-FAKE-code-be-used-from-a-regular-F-project" class="anchor" href="#Can-FAKE-code-be-used-from-a-regular-F-project">Can FAKE code be used from a regular F# project</a></h2>
+<p>Yes indeed! You can just use all the different FAKE packages, like <a href="https://fake.build/apidocs/v5/fake-core-environment.html"><code>Fake.Core.Environment</code></a>. The API reference will list the <a href="https://www.nuget.org/packages/Fake.Core.Environment">NuGet package</a> you need to install right at the top.
+Some/most of the FAKE-APIs will complain about a missing context, to initialize one you can use</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
+<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">execContext</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="alert alert-info">
+    <h5>HINT</h5>
+    If you believe a particular API should not need the context please feel free to open an issue for discussion or a PR with a fix!
+</div>
 
-				
+				<div class="tip" id="fs1">val execContext : obj</div>
+
 			</article>
 		</div>
 
@@ -390,7 +419,7 @@ To replace/rewrite existing tools you currently execute as part of your build pr
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

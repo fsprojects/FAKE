@@ -60,6 +60,7 @@
 					<a class="navbar-link">About</a>
 					<div class="navbar-dropdown" class="navbar-item">
 						<a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+						<a href="/fake-what-is-fake.html" class="navbar-item">FAQ?</a>
 						<a href="/help-supporters.html" class="navbar-item">Supporters</a>
 						<a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
 						<a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
@@ -364,7 +365,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L893-893" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L920-920" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Activates the build failure target.</p>
@@ -383,7 +384,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L908-908" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L935-935" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Activates the final target.</p>
@@ -402,7 +403,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L417-417" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L443-443" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a Target.</p>
@@ -421,7 +422,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L888-888" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L915-915" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a target in case of build failure (not activated).</p>
@@ -440,7 +441,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L903-903" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L930-930" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a final target (not activated).</p>
@@ -459,7 +460,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L898-898" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L925-925" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deactivates the build failure target.</p>
@@ -478,7 +479,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L913-913" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L940-940" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>deactivates the final target.</p>
@@ -505,7 +506,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use ignore instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L311-311" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L337-337" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Do nothing - Can be used to define empty targets.</p>
@@ -524,7 +525,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L257-257" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L283-283" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -534,19 +535,25 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
-            Target.initEnvironment()
+            Target.getArguments()
           </code>
           <div class="tip" id="513">
-            <strong>Signature:</strong> unit -&gt; unit<br />
+            <strong>Signature:</strong> unit -&gt; string [] option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1095-1095" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1144-1144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>allows to initialize the environment before defining targets
-This function should be used at the start of your fake script
-see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsharp/FAKE/issues/2283</a></p>
+          <p>allows to retrieve the arguments passed into the current execution,
+when <code>Target.run*withArguments</code> overloads are used, see <a href="https://fake.build/core-targets.html#Targets-with-arguments
+This">https://fake.build/core-targets.html#Targets-with-arguments
+This</a> function should be used at the start of your fake script
+Alternatively, you can use Target.initEnvironment() instead,
+Note: This function usually returns <code>Some [||]</code>, it will return <code>None</code> when
+No actual execution was requested (for example because of <code>--list</code>),
+you shouldn't execute any side effects when <code>None</code> is returned
+(you should never execute side effects but you can use this flag to check if needed)</p>
 
 
         </td>
@@ -555,14 +562,37 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '514', 514)" onmouseover="showTip(event, '514', 514)">
-            Target.listAvailable()
+            Target.initEnvironment()
           </code>
           <div class="tip" id="514">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L436-436" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1133-1133" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>allows to initialize the environment before defining targets
+This function should be used at the start of your fake script
+see <a href="https://github.com/fsharp/FAKE/issues/2283
+Alternatively,">https://github.com/fsharp/FAKE/issues/2283
+Alternatively,</a> you can use Target.getArguments() instead</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
+            Target.listAvailable()
+          </code>
+          <div class="tip" id="515">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L462-462" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>List all targets available.</p>
@@ -573,15 +603,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
+          <code onmouseout="hideTip(event, '516', 516)" onmouseover="showTip(event, '516', 516)">
             Target.printDependencyGraph(...)
           </code>
-          <div class="tip" id="515">
+          <div class="tip" id="516">
             <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L531-531" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L558-558" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a dependency graph.</p>
@@ -592,15 +622,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '516', 516)" onmouseover="showTip(event, '516', 516)">
+          <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
             Target.raiseIfError(context)
           </code>
-          <div class="tip" id="516">
+          <div class="tip" id="517">
             <strong>Signature:</strong> context:OptionalTargetContext -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L943-943" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L970-970" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If <code>TargetContext option</code> is Some and has error, raise it as a BuildFailedException</p>
@@ -611,10 +641,10 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
+          <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
             Target.removeCollectStack
           </code>
-          <div class="tip" id="517">
+          <div class="tip" id="518">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
@@ -628,10 +658,10 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
+          <code onmouseout="hideTip(event, '519', 519)" onmouseover="showTip(event, '519', 519)">
             Target.removeLastDescription
           </code>
-          <div class="tip" id="518">
+          <div class="tip" id="519">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
@@ -645,15 +675,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '519', 519)" onmouseover="showTip(event, '519', 519)">
+          <code onmouseout="hideTip(event, '520', 520)" onmouseover="showTip(event, '520', 520)">
             Target.run parallelJobs targetName args
           </code>
-          <div class="tip" id="519">
+          <div class="tip" id="520">
             <strong>Signature:</strong> parallelJobs:int -&gt; targetName:string -&gt; args:string list -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1099-1099" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1150-1150" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs a target and its dependencies</p>
@@ -664,10 +694,10 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '520', 520)" onmouseover="showTip(event, '520', 520)">
+          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
             Target.runAndGetContext(...)
           </code>
-          <div class="tip" id="520">
+          <div class="tip" id="521">
             <strong>Signature:</strong> parallelJobs:int -&gt; targetName:string -&gt; args:string list -&gt; TargetContext<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -680,7 +710,7 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
                 <h5>OBSOLETE</h5>
                 <p>Use Target.WithContext.run instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L952-952" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L979-979" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs a target and its dependencies and returns a <a href="fake-core-targetcontext.html" title="TargetContext"><code>TargetContext</code></a></p>
@@ -691,34 +721,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
-            Target.runOrDefault(defaultTarget)
-          </code>
-          <div class="tip" id="521">
-            <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1103-1103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the command given on the command line or the given target when no target is given</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '522', 522)" onmouseover="showTip(event, '522', 522)">
-            Target.runOrDefaultWithArguments(...)
+            Target.runOrDefault(defaultTarget)
           </code>
           <div class="tip" id="522">
             <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1107-1107" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1154-1154" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the command given on the command line or the given target when no target is given</p>
@@ -730,14 +741,33 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '523', 523)" onmouseover="showTip(event, '523', 523)">
-            Target.runOrList()
+            Target.runOrDefaultWithArguments(...)
           </code>
           <div class="tip" id="523">
+            <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1158-1158" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Runs the command given on the command line or the given target when no target is given</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '524', 524)" onmouseover="showTip(event, '524', 524)">
+            Target.runOrList()
+          </code>
+          <div class="tip" id="524">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1111-1111" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1162-1162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the target given by the target parameter or lists the available targets</p>
@@ -748,34 +778,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '524', 524)" onmouseover="showTip(event, '524', 524)">
+          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
             Target.runSimple name args
           </code>
-          <div class="tip" id="524">
+          <div class="tip" id="525">
             <strong>Signature:</strong> name:string -&gt; args:string list -&gt; TargetResult<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L290-290" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
-            Target.runSimpleWithContext name ctx
-          </code>
-          <div class="tip" id="525">
-            <strong>Signature:</strong> name:string -&gt; ctx:TargetContext -&gt; TargetResult<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L296-296" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L316-316" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
@@ -787,9 +798,28 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '526', 526)" onmouseover="showTip(event, '526', 526)">
-            Target.setCollectStack
+            Target.runSimpleWithContext name ctx
           </code>
           <div class="tip" id="526">
+            <strong>Signature:</strong> name:string -&gt; ctx:TargetContext -&gt; TargetResult<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L322-322" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
+            Target.setCollectStack
+          </code>
+          <div class="tip" id="527">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
@@ -803,10 +833,10 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
+          <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
             Target.setLastDescription
           </code>
-          <div class="tip" id="527">
+          <div class="tip" id="528">
             <strong>Signature:</strong> string -&gt; unit<br />
                                   </div>
         </td>
@@ -820,10 +850,10 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
+          <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
             Target.setPrintStackTraceOnError
           </code>
-          <div class="tip" id="528">
+          <div class="tip" id="529">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
@@ -837,15 +867,15 @@ see <a href="https://github.com/fsharp/FAKE/issues/2283">https://github.com/fsha
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
+          <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
             Target.updateBuildStatus(context)
           </code>
-          <div class="tip" id="529">
+          <div class="tip" id="530">
             <strong>Signature:</strong> context:OptionalTargetContext -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L930-930" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L957-957" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Updates build status based on <a href="fake-core-targetmodule-optionaltargetcontext.html" title="OptionalTargetContext"><code>OptionalTargetContext</code></a>
@@ -894,7 +924,7 @@ Will not update status if <a href="fake-core-targetmodule-optionaltargetcontext.
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1-alpha.1104</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
