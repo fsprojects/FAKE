@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.12.3 - 2019-07-03
+## 5.15.3 - 2019-07-03
 
 * BUGFIX: Disable fast restore for MSBuild version < 15.8 - https://github.com/fsprojects/Paket/pull/3611
 
