@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.15.2 - 2019-07-03
+
+* BUGFIX: Fast Restore (bugfix from paket) - https://github.com/fsprojects/Paket/pull/3608
+
 ## 5.15.1 - 2019-06-30
 
 * ENHANCEMENT: Some internal improvements in `Fake.Runtime` for Ionide - https://github.com/fsharp/FAKE/pull/2341
