@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.15.2-alpha - tbd
+## 5.15.2 - 2019-07-03
 
-* tbd
+* BUGFIX: Fast Restore (bugfix from paket) - https://github.com/fsprojects/Paket/pull/3608
 
 ## 5.15.1 - 2019-06-30
 
