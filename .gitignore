@@ -46,6 +46,7 @@ tools/RazorEngine
 !tools/FAKE/tools/FakeLib.dll
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore
+!integrationtests/.gitignore
 _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
