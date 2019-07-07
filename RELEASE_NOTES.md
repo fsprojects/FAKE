@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.15.4-alpha - tbd
+
+* tbd
+
 ## 5.15.3 - 2019-07-03
 
 * BUGFIX: Disable fast restore for MSBuild version < 15.8 - https://github.com/fsprojects/Paket/pull/3611
