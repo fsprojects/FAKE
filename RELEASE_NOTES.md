@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.15.4-alpha - tbd
+## 5.15.4 - 2019-07-16
 
-* tbd
+* BUGFIX: Fix high memory use and slowness with a large number of targets/dependencies - https://github.com/fsharp/FAKE/pull/2354
 
 ## 5.15.3 - 2019-07-03
 
