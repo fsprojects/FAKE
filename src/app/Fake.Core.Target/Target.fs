@@ -632,29 +632,24 @@ module Target =
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
-        let _ = get target
-
-        let rec visitDependenciesAux previousDependencies = function
+        let visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        let visitedTargets = new List<Target>()
+        let rec visitDependenciesAux = function
             // NOTE: should be tail recursive
-            | (visited, level, targetName) :: workLeft ->
-                let target = get targetName
-                let isVisited =
-                    visited
-                    |> Seq.exists (fun t -> String.Equals(t, targetName, StringComparison.OrdinalIgnoreCase))
-                if isVisited then
-                    visitDependenciesAux previousDependencies workLeft
+            | targetName :: workLeft ->
+                if visited.Add(targetName)
+                then
+                    let target = get targetName
+                    visitedTargets.Add(target)
+                    let newLeft = target.Dependencies @ workLeft
+                    visitDependenciesAux newLeft
                 else
-                    let deps =
-                        target.Dependencies
-                        |> List.map (fun (t) -> (String.toLower targetName::visited), level + 1, t)
-                    let newVisitedDeps = target :: previousDependencies
-                    visitDependenciesAux newVisitedDeps (deps @ workLeft)
-            | _ ->
-                previousDependencies
-                |> List.distinctBy (fun (t) -> String.toLower t.Name)
+                    visitDependenciesAux workLeft                        
+            | _ -> visitedTargets |> Seq.toList
+
 
         // first find the list of targets we "have" to build
-        let targets = visitDependenciesAux [] [[], 0, target]
+        let targets = visitDependenciesAux [target]
 
         // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
         let targetLeftSet = HashSet<_>(StringComparer.OrdinalIgnoreCase)
