@@ -8,7 +8,7 @@ open System.Diagnostics
 let time f =
     let sw = Stopwatch.StartNew()
     f ()
-    sw.Stop
+    sw.Stop()
     sw.Elapsed
 
 let withFakeContext name f =

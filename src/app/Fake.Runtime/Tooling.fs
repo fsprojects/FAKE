@@ -19,7 +19,7 @@ open System.Threading.Tasks
 open System.Net
 open Newtonsoft.Json.Linq
 
-let private compatibleFakeVersion = "5.15.1-alpha.1104"
+let private compatibleFakeVersion = "5.15.3"
 let private fakeDownloadUri version =
     sprintf "https://github.com/fsharp/FAKE/releases/download/%s/fake-dotnetcore-portable.zip" version
     |> Uri
@@ -144,20 +144,21 @@ let getProjectOptions { Config = config; Prepared = prepared } : string[] =
     "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: args
     |> List.toArray
 
-let private errorTarget file msg desc =
-    let decl = 
-        { File = file
-          Line = 0
-          Column = 0 }
-    let target =
-        { Name = msg
-          HardDependencies = [||]
-          SoftDependencies = [||]
-          Declaration = decl
-          Description = desc }
-    target
+type GetTargetsWarningOrErrorType =
+    | NoFakeScript = 1
+    | MissingFakeCoreTargets = 2
+    /// Most likely due to missing `Target.initEnvironment()`
+    | MissingNavigationInfo = 4
+    | FakeCoreTargetsOlderThan5_15 = 3
+    | ExecutionError = 5
+    /// Most likely due to missing `Target.runOrDefault`
+    | EmptyInfoFile = 5
+type WarningOrError =
+  { Type : GetTargetsWarningOrErrorType 
+    Message : string }  
+type GetTargetsResult = { WarningsAndErrors : WarningOrError []; Targets : Target [] }
 
-let private runProcess (log: string -> unit) (workingDir: string) (exePath: string) (args: string) =
+let private runProcess (log: bool -> string -> unit) (workingDir: string) (exePath: string) (args: string) =
     let psi = System.Diagnostics.ProcessStartInfo()
     psi.FileName <- exePath
     psi.WorkingDirectory <- workingDir
@@ -169,8 +170,8 @@ let private runProcess (log: string -> unit) (workingDir: string) (exePath: stri
 
     use p = new System.Diagnostics.Process()
     p.StartInfo <- psi
-    p.OutputDataReceived.Add(fun ea -> log (ea.Data))
-    p.ErrorDataReceived.Add(fun ea -> log (ea.Data))
+    p.OutputDataReceived.Add(fun ea -> log false (ea.Data))
+    p.ErrorDataReceived.Add(fun ea -> log true (ea.Data))
 
     p.Start() |> ignore
     p.BeginOutputReadLine()
@@ -181,7 +182,10 @@ let private runProcess (log: string -> unit) (workingDir: string) (exePath: stri
 
     exitCode
 
-let private getTargetsLegacy (file:string) (ctx:FakeContext) : Async<Target []> = async {
+let private formatOutput (lines:ResizeArray<bool*string>) =
+  sprintf "Output: \n%s" (String.Join("\n", lines |> Seq.map (fun (isErr, msg) -> (if isErr then "Err: " else "Out: ") + msg)))
+
+let private getTargetsLegacy (file:string) (ctx:FakeContext) : Async<GetTargetsResult> = async {
     // pre Fake.Core.Targets upgrade
     let decl = 
         { File = null
@@ -193,12 +197,14 @@ let private getTargetsLegacy (file:string) (ctx:FakeContext) : Async<Target []> 
     let workingDir = Path.GetDirectoryName file
     let fakeArgs = sprintf "-s run \"%s\" -- --list" fileName
     let args = sprintf "\"%s\" %s" rt fakeArgs
-    let exitCode = runProcess (lines.Add) workingDir ctx.DotNetRuntime args
+    let exitCode = runProcess (fun isErr msg -> lines.Add(isErr, msg)) workingDir ctx.DotNetRuntime args
     if exitCode <> 0 then
-      return [| errorTarget file (sprintf "Running Script 'fake %s' failed (%d)" fakeArgs exitCode) "We tried to list the targets but your script failed" |]
+      let msg = sprintf "Running Script 'fake %s' failed (%d). %s" fakeArgs exitCode (formatOutput lines)
+      return { WarningsAndErrors = [| { Type = GetTargetsWarningOrErrorType.ExecutionError; Message = msg } |]; Targets = [||] }
     else
       let targets =
         lines
+        |> Seq.choose (fun (isErr, msg) -> if isErr then None else Some msg)
         |> Seq.filter (isNull >> not)
         |> Seq.choose (fun line ->
           // heuristic
@@ -217,9 +223,9 @@ let private getTargetsLegacy (file:string) (ctx:FakeContext) : Async<Target []> 
             |> Some
           else None)
         |> Seq.toArray
-      return targets
+      return { WarningsAndErrors = [||]; Targets = targets }
 }
-let private getTargetsJson (file:string) (ctx:FakeContext) : Async<Target []> = async {
+let private getTargetsJson (file:string) (ctx:FakeContext) : Async<GetTargetsResult> = async {
     // with --write-info support
     let! rt = getFakeRuntime ()
     let lines = ResizeArray<_>()
@@ -231,35 +237,40 @@ let private getTargetsJson (file:string) (ctx:FakeContext) : Async<Target []> = 
       // FAKE is clever enough to not recompile
       let fakeArgs = sprintf "-s run --nocache --fsiargs \"--debug:portable --optimize-\" \"%s\" -- --write-info \"%s\"" fileName resultsFile
       let args = sprintf "\"%s\" %s" rt fakeArgs
-      let exitCode = runProcess (lines.Add) workingDir ctx.DotNetRuntime args
+      let exitCode = runProcess (fun isErr msg -> lines.Add(isErr, msg)) workingDir ctx.DotNetRuntime args
       if exitCode <> 0 then
-        return [| errorTarget file (sprintf "Running Script 'fake %s' failed (%d)" fakeArgs exitCode) "We tried to retrieve the targets but your script failed" |]
+        let msg = sprintf "Running Script 'fake %s' failed (%d). %s" fakeArgs exitCode (formatOutput lines)
+        return { WarningsAndErrors = [| { Type = GetTargetsWarningOrErrorType.ExecutionError; Message = msg } |]; Targets = [||] }
       else
         let jsonStr = File.ReadAllText resultsFile
-        let jobj = JObject.Parse jsonStr
-        let parseStringWithNull (t:JToken) =
-            if isNull t || t.Type = JTokenType.Null then null
-            else string t 
-        let parseDecl (t:JToken) =
-            { File = parseStringWithNull t.["file"]; Line = int t.["line"]; Column = int t.["column"] }
-        let parseDep (t:JToken) =
-            { Name = string t.["name"]; Declaration = parseDecl t.["declaration"] }
-        let parseArray parseItem (a:JToken) =
-            (a :?> JArray)
-            |> Seq.map parseItem
+        if String.IsNullOrEmpty jsonStr then
+          let msg = sprintf "Running Script 'fake %s' did not create an info file. Are you missing the `Target.runOrDefault` call at the end of your script?" fakeArgs
+          return { WarningsAndErrors = [| { Type = GetTargetsWarningOrErrorType.EmptyInfoFile; Message = msg } |]; Targets = [||] }
+        else
+          let jobj = JObject.Parse jsonStr
+          let parseStringWithNull (t:JToken) =
+              if isNull t || t.Type = JTokenType.Null then null
+              else string t 
+          let parseDecl (t:JToken) =
+              { File = parseStringWithNull t.["file"]; Line = int t.["line"]; Column = int t.["column"] }
+          let parseDep (t:JToken) =
+              { Name = string t.["name"]; Declaration = parseDecl t.["declaration"] }
+          let parseArray parseItem (a:JToken) =
+              (a :?> JArray)
+              |> Seq.map parseItem
+              |> Seq.toArray
+          let parseTarget (t:JToken) =
+              { Name = string t.["name"]
+                Declaration = parseDecl t.["declaration"]
+                HardDependencies = parseArray parseDep t.["hardDependencies"]
+                SoftDependencies = parseArray parseDep t.["softDependencies"]
+                Description = string t.["description"] }
+          let jTargets = jobj.["targets"] :?> JArray
+          let targets =
+            jTargets
+            |> Seq.map parseTarget
             |> Seq.toArray
-        let parseTarget (t:JToken) =
-            { Name = string t.["name"]
-              Declaration = parseDecl t.["declaration"]
-              HardDependencies = parseArray parseDep t.["hardDependencies"]
-              SoftDependencies = parseArray parseDep t.["softDependencies"]
-              Description = string t.["description"] }
-        let jTargets = jobj.["targets"] :?> JArray
-        let targets =
-          jTargets
-          |> Seq.map parseTarget
-          |> Seq.toArray
-        return targets
+          return { WarningsAndErrors = [||]; Targets = targets }
     finally
       try File.Delete resultsFile with e -> ()     
 }      
@@ -271,13 +282,6 @@ let private getTargetsVersion (context:Runners.FakeContext) : Version option =
       |> Seq.tryFind (fun a -> a.Name = "Fake.Core.Target")
       |> Option.map (fun a -> a.Version)
     targetVersion
-type GetTargetsWarningOrErrorType =
-    | NoFakeScript = 1
-    | MissingFakeCoreTargets = 2
-    // Most likely due to missing `Target.initEnvironment()`
-    | MissingNavigationInfo = 4
-    | FakeCoreTargetsOlderThan5_15 = 3
-type GetTargetsResult = { WarningsAndErrors : GetTargetsWarningOrErrorType []; Targets : Target [] }
 
 // filePath -> hash * Task<Results>
 let private getTargetsDict = new System.Collections.Concurrent.ConcurrentDictionary<string, string * Task<GetTargetsResult>>()
@@ -285,7 +289,7 @@ let getTargets (file:string) (ctx:FakeContext) : Async<GetTargetsResult> = async
     checkLogging()
     match detectFakeScript file with
     | None ->
-      return { WarningsAndErrors = [|GetTargetsWarningOrErrorType.NoFakeScript|]; Targets = [||] }// Ok [| errorTarget file "not a FAKE 5 script" "This file is not a valid FAKE 5 script" |]
+      return { WarningsAndErrors = [|{ Type = GetTargetsWarningOrErrorType.NoFakeScript; Message = "This file is not a valid FAKE 5 script" }|]; Targets = [||] }// Ok [| errorTarget file "not a FAKE 5 script" "This file is not a valid FAKE 5 script" |]
     | Some { Config = config; Prepared = prepared } ->
         // check cache
         let cacheDir = prepared._CacheDir
@@ -299,19 +303,19 @@ let getTargets (file:string) (ctx:FakeContext) : Async<GetTargetsResult> = async
                 let context, cache = CoreCache.prepareContext config prov
                 match getTargetsVersion context with
                 | None ->
-                  return { WarningsAndErrors = [|GetTargetsWarningOrErrorType.MissingFakeCoreTargets|]; Targets = [||] }
+                  return { WarningsAndErrors = [| { Type = GetTargetsWarningOrErrorType.MissingFakeCoreTargets; Message = "The 'Fake.Core.Target' package is not referenced." }|]; Targets = [||] }
                 | Some v when v < Version(5, 15) ->
-                  let! targets = getTargetsLegacy file ctx
-                  return { WarningsAndErrors = [|GetTargetsWarningOrErrorType.FakeCoreTargetsOlderThan5_15|]; Targets = targets }
+                  let! resp = getTargetsLegacy file ctx
+                  return { resp with WarningsAndErrors = [| yield! resp.WarningsAndErrors; yield { Type = GetTargetsWarningOrErrorType.FakeCoreTargetsOlderThan5_15; Message = "this script should be updated to at least Fake.Core.Target 5.15" }|]; }
                 | Some v ->
                   // Use newer logic
-                  let! targets = getTargetsJson file ctx
+                  let! resp = getTargetsJson file ctx
                   let warnings =
-                    if targets.Length > 0 then
-                      if isNull targets.[0].Declaration.File then [|GetTargetsWarningOrErrorType.MissingNavigationInfo|]
+                    if resp.Targets.Length > 0 then
+                      if isNull resp.Targets.[0].Declaration.File then [|{ Type = GetTargetsWarningOrErrorType.MissingNavigationInfo; Message="navigation is missing, are you missing 'Target.initEnvironment()` at the top?"}|]
                       else [||]
                     else [||]
-                  return { WarningsAndErrors = warnings; Targets = targets }
+                  return { resp with WarningsAndErrors = [|yield! resp.WarningsAndErrors; yield! warnings|] }
             }
             |> Async.StartAsTask
              

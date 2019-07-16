@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>Fake.Core.Process</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>

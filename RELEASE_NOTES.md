@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.15.4 - 2019-07-16
+
+* BUGFIX: Fix high memory use and slowness with a large number of targets/dependencies - https://github.com/fsharp/FAKE/pull/2354
+
 ## 5.15.3 - 2019-07-03
 
 * BUGFIX: Disable fast restore for MSBuild version < 15.8 - https://github.com/fsprojects/Paket/pull/3611
