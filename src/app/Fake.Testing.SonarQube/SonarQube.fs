@@ -14,6 +14,8 @@ module Fake.Testing.SonarQube
     type SonarQubeParams = {
         /// FileName of the SonarQube runner exe. 
         ToolsPath : string
+        /// Organization which owns the SonarQube project
+        Organization : string option
         /// Key to identify the SonarQube project
         Key : string
         /// Name of the project
@@ -29,6 +31,7 @@ module Fake.Testing.SonarQube
     /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
     let SonarQubeDefaults = 
         { ToolsPath = Tools.findToolInSubPath "MSBuild.SonarQube.Runner.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "SonarQube")
+          Organization = None
           Key = null
           Name = null
           Version = "1.0"
@@ -40,6 +43,10 @@ module Fake.Testing.SonarQube
     let private SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
       let sonarPath = parameters.ToolsPath 
       let setArgs = parameters.Settings |> List.fold (fun acc x -> acc + "/d:" + x + " ") ""
+      let orgArgs = 
+        match parameters.Organization with
+        | Some (organization) -> (" /o:" + organization)
+        | None -> ""
 
       let cfgArgs = 
         match parameters.Config with
@@ -48,7 +55,7 @@ module Fake.Testing.SonarQube
       
       let args = 
         match call with
-        | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs
+        | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs + orgArgs
         | End -> "end " + setArgs + cfgArgs
 
       let result =
