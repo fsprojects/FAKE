@@ -25,6 +25,7 @@ Slack.sendNotification webhookUrl (fun p ->
     {p with
         Text = "My Slack Notification!\n<https://google.com|Click Here>!"
         Channel = "@SomeoneImportant"
+		Username = "My Slack User"
         IconEmoji = ":ghost:"
         Attachments = [| 
             {Slack.NotificationAttachmentDefaults with
