@@ -1,4 +1,4 @@
-﻿namespace Fake.Api
+﻿namespace Fake.Api.MyApi
 
 #if NETSTANDARD
 open System.Net.Http
@@ -43,7 +43,7 @@ module Slack =
         /// (Required) The message body
         Text: string
         /// Name the message will appear to be sent from. Default value: Specified in your Slack Webhook configuration.
-        From: string
+        Username: string
         /// Channel to which the message will be posted. Default value: Specified in your Slack Webhook configuration.
         Channel: string
         /// The icon to be displayed with the message. Default value: Specified in your slack Webhook configuration.
@@ -61,7 +61,7 @@ module Slack =
     /// The default Slack notification parameters
     let NotificationDefaults = {
         Text = ""
-        From = null
+        Username = null
         Channel = null
         IconURL = null
         IconEmoji = null
