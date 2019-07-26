@@ -1,4 +1,4 @@
-﻿namespace Fake.Api.MyApi
+﻿namespace Fake.Api
 
 #if NETSTANDARD
 open System.Net.Http
