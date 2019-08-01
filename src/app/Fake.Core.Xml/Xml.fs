@@ -78,10 +78,21 @@ let writeCDataElement elementName data (writer : XmlWriter) =
     writer.WriteCData data
     endElement writer
 
+/// Checks the attribute with the given name from the given XmlNode
+let hasAttribute (name : string) (node : #XmlNode) =
+    let attribute = node.Attributes.[name]
+    not (isNull attribute)
+
+/// Gets the attribute value with the given name from the given XmlNode
+let getAttributeValue (name : string) (node : #XmlNode) =
+    let attribute = node.Attributes.[name]
+    if not (isNull attribute) then Some(attribute.Value) else None
+
 /// Gets the attribute with the given name from the given XmlNode
 let getAttribute (name : string) (node : #XmlNode) =
-    let attribute = node.Attributes.[name]
-    if not (isNull attribute) then attribute.Value else null
+    match getAttributeValue name node with
+    | Some x -> x
+    | _ -> null
 
 /// Gets a sequence of all child nodes for the given XmlNode
 let getChilds (node : #XmlNode) =
