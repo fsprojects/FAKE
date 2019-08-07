@@ -42,22 +42,46 @@ module Fake.Testing.SonarQube
     /// Execute the external msbuild runner of SonarQube. Parameters are given to the command line tool as required.
     let private SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
       let sonarPath = parameters.ToolsPath 
-      let setArgs = parameters.Settings |> List.fold (fun acc x -> acc + "/d:" + x + " ") ""
-      let orgArgs = 
+      let arg flag param =
+          let augmentedParam = @""+ param + @""
+          (sprintf "/%s:%s"  flag augmentedParam).Trim()
+          
+      let organisationArgument =
         match parameters.Organization with
-        | Some (organization) -> (" /o:" + organization)
-        | None -> ""
-
-      let cfgArgs = 
+            | None -> None
+            | Some (organization) -> Some (arg "o" organization)
+        
+      let configurationArgument = 
         match parameters.Config with
-        | Some(x) -> (" /s:"+x) 
-        | None -> ""
+            | None -> None
+            | Some x -> Some ( arg "s" x )
+      
+      let beginInitialArguments =
+          Arguments.Empty
+          |> Arguments.appendIf true "begin"
+          |> Arguments.appendIf true (arg "k" parameters.Key)
+          |> Arguments.appendIf true (arg "n" parameters.Name)
+          |> Arguments.appendIf true (arg "v" parameters.Version)
+          |> Arguments.appendIf (organisationArgument.IsNone = false) organisationArgument.Value
+          |> Arguments.appendIf (configurationArgument.IsNone = false) configurationArgument.Value
+          
+      let beginCall =
+          parameters.Settings
+          |> List.fold (fun arguments x ->  arguments |> Arguments.appendIf true (sprintf "/d:%s" x) ) beginInitialArguments
+          
+      let endInitialArguments =
+          Arguments.Empty
+          |> Arguments.appendIf true "end"
+          |> Arguments.appendIf (configurationArgument.IsNone = false) configurationArgument.Value
+          
+      let endCall =   
+          parameters.Settings
+          |> List.fold (fun arguments x ->  arguments |> Arguments.appendIf true (sprintf "/d:%s" x) ) endInitialArguments
       
       let args = 
         match call with
-        | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs + orgArgs
-        | End -> "end " + setArgs + cfgArgs
-
+        | Begin -> beginCall.ToStartInfo
+        | End -> endCall.ToStartInfo 
       let result =
         Process.execSimple ((fun info ->
         { info with
