@@ -73,24 +73,57 @@ module DacPac =
           Variables = []
           Profile = "" }
 
+    [<Literal>]
+    let Action = "Action"
+
+    [<Literal>]
+    let Source = "Source"
+
+    [<Literal>]
+    let Destination = "Destination"
+
+    [<Literal>]
+    let OutputPath = "OutputPath"
+
+    [<Literal>]
+    let BlockOnPossibleDataLoss = "BlockOnPossibleDataLoss"
+
+    [<Literal>]
+    let DropObjectsNotInSource = "DropObjectsNotInSource"
+
+    [<Literal>]
+    let Timeout = "Timeout"
+
+    [<Literal>]
+    let RecreateDb = "RecreateDb"
+
+    [<Literal>]
+    let AdditionalSqlPackageProperties = "AdditionalSqlPackageProperties"
+
+    [<Literal>]
+    let Variables = "Variables"
+
+    [<Literal>]
+    let Profile = "Profile"
+
     let private formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
 
         match argumentName with
-        | "Action" -> sprintf "/Action:%s" action
-        | "Source" -> sprintf """/SourceFile:"%s" """ args.Source
-        | "Destination" when not(String.isNullOrEmpty(args.Destination)) -> sprintf """/TargetConnectionString:"%s" """ args.Destination
-        | "OutputPath" -> sprintf "%s" outputPath
-        | "BlockOnPossibleDataLoss" when args.BlockOnPossibleDataLoss.IsSome -> sprintf "/p:BlockOnPossibleDataLoss=%b" args.BlockOnPossibleDataLoss.Value
-        | "BlockOnPossibleDataLoss" when String.isNullOrEmpty(args.Profile) && args.BlockOnPossibleDataLoss.IsNone -> sprintf "/p:BlockOnPossibleDataLoss=%b" false
-        | "DropObjectsNotInSource" when args.DropObjectsNotInSource.IsSome -> sprintf "/p:DropObjectsNotInSource=%b" args.DropObjectsNotInSource.Value
-        | "DropObjectsNotInSource" when String.isNullOrEmpty(args.Profile) && args.DropObjectsNotInSource.IsNone -> sprintf "/p:DropObjectsNotInSource=%b" false
-        | "Timeout" when args.Timeout.IsSome -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | "Timeout" when String.isNullOrEmpty(args.Profile) && args.Timeout.IsNone -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | "RecreateDb" when args.RecreateDb.IsSome -> sprintf "/p:CreateNewDatabase=%b" args.RecreateDb.Value
-        | "RecreateDb" when String.isNullOrEmpty(args.Profile) && args.RecreateDb.IsNone -> sprintf "/p:CreateNewDatabase=%b" false
-        | "AdditionalSqlPackageProperties" when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
-        | "Variables" when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
-        | "Profile" when not(System.String.IsNullOrEmpty(args.Profile)) -> sprintf "/pr:%s" args.Profile
+        | Action -> sprintf "/Action:%s" action
+        | Source -> sprintf """/SourceFile:"%s" """ args.Source
+        | Destination when not(String.isNullOrEmpty(args.Destination)) -> sprintf """/TargetConnectionString:"%s" """ args.Destination
+        | OutputPath -> sprintf "%s" outputPath
+        | BlockOnPossibleDataLoss when args.BlockOnPossibleDataLoss.IsSome -> sprintf "/p:BlockOnPossibleDataLoss=%b" args.BlockOnPossibleDataLoss.Value
+        | BlockOnPossibleDataLoss when String.isNullOrEmpty(args.Profile) && args.BlockOnPossibleDataLoss.IsNone -> sprintf "/p:BlockOnPossibleDataLoss=%b" false
+        | DropObjectsNotInSource when args.DropObjectsNotInSource.IsSome -> sprintf "/p:DropObjectsNotInSource=%b" args.DropObjectsNotInSource.Value
+        | DropObjectsNotInSource when String.isNullOrEmpty(args.Profile) && args.DropObjectsNotInSource.IsNone -> sprintf "/p:DropObjectsNotInSource=%b" false
+        | Timeout when args.Timeout.IsSome -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
+        | Timeout when String.isNullOrEmpty(args.Profile) && args.Timeout.IsNone -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
+        | RecreateDb when args.RecreateDb.IsSome -> sprintf "/p:CreateNewDatabase=%b" args.RecreateDb.Value
+        | RecreateDb when String.isNullOrEmpty(args.Profile) && args.RecreateDb.IsNone -> sprintf "/p:CreateNewDatabase=%b" false
+        | AdditionalSqlPackageProperties when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
+        | Variables when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
+        | Profile when not(System.String.IsNullOrEmpty(args.Profile)) -> sprintf "/pr:%s" args.Profile
         | _ -> ""
 
     module PropertyKeys =
@@ -110,17 +143,17 @@ module DacPac =
 
         let format = formatArgument args action outputPath additionalParameters variables
 
-        let actionParameter = format "Action"
-        let sourceParameter = format "Source"
-        let destinationParameter = format "Destination"
-        let outputPathParameter = format "OutputPath"
-        let blockOnPossibleDataLossParameter = format "BlockOnPossibleDataLoss"
-        let dropObjectsNotInSourceParameter = format "DropObjectsNotInSource"
-        let timeoutParameter = format "Timeout"
-        let recreateDbParameter = format "RecreateDb"
-        let additionalSqlPackagePropertiesParameter = format "AdditionalSqlPackageProperties"
-        let variablesParameter = format "Variables"
-        let profileParameter = format "Profile"
+        let actionParameter = format Action
+        let sourceParameter = format Source
+        let destinationParameter = format Destination
+        let outputPathParameter = format OutputPath
+        let blockOnPossibleDataLossParameter = format BlockOnPossibleDataLoss
+        let dropObjectsNotInSourceParameter = format DropObjectsNotInSource
+        let timeoutParameter = format Timeout
+        let recreateDbParameter = format RecreateDb
+        let additionalSqlPackagePropertiesParameter = format AdditionalSqlPackageProperties
+        let variablesParameter = format Variables
+        let profileParameter = format Profile
         
         [ actionParameter; sourceParameter; destinationParameter; outputPathParameter; blockOnPossibleDataLossParameter; dropObjectsNotInSourceParameter; timeoutParameter; recreateDbParameter; additionalSqlPackagePropertiesParameter; variablesParameter; profileParameter ]
             |> List.filter (fun item -> item <> "")
@@ -130,8 +163,6 @@ module DacPac =
     let deployDb setParams =
         let args = setParams DefaultDeploymentArgs
         let action, outputPath = generateCommandLine args.Action
-
-        printfn "%A" args
 
         let concat parameter =
             List.map (fun (key, value) -> sprintf "/%s:%s=%s" parameter key value)
@@ -151,16 +182,14 @@ module DacPac =
                 if validPaths |> List.contains args.SqlPackageToolPath then validPaths
                 else [ args.SqlPackageToolPath ]
             failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
-                 
-        let result =
-            Process.execRaw
-                (fun psi -> { psi with Arguments = arguments; FileName = args.SqlPackageToolPath })
-                TimeSpan.MaxValue
-                true
-                (printfn "SqlPackage error: %s")
-                (printfn "%s")
-
-        match result with
-        | 0 -> ()
-        | _ -> failwith "Error executing DACPAC deployment. Please see output for error details"
+        
+        CreateProcess.fromRawCommandLine args.SqlPackageToolPath arguments
+            |> CreateProcess.withTimeout TimeSpan.MaxValue
+            |> CreateProcess.addOnExited (fun data exitCode ->
+                if exitCode <> 0 then
+                    failwithf "Process exit code '%d' <> 0." exitCode
+                else
+                    data)
+            |> Proc.run
+            |> ignore
 
