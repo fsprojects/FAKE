@@ -1065,7 +1065,6 @@ Target.create "PrepareArtifacts" (fun _ ->
         Trace.trace "ensure artifacts."
         let files =
             !! (artifactsDir </> "fake-dotnetcore-*.zip")
-            |> GlobbingPattern.setBaseDir "C:\\" // workaround a globbing bug, remove me with 5.0.0-rc014
             |> Seq.toList
         Trace.tracefn "files: %A" files
         files
