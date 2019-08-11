@@ -43,9 +43,9 @@ module ProcessUtils =
             // and https://github.com/fsharp/FAKE/issues/1899
             Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
             |> String.split ';'
-            |> Seq.collect (fun postFix -> findFilesInternal path (file + postFix))
-            |> fun findings -> Seq.append findings (findFilesInternal path file)
-        else findFilesInternal path file
+            |> Seq.collect (fun postFix -> findFilesInternal dirs (file + postFix))
+            |> fun findings -> Seq.append findings (findFilesInternal dirs file)
+        else findFilesInternal dirs file
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
@@ -66,7 +66,7 @@ module ProcessUtils =
         Environment.pathDirectories
         |> Seq.filter Path.isValidPath
         |> Seq.append [ "." ]
-        |> fun path -> findFiles path file
+        |> fun dirs -> findFiles dirs file
 
     /// Searches the current directory and the directories within the PATH
     /// environment variable for the given file. If successful returns the full
