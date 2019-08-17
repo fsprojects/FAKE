@@ -69,8 +69,9 @@ nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 nuget FSharp.Control.Reactive
 nuget System.Reactive.Compatibility
-// From FSharp.Compiler.Service, but manually managed because of rename
-nuget System.ValueTuple copy_local: true, redirects:force
+// From FSharp.Compiler.Service, but manually managed because of rename, use 4.4.0 because of some msbuild weirdness in legacy...
+// no matter what we specify here it seems to always copy 4.4.0 into the output directory. Probably some clash with some implicit dependency somewhere
+nuget System.ValueTuple copy_local: true, redirects:force 4.4.0
 
 group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
