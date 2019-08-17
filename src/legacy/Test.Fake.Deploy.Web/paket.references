@@ -1,7 +1,0 @@
-FSharp.Core
-Nancy.Testing
-Nancy.Viewengines.Razor
-Newtonsoft.Json
-System.Web.Razor.Unofficial
-xunit
-FSharp.Compiler.Tools

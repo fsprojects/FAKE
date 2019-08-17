@@ -3,3 +3,5 @@ Machine.Specifications.Should
 Mono.Web.Xdt
 Mono.Cecil
 Nuget.Core
+// Because otherwise this project will overwrite the version with an implicit one...
+System.ValueTuple

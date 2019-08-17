@@ -4,8 +4,8 @@
 module Fake.FscHelper
 
 open System
-open Microsoft.FSharp.Compiler
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler
+open FSharp.Compiler.SourceCodeServices
 
 // OBSOLETE
 

@@ -1,4 +1,4 @@
-version 5.211.0
+version 5.215.0
 content: none
 //source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
@@ -27,6 +27,7 @@ nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
+nuget Nuget.Protocol ~> 4.0 strategy: min // To support net462...
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
@@ -68,8 +69,9 @@ nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 nuget FSharp.Control.Reactive
 nuget System.Reactive.Compatibility
-// From FSharp.Compiler.Service, but manually managed because of rename
-nuget System.ValueTuple copy_local: true, redirects:force
+// From FSharp.Compiler.Service, but manually managed because of rename, use 4.4.0 because of some msbuild weirdness in legacy...
+// no matter what we specify here it seems to always copy 4.4.0 into the output directory. Probably some clash with some implicit dependency somewhere
+nuget System.ValueTuple copy_local: true, redirects:force 4.4.0
 
 group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
@@ -144,7 +146,7 @@ group netcorerunner
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
 
     nuget Paket.Core
@@ -167,17 +169,14 @@ group netcore
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
     nuget FSharp.Compiler.Service content: none
 
     nuget NETStandard.Library ~> 2.0
     
-    // Starting from 2018-07-08 this needs to be <4.5 to not break 5.0 and 5.1 releases
-    // After some time we can upgrade this (and consolidate the netcore and netcorerunner groups)
-    // but not before 2018-11
-    nuget FSharp.Core < 4.5
+    nuget FSharp.Core ~> 4.0
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
@@ -195,6 +194,7 @@ group netcore
         nuget Microsoft.Build.Utilities.Core < 16
     nuget BlackFox.VsWhere
 
+    nuget System.Net.Http
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath
     nuget System.Xml.XPath.XDocument

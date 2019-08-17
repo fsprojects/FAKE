@@ -187,6 +187,17 @@ module DotNet =
         /// Take version from global.json and fail if it is not found.
         | GlobalJson
 
+    /// Specifies the source channel for the installation. 
+    module CliChannel =
+        /// Long-Term Support channel (most current supported release).
+        let LTS = Some "LTS"
+        /// Most current release.
+        let Current = Some "Current"
+        /// Two-part version in X.Y format representing a specific release (for example, 2.0 or 1.0).
+        let Version major minor = Some (sprintf "%d.%d" major minor)  
+        /// Branch name. For example, release/2.0.0, release/2.0.0-preview2, or master (for nightly releases).
+        let Branch branchName = Some branchName
+
     /// .NET Core SDK install options
     [<NoComparison>]
     [<NoEquality>]
@@ -201,6 +212,8 @@ module DotNet =
             /// - Branch name. For example, release/2.0.0, release/2.0.0-preview2, or master (for nightly releases).
             /// 
             /// The default value is `LTS`. For more information on .NET support channels, see the .NET Support Policy page.
+            /// 
+            /// Use the `CliChannel` module, for example `CliChannel.Current`
             Channel: string option
             /// .NET Core SDK version
             Version: CliVersion
