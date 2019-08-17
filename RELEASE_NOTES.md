@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.16.0-alpha - 2019-08-17
+## 5.16.0 - 2019-08-17
 
 * LEGACY: Remove `Fake.Deploy` from repository and NuGet package, see https://github.com/fsharp/FAKE/issues/1820
 * LEGACY: Update to `net461` to support latest `FSharp.Compiler.Service` to fix https://github.com/fsharp/FAKE/issues/2362
