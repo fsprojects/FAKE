@@ -349,12 +349,10 @@ Target.create "Legacy_CreateNuGet" (fun _ ->
                 prefs |> List.head
 
     for package,description in packages do
-        let nugetDocsDir = nugetLegacyDir @@ "docs"
         let nugetToolsDir = nugetLegacyDir @@ "tools"
         let nugetLibDir = nugetLegacyDir @@ "lib"
         let nugetLib451Dir = nugetLibDir @@ "net451"
 
-        Shell.cleanDir nugetDocsDir
         Shell.cleanDir nugetToolsDir
         Shell.cleanDir nugetLibDir
         Shell.deleteDir nugetLibDir
@@ -370,11 +368,9 @@ Target.create "Legacy_CreateNuGet" (fun _ ->
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
             deleteFCS nugetToolsDir
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
             deleteFCS nugetToolsDir
         | p when p = "FAKE.Lib" ->
             Shell.cleanDir nugetLib451Dir
