@@ -46,7 +46,11 @@ module GitHub =
           /// Indicates whether the release will be created as a draft
           Draft : bool 
           /// Indicates whether the release will be created as a prerelease
-          Prerelease : bool }      
+          Prerelease : bool
+          /// Commit hash or branch name that will be used to create the release tag.
+          /// Is not used if the tag already exists.
+          /// If left unspecified, and the tag does not already exist, the default branch is used instead.
+          TargetCommitish : string }
 
     // wrapper re-implementation of HttpClientAdapter which works around
     // known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
@@ -153,13 +157,15 @@ module GitHub =
                 { Name = tagName
                   Body = ""
                   Draft = true 
-                  Prerelease = false } |> setParams
+                  Prerelease = false
+                  TargetCommitish = "" } |> setParams
             
             let data = NewRelease(tagName)
             data.Name <- p.Name
             data.Body <- p.Body
             data.Draft <- p.Draft
             data.Prerelease <- p.Prerelease
+            data.TargetCommitish <- p.TargetCommitish
 
             let! release = Async.AwaitTask <| client'.Repository.Release.Create(owner, repoName, data)
 
