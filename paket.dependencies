@@ -27,6 +27,7 @@ nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
+nuget Nuget.Protocol ~> 4.0 strategy: min // To support net462...
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping

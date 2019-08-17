@@ -225,7 +225,7 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     Thread.Sleep 1000
     (result, messages)
 
-open Microsoft.FSharp.Compiler.Interactive.Shell
+open FSharp.Compiler.Interactive.Shell
 open System.Reflection
 
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
@@ -246,7 +246,7 @@ type private CacheInfo =
 /// gets a cache entry for the given script.
 /// We need to consider fsiOptions as they might contain --defines.
 let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
-    let allScriptContents = getAllScripts true scriptPath
+    let allScriptContents = getAllScripts scriptPath
     let scriptHash = getScriptHash allScriptContents fsiOptions
     //TODO this is only calculating the hash for the input file, not anything #load-ed
 

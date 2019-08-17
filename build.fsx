@@ -560,7 +560,6 @@ Target.create "GenerateDocs" (fun _ ->
               -- (toolsDir + "/FSharp.Compiler.Service.dll")
               -- (toolsDir + "/FAKE.FSharp.Compiler.Service.dll")
               -- (toolsDir + "/Fake.IIS.dll")
-              -- (toolsDir + "/Fake.Deploy.Lib.dll")
             |> dllsAndLibDirs
 
         fakeLegacyDlls
@@ -585,7 +584,6 @@ Target.create "GenerateDocs" (fun _ ->
               -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
               -- "build/**/FAKE.FSharp.Compiler.Service.dll"
               -- "build/**/Fake.IIS.dll"
-              -- "build/**/Fake.Deploy.Lib.dll"
             |> dllsAndLibDirs
 
         fake5LegacyDlls

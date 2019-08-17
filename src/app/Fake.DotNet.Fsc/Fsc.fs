@@ -5,7 +5,7 @@
 module Fake.DotNet.Fsc
 
 open System
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 open Fake.IO
 open Fake.Core
 
