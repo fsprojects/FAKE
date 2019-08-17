@@ -1,8 +1,16 @@
 # Release Notes
 
-## 5.15.5-alpha - tbd
+## 5.16.0-alpha - tbd
 
-* tbd
+* LEGACY: Remove `Fake.Deploy` from repository and NuGet package, see https://github.com/fsharp/FAKE/issues/1820
+* LEGACY: Update to `net461` to support latest `FSharp.Compiler.Service` to fix https://github.com/fsharp/FAKE/issues/2362
+* LEGACY: Release a new version of `FakeLib.dll` (the original FAKE NuGet package) 
+* BUGFIX: Fake.Api.Slack uses `Username` not `From`, thanks @mastion - https://github.com/fsharp/FAKE/pull/2360
+* ENHANCEMENT: add rollforward policy to next-major to make `fake-cli` work in future dotnet sdk  major version, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2372
+* ENHANCEMENT: `ProcessUtils` now considers `PATHEXT` on windows - https://github.com/fsharp/FAKE/pull/2368
+* ENHANCEMENT: [`Fake.Api.GitHub`] Added `TargetCommitish` parameter to the `CreateReleaseParams` record. This parameter is passed to Octokit's 'NewRelease', and allows for the creation of releases from arbitrary commits when the release tag does not exist yet, thanks @nikolamilekic - https://github.com/fsharp/FAKE/pull/2367
+* (Minor) BREAKING: Drop support for `netstandard1.6` and `net46` (please open an issue if that actually hits you). All fake modules are now compiled for `netstandard2.0`, `net462` and `FSharp.Core <= 4.7`
+* ENHANCEMENT: `Fake.DotNet.Fsc` and `Fake.DotNet.Fsi` now use latest `FSharp.Compiler.Service`
 
 ## 5.15.4 - 2019-07-16
 

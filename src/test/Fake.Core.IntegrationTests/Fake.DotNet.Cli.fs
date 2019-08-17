@@ -23,7 +23,7 @@ let tests =
                             CustomDownloadDir = Some installerDir }
                     ForceInstall = true
                     CustomInstallDir = Some preparedDir
-                    Channel = "LTS"
+                    Channel = Some "LTS"
                     Version = DotNet.CliVersion.Coherent })
 
             let opts = f (DotNet.Options.Create())
@@ -37,7 +37,7 @@ let tests =
                 { option with
                     ForceInstall = true
                     CustomInstallDir = Some preparedDir
-                    Channel = "LTS"
+                    Channel = Some "LTS"
                     Version = DotNet.CliVersion.Coherent })
 
             let opts = f (DotNet.Options.Create())
@@ -50,7 +50,7 @@ let tests =
             let f = DotNet.install (fun option ->
                 { option with
                     ForceInstall = true
-                    Channel = "LTS"
+                    Channel = Some "LTS"
                     CustomInstallDir = Some preparedDir
                     Version = DotNet.CliVersion.Coherent })
 
