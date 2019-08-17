@@ -51,7 +51,7 @@ type FxCopParams =
 
 /// This checks the result file with some XML queries for errors
 /// [omit]
-[<System.Obsolete(""Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.checkForErrors instead".")>]
+[<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.checkForErrors instead.")>]
 let checkForErrors resultFile = 
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let FxCopCriticalWarnings = 0
@@ -91,7 +91,7 @@ let FxCopDefaults =
       CustomDictionary = String.Empty }
 
 /// Run FxCop on a group of assemblies.
-[<System.Obsolete(""Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.Run instead"")>]
+[<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.Run instead")>]
 let FxCop setParams (assemblies : string seq) = 
     let param = setParams FxCopDefaults
     use __ = traceStartTaskUsing "FxCop" ""

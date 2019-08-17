@@ -7,7 +7,7 @@ open Fake.Runtime.Runners
 open System.Runtime.Loader
 #endif
 
-open Microsoft.FSharp.Compiler.Interactive.Shell
+open FSharp.Compiler.Interactive.Shell
 open System.Reflection
 open System
 open System.IO

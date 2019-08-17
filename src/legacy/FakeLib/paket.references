@@ -5,6 +5,7 @@ FParsec
 Mono.Cecil
 Octokit
 Nuget.Core
+NuGet.Protocol
 Newtonsoft.Json
 System.Net.Http
 HashLib
