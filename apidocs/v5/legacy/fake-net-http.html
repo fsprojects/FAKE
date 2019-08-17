@@ -355,10 +355,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2118', 2118)" onmouseover="showTip(event, '2118', 2118)">
+          <code onmouseout="hideTip(event, '2214', 2214)" onmouseover="showTip(event, '2214', 2214)">
             downloadFile localFilePath uri
           </code>
-          <div class="tip" id="2118">
+          <div class="tip" id="2214">
             <strong>Signature:</strong> localFilePath:string -&gt; uri:string -&gt; string<br />
                                   </div>
         </td>
@@ -384,10 +384,10 @@ string -&gt; string -&gt; string</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2119', 2119)" onmouseover="showTip(event, '2119', 2119)">
+          <code onmouseout="hideTip(event, '2215', 2215)" onmouseover="showTip(event, '2215', 2215)">
             downloadFiles(input)
           </code>
-          <div class="tip" id="2119">
+          <div class="tip" id="2215">
             <strong>Signature:</strong> input:DownloadParameters list -&gt; string list<br />
                                   </div>
         </td>
@@ -412,15 +412,15 @@ DownloadParameters -&gt; string list</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2120', 2120)" onmouseover="showTip(event, '2120', 2120)">
+          <code onmouseout="hideTip(event, '2216', 2216)" onmouseover="showTip(event, '2216', 2216)">
             get userName password url
           </code>
-          <div class="tip" id="2120">
+          <div class="tip" id="2216">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L182-182" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L190-190" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP GET command and retrives the information.
@@ -438,15 +438,34 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2121', 2121)" onmouseover="showTip(event, '2121', 2121)">
+          <code onmouseout="hideTip(event, '2217', 2217)" onmouseover="showTip(event, '2217', 2217)">
+            getWithHeaders(...)
+          </code>
+          <div class="tip" id="2217">
+            <strong>Signature:</strong> userName:string -&gt; password:string -&gt; headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; Map&lt;string,string list&gt; * string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L279-279" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Like 'get' but allow to set headers and returns the response headers.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2218', 2218)" onmouseover="showTip(event, '2218', 2218)">
             post url userName password data
           </code>
-          <div class="tip" id="2121">
+          <div class="tip" id="2218">
             <strong>Signature:</strong> url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L243-243" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L258-258" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP POST command and retrives the information.
@@ -465,15 +484,15 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2122', 2122)" onmouseover="showTip(event, '2122', 2122)">
+          <code onmouseout="hideTip(event, '2219', 2219)" onmouseover="showTip(event, '2219', 2219)">
             postCommand(...)
           </code>
-          <div class="tip" id="2122">
+          <div class="tip" id="2219">
             <strong>Signature:</strong> headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L230-230" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L244-244" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP POST command and retrives the information.<br />
@@ -494,18 +513,20 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2123', 2123)" onmouseover="showTip(event, '2123', 2123)">
+          <code onmouseout="hideTip(event, '2220', 2220)" onmouseover="showTip(event, '2220', 2220)">
             upload url file
           </code>
-          <div class="tip" id="2123">
+          <div class="tip" id="2220">
             <strong>Signature:</strong> url:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L260-260" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L276-276" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Upload the given file to the given endpoint</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -547,7 +568,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

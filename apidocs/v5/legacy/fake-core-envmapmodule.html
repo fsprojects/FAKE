@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>StringKeyword - FAKE - F# Make</title>
+	<title>EnvMap - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -297,7 +297,7 @@
                 <div class="notification">
                     Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
                     <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-runtime-fsharpparser-stringkeyword.html">here if exists in a module</a>.
+                    If the API is already migrated you can check <a href="/apidocs/v5/fake-core-envmapmodule.html">here if exists in a module</a>.
                     More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
                 </div>
 
@@ -306,27 +306,31 @@
 
 
 
-<h1><a name="StringKeyword" class="anchor" href="#StringKeyword">StringKeyword</a></h1>
+<h1><a name="EnvMap" class="anchor" href="#EnvMap">EnvMap</a></h1>
+
 <div class="xmldoc">
 </div>
-  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6243', 6243)" onmouseover="showTip(event, '6243', 6243)">
-            SourceDirectory
+          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
+            create()
           </code>
-          <div class="tip" id="6243">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="1281">
+            <strong>Signature:</strong> unit -&gt; IImmutableDictionary&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L56-56" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -335,15 +339,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6244', 6244)" onmouseover="showTip(event, '6244', 6244)">
-            SourceFile
+          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
+            empty
           </code>
-          <div class="tip" id="6244">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="1282">
+            <strong>Signature:</strong> EnvMap<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L30-30" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -352,15 +356,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6245', 6245)" onmouseover="showTip(event, '6245', 6245)">
-            Unknown(string)
+          <code onmouseout="hideTip(event, '1283', 1283)" onmouseover="showTip(event, '1283', 1283)">
+            ofSeq(l)
           </code>
-          <div class="tip" id="6245">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="1283">
+            <strong>Signature:</strong> l:seq&lt;string * string&gt; -&gt; IImmutableDictionary&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L54-54" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L35-35" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -405,7 +409,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

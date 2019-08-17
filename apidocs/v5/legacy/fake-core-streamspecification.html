@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>AnalyseState - FAKE - F# Make</title>
+	<title>StreamSpecification - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -297,7 +297,7 @@
                 <div class="notification">
                     Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
                     <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-runtime-fsharpparser-analysestate.html">here if exists in a module</a>.
+                    If the API is already migrated you can check <a href="/apidocs/v5/fake-core-streamspecification.html">here if exists in a module</a>.
                     More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
                 </div>
 
@@ -306,8 +306,10 @@
 
 
 
-<h1><a name="AnalyseState" class="anchor" href="#AnalyseState">AnalyseState</a></h1>
+<h1><a name="StreamSpecification" class="anchor" href="#StreamSpecification">StreamSpecification</a></h1>
 <div class="xmldoc">
+<p>Various options to redirect streams.</p>
+
 </div>
   <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
   <table class="table table-bordered member-list">
@@ -318,35 +320,58 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6238', 6238)" onmouseover="showTip(event, '6238', 6238)">
-            NoAnalysis
+          <code onmouseout="hideTip(event, '4896', 4896)" onmouseover="showTip(event, '4896', 4896)">
+            CreatePipe(StreamRef)
           </code>
-          <div class="tip" id="6238">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4896">
+            <strong>Signature:</strong> StreamRef<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Retrieve the raw pipe from the process (the StreamRef is set with a stream you can write into for 'stdin' and read from for 'stdout' and 'stderr')</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6239', 6239)" onmouseover="showTip(event, '6239', 6239)">
-            Reference(string option)
+          <code onmouseout="hideTip(event, '4897', 4897)" onmouseover="showTip(event, '4897', 4897)">
+            Inherit
           </code>
-          <div class="tip" id="6239">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="4897">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/FSharpParser.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Do not redirect, or use normal process inheritance</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4898', 4898)" onmouseover="showTip(event, '4898', 4898)">
+            UseStream(closeOnExit,stream)
+          </code>
+          <div class="tip" id="4898">
+            <strong>Signature:</strong> bool * Stream<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L73-73" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Redirect to the given stream (the stream must be provided by the user and be writeable for 'stdout' &amp; 'stderr' and readable for 'stdin')</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -388,7 +413,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

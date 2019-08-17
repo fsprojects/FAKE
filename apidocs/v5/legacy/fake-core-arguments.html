@@ -308,6 +308,8 @@
 
 <h1><a name="Arguments" class="anchor" href="#Arguments">Arguments</a></h1>
 <div class="xmldoc">
+<p>Represents a list of arguments</p>
+
 </div>
   <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
   <table class="table table-bordered member-list">
@@ -318,15 +320,32 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4627', 4627)" onmouseover="showTip(event, '4627', 4627)">
+          <code onmouseout="hideTip(event, '4730', 4730)" onmouseover="showTip(event, '4730', 4730)">
             Args
           </code>
-          <div class="tip" id="4627">
+          <div class="tip" id="4730">
             <strong>Signature:</strong> string array<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L119-119" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L133-133" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4731', 4731)" onmouseover="showTip(event, '4731', 4731)">
+            Original
+          </code>
+          <div class="tip" id="4731">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L133-133" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -343,32 +362,54 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4628', 4628)" onmouseover="showTip(event, '4628', 4628)">
+          <code onmouseout="hideTip(event, '4732', 4732)" onmouseover="showTip(event, '4732', 4732)">
             x.ToLinuxShellCommandLine
           </code>
-          <div class="tip" id="4628">
+          <div class="tip" id="4732">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L127-127" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L142-142" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Escape the given argument list according to a unix shell (bash)</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4629', 4629)" onmouseover="showTip(event, '4629', 4629)">
-            x.ToWindowsCommandLine
+          <code onmouseout="hideTip(event, '4733', 4733)" onmouseover="showTip(event, '4733', 4733)">
+            x.ToStartInfo
           </code>
-          <div class="tip" id="4629">
+          <div class="tip" id="4733">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L126-126" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L153-153" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Create a new command line string which can be used in a ProcessStartInfo object.
+If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise <code>ToWindowsCommandLine</code> (with some special code for <code>mono</code>) is used.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4734', 4734)" onmouseover="showTip(event, '4734', 4734)">
+            x.ToWindowsCommandLine
+          </code>
+          <div class="tip" id="4734">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L140-140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This is the reverse of <a href="https://msdn.microsoft.com/en-us/library/17w5ykft.aspx">https://msdn.microsoft.com/en-us/library/17w5ykft.aspx</a></p>
@@ -387,15 +428,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4630', 4630)" onmouseover="showTip(event, '4630', 4630)">
+          <code onmouseout="hideTip(event, '4735', 4735)" onmouseover="showTip(event, '4735', 4735)">
             Arguments.Empty
           </code>
-          <div class="tip" id="4630">
+          <div class="tip" id="4735">
             <strong>Signature:</strong> Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L120-120" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L134-134" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -404,49 +445,54 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4631', 4631)" onmouseover="showTip(event, '4631', 4631)">
+          <code onmouseout="hideTip(event, '4736', 4736)" onmouseover="showTip(event, '4736', 4736)">
             Arguments.OfArgs(args)
           </code>
-          <div class="tip" id="4631">
-            <strong>Signature:</strong> (args:string array) -&gt; Arguments<br />
+          <div class="tip" id="4736">
+            <strong>Signature:</strong> args:seq&lt;string&gt; -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L145-145" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Create a new arguments object from the given list of arguments</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4632', 4632)" onmouseover="showTip(event, '4632', 4632)">
+          <code onmouseout="hideTip(event, '4737', 4737)" onmouseover="showTip(event, '4737', 4737)">
             Arguments.OfStartInfo(cmd)
           </code>
-          <div class="tip" id="4632">
+          <div class="tip" id="4737">
             <strong>Signature:</strong> cmd:string -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L149-149" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Create a new arguments object from a given startinfo-conforming-escaped command line string.
+Same as <code>OfWindowsCommandLine</code>.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4633', 4633)" onmouseover="showTip(event, '4633', 4633)">
+          <code onmouseout="hideTip(event, '4738', 4738)" onmouseover="showTip(event, '4738', 4738)">
             Arguments.OfWindowsCommandLine(cmd)
           </code>
-          <div class="tip" id="4633">
+          <div class="tip" id="4738">
             <strong>Signature:</strong> cmd:string -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L122-122" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L136-136" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>See <a href="https://msdn.microsoft.com/en-us/library/17w5ykft.aspx">https://msdn.microsoft.com/en-us/library/17w5ykft.aspx</a></p>
@@ -493,7 +539,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

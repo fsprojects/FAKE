@@ -378,10 +378,10 @@ If some integration is not working as expected or you have features you would li
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1151', 1151)" onmouseover="showTip(event, '1151', 1151)">
+          <code onmouseout="hideTip(event, '1152', 1152)" onmouseover="showTip(event, '1152', 1152)">
             TeamCity.block name description
           </code>
-          <div class="tip" id="1151">
+          <div class="tip" id="1152">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; IDisposable<br />
                                   </div>
         </td>
@@ -398,32 +398,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1152', 1152)" onmouseover="showTip(event, '1152', 1152)">
+          <code onmouseout="hideTip(event, '1153', 1153)" onmouseover="showTip(event, '1153', 1153)">
             TeamCity.defaultTraceListener
           </code>
-          <div class="tip" id="1152">
+          <div class="tip" id="1153">
             <strong>Signature:</strong> ITraceListener<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L435-435" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1153', 1153)" onmouseover="showTip(event, '1153', 1153)">
-            TeamCity.detect()
-          </code>
-          <div class="tip" id="1153">
-            <strong>Signature:</strong> unit -&gt; bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L437-437" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L402-402" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -433,14 +416,14 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1154', 1154)" onmouseover="showTip(event, '1154', 1154)">
-            TeamCity.install(force)
+            TeamCity.detect()
           </code>
           <div class="tip" id="1154">
-            <strong>Signature:</strong> force:bool -&gt; unit<br />
+            <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L439-439" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L404-404" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -450,14 +433,14 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1155', 1155)" onmouseover="showTip(event, '1155', 1155)">
-            TeamCity.Installer
+            TeamCity.install(force)
           </code>
           <div class="tip" id="1155">
-            <strong>Signature:</strong> BuildServerInstaller<br />
+            <strong>Signature:</strong> force:bool -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L444-444" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L406-406" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -467,14 +450,50 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1156', 1156)" onmouseover="showTip(event, '1156', 1156)">
-            TeamCity.reportBuildStatus(...)
+            TeamCity.Installer
           </code>
           <div class="tip" id="1156">
+            <strong>Signature:</strong> BuildServerInstaller<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L411-411" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1157', 1157)" onmouseover="showTip(event, '1157', 1157)">
+            TeamCity.reportBuildProblem(message)
+          </code>
+          <div class="tip" id="1157">
+            <strong>Signature:</strong> message:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L61-61" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Reports build problem</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1158', 1158)" onmouseover="showTip(event, '1158', 1158)">
+            TeamCity.reportBuildStatus(...)
+          </code>
+          <div class="tip" id="1158">
             <strong>Signature:</strong> status:string -&gt; message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L172-172" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports the build status.</p>
@@ -485,15 +504,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1157', 1157)" onmouseover="showTip(event, '1157', 1157)">
+          <code onmouseout="hideTip(event, '1159', 1159)" onmouseover="showTip(event, '1159', 1159)">
             TeamCity.reportProgress(message)
           </code>
-          <div class="tip" id="1157">
+          <div class="tip" id="1159">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L183-183" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports the progress.</p>
@@ -504,15 +523,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1158', 1158)" onmouseover="showTip(event, '1158', 1158)">
+          <code onmouseout="hideTip(event, '1160', 1160)" onmouseover="showTip(event, '1160', 1160)">
             TeamCity.reportProgressFinish(message)
           </code>
-          <div class="tip" id="1158">
+          <div class="tip" id="1160">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L189-189" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L169-169" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports the progress end.</p>
@@ -523,15 +542,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1159', 1159)" onmouseover="showTip(event, '1159', 1159)">
+          <code onmouseout="hideTip(event, '1161', 1161)" onmouseover="showTip(event, '1161', 1161)">
             TeamCity.reportProgressStart(message)
           </code>
-          <div class="tip" id="1159">
+          <div class="tip" id="1161">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L186-186" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L166-166" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports the progress start.</p>
@@ -542,10 +561,10 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1160', 1160)" onmouseover="showTip(event, '1160', 1160)">
+          <code onmouseout="hideTip(event, '1162', 1162)" onmouseover="showTip(event, '1162', 1162)">
             TeamCity.sendTeamCityError(error)
           </code>
-          <div class="tip" id="1160">
+          <div class="tip" id="1162">
             <strong>Signature:</strong> error:string -&gt; unit<br />
                                   </div>
         </td>
@@ -561,15 +580,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1161', 1161)" onmouseover="showTip(event, '1161', 1161)">
+          <code onmouseout="hideTip(event, '1163', 1163)" onmouseover="showTip(event, '1163', 1163)">
             TeamCity.setBuildStatistic key value
           </code>
-          <div class="tip" id="1161">
+          <div class="tip" id="1163">
             <strong>Signature:</strong> key:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L206-206" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L184-184" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports a build statistic.</p>
@@ -580,15 +599,15 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1162', 1162)" onmouseover="showTip(event, '1162', 1162)">
+          <code onmouseout="hideTip(event, '1164', 1164)" onmouseover="showTip(event, '1164', 1164)">
             TeamCity.setParameter name value
           </code>
-          <div class="tip" id="1162">
+          <div class="tip" id="1164">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L187-187" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reports a parameter value</p>
@@ -635,7 +654,7 @@ Usage: <code>use __ = TeamCity.block "My Block"</code></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

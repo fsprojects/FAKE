@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>Environment - FAKE - F# Make</title>
+	<title>HttpResponseMessage<'a> - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -292,33 +292,35 @@
 
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">
+		<div class="column is-9-desktop is-12-mobile">            
 			<article class="content">
-								<p>
-										This is part of the <a href="https://www.nuget.org/packages/Fake.Core.Environment" >Fake.Core.Environment</a> module.
-								</p>
+                <div class="notification">
+                    Note: This API documentation is for FAKE version 4. The migration API documentation can be found 
+                    <a href="/apidocs/v5/legacy/fake-httplistenerhelper-httpresponsemessage-1.html">here</a>. The API documentation for the new fake 5 modules can be found 
+                    <a href="/apidocs/v5/index.html">here</a>
+                </div>
+
                 
-							
 
 
 
 
-<h1><a name="Environment" class="anchor" href="#Environment">Environment</a></h1>
+<h1><a name="HttpResponseMessage<'a>" class="anchor" href="#HttpResponseMessage<'a>">HttpResponseMessage<'a></a></h1>
 <div class="xmldoc">
 </div>
-  <h2><a name="Static members" class="anchor" href="#Static members">Static members</a></h2>
+  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3434', 3434)" onmouseover="showTip(event, '3434', 3434)">
-            Environment.CommandLine
+          <code onmouseout="hideTip(event, '1322', 1322)" onmouseover="showTip(event, '1322', 1322)">
+            Exception(string)
           </code>
-          <div class="tip" id="3434">
+          <div class="tip" id="1322">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -329,263 +331,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3435', 3435)" onmouseover="showTip(event, '3435', 3435)">
-            Environment.CurrentDirectory()
+          <code onmouseout="hideTip(event, '1323', 1323)" onmouseover="showTip(event, '1323', 1323)">
+            Message(&#39;a)
           </code>
-          <div class="tip" id="3435">
-            <strong>Signature:</strong> unit -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3436', 3436)" onmouseover="showTip(event, '3436', 3436)">
-            Environment.CurrentManagedThreadId
-          </code>
-          <div class="tip" id="3436">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3437', 3437)" onmouseover="showTip(event, '3437', 3437)">
-            Environment.ExitCode()
-          </code>
-          <div class="tip" id="3437">
-            <strong>Signature:</strong> unit -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3438', 3438)" onmouseover="showTip(event, '3438', 3438)">
-            Environment.HasShutdownStarted
-          </code>
-          <div class="tip" id="3438">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3439', 3439)" onmouseover="showTip(event, '3439', 3439)">
-            Environment.Is64BitOperatingSystem
-          </code>
-          <div class="tip" id="3439">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3440', 3440)" onmouseover="showTip(event, '3440', 3440)">
-            Environment.Is64BitProcess
-          </code>
-          <div class="tip" id="3440">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3441', 3441)" onmouseover="showTip(event, '3441', 3441)">
-            Environment.MachineName
-          </code>
-          <div class="tip" id="3441">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3442', 3442)" onmouseover="showTip(event, '3442', 3442)">
-            Environment.NewLine
-          </code>
-          <div class="tip" id="3442">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3443', 3443)" onmouseover="showTip(event, '3443', 3443)">
-            Environment.OSVersion
-          </code>
-          <div class="tip" id="3443">
-            <strong>Signature:</strong> OperatingSystem<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3444', 3444)" onmouseover="showTip(event, '3444', 3444)">
-            Environment.ProcessorCount
-          </code>
-          <div class="tip" id="3444">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3445', 3445)" onmouseover="showTip(event, '3445', 3445)">
-            Environment.StackTrace
-          </code>
-          <div class="tip" id="3445">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3446', 3446)" onmouseover="showTip(event, '3446', 3446)">
-            Environment.SystemDirectory
-          </code>
-          <div class="tip" id="3446">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3447', 3447)" onmouseover="showTip(event, '3447', 3447)">
-            Environment.SystemPageSize
-          </code>
-          <div class="tip" id="3447">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3448', 3448)" onmouseover="showTip(event, '3448', 3448)">
-            Environment.TickCount
-          </code>
-          <div class="tip" id="3448">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3449', 3449)" onmouseover="showTip(event, '3449', 3449)">
-            Environment.UserDomainName
-          </code>
-          <div class="tip" id="3449">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3450', 3450)" onmouseover="showTip(event, '3450', 3450)">
-            Environment.UserInteractive
-          </code>
-          <div class="tip" id="3450">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3451', 3451)" onmouseover="showTip(event, '3451', 3451)">
-            Environment.UserName
-          </code>
-          <div class="tip" id="3451">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3452', 3452)" onmouseover="showTip(event, '3452', 3452)">
-            Environment.Version
-          </code>
-          <div class="tip" id="3452">
-            <strong>Signature:</strong> Version<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3453', 3453)" onmouseover="showTip(event, '3453', 3453)">
-            Environment.WorkingSet
-          </code>
-          <div class="tip" id="3453">
-            <strong>Signature:</strong> int64<br />
+          <div class="tip" id="1323">
+            <strong>Signature:</strong> &#39;a<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -603,7 +353,6 @@
 		</aside>
 	</div>
 </section>
-
 
 	<footer>
 		<div class="hero is-dark">
@@ -632,7 +381,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

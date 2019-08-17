@@ -888,7 +888,7 @@ Does not support FTPS and SFTP.</p>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Please use nuget &#39;Fake.DotNet.FxCop&#39;, open &#39;Fake.DotNet&#39; and use module FxCop instead.</p>
             </div> 
           <p>Contains a task which can be used to run <a href="http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx">FxCop</a> on .NET assemblies. There is also a <a href="../fxcop.html">tutorial</a> for this task available.</p>
 
@@ -1958,7 +1958,7 @@ functions from the Side-by-side helper module</p>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Core.Xdt instead (open Fake.Core and use &#39;Xdt.&lt;name&gt;&#39; instead of directly calling Xdt&lt;name&gt; - ie add a dot)</p>
             </div> 
           <p>Contains functions used to transform config (or any XML) files using Microsoft's XML Document Transformations.</p>
 
@@ -2443,6 +2443,16 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-arguments.html">Arguments</a>
           </td>
           <td class="xmldoc">
+            <p>Represents a list of arguments</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-asyncprocessresult-1.html">AsyncProcessResult<'a></a>
+          </td>
+          <td class="xmldoc">
             
           </td>
         </tr>
@@ -2476,6 +2486,16 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-command.html">Command</a>
+          </td>
+          <td class="xmldoc">
+            <p>The type of command to execute</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-consolemessage.html">ConsoleMessage</a>
           </td>
           <td class="xmldoc">
@@ -2490,6 +2510,27 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
           </td>
           <td class="xmldoc">
             <p>Implements a TraceListener for System.Console.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-createprocess-1.html">CreateProcess<'TRes></a>
+          </td>
+          <td class="xmldoc">
+            <p>Handle for creating a process and returning potential results.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-dataref-1.html">DataRef<'T></a>
+          </td>
+          <td class="xmldoc">
+            <p>Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
+Used to retrieve "pipes"</p>
 
 
           </td>
@@ -2539,6 +2580,14 @@ Please consider not using a match on this type in code external to the fake repo
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-envmap.html">EnvMap</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-execparams.html">ExecParams</a>
           </td>
           <td class="xmldoc">
@@ -2550,6 +2599,14 @@ Please consider not using a match on this type in code external to the fake repo
         <tr>
           <td class="type-name">
             <a href="fake-core-filepath.html">FilePath</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-imap-2.html">IMap<'TKey, 'TValue></a>
           </td>
           <td class="xmldoc">
             
@@ -2627,12 +2684,38 @@ Please consider not using a match on this type in code external to the fake repo
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-processoutput.html">ProcessOutput</a>
+          </td>
+          <td class="xmldoc">
+            <p>The output of the process. If ordering between stdout and stderr is important you need to use streams.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-processresult.html">ProcessResult</a>
           </td>
           <td class="xmldoc">
             <p>A process result including error code, message log and errors.</p>
 
 
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-processresult-1.html">ProcessResult<'a></a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-rawprocessresult.html">RawProcessResult</a>
+          </td>
+          <td class="xmldoc">
+            
           </td>
         </tr>
         <tr>
@@ -2655,6 +2738,24 @@ Note: For overwriting the <code>PreRelease</code> part use: <code>{ Version with
           </td>
           <td class="xmldoc">
             <p>Allows to exec shell operations synchronously and asynchronously.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-streamref.html">StreamRef</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-streamspecification.html">StreamSpecification</a>
+          </td>
+          <td class="xmldoc">
+            <p>Various options to redirect streams.</p>
 
 
           </td>
@@ -2747,7 +2848,19 @@ Please consider not using a match on this type in code external to the fake repo
             <a href="fake-core-args.html">Args</a>
           </td>
           <td class="xmldoc">
-          
+          <p>Helper functions for proper command line parsing</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-argumentsmodule.html">Arguments</a>
+          </td>
+          <td class="xmldoc">
+          <p>Module for working with an <a href="fake-core-arguments.html" title="Arguments"><code>Arguments</code></a> instance</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2799,6 +2912,50 @@ This allows us to run some modules without any context and change behavior depen
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-core-createprocess.html">CreateProcess</a>
+          </td>
+          <td class="xmldoc">
+          <p>Module for creating and modifying CreateProcess<'TRes> instances.
+You can manage:</p>
+<ul>
+<li>The command (ie file to execute and arguments)</li>
+<li>The working directory</li>
+<li>The process environment</li>
+<li>Stream redirection and pipes</li>
+<li>Timeout for the process to exit</li>
+<li>The result and the result transformations (<code>map</code>, <code>mapResult</code>)</li>
+</ul>
+<p>More extensions can be found in the <a href="apidocs/v5/fake-core-createprocessext-createprocess.html">CreateProcess Extensions</a></p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Command</span><span class="pn">.</span><span class="id">RawCommand</span><span class="pn">(</span><span class="s">&quot;file&quot;</span><span class="pn">,</span> <span class="id">Arguments</span><span class="pn">.</span><span class="id">OfArgs</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span><span class="pn">)</span>
+<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromCommand</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-createprocessext.html">CreateProcessExt</a>
+          </td>
+          <td class="xmldoc">
+          <p>Some extensions for the <code>CreateProcess</code> module, opened automatically (use add <code>open Fake.Core</code>)</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-core-dochelper.html">DocHelper</a>
           </td>
           <td class="xmldoc">
@@ -2808,6 +2965,14 @@ This allows us to run some modules without any context and change behavior depen
         <tr>
           <td class="module-name">
             <a href="fake-core-docoptresultmodule.html">DocoptResult</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-envmapmodule.html">EnvMap</a>
           </td>
           <td class="xmldoc">
           
@@ -2833,10 +2998,52 @@ This allows us to run some modules without any context and change behavior depen
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-core-imap.html">IMap</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-core-mono.html">Mono</a>
           </td>
           <td class="xmldoc">
           
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-proc.html">Proc</a>
+          </td>
+          <td class="xmldoc">
+          <p>Module to start or run processes, used in combination with the <code>CreateProcess</code> API.</p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket: </span>
+<span class="s">nuget Fake.Core.Process //&quot;</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Core</span>
+<span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="m">CreateProcess</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">fromRawCommand</span> <span class="s">&quot;./folder/mytool.exe&quot;</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="m">Proc</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">namespace Fake</div>
+<div class="tip" id="fs2">namespace Fake.Core</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
+<div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
+<div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
+<div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
+<div class="tip" id="fs7">val ignore : value:&#39;T -&gt; unit</div>
+
+
           </td>
         </tr>
         <tr>
@@ -2850,6 +3057,14 @@ This allows us to run some modules without any context and change behavior depen
         <tr>
           <td class="module-name">
             <a href="fake-core-process.html">Process</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-processutils.html">ProcessUtils</a>
           </td>
           <td class="xmldoc">
           
@@ -2884,6 +3099,14 @@ Make sure to read the documentation in the <a href="fake-core-semverinfo.html">S
           <p>Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
 
 
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-streamextensions.html">StreamExtensions</a>
+          </td>
+          <td class="xmldoc">
+          
           </td>
         </tr>
         <tr>
@@ -3538,7 +3761,24 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             <a href="fake-dotnet-testing-nunit3.html">NUnit3</a>
           </td>
           <td class="xmldoc">
-          <p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+          <p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+<h3>Sample</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+       <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+         <span class="o">|&gt;</span> <span class="id">NUnit3</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+             <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                   <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
+   <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
 
 
           </td>
@@ -4375,16 +4615,6 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
         </tr>
         <tr>
           <td class="module-name">
-            <a href="fake-runtime-hashgeneration.html">HashGeneration</a>
-          </td>
-          <td class="xmldoc">
-          <p>Contains helper functions which allow to interact with the F# Interactive.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="module-name">
             <a href="fake-runtime-legacyapihelper.html">LegacyApiHelper</a>
           </td>
           <td class="xmldoc">
@@ -4913,7 +5143,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

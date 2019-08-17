@@ -309,7 +309,24 @@
 <h1><a name="NUnit3" class="anchor" href="#NUnit3">NUnit3</a></h1>
 
 <div class="xmldoc">
-<p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+<p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+<h3>Sample</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+       <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+         <span class="o">|&gt;</span> <span class="id">NUnit3</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+             <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                   <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
+   <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
 
 </div>
 
@@ -408,15 +425,15 @@ You can pass any value using Other.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1767', 1767)" onmouseover="showTip(event, '1767', 1767)">
+          <code onmouseout="hideTip(event, '1862', 1862)" onmouseover="showTip(event, '1862', 1862)">
             buildArgs parameters assemblies
           </code>
-          <div class="tip" id="1767">
+          <div class="tip" id="1862">
             <strong>Signature:</strong> parameters:NUnit3Params -&gt; assemblies:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L277-277" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L287-287" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Builds the command line arguments from the given parameter record and the given assemblies.</p>
@@ -427,15 +444,15 @@ You can pass any value using Other.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1768', 1768)" onmouseover="showTip(event, '1768', 1768)">
+          <code onmouseout="hideTip(event, '1863', 1863)" onmouseover="showTip(event, '1863', 1863)">
             NUnit3Defaults
           </code>
-          <div class="tip" id="1768">
+          <div class="tip" id="1863">
             <strong>Signature:</strong> NUnit3Params<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L239-239" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L249-249" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The <a href="fake-testing-nunit3-nunit3params.html">NUnit3Params</a> default parameters.</p>
@@ -475,15 +492,15 @@ You can pass any value using Other.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1769', 1769)" onmouseover="showTip(event, '1769', 1769)">
+          <code onmouseout="hideTip(event, '1864', 1864)" onmouseover="showTip(event, '1864', 1864)">
             run setParams assemblies
           </code>
-          <div class="tip" id="1769">
+          <div class="tip" id="1864">
             <strong>Signature:</strong> setParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L312-312" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L360-360" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -528,7 +545,7 @@ You can pass any value using Other.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

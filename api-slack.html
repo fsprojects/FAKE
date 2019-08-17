@@ -337,6 +337,7 @@ This documentation is for FAKE version 5.0 or later. The old documentation can b
 <span class="l">30: </span>
 <span class="l">31: </span>
 <span class="l">32: </span>
+<span class="l">33: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Api</span>
 
@@ -347,6 +348,7 @@ This documentation is for FAKE version 5.0 or later. The old documentation can b
     <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
         <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;My Slack Notification!\n&lt;https://google.com|Click Here&gt;!&quot;</span>
         <span class="id">Channel</span> <span class="o">=</span> <span class="s">&quot;@SomeoneImportant&quot;</span>
+		<span class="id">Username</span> <span class="o">=</span> <span class="s">&quot;My Slack User&quot;</span>
         <span class="id">IconEmoji</span> <span class="o">=</span> <span class="s">&quot;:ghost:&quot;</span>
         <span class="id">Attachments</span> <span class="o">=</span> <span class="pn">[|</span> 
             <span class="pn">{</span><span class="id">Slack</span><span class="pn">.</span><span class="id">NotificationAttachmentDefaults</span> <span class="k">with</span>
@@ -369,7 +371,7 @@ This documentation is for FAKE version 5.0 or later. The old documentation can b
                 <span class="id">Color</span> <span class="o">=</span> <span class="s">&quot;#FFCCDD&quot;</span>
             <span class="pn">}</span><span class="pn">|]</span>
     <span class="pn">}</span><span class="pn">)</span>
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="fn">printfn</span> <span class="s">&quot;Result: </span><span class="pf">%s</span><span class="s">&quot;</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">printfn</span> <span class="s">&quot;Result: %s&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -416,7 +418,7 @@ This documentation is for FAKE version 5.0 or later. The old documentation can b
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

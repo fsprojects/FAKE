@@ -309,6 +309,8 @@
 <h1><a name="Args" class="anchor" href="#Args">Args</a></h1>
 
 <div class="xmldoc">
+<p>Helper functions for proper command line parsing</p>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -322,52 +324,58 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1185', 1185)" onmouseover="showTip(event, '1185', 1185)">
+          <code onmouseout="hideTip(event, '1187', 1187)" onmouseover="showTip(event, '1187', 1187)">
             fromWindowsCommandLine(cmd)
           </code>
-          <div class="tip" id="1185">
+          <div class="tip" id="1187">
             <strong>Signature:</strong> cmd:string -&gt; string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L116-116" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L129-129" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Read a windows command line string into its arguments</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1186', 1186)" onmouseover="showTip(event, '1186', 1186)">
+          <code onmouseout="hideTip(event, '1188', 1188)" onmouseover="showTip(event, '1188', 1188)">
             toLinuxShellCommandLine(args)
           </code>
-          <div class="tip" id="1186">
+          <div class="tip" id="1188">
             <strong>Signature:</strong> args:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L113-113" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L126-126" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Escape the given argument list according to a unix shell (bash)</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1187', 1187)" onmouseover="showTip(event, '1187', 1187)">
+          <code onmouseout="hideTip(event, '1189', 1189)" onmouseover="showTip(event, '1189', 1189)">
             toWindowsCommandLine(args)
           </code>
-          <div class="tip" id="1187">
+          <div class="tip" id="1189">
             <strong>Signature:</strong> args:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L112-112" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L124-124" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          
+          <p>Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if needed (currently always but this might change).</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -409,7 +417,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

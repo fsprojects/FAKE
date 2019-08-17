@@ -296,6 +296,18 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-16-0-alpha-tbd" class="anchor" href="#5-16-0-alpha-tbd">5.16.0-alpha - tbd</a></h2>
+<ul>
+<li>LEGACY: Remove <code>Fake.Deploy</code> from repository and NuGet package, see <a href="https://github.com/fsharp/FAKE/issues/1820">https://github.com/fsharp/FAKE/issues/1820</a></li>
+<li>LEGACY: Update to <code>net461</code> to support latest <code>FSharp.Compiler.Service</code> to fix <a href="https://github.com/fsharp/FAKE/issues/2362">https://github.com/fsharp/FAKE/issues/2362</a></li>
+<li>LEGACY: Release a new version of <code>FakeLib.dll</code> (the original FAKE NuGet package)</li>
+<li>BUGFIX: Fake.Api.Slack uses <code>Username</code> not <code>From</code>, thanks @mastion - <a href="https://github.com/fsharp/FAKE/pull/2360">https://github.com/fsharp/FAKE/pull/2360</a></li>
+<li>ENHANCEMENT: add rollforward policy to next-major to make <code>fake-cli</code> work in future dotnet sdk  major version, thanks @baronfel - <a href="https://github.com/fsharp/FAKE/pull/2372">https://github.com/fsharp/FAKE/pull/2372</a></li>
+<li>ENHANCEMENT: <code>ProcessUtils</code> now considers <code>PATHEXT</code> on windows - <a href="https://github.com/fsharp/FAKE/pull/2368">https://github.com/fsharp/FAKE/pull/2368</a></li>
+<li>ENHANCEMENT: [<code>Fake.Api.GitHub</code>] Added <code>TargetCommitish</code> parameter to the <code>CreateReleaseParams</code> record. This parameter is passed to Octokit's 'NewRelease', and allows for the creation of releases from arbitrary commits when the release tag does not exist yet, thanks @nikolamilekic - <a href="https://github.com/fsharp/FAKE/pull/2367">https://github.com/fsharp/FAKE/pull/2367</a></li>
+<li>(Minor) BREAKING: Drop support for <code>netstandard1.6</code> and <code>net46</code> (please open an issue if that actually hits you). All fake modules are now compiled for <code>netstandard2.0</code>, <code>net462</code> and <code>FSharp.Core 4.7</code>, you should consider to upgrade your runtime.</li>
+<li>ENHANCEMENT: <code>Fake.DotNet.Fsc</code> and <code>Fake.DotNet.Fsi</code> now use latest <code>FSharp.Compiler.Service</code></li>
+</ul>
 <h2><a name="5-15-4-2019-07-16" class="anchor" href="#5-15-4-2019-07-16">5.15.4 - 2019-07-16</a></h2>
 <ul>
 <li>BUGFIX: Fix high memory use and slowness with a large number of targets/dependencies - <a href="https://github.com/fsharp/FAKE/pull/2354">https://github.com/fsharp/FAKE/pull/2354</a></li>
@@ -2255,7 +2267,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

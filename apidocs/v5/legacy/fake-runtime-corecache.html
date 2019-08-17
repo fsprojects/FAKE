@@ -323,6 +323,14 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-runtime-corecache-cacheoutdated.html">CacheOutdated</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-runtime-corecache-icachingprovider.html">ICachingProvider</a>
           </td>
           <td class="xmldoc">
@@ -343,15 +351,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2132', 2132)" onmouseover="showTip(event, '2132', 2132)">
+          <code onmouseout="hideTip(event, '2230', 2230)" onmouseover="showTip(event, '2230', 2230)">
             fakeDirectoryName
           </code>
-          <div class="tip" id="2132">
+          <div class="tip" id="2230">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L308-308" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L398-398" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -360,15 +368,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2133', 2133)" onmouseover="showTip(event, '2133', 2133)">
+          <code onmouseout="hideTip(event, '2231', 2231)" onmouseover="showTip(event, '2231', 2231)">
             findAndLoadInRuntimeDeps(...)
           </code>
-          <div class="tip" id="2133">
+          <div class="tip" id="2231">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; name:AssemblyName -&gt; logLevel:VerboseLevel -&gt; runtimeDependencies:AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L221-221" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -377,15 +385,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2134', 2134)" onmouseover="showTip(event, '2134', 2134)">
+          <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
             findAndLoadInRuntimeDepsCached
           </code>
-          <div class="tip" id="2134">
+          <div class="tip" id="2232">
             <strong>Signature:</strong> AssemblyLoadContext -&gt; AssemblyName -&gt; VerboseLevel -&gt; AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L270-270" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L298-298" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -394,15 +402,49 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2135', 2135)" onmouseover="showTip(event, '2135', 2135)">
+          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
+            findUnmanagedInRuntimeDeps(...)
+          </code>
+          <div class="tip" id="2233">
+            <strong>Signature:</strong> unmanagedDllName:string -&gt; logLevel:VerboseLevel -&gt; nativeLibraries:NativeLibrary list -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L334-334" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
+            getCached(...)
+          </code>
+          <div class="tip" id="2234">
+            <strong>Signature:</strong> getUncached:(unit -&gt; &#39;a) -&gt; readFromCache:(unit -&gt; &#39;a) -&gt; writeToCache:(&#39;a -&gt; unit) -&gt; checkCacheUpToDate:(unit -&gt; bool) -&gt; &#39;a<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L26-26" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
             loadAssembly(...)
           </code>
-          <div class="tip" id="2135">
+          <div class="tip" id="2235">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; logLevel:VerboseLevel -&gt; assemInfo:AssemblyInfo -&gt; (string option * Assembly) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L170-170" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L192-192" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -411,15 +453,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2136', 2136)" onmouseover="showTip(event, '2136', 2136)">
+          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
             prepareContext config cache
           </code>
-          <div class="tip" id="2136">
+          <div class="tip" id="2236">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; FakeContext * CoreCacheInfo option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L310-310" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L400-400" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -428,10 +470,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2137', 2137)" onmouseover="showTip(event, '2137', 2137)">
+          <code onmouseout="hideTip(event, '2237', 2237)" onmouseover="showTip(event, '2237', 2237)">
+            resolveUnmanagedDependencyCached
+          </code>
+          <div class="tip" id="2237">
+            <strong>Signature:</strong> (string -&gt; nativeint) -&gt; string -&gt; VerboseLevel -&gt; NativeLibrary list -&gt; nativeint<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L349-349" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2238', 2238)" onmouseover="showTip(event, '2238', 2238)">
             runScriptWithCacheProvider config cache
           </code>
-          <div class="tip" id="2137">
+          <div class="tip" id="2238">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -444,7 +503,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use runScriptWithCacheProviderExt instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L420-420" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L510-510" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -453,15 +512,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2138', 2138)" onmouseover="showTip(event, '2138', 2138)">
+          <code onmouseout="hideTip(event, '2239', 2239)" onmouseover="showTip(event, '2239', 2239)">
             runScriptWithCacheProviderExt(...)
           </code>
-          <div class="tip" id="2138">
+          <div class="tip" id="2239">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult * ResultCoreCacheInfo * FakeContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L402-402" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L492-492" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -470,15 +529,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2139', 2139)" onmouseover="showTip(event, '2139', 2139)">
+          <code onmouseout="hideTip(event, '2240', 2240)" onmouseover="showTip(event, '2240', 2240)">
             setupAssemblyResolverLogger(context)
           </code>
-          <div class="tip" id="2139">
+          <div class="tip" id="2240">
             <strong>Signature:</strong> context:FakeContext -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L385-385" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L477-477" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -523,7 +582,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.15.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0-alpha.1228</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
