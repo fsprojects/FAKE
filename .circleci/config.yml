@@ -32,7 +32,7 @@ jobs:
           command: |
             apt-get update
             apt-get install -y libunwind8 libicu52 unzip wget git
-            wget https://github.com/fsharp/FAKE/releases/download/5.15.1-alpha.1104/fake-dotnetcore-linux-x64.zip -O /tmp/fake-dotnetcore-linux-x64.zip
+            wget https://github.com/fsharp/FAKE/releases/download/5.16.0/fake-dotnetcore-linux-x64.zip -O /tmp/fake-dotnetcore-linux-x64.zip
             mkdir fake-dotnetcore
             unzip /tmp/fake-dotnetcore-linux-x64.zip -d fake-dotnetcore || echo unzip returned $?
             chmod +x $PWD/fake-dotnetcore/fake

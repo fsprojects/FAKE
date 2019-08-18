@@ -5,7 +5,7 @@ install:
   - ps: |
       Write-Host "Installing .NET SDK..."
       $msiPath = "$($env:USERPROFILE)\dotnet-SDK.exe"
-      (New-Object Net.WebClient).DownloadFile('https://download.visualstudio.microsoft.com/download/pr/4690d405-11c6-488e-b1ba-4f2e9b247b25/7c70d9003e02997b66d843ec54ba53d1/dotnet-sdk-2.1.505-win-x64.exe', $msiPath)
+      (New-Object Net.WebClient).DownloadFile('https://download.visualstudio.microsoft.com/download/pr/2f2d03ef-b000-46a2-abf5-8b863e438568/cddce0caa2526db658e0d21937f89b28/dotnet-sdk-2.1.508-win-x64.exe', $msiPath)
       cmd /c start /wait $msiPath /quiet /norestart
       Write-Host "Installed" -ForegroundColor green
 

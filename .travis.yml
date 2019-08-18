@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 dist: xenial # Ubuntu 16.04
 
-dotnet : 2.1.505
+dotnet : 2.1.508
 
 addons:
   apt:
