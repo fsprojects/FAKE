@@ -60,7 +60,7 @@ let timeout = (System.TimeSpan.FromMinutes 10.)
 let runTemplate rootDir kind dependencies dsl =
     Directory.ensure rootDir
     try
-        DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s --dependencies %s --dsl %s" templateName (string kind) (string dependencies) (string dsl))   
+        DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" (sprintf "%s --allow-scripts yes --version 5.16.0 --bootstrap %s --dependencies %s --dsl %s" templateName versionString (string kind) (string dependencies) (string dsl))   
         |> shouldSucceed "should have run the template successfully"
     with e ->
         if e.Message.Contains "Command succeeded" && 
