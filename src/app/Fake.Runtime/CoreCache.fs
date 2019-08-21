@@ -114,7 +114,7 @@ module internal Cache =
                                 }
                               RuntimeOptions =
                                 { context.Config.RuntimeOptions with
-                                    RuntimeDependencies = context.Config.RuntimeOptions.RuntimeDependencies @ readXml
+                                    _RuntimeDependencies = context.Config.RuntimeOptions._RuntimeDependencies @ readXml
                                 }
                           }
                     }, Some config

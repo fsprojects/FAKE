@@ -10,7 +10,7 @@ module ProcessUtils =
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
-    let findFiles dirs file = 
+    let private findFilesInternal dirs file = 
         let files = 
             dirs
             |> Seq.map (fun (path : string) -> 
@@ -35,6 +35,18 @@ module ProcessUtils =
             |> Seq.cache
         files
 
+    /// Searches the given directories for all occurrences of the given file name, on windows PATHEXT is considered (and preferred when searching)
+    let findFiles dirs file =
+        // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
+        if Environment.isWindows then
+            // Prefer PATHEXT, see https://github.com/fsharp/FAKE/issues/1911
+            // and https://github.com/fsharp/FAKE/issues/1899
+            Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
+            |> String.split ';'
+            |> Seq.collect (fun postFix -> findFilesInternal dirs (file + postFix))
+            |> fun findings -> Seq.append findings (findFilesInternal dirs file)
+        else findFilesInternal dirs file
+
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
     let tryFindFile dirs file =
@@ -54,16 +66,7 @@ module ProcessUtils =
         Environment.pathDirectories
         |> Seq.filter Path.isValidPath
         |> Seq.append [ "." ]
-        |> fun path ->
-            // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
-            if Environment.isWindows then
-                // Prefer PATHEXT, see https://github.com/fsharp/FAKE/issues/1911
-                // and https://github.com/fsharp/FAKE/issues/1899
-                Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
-                |> String.split ';'
-                |> Seq.collect (fun postFix -> findFiles path (file + postFix))
-                |> fun findings -> Seq.append findings (findFiles path file)
-            else findFiles path file
+        |> fun dirs -> findFiles dirs file
 
     /// Searches the current directory and the directories within the PATH
     /// environment variable for the given file. If successful returns the full
