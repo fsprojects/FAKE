@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.16.1-alpha - tbd
+
+* BUGFIX: Fix https://github.com/fsharp/FAKE/issues/2382
+
 ## 5.16.0 - 2019-08-17
 
 * LEGACY: Remove `Fake.Deploy` from repository and NuGet package, see https://github.com/fsharp/FAKE/issues/1820
