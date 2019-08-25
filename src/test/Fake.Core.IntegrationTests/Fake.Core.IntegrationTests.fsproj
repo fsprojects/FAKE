@@ -6,6 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.NuGet\Fake.DotNet.NuGet.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.Paket\Fake.DotNet.Paket.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
@@ -16,12 +17,15 @@
     <Compile Include="TestHelpers.fs" />
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.NuGet.fs" />
+    <Compile Include="Fake.DotNet.Paket.fs" />
     <Compile Include="Fake.IO.File.fs" />
+    <Compile Include="Fake.IO.Globbing.fs" />
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="SimpleHelloWorldTests.fs" />
     <Compile Include="Main.fs" />
-    <None Include="testdata/testProperty.proj" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="testdata/testPath.proj" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="testdata\NoVersionTestFile.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="testdata\testProperty.proj" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="testdata\testPath.proj" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Script.fsx" />
     <None Include="paket.references" />
   </ItemGroup>

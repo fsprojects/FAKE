@@ -1,6 +1,6 @@
 [<AutoOpen>]
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
-/// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
+/// There is also a tutorial about [nuget package creating](/create-nuget-package.html) available.
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 module Fake.NuGetHelper
 

@@ -90,7 +90,6 @@ group Build
     source https://api.nuget.org/v3/index.json
     //source https://ci.appveyor.com/nuget/fake
     //source https://ci.appveyor.com/nuget/fsharp-formatting
-    source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1
     nuget NuGet.CommandLine
@@ -99,7 +98,6 @@ group Build
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
-    nuget RoslynTools.ReferenceAssemblies
     nuget Newtonsoft.Json
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
@@ -110,8 +108,7 @@ group NetcoreBuild
     // FAKE_MYGET_FEED (don't edit this line)
     storage: none
 
-    // 2018-07-08: Until we use a runner > 5.1, see https://github.com/fsharp/FAKE/pull/2011
-    nuget FSharp.Core < 4.5
+    nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
     nuget Paket.Core // prerelease
@@ -159,6 +156,8 @@ group netcorerunner
 
     // Testing
     nuget Expecto >= 5.0
+    nuget YoloDev.Expecto.TestSdk
+    nuget Microsoft.TestPlatform.TestHost
     nuget Expecto.TestResults
     nuget Expecto.FsCheck
     nuget FsCheck

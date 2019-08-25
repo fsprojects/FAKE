@@ -216,6 +216,7 @@ module Operators =
     let inline (!!) x = GlobbingPattern.create x
 
 [<RequireQualifiedAccess>]
+[<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead.">]
 module Tools =
     open Operators
 
@@ -223,6 +224,7 @@ module Tools =
 
     /// Looks for a tool first in its default path, if not found the in ./packages/ and then
     /// in all subfolders of the root folder - returns the tool file name.
+    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
     let findToolInSubPath (toolname:string) (defaultPath:string) =
         try
             let tools = !! (defaultPath @@ "/**/" @@ toolname)
@@ -240,12 +242,14 @@ module Tools =
 
     /// Looks for a tool in all subfolders - returns the folder where the tool was found
     /// or None if not found.
+    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
     let tryFindToolFolderInSubPath toolname =
         !! ("./**/" @@ toolname)
         |> Seq.tryHead
         |> Option.map Path.GetDirectoryName
 
     /// Looks for a tool in all subfolders - returns the folder where the tool was found.
+    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
     let findToolFolderInSubPath toolname defaultPath =
         toolname
         |> tryFindToolFolderInSubPath 

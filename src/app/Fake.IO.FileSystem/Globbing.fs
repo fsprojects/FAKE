@@ -151,8 +151,7 @@ let internal compileGlobToRegex pattern =
                 "dirwildcard", (@"\\\*\\\*(/|\\\\)", @"(.*(/|\\))?")
                 "stardotstar", (@"\\\*\\.\\\*", @"([^\\/]*)")
                 "wildcard", (@"\\\*", @"([^\\/]*)")
-            ] |> List.map(fun (key, reg) ->
-                let pattern, replace = reg
+            ] |> List.map(fun (key, (pattern, replace)) ->
                 let pattern = sprintf "(?<%s>%s)" key pattern
                 key, (pattern, replace)
             )

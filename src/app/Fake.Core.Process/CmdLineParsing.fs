@@ -173,6 +173,43 @@ module Arguments =
     let append s (a:Arguments) =
         Arguments.OfArgs(Seq.append a.Args s)
 
+    /// Appends the given raw argument to the command line, you can not use other methods for this to work
+    /// This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
+    /// "raw" methods are not compatible with non-raw methods.
+    let appendRaw s (a:Arguments) =
+        let cmd = a.ToStartInfo
+        let newCmd = if cmd.Length = 0 then s else cmd + " " + s
+        { Args = Array.append a.Args [|s|]; Original = Some newCmd }
+
+    /// Appends the given raw argument to the command line, you can not use other methods for this to work
+    /// This allows unusal quoting with the given prefix, like /k:"myarg" ("/k:" would be the argPrefix)
+    /// This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
+    /// "raw" methods are not compatible with non-raw methods.
+    let appendRawEscaped (argPrefix:string) paramValue (a:Arguments) =
+        if argPrefix.IndexOfAny([|' '; '\"'; '\\'; '\t'|]) >= 0 then
+            invalidArg "argPrefix" "Argument prefix cannot contain special characters"
+        a |> appendRaw (sprintf "%s%s" argPrefix (CmdLineParsing.windowsArgvToCommandLine false [paramValue]))
+        
+    /// Append an argument prefixed by another if the value is Some.
+    /// This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
+    /// "raw" methods are not compatible with non-raw methods.
+    let appendRawEscapedIf b (argPrefix:string) (paramValue:string) (a:Arguments) =
+        if b then
+             a |> appendRawEscaped argPrefix paramValue
+        else a
+    /// Append an argument prefixed by another if the value is Some.
+    /// This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
+    /// "raw" methods are not compatible with non-raw methods.
+    let appendRawEscapedOption (argPrefix:string) (paramValue:string option) (a:Arguments) =
+        match paramValue with
+        | Some x -> a |> appendRawEscaped argPrefix x
+        | None -> a
+    /// Append an argument prefixed by another if the value is Some.
+    /// This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
+    /// "raw" methods are not compatible with non-raw methods.
+    let appendRawEscapedNotEmpty (argPrefix:string) (paramValue:string) (a:Arguments) =
+        appendRawEscapedIf (String.isNullOrEmpty paramValue |> not) argPrefix paramValue a
+
     /// Append an argument prefixed by another if the value is Some.
     let appendOption (paramName:string) (paramValue:string option) (a:Arguments) =
         match paramValue with

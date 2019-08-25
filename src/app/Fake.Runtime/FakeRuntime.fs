@@ -256,7 +256,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         paketApi.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
         |> ignore
       with
-      | e when e.Message.Contains "Did you restore groups" ->
+      | e when e.Message.Contains "Did you restore group" ->
         // See https://github.com/fsharp/FAKE/issues/1672
         // and https://github.com/fsprojects/Paket/issues/2785
         // We do a restore anyway.

@@ -298,6 +298,33 @@ module Environment =
 #endif
         | enc -> Text.Encoding.GetEncoding(enc)
 
+    let private getEnvDir specialPath =
+        let dir = Environment.GetFolderPath specialPath 
+        if String.IsNullOrEmpty dir then None else Some dir
+    let private localRootForTempData() =
+        getEnvDir Environment.SpecialFolder.UserProfile
+        |> Option.orElse (getEnvDir Environment.SpecialFolder.LocalApplicationData)
+        |> Option.defaultWith (fun _ ->
+            let fallback = Path.GetFullPath ".paket"
+            //Logging.traceWarnfn "Could not detect a root for our (user specific) temporary files. Try to set the 'HOME' or 'LocalAppData' environment variable!. Using '%s' instead." fallback
+            if not (Directory.Exists fallback) then
+                Directory.CreateDirectory fallback |> ignore
+            fallback
+        )
+    let [<Literal>] private globalPackagesFolderEnvironmentKey = "NUGET_PACKAGES"
+    let private nugetPackagesFolder =
+        lazy
+            environVarOrNone globalPackagesFolderEnvironmentKey 
+            |> Option.map (fun path ->
+                path.Replace (Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            ) |> Option.defaultWith (fun _ ->
+                Path.Combine (localRootForTempData(),".nuget","packages")
+            )
+    /// Returns the path to the user-specific nuget packages folder
+    let getNuGetPackagesCacheFolder() = nugetPackagesFolder.Value
+
+
+
 #if !NETSTANDARD
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
     /// Returns a sequence with all installed .NET framework versions
