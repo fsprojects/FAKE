@@ -1,5 +1,5 @@
 ﻿/// Contains tasks to compiles F# source file with the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
-/// There is also a tutorial about the [F# compiler tasks](../fsc.html) available.
+/// There is also a tutorial about the [F# compiler tasks](/fsc.html) available.
 [<System.Obsolete("Use Fake.DotNet.Fsc instead (FAKE0001 - package: Fake.DotNet.Fsc - module: Fake.DotNet.Fsc)")>]
 module Fake.FscHelper
 
