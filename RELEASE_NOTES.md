@@ -6,6 +6,12 @@
 * BUGFIX: Fix FAKE unable to load assemblies in some scenarios - https://github.com/fsharp/FAKE/issues/2381
 * BUGFIX: Fix File.getVersion fails if version is not set, thanks @SCullman - https://github.com/fsharp/FAKE/issues/2378
 * ENHANCEMENT: make `Fake.DotNet.Paket` work with the dotnet tool based version of Paket, thanks @seanamosw - https://github.com/fsharp/FAKE/pull/2364
+* ENHANCEMENT: add `Organization` field to `Fake.Testing.SonarQube`, thanks @Lutando - https://github.com/fsharp/FAKE/pull/2358
+* ENHANCEMENT: Added `Arguments.appendRaw*` functions to handle weird microsoft escaping.
+* ENHANCEMENT: Added `Environment.getNuGetPackagesCacheFolder()`, returns the NuGet packages path.
+* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is not obsolete)
+* DOCS: Fix some broken links - https://github.com/fsharp/FAKE/issues/2351
+
 
 ## 5.16.0 - 2019-08-17
 

@@ -157,6 +157,8 @@ group netcorerunner
 
     // Testing
     nuget Expecto >= 5.0
+    nuget YoloDev.Expecto.TestSdk
+    nuget Microsoft.TestPlatform.TestHost
     nuget Expecto.TestResults
     nuget Expecto.FsCheck
     nuget FsCheck
