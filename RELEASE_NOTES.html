@@ -54,6 +54,7 @@
 						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
 						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
                         <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
+						<a href="/fake-fake5-custom-modules.html" class="navbar-item">Create custom modules</a>
 					</div>
 				</div>
 
@@ -296,6 +297,18 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-16-1-2019-08-25" class="anchor" href="#5-16-1-2019-08-25">5.16.1 - 2019-08-25</a></h2>
+<ul>
+<li>BUGFIX: Fix that <code>generate_load_scripts</code> prevents restore after update - <a href="https://github.com/fsharp/FAKE/issues/2382">https://github.com/fsharp/FAKE/issues/2382</a></li>
+<li>BUGFIX: Fix FAKE unable to load assemblies in some scenarios - <a href="https://github.com/fsharp/FAKE/issues/2381">https://github.com/fsharp/FAKE/issues/2381</a></li>
+<li>BUGFIX: Fix File.getVersion fails if version is not set, thanks @SCullman - <a href="https://github.com/fsharp/FAKE/issues/2378">https://github.com/fsharp/FAKE/issues/2378</a></li>
+<li>ENHANCEMENT: make <code>Fake.DotNet.Paket</code> work with the dotnet tool based version of Paket, thanks @seanamosw - <a href="https://github.com/fsharp/FAKE/pull/2364">https://github.com/fsharp/FAKE/pull/2364</a></li>
+<li>ENHANCEMENT: add <code>Organization</code> field to <code>Fake.Testing.SonarQube</code>, thanks @Lutando - <a href="https://github.com/fsharp/FAKE/pull/2358">https://github.com/fsharp/FAKE/pull/2358</a></li>
+<li>ENHANCEMENT: Added <code>Arguments.appendRaw*</code> functions to handle weird microsoft escaping.</li>
+<li>ENHANCEMENT: Added <code>Environment.getNuGetPackagesCacheFolder()</code>, returns the NuGet packages path.</li>
+<li>ENHANCEMENT: Added <code>ProcessUtils.tryFindLocalTool</code> to resolve tools via a common logic (<code>Fake.IO.Globbing.Tools</code> is not obsolete)</li>
+<li>DOCS: Fix some broken links - <a href="https://github.com/fsharp/FAKE/issues/2351">https://github.com/fsharp/FAKE/issues/2351</a></li>
+</ul>
 <h2><a name="5-16-0-2019-08-17" class="anchor" href="#5-16-0-2019-08-17">5.16.0 - 2019-08-17</a></h2>
 <ul>
 <li>LEGACY: Remove <code>Fake.Deploy</code> from repository and NuGet package, see <a href="https://github.com/fsharp/FAKE/issues/1820">https://github.com/fsharp/FAKE/issues/1820</a></li>
@@ -2268,7 +2281,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

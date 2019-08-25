@@ -53,6 +53,7 @@
 						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
 						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
                         <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
+						<a href="/fake-fake5-custom-modules.html" class="navbar-item">Create custom modules</a>
 					</div>
 				</div>
 
@@ -321,10 +322,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '164', 164)" onmouseover="showTip(event, '164', 164)">
+          <code onmouseout="hideTip(event, '165', 165)" onmouseover="showTip(event, '165', 165)">
             FakeVar.define(name)
           </code>
-          <div class="tip" id="164">
+          <div class="tip" id="165">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -341,10 +342,10 @@ And of the functions will fail if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '165', 165)" onmouseover="showTip(event, '165', 165)">
+          <code onmouseout="hideTip(event, '166', 166)" onmouseover="showTip(event, '166', 166)">
             FakeVar.defineAllowNoContext(name)
           </code>
-          <div class="tip" id="165">
+          <div class="tip" id="166">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -361,10 +362,10 @@ Will use a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '166', 166)" onmouseover="showTip(event, '166', 166)">
+          <code onmouseout="hideTip(event, '167', 167)" onmouseover="showTip(event, '167', 167)">
             FakeVar.defineOrNone(name)
           </code>
-          <div class="tip" id="166">
+          <div class="tip" id="167">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -381,10 +382,10 @@ Will always return 'None' when no context is set and 'throw' on set</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '167', 167)" onmouseover="showTip(event, '167', 167)">
+          <code onmouseout="hideTip(event, '168', 168)" onmouseover="showTip(event, '168', 168)">
             FakeVar.get(name)
           </code>
-          <div class="tip" id="167">
+          <div class="tip" id="168">
             <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -400,10 +401,10 @@ Will always return 'None' when no context is set and 'throw' on set</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '168', 168)" onmouseover="showTip(event, '168', 168)">
+          <code onmouseout="hideTip(event, '169', 169)" onmouseover="showTip(event, '169', 169)">
             FakeVar.getOrDefault name defaultValue
           </code>
-          <div class="tip" id="168">
+          <div class="tip" id="169">
             <strong>Signature:</strong> name:string -&gt; defaultValue:&#39;a -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -419,10 +420,10 @@ Will always return 'None' when no context is set and 'throw' on set</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '169', 169)" onmouseover="showTip(event, '169', 169)">
+          <code onmouseout="hideTip(event, '170', 170)" onmouseover="showTip(event, '170', 170)">
             FakeVar.getOrFail(name)
           </code>
-          <div class="tip" id="169">
+          <div class="tip" id="170">
             <strong>Signature:</strong> name:string -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -438,10 +439,10 @@ Will always return 'None' when no context is set and 'throw' on set</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '170', 170)" onmouseover="showTip(event, '170', 170)">
+          <code onmouseout="hideTip(event, '171', 171)" onmouseover="showTip(event, '171', 171)">
             FakeVar.remove(name)
           </code>
-          <div class="tip" id="170">
+          <div class="tip" id="171">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
@@ -457,10 +458,10 @@ Will always return 'None' when no context is set and 'throw' on set</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '171', 171)" onmouseover="showTip(event, '171', 171)">
+          <code onmouseout="hideTip(event, '172', 172)" onmouseover="showTip(event, '172', 172)">
             FakeVar.set name v
           </code>
-          <div class="tip" id="171">
+          <div class="tip" id="172">
             <strong>Signature:</strong> name:string -&gt; v:&#39;a -&gt; unit<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -513,7 +514,7 @@ Will always return 'None' when no context is set and 'throw' on set</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

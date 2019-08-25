@@ -53,6 +53,7 @@
 						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
 						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
                         <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
+						<a href="/fake-fake5-custom-modules.html" class="navbar-item">Create custom modules</a>
 					</div>
 				</div>
 
@@ -319,10 +320,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '842', 842)" onmouseover="showTip(event, '842', 842)">
+          <code onmouseout="hideTip(event, '853', 853)" onmouseover="showTip(event, '853', 853)">
             File.allExist(files)
           </code>
-          <div class="tip" id="842">
+          <div class="tip" id="853">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; bool<br />
                                   </div>
         </td>
@@ -338,15 +339,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '843', 843)" onmouseover="showTip(event, '843', 843)">
+          <code onmouseout="hideTip(event, '854', 854)" onmouseover="showTip(event, '854', 854)">
             File.append file lines
           </code>
-          <div class="tip" id="843">
+          <div class="tip" id="854">
             <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L138-138" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L151-151" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Appends all lines to a file line by line</p>
@@ -357,15 +358,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '844', 844)" onmouseover="showTip(event, '844', 844)">
+          <code onmouseout="hideTip(event, '855', 855)" onmouseover="showTip(event, '855', 855)">
             File.applyReplace replaceF fileName
           </code>
-          <div class="tip" id="844">
+          <div class="tip" id="855">
             <strong>Signature:</strong> replaceF:(string -&gt; string) -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L148-148" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L161-161" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replaces the text in the given file</p>
@@ -376,10 +377,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '845', 845)" onmouseover="showTip(event, '845', 845)">
+          <code onmouseout="hideTip(event, '856', 856)" onmouseover="showTip(event, '856', 856)">
             File.checkExists(fileName)
           </code>
-          <div class="tip" id="845">
+          <div class="tip" id="856">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -395,15 +396,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '846', 846)" onmouseover="showTip(event, '846', 846)">
+          <code onmouseout="hideTip(event, '857', 857)" onmouseover="showTip(event, '857', 857)">
             File.create(fileName)
           </code>
-          <div class="tip" id="846">
+          <div class="tip" id="857">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a file if it does not exist.</p>
@@ -414,15 +415,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '847', 847)" onmouseover="showTip(event, '847', 847)">
+          <code onmouseout="hideTip(event, '858', 858)" onmouseover="showTip(event, '858', 858)">
             File.delete(fileName)
           </code>
-          <div class="tip" id="847">
+          <div class="tip" id="858">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L85-85" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes a file if it exists.</p>
@@ -433,15 +434,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '848', 848)" onmouseover="showTip(event, '848', 848)">
+          <code onmouseout="hideTip(event, '859', 859)" onmouseover="showTip(event, '859', 859)">
             File.deleteAll(files)
           </code>
-          <div class="tip" id="848">
+          <div class="tip" id="859">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes the given files.</p>
@@ -452,10 +453,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '849', 849)" onmouseover="showTip(event, '849', 849)">
+          <code onmouseout="hideTip(event, '860', 860)" onmouseover="showTip(event, '860', 860)">
             File.exists(fileName)
           </code>
-          <div class="tip" id="849">
+          <div class="tip" id="860">
             <strong>Signature:</strong> fileName:string -&gt; bool<br />
                                   </div>
         </td>
@@ -471,10 +472,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '850', 850)" onmouseover="showTip(event, '850', 850)">
+          <code onmouseout="hideTip(event, '861', 861)" onmouseover="showTip(event, '861', 861)">
             File.getEncoding def filename
           </code>
-          <div class="tip" id="850">
+          <div class="tip" id="861">
             <strong>Signature:</strong> def:Encoding -&gt; filename:string -&gt; Encoding<br />
                                   </div>
         </td>
@@ -488,10 +489,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '851', 851)" onmouseover="showTip(event, '851', 851)">
+          <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
             File.getEncodingOrDefault def filename
           </code>
-          <div class="tip" id="851">
+          <div class="tip" id="862">
             <strong>Signature:</strong> def:Encoding -&gt; filename:string -&gt; Encoding<br />
                                   </div>
         </td>
@@ -507,10 +508,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '852', 852)" onmouseover="showTip(event, '852', 852)">
+          <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
             File.getEncodingOrUtf8WithoutBom
           </code>
-          <div class="tip" id="852">
+          <div class="tip" id="863">
             <strong>Signature:</strong> string -&gt; Encoding<br />
                                   </div>
         </td>
@@ -526,18 +527,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '853', 853)" onmouseover="showTip(event, '853', 853)">
+          <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
             File.getVersion(fileName)
           </code>
-          <div class="tip" id="853">
+          <div class="tip" id="864">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Get the version a file.</p>
+          <p>Get the version a file. This overload throws when the file has no version, consider using tryGetVersion instead.
+On non-windows platforms this API returns assembly metadata instead, see <a href="https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28">https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28</a></p>
 <h2>Parameters</h2>
 <ul>
 <li>'fileName' - Name of file from which the version is retrieved. The path can be relative.</li>
@@ -549,15 +551,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '854', 854)" onmouseover="showTip(event, '854', 854)">
+          <code onmouseout="hideTip(event, '865', 865)" onmouseover="showTip(event, '865', 865)">
             File.read(file)
           </code>
-          <div class="tip" id="854">
+          <div class="tip" id="865">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L106-106" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -566,15 +568,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '855', 855)" onmouseover="showTip(event, '855', 855)">
+          <code onmouseout="hideTip(event, '866', 866)" onmouseover="showTip(event, '866', 866)">
             File.readAsBytes(file)
           </code>
-          <div class="tip" id="855">
+          <div class="tip" id="866">
             <strong>Signature:</strong> file:string -&gt; byte []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L145-145" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L158-158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reads a file as one array of bytes</p>
@@ -585,15 +587,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '856', 856)" onmouseover="showTip(event, '856', 856)">
+          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
             File.readAsString(file)
           </code>
-          <div class="tip" id="856">
+          <div class="tip" id="867">
             <strong>Signature:</strong> file:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L142-142" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L155-155" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -602,15 +604,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '857', 857)" onmouseover="showTip(event, '857', 857)">
+          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
             File.readAsStringWithEncoding(...)
           </code>
-          <div class="tip" id="857">
+          <div class="tip" id="868">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L154-154" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reads a file as one text</p>
@@ -621,15 +623,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '858', 858)" onmouseover="showTip(event, '858', 858)">
+          <code onmouseout="hideTip(event, '869', 869)" onmouseover="showTip(event, '869', 869)">
             File.readLine(file)
           </code>
-          <div class="tip" id="858">
+          <div class="tip" id="869">
             <strong>Signature:</strong> file:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L103-103" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L115-115" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
@@ -640,15 +642,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '859', 859)" onmouseover="showTip(event, '859', 859)">
+          <code onmouseout="hideTip(event, '870', 870)" onmouseover="showTip(event, '870', 870)">
             File.readLineWithEncoding encoding file
           </code>
-          <div class="tip" id="859">
+          <div class="tip" id="870">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L109-109" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
@@ -659,15 +661,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '860', 860)" onmouseover="showTip(event, '860', 860)">
+          <code onmouseout="hideTip(event, '871', 871)" onmouseover="showTip(event, '871', 871)">
             File.readWithEncoding encoding file
           </code>
-          <div class="tip" id="860">
+          <div class="tip" id="871">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L87-87" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L99-99" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reads a file line by line</p>
@@ -678,15 +680,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '861', 861)" onmouseover="showTip(event, '861', 861)">
+          <code onmouseout="hideTip(event, '872', 872)" onmouseover="showTip(event, '872', 872)">
             File.replaceContent fileName text
           </code>
-          <div class="tip" id="861">
+          <div class="tip" id="872">
             <strong>Signature:</strong> fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L127-127" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L140-140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replaces the file with the given string</p>
@@ -697,66 +699,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
+          <code onmouseout="hideTip(event, '873', 873)" onmouseover="showTip(event, '873', 873)">
+            File.tryGetVersion(fileName)
+          </code>
+          <div class="tip" id="873">
+            <strong>Signature:</strong> fileName:string -&gt; string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L63-63" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Tries to get the version a file. Throws FileNotFoundException if the file doesn't exist.
+Returns None if the file doesn't contain a FileVersion component.
+On non-windows platforms this API returns assembly metadata instead, see <a href="https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28">https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28</a></p>
+<h2>Parameters</h2>
+<ul>
+<li>'fileName' - Name of file from which the version is retrieved. The path can be relative.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '874', 874)" onmouseover="showTip(event, '874', 874)">
             File.write append fileName lines
           </code>
-          <div class="tip" id="862">
+          <div class="tip" id="874">
             <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L112-112" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
-            File.writeBytes file bytes
-          </code>
-          <div class="tip" id="863">
-            <strong>Signature:</strong> file:string -&gt; bytes:byte [] -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L115-115" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a byte array to a file</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
-            File.writeNew file lines
-          </code>
-          <div class="tip" id="864">
-            <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a file line by line</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '865', 865)" onmouseover="showTip(event, '865', 865)">
-            File.writeString append fileName text
-          </code>
-          <div class="tip" id="865">
-            <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -769,15 +741,70 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '866', 866)" onmouseover="showTip(event, '866', 866)">
+          <code onmouseout="hideTip(event, '875', 875)" onmouseover="showTip(event, '875', 875)">
+            File.writeBytes file bytes
+          </code>
+          <div class="tip" id="875">
+            <strong>Signature:</strong> file:string -&gt; bytes:byte [] -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L127-127" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Writes a byte array to a file</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '876', 876)" onmouseover="showTip(event, '876', 876)">
+            File.writeNew file lines
+          </code>
+          <div class="tip" id="876">
+            <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L148-148" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Writes a file line by line</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '877', 877)" onmouseover="showTip(event, '877', 877)">
+            File.writeString append fileName text
+          </code>
+          <div class="tip" id="877">
+            <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L137-137" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '878', 878)" onmouseover="showTip(event, '878', 878)">
             File.writeStringWithEncoding(...)
           </code>
-          <div class="tip" id="866">
+          <div class="tip" id="878">
             <strong>Signature:</strong> encoding:Encoding -&gt; append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L118-118" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L130-130" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a string to a file</p>
@@ -788,15 +815,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
+          <code onmouseout="hideTip(event, '879', 879)" onmouseover="showTip(event, '879', 879)">
             File.writeWithEncoding(...)
           </code>
-          <div class="tip" id="867">
+          <div class="tip" id="879">
             <strong>Signature:</strong> encoding:Encoding -&gt; append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L106-106" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L118-118" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a file line by line</p>
@@ -815,15 +842,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
+          <code onmouseout="hideTip(event, '880', 880)" onmouseover="showTip(event, '880', 880)">
             File.( |EndsWith|_| ) extension file
           </code>
-          <div class="tip" id="868">
+          <div class="tip" id="880">
             <strong>Signature:</strong> extension:string -&gt; file:string -&gt; unit option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L82-82" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/File.fs#L94-94" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Active Pattern for determining file extension.</p>
@@ -871,7 +898,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -53,6 +53,7 @@
 						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
 						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
                         <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
+						<a href="/fake-fake5-custom-modules.html" class="navbar-item">Create custom modules</a>
 					</div>
 				</div>
 
@@ -626,9 +627,28 @@ newest toolkit available</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '142', 142)" onmouseover="showTip(event, '142', 142)">
-            Environment.getTargetPlatformDir(...)
+            Environment.getNuGetPackagesCacheFolder(...)
           </code>
           <div class="tip" id="142">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L324-324" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Returns the path to the user-specific nuget packages folder</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '143', 143)" onmouseover="showTip(event, '143', 143)">
+            Environment.getTargetPlatformDir(...)
+          </code>
+          <div class="tip" id="143">
             <strong>Signature:</strong> platformVersion:string -&gt; string<br />
                                   </div>
         </td>
@@ -644,10 +664,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '143', 143)" onmouseover="showTip(event, '143', 143)">
+          <code onmouseout="hideTip(event, '144', 144)" onmouseover="showTip(event, '144', 144)">
             Environment.hasBuildParam(name)
           </code>
-          <div class="tip" id="143">
+          <div class="tip" id="144">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -671,10 +691,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '144', 144)" onmouseover="showTip(event, '144', 144)">
+          <code onmouseout="hideTip(event, '145', 145)" onmouseover="showTip(event, '145', 145)">
             Environment.hasEnvironVar(name)
           </code>
-          <div class="tip" id="144">
+          <div class="tip" id="145">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                   </div>
         </td>
@@ -690,10 +710,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '145', 145)" onmouseover="showTip(event, '145', 145)">
+          <code onmouseout="hideTip(event, '146', 146)" onmouseover="showTip(event, '146', 146)">
             Environment.isDotnetCore
           </code>
-          <div class="tip" id="145">
+          <div class="tip" id="146">
             <strong>Signature:</strong> bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -715,10 +735,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '146', 146)" onmouseover="showTip(event, '146', 146)">
+          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
             Environment.isDotNetCore
           </code>
-          <div class="tip" id="146">
+          <div class="tip" id="147">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -732,10 +752,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
+          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
             Environment.isLinux
           </code>
-          <div class="tip" id="147">
+          <div class="tip" id="148">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -751,10 +771,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
+          <code onmouseout="hideTip(event, '149', 149)" onmouseover="showTip(event, '149', 149)">
             Environment.isMacOS
           </code>
-          <div class="tip" id="148">
+          <div class="tip" id="149">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -770,10 +790,10 @@ newest toolkit available</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '149', 149)" onmouseover="showTip(event, '149', 149)">
+          <code onmouseout="hideTip(event, '150', 150)" onmouseover="showTip(event, '150', 150)">
             Environment.isMono
           </code>
-          <div class="tip" id="149">
+          <div class="tip" id="150">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -790,10 +810,10 @@ Todo: Detect mono on windows</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '150', 150)" onmouseover="showTip(event, '150', 150)">
+          <code onmouseout="hideTip(event, '151', 151)" onmouseover="showTip(event, '151', 151)">
             Environment.isUnix
           </code>
-          <div class="tip" id="150">
+          <div class="tip" id="151">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -810,10 +830,10 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '151', 151)" onmouseover="showTip(event, '151', 151)">
+          <code onmouseout="hideTip(event, '152', 152)" onmouseover="showTip(event, '152', 152)">
             Environment.isWindows
           </code>
-          <div class="tip" id="151">
+          <div class="tip" id="152">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -829,10 +849,10 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '152', 152)" onmouseover="showTip(event, '152', 152)">
+          <code onmouseout="hideTip(event, '153', 153)" onmouseover="showTip(event, '153', 153)">
             Environment.monoPath
           </code>
-          <div class="tip" id="152">
+          <div class="tip" id="153">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -846,10 +866,10 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '153', 153)" onmouseover="showTip(event, '153', 153)">
+          <code onmouseout="hideTip(event, '154', 154)" onmouseover="showTip(event, '154', 154)">
             Environment.monoVersion
           </code>
-          <div class="tip" id="153">
+          <div class="tip" id="154">
             <strong>Signature:</strong> (string * Version option) option<br />
                                   </div>
         </td>
@@ -872,10 +892,10 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '154', 154)" onmouseover="showTip(event, '154', 154)">
+          <code onmouseout="hideTip(event, '155', 155)" onmouseover="showTip(event, '155', 155)">
             Environment.pathDirectories
           </code>
-          <div class="tip" id="154">
+          <div class="tip" id="155">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -891,10 +911,10 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '155', 155)" onmouseover="showTip(event, '155', 155)">
+          <code onmouseout="hideTip(event, '156', 156)" onmouseover="showTip(event, '156', 156)">
             Environment.ProgramFiles
           </code>
-          <div class="tip" id="155">
+          <div class="tip" id="156">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -910,10 +930,10 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '156', 156)" onmouseover="showTip(event, '156', 156)">
+          <code onmouseout="hideTip(event, '157', 157)" onmouseover="showTip(event, '157', 157)">
             Environment.ProgramFilesX86
           </code>
-          <div class="tip" id="156">
+          <div class="tip" id="157">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -931,10 +951,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '157', 157)" onmouseover="showTip(event, '157', 157)">
+          <code onmouseout="hideTip(event, '158', 158)" onmouseover="showTip(event, '158', 158)">
             Environment.sdkBasePath
           </code>
-          <div class="tip" id="157">
+          <div class="tip" id="158">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -950,10 +970,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '158', 158)" onmouseover="showTip(event, '158', 158)">
+          <code onmouseout="hideTip(event, '159', 159)" onmouseover="showTip(event, '159', 159)">
             Environment.setBuildParam name value
           </code>
-          <div class="tip" id="158">
+          <div class="tip" id="159">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -977,10 +997,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '159', 159)" onmouseover="showTip(event, '159', 159)">
+          <code onmouseout="hideTip(event, '160', 160)" onmouseover="showTip(event, '160', 160)">
             Environment.setEnvironVar name value
           </code>
-          <div class="tip" id="159">
+          <div class="tip" id="160">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
@@ -996,10 +1016,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '160', 160)" onmouseover="showTip(event, '160', 160)">
+          <code onmouseout="hideTip(event, '161', 161)" onmouseover="showTip(event, '161', 161)">
             Environment.splitEnvironVar(name)
           </code>
-          <div class="tip" id="160">
+          <div class="tip" id="161">
             <strong>Signature:</strong> name:string -&gt; string list<br />
                                   </div>
         </td>
@@ -1015,10 +1035,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '161', 161)" onmouseover="showTip(event, '161', 161)">
+          <code onmouseout="hideTip(event, '162', 162)" onmouseover="showTip(event, '162', 162)">
             Environment.SystemRoot
           </code>
-          <div class="tip" id="161">
+          <div class="tip" id="162">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -1071,7 +1091,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

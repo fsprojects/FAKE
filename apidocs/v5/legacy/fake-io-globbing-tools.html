@@ -53,6 +53,7 @@
 						<a href="/fake-template.html" class="navbar-item">FAKE template</a>
 						<a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
                         <a href="/fake-completion.html" class="navbar-item">FAKE command-line completion</a>
+						<a href="/fake-fake5-custom-modules.html" class="navbar-item">Create custom modules</a>
 					</div>
 				</div>
 
@@ -305,6 +306,12 @@
 
 
 
+  <p>
+    <div class="alert alert-warning">
+    <h5>OBSOLETE</h5>
+    <p>use Fake.Core.Process and the ProcessUtils helpers instead.</p>
+    </div> 
+  </p>
 
 <h1><a name="Tools" class="anchor" href="#Tools">Tools</a></h1>
 
@@ -322,15 +329,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2143', 2143)" onmouseover="showTip(event, '2143', 2143)">
+          <code onmouseout="hideTip(event, '2155', 2155)" onmouseover="showTip(event, '2155', 2155)">
             Tools.findToolFolderInSubPath(...)
           </code>
-          <div class="tip" id="2143">
+          <div class="tip" id="2155">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
-                                  </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L249-249" class="github-link">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L253-253" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool in all subfolders - returns the folder where the tool was found.</p>
@@ -341,15 +356,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2144', 2144)" onmouseover="showTip(event, '2144', 2144)">
+          <code onmouseout="hideTip(event, '2156', 2156)" onmouseover="showTip(event, '2156', 2156)">
             Tools.findToolInSubPath(...)
           </code>
-          <div class="tip" id="2144">
+          <div class="tip" id="2156">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
-                                  </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L226-226" class="github-link">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L228-228" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool first in its default path, if not found the in ./packages/ and then
@@ -361,15 +384,23 @@ in all subfolders of the root folder - returns the tool file name.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2145', 2145)" onmouseover="showTip(event, '2145', 2145)">
+          <code onmouseout="hideTip(event, '2157', 2157)" onmouseover="showTip(event, '2157', 2157)">
             Tools.tryFindToolFolderInSubPath(...)
           </code>
-          <div class="tip" id="2145">
+          <div class="tip" id="2157">
             <strong>Signature:</strong> toolname:string -&gt; string option<br />
-                                  </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L243-243" class="github-link">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L246-246" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool in all subfolders - returns the folder where the tool was found
@@ -417,7 +448,7 @@ or None if not found.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
