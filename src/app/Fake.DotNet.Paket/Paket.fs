@@ -33,11 +33,11 @@ type PaketPackParams =
       PinProjectReferences : bool }
 
 let private findPaketExecutable () =
-    match Tools.tryFindToolFolderInSubPath "paket" with
+    match Tools.tryFindToolFolderInSubPath "paket.exe" with
     | Some folder ->
-        folder @@ "paket"
+        folder @@ "paket.exe" 
     | None ->
-        (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
+        (Tools.findToolFolderInSubPath "paket" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket"
 
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
