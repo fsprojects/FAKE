@@ -54,23 +54,24 @@ module File =
     /// Checks if all given files exist.
     let allExist files = Seq.forall File.Exists files
 
-    /// Get the version a file.
+    /// Tries to get the version a file. Throws FileNotFoundException if the file doesn't exist.
+    /// Returns None if the file doesn't contain a FileVersion component.
     /// ## Parameters
     ///
     ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
-    let getVersion (fileName : string) =
+    let tryGetVersion (fileName : string) : string option =
         Path.getFullName fileName
         |> System.Diagnostics.FileVersionInfo.GetVersionInfo
-        |> fun x -> x.FileVersion.ToString()
-    
-    /// Trys to get the version a file.
+        |> fun x -> if isNull x.FileVersion then None else Some x.FileVersion
+
+    /// Get the version a file. This overload throws when the file has no version, consider using tryGetVersion instead
     /// ## Parameters
     ///
     ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
-    let tryGetVersion (fileName : string) =
-        Path.getFullName fileName
-        |> System.Diagnostics.FileVersionInfo.GetVersionInfo
-        |> fun x -> if (isNull x.FileVersion) then None else Some (x.FileVersion.ToString())
+    let getVersion (fileName : string) : string =
+        match tryGetVersion fileName with
+        | Some v -> v
+        | None -> raise <| System.InvalidOperationException(sprintf "The file '%s' doesn't contain a file version" fileName)
 
     /// Creates a file if it does not exist.
     let create fileName =

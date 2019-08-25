@@ -8,6 +8,16 @@ open Fake.Core.IntegrationTests.TestHelpers
 [<Tests>]
 let tests =
     testList "Fake.IO.FileIntegraionTests" [
+        testCase "File.getVersion throws InvalidOperationException #2378" <| fun _ ->
+            let testFile = getTestFile "NoVersionTestFile.dll"
+            Expect.throwsT<System.InvalidOperationException> (fun () ->
+                    File.getVersion testFile
+                        |> ignore<string>
+                ) "Expected InvalidOperationException for missing file version"
+        testCase "File.tryGetVersion works when component is missing #2378" <| fun _ ->
+            let testFile = getTestFile "NoVersionTestFile.dll"
+            Expect.equal (File.tryGetVersion testFile) None "Expected None for missing file version"
+
         testCase "Files created using File.create can be used immediately - #2183" <| fun _ ->
             let testFile = Path.combine (Path.GetTempPath ()) (Path.GetRandomFileName ())
 
