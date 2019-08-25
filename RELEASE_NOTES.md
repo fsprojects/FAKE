@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.16.1-alpha - tbd
+## 5.16.1 - 2019-08-25
 
 * BUGFIX: Fix that `generate_load_scripts` prevents restore after update - https://github.com/fsharp/FAKE/issues/2382
 * BUGFIX: Fix FAKE unable to load assemblies in some scenarios - https://github.com/fsharp/FAKE/issues/2381
