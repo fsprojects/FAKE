@@ -27,8 +27,15 @@ let createTestDir () =
         |> ignore<DirectoryInfo>
     { Dir = testFile }
 
+let testDirLocation = System.IO.Path.GetDirectoryName (typeof<TestDir>.Assembly.Location)
+
+let createTestDirInCurrent () =
+    let folder = testDirLocation </> ((Guid.NewGuid ()).ToString())
+    Directory.CreateDirectory folder 
+        |> ignore<DirectoryInfo>
+    { Dir = folder }
+
 let getTestFile testFile =
-    let testDirLocation = System.IO.Path.GetDirectoryName (typeof<TestDir>.Assembly.Location)
     Path.Combine(testDirLocation, "testdata", testFile)
 
 exception FakeExecutionFailed of ProcessResult
