@@ -3,10 +3,10 @@
      <!-- Include PDBs in Nuget package. -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb; $(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
-  <ItemGoup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGoup>
+  </ItemGroup>
 </Project>
