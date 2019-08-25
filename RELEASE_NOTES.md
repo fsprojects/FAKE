@@ -3,6 +3,7 @@
 ## 5.16.1-alpha - tbd
 
 * BUGFIX: Fix https://github.com/fsharp/FAKE/issues/2382
+* BUGFIX: Fix https://github.com/fsharp/FAKE/issues/2381
 
 ## 5.16.0 - 2019-08-17
 
