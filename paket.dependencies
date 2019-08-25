@@ -108,8 +108,7 @@ group NetcoreBuild
     // FAKE_MYGET_FEED (don't edit this line)
     storage: none
 
-    // 2018-07-08: Until we use a runner > 5.1, see https://github.com/fsharp/FAKE/pull/2011
-    nuget FSharp.Core < 4.5
+    nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
     nuget Paket.Core // prerelease
