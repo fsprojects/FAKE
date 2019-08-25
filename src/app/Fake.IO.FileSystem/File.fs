@@ -56,6 +56,7 @@ module File =
 
     /// Tries to get the version a file. Throws FileNotFoundException if the file doesn't exist.
     /// Returns None if the file doesn't contain a FileVersion component.
+    /// On non-windows platforms this API returns assembly metadata instead, see https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28
     /// ## Parameters
     ///
     ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
@@ -64,7 +65,8 @@ module File =
         |> System.Diagnostics.FileVersionInfo.GetVersionInfo
         |> fun x -> if isNull x.FileVersion then None else Some x.FileVersion
 
-    /// Get the version a file. This overload throws when the file has no version, consider using tryGetVersion instead
+    /// Get the version a file. This overload throws when the file has no version, consider using tryGetVersion instead.
+    /// On non-windows platforms this API returns assembly metadata instead, see https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28
     /// ## Parameters
     ///
     ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
@@ -128,8 +130,9 @@ module File =
     let writeStringWithEncoding (encoding:Encoding) append fileName (text : string) =
         let fi = FileInfo.ofPath fileName
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
-        use writer = new StreamWriter(file, encoding)
-        writer.Write text
+        ( use writer = new StreamWriter(file, encoding)
+          writer.Write text)
+        file.Close()
 
     let writeString append fileName (text : string) = writeStringWithEncoding (getEncodingOrUtf8WithoutBom fileName) append fileName text
 

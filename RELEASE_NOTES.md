@@ -5,6 +5,7 @@
 * BUGFIX: Fix that `generate_load_scripts` prevents restore after update - https://github.com/fsharp/FAKE/issues/2382
 * BUGFIX: Fix FAKE unable to load assemblies in some scenarios - https://github.com/fsharp/FAKE/issues/2381
 * BUGFIX: Fix File.getVersion fails if version is not set, thanks @SCullman - https://github.com/fsharp/FAKE/issues/2378
+* ENHANCEMENT: make `Fake.DotNet.Paket` work with the dotnet tool based version of Paket, thanks @seanamosw - https://github.com/fsharp/FAKE/pull/2364
 
 ## 5.16.0 - 2019-08-17
 
