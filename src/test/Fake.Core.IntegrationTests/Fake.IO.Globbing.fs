@@ -50,8 +50,8 @@ let tests =
     testList "Fake.Core.Globbing.IntegrationTests" [
         testCase "glob should handle substring directories properly" <| fun _ ->
             use testDir = createTestDir()
-            let name = testDir </> "Name"
-            let nameWithSuffix = testDir </> "NameWithSuffix"
+            let name = testDir.Dir </> "Name"
+            let nameWithSuffix = testDir.Dir </> "NameWithSuffix"
             Directory.CreateDirectory name |> ignore
             Directory.CreateDirectory nameWithSuffix |> ignore
             File.WriteAllText(nameWithSuffix </> "match1.txt", "match1")
