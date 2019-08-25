@@ -62,6 +62,15 @@ module File =
         Path.getFullName fileName
         |> System.Diagnostics.FileVersionInfo.GetVersionInfo
         |> fun x -> x.FileVersion.ToString()
+    
+    /// Trys to get the version a file.
+    /// ## Parameters
+    ///
+    ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
+    let tryGetVersion (fileName : string) =
+        Path.getFullName fileName
+        |> System.Diagnostics.FileVersionInfo.GetVersionInfo
+        |> fun x -> if (isNull x.FileVersion) then None else Some (x.FileVersion.ToString())
 
     /// Creates a file if it does not exist.
     let create fileName =
