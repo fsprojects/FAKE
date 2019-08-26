@@ -5,6 +5,7 @@ module Fake.DotNet.Testing.VSTest
 open Fake.Core
 open Fake.Testing.Common
 open System
+open System.IO
 open System.Text
 
 /// [omit]
@@ -94,15 +95,15 @@ let private VSTestDefaults =
       TestAdapterPath = null }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
-let buildArgs (parameters : VSTestParams) (assembly: string) = 
+let buildArgs (parameters : VSTestParams) (assemblies: string seq) = 
     let testsToRun = 
         if not (Seq.isEmpty parameters.Tests) then 
             sprintf @"/Tests:%s" (parameters.Tests |> String.separated ",")
         else null
-    new StringBuilder()
-    |> StringBuilder.appendIfTrue (assembly <> null) assembly
+    StringBuilder()
+    |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.appendIfNotNull parameters.SettingsPath "/Settings:"
-    |> StringBuilder.appendIfTrue (testsToRun <> null) testsToRun
+    |> StringBuilder.appendIfTrue (not (isNull testsToRun)) testsToRun
     |> StringBuilder.appendIfTrue parameters.Parallel "/Parallel"
     |> StringBuilder.appendIfTrue parameters.EnableCodeCoverage "/EnableCodeCoverage"
     |> StringBuilder.appendIfTrue parameters.InIsolation "/InIsolation"
@@ -119,6 +120,31 @@ let buildArgs (parameters : VSTestParams) (assembly: string) =
     |> StringBuilder.appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
     |> StringBuilder.toText
 
+let internal createProcess createTempFile (setParams : VSTestParams -> VSTestParams) (assemblies : string[]) =
+    let parameters = VSTestDefaults |> setParams
+    if Array.isEmpty assemblies then failwith "VSTest: cannot run tests (the assembly list is empty)."
+    let tool = parameters.ToolPath
+    let generatedArgs = buildArgs parameters assemblies
+    
+    let path = createTempFile()
+    let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
+    CreateProcess.fromRawCommandLine tool argLine
+    |> CreateProcess.withWorkingDirectory parameters.WorkingDir
+    |> CreateProcess.withTimeout parameters.TimeOut
+    |> CreateProcess.addOnSetup (fun () ->
+        File.WriteAllText(path, generatedArgs)
+        Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
+    )
+    |> CreateProcess.addOnFinally (fun () ->
+        File.Delete path
+    )
+    |> CreateProcess.addOnExited (fun result exitCode ->
+        if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
+            let message = sprintf "%sVSTest test run failed with exit code %i" Environment.NewLine exitCode
+            Trace.traceError message
+            failwith message
+    )
+
 /// Runs the VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
 /// ## Parameters
 /// 
@@ -132,22 +158,10 @@ let buildArgs (parameters : VSTestParams) (assembly: string) =
 ///           |> VSTest.run (fun p -> { p with SettingsPath = "Local.RunSettings" })
 ///     )
 let run (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
-    let details = assemblies |> String.separated ", "
-    use __ = Trace.traceTask "VSTest" details
-    let parameters = VSTestDefaults |> setParams
-    if String.IsNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
     let assemblies = assemblies |> Seq.toArray
-    if Array.isEmpty assemblies then failwith "VSTest: cannot run tests (the assembly list is empty)."
-    let failIfError assembly exitCode = 
-        if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
-            let message = sprintf "%sVSTest test run failed for %s" Environment.NewLine assembly
-            Trace.traceError message
-            failwith message
-    for assembly in assemblies do
-        let args = buildArgs parameters assembly
-        Process.execSimple (fun info -> 
-            { info with 
-                FileName = parameters.ToolPath
-                WorkingDirectory = parameters.WorkingDir
-                Arguments = args }) parameters.TimeOut
-        |> failIfError assembly
+    let details = assemblies |> String.separated ", "
+    use disposable = Trace.traceTask "VSTest" details
+    createProcess Path.GetTempFileName setParams assemblies
+    |> Proc.run
+
+    disposable.MarkSuccess()
