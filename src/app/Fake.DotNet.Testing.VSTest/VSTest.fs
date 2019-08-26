@@ -30,6 +30,8 @@ type VSTestParams =
       SettingsPath : string
       /// Names of the tests that should be run (optional).
       Tests : seq<string>
+      /// Enables parallel test execution (optional).
+      Parallel : bool
       /// Enables code coverage collection (optional).
       EnableCodeCoverage : bool
       /// Run the tests in an isolated process (optional).
@@ -69,6 +71,7 @@ type VSTestParams =
 let private VSTestDefaults = 
     { SettingsPath = null
       Tests = []
+      Parallel = false
       EnableCodeCoverage = false
       InIsolation = true
       UseVsixExtensions = false
@@ -100,6 +103,7 @@ let buildArgs (parameters : VSTestParams) (assembly: string) =
     |> StringBuilder.appendIfTrue (assembly <> null) assembly
     |> StringBuilder.appendIfNotNull parameters.SettingsPath "/Settings:"
     |> StringBuilder.appendIfTrue (testsToRun <> null) testsToRun
+    |> StringBuilder.appendIfTrue parameters.Parallel "/Parallel"
     |> StringBuilder.appendIfTrue parameters.EnableCodeCoverage "/EnableCodeCoverage"
     |> StringBuilder.appendIfTrue parameters.InIsolation "/InIsolation"
     |> StringBuilder.appendIfTrue parameters.UseVsixExtensions "/UseVsixExtensions:true"
