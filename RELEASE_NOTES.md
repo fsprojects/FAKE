@@ -13,7 +13,7 @@
 * ENHANCEMENT: add `Organization` field to `Fake.Testing.SonarQube`, thanks @Lutando - https://github.com/fsharp/FAKE/pull/2358
 * ENHANCEMENT: Added `Arguments.appendRaw*` functions to handle weird microsoft escaping.
 * ENHANCEMENT: Added `Environment.getNuGetPackagesCacheFolder()`, returns the NuGet packages path.
-* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is not obsolete)
+* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is now obsolete)
 * DOCS: Fix some broken links - https://github.com/fsharp/FAKE/issues/2351
 
 
