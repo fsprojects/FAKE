@@ -86,7 +86,7 @@ let private VSTestDefaults =
       ListLoggers = false
       ListSettingsProviders = false
       ToolPath = 
-          match Process.tryFindFile vsTestPaths vsTestExe with
+          match ProcessUtils.tryFindFile vsTestPaths vsTestExe with
           | Some path -> path
           | None -> ""
       WorkingDir = null
