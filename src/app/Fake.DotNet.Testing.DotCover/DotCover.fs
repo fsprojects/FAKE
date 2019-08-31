@@ -172,7 +172,7 @@ let merge (setParams: MergeParams -> MergeParams) =
 ///                         ReportType = ReportType.Xml })
 let report (setParams: ReportParams -> ReportParams) =
     let parameters = (ReportDefaults |> setParams)
-    buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir
+    buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir false
 
 /// Runs the dotCover "cover" command against the NUnit test runner.
 /// ## Parameters
