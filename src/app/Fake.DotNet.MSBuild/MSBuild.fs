@@ -513,7 +513,9 @@ module MSBuild =
         //
         // See https://github.com/fsharp/FAKE/issues/2112 and https://github.com/fsharp/FAKE/issues/2392
         // for some history on this problem
-        v.Replace(";", "%3B").Replace(",", "%2C")
+        v.Replace("%", "%25")
+         .Replace(";", "%3B")
+         .Replace(",", "%2C")
 
     let properties =
         p.Properties
