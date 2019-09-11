@@ -501,19 +501,19 @@ module MSBuild =
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    // see https://github.com/fsharp/FAKE/issues/2112
     let escapePropertyValue (v:string) =
-        // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
-        v.Replace("%", "%25")
-         .Replace("\\", "%5C")
-         .Replace("\"", "%22")
-         .Replace(";", "%3B")
-         .Replace(",", "%2C")
-         .Replace("$", "%24")
-         .Replace("@", "%40")
-         .Replace("'", "%27")
-         .Replace("?", "%3F")
-         .Replace("*", "%2A")
+        // This list has been found by trial and error but isn't perfect.
+        //
+        // Neither escaping everything (breaks <UsingTask AssemblyFile="$(Path)"" />)
+        // nor only what's documented by Microsoft at https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
+        // (same problem with paths and ',' isn't covered but is still required to escape) works.
+        //
+        // This escape isn't perfect, mainly passing a a parameter with a ',' inside to a part of
+        // msbuild that doesn't support '%' escaping doesn't work but it's good for 99% of use cases.
+        //
+        // See https://github.com/fsharp/FAKE/issues/2112 and https://github.com/fsharp/FAKE/issues/2392
+        // for some history on this problem
+        v.Replace(";", "%3B").Replace(",", "%2C")
 
     let properties =
         p.Properties
