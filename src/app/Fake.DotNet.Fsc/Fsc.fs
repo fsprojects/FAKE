@@ -425,15 +425,15 @@ Compile using a path to Fsc.exe
 *)
 /// An external fsc.exe compiler
 let private extFscCompile (fscTool: string) (optsArr: string []) = 
-    let args = (Arguments.OfArgs optsArr).ToWindowsCommandLine
-    let r = 
-        Process.execWithResult (fun info -> 
-        { info with
-            FileName = fscTool
-            Arguments = args
-        } ) TimeSpan.MaxValue
+    let args = Arguments.OfArgs optsArr
 
-    let errors = r.Errors |> List.map FscResultMessage.Warning |> List.toArray
+    let r = Command.RawCommand(fscTool, args)
+            |> CreateProcess.fromCommand
+            |> CreateProcess.redirectOutput
+            |> CreateProcess.withFramework // start with mono if needed.
+            |> Proc.run
+
+    let errors = r.Result.Error|> String.splitLines |> List.map FscResultMessage.Warning |> List.toArray
     errors, r.ExitCode
 
 /// Compiles the given F# source files with the specified parameters.
