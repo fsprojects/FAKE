@@ -2,6 +2,8 @@
 
 ## 5.16.2-alpha - tbd
 
+* DOCS: Remove Issue Stats - https://github.com/fsharp/FAKE/pull/2393
+
 * tbd.
 
 ## 5.16.1 - 2019-08-25
