@@ -2,7 +2,9 @@
 
 ## 5.16.2-alpha - tbd
 
-* DOCS: Remove Issue Stats - https://github.com/fsharp/FAKE/pull/2393
+* DOCS: Remove Issue Stats, thanks @vbfox - https://github.com/fsharp/FAKE/pull/2393
+* ENHANCEMENT: Support VSTest parallel test execution setting, thanks @dungpa - https://github.com/fsharp/FAKE/pull/2385
+* ENHANCEMENT: Update dotnet new template, thanks @Krzysztof-Cieslak - https://github.com/fsharp/FAKE/pull/2391
 
 * tbd.
 
