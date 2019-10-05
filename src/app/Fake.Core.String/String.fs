@@ -146,9 +146,6 @@ let convertTextToWindowsLineBreaks text =
     |> replace MacLineBreaks LinuxLineBreaks
     |> replace LinuxLineBreaks WindowsLineBreaks
 
-let splitLines (text:string)=let variants=[|LinuxLineBreaks; WindowsLineBreaks; MacLineBreaks|]
-                             text.Split(variants, StringSplitOptions.RemoveEmptyEntries) |> Array.toList
-
 /// Reads a file line by line and replaces all line breaks to windows line breaks
 ///   - uses a temp file to store the contents in order to prevent OutOfMemory exceptions
 let convertFileToWindowsLineBreaksWithEncoding (encoding:System.Text.Encoding) (fileName : string) =

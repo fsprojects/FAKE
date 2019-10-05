@@ -426,6 +426,8 @@ Compile using a path to Fsc.exe
 /// An external fsc.exe compiler
 let private extFscCompile (fscTool: string) (optsArr: string []) = 
     let args = Arguments.OfArgs optsArr
+    let splitLines (text:string)=let variants=[|"\n"; "\r\n"; "\r"|]
+                                 text.Split(variants, StringSplitOptions.RemoveEmptyEntries)
 
     let r = Command.RawCommand(fscTool, args)
             |> CreateProcess.fromCommand
@@ -433,7 +435,7 @@ let private extFscCompile (fscTool: string) (optsArr: string []) =
             |> CreateProcess.withFramework // start with mono if needed.
             |> Proc.run
 
-    let errors = r.Result.Error|> String.splitLines |> List.map FscResultMessage.Warning |> List.toArray
+    let errors = r.Result.Error|> splitLines |> Array.map FscResultMessage.Warning
     errors, r.ExitCode
 
 /// Compiles the given F# source files with the specified parameters.
