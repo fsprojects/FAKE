@@ -66,7 +66,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.Framework (Some path) })
+              ToolType = CreateProcess.ToolType.Framework (Some path) })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -81,7 +81,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.Global })
+              ToolType = CreateProcess.ToolType.Global })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -95,7 +95,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.DotNet (Fake.Core.ProcessUtils.DotNetTool.Create()) })
+              ToolType = CreateProcess.ToolType.DotNet (CreateProcess.DotNetTool.Create()) })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -105,25 +105,11 @@ let tests =
       Expect.equal (RawCommand(file, args)).CommandLine
        (sprintf "%s reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
-    testCase "Test that DotNet does default blanks" <| fun _ ->
-      let cp =
-        rawCreateProcess (fun p ->
-            { p with
-                ToolType = Fake.Core.ProcessUtils.ToolType.DotNet { DotNetCli = Some "   "; Tool = Some System.String.Empty} })
-      let file, args =
-        match cp.Command with
-        | RawCommand(file, args) -> file, args
-        | _ -> failwithf "expected RawCommand"
-
-      Expect.equal file "dotnet" "Expected reportgenerator"
-      Expect.equal (RawCommand(file, args)).CommandLine
-        (sprintf "%s reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
-
     testCase "Test that DotNet can override tool" <| fun _ ->
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.DotNet { DotNetCli = None; Tool = Some "cli-tool"} })
+              ToolType = CreateProcess.ToolType.DotNet { Options = id; Tool = Some "cli-tool"} })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -137,7 +123,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.DotNet { DotNetCli = Some "some/dotnet/path"; Tool = None } })
+              ToolType = CreateProcess.ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = None } })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -151,7 +137,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = Fake.Core.ProcessUtils.ToolType.DotNet { DotNetCli = Some "some/dotnet/path"; Tool = Some "cli-tool"}  })
+              ToolType = CreateProcess.ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = Some "cli-tool"}  })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args

@@ -49,7 +49,7 @@ type LogVerbosity =
 type ReportGeneratorParams =
     {
       /// Tool type
-      ToolType : Fake.Core.ProcessUtils.ToolType
+      ToolType : CreateProcess.ToolType
       /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
       /// (Required) The directory where the generated report should be saved.
@@ -91,7 +91,7 @@ let private toolname = "ReportGenerator.exe"
 /// ReportGenerator default parameters
 let private ReportGeneratorDefaultParams =
     {
-      ToolType = Fake.Core.ProcessUtils.ToolType.Framework None
+      ToolType = CreateProcess.ToolType.Framework None
       ExePath = Tools.findToolInSubPath toolname (currentDirectory </> "tools" </> "ReportGenerator")
       TargetDir = currentDirectory
       ReportTypes = [ ReportType.Html ]
@@ -115,13 +115,11 @@ let internal createProcess setParams (reports : string seq) =
       then value
       else x |> Option.get
 
-    let (tool, lead) = match parameters.ToolType with
-                       | Fake.Core.ProcessUtils.ToolType.Framework None -> (parameters.ExePath, None)
-                       | Fake.Core.ProcessUtils.ToolType.Framework (Some p) -> (p, None)
-                       | Fake.Core.ProcessUtils.ToolType.Global -> ("reportgenerator", None)
-                       | Fake.Core.ProcessUtils.ToolType.DotNet tool ->
-                          (defaultIfBlank tool.DotNetCli "dotnet",
-                           Some (defaultIfBlank tool.Tool "reportgenerator"))
+    let tool = match parameters.ToolType with
+               | CreateProcess.ToolType.Framework None -> parameters.ExePath
+               | CreateProcess.ToolType.Framework (Some p) -> p
+               | CreateProcess.ToolType.Global -> "reportgenerator"
+               | CreateProcess.ToolType.DotNet tool -> defaultIfBlank tool.Tool "reportgenerator"
 
     let joinWithSemicolon (xs: string seq) = String.Join(";", xs)
 
@@ -141,9 +139,6 @@ let internal createProcess setParams (reports : string seq) =
 
     let args =
         [
-            match lead with
-            | None -> ()
-            | Some p -> yield p
             yield! reports |> yieldIfNotEmpty "reports"
             yield sprintf "-targetdir:%s" parameters.TargetDir
 
@@ -163,7 +158,8 @@ let internal createProcess setParams (reports : string seq) =
 
     CreateProcess.fromCommand (RawCommand(tool, args))
     |> match parameters.ToolType with
-       | Fake.Core.ProcessUtils.ToolType.Framework _ -> CreateProcess.withFramework
+       | CreateProcess.ToolType.Framework _ -> CreateProcess.withFramework
+       | CreateProcess.ToolType.DotNet t -> CreateProcess.withDotNet (t.Options >> (fun o -> { o with WorkingDirectory = parameters.WorkingDir }))
        | _ -> id
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
@@ -185,7 +181,7 @@ let generateReports setParams (reports : string list) =
     | reports ->
         reports
         |> createProcess setParams
-        |> Proc.run
+        |> Proc.run // TODO
         |> ignore
 
     __.MarkSuccess()

@@ -7,19 +7,6 @@ open Fake.IO.FileSystemOperators
 
 [<RequireQualifiedAccess>]
 module ProcessUtils =
-    /// Information about a dotnet tool
-    type DotNetTool =
-      {
-        DotNetCli : string option
-        Tool : string option
-      }
-    with static member Create() = {DotNetCli = None; Tool = None}
-
-    /// Select which style of tool implementation
-    type ToolType =
-      | DotNet of DotNetTool
-      | Global
-      | Framework of string option
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
