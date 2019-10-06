@@ -59,6 +59,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+Target.initEnvironment()
+
 // Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
 let disableBootstrap = false
 
@@ -147,6 +149,8 @@ match TeamFoundation.Environment.SystemPullRequestIsFork with
 | _ ->
     Trace.traceFAKE "Not setting buildNumber to '%s', because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html" nugetVersion
 
+do printfn "Build FAKE with Paket.Core Version %s" paket_proj_nugetversion
+
 let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
@@ -186,7 +190,6 @@ let cleanForTests () =
     !! "integrationtests/*/temp"
     |> Seq.iter rmdir
 
-Target.initEnvironment()
 
 Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // Workaround https://github.com/fsprojects/Paket/issues/2830
@@ -773,6 +776,7 @@ runtimes
         | None -> "current", lazy info.Value.RID
     let targetName = sprintf "_DotNetPublish_%s" runtimeName
     Target.create targetName (fun _ ->
+        Environment.setEnvironVar "PAKET_PROJ_VERSION" paket_proj_nugetversion
         !! (appDir </> "Fake.netcore/Fake.netcore.fsproj")
         |> Seq.iter(fun proj ->
             let nugetDir = System.IO.Path.GetFullPath nugetDncDir
@@ -807,6 +811,7 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
+    Environment.setEnvironVar "PAKET_PROJ_VERSION" paket_proj_nugetversion
     DotNet.publish (fun c ->
         { c with
             Framework = Some "netcoreapp2.1"
@@ -930,6 +935,7 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1"
+    Environment.setEnvironVar "PAKET_PROJ_VERSION" paket_proj_nugetversion
     // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
