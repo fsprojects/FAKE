@@ -1,5 +1,5 @@
 ﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
-/// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
+/// There is also a tutorial about the [AssemblyInfo tasks](/assemblyinfo.html) available.
 namespace Fake.DotNet
 
 open System

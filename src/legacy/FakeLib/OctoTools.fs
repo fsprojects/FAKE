@@ -1,5 +1,5 @@
 /// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
-/// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
+/// There is also a tutorial about the [Octopus deployment helper](/octopusdeploy.html) available.
 [<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 module Fake.OctoTools
 

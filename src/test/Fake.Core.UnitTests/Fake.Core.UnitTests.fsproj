@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.Fsi\Fake.DotNet.Fsi.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.ILMerge\Fake.DotNet.ILMerge.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.FxCop\Fake.DotNet.FxCop.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.Testing.VSTest\Fake.DotNet.Testing.VSTest.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
@@ -23,6 +24,7 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.SpecFlow\Fake.DotNet.Testing.SpecFlow.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Xdt\Fake.DotNet.Xdt.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Testing.ReportGenerator\Fake.Testing.ReportGenerator.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Testing.SonarQube\Fake.Testing.SonarQube.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
@@ -42,10 +44,12 @@
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.NuGet.fs" />
     <Compile Include="Fake.DotNet.Testing.NUnit.fs" />
+    <Compile Include="Fake.DotNet.Testing.VSTest.fs" />
     <Compile Include="Fake.DotNet.Testing.SpecFlow.fs" />
     <Compile Include="Fake.DotNet.Fsi.fs" />
     <Compile Include="Fake.DotNet.Xdt.fs" />
     <Compile Include="Fake.Testing.ReportGenerator.fs" />
+    <Compile Include="Fake.Testing.SonarQube.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.Tools.Pickles.fs" />
     <Compile Include="Fake.IO.Zip.fs" />

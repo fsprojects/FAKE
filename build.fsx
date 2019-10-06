@@ -68,9 +68,6 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 
-// The name of the project on GitHub
-let gitName = "FAKE"
-
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 let paket_proj_release = ReleaseNotes.load "external/Paket/RELEASE_NOTES.md"
 let paket_proj_nugetversion = paket_proj_release.NugetVersion
@@ -103,6 +100,9 @@ let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
 let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+
+// The name of the project on GitHub
+let gitName = getVarOrDefault "github_repository_name" "FAKE"
 let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = getVarOrDefault "artifactsdirectory" ""

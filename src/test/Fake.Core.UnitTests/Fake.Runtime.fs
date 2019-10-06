@@ -1,10 +1,12 @@
 module Fake.RuntimeTests
 
 open System.IO
+open System.Reflection
 open Fake.Runtime
 open Fake.IO.FileSystemOperators
 open Expecto
 open Fake.IO
+open Fake.Runtime.Runners
 
 [<Tests>]
 let tests = 
@@ -14,6 +16,34 @@ let tests =
       |> Flip.Expect.equal "should detect script itself" "scriptpath:///build.fsx"
       Path.readPathFromCache "build.fsx" "scriptpath:///build.fsx"
       |> Flip.Expect.equal "should detect script itself" (Path.GetFullPath "build.fsx")
+
+    testCase "CoreCache.findInAssemblyList works with null token" <| fun _ ->
+        let toFind = AssemblyName "Microsoft.ServiceFabric.Client.Http, Culture=neutral, PublicKeyToken=null"
+        let res = { FullName = "Microsoft.ServiceFabric.Client.Http, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"; Version = "3.0.0.0"; Location = "C:\\invalid.dll" }
+        let available : AssemblyInfo list = [ res ]
+        let result = CoreCache.findInAssemblyList toFind available
+        Expect.equal result (Some (true, res)) "Expected to retrieve Microsoft.ServiceFabric.Common"
+        
+    testCase "CoreCache.findInAssemblyList works with different version" <| fun _ ->
+        let toFind = AssemblyName "Microsoft.ServiceFabric.Client.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+        let res = { FullName = "Microsoft.ServiceFabric.Client.Http, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"; Version = "3.0.0.0"; Location = "C:\\invalid.dll" }
+        let available : AssemblyInfo list = [ res ]
+        let result = CoreCache.findInAssemblyList toFind available
+        Expect.equal result (Some (false, res)) "Expected to retrieve Microsoft.ServiceFabric.Common"
+
+    testCase "CoreCache.findInAssemblyList doesn't return different token" <| fun _ ->
+        let toFind = AssemblyName "Microsoft.ServiceFabric.Client.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=41bf3856ad364e35"
+        let res = { FullName = "Microsoft.ServiceFabric.Client.Http, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"; Version = "3.0.0.0"; Location = "C:\\invalid.dll" }
+        let available : AssemblyInfo list = [ res ]
+        let result = CoreCache.findInAssemblyList toFind available
+        Expect.equal result None "Expected to not retrieve Microsoft.ServiceFabric.Common"
+
+    testCase "CoreCache.findInAssemblyList doesn't return different name" <| fun _ ->
+        let toFind = AssemblyName "Microsoft.ServiceFabric.Client, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+        let res = { FullName = "Microsoft.ServiceFabric.Client.Http, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"; Version = "3.0.0.0"; Location = "C:\\invalid.dll" }
+        let available : AssemblyInfo list = [ res ]
+        let result = CoreCache.findInAssemblyList toFind available
+        Expect.equal result None "Expected to not retrieve Microsoft.ServiceFabric.Common"
 
     testCase "Test that cache helpers work for nuget cache" <| fun _ ->
       let nugetLib = Paket.Constants.UserNuGetPackagesFolder </> "MyLib" </> "lib" </> "mylib.dll"

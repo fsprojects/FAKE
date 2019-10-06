@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 dist: xenial # Ubuntu 16.04
 
-dotnet : 2.1.505
+dotnet : 2.1.508
 
 addons:
   apt:
@@ -19,7 +19,7 @@ before_install:
   #- sudo dpkg -i packages-microsoft-prod.deb
   #- sudo apt-get install apt-transport-https -y
   #- sudo apt-get update -y
-  #- sudo apt-get install dotnet-sdk-2.1=2.1.505* -y
+  #- sudo apt-get install dotnet-sdk-2.1=2.1.508* -y
 
 env:
  - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis

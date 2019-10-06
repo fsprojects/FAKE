@@ -166,7 +166,10 @@ module internal Cache =
                         |> Seq.filter (fun r -> not (System.IO.Path.GetFileName(r).ToLowerInvariant().StartsWith("api-ms")))
                         |> Seq.choose (fun r ->
                             try Some (AssemblyInfo.ofLocation r)
-                            with e -> None)
+                            with e ->
+                                if context.Config.VerboseLevel.PrintVerbose then
+                                    Trace.tracefn "Error while trying to load assembly metainformation: %O" e
+                                None)
                         |> Seq.toList
                     let newAdditionalArgs =
                         { fsiOpts with
@@ -218,6 +221,29 @@ let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel)
         if logLevel.PrintVerbose then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
+let findInAssemblyList (name:AssemblyName) (runtimeDependencies:AssemblyInfo list) =
+    let strName = name.FullName
+    match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
+    | Some a ->
+        Some (true, a)
+    | _ ->
+        let token = name.GetPublicKeyToken()
+        // When null or empty accept what we have
+        // See https://github.com/fsharp/FAKE/issues/2381
+        let emptyToken = isNull token || token.Length = 0
+        let emptyVersion = isNull name.Version
+        match runtimeDependencies
+              |> Seq.map (fun r -> AssemblyName(r.FullName), r)
+              |> Seq.tryFind (fun (n, _) ->
+                  n.Name = name.Name &&
+                  (emptyToken || 
+                      n.GetPublicKeyToken() = token)) with
+        | Some (otherName, info) ->
+            // Then the version matches or is null and the public token is null we still accept this as perfect match
+            Some ((emptyToken && (emptyVersion || otherName.Version = name.Version)), info)
+        | _ ->
+            None
+
 let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
     if logLevel.PrintVerbose then tracefn "Trying to resolve: %s" strName
@@ -265,22 +291,11 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
         | None ->                
 #endif
             if logLevel.PrintVerbose then tracefn "Could not find assembly in the default load-context: %s" strName
-            match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
-            | Some a ->
-                true, loadAssembly loadContext logLevel a
-            | _ ->
-                let token = name.GetPublicKeyToken()
-                match runtimeDependencies
-                      |> Seq.map (fun r -> AssemblyName(r.FullName), r)
-                      |> Seq.tryFind (fun (n, _) ->
-                          n.Name = name.Name &&
-                          (isNull token || // When null accept what we have.
-                              n.GetPublicKeyToken() = token)) with
-                | Some (otherName, info) ->
-                    // Then the version matches and the public token is null we still accept this as perfect match
-                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext logLevel info
-                | _ ->
-                    false, None
+            match runtimeDependencies |> findInAssemblyList name  with
+            | Some (perfectMatch, a) ->
+                perfectMatch, loadAssembly loadContext logLevel a
+            | None ->
+                false, None
     match result with
     | Some (location, a) ->
         if logLevel.PrintVerbose then

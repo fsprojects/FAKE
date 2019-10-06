@@ -30,8 +30,6 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise the test-suite will fail (However, the compilation should work)
 
-[![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/pr)](http://www.issuestats.com/github/fsharp/FAKE) [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/issue)](http://www.issuestats.com/github/fsharp/FAKE)
-
 [![NuGet Badge](https://buildstats.info/nuget/FAKE)](https://www.nuget.org/packages/FAKE)
 [![NuGet Badge](https://buildstats.info/nuget/Fake.Core.Target)](https://www.nuget.org/packages/Fake.Core.Target) [![NuGet Badge](https://buildstats.info/nuget/Fake.Core.Context)](https://www.nuget.org/packages/Fake.Core.Context)
 

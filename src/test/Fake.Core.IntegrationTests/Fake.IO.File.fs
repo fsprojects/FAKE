@@ -4,10 +4,23 @@ open Fake.IO
 open System.IO
 open Expecto
 open Fake.Core.IntegrationTests.TestHelpers
+open Fake.Core
 
 [<Tests>]
 let tests =
-    testList "Fake.IO.FileIntegraionTests" [
+    testList "Fake.IO.FileIntegrationTests" [
+        testCase "File.getVersion throws InvalidOperationException #2378" <| fun _ ->
+          if Environment.isWindows then // On non-windows the API returns managed assembly info, see https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28
+            let testFile = getTestFile "NoVersionTestFile.dll"
+            Expect.throwsT<System.InvalidOperationException> (fun () ->
+                    File.getVersion testFile
+                        |> ignore<string>
+                ) "Expected InvalidOperationException for missing file version"
+        testCase "File.tryGetVersion works when component is missing #2378" <| fun _ ->
+          if Environment.isWindows then // On non-windows the API returns managed assembly info, see https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28
+            let testFile = getTestFile "NoVersionTestFile.dll"
+            Expect.equal (File.tryGetVersion testFile) None "Expected None for missing file version"
+
         testCase "Files created using File.create can be used immediately - #2183" <| fun _ ->
             let testFile = Path.combine (Path.GetTempPath ()) (Path.GetRandomFileName ())
 
