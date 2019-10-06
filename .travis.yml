@@ -1,0 +1,38 @@
+language: csharp
+dist: trusty
+
+sudo: false
+
+env:
+  global:
+    - HOME=/home/travis
+    - APPDATA=/home/travis
+    - LocalAppData=/home/travis
+  matrix:
+    # run .net integration tests
+    - SkipIntegrationTestsNetCore=true PAKET_TESTSUITE_FLAKYTESTS=false
+    # run .net core integration tests
+    - SkipIntegrationTestsNet=true PAKET_TESTSUITE_FLAKYTESTS=false
+    # just flaky tests
+    - PAKET_TESTSUITE_FLAKYTESTS=true
+
+dotnet: 2.1.500
+
+mono:
+  - 5.18.1
+  - 5.16.0
+  - latest
+
+matrix:
+  allow_failures:
+    # flaky test are expected to fail from time to time
+    - env: PAKET_TESTSUITE_FLAKYTESTS=true
+    # sporadic MonoBtlsException: Ssl error:1000007d:SSL routines:OPENSSL_internal:CERTIFICATE_VERIFY_FAILED
+    - env: SkipIntegrationTestsNetCore=true PAKET_TESTSUITE_FLAKYTESTS=false
+
+branches:
+  except:
+    - gh-pages
+
+script:
+  - ./build.sh BuildPackage

@@ -1,0 +1,168 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27009.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		docs\tools\generate.fsx = docs\tools\generate.fsx
+		global.json = global.json
+		LICENSE.txt = LICENSE.txt
+		NuGet.Config = NuGet.Config
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+		.paket\Paket.Restore.targets = .paket\Paket.Restore.targets
+		nuget\paket.template = nuget\paket.template
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{83F16175-43B1-4C90-A1EE-8E351C33435D}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tools\generate.fsx = docs\tools\generate.fsx
+		docs\tools\templates\template.cshtml = docs\tools\templates\template.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{8E6D5255-776D-4B61-85F9-73C37AA1FB9A}"
+	ProjectSection(SolutionItems) = preProject
+		docs\content\analyzers.md = docs\content\analyzers.md
+		docs\content\bootstrapper.md = docs\content\bootstrapper.md
+		docs\content\caches.md = docs\content\caches.md
+		docs\content\controlling-nuget-resolution.md = docs\content\controlling-nuget-resolution.md
+		docs\content\convert-from-nuget-tutorial.md = docs\content\convert-from-nuget-tutorial.md
+		docs\content\dependencies-file.md = docs\content\dependencies-file.md
+		docs\content\editor-support.md = docs\content\editor-support.md
+		docs\content\faq.md = docs\content\faq.md
+		docs\content\getting-started.md = docs\content\getting-started.md
+		docs\content\git-dependencies.md = docs\content\git-dependencies.md
+		docs\content\github-dependencies.md = docs\content\github-dependencies.md
+		docs\content\glossary.md = docs\content\glossary.md
+		docs\content\groups.md = docs\content\groups.md
+		docs\content\http-dependencies.md = docs\content\http-dependencies.md
+		docs\content\index.md = docs\content\index.md
+		docs\content\installation.md = docs\content\installation.md
+		docs\content\license.md = docs\content\license.md
+		docs\content\local-file.md = docs\content\local-file.md
+		docs\content\lock-file.md = docs\content\lock-file.md
+		docs\content\nuget-dependencies.md = docs\content\nuget-dependencies.md
+		docs\content\paket-and-dotnet-cli.md = docs\content\paket-and-dotnet-cli.md
+		docs\content\paket-folder.md = docs\content\paket-folder.md
+		docs\content\paket.dependencies = docs\content\paket.dependencies
+		docs\content\paket.lock = docs\content\paket.lock
+		docs\content\reference-from-repl.fsx = docs\content\reference-from-repl.fsx
+		docs\content\references-files.md = docs\content\references-files.md
+		docs\content\release-notes.md = docs\content\release-notes.md
+		docs\content\resolver.fsx = docs\content\resolver.fsx
+		docs\content\template-files.md = docs\content\template-files.md
+		docs\content\testimonials.md = docs\content\testimonials.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD-2B06-4030-9F0F-DC548F98E1C4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Paket.Tests", "tests\Paket.Tests\Paket.Tests.fsproj", "{E789C72A-5CFD-436B-8EF1-61AA2852A89F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Paket", "src\Paket\Paket.fsproj", "{09B32F18-0C20-4489-8C83-5106D5C04C93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paket.Bootstrapper", "src\Paket.Bootstrapper\Paket.Bootstrapper.csproj", "{CE3F8B87-1ABD-462E-A35B-CDCEC695898B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Paket.Core", "src\Paket.Core\Paket.Core.fsproj", "{7BAB0AE2-089F-4761-B138-A717AA2F86C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commands", "commands", "{4425A246-BD18-4622-86B5-0154F19165E4}"
+	ProjectSection(SolutionItems) = preProject
+		docs\content\commands\add.md = docs\content\commands\add.md
+		docs\content\commands\auto-restore.md = docs\content\commands\auto-restore.md
+		docs\content\commands\config.md = docs\content\commands\config.md
+		docs\content\commands\convert-from-nuget.md = docs\content\commands\convert-from-nuget.md
+		docs\content\commands\find-package-versions.md = docs\content\commands\find-package-versions.md
+		docs\content\commands\find-packages.md = docs\content\commands\find-packages.md
+		docs\content\commands\find-refs.md = docs\content\commands\find-refs.md
+		docs\content\commands\generate-load-scripts.md = docs\content\commands\generate-load-scripts.md
+		docs\content\commands\install.md = docs\content\commands\install.md
+		docs\content\commands\outdated.md = docs\content\commands\outdated.md
+		docs\content\commands\pack.md = docs\content\commands\pack.md
+		docs\content\commands\remove.md = docs\content\commands\remove.md
+		docs\content\commands\restore.md = docs\content\commands\restore.md
+		docs\content\commands\show-installed-packages.md = docs\content\commands\show-installed-packages.md
+		docs\content\commands\simplify.md = docs\content\commands\simplify.md
+		docs\content\commands\update.md = docs\content\commands\update.md
+		docs\content\commands\why.md = docs\content\commands\why.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paket.Bootstrapper.Tests", "tests\Paket.Bootstrapper.Tests\Paket.Bootstrapper.Tests.csproj", "{7C622582-E281-4EAB-AADA-B5893BB89B45}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Paket.IntegrationTests", "integrationtests\Paket.IntegrationTests\Paket.IntegrationTests.fsproj", "{7234B9B4-8CF5-4E68-AA29-050C087B9246}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{62D18A14-5240-4CB1-AA8A-762D3EB0E19A}"
+	ProjectSection(SolutionItems) = preProject
+		.paket\paket.exe.config = .paket\paket.exe.config
+		.paket\Paket.Restore.targets = .paket\Paket.Restore.targets
+		.paket\paket.targets = .paket\paket.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E789C72A-5CFD-436B-8EF1-61AA2852A89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E789C72A-5CFD-436B-8EF1-61AA2852A89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E789C72A-5CFD-436B-8EF1-61AA2852A89F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E789C72A-5CFD-436B-8EF1-61AA2852A89F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B32F18-0C20-4489-8C83-5106D5C04C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B32F18-0C20-4489-8C83-5106D5C04C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B32F18-0C20-4489-8C83-5106D5C04C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B32F18-0C20-4489-8C83-5106D5C04C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3F8B87-1ABD-462E-A35B-CDCEC695898B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3F8B87-1ABD-462E-A35B-CDCEC695898B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3F8B87-1ABD-462E-A35B-CDCEC695898B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3F8B87-1ABD-462E-A35B-CDCEC695898B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAB0AE2-089F-4761-B138-A717AA2F86C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAB0AE2-089F-4761-B138-A717AA2F86C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAB0AE2-089F-4761-B138-A717AA2F86C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAB0AE2-089F-4761-B138-A717AA2F86C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C622582-E281-4EAB-AADA-B5893BB89B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C622582-E281-4EAB-AADA-B5893BB89B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C622582-E281-4EAB-AADA-B5893BB89B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C622582-E281-4EAB-AADA-B5893BB89B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7234B9B4-8CF5-4E68-AA29-050C087B9246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7234B9B4-8CF5-4E68-AA29-050C087B9246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7234B9B4-8CF5-4E68-AA29-050C087B9246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7234B9B4-8CF5-4E68-AA29-050C087B9246}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83F16175-43B1-4C90-A1EE-8E351C33435D} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
+		{8E6D5255-776D-4B61-85F9-73C37AA1FB9A} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
+		{E789C72A-5CFD-436B-8EF1-61AA2852A89F} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{4425A246-BD18-4622-86B5-0154F19165E4} = {8E6D5255-776D-4B61-85F9-73C37AA1FB9A}
+		{7C622582-E281-4EAB-AADA-B5893BB89B45} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{7234B9B4-8CF5-4E68-AA29-050C087B9246} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61E9964A-34E0-4B78-8854-B092E6764056}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
