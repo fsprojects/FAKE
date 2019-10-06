@@ -28,6 +28,8 @@
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
+    <ProjectReference Include="..\..\..\external\Paket\src\Paket.Core.preview3\Paket.Core.fsproj" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fake.ContextHelper.fs" />

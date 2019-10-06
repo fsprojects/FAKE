@@ -26,11 +26,12 @@
         <Compile Include="..\Fake.netcore\Cli.fs" />
         <Compile Include="..\Fake.netcore\Program.fs" />
         <!-- Note: This resource should be moved to Paket.Core... -->
-        <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
+        <!--EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" /-->
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" />
         <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj" />
+        <ProjectReference Include="..\..\..\external\Paket\src\Paket.Core.preview3\Paket.Core.fsproj" />
     </ItemGroup>
     <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

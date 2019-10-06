@@ -72,6 +72,8 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias 
 let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
+let paket_proj_release = ReleaseNotes.load "external/Paket/RELEASE_NOTES.md"
+let paket_proj_nugetversion = paket_proj_release.NugetVersion
 
 let buildDir = "./build"
 let testDir = "./test"
@@ -827,6 +829,7 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
     Environment.setEnvironVar "PackageVersion" nugetVersion
     Environment.setEnvironVar "Version" nugetVersion
+    Environment.setEnvironVar "PAKET_PROJ_VERSION" paket_proj_nugetversion
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)

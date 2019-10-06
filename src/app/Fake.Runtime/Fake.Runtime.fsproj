@@ -3,6 +3,12 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
+    <Description>FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#.
+    Fake.Runtime is the runtime package to allow FAKE script specific functionalities (like caching, tooling, FAKE dependencies and similar things).
+    Your script should usually not depend on this package (only if it wants to run other scripts for example).
+    This package might depend on not-yet-released features of Paket.Core, so be careful when depending on this package.
+    Feel free to open an issue on FAKE to discuss your use case! 
+    </Description>
   </PropertyGroup>
   <PropertyGroup>
     <!-- NOTE: The defines are required to still build legacy Fakelib (where the same files are used) -->
@@ -35,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\..\..\external\Paket\src\Paket.Core.preview3\Paket.Core.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
