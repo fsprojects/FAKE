@@ -1,0 +1,3 @@
+source https://api.nuget.org/v3/index.json
+
+nuget Bender 3.0.29.0
