@@ -19,6 +19,11 @@ open System.Threading
 open Microsoft.FSharp.Core.Printf
 open System.Threading.Tasks
 
+let private requestTimeoutInMs = 10 * 60 * 1000
+let private uploadRequestTimeoutInMs = 20 * 60 * 1000
+
+let internal isRequestEnvVarSet = Environment.GetEnvironmentVariable("PAKET_DEBUG_REQUESTS") = "true"
+
 #if !NETSTANDARD1_6
 ServicePointManager.SecurityProtocol <- unbox 192 ||| unbox 768 ||| unbox 3072 ||| unbox 48
                                         ///SecurityProtocolType.Tls ||| SecurityProtocolType.Tls11 ||| SecurityProtocolType.Tls12 ||| SecurityProtocolType.Ssl3
@@ -349,15 +354,17 @@ let useDefaultHandler =
         let env = env.ToLowerInvariant()
         env = "true" || env = "yes" || env = "y"
 
-let createHttpClient (url,auth:Auth option) =
+let createHttpClientRaw (url,auth:Auth option) : HttpClient =
 #if !NO_WINCLIENTHANDLER
     if isWindows && not useDefaultHandler then
         // See https://github.com/dotnet/corefx/issues/31098
         let proxy = getDefaultProxyFor url
         let handler = new WinHttpHandler(Proxy = proxy)
         handler.AutomaticDecompression <- DecompressionMethods.GZip ||| DecompressionMethods.Deflate
+        handler.MaxConnectionsPerServer <- 4
 
         let client = new HttpClient(handler)
+        client.Timeout <- Threading.Timeout.InfiniteTimeSpan
         match auth with
         | None -> handler.ServerCredentials <- CredentialCache.DefaultCredentials
         | Some(Credentials({Username = username; Password = password; Type = AuthType.Basic})) ->
@@ -385,8 +392,11 @@ let createHttpClient (url,auth:Auth option) =
                 UseProxy = true,
                 Proxy = getDefaultProxyFor url)
         handler.AutomaticDecompression <- DecompressionMethods.GZip ||| DecompressionMethods.Deflate
-
+#if !NO_MAXCONNECTIONPERSERVER    
+        handler.MaxConnectionsPerServer <- 4
+#endif    
         let client = new HttpClient(handler)
+        client.Timeout <- Threading.Timeout.InfiniteTimeSpan
         match auth with
         | None -> handler.UseDefaultCredentials <- true
         | Some(Credentials({Username = username; Password = password; Type = AuthType.Basic})) ->
@@ -410,6 +420,11 @@ let createHttpClient (url,auth:Auth option) =
         handler.UseProxy <- true
         client
 
+// TODO:
+// re-use HttpClient instances and 
+// try to use MaxConnectionsPerServer = 4
+let createHttpClient = memoize createHttpClientRaw
+
 #if USE_WEB_CLIENT_FOR_UPLOAD
 type CustomTimeoutWebClient(timeout) =
     inherit WebClient()
@@ -419,7 +434,7 @@ type CustomTimeoutWebClient(timeout) =
         w
 
 let createWebClient (url,auth:Auth option) =
-    let client = new CustomTimeoutWebClient(20 * 60 * 1000)
+    let client = new CustomTimeoutWebClient(uploadRequestTimeoutInMs)
     client.Headers.Add("User-Agent", "Paket")
     client.Proxy <- getDefaultProxyFor url
 
@@ -467,7 +482,7 @@ let private resolveAuth (auth: AuthProvider) doRequest =
 /// [omit]
 let downloadFromUrlWithTimeout (auth:AuthProvider, url : string) (timeout:TimeSpan option) (filePath: string) =
     let doRequest auth = async {
-        use client = createHttpClient (url,auth)
+        let client = createHttpClient (url,auth)
         if timeout.IsSome then
             client.Timeout <- timeout.Value
         let! tok = Async.CancellationToken
@@ -493,7 +508,7 @@ let downloadFromUrl (auth:AuthProvider, url : string) (filePath: string) =
 let getFromUrl (auth:AuthProvider, url : string, contentType : string) =
     let uri = Uri url
     let doRequest auth = async {
-        use client = createHttpClient(url,auth)
+        let client = createHttpClient(url,auth)
         let! tok = Async.CancellationToken
         if notNullOrEmpty contentType then
             addAcceptHeader client contentType
@@ -514,7 +529,7 @@ let getFromUrl (auth:AuthProvider, url : string, contentType : string) =
 
 let getXmlFromUrl (auth:AuthProvider, url : string) =
     let doRequest auth = async {
-        use client = createHttpClient (url,auth)
+        let client = createHttpClient (url,auth)
         let! tok = Async.CancellationToken
         // mimic the headers sent from nuget client to odata/ endpoints
         addAcceptHeader client "application/atom+xml, application/xml"
@@ -559,23 +574,15 @@ module SafeWebResult =
         | SuccessResponse s -> FSharp.Core.Result.Ok s
 
 let rec private _safeGetFromUrl (auth:Auth option, url : string, contentType : string, iTry, nTries) =
-
-    let rec getExceptionNames (exn:Exception) = [
-        if exn <> null then
-            yield exn.GetType().Name
-            if exn.InnerException <> null then
-                yield! getExceptionNames exn.InnerException
-    ]
-
-    let shouldRetry exn = isMonoRuntime && iTry < nTries && (getExceptionNames exn |> List.contains "MonoBtlsException")
+    let canRetry = iTry < nTries
 
     async {
+        let uri = Uri url
+        let! tok = Async.CancellationToken
+        let tokSource = System.Threading.CancellationTokenSource.CreateLinkedTokenSource(tok)
         try
-            let uri = Uri url
-            use client = createHttpClient (url,auth)
-            let! tok = Async.CancellationToken
-            let tokSource = System.Threading.CancellationTokenSource.CreateLinkedTokenSource(tok)
-            tokSource.CancelAfter(60000)
+            let client = createHttpClient (url,auth)
+            tokSource.CancelAfter(requestTimeoutInMs)
 
             if notNullOrEmpty contentType then
                 addAcceptHeader client contentType
@@ -586,21 +593,28 @@ let rec private _safeGetFromUrl (auth:Auth option, url : string, contentType : s
             let! raw = client.DownloadStringTaskAsync(uri, tokSource.Token) |> Async.AwaitTaskWithoutAggregate
             return SuccessResponse raw
         with
-
-        | exn when shouldRetry exn ->
-            raise (Exception("Hello from _safeGetFromUrl.shouldRetry", exn))
-            // there are issues with mono, try again :\
-            Logging.traceWarnfn "Request failed, this is likely due to a mono issue. Trying again, this was try %i/%i" iTry nTries
-            return! _safeGetFromUrl(auth, url, contentType, iTry + 1, nTries)
-
+        | inner when tokSource.IsCancellationRequested && not tok.IsCancellationRequested ->
+            if canRetry then
+                // Timeout reached
+                if verbose || isRequestEnvVarSet then
+                    Logging.traceWarnfn "Request failed due to timeout (%d ms). Trying again, this was try %i/%i. Error was %O" requestTimeoutInMs iTry nTries inner
+                else
+                    Logging.traceWarnfn "Request failed due to timeout (%d ms). Trying again, this was try %i/%i." requestTimeoutInMs iTry nTries
+                return! _safeGetFromUrl(auth, url, contentType, iTry + 1, nTries)
+            else
+                return UnknownError (ExceptionDispatchInfo.Capture (new TimeoutException(sprintf "Request to '%O' timed out" uri, inner)))
         | :? RequestFailedException as w ->
             match w.Info with
             | Some { StatusCode = HttpStatusCode.NotFound } -> return NotFound
             | Some { StatusCode = HttpStatusCode.Unauthorized } -> return Unauthorized
             | _ ->
-                if verbose then
+                if verbose || isRequestEnvVarSet then
                     Logging.verbosefn "Error while retrieving '%s': %O" url w
                 return UnknownError (ExceptionDispatchInfo.Capture w)
+        | inner ->
+            if verbose || isRequestEnvVarSet then
+                Logging.traceWarnfn "Request to '%O' failed with unknown error: %O" uri inner
+            return UnknownError (ExceptionDispatchInfo.Capture inner)
     }
 
 /// [omit]
