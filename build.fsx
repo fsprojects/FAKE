@@ -842,6 +842,8 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    // for github package management to allow uploading the package... -> We need to re-package...
+    //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack
