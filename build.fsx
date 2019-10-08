@@ -1294,8 +1294,7 @@ if buildLegacy then
     ==> "RunTests"
 
 "DotNetPackage"
-    // Temporary disabled due to failing CI
-    //==> "TemplateIntegrationTests"
+    ==> "TemplateIntegrationTests"
     ==> "FullDotNetCore"
     ==> "Default"
 
