@@ -377,6 +377,10 @@ It also contains some specific information like the copyright which is not handl
 <td align="left"><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
 </tr>
 <tr class="odd">
+<td align="left"><p><code>@contentFiles@</code></p></td>
+<td align="left"><p>a list of <a href="https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files">contentFiles</a> to be included in the nuget package</p></td>
+</tr>
+<tr class="even">
 <td align="left"><p><code>@files@</code></p></td>
 <td align="left"><p>a list of source, target, and exclude strings for files to be included in the nuget package</p></td>
 </tr>
@@ -553,6 +557,40 @@ Here is a code snippet showing how to use this:</p>
 </code></pre></td>
 </tr>
 </table>
+<h2><a name="NuGet-ContentFiles" class="anchor" href="#NuGet-ContentFiles">NuGet ContentFiles</a></h2>
+<p>ContentFiles in NuGet are static files that the NuGet client will make available to a project for inclusion in the project.  For more information see this <a href="https://blog.nuget.org/20160126/nuget-contentFiles-demystified.html">blog post</a> explaining the difference and relationship to the Files element.</p>
+<p>The ContentFiles param supports all the documented nuspec contentFiles <a href="https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files">attributes</a>.</p>
+<p>It takes a value of type <code>list&lt;string*string option*string option*bool option*bool option&gt;</code> where each tuple part maps respectively to the following <a href="(https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files)">attributes</a>:</p>
+<ul>
+<li>include</li>
+<li>exclude</li>
+<li>buildAction</li>
+<li>copyToOutput</li>
+<li>flatten</li>
+</ul>
+<p>Here is a code snippet showing how to use ContentFiles:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+        <span class="c">// ...</span>
+        <span class="id">ContentFiles</span> <span class="o">=</span> <span class="pn">[</span>
+            <span class="pn">(</span><span class="s">@&quot;**/*.md&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">Some</span> <span class="s">@&quot;**/Exclude/*.md&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="id">Some</span> <span class="s">@&quot;Content&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="id">None</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">None</span><span class="pn">)</span>
+        <span class="pn">]</span>
+        <span class="c">// ...</span>
+    <span class="pn">}</span><span class="pn">)</span>
+    <span class="s">&quot;template.nuspec&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 
 				<div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
 <div class="tip" id="fs2">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
@@ -593,7 +631,7 @@ Here is a code snippet showing how to use this:</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.16.2-alpha.1304</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
