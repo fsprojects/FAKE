@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.17.1-alpha - tbd
+
+* tbd
+
 ## 5.17.0 - 2019-10-10
 
 * DOCS: Remove Issue Stats, thanks @vbfox - https://github.com/fsharp/FAKE/pull/2393
