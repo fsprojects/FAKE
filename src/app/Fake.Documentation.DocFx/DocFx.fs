@@ -20,18 +20,6 @@ let private docFxPath =
         | Some docFx when File.Exists docFx -> docFx
         | _ -> toolPath
 
-
-
-let private boolParam = Process.boolParam
-let private stringParam (paramName,paramValue) = Process.stringParam (paramName, Process.quoteIfNeeded paramValue)
-let private optionParam = Process.optionParam
-let private seperated xs = xs |> String.separated ","
-let private stringListParam (paramName, paramValue)= 
-    match paramValue with
-    | [] -> None
-    | xs -> stringParam (paramName, xs |> seperated)
-let private paramsToString = Process.parametersToString "--" "="
-
 type CommonParams =
     {
         /// The tool path - FAKE tries to find docfx.exe automatically in any sub folder.
@@ -99,16 +87,41 @@ type InitParams =
             ApiSourceFolder = ""
         }
 
+let private stringify value = 
+    sprintf "%A" value
 
+let private seperated xs = xs |> String.separated ","
+let private stringifyList (paramValue) = 
+    match paramValue with
+    | [] -> ""
+    | xs -> seperated paramValue
+
+let private stringifyOption option =
+    match option with
+    | Some value -> stringify value
+    | None -> ""
+
+let private stringifyParams parameters = 
+    let stringify (name, value) = sprintf "%s=%s" name value
+
+    let args = 
+        parameters 
+        |> List.map stringify 
+        |> Arguments.OfArgs
+
+    args.ToWindowsCommandLine
 
 let private serializeInitParams p = 
-    [  boolParam ("quiet",true)
-       boolParam ("overwrite", p.Overwrite)
-       stringParam ("output", p.OutputFolder)
-       boolParam ("file", p.OnlyConfigFile)
-       stringParam ("apiGlobPattern", p.ApiSourceGlobPattern)
-       stringParam ("apiSourceFolder", p.ApiSourceFolder) ]
-    |> paramsToString
+    let parameters = [  
+        ("quiet", "true")
+        ("overwrite", stringify p.Overwrite)
+        ("output", p.OutputFolder)
+        ("file", stringify p.OnlyConfigFile)
+        ("apiGlobPattern", p.ApiSourceGlobPattern)
+        ("apiSourceFolder", p.ApiSourceFolder) 
+    ]
+
+    stringifyParams parameters
     
 
 /// Initialize a DocFx documentation.
@@ -167,10 +180,10 @@ let private parseLogLevel =
                 | Error -> "Error")
 
 let private parseLogParams p = 
-    [ stringParam ("log", p.LogFilePath)
-      optionParam ("logLevel", (parseLogLevel p.LogLevel))
-      stringParam ("repositoryRoot", p.RepoRoot)
-      stringParam ("correlationId", p.CorrelationId) ]
+    [ ("log", p.LogFilePath)
+      ("logLevel", sprintf "%A" (parseLogLevel p.LogLevel))
+      ("repositoryRoot", p.RepoRoot)
+      ("correlationId", p.CorrelationId) ]
 
 /// Build-Command parameters
 type BuildParams = 
@@ -343,46 +356,46 @@ type BuildParams =
 
 let private parseBuildParams p =
     let buildParams = [   
-        stringParam ("output", p.OutputFolder)
-        stringListParam ("content", p.Content)
-        stringListParam ("resource", p.Resource)
-        stringListParam ("overwrite", p.Overwrite)
-        stringListParam ("xref", p.XRefMaps)
-        stringListParam ("template", p.Templates)
-        stringListParam ("theme", p.Themes)
-        boolParam ("serve", p.Serve)
-        stringParam ("hostname", p.Host)
-        optionParam ("port", p.Port)
-        boolParam ("force", p.ForceRebuild)
-        boolParam ("debug", p.EnableDebugMode)
-        stringParam ("debugOutput", p.OutputFolderForDebugFiles)
-        boolParam ("forcePostProcess", p.ForcePostProcess)
-        stringParam ("globalMetadata", p.GlobalMetadata)
-        stringListParam ("globalMetadataFiles", p.GlobalMetadataFilePaths)
-        stringListParam ("fileMetadataFiles", p.FileMetadataFilePaths)
-        boolParam ("exportRawModel", p.ExportRawModel)
-        stringParam ("rawModelOutputFolder", p.RawModelOutputFolder)
-        stringParam ("viewModelOutputFolder", p.ViewModelOutputFolder)
-        boolParam ("exportViewModel", p.ExportViewModel)
-        boolParam ("dryRun", p.DryRun)
-        optionParam ("maxParallelism", p.MaxParallelism)
-        stringParam ("markdownEngineName", p.MarkdownEngineName)
-        stringParam ("markdownEngineProperties", p.MarkdownEngineProperties)
-        optionParam ("noLangKeyword", p.NoLangKeyword)
-        stringParam ("intermediateFolder", p.IntermediateFolder)
-        stringParam ("changeFile", p.ChangesFile)
-        stringListParam ("postProcessors", p.PostProcessors)
-        optionParam ("lruSize", p.LruSize)
-        boolParam ("keepFileLink", p.KeepFileLink)
-        boolParam ("cleanupCacheHistory", p.CleanupCacheHistory)
-        stringParam ("falName", p.FALName)
-        boolParam ("disableGitFeatures", p.DisableGitFeatures)
-        stringParam ("schemaLicense", p.SchemaLicense)
+        ("output", p.OutputFolder)
+        ("content", stringifyList p.Content)
+        ("resource", stringifyList p.Resource)
+        ("overwrite", stringifyList p.Overwrite)
+        ("xref", stringifyList p.XRefMaps)
+        ("template", stringifyList p.Templates)
+        ("theme", stringifyList p.Themes)
+        ("serve", stringify p.Serve)
+        ("hostname", p.Host)
+        ("port", stringifyOption p.Port)
+        ("force", stringify p.ForceRebuild)
+        ("debug", stringify p.EnableDebugMode)
+        ("debugOutput", p.OutputFolderForDebugFiles)
+        ("forcePostProcess", stringify p.ForcePostProcess)
+        ("globalMetadata", p.GlobalMetadata)
+        ("globalMetadataFiles", stringifyList p.GlobalMetadataFilePaths)
+        ("fileMetadataFiles", stringifyList p.FileMetadataFilePaths)
+        ("exportRawModel", stringify p.ExportRawModel)
+        ("rawModelOutputFolder", p.RawModelOutputFolder)
+        ("viewModelOutputFolder", p.ViewModelOutputFolder)
+        ("exportViewModel", stringify p.ExportViewModel)
+        ("dryRun", stringify p.DryRun)
+        ("maxParallelism", stringifyOption p.MaxParallelism)
+        ("markdownEngineName", p.MarkdownEngineName)
+        ("markdownEngineProperties", p.MarkdownEngineProperties)
+        ("noLangKeyword", stringifyOption p.NoLangKeyword)
+        ("intermediateFolder", p.IntermediateFolder)
+        ("changeFile", p.ChangesFile)
+        ("postProcessors", stringifyList p.PostProcessors)
+        ("lruSize", stringifyOption p.LruSize)
+        ("keepFileLink", stringify p.KeepFileLink)
+        ("cleanupCacheHistory", stringify p.CleanupCacheHistory)
+        ("falName", p.FALName)
+        ("disableGitFeatures", stringify p.DisableGitFeatures)
+        ("schemaLicense", p.SchemaLicense)
     ]
     List.append buildParams (parseLogParams p.LogParams)
 
 let private serializeBuildParams p =
-    p |> parseBuildParams |> paramsToString |> sprintf "%s %s" p.ConfigFile
+    p |> parseBuildParams |> stringifyParams |> sprintf "%s %s" p.ConfigFile
 
 
 /// Builds a DocFx documentation.
@@ -469,22 +482,22 @@ type PdfParams =
         x.WithBuildParams (fun b -> b.WithCommon f)
 let private parsePdfParams p = 
     let pdfParams = [
-        stringParam ("name", p.Name)
-        stringParam ("css", p.CssFilePath)
-        optionParam ("generatesAppendices", p.GeneratesAppendices)
-        optionParam ("generatesExternalLink", p.GeneratesExternalLink)
-        optionParam ("keepRawFiles", p.KeepRawFiles)
-        stringParam ("errorHandling", p.LoadErrorHandling)
-        stringParam ("rawOutputFolder", p.RawOutputFolder)
-        stringParam ("host", p.Host)
-        stringParam ("locale", p.Locale)
-        stringListParam ("excludedTocs", p.ExcludedTocs)
-        stringParam ("basePath", p.BasePath)
+        ("name", p.Name)
+        ("css", p.CssFilePath)
+        ("generatesAppendices", stringifyOption p.GeneratesAppendices)
+        ("generatesExternalLink", stringifyOption p.GeneratesExternalLink)
+        ("keepRawFiles", stringifyOption p.KeepRawFiles)
+        ("errorHandling", p.LoadErrorHandling)
+        ("rawOutputFolder", p.RawOutputFolder)
+        ("host", p.Host)
+        ("locale", p.Locale)
+        ("excludedTocs", stringifyList p.ExcludedTocs)
+        ("basePath", p.BasePath)
     ]
     List.append pdfParams (parseBuildParams p.BuildParams)
 
 let private serializePdfParams p =
-    p |> parsePdfParams |> paramsToString |> sprintf "%s %s" p.BuildParams.ConfigFile
+    p |> parsePdfParams |> stringifyParams |> sprintf "%s %s" p.BuildParams.ConfigFile
 
 /// Builds a Pdf-File from a DocFx documentation.
 /// ## Parameters
@@ -539,10 +552,10 @@ type ExportTemplateParams =
 
 let private serializeExportTemplateParams p =
     [
-        boolParam ("all", p.All)
-        stringParam ("output", p.OutputFolder)
+        ("all", stringify p.All)
+        ("output", p.OutputFolder)
     ] 
-    |> paramsToString
+    |> stringifyParams
     |> sprintf "export %s %s" (p.Templates |> seperated)
 
 /// Exports template files.
@@ -585,9 +598,9 @@ type DownloadParams =
 
 let private serializeDownloadParams p =
     [
-        stringParam ("xref", p.Uri)
+        ("xref", p.Uri)
     ] 
-    |> paramsToString
+    |> stringifyParams
     |> sprintf "%s %s" p.ArchiveFile
 
 /// Download xref archive.
@@ -636,10 +649,10 @@ type ServeParams =
 
 let private serializeServeParams p =
     [
-        stringParam ("hostname", p.Host)
-        optionParam ("port", p.Port)
+        ("hostname", p.Host)
+        ("port", stringifyOption p.Port)
     ] 
-    |> paramsToString
+    |> stringifyParams
     |> sprintf "%s %s" p.Folder
 
 /// Serves a DocFx documentation.
@@ -727,17 +740,17 @@ type MetadataParams =
 
 let private serializeMetadataParams p =
     let metadata = [
-        boolParam ("force", p.ForceRebuild)
-        boolParam ("shouldSkipMarkup", p.ShouldSkipMarkup)
-        stringParam ("output" , p.OutputFolder)
-        boolParam ("raw", p.PreserveRawInlineComments)
-        stringParam ("filter", p.FilterConfigFile)
-        stringParam ("globalNamespaceId", p.GlobalNamespaceId)
-        stringParam ("property", p.MSBuildProperties)
-        boolParam ("disableGitFeatures", p.DisableGitFeatures)
+        ("force", stringify p.ForceRebuild)
+        ("shouldSkipMarkup", stringify p.ShouldSkipMarkup)
+        ("output" , p.OutputFolder)
+        ("raw", stringify p.PreserveRawInlineComments)
+        ("filter", p.FilterConfigFile)
+        ("globalNamespaceId", p.GlobalNamespaceId)
+        ("property", p.MSBuildProperties)
+        ("disableGitFeatures", stringify p.DisableGitFeatures)
     ] 
     List.append metadata (parseLogParams p.LogParams)
-    |> paramsToString
+    |> stringifyParams
     |> sprintf "%s %s %s" p.ConfigFile (seperated p.Projects)
 
 /// Serves a DocFx documentation.

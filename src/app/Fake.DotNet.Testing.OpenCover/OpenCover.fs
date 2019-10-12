@@ -12,7 +12,9 @@ module Fake.DotNet.Testing.OpenCover
         | Manual
         | Register
         | RegisterUser
-    
+        | Path32
+        | Path64
+
     type HideSkippedType =
         | All
         | File
@@ -102,7 +104,9 @@ module Fake.DotNet.Testing.OpenCover
                     (match param.Register with
                     | Manual -> String.Empty
                     | Register -> printParam "register"
-                    | RegisterUser -> printParamWithValue "register" "user")
+                    | RegisterUser -> printParamWithValue "register" "user"
+                    | Path32 -> printParamWithValue "register" "Path32"
+                    | Path64 -> printParamWithValue "register" "Path64")
             |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Filter) (printParamWithValue "filter" (quote param.Filter))
             |> StringBuilder.appendIfTrueWithoutQuotes param.MergeByHash (printParam "mergebyhash")
             |> StringBuilder.appendIfTrueWithoutQuotes (not param.ExcludeByAttribute.IsEmpty) (printParamListAsValuesWithQuote "excludebyattribute" param.ExcludeByAttribute)

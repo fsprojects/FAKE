@@ -1,5 +1,18 @@
 # Release Notes
 
+## 5.17.0 - 2019-10-10
+
+* DOCS: Remove Issue Stats, thanks @vbfox - https://github.com/fsharp/FAKE/pull/2393
+* ENHANCEMENT: Support VSTest parallel test execution setting, thanks @dungpa - https://github.com/fsharp/FAKE/pull/2385
+* ENHANCEMENT: Update dotnet new template, thanks @Krzysztof-Cieslak - https://github.com/fsharp/FAKE/pull/2391
+* BUGFIX: Fix API for DotCover.report, thanks @TomasMorton - https://github.com/fsharp/FAKE/pull/2389
+* ENHANCEMENT: Add installFrozenLockFile option for Yarn, thanks @rfrerebe - https://github.com/fsharp/FAKE/pull/2388
+* ENHANCEMENT: Add the extra OpenCover registration options, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2387
+* ENHANCEMENT: Allow FSI evaluation option for FSharp.Formatting, thanks @kurtschelfthout - https://github.com/fsharp/FAKE/pull/2158
+* BUGFIX: Fixed DocFx bug, thanks @DigitalFlow - https://github.com/fsharp/FAKE/pull/2188
+* ENHANCEMENT: Add support for contentFiles to Fake.DotNet.NuGet packaging, thanks @chappoo - https://github.com/fsharp/FAKE/pull/2165
+* ENHANCEMENT: Support mono in Fake.DotNet.Fsc, thanks @wallymathieu - https://github.com/fsharp/FAKE/pull/2397
+
 ## 5.16.1 - 2019-08-25
 
 * BUGFIX: Fix that `generate_load_scripts` prevents restore after update - https://github.com/fsharp/FAKE/issues/2382
@@ -9,7 +22,7 @@
 * ENHANCEMENT: add `Organization` field to `Fake.Testing.SonarQube`, thanks @Lutando - https://github.com/fsharp/FAKE/pull/2358
 * ENHANCEMENT: Added `Arguments.appendRaw*` functions to handle weird microsoft escaping.
 * ENHANCEMENT: Added `Environment.getNuGetPackagesCacheFolder()`, returns the NuGet packages path.
-* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is not obsolete)
+* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is now obsolete)
 * DOCS: Fix some broken links - https://github.com/fsharp/FAKE/issues/2351
 
 

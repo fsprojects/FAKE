@@ -276,6 +276,12 @@ module internal RawProc =
                                 Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                             allFinished <- ok
                         
+                        if not allFinished && Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
+                            if Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
+                                System.Diagnostics.Debugger.Launch() |> ignore
+                                System.Diagnostics.Debugger.Break() |> ignore
+                            Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
+
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
                         let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
