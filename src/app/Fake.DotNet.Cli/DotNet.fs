@@ -664,17 +664,20 @@ module DotNet =
         try f ()
         finally if writtenJson then File.delete globalJsonPath
 
-    /// Execute raw dotnet cli command
-    /// ## Parameters
-    ///
-    /// - 'options' - common execution options
-    /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
-    /// - 'args' - command arguments
-    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
-        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
-        let timeout = TimeSpan.MaxValue
+    /// [omit]
+    let internal buildCommand command args options =
+        let sdkOptions = buildSdkOptionsArgs options
+        let commonOptions = buildCommonArgs options
+        [ sdkOptions
+          command // |> Args.fromWindowsCommandLine |> Seq.toList
+          commonOptions
+          args ] // |> Args.fromWindowsCommandLine |> Seq.toList ]
+        |> List.concat
 
-        let options = buildOptions (Options.Create())
+    /// [omit]
+    let internal run cmdArgs options =
+        let timeout = TimeSpan.MaxValue
+        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let errorF msg =
             if options.PrintRedirectedOutput then
                 Trace.traceError msg
@@ -684,15 +687,6 @@ module DotNet =
             if options.PrintRedirectedOutput then
                 Trace.trace msg
             results.Add (ConsoleMessage.CreateOut msg)
-
-        let sdkOptions = buildSdkOptionsArgs options
-        let commonOptions = buildCommonArgs options
-        let cmdArgs = 
-            [ sdkOptions
-              command |> Args.fromWindowsCommandLine |> Seq.toList
-              commonOptions
-              args |> Args.fromWindowsCommandLine |> Seq.toList ]
-            |> List.concat          
 
         let result =
             let f (info:ProcStartInfo) =
@@ -718,6 +712,23 @@ module DotNet =
             )
         ProcessResult.New result (results |> List.ofSeq)
 
+    let internal setOptions (buildOptions: Options -> Options) =
+      buildOptions (Options.Create())
+
+    /// Execute raw dotnet cli command
+    /// ## Parameters
+    ///
+    /// - 'options' - common execution options
+    /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
+    /// - 'args' - command arguments
+    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
+        let options = setOptions buildOptions
+
+        let cmdArgs = buildCommand (command |> Args.fromWindowsCommandLine |> Seq.toList)
+                                   (args |> Args.fromWindowsCommandLine |> Seq.toList)
+                                   options
+
+        run cmdArgs options
 
     /// dotnet --info command options
     type InfoOptions =

@@ -49,7 +49,7 @@ type LogVerbosity =
 type ReportGeneratorParams =
     {
       /// Tool type
-      ToolType : CreateProcess.ToolType
+      ToolType : ToolType
       /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
       /// (Required) The directory where the generated report should be saved.
@@ -91,7 +91,7 @@ let private toolname = "ReportGenerator.exe"
 /// ReportGenerator default parameters
 let private ReportGeneratorDefaultParams =
     {
-      ToolType = CreateProcess.ToolType.Framework None
+      ToolType = ToolType.Framework { Tool = None }
       ExePath = Tools.findToolInSubPath toolname (currentDirectory </> "tools" </> "ReportGenerator")
       TargetDir = currentDirectory
       ReportTypes = [ ReportType.Html ]
@@ -109,18 +109,6 @@ let private ReportGeneratorDefaultParams =
 /// [omit]
 let internal createProcess setParams (reports : string seq) =
     let parameters = setParams ReportGeneratorDefaultParams
-    let defaultIfBlank x value =
-      if x |> Option.isNone ||
-         x |> Option.get |> String.IsNullOrWhiteSpace
-      then value
-      else x |> Option.get
-
-    let tool = match parameters.ToolType with
-               | CreateProcess.ToolType.Framework None -> parameters.ExePath
-               | CreateProcess.ToolType.Framework (Some p) -> p
-               | CreateProcess.ToolType.Global -> "reportgenerator"
-               | CreateProcess.ToolType.DotNet tool -> defaultIfBlank tool.Tool "reportgenerator"
-
     let joinWithSemicolon (xs: string seq) = String.Join(";", xs)
 
     let yieldIfSome paramName (value: string option) =
@@ -156,16 +144,14 @@ let internal createProcess setParams (reports : string seq) =
         ]
         |> Arguments.OfArgs
 
+    let tool = parameters.ToolType.Command parameters.ExePath "reportgenerator"
     CreateProcess.fromCommand (RawCommand(tool, args))
-    |> match parameters.ToolType with
-       | CreateProcess.ToolType.Framework _ -> CreateProcess.withFramework
-       | CreateProcess.ToolType.DotNet t -> CreateProcess.withDotNet (t.Options >> (fun o -> { o with WorkingDirectory = parameters.WorkingDir }))
-       | _ -> id
+    |> CreateProcess.withFrameworkOrDotNetTool parameters.ToolType
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
     |> fun command ->
         Trace.trace command.CommandLine
-        command
+        { Command = command; ToolType = parameters.ToolType }
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
@@ -181,7 +167,7 @@ let generateReports setParams (reports : string list) =
     | reports ->
         reports
         |> createProcess setParams
-        |> Proc.run // TODO
+        |> Proc.runWithDotNetOrFramework
         |> ignore
 
     __.MarkSuccess()

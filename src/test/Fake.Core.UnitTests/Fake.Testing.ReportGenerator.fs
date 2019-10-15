@@ -1,16 +1,17 @@
 module Fake.Testing.ReportGeneratorTests
 
+open System
 open System.IO
 open Fake.Core
 open Fake.Testing
 open Expecto
 
 let rawCreateProcess setParams =
-  ["report1.xml"; "report2.xml"]
-  |> Fake.Testing.ReportGenerator.createProcess (fun param ->
+  (["report1.xml"; "report2.xml"]
+   |> Fake.Testing.ReportGenerator.createProcess (fun param ->
        { setParams param with
            ExePath = Path.Combine("reportgenerator", "ReportGenerator.exe")
-           TargetDir = "targetDir"})
+           TargetDir = "targetDir"})).Command
 
 let runCreateProcess setParams =
   let cp = rawCreateProcess setParams
@@ -66,7 +67,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.Framework (Some path) })
+              ToolType = ToolType.Framework { Tool = Some path } })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -81,7 +82,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.Global })
+              ToolType = ToolType.Global { Tool = None }})
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -89,19 +90,33 @@ let tests =
 
       Expect.equal file "reportgenerator" "Expected reportgenerator"
       Expect.equal (RawCommand(file, args)).CommandLine
-         (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" "reportgenerator") "expected proper command line"
+         (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
-    testCase "Test that DotNet does default tool" <| fun _ ->
+    testCase "Test that Global can substitute" <| fun _ ->
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.DotNet (CreateProcess.DotNetTool.Create()) })
+              ToolType = ToolType.Global { Tool = Some "alternative" }})
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
 
-      Expect.equal file "dotnet" "Expected reportgenerator"
+      Expect.equal file "alternative" "Expected alternative"
+      Expect.equal (RawCommand(file, args)).CommandLine
+         (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
+
+    testCase "Test that DotNet does default tool" <| fun _ ->
+      let cp =
+        rawCreateProcess (fun p ->
+          { p with
+              ToolType = ToolType.DotNet (DotNetTool.Create()) })
+      let file, args =
+        match cp.Command with
+        | RawCommand(file, args) -> file, args
+        | _ -> failwithf "expected RawCommand"
+
+      Expect.equal (file |> Path.GetFileNameWithoutExtension) "dotnet"  "Expected dotnet path"
       Expect.equal (RawCommand(file, args)).CommandLine
        (sprintf "%s reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
@@ -109,13 +124,13 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.DotNet { Options = id; Tool = Some "cli-tool"} })
+              ToolType = ToolType.DotNet { Options = id; Tool = Some "cli-tool"} })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
 
-      Expect.equal file "dotnet" "Expected reportgenerator"
+      Expect.equal (file |> Path.GetFileNameWithoutExtension) "dotnet"  "Expected dotnet path"
       Expect.equal (RawCommand(file, args)).CommandLine
        (sprintf "%s cli-tool -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
@@ -123,7 +138,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = None } })
+              ToolType = ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = None } })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -137,7 +152,7 @@ let tests =
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = CreateProcess.ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = Some "cli-tool"}  })
+              ToolType = ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = Some "cli-tool"}  })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
