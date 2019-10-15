@@ -68,9 +68,6 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 
-// The name of the project on GitHub
-let gitName = "FAKE"
-
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 let buildDir = "./build"
@@ -101,6 +98,9 @@ let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
 let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+
+// The name of the project on GitHub
+let gitName = getVarOrDefault "github_repository_name" "FAKE"
 let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = getVarOrDefault "artifactsdirectory" ""
@@ -834,6 +834,8 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    // for github package management to allow uploading the package... -> We need to re-package...
+    //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack

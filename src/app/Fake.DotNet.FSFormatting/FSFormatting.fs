@@ -27,7 +27,8 @@ type LiterateArguments =
       OutputDirectory : string 
       Template : string
       ProjectParameters : (string * string) list
-      LayoutRoots : string list }
+      LayoutRoots : string list 
+      FsiEval : bool }
 
 let defaultLiterateArguments =
     { ToolPath = toolPath
@@ -35,7 +36,8 @@ let defaultLiterateArguments =
       OutputDirectory = ""
       Template = ""
       ProjectParameters = []
-      LayoutRoots = [] }
+      LayoutRoots = [] 
+      FsiEval = false }
 
 let createDocs p =
     let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
@@ -45,6 +47,7 @@ let createDocs p =
     let source = arguments.Source
     let template = arguments.Template
     let outputDir = arguments.OutputDirectory
+    let fsiEval = if arguments.FsiEval then [ "--fsieval" ] else []
 
     let command = 
         arguments.ProjectParameters
@@ -52,7 +55,7 @@ let createDocs p =
         |> Seq.concat
         |> Seq.append 
                (["literate"; "--processdirectory" ] @ layoutroots @ [ "--inputdirectory"; source; "--templatefile"; template; 
-                  "--outputDirectory"; outputDir; "--replacements" ])
+                  "--outputDirectory"; outputDir] @ fsiEval @ [ "--replacements" ])
         |> Seq.map (fun s -> 
                if s.StartsWith "\"" then s
                else sprintf "\"%s\"" s)

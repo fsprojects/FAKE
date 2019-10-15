@@ -1,4 +1,4 @@
-version 5.215.0
+version 5.224
 content: none
 //source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
@@ -111,7 +111,7 @@ group NetcoreBuild
     nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core // prerelease
+    nuget Paket.Core prerelease
     nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
@@ -146,7 +146,7 @@ group netcorerunner
     framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
 
-    nuget Paket.Core
+    nuget Paket.Core // prerelease
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
