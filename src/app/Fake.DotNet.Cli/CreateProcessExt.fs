@@ -4,7 +4,7 @@ open Fake.DotNet
 
 /// Some extensions for the `CreateProcess` module, opened automatically (use add `open Fake.Core`)
 [<AutoOpen>]
-module CreateProcessExt =
+module CreateProcessDotNetExt =
   /// Information about a dotnet tool
   type DotNetTool =
     { /// Parameters as for DotNet.exec

@@ -272,6 +272,9 @@
     <Compile Include="..\..\app\Fake.DotNet.Cli\DotNet.fs">
       <Link>Fake.DotNet.Cli/DotNet.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.DotNet.Cli\CreateProcessExt.fs">
+      <Link>Fake.DotNet.Cli\CreateProcessExt.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Testing.Common\TestingCommon.fs">
       <Link>Fake.Testing.Common/TestingCommon.fs</Link>
     </Compile>
