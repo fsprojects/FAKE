@@ -137,7 +137,7 @@ type ProcStartInfo =
         { x with Environment = map }
 
     member x.AsStartInfo =
-        let p = new ProcessStartInfo(x.FileName, x.Arguments)
+        let p = ProcessStartInfo(x.FileName, x.Arguments)
         p.CreateNoWindow <- x.CreateNoWindow
         if not (isNull x.Domain) then
             p.Domain <- x.Domain
@@ -241,12 +241,12 @@ module internal Kernel32 =
     
     let getPathToApp (proc:Process) =
         let mutable nChars = 256u
-        let Buff = new StringBuilder(int nChars);
+        let buff = StringBuilder(int nChars)
 
-        let success = QueryFullProcessImageName(proc.Handle, 0u, Buff, &nChars)
+        let success = QueryFullProcessImageName(proc.Handle, 0u, buff, &nChars)
 
         if (0u <> success) then
-            Buff.ToString()
+            buff.ToString()
         else
             let hresult = Marshal.GetHRForLastWin32Error()
             Marshal.ThrowExceptionForHR hresult
@@ -260,10 +260,13 @@ module Process =
 
     /// Kills the given process
     let kill (proc : Process) = 
-        Trace.tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
+        Trace.tracefn "Trying to kill process '%s' (Id = %d)" proc.ProcessName proc.Id
         try 
             proc.Kill()
-        with ex -> Trace.logfn "Killing %s failed with %s" proc.ProcessName ex.Message
+        with ex ->  
+            if Trace.isVerbose(true)
+            then Trace.logfn "Killing '%s' failed with: %O" proc.ProcessName ex
+            else Trace.logfn "Killing '%s' failed with: %s" proc.ProcessName ex.Message
 
     type ProcessList() =
         let mutable shouldKillProcesses = true
@@ -279,16 +282,16 @@ module Process =
                         // process IDs may be reused by the operating system so we need
                         // to make sure the process is indeed the one we started
                         | Some proc when proc.StartTime = startTime && not proc.HasExited ->
-                            try 
-                                if not !traced then
-                                  Trace.tracefn "Killing all processes that are created by FAKE and are still running."
-                                  traced := true
+                            if not !traced then
+                              Trace.tracefn "Killing all processes that are created by FAKE and are still running."
+                              traced := true
 
-                                Trace.logfn "Trying to kill %s" proc.ProcessName
-                                kill proc
-                            with exn -> Trace.logfn "Killing %s failed with %s" proc.ProcessName exn.Message
+                            kill proc
                         | _ -> ()                    
-                    with exn -> Trace.logfn "Killing %d failed with %s" pid exn.Message
+                    with exn -> 
+                        if Trace.isVerbose(true)
+                        then Trace.logfn "Killing '%d' failed with: %s" pid exn.Message
+                        else Trace.logfn "Killing '%d' failed with: %O" pid exn
                 startedProcesses.Clear()
             )        
         member __.KillAll() = killProcesses()

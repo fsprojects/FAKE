@@ -14,8 +14,21 @@ type FAKEException(msg) =
 
 let private openTags = new ThreadLocal<list<System.Diagnostics.Stopwatch * KnownTags>>(fun _ -> [])
 
+let mutable private verbose = Environment.environVarAsBoolOrDefault "FAKE_COREFX_VERBOSE" false
+let mutable private hintPrinted = false
+let setVerbose() = verbose <- true
+
+
 /// Logs the specified string        
 let log message = TraceData.LogMessage(message, true) |> CoreTracing.postMessage
+
+let isVerbose (printHint) =
+    if printHint && not hintPrinted then
+        hintPrinted <- true
+        if not verbose then
+            let hint = "Note: To further diagnose the following problem you can increase verbosity of the fake modules by setting the 'FAKE_COREFX_VERBOSE' environment variable to 'true' or by using 'Trace.setVerbose()' in your script."
+            log hint
+    verbose
 
 /// Logs the specified message
 let logfn fmt = Printf.ksprintf log fmt
@@ -25,7 +38,7 @@ let logf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.L
 
 /// Logs the specified string if the verbose mode is activated.
 let logVerbosefn fmt = 
-    Printf.ksprintf (if BuildServer.verbose then log
+    Printf.ksprintf (if isVerbose(false) then log
                      else ignore) fmt
 
 /// Writes a trace to the command line (in green)
@@ -39,7 +52,7 @@ let tracef fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData
 
 /// Writes a trace to the command line (in green) if the verbose mode is activated.
 let traceVerbose s = 
-    if BuildServer.verbose then trace s
+    if isVerbose(false) then trace s
 
 /// Writes a trace to stderr (in yellow)  
 let traceImportant text = CoreTracing.postMessage (TraceData.ImportantMessage text)
