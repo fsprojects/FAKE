@@ -9,9 +9,10 @@ open Expecto
 let rawCreateProcess setParams =
   (["report1.xml"; "report2.xml"]
    |> Fake.Testing.ReportGenerator.createProcess (fun param ->
-       { setParams param with
+       { param with
            ExePath = Path.Combine("reportgenerator", "ReportGenerator.exe")
-           TargetDir = "targetDir"})).Command
+           TargetDir = "targetDir"}
+       |> setParams))
 
 let runCreateProcess setParams =
   let cp = rawCreateProcess setParams
@@ -62,12 +63,13 @@ let tests =
       Expect.equal commandLine
         (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Cobertura -verbosity:Verbose" expectedPath) "expected proper command line"
 
-    testCase "Test that Framework can override" <| fun _ ->
+    testCase "Test that full Framework works" <| fun _ ->
       let path = "another/path/for/tool.exe"
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = ToolType.Framework { Tool = Some path } })
+              ExePath = path
+              ToolType = ToolType.CreateFullFramework() })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
@@ -78,88 +80,69 @@ let tests =
       Expect.equal (RawCommand(file, args)).CommandLine
          (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" path) "expected proper command line"
 
-    testCase "Test that Global does override" <| fun _ ->
+    testCase "Test that global tool works" <| fun _ ->
+      let path = "another/path/for/globaltool.exe"
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = ToolType.Global { Tool = None }})
+              ExePath = path
+              ToolType = ToolType.CreateGlobalTool() })
       let file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
 
-      Expect.equal file "reportgenerator" "Expected reportgenerator"
+      Expect.equal file path "Expected globaltool.exe"
       Expect.equal (RawCommand(file, args)).CommandLine
          (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
-    testCase "Test that Global can substitute" <| fun _ ->
+    testCase "Test that local tool override works" <| fun _ ->
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = ToolType.Global { Tool = Some "alternative" }})
-      let file, args =
+              ToolType =
+                ToolType.CreateLocalTool()
+                |> ToolType.withDefaultToolCommandName "alternative" })
+      let dotnet, file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
+        |> ArgumentHelper.checkIfDotNet
 
       Expect.equal file "alternative" "Expected alternative"
       Expect.equal (RawCommand(file, args)).CommandLine
          (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
 
-    testCase "Test that DotNet does default tool" <| fun _ ->
+    testCase "Test that local tool works" <| fun _ ->
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = ToolType.DotNet (DotNetTool.Create()) })
-      let file, args =
+              ToolType = ToolType.CreateLocalTool () })
+      let dotnet, file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
+        |> ArgumentHelper.checkIfDotNet
 
-      Expect.equal (file |> Path.GetFileNameWithoutExtension) "dotnet"  "Expected dotnet path"
+      Expect.equal (file) "reportgenerator"  "Expected reportgenerator argument"
       Expect.equal (RawCommand(file, args)).CommandLine
-       (sprintf "%s reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
-
-    testCase "Test that DotNet can override tool" <| fun _ ->
-      let cp =
-        rawCreateProcess (fun p ->
-          { p with
-              ToolType = ToolType.DotNet { Options = id; Tool = Some "cli-tool"} })
-      let file, args =
-        match cp.Command with
-        | RawCommand(file, args) -> file, args
-        | _ -> failwithf "expected RawCommand"
-
-      Expect.equal (file |> Path.GetFileNameWithoutExtension) "dotnet"  "Expected dotnet path"
-      Expect.equal (RawCommand(file, args)).CommandLine
-       (sprintf "%s cli-tool -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
+       (sprintf "reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose") "expected proper command line"
 
     testCase "Test that DotNet can override dotnet" <| fun _ ->
       let cp =
         rawCreateProcess (fun p ->
           { p with
-              ToolType = ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = None } })
-      let file, args =
+              ToolType =
+                ToolType.CreateLocalTool()
+                |> ToolType.withDotNetOptions (fun o -> {o with DotNetCliPath = "some/dotnet/path/dotnet.exe"}) })
+      let dotnet, file, args =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
+        |> ArgumentHelper.checkIfDotNet
 
-      Expect.equal file "some/dotnet/path" "Expected reportgenerator"
+      Expect.equal dotnet "some/dotnet/path/dotnet.exe" "Expected dotnet path"
       Expect.equal (RawCommand(file, args)).CommandLine
-       (sprintf "%s reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
-
-    testCase "Test that DotNet can override both" <| fun _ ->
-      let cp =
-        rawCreateProcess (fun p ->
-          { p with
-              ToolType = ToolType.DotNet { Options = (fun o -> {o with DotNetCliPath = "some/dotnet/path"}); Tool = Some "cli-tool"}  })
-      let file, args =
-        match cp.Command with
-        | RawCommand(file, args) -> file, args
-        | _ -> failwithf "expected RawCommand"
-
-      Expect.equal file "some/dotnet/path" "Expected reportgenerator"
-      Expect.equal (RawCommand(file, args)).CommandLine
-       (sprintf "%s cli-tool -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose" file) "expected proper command line"
+       (sprintf "reportgenerator -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html -verbosity:Verbose") "expected proper command line"
 
   ]

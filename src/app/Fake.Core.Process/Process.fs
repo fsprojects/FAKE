@@ -472,7 +472,7 @@ module Process =
                 stateNeedsDispose <- false
                 return { Result = output; Raw = exitCode }
             finally
-                if stateNeedsDispose then state.Dispose()
+                if stateNeedsDispose && not (isNull state) then state.Dispose()
           }
           // Immediate makes sure we set the ref cell before we return the task...
           |> Async.StartImmediateAsTask

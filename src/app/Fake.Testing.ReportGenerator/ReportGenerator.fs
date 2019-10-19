@@ -92,7 +92,7 @@ let private toolname = "ReportGenerator.exe"
 /// ReportGenerator default parameters
 let private ReportGeneratorDefaultParams =
     {
-      ToolType = ToolType.Framework { Tool = None }
+      ToolType = ToolType.Create()
       ExePath = Tools.findToolInSubPath toolname (currentDirectory </> "tools" </> "ReportGenerator")
       TargetDir = currentDirectory
       ReportTypes = [ ReportType.Html ]
@@ -145,9 +145,8 @@ let internal createProcess setParams (reports : string seq) =
         ]
         |> Arguments.OfArgs
 
-    //let tool = parameters.ToolType.Command parameters.ExePath "reportgenerator"
     CreateProcess.fromCommand (RawCommand(parameters.ExePath, args))
-    |> CreateProcess.withFrameworkOrDotNetTool parameters.ToolType
+    |> CreateProcess.withToolType (parameters.ToolType.WithDefaultToolCommandName "reportgenerator")
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
 

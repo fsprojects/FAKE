@@ -705,8 +705,8 @@ module DotNet =
             match firstArg with
             | FirstArgReplacement.UsePreviousFile -> Arguments.withPrefix [c.Command.Executable] c.Command.Arguments
             | FirstArgReplacement.ReplaceWith args ->
-                Arguments.ofList args
-                |> Arguments.appendRaw (c.Command.Arguments.ToStartInfo) 
+                (Arguments.ofList args).ToStartInfo + " " + c.Command.Arguments.ToStartInfo
+                |> Arguments.OfStartInfo
         let cmd = RawCommand(options.DotNetCliPath, newArgs)
         c
         |> CreateProcess.withCommand cmd

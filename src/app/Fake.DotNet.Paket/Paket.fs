@@ -39,7 +39,7 @@ let internal findPaketExecutable (baseDir) =
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
     { ToolPath = findPaketExecutable ""
-      ToolType = ToolType.Framework { Tool = None }
+      ToolType = ToolType.Create ()
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
       SpecificVersions = []
@@ -71,7 +71,7 @@ type PaketPushParams =
 /// Paket push default parameters
 let PaketPushDefaults() : PaketPushParams =
     { ToolPath = findPaketExecutable ""
-      ToolType = ToolType.Framework { Tool = None }
+      ToolType = ToolType.Create ()
       TimeOut = System.TimeSpan.MaxValue
       PublishUrl = null
       EndPoint =  null
@@ -93,7 +93,7 @@ type PaketRestoreParams =
 /// Paket restore default parameters
 let PaketRestoreDefaults() : PaketRestoreParams =
     { ToolPath = findPaketExecutable ""
-      ToolType = ToolType.Framework { Tool = None }
+      ToolType = ToolType.Create ()
       TimeOut = System.TimeSpan.MaxValue
       WorkingDir = "."
       ForceDownloadOfPackages = false
@@ -102,12 +102,10 @@ let PaketRestoreDefaults() : PaketRestoreParams =
       Group = "" }
 
 let private startPaket (toolType: ToolType) toolPath workDir timeout args =
-    let tool = toolType.Command toolPath "paket"
-    CreateProcess.fromCommand (RawCommand(tool, args))
-    |> CreateProcess.withFrameworkOrDotNetTool toolType
+    CreateProcess.fromCommand (RawCommand(toolPath, args))
+    |> CreateProcess.withToolType toolType
     |> CreateProcess.withWorkingDirectory workDir
     |> CreateProcess.withTimeout timeout
-    |> CreateProcess.withFrameworkOrDotNetTool toolType
     |> Proc.run
     |> fun r -> r.ExitCode
 
