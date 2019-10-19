@@ -69,8 +69,8 @@ type ToolType =
   static member CreateFrameworkDependentDeployment(install) = FrameworkDependentDeployment (DotNetFDDOptions.Create(install))
   static member CreateGlobalTool() = GlobalTool
   static member CreateLocalTool() = LocalTool (DotNetLocalTool.Create())
-  static member CreateCLIToolReference() = CLIToolReference (DotNetLocalTool.Create())
   static member CreateLocalTool(install) = LocalTool (DotNetLocalTool.Create(install))
+  static member CreateCLIToolReference() = CLIToolReference (DotNetLocalTool.Create())
   static member CreateCLIToolReference(install) = CLIToolReference (DotNetLocalTool.Create(install))
   member x.WithDefaultToolCommandName toolCommandName =
     match x with
