@@ -642,7 +642,7 @@ module DotNet =
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
-    let internal withGlobalJson workDir version f =
+    let internal withGlobalJsonDispose workDir version =
         let globalJsonPath =
             if (Path.GetFullPath workDir).StartsWith(Path.GetFullPath ".") then "global.json"
             else workDir </> "global.json"
@@ -661,8 +661,12 @@ module DotNet =
                     File.WriteAllText(globalJsonPath, template)
                     true
             | _ -> false
-        try f ()
-        finally if writtenJson then File.delete globalJsonPath
+        { new IDisposable with
+            member x.Dispose () = if writtenJson then File.delete globalJsonPath }
+
+    let internal withGlobalJson workDir version f =
+        use d = withGlobalJsonDispose workDir version
+        f ()
 
     /// [omit]
     let internal buildCommand command args options =
@@ -674,9 +678,13 @@ module DotNet =
           args ] // |> Args.fromWindowsCommandLine |> Seq.toList ]
         |> List.concat
 
-    /// [omit]
-    let internal run cmdArgs options =
-        let timeout = TimeSpan.MaxValue
+    [<RequireQualifiedAccess>]
+    type FirstArgReplacement =
+        | UsePreviousFile
+        | ReplaceWith of string list
+
+    let internal runRaw (firstArg:FirstArgReplacement) options (c:CreateProcess<'a>) =
+        //let timeout = TimeSpan.MaxValue
         let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let errorF msg =
             if options.PrintRedirectedOutput then
@@ -688,29 +696,44 @@ module DotNet =
                 Trace.trace msg
             results.Add (ConsoleMessage.CreateOut msg)
 
-        let result =
-            let f (info:ProcStartInfo) =
-                let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
-                let oldPath =
-                    options
-                    |> Process.getEnvironmentVariable "PATH"
-                { info with
-                    FileName = options.DotNetCliPath
-                    WorkingDirectory = options.WorkingDirectory
-                    Arguments = Args.toWindowsCommandLine cmdArgs }
-                |> Process.setEnvironment options.Environment
-                |> Process.setEnvironmentVariable "PATH" (
-                    match oldPath with
-                    | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
-                    | None -> dir)
+        let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+        let oldPath =
+            options
+            |> Process.getEnvironmentVariable "PATH"
 
+        let newArgs =
+            match firstArg with
+            | FirstArgReplacement.UsePreviousFile -> Arguments.withPrefix [c.Command.Executable] c.Command.Arguments
+            | FirstArgReplacement.ReplaceWith args ->
+                Arguments.ofList args
+                |> Arguments.appendRaw (c.Command.Arguments.ToStartInfo) 
+        let cmd = RawCommand(options.DotNetCliPath, newArgs)
+        c
+        |> CreateProcess.withCommand cmd
+        |> (if c.WorkingDirectory.IsNone then CreateProcess.withWorkingDirectory options.WorkingDirectory else id)
+        //|> CreateProcess.withArguments (Args.toWindowsCommandLine cmdArgs)
+        |> CreateProcess.withEnvironmentMap (EnvMap.ofMap options.Environment)
+        |> CreateProcess.setEnvironmentVariable "PATH" (
+            match oldPath with
+            | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+            | None -> dir)
+        |> CreateProcess.appendSimpleFuncs
+            (fun _ -> withGlobalJsonDispose options.WorkingDirectory options.Version)
+            (fun state p -> ())
+            (fun prev state exitCode -> prev)
+            (fun s -> s.Dispose())
+        //|> CreateProcess.withTimeout timeout        
+        |> (if options.RedirectOutput then CreateProcess.withOutputEventsNotNull messageF errorF else id)
+        |> CreateProcess.map (fun prev ->
+            prev, (results |> List.ofSeq))
 
-            withGlobalJson options.WorkingDirectory options.Version (fun () ->
-                if options.RedirectOutput then
-                  Process.execRaw f timeout true errorF messageF
-                else Process.execSimple f timeout
-            )
-        ProcessResult.New result (results |> List.ofSeq)
+    /// [omit]
+    let internal run cmdArgs options : ProcessResult =
+        CreateProcess.fromCommand (Command.RawCommand(options.DotNetCliPath, Arguments.ofList (List.ofSeq cmdArgs)))
+        |> runRaw (FirstArgReplacement.ReplaceWith []) options
+        |> CreateProcess.map (fun (r, results) ->
+            ProcessResult.New r.ExitCode results)
+        |> Proc.run
 
     let internal setOptions (buildOptions: Options -> Options) =
       buildOptions (Options.Create())
@@ -718,7 +741,7 @@ module DotNet =
     /// Execute raw dotnet cli command
     /// ## Parameters
     ///
-    /// - 'options' - common execution options
+    /// - 'buildOptions' - build common execution options
     /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
     /// - 'args' - command arguments
     let exec (buildOptions: Options -> Options) (command:string) (args:string) =
@@ -729,6 +752,19 @@ module DotNet =
                                    options
 
         run cmdArgs options
+
+    /// Replace the current `CreateProcess` instance to run with dotnet.exe
+    /// ## Parameters
+    ///
+    /// - 'buildOptions' - build common execution options
+    /// - 'firstArg' - the first argument (like t)
+    /// - 'args' - command arguments
+    let prefixProcess (buildOptions: Options -> Options) (firstArgs:string list) (c:CreateProcess<'a>) =
+        let options = setOptions buildOptions
+
+        c
+        |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
+        |> CreateProcess.map fst
 
     /// dotnet --info command options
     type InfoOptions =

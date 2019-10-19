@@ -145,14 +145,11 @@ let internal createProcess setParams (reports : string seq) =
         ]
         |> Arguments.OfArgs
 
-    let tool = parameters.ToolType.Command parameters.ExePath "reportgenerator"
-    CreateProcess.fromCommand (RawCommand(tool, args))
+    //let tool = parameters.ToolType.Command parameters.ExePath "reportgenerator"
+    CreateProcess.fromCommand (RawCommand(parameters.ExePath, args))
     |> CreateProcess.withFrameworkOrDotNetTool parameters.ToolType
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
-    |> fun command ->
-        Trace.trace command.CommandLine
-        { Command = command; ToolType = parameters.ToolType }
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
@@ -168,7 +165,7 @@ let generateReports setParams (reports : string list) =
     | reports ->
         reports
         |> createProcess setParams
-        |> Proc.runWithDotNetOrFramework
+        |> Proc.run
         |> ignore
 
     __.MarkSuccess()

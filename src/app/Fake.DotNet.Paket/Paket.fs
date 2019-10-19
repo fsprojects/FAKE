@@ -107,10 +107,8 @@ let private startPaket (toolType: ToolType) toolPath workDir timeout args =
     |> CreateProcess.withFrameworkOrDotNetTool toolType
     |> CreateProcess.withWorkingDirectory workDir
     |> CreateProcess.withTimeout timeout
-    |> fun command ->
-        Trace.trace command.CommandLine
-        { Command = command; ToolType = toolType }
-    |> Proc.runWithDotNetOrFramework
+    |> CreateProcess.withFrameworkOrDotNetTool toolType
+    |> Proc.run
     |> fun r -> r.ExitCode
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
