@@ -19,10 +19,10 @@ open System
 open System.IO
 
 open Fake.Core
+open Fake.DotNet
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
-open Fake.DotNet
 
 type ReportType =
     | Html
@@ -150,7 +150,6 @@ let internal createProcess setParams (reports : string seq) =
     |> CreateProcess.withFrameworkOrDotNetTool parameters.ToolType
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
-    |> CreateProcess.withFrameworkOrDotNetTool parameters.ToolType
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters

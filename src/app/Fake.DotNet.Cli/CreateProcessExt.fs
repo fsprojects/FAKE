@@ -72,7 +72,7 @@ module CreateProcessDotNetExt =
       c
       |> DotNet.prefixProcess buildOptions [c.Command.Executable]
 
-    /// Ensures the command  is run with dotnet or with frameowrk/mono as appropriate.
+    /// Ensures the command  is run with dotnet or with framework/mono as appropriate.
     ///
     /// ### Example
     ///
