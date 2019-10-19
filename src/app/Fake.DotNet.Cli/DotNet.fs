@@ -723,7 +723,10 @@ module DotNet =
             (fun prev state exitCode -> prev)
             (fun s -> s.Dispose())
         //|> CreateProcess.withTimeout timeout        
-        |> (if options.RedirectOutput then CreateProcess.withOutputEventsNotNull messageF errorF else id)
+        |> (if options.RedirectOutput then 
+                CreateProcess.redirectOutputIfNotRedirected
+                >> CreateProcess.withOutputEventsNotNull messageF errorF
+            else id)
         |> CreateProcess.map (fun prev ->
             prev, (results |> List.ofSeq))
 

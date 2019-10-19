@@ -38,13 +38,13 @@ module EnvMap =
     let create() =
         ofSeq (Environment.environVars ())
 
-    let addRange (l) (e:EnvMap) : EnvMap=
-        e.AddRange(l)
+    let replace (l) (e:EnvMap) : EnvMap=
+        e.SetItems(l)
         //|> IMap.add defaultEnvVar defaultEnvVar
 
     let ofMap (l) : EnvMap =
         create()
-        |> addRange l
+        |> replace l
 
 /// The type of command to execute
 type Command =
@@ -72,12 +72,15 @@ type Command =
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
 /// Used to retrieve "pipes"
 type DataRef<'T> =
-    internal { retrieveRaw : (unit -> 'T) ref }
+    internal { mutable value : 'T option; mutable onSet : 'T -> unit }
     static member Empty =
-        { retrieveRaw = ref (fun _ -> invalidOp "Can retrieve only when a process has been started!") } : DataRef<'T>
+        { value = None; onSet = ignore } : DataRef<'T>
     static member Map f (inner:DataRef<'T>) =
-        { retrieveRaw = ref (fun _ -> f inner.Value) }
-    member x.Value = (!x.retrieveRaw)()
+        let newCell = { value = inner.value |> Option.map f; onSet = fun _ -> invalidOp "cannot set this ref cell" }
+        let previousSet = inner.onSet
+        inner.onSet <- fun newVal -> previousSet newVal; newCell.value <- Some (f newVal)
+        newCell
+    member x.Value = match x.value with Some s -> s | None -> invalidOp "Can retrieve data cell before it has been set!"
 
 type StreamRef = DataRef<System.IO.Stream>
 
@@ -211,7 +214,7 @@ module internal RawProc =
                             setEcho false |> ignore
                         c.OutputHook.OnStart (toolProcess)
                         
-                        let handleStream parameter processStream isInputStream =
+                        let handleStream originalParameter parameter processStream isInputStream =
                             async {
                                 match parameter with
                                 | Inherit ->
@@ -226,25 +229,36 @@ module internal RawProc =
                                     return
                                         if shouldClose then stream else Stream.Null
                                 | CreatePipe (r) ->
-                                    r.retrieveRaw := fun _ -> processStream
+                                    match originalParameter with
+                                    | CreatePipe o ->
+                                        // first set the "original" cell
+                                        o.value <- Some processStream
+                                        // Call onSet to "produce" the high-level stream
+                                        o.onSet processStream
+                                        // Set the "high"-level stream to the "original" cell
+                                        let stream = r.Value
+                                        o.value <- Some stream
+                                        // Mark the "high"-level stream empty in order to prevent invalid usage
+                                        r.value <- None
+                                    | _ -> failwithf "Unexpected value"
                                     return Stream.Null
                             }
         
                         if p.RedirectStandardInput then
                             redirectStdInTask <-
-                              handleStream streamSpec.StandardInput toolProcess.StandardInput.BaseStream true
+                              handleStream c.Streams.StandardInput streamSpec.StandardInput toolProcess.StandardInput.BaseStream true
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
                               
                         if p.RedirectStandardOutput then
                             readOutputTask <-
-                              handleStream streamSpec.StandardOutput toolProcess.StandardOutput.BaseStream false
+                              handleStream c.Streams.StandardOutput streamSpec.StandardOutput toolProcess.StandardOutput.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
         
                         if p.RedirectStandardError then
                             readErrorTask <-
-                              handleStream streamSpec.StandardError toolProcess.StandardError.BaseStream false
+                              handleStream c.Streams.StandardError streamSpec.StandardError toolProcess.StandardError.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
             

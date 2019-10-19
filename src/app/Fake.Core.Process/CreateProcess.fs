@@ -434,7 +434,65 @@ module CreateProcess =
             (fun (outMem, errMem) ->
                 outMem.Dispose()
                 errMem.Dispose())
+        
+    /// Starts redirecting the output streams if they are not already redirected.
+    /// Be careful when using this function. Using redirectOutput is the preferred variant
+    let redirectOutputIfNotRedirected (c:CreateProcess<_>) =
+        let refOut = StreamRef.Empty
+        let refErr = StreamRef.Empty
+        let pipeOut = CreatePipe refOut
+        let pipeErr = CreatePipe refErr
 
+        let startReadStream t (s:Stream) =
+            async {
+                try
+                    let pool = System.Buffers.ArrayPool<byte>.Shared
+                    let length = 1024 * 10
+                    let rented = pool.Rent(1024 * 10)
+                    try
+                        let mutable lastRead = 1
+                        while lastRead > 0 do
+                            let! read = s.ReadAsync(rented, 0, length)
+                            lastRead <- read
+                    finally
+                        pool.Return rented
+                with e ->
+                    Trace.traceError <| sprintf "Error in startReadStream ('%s') of process '%s': %O" t c.CommandLine e
+                
+            }
+            |> Async.Start
+
+        { c with
+            Streams =
+                { c.Streams with
+                    StandardOutput =
+                        match c.Streams.StandardOutput with
+                        | Inherit -> pipeOut
+                        | _ -> c.Streams.StandardOutput
+                    StandardError =
+                        match c.Streams.StandardError with
+                        | Inherit -> pipeErr
+                        | _ -> c.Streams.StandardError
+                }
+        }
+        |> appendFuncsDispose 
+            (fun () -> ())
+            (fun r streams -> streams)
+            (fun () p -> ())
+            (fun prev () exitCode ->
+                async {
+                    // Make sure to read the streams
+                    match refOut.value with
+                    | Some s -> startReadStream "Standard Output" s
+                    | _ -> ()
+                    match refErr.value with
+                    | Some s -> startReadStream "Standard Error" s
+                    | _ -> ()
+                    let! prevResult = prev
+                    return prevResult
+                })
+            (fun () -> ())
+        
     /// Calls the given functions whenever a new output-line is received.
     let withOutputEvents onStdOut onStdErr (c:CreateProcess<_>) =
         let watchStream onF (stream:System.IO.Stream) =
