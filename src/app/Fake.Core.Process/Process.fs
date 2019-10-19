@@ -429,37 +429,47 @@ module Process =
             let hook = c.Hook
             
             let state = hook.PrepareState ()
-            let! exitCode =
-                async {
-                    let procRaw =
-                      { Command = c.Command
-                        TraceCommand = c.TraceCommand
-                        WorkingDirectory = c.WorkingDirectory
-                        Environment = c.Environment
-                        Streams = c.Streams
-                        OutputHook =
-                            { new IRawProcessHook with
-                                member x.Prepare streams = hook.PrepareStreams(state, streams)
-                                member x.OnStart (p) = hook.ProcessStarted (state, p) } }
+            let mutable stateNeedsDispose = true
+            try
+                let! exitCode =
+                    async {
+                        let procRaw =
+                          { Command = c.InternalCommand
+                            TraceCommand = c.TraceCommand
+                            WorkingDirectory = c.InternalWorkingDirectory
+                            Environment = c.InternalEnvironment
+                            Streams = c.Streams
+                            OutputHook =
+                                { new IRawProcessHook with
+                                    member x.Prepare streams = hook.PrepareStreams(state, streams)
+                                    member x.OnStart (p) = hook.ProcessStarted (state, p) } }
 
-                    let! e = processStarter.Start(procRaw)
-                    return e
-                }
-            
-            let output =
-                hook.RetrieveResult (state, exitCode)
-                |> Async.StartImmediateAsTask
-            async {
-                try
-                    let all = System.Threading.Tasks.Task.WhenAll([exitCode :> System.Threading.Tasks.Task; output:> System.Threading.Tasks.Task])
-                    let! streams =
-                        all.ContinueWith (new System.Func<System.Threading.Tasks.Task, unit> (fun t -> ()))
-                        |> Async.AwaitTaskWithoutAggregate
-                    if not (isNull state) then
-                        state.Dispose()
-                with e -> Trace.traceFAKE "Error in state dispose: %O" e }
-                |> Async.Start
-            return { Result = output; Raw = exitCode }
+                        let! e = processStarter.Start(procRaw)
+                        return e
+                    }
+                
+                let output =
+                    hook.RetrieveResult (state, exitCode)
+                    |> Async.StartImmediateAsTask
+                async {
+                    let mutable needDispose = true
+                    try
+                        try
+                            let all = System.Threading.Tasks.Task.WhenAll([exitCode :> System.Threading.Tasks.Task; output:> System.Threading.Tasks.Task])
+                            let! streams =
+                                all.ContinueWith (new System.Func<System.Threading.Tasks.Task, unit> (fun t -> ()))
+                                |> Async.AwaitTaskWithoutAggregate
+                            needDispose <- false
+                            if not (isNull state) then
+                                state.Dispose()
+                        with e -> Trace.traceFAKE "Error in state dispose: %O" e
+                    finally
+                        if needDispose && not (isNull state) then state.Dispose() }
+                    |> Async.Start
+                stateNeedsDispose <- false
+                return { Result = output; Raw = exitCode }
+            finally
+                if stateNeedsDispose then state.Dispose()
           }
           // Immediate makes sure we set the ref cell before we return the task...
           |> Async.StartImmediateAsTask

@@ -32,13 +32,19 @@ module EnvMap =
         then ImmutableDictionary.Empty.WithComparers(StringComparer.OrdinalIgnoreCase) :> EnvMap
         else IMap.empty
 
-    let ofSeq l =
+    let ofSeq l : EnvMap =
         empty.AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
 
     let create() =
         ofSeq (Environment.environVars ())
+
+    let addRange (l) (e:EnvMap) : EnvMap=
+        e.AddRange(l)
         //|> IMap.add defaultEnvVar defaultEnvVar
 
+    let ofMap (l) : EnvMap =
+        create()
+        |> addRange l
 
 /// The type of command to execute
 type Command =
@@ -52,6 +58,16 @@ type Command =
         match x with
         | ShellCommand s -> s
         | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
+
+    member x.Arguments =
+        match x with
+        | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Arguments for ShellCommand"
+        | RawCommand (_, arg) -> arg
+
+    member x.Executable =
+        match x with
+        | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Executable for ShellCommand"
+        | RawCommand (f, _) -> f
 
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
 /// Used to retrieve "pipes"
@@ -112,7 +128,7 @@ type internal RawCreateProcess =
         OutputHook : IRawProcessHook
     }
     member internal x.ToStartInfo =
-        let p = new System.Diagnostics.ProcessStartInfo()
+        let p = System.Diagnostics.ProcessStartInfo()
         match x.Command with
         | ShellCommand s ->
             p.UseShellExecute <- true
