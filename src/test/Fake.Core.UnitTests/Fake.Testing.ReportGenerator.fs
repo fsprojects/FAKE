@@ -1,8 +1,8 @@
 module Fake.Testing.ReportGeneratorTests
 
-open System
 open System.IO
 open Fake.Core
+open Fake.DotNet
 open Fake.Testing
 open Expecto
 

@@ -19,6 +19,7 @@ open System
 open System.IO
 
 open Fake.Core
+open Fake.DotNet
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
