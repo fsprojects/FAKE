@@ -330,14 +330,14 @@ let main (args:string[]) =
     Console.OutputEncoding <- encoding
   with e ->
     // See https://github.com/fsharp/FAKE/issues/2406
-    printfn "Error while resetting OutputEncoding to '%O':" encoding
+    printfn "(Warning) Error while resetting OutputEncoding to '%O':" encoding
     reportExn VerboseLevel.Normal e
   try
     // Potential fix for https://github.com/fsharp/FAKE/issues/2173
     Console.ResetColor()
   with e ->
     // See https://github.com/fsharp/FAKE/issues/2406
-    printfn "Error while Console.ResetColor:"
+    printfn "(Warning) Error while Console.ResetColor:"
     reportExn VerboseLevel.Normal e
 #if !NETSTANDARD1_6
   //if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
