@@ -448,7 +448,7 @@ module CreateProcess =
                 try
                     let pool = System.Buffers.ArrayPool<byte>.Shared
                     let length = 1024 * 10
-                    let rented = pool.Rent(1024 * 10)
+                    let rented = pool.Rent(length)
                     try
                         let mutable lastRead = 1
                         while lastRead > 0 do
@@ -458,9 +458,8 @@ module CreateProcess =
                         pool.Return rented
                 with e ->
                     Trace.traceError <| sprintf "Error in startReadStream ('%s') of process '%s': %O" t c.CommandLine e
-                
             }
-            |> Async.Start
+            |> Async.StartAsTask
 
         { c with
             Streams =
@@ -482,13 +481,19 @@ module CreateProcess =
             (fun prev () exitCode ->
                 async {
                     // Make sure to read the streams
-                    match refOut.value with
-                    | Some s -> startReadStream "Standard Output" s
-                    | _ -> ()
-                    match refErr.value with
-                    | Some s -> startReadStream "Standard Error" s
-                    | _ -> ()
+                    let outTask =
+                        match refOut.value with
+                        | None -> System.Threading.Tasks.Task.CompletedTask
+                        | Some s -> startReadStream "Standard Output" s :> _
+                    let errTask =                    
+                        match refErr.value with
+                        | None -> System.Threading.Tasks.Task.CompletedTask
+                        | Some s -> startReadStream "Standard Error" s :> _
                     let! prevResult = prev
+
+                    // follow up mappings have the complete stream read (for example 'withOutputEvents')
+                    do! Threading.Tasks.Task.WhenAll([errTask; outTask])
+
                     return prevResult
                 })
             (fun () -> ())
