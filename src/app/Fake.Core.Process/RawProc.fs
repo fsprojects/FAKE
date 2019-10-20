@@ -306,17 +306,35 @@ module internal RawProc =
                                 Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                             allFinished <- ok
                         
-                        if not allFinished && Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
-                            if Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
-                                System.Diagnostics.Debugger.Launch() |> ignore
-                                System.Diagnostics.Debugger.Break() |> ignore
-                            Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
-
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
-                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
-                        for s in streams do s.Dispose()
-                        
+                        if allFinished || Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
+                            if not allFinished && Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
+                                System.Diagnostics.Debugger.Launch() |> ignore
+                                System.Diagnostics.Debugger.Break() |> ignore
+                            if not allFinished && Environment.GetEnvironmentVariable("FAKE_FAIL_PROCESS_HANG") = "true" then
+                                Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
+
+                            // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
+                            // workaround with continuewith
+                            let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                            for s in streams do s.Dispose()
+                        else
+                            let msg = "We encountered https://github.com/fsharp/FAKE/issues/2401, please help to resolve this issue! You can set 'FAKE_IGNORE_PROCESS_HANG' to true to ignore this error. But please consider sending a full process dump or volunteer with debugging."
+                            if Environment.GetEnvironmentVariable("FAKE_IGNORE_PROCESS_HANG") <> "true" then
+                                failwith msg
+                            else
+                                async {
+                                    try
+                                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                                        Trace.traceFAKE "The hanging redirect task has finished eventually! Disposing streams."
+                                        for s in streams do s.Dispose()
+                                    with e ->
+                                        Trace.traceFAKE "Waiting for the hanging redirect task failed: %O" e
+                                }
+                                |> Async.Start
+                                Trace.traceFAKE msg
+                            
                         return { RawExitCode = code } 
                     }
                     |> Async.StartImmediateAsTask
