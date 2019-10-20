@@ -333,7 +333,7 @@ module internal RawProc =
                                         Trace.traceFAKE "Waiting for the hanging redirect task failed: %O" e
                                 }
                                 |> Async.Start
-                                Trace.traceFAKE msg
+                                Trace.traceFAKE "%s" msg
                             
                         return { RawExitCode = code } 
                     }
