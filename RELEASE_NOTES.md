@@ -1,5 +1,15 @@
 # Release Notes
 
+## 5.18.0 - 2019-10-21
+
+* ENHANCEMENT: Add core support for local tools via `CreateProcess.withToolType`, this helper is part of `Fake.DotNet.Cli` and available after `open Fake.Core` - https://github.com/fsharp/FAKE/pull/2399
+* ENHANCEMENT: Add `ToolType` support in `ReportGenerator` and `Paket`, thanks @SteveGilham and @Tarmil - https://github.com/fsharp/FAKE/pull/2399
+* ENHANCEMENT: Add `FAKE_COREFX_VERBOSE` in order to increase verbosity for the FAKE libraries
+* ENHANCEMENT: Add `DotNet.setupEnv` in order to improve working with installed SDKs (for example when calling fable), fixes https://github.com/fsharp/FAKE/issues/2405
+* BUGFIX: Address https://github.com/fsharp/FAKE/issues/2406 by only printing a warning instead of crashing
+* BUGFIX: Partially address https://github.com/fsharp/FAKE/issues/2401 by allowing the user to continue and request additional info.
+* BUGFIX: Fix "FindLocalTools fails to search Paket.exe in Subdirectory" - https://github.com/fsharp/FAKE/issues/2390
+
 ## 5.17.0 - 2019-10-10
 
 * DOCS: Remove Issue Stats, thanks @vbfox - https://github.com/fsharp/FAKE/pull/2393
@@ -24,7 +34,6 @@
 * ENHANCEMENT: Added `Environment.getNuGetPackagesCacheFolder()`, returns the NuGet packages path.
 * ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is now obsolete)
 * DOCS: Fix some broken links - https://github.com/fsharp/FAKE/issues/2351
-
 
 ## 5.16.0 - 2019-08-17
 

@@ -30,6 +30,7 @@ type BuildServerInstaller () =
 module BuildServer =
     /// Defines if FAKE will use verbose tracing.
     /// This flag can be specified by setting the *verbose* build parameter.
+    [<Obsolete "use 'Trace.isVerbose ()' and 'Trace.setVerbose true' instead">]
     let mutable verbose = Environment.hasEnvironVar "verbose"
 
     /// A constant label for local builds

@@ -10,11 +10,11 @@ module ProcessUtils =
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
-    let private findFilesInternal dirs file = 
-        let files = 
+    let private findFilesInternal dirs file =
+        let files =
             dirs
             |> Seq.choose (fun (path : string) ->
-                let replacedPath = 
+                let replacedPath =
                     path
                     |> String.replace "[ProgramFiles]" Environment.ProgramFiles
                     |> String.replace "[ProgramFilesX86]" Environment.ProgramFilesX86
@@ -51,7 +51,7 @@ module ProcessUtils =
         else None
 
     /// Searches the given directories for the given file, failing if not found. Considers PATHEXT on Windows.
-    let findFile dirs tool = 
+    let findFile dirs tool =
         match tryFindFile dirs tool with
         | Some found -> found
         | None -> failwithf "%s not found in %A." tool dirs
@@ -88,7 +88,7 @@ module ProcessUtils =
 
     /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable. Considers PATHEXT on Windows.
     /// [omit]
-    let findPath fallbackValue tool = 
+    let findPath fallbackValue tool =
         match tryFindPath fallbackValue tool with
         | Some file -> file
         | None -> tool
@@ -96,7 +96,24 @@ module ProcessUtils =
     /// Walks directories via breadth first search (BFS)
     let private walkDirectories dirs =
         let rec enumerateDirs dirs =
-            let subDirs = dirs |> Seq.collect System.IO.Directory.EnumerateDirectories |> Seq.cache
+            let subDirs =
+                dirs
+                |> Seq.collect (fun dir ->
+                    try
+                        if not (System.IO.Directory.Exists dir) then Seq.empty
+                        else System.IO.Directory.EnumerateDirectories dir
+                    with 
+                    | :? System.IO.DirectoryNotFoundException ->
+                        Seq.empty
+                    | :? System.IO.IOException
+                    | :? System.Security.SecurityException
+                    | :? System.UnauthorizedAccessException as e ->
+                        if Trace.isVerbose(true) then
+                            Trace.traceErrorfn "Ignoring directory listing of '%s', due to %s" dir e.Message
+                        else 
+                            Trace.traceErrorfn "Ignoring directory listing of '%s', due to %O" dir e
+                        Seq.empty)
+                |> Seq.cache
             if Seq.isEmpty subDirs then Seq.empty
             else
                 seq {
@@ -122,7 +139,7 @@ module ProcessUtils =
             |> Seq.append envDir
         findFiles dirs tool
         |> Seq.tryHead
-    
+
     /// Like tryFindLocalTool but returns the `tool` string if nothing is found (will probably error later, but this function is OK to be used for fake default values.
     let findLocalTool envVar tool recursiveDirs =
         match tryFindLocalTool envVar tool recursiveDirs with

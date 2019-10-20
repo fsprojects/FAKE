@@ -32,13 +32,19 @@ module EnvMap =
         then ImmutableDictionary.Empty.WithComparers(StringComparer.OrdinalIgnoreCase) :> EnvMap
         else IMap.empty
 
-    let ofSeq l =
+    let ofSeq l : EnvMap =
         empty.AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
 
     let create() =
         ofSeq (Environment.environVars ())
+
+    let replace (l) (e:EnvMap) : EnvMap=
+        e.SetItems(l)
         //|> IMap.add defaultEnvVar defaultEnvVar
 
+    let ofMap (l) : EnvMap =
+        create()
+        |> replace l
 
 /// The type of command to execute
 type Command =
@@ -53,15 +59,28 @@ type Command =
         | ShellCommand s -> s
         | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
 
+    member x.Arguments =
+        match x with
+        | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Arguments for ShellCommand"
+        | RawCommand (_, arg) -> arg
+
+    member x.Executable =
+        match x with
+        | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Executable for ShellCommand"
+        | RawCommand (f, _) -> f
+
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
 /// Used to retrieve "pipes"
 type DataRef<'T> =
-    internal { retrieveRaw : (unit -> 'T) ref }
+    internal { mutable value : 'T option; mutable onSet : 'T -> unit }
     static member Empty =
-        { retrieveRaw = ref (fun _ -> invalidOp "Can retrieve only when a process has been started!") } : DataRef<'T>
+        { value = None; onSet = ignore } : DataRef<'T>
     static member Map f (inner:DataRef<'T>) =
-        { retrieveRaw = ref (fun _ -> f inner.Value) }
-    member x.Value = (!x.retrieveRaw)()
+        let newCell = { value = inner.value |> Option.map f; onSet = fun _ -> invalidOp "cannot set this ref cell" }
+        let previousSet = inner.onSet
+        inner.onSet <- fun newVal -> previousSet newVal; newCell.value <- Some (f newVal)
+        newCell
+    member x.Value = match x.value with Some s -> s | None -> invalidOp "Can retrieve data cell before it has been set!"
 
 type StreamRef = DataRef<System.IO.Stream>
 
@@ -112,7 +131,7 @@ type internal RawCreateProcess =
         OutputHook : IRawProcessHook
     }
     member internal x.ToStartInfo =
-        let p = new System.Diagnostics.ProcessStartInfo()
+        let p = System.Diagnostics.ProcessStartInfo()
         match x.Command with
         | ShellCommand s ->
             p.UseShellExecute <- true
@@ -195,7 +214,7 @@ module internal RawProc =
                             setEcho false |> ignore
                         c.OutputHook.OnStart (toolProcess)
                         
-                        let handleStream parameter processStream isInputStream =
+                        let handleStream originalParameter parameter processStream isInputStream =
                             async {
                                 match parameter with
                                 | Inherit ->
@@ -210,25 +229,36 @@ module internal RawProc =
                                     return
                                         if shouldClose then stream else Stream.Null
                                 | CreatePipe (r) ->
-                                    r.retrieveRaw := fun _ -> processStream
+                                    match originalParameter with
+                                    | CreatePipe o ->
+                                        // first set the "original" cell
+                                        o.value <- Some processStream
+                                        // Call onSet to "produce" the high-level stream
+                                        o.onSet processStream
+                                        // Set the "high"-level stream to the "original" cell
+                                        let stream = r.Value
+                                        o.value <- Some stream
+                                        // Mark the "high"-level stream empty in order to prevent invalid usage
+                                        r.value <- None
+                                    | _ -> failwithf "Unexpected value"
                                     return Stream.Null
                             }
         
                         if p.RedirectStandardInput then
                             redirectStdInTask <-
-                              handleStream streamSpec.StandardInput toolProcess.StandardInput.BaseStream true
+                              handleStream c.Streams.StandardInput streamSpec.StandardInput toolProcess.StandardInput.BaseStream true
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
                               
                         if p.RedirectStandardOutput then
                             readOutputTask <-
-                              handleStream streamSpec.StandardOutput toolProcess.StandardOutput.BaseStream false
+                              handleStream c.Streams.StandardOutput streamSpec.StandardOutput toolProcess.StandardOutput.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
         
                         if p.RedirectStandardError then
                             readErrorTask <-
-                              handleStream streamSpec.StandardError toolProcess.StandardError.BaseStream false
+                              handleStream c.Streams.StandardError streamSpec.StandardError toolProcess.StandardError.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
             
@@ -276,17 +306,35 @@ module internal RawProc =
                                 Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                             allFinished <- ok
                         
-                        if not allFinished && Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
-                            if Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
-                                System.Diagnostics.Debugger.Launch() |> ignore
-                                System.Diagnostics.Debugger.Break() |> ignore
-                            Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
-
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
-                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
-                        for s in streams do s.Dispose()
-                        
+                        if allFinished || Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
+                            if not allFinished && Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
+                                System.Diagnostics.Debugger.Launch() |> ignore
+                                System.Diagnostics.Debugger.Break() |> ignore
+                            if not allFinished && Environment.GetEnvironmentVariable("FAKE_FAIL_PROCESS_HANG") = "true" then
+                                Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
+
+                            // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
+                            // workaround with continuewith
+                            let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                            for s in streams do s.Dispose()
+                        else
+                            let msg = "We encountered https://github.com/fsharp/FAKE/issues/2401, please help to resolve this issue! You can set 'FAKE_IGNORE_PROCESS_HANG' to true to ignore this error. But please consider sending a full process dump or volunteer with debugging."
+                            if Environment.GetEnvironmentVariable("FAKE_IGNORE_PROCESS_HANG") <> "true" then
+                                failwith msg
+                            else
+                                async {
+                                    try
+                                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                                        Trace.traceFAKE "The hanging redirect task has finished eventually! Disposing streams."
+                                        for s in streams do s.Dispose()
+                                    with e ->
+                                        Trace.traceFAKE "Waiting for the hanging redirect task failed: %O" e
+                                }
+                                |> Async.Start
+                                Trace.traceFAKE "%s" msg
+                            
                         return { RawExitCode = code } 
                     }
                     |> Async.StartImmediateAsTask
