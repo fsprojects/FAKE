@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.18.1-alpha - tbd
+
+* tbd
+
 ## 5.18.0 - 2019-10-21
 
 * ENHANCEMENT: Add core support for local tools via `CreateProcess.withToolType`, this helper is part of `Fake.DotNet.Cli` and available after `open Fake.Core` - https://github.com/fsharp/FAKE/pull/2399
