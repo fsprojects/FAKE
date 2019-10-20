@@ -769,6 +769,21 @@ module DotNet =
         |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
         |> CreateProcess.map fst
 
+    /// Setup the environment in such a way that started processes use the given dotnet SDK installation.
+    /// This is useful for example when using fable, see https://github.com/fsharp/FAKE/issues/2405
+    /// ## Parameters
+    ///
+    /// - 'buildOptions' - build common execution options
+    /// - 'firstArg' - the first argument (like t)
+    /// - 'args' - command arguments
+    let setupEnv (install: Options -> Options) = 
+        let options = setOptions install
+        let dotnetTool = System.IO.Path.GetFullPath options.DotNetCliPath
+        let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
+        let currentPath = Environment.environVar "PATH"
+        if not (currentPath.Contains (dotnetFolder)) then
+            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.DirectorySeparatorChar + currentPath)
+
     /// dotnet --info command options
     type InfoOptions =
         {
