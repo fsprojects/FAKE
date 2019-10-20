@@ -637,7 +637,7 @@ module DotNet =
 
     /// [omit]
     let private buildSdkOptionsArgs (param: Options) =
-        [   param.Diagnostics |> argOption "--diagostics"
+        [   param.Diagnostics |> argOption "--diagnostics"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
