@@ -10,11 +10,11 @@ module ProcessUtils =
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
-    let private findFilesInternal dirs file = 
-        let files = 
+    let private findFilesInternal dirs file =
+        let files =
             dirs
             |> Seq.choose (fun (path : string) ->
-                let replacedPath = 
+                let replacedPath =
                     path
                     |> String.replace "[ProgramFiles]" Environment.ProgramFiles
                     |> String.replace "[ProgramFilesX86]" Environment.ProgramFilesX86
@@ -51,7 +51,7 @@ module ProcessUtils =
         else None
 
     /// Searches the given directories for the given file, failing if not found. Considers PATHEXT on Windows.
-    let findFile dirs tool = 
+    let findFile dirs tool =
         match tryFindFile dirs tool with
         | Some found -> found
         | None -> failwithf "%s not found in %A." tool dirs
@@ -88,7 +88,7 @@ module ProcessUtils =
 
     /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable. Considers PATHEXT on Windows.
     /// [omit]
-    let findPath fallbackValue tool = 
+    let findPath fallbackValue tool =
         match tryFindPath fallbackValue tool with
         | Some file -> file
         | None -> tool
@@ -122,7 +122,7 @@ module ProcessUtils =
             |> Seq.append envDir
         findFiles dirs tool
         |> Seq.tryHead
-    
+
     /// Like tryFindLocalTool but returns the `tool` string if nothing is found (will probably error later, but this function is OK to be used for fake default values.
     let findLocalTool envVar tool recursiveDirs =
         match tryFindLocalTool envVar tool recursiveDirs with

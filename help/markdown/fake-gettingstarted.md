@@ -15,6 +15,20 @@ FAKE is completely written in F# and all build scripts will also be written in F
 
 There are various ways to install FAKE 5:
 
+* Install FAKE as a local `dotnet tool` (easiest, but needs [.NET Core SDK Version 3 or newer](https://dotnet.microsoft.com/download)):
+    * First you need to create a [tool manifest](https://medium.com/@bilalfazlani/net-core-local-tools-are-here-fe9ac2464481), which should be commited to your repository:
+        <pre><code class="lang-bash">
+        dotnet new tool-manifest
+        </code></pre>
+    * To install FAKE, run:
+        <pre><code class="lang-bash">
+        dotnet tool install fake-cli
+        </code></pre>
+
+    Use `--version` to specify the version of FAKE. See the [`local_tool`](https://github.com/FakeBuild/fake-bootstrap/tree/local_tool) branch of `fake-bootstrap` for ideas to bootstrap in your CI process.
+
+    To run fake use `dotnet fake --version`. To restore/download fake on another machine use `dotnet tool restore` after this command `dotnet fake` should work as expected.
+
 * Install FAKE as a global `dotnet tool` (easiest, but needs [.NET Core SDK](https://dotnet.microsoft.com/download)):
     * To install FAKE globally, run:
         <pre><code class="lang-bash">
@@ -65,9 +79,9 @@ There are various ways to install FAKE 5:
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* Use it as a dotnet tool (legacy): Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* (No longer recommended) Use it as a dotnet tool (legacy): Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
-* Bootstrap via paket `clitool` (legacy), this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
+* (No longer recommended) Bootstrap via paket `clitool` (legacy), this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
 
 now you can use
 
