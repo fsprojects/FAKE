@@ -653,7 +653,7 @@ module CreateProcess =
                     | 0 ->
                         return prevResult
                     | _ when state.Stopwatch.Elapsed > timeout -> 
-                        return failwithf "Process '%s' timed out." c.CommandLine
+                        return raise <| TimeoutException(sprintf "Process '%s' timed out." c.CommandLine)
                     | _ ->
                         return prevResult
                 })

@@ -40,15 +40,23 @@ let runProject noBuild f proj args =
 let runTestTool noBuild f name args =
     runProject noBuild f (sprintf "%s/../../../../TestTools/%s" dllPath name) args
 
-let runCmd f args =
+let runCmdOrSh f cmdArgs shArgs =
+    let shell, args =
+        if Environment.isWindows then
+            "cmd", cmdArgs
+        else
+            "sh", shArgs 
     let result =
         args |> Args.fromWindowsCommandLine |> Seq.toList
-        |> CreateProcess.fromRawCommand "cmd"
+        |> CreateProcess.fromRawCommand shell
         //|> CreateProcess.withEnvironment (options.Environment |> Map.toList)
         //|> CreateProcess.withWorkingDirectory options.WorkingDirectory
         |> f
         |> Proc.run
     result
+
+let runEcho f text =
+    runCmdOrSh f (sprintf "/c echo %s" text) (sprintf "-c 'echo %s'" text)
 
 let redirectNormal = CreateProcess.redirectOutput
 let redirectAdvanced c =
@@ -98,7 +106,7 @@ let tests =
         // From https://github.com/msugakov/CsharpRedirectStandardOutput/blob/master/RedirectStandardOutputLibrary.Tests
         redirectTestCases runs "Make sure cmd-echo works with regular redirect" <| fun run redirect ->
             let guid = System.Guid.NewGuid().ToString()
-            let r = runCmd redirect (sprintf "/c echo %s" guid)
+            let r = runEcho redirect guid
             //Expect.isGreaterThan r.Result.Error.Length 1000 (sprintf "Expected an error string, but was: %s" r.Result.Error)
             let output = r.Result.Output.Trim()
             let error = r.Result.Error.Trim()
