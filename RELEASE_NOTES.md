@@ -8,6 +8,7 @@
 * ENHANCEMENT: Add `DotNet.setupEnv` in order to improve working with installed SDKs (for example when calling fable), fixes https://github.com/fsharp/FAKE/issues/2405
 * BUGFIX: Address https://github.com/fsharp/FAKE/issues/2406 by only printing a warning instead of crashing
 * BUGFIX: Partially address https://github.com/fsharp/FAKE/issues/2401 by allowing the user to continue and request additional info.
+* BUGFIX: Fix "FindLocalTools fails to search Paket.exe in Subdirectory" - https://github.com/fsharp/FAKE/issues/2390
 
 ## 5.17.0 - 2019-10-10
 

@@ -113,4 +113,8 @@ let tests =
             Expect.equal error "" (sprintf "standard error should be empty (run '%d'): %s" run error)
             Expect.equal output guid (sprintf "standard output should be the given guuid (run '%d'): %s" run output)
             ()
+
+        testCase "ProcessUtils.findLocalTool doesn't fail on non-existent path, #2390" <| fun _ ->
+            let p = ProcessUtils.findLocalTool "test_not_existing" "test_not_existing" [ "./not/existing/path" ]
+            Expect.equal p "test_not_existing" "Expected findLocalTool to fallback to parameter"
     ]

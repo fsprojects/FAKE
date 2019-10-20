@@ -96,7 +96,24 @@ module ProcessUtils =
     /// Walks directories via breadth first search (BFS)
     let private walkDirectories dirs =
         let rec enumerateDirs dirs =
-            let subDirs = dirs |> Seq.collect System.IO.Directory.EnumerateDirectories |> Seq.cache
+            let subDirs =
+                dirs
+                |> Seq.collect (fun dir ->
+                    try
+                        if not (System.IO.Directory.Exists dir) then Seq.empty
+                        else System.IO.Directory.EnumerateDirectories dir
+                    with 
+                    | :? System.IO.DirectoryNotFoundException ->
+                        Seq.empty
+                    | :? System.IO.IOException
+                    | :? System.Security.SecurityException
+                    | :? System.UnauthorizedAccessException as e ->
+                        if Trace.isVerbose(true) then
+                            Trace.traceErrorfn "Ignoring directory listing of '%s', due to %s" dir e.Message
+                        else 
+                            Trace.traceErrorfn "Ignoring directory listing of '%s', due to %O" dir e
+                        Seq.empty)
+                |> Seq.cache
             if Seq.isEmpty subDirs then Seq.empty
             else
                 seq {
