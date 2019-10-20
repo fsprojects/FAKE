@@ -15,7 +15,7 @@
         "bootstrap": {
             "type": "parameter",
             "dataType": "choice",
-            "defaultValue": "tool",
+            "defaultValue": "local",
             "choices": [{
                     "choice": "project",
                     "description": "Creates a build.proj file to bootstrap FAKE"
@@ -23,6 +23,10 @@
                 {
                     "choice": "tool",
                     "description": "Uses the FAKE dotnet sdk global tool to bootstrap FAKE. The tool is installed into 'tool--path'"
+                },
+                {
+                    "choice": "local",
+                    "description": "Uses the FAKE dotnet sdk local tool to bootstrap FAKE. The tool is installed into the sdk tool manifest"
                 },
                 {
                     "choice": "none",
@@ -33,7 +37,7 @@
         "dependencies": {
             "type": "parameter",
             "dataType": "choice",
-            "defaultValue": "file",
+            "defaultValue": "inline",
             "choices": [{
                     "choice": "file",
                     "description": "Use paket.dependencies file to define build dependencies"
@@ -71,7 +75,7 @@
         },
         "version": {
             "type": "parameter",
-            "description": "Version of FAKE to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
+            "description": "Version of FAKE to install. This parameter is only applicable when either 'local', 'tool' or 'project' is used for bootstrapping",
             "dataType": "string",
             "defaultValue": "latest",
             "replaces": "(version)"
@@ -88,6 +92,20 @@
                 "rename": {
                     "fake.tool.sh": "fake.sh",
                     "fake.tool.cmd": "fake.cmd"
+                }
+            },
+            {
+                "exclude": "**/fake.local.*",
+                "condition": "(bootstrap != \"local\")"
+            },
+            {
+                "exclude": "**/.config/*",
+                "condition": "(bootstrap != \"local\")"
+            },
+            {
+                "rename": {
+                    "fake.local.sh": "fake.sh",
+                    "fake.local.cmd": "fake.cmd"
                 }
             },
             {
@@ -116,7 +134,7 @@
                 "rename": {
                     "build.fake.fsx": "build.fsx"
                 }
-            },            
+            },
             {
                 "exclude": "**/build.buildtask.*",
                 "condition": "(dsl != \"buildtask\")"
@@ -138,7 +156,18 @@
         "args": {
             "executable": "/bin/sh",
             "args": "-c \"chmod +x *.sh\""
-
+        },
+        "continueOnError": false
+    }, {
+        "condition": "(bootstrap == \"local\") && (version == \"latest\")",
+        "description": "update to latest version",
+        "manualInstructions": [{
+            "text": "Run 'dotnet tool update fake-cli'"
+        }],
+        "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+        "args": {
+            "executable": "dotnet",
+            "args": "tool update fake-cli"
         },
         "continueOnError": false
     }]
