@@ -297,6 +297,16 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-18-0-2019-10-21" class="anchor" href="#5-18-0-2019-10-21">5.18.0 - 2019-10-21</a></h2>
+<ul>
+<li>ENHANCEMENT: Add core support for local tools via <code>CreateProcess.withToolType</code>, this helper is part of <code>Fake.DotNet.Cli</code> and available after <code>open Fake.Core</code> - <a href="https://github.com/fsharp/FAKE/pull/2399">https://github.com/fsharp/FAKE/pull/2399</a></li>
+<li>ENHANCEMENT: Add <code>ToolType</code> support in <code>ReportGenerator</code> and <code>Paket</code>, thanks @SteveGilham and @Tarmil - <a href="https://github.com/fsharp/FAKE/pull/2399">https://github.com/fsharp/FAKE/pull/2399</a></li>
+<li>ENHANCEMENT: Add <code>FAKE_COREFX_VERBOSE</code> in order to increase verbosity for the FAKE libraries</li>
+<li>ENHANCEMENT: Add <code>DotNet.setupEnv</code> in order to improve working with installed SDKs (for example when calling fable), fixes <a href="https://github.com/fsharp/FAKE/issues/2405">https://github.com/fsharp/FAKE/issues/2405</a></li>
+<li>BUGFIX: Address <a href="https://github.com/fsharp/FAKE/issues/2406">https://github.com/fsharp/FAKE/issues/2406</a> by only printing a warning instead of crashing</li>
+<li>BUGFIX: Partially address <a href="https://github.com/fsharp/FAKE/issues/2401">https://github.com/fsharp/FAKE/issues/2401</a> by allowing the user to continue and request additional info.</li>
+<li>BUGFIX: Fix "FindLocalTools fails to search Paket.exe in Subdirectory" - <a href="https://github.com/fsharp/FAKE/issues/2390">https://github.com/fsharp/FAKE/issues/2390</a></li>
+</ul>
 <h2><a name="5-17-0-2019-10-10" class="anchor" href="#5-17-0-2019-10-10">5.17.0 - 2019-10-10</a></h2>
 <ul>
 <li>DOCS: Remove Issue Stats, thanks @vbfox - <a href="https://github.com/fsharp/FAKE/pull/2393">https://github.com/fsharp/FAKE/pull/2393</a></li>
@@ -2294,7 +2304,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

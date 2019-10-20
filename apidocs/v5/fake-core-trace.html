@@ -357,15 +357,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '394', 394)" onmouseover="showTip(event, '394', 394)">
+          <code onmouseout="hideTip(event, '397', 397)" onmouseover="showTip(event, '397', 397)">
             Trace.closeAllOpenTags()
           </code>
-          <div class="tip" id="394">
+          <div class="tip" id="397">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L192-192" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L205-205" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -374,10 +374,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '395', 395)" onmouseover="showTip(event, '395', 395)">
+          <code onmouseout="hideTip(event, '398', 398)" onmouseover="showTip(event, '398', 398)">
             Trace.closeTag(tag)
           </code>
-          <div class="tip" id="395">
+          <div class="tip" id="398">
             <strong>Signature:</strong> tag:KnownTags -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -390,7 +390,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTag instead and &#39;use&#39; to properly call closeTag in case of exceptions. To remove this warning use &#39;closeTagUnsafe&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L167-167" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L180-180" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Removes an opening tag from the internal tag stack</p>
@@ -401,15 +401,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '396', 396)" onmouseover="showTip(event, '396', 396)">
+          <code onmouseout="hideTip(event, '399', 399)" onmouseover="showTip(event, '399', 399)">
             Trace.closeTagUnsafe(tag)
           </code>
-          <div class="tip" id="396">
+          <div class="tip" id="399">
             <strong>Signature:</strong> tag:KnownTags -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L175-175" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -418,15 +418,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '397', 397)" onmouseover="showTip(event, '397', 397)">
+          <code onmouseout="hideTip(event, '400', 400)" onmouseover="showTip(event, '400', 400)">
             Trace.closeTagUnsafeEx status tag
           </code>
-          <div class="tip" id="397">
+          <div class="tip" id="400">
             <strong>Signature:</strong> status:TagStatus -&gt; tag:KnownTags -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L166-166" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Removes an opening tag from the internal tag stack</p>
@@ -437,15 +437,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '398', 398)" onmouseover="showTip(event, '398', 398)">
+          <code onmouseout="hideTip(event, '401', 401)" onmouseover="showTip(event, '401', 401)">
             Trace.exceptionAndInnersToString(ex)
           </code>
-          <div class="tip" id="398">
+          <div class="tip" id="401">
             <strong>Signature:</strong> ex:Exception -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Converts an exception and its inner exceptions to a nice string.</p>
@@ -456,15 +456,32 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '399', 399)" onmouseover="showTip(event, '399', 399)">
+          <code onmouseout="hideTip(event, '402', 402)" onmouseover="showTip(event, '402', 402)">
+            Trace.isVerbose(printHint)
+          </code>
+          <div class="tip" id="402">
+            <strong>Signature:</strong> printHint:bool -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L25-25" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '403', 403)" onmouseover="showTip(event, '403', 403)">
             Trace.log(message)
           </code>
-          <div class="tip" id="399">
+          <div class="tip" id="403">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L18-18" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L23-23" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Logs the specified string</p>
@@ -475,15 +492,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '400', 400)" onmouseover="showTip(event, '400', 400)">
+          <code onmouseout="hideTip(event, '404', 404)" onmouseover="showTip(event, '404', 404)">
             Trace.logf(fmt)
           </code>
-          <div class="tip" id="400">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9889,unit&gt; -&gt; &#39;?9889<br />
-                          <strong>Type parameters:</strong> '?9889                      </div>
+          <div class="tip" id="404">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9908,unit&gt; -&gt; &#39;?9908<br />
+                          <strong>Type parameters:</strong> '?9908                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L37-37" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Logs the specified message (without line break)</p>
@@ -494,15 +511,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '401', 401)" onmouseover="showTip(event, '401', 401)">
+          <code onmouseout="hideTip(event, '405', 405)" onmouseover="showTip(event, '405', 405)">
             Trace.logfn(fmt)
           </code>
-          <div class="tip" id="401">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9887,unit&gt; -&gt; &#39;?9887<br />
-                          <strong>Type parameters:</strong> '?9887                      </div>
+          <div class="tip" id="405">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9906,unit&gt; -&gt; &#39;?9906<br />
+                          <strong>Type parameters:</strong> '?9906                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L21-21" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L34-34" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Logs the specified message</p>
@@ -513,15 +530,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '402', 402)" onmouseover="showTip(event, '402', 402)">
+          <code onmouseout="hideTip(event, '406', 406)" onmouseover="showTip(event, '406', 406)">
             Trace.logItems message items
           </code>
-          <div class="tip" id="402">
+          <div class="tip" id="406">
             <strong>Signature:</strong> message:string -&gt; items:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L301-301" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L314-314" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Logs the given files with the message.</p>
@@ -532,15 +549,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '403', 403)" onmouseover="showTip(event, '403', 403)">
+          <code onmouseout="hideTip(event, '407', 407)" onmouseover="showTip(event, '407', 407)">
             Trace.logToConsole(msg, eventLogEntry)
           </code>
-          <div class="tip" id="403">
+          <div class="tip" id="407">
             <strong>Signature:</strong> (msg:string * eventLogEntry:EventLogEntryType) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L291-291" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L304-304" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the message to the console</p>
@@ -551,15 +568,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '404', 404)" onmouseover="showTip(event, '404', 404)">
+          <code onmouseout="hideTip(event, '408', 408)" onmouseover="showTip(event, '408', 408)">
             Trace.logVerbosefn(fmt)
           </code>
-          <div class="tip" id="404">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9891,unit&gt; -&gt; &#39;?9891<br />
-                          <strong>Type parameters:</strong> '?9891                      </div>
+          <div class="tip" id="408">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9910,unit&gt; -&gt; &#39;?9910<br />
+                          <strong>Type parameters:</strong> '?9910                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L40-40" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Logs the specified string if the verbose mode is activated.</p>
@@ -570,10 +587,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '405', 405)" onmouseover="showTip(event, '405', 405)">
+          <code onmouseout="hideTip(event, '409', 409)" onmouseover="showTip(event, '409', 409)">
             Trace.openTag tag description
           </code>
-          <div class="tip" id="405">
+          <div class="tip" id="409">
             <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -586,7 +603,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTag instead and &#39;use&#39; to properly call closeTag in case of exceptions. To remove this warning use &#39;openTagUnsafe&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L150-150" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Puts an opening tag on the internal tag stack</p>
@@ -597,15 +614,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '406', 406)" onmouseover="showTip(event, '406', 406)">
+          <code onmouseout="hideTip(event, '410', 410)" onmouseover="showTip(event, '410', 410)">
             Trace.openTagUnsafe tag description
           </code>
-          <div class="tip" id="406">
+          <div class="tip" id="410">
             <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L127-127" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L140-140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Puts an opening tag on the internal tag stack</p>
@@ -616,15 +633,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '407', 407)" onmouseover="showTip(event, '407', 407)">
+          <code onmouseout="hideTip(event, '411', 411)" onmouseover="showTip(event, '411', 411)">
             Trace.publish typ path
           </code>
-          <div class="tip" id="407">
+          <div class="tip" id="411">
             <strong>Signature:</strong> typ:ImportData -&gt; path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L187-187" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L200-200" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -633,11 +650,28 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '408', 408)" onmouseover="showTip(event, '408', 408)">
+          <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
             Trace.setBuildNumber(number)
           </code>
-          <div class="tip" id="408">
+          <div class="tip" id="412">
             <strong>Signature:</strong> number:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L202-202" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
+            Trace.setBuildState(tag)
+          </code>
+          <div class="tip" id="413">
+            <strong>Signature:</strong> tag:TagStatus -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -650,32 +684,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '409', 409)" onmouseover="showTip(event, '409', 409)">
-            Trace.setBuildState(tag)
-          </code>
-          <div class="tip" id="409">
-            <strong>Signature:</strong> tag:TagStatus -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L176-176" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '410', 410)" onmouseover="showTip(event, '410', 410)">
+          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
             Trace.setBuildStateWithMessage(...)
           </code>
-          <div class="tip" id="410">
+          <div class="tip" id="414">
             <strong>Signature:</strong> tag:TagStatus -&gt; message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L186-186" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -684,15 +701,32 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '411', 411)" onmouseover="showTip(event, '411', 411)">
+          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
+            Trace.setVerbose()
+          </code>
+          <div class="tip" id="415">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L19-19" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
             Trace.testOutput testName out err
           </code>
-          <div class="tip" id="411">
+          <div class="tip" id="416">
             <strong>Signature:</strong> testName:string -&gt; out:string -&gt; err:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L183-183" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L196-196" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -701,15 +735,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
+          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
             Trace.testStatus testName testStatus
           </code>
-          <div class="tip" id="412">
+          <div class="tip" id="417">
             <strong>Signature:</strong> testName:string -&gt; testStatus:TestStatus -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L179-179" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L192-192" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -718,15 +752,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
+          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
             Trace.trace(message)
           </code>
-          <div class="tip" id="413">
+          <div class="tip" id="418">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L45-45" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a trace to the command line (in green)</p>
@@ -737,15 +771,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
+          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
             Trace.traceEndFailureTargetUnsafeEx(...)
           </code>
-          <div class="tip" id="414">
+          <div class="tip" id="419">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L220-220" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L233-233" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a failure target</p>
@@ -756,15 +790,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
+          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
             Trace.traceEndFinalTargetUnsafeEx(...)
           </code>
-          <div class="tip" id="415">
+          <div class="tip" id="420">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L216-216" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L229-229" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a final target</p>
@@ -775,10 +809,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
+          <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
             Trace.traceEndTarget(name)
           </code>
-          <div class="tip" id="416">
+          <div class="tip" id="421">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -791,7 +825,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTarget instead and &#39;use&#39; to properly call traceEndTask in case of exceptions. To remove this warning use &#39;traceEndTargetUnsafe&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L229-229" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L242-242" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a target</p>
@@ -802,15 +836,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
+          <code onmouseout="hideTip(event, '422', 422)" onmouseover="showTip(event, '422', 422)">
             Trace.traceEndTargetUnsafe(name)
           </code>
-          <div class="tip" id="417">
+          <div class="tip" id="422">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L224-224" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L237-237" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a target</p>
@@ -821,15 +855,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
+          <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
             Trace.traceEndTargetUnsafeEx state name
           </code>
-          <div class="tip" id="418">
+          <div class="tip" id="423">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L212-212" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L225-225" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a target</p>
@@ -840,10 +874,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
+          <code onmouseout="hideTip(event, '424', 424)" onmouseover="showTip(event, '424', 424)">
             Trace.traceEndTask(task)
           </code>
-          <div class="tip" id="419">
+          <div class="tip" id="424">
             <strong>Signature:</strong> task:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -856,7 +890,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTask instead and &#39;use&#39; to properly call traceEndTask in case of exceptions. To remove this warning use &#39;traceEndTask&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L260-260" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L273-273" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a task</p>
@@ -867,15 +901,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
+          <code onmouseout="hideTip(event, '425', 425)" onmouseover="showTip(event, '425', 425)">
             Trace.traceEndTaskUnsafe(task)
           </code>
-          <div class="tip" id="420">
+          <div class="tip" id="425">
             <strong>Signature:</strong> task:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L256-256" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L269-269" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a task</p>
@@ -886,15 +920,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
+          <code onmouseout="hideTip(event, '426', 426)" onmouseover="showTip(event, '426', 426)">
             Trace.traceEndTaskUnsafeEx state task
           </code>
-          <div class="tip" id="421">
+          <div class="tip" id="426">
             <strong>Signature:</strong> state:TagStatus -&gt; task:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L252-252" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L265-265" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the end of a task</p>
@@ -905,15 +939,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '422', 422)" onmouseover="showTip(event, '422', 422)">
+          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
             Trace.traceEnvironmentVariables()
           </code>
-          <div class="tip" id="422">
+          <div class="tip" id="427">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L113-113" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the EnvironmentVariables</p>
@@ -924,15 +958,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
+          <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
             Trace.traceError(error)
           </code>
-          <div class="tip" id="423">
+          <div class="tip" id="428">
             <strong>Signature:</strong> error:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L54-54" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces an error (in red)</p>
@@ -943,15 +977,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '424', 424)" onmouseover="showTip(event, '424', 424)">
+          <code onmouseout="hideTip(event, '429', 429)" onmouseover="showTip(event, '429', 429)">
             Trace.traceErrorfn(fmt)
           </code>
-          <div class="tip" id="424">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9905,unit&gt; -&gt; &#39;?9905<br />
-                          <strong>Type parameters:</strong> '?9905                      </div>
+          <div class="tip" id="429">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9924,unit&gt; -&gt; &#39;?9924<br />
+                          <strong>Type parameters:</strong> '?9924                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L70-70" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes an error message to stderr (in red)</p>
@@ -962,15 +996,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '425', 425)" onmouseover="showTip(event, '425', 425)">
+          <code onmouseout="hideTip(event, '430', 430)" onmouseover="showTip(event, '430', 430)">
             Trace.traceException(ex)
           </code>
-          <div class="tip" id="425">
+          <div class="tip" id="430">
             <strong>Signature:</strong> ex:Exception -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L110-110" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces an exception details (in red)</p>
@@ -981,15 +1015,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '426', 426)" onmouseover="showTip(event, '426', 426)">
+          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
             Trace.tracef(fmt)
           </code>
-          <div class="tip" id="426">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9896,unit&gt; -&gt; &#39;?9896<br />
-                          <strong>Type parameters:</strong> '?9896                      </div>
+          <div class="tip" id="431">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9915,unit&gt; -&gt; &#39;?9915<br />
+                          <strong>Type parameters:</strong> '?9915                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a message to the command line (in green) and without a line break</p>
@@ -1000,15 +1034,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
+          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
             Trace.traceFailureTarget(...)
           </code>
-          <div class="tip" id="427">
+          <div class="tip" id="432">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L239-239" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L252-252" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -1017,15 +1051,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
+          <code onmouseout="hideTip(event, '433', 433)" onmouseover="showTip(event, '433', 433)">
             Trace.traceFAKE(fmt)
           </code>
-          <div class="tip" id="428">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9902,unit&gt; -&gt; &#39;?9902<br />
-                          <strong>Type parameters:</strong> '?9902                      </div>
+          <div class="tip" id="433">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9921,unit&gt; -&gt; &#39;?9921<br />
+                          <strong>Type parameters:</strong> '?9921                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L51-51" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a trace to the command line (in yellow)</p>
@@ -1036,15 +1070,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '429', 429)" onmouseover="showTip(event, '429', 429)">
+          <code onmouseout="hideTip(event, '434', 434)" onmouseover="showTip(event, '434', 434)">
             Trace.traceFinalTarget(...)
           </code>
-          <div class="tip" id="429">
+          <div class="tip" id="434">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L235-235" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L248-248" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -1053,15 +1087,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '430', 430)" onmouseover="showTip(event, '430', 430)">
+          <code onmouseout="hideTip(event, '435', 435)" onmouseover="showTip(event, '435', 435)">
             Trace.tracefn(fmt)
           </code>
-          <div class="tip" id="430">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9894,unit&gt; -&gt; &#39;?9894<br />
-                          <strong>Type parameters:</strong> '?9894                      </div>
+          <div class="tip" id="435">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9913,unit&gt; -&gt; &#39;?9913<br />
+                          <strong>Type parameters:</strong> '?9913                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L35-35" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L48-48" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a message to the command line (in green)</p>
@@ -1072,15 +1106,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
+          <code onmouseout="hideTip(event, '436', 436)" onmouseover="showTip(event, '436', 436)">
             Trace.traceHeader(name)
           </code>
-          <div class="tip" id="431">
+          <div class="tip" id="436">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L120-120" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L133-133" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces a header</p>
@@ -1091,15 +1125,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
+          <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
             Trace.traceImportant(text)
           </code>
-          <div class="tip" id="432">
+          <div class="tip" id="437">
             <strong>Signature:</strong> text:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L58-58" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a trace to stderr (in yellow)</p>
@@ -1110,15 +1144,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '433', 433)" onmouseover="showTip(event, '433', 433)">
+          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
             Trace.traceImportantfn(fmt)
           </code>
-          <div class="tip" id="433">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9900,unit&gt; -&gt; &#39;?9900<br />
-                          <strong>Type parameters:</strong> '?9900                      </div>
+          <div class="tip" id="438">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?9919,unit&gt; -&gt; &#39;?9919<br />
+                          <strong>Type parameters:</strong> '?9919                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L48-48" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a message to stderr (in yellow)</p>
@@ -1129,15 +1163,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '434', 434)" onmouseover="showTip(event, '434', 434)">
+          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
             Trace.traceLine()
           </code>
-          <div class="tip" id="434">
+          <div class="tip" id="439">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L117-117" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L130-130" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces a line</p>
@@ -1148,15 +1182,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '435', 435)" onmouseover="showTip(event, '435', 435)">
+          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
             Trace.traceStartFailureTargetUnsafe(...)
           </code>
-          <div class="tip" id="435">
+          <div class="tip" id="440">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L216-216" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the begin of a failure target</p>
@@ -1167,15 +1201,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '436', 436)" onmouseover="showTip(event, '436', 436)">
+          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
             Trace.traceStartFinalTargetUnsafe(...)
           </code>
-          <div class="tip" id="436">
+          <div class="tip" id="441">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L212-212" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the begin of a final target</p>
@@ -1186,10 +1220,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
+          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
             Trace.traceStartTarget(...)
           </code>
-          <div class="tip" id="437">
+          <div class="tip" id="442">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1202,6 +1236,25 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTarget instead and &#39;use&#39; to properly call traceEndTask in case of exceptions. To remove this warning use &#39;traceStartTargetUnsafe&#39;.</p>
             </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L221-221" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Traces the begin of a target</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
+            Trace.traceStartTargetUnsafe(...)
+          </code>
+          <div class="tip" id="443">
+            <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L208-208" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
@@ -1213,29 +1266,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
-            Trace.traceStartTargetUnsafe(...)
-          </code>
-          <div class="tip" id="438">
-            <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L195-195" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the begin of a target</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
+          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
             Trace.traceStartTask task description
           </code>
-          <div class="tip" id="439">
+          <div class="tip" id="444">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1248,7 +1282,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Consider using traceTask instead and &#39;use&#39; to properly call traceEndTask in case of exceptions. To remove this warning use &#39;traceStartTaskUnsafe&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L249-249" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L262-262" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Traces the begin of a task</p>
@@ -1259,68 +1293,68 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
+          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
             Trace.traceStartTaskUnsafe(...)
           </code>
-          <div class="tip" id="440">
+          <div class="tip" id="445">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L257-257" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Traces the begin of a task</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
+            Trace.traceTag tag description
+          </code>
+          <div class="tip" id="446">
+            <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; ISafeDisposable<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L182-182" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
+            Trace.traceTarget(...)
+          </code>
+          <div class="tip" id="447">
+            <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
                                   </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L244-244" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Traces the begin of a task</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
-            Trace.traceTag tag description
-          </code>
-          <div class="tip" id="441">
-            <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; ISafeDisposable<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L169-169" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
           
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
-            Trace.traceTarget(...)
-          </code>
-          <div class="tip" id="442">
-            <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L231-231" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             Trace.traceTask name description
           </code>
-          <div class="tip" id="443">
+          <div class="tip" id="448">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; ISafeDisposable<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L263-263" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L276-276" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Wrap functions in a 'use' of this function</p>
@@ -1331,15 +1365,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
+          <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
             Trace.traceVerbose(s)
           </code>
-          <div class="tip" id="444">
+          <div class="tip" id="449">
             <strong>Signature:</strong> s:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L41-41" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L54-54" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a trace to the command line (in green) if the verbose mode is activated.</p>
@@ -1350,15 +1384,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
+          <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
             Trace.useWith(...)
           </code>
-          <div class="tip" id="445">
-            <strong>Signature:</strong> automaticSuccess:bool -&gt; func:(ISafeDisposable -&gt; &#39;?9946) -&gt; trace:ISafeDisposable -&gt; &#39;?9946<br />
-                          <strong>Type parameters:</strong> '?9946                      </div>
+          <div class="tip" id="450">
+            <strong>Signature:</strong> automaticSuccess:bool -&gt; func:(ISafeDisposable -&gt; &#39;?9965) -&gt; trace:ISafeDisposable -&gt; &#39;?9965<br />
+                          <strong>Type parameters:</strong> '?9965                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L270-270" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L283-283" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Allows automatic or manual tracing around a function being run
@@ -1408,7 +1442,7 @@ Any exception thrown will result in a mark failed and exception re-thrown</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -310,6 +310,25 @@
 <p>There are various ways to install FAKE 5:</p>
 <ul>
 <li>
+<p>Install FAKE as a local <code>dotnet tool</code> (easiest, but needs <a href="https://dotnet.microsoft.com/download">.NET Core SDK Version 3 or newer</a>):</p>
+<ul>
+<li>
+<p>First you need to create a <a href="https://medium.com/@bilalfazlani/net-core-local-tools-are-here-fe9ac2464481">tool manifest</a>, which should be commited to your repository:
+<pre><code class="lang-bash">
+dotnet new tool-manifest
+</code></pre></p>
+</li>
+<li>
+<p>To install FAKE, run:
+<pre><code class="lang-bash">
+dotnet tool install fake-cli
+</code></pre></p>
+<p>Use <code>--version</code> to specify the version of FAKE. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/local_tool"><code>local_tool</code></a> branch of <code>fake-bootstrap</code> for ideas to bootstrap in your CI process.</p>
+<p>To run fake use <code>dotnet fake --version</code>. To restore/download fake on another machine use <code>dotnet tool restore</code> after this command <code>dotnet fake</code> should work as expected.</p>
+</li>
+</ul>
+</li>
+<li>
 <p>Install FAKE as a global <code>dotnet tool</code> (easiest, but needs <a href="https://dotnet.microsoft.com/download">.NET Core SDK</a>):</p>
 <ul>
 <li>
@@ -372,8 +391,8 @@ see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</
 <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
 </div></p>
 </li>
-<li><p>Use it as a dotnet tool (legacy): Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
-<li><p>Bootstrap via paket <code>clitool</code> (legacy), this is basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code></a> branch of <code>fake-bootstrap</code> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
+<li><p>(No longer recommended) Use it as a dotnet tool (legacy): Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+<li><p>(No longer recommended) Bootstrap via paket <code>clitool</code> (legacy), this is basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code></a> branch of <code>fake-bootstrap</code> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
 </ul>
 <p>now you can use</p>
 <pre><code class="lang-bash">fake --help</code></pre>
@@ -989,7 +1008,7 @@ Now edit the script so it looks like this:</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

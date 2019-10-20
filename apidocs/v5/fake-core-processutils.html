@@ -320,10 +320,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
+          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
             ProcessUtils.findFile dirs tool
           </code>
-          <div class="tip" id="317">
+          <div class="tip" id="320">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; string<br />
                                   </div>
         </td>
@@ -339,10 +339,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '318', 318)" onmouseover="showTip(event, '318', 318)">
+          <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
             ProcessUtils.findFiles dirs tool
           </code>
-          <div class="tip" id="318">
+          <div class="tip" id="321">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -358,10 +358,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '319', 319)" onmouseover="showTip(event, '319', 319)">
+          <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
             ProcessUtils.findFilesOnPath(tool)
           </code>
-          <div class="tip" id="319">
+          <div class="tip" id="322">
             <strong>Signature:</strong> tool:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -377,15 +377,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
+          <code onmouseout="hideTip(event, '323', 323)" onmouseover="showTip(event, '323', 323)">
             ProcessUtils.findLocalTool(...)
           </code>
-          <div class="tip" id="320">
+          <div class="tip" id="323">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; recursiveDirs:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L127-127" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L144-144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like tryFindLocalTool but returns the <code>tool</code> string if nothing is found (will probably error later, but this function is OK to be used for fake default values.</p>
@@ -396,10 +396,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
+          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
             ProcessUtils.tryFindFile dirs tool
           </code>
-          <div class="tip" id="321">
+          <div class="tip" id="324">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; string option<br />
                                   </div>
         </td>
@@ -415,10 +415,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
+          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
             ProcessUtils.tryFindFileOnPath(tool)
           </code>
-          <div class="tip" id="322">
+          <div class="tip" id="325">
             <strong>Signature:</strong> tool:string -&gt; string option<br />
                                   </div>
         </td>
@@ -440,15 +440,15 @@ path to the file. Considers PATHEXT on Windows.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '323', 323)" onmouseover="showTip(event, '323', 323)">
+          <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
             ProcessUtils.tryFindLocalTool(...)
           </code>
-          <div class="tip" id="323">
+          <div class="tip" id="326">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; recursiveDirs:seq&lt;string&gt; -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L113-113" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L130-130" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Find a local tool in the given envar the given directories, the current directory or PATH (in this order)
@@ -460,10 +460,10 @@ Recommended usage <code>tryFindLocalTool "TOOL" "tool" [ "." ]</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
+          <code onmouseout="hideTip(event, '327', 327)" onmouseover="showTip(event, '327', 327)">
             ProcessUtils.tryFindPath(...)
           </code>
-          <div class="tip" id="324">
+          <div class="tip" id="327">
             <strong>Signature:</strong> additionalDirs:seq&lt;string&gt; -&gt; tool:string -&gt; string option<br />
                                   </div>
         </td>
@@ -479,10 +479,10 @@ Recommended usage <code>tryFindLocalTool "TOOL" "tool" [ "." ]</code></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
+          <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
             ProcessUtils.tryFindTool envVar tool
           </code>
-          <div class="tip" id="325">
+          <div class="tip" id="328">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; string option<br />
                                   </div>
         </td>
@@ -535,7 +535,7 @@ Recommended usage <code>tryFindLocalTool "TOOL" "tool" [ "." ]</code></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

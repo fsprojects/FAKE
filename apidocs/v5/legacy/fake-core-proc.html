@@ -330,7 +330,7 @@
 </table>
 <div class="tip" id="fs1">namespace Fake</div>
 <div class="tip" id="fs2">namespace Fake.Core</div>
-<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
 <div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
 <div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
 <div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
@@ -349,15 +349,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
+          <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
             Proc.run(c)
           </code>
-          <div class="tip" id="1343">
+          <div class="tip" id="1347">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1079-1079" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1092-1092" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like <code>start</code> but waits for the result synchronously.</p>
@@ -368,15 +368,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1344', 1344)" onmouseover="showTip(event, '1344', 1344)">
+          <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
             Proc.start(c)
           </code>
-          <div class="tip" id="1344">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18250&gt; -&gt; Task&lt;&#39;?18250&gt;<br />
-                          <strong>Type parameters:</strong> '?18250                      </div>
+          <div class="tip" id="1348">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18275&gt; -&gt; Task&lt;&#39;?18275&gt;<br />
+                          <strong>Type parameters:</strong> '?18275                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1071-1071" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1084-1084" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Starts the given process and waits for the <a href="fake-net-result-result.html" title="Result"><code>Result</code></a> task. (see <code>startRaw</code> documentation).
@@ -388,15 +388,15 @@ In most common scenarios the <a href="fake-net-result-result.html" title="Result
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1345', 1345)" onmouseover="showTip(event, '1345', 1345)">
+          <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
             Proc.startAndAwait(c)
           </code>
-          <div class="tip" id="1345">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18252&gt; -&gt; Async&lt;&#39;?18252&gt;<br />
-                          <strong>Type parameters:</strong> '?18252                      </div>
+          <div class="tip" id="1349">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18277&gt; -&gt; Async&lt;&#39;?18277&gt;<br />
+                          <strong>Type parameters:</strong> '?18277                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1076-1076" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1089-1089" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Convenience method when you immediatly want to await the result of 'start', just note that
@@ -409,15 +409,15 @@ when used incorrectly this might lead to race conditions
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1346', 1346)" onmouseover="showTip(event, '1346', 1346)">
+          <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
             Proc.startRaw(c)
           </code>
-          <div class="tip" id="1346">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18246&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?18246&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?18246                      </div>
+          <div class="tip" id="1350">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18271&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?18271&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?18271                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1064-1064" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1077-1077" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Starts a process. The process has been started successfully after the returned task has been completed.
@@ -434,15 +434,15 @@ For example consider a long running process where you are only interested in the
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
+          <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
             Proc.startRawSync(c)
           </code>
-          <div class="tip" id="1347">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18248&gt; -&gt; AsyncProcessResult&lt;&#39;?18248&gt;<br />
-                          <strong>Type parameters:</strong> '?18248                      </div>
+          <div class="tip" id="1351">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18273&gt; -&gt; AsyncProcessResult&lt;&#39;?18273&gt;<br />
+                          <strong>Type parameters:</strong> '?18273                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1067-1067" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1080-1080" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Similar to <code>startRaw</code> but waits until the process has been started.</p>
@@ -489,7 +489,7 @@ For example consider a long running process where you are only interested in the
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

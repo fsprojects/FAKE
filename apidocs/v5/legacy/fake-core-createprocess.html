@@ -357,7 +357,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L490-490" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L559-559" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function after the process has been exited and the previous result has been calculated.</p>
@@ -376,7 +376,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L324-324" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L329-329" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function when the process is cleaned up.</p>
@@ -395,7 +395,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L315-315" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L320-320" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function before the process is started</p>
@@ -410,11 +410,11 @@ You can manage:</p>
             addOnStarted f c
           </code>
           <div class="tip" id="1250">
-            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18370&gt; -&gt; CreateProcess&lt;&#39;?18370&gt;<br />
-                          <strong>Type parameters:</strong> '?18370                      </div>
+            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18398&gt; -&gt; CreateProcess&lt;&#39;?18398&gt;<br />
+                          <strong>Type parameters:</strong> '?18398                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L332-332" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L337-337" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function right after the process is started.</p>
@@ -429,11 +429,11 @@ You can manage:</p>
             appendSimpleFuncs(...)
           </code>
           <div class="tip" id="1251">
-            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?18361) -&gt; onStart:(&#39;?18361 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;?18362&gt; -&gt; &#39;?18361 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?18363&gt;) -&gt; onDispose:(&#39;?18361 -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18362&gt; -&gt; CreateProcess&lt;&#39;?18363&gt;<br />
-                          <strong>Type parameters:</strong> '?18361, '?18362, '?18363                      </div>
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;b) -&gt; onStart:(&#39;b -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;c&gt; -&gt; &#39;b -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;d&gt;) -&gt; onDispose:(&#39;b -&gt; unit) -&gt; c:CreateProcess&lt;&#39;c&gt; -&gt; CreateProcess&lt;&#39;d&gt;<br />
+                          <strong>Type parameters:</strong> 'b, 'c, 'd                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L305-305" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L310-310" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Attaches the given functions to the current CreateProcess instance.</p>
@@ -448,11 +448,11 @@ You can manage:</p>
             copyRedirectedProcessOutputsToStandardOutputs(...)
           </code>
           <div class="tip" id="1252">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18312&gt; -&gt; CreateProcess&lt;&#39;?18312&gt;<br />
-                          <strong>Type parameters:</strong> '?18312                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18340&gt; -&gt; CreateProcess&lt;&#39;?18340&gt;<br />
+                          <strong>Type parameters:</strong> '?18340                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L194-194" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L197-197" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copies std-out and std-err into the corresponding <code>System.Console</code> streams (by using interceptStream).</p>
@@ -471,7 +471,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L214-214" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Disable the default trace of started processes.</p>
@@ -486,11 +486,11 @@ You can manage:</p>
             ensureExitCode(r)
           </code>
           <div class="tip" id="1254">
-            <strong>Signature:</strong> r:CreateProcess&lt;&#39;?18404&gt; -&gt; CreateProcess&lt;&#39;?18404&gt;<br />
-                          <strong>Type parameters:</strong> '?18404                      </div>
+            <strong>Signature:</strong> r:CreateProcess&lt;&#39;?18434&gt; -&gt; CreateProcess&lt;&#39;?18434&gt;<br />
+                          <strong>Type parameters:</strong> '?18434                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L521-521" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L590-590" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Makes sure the exit code is <code>0</code>, otherwise a detailed exception is thrown (showing the command line).</p>
@@ -509,7 +509,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L505-505" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L574-574" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>throws an exception with the given message if <code>exitCode &lt;&gt; 0</code></p>
@@ -528,7 +528,7 @@ You can manage:</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L104-104" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L107-107" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a simple <code>CreateProcess&lt;_&gt;</code> instance from the given command.</p>
@@ -561,7 +561,7 @@ You can manage:</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L162-162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -592,7 +592,7 @@ You can manage:</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L146-146" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -659,7 +659,7 @@ You can manage:</p>
                 <h5>OBSOLETE</h5>
                 <p>Use fromRawCommandLine instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L149-149" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -674,11 +674,11 @@ You can manage:</p>
             getEnvironmentMap(c)
           </code>
           <div class="tip" id="1260">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18376&gt; -&gt; EnvMap<br />
-                          <strong>Type parameters:</strong> '?18376                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18404&gt; -&gt; EnvMap<br />
+                          <strong>Type parameters:</strong> '?18404                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L350-350" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L356-356" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieve the current environment map.</p>
@@ -697,7 +697,7 @@ You can manage:</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L190-190" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L193-193" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>intercept the given StreamSpecification and writes the intercepted data into target.
@@ -713,11 +713,11 @@ Throws if the stream is not redirected (ie is Inherit).</p>
             map f c
           </code>
           <div class="tip" id="1262">
-            <strong>Signature:</strong> f:(&#39;?18386 -&gt; &#39;?18387) -&gt; c:CreateProcess&lt;&#39;?18386&gt; -&gt; CreateProcess&lt;&#39;?18387&gt;<br />
-                          <strong>Type parameters:</strong> '?18386, '?18387                      </div>
+            <strong>Signature:</strong> f:(&#39;b -&gt; &#39;c) -&gt; c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;c&gt;<br />
+                          <strong>Type parameters:</strong> 'b, 'c                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L383-383" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L389-389" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map the current result to a new type.</p>
@@ -732,11 +732,11 @@ Throws if the stream is not redirected (ie is Inherit).</p>
             mapFilePath f c
           </code>
           <div class="tip" id="1263">
-            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?18322&gt; -&gt; CreateProcess&lt;&#39;?18322&gt;<br />
-                          <strong>Type parameters:</strong> '?18322                      </div>
+            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?18350&gt; -&gt; CreateProcess&lt;&#39;?18350&gt;<br />
+                          <strong>Type parameters:</strong> '?18350                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L229-229" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L232-232" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map the file-path according to the given function.</p>
@@ -755,7 +755,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L396-396" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L402-402" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map only the result object and leave the exit code in the result type.</p>
@@ -774,7 +774,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L163-163" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L166-166" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given <code>ProcessStartInfo</code></p>
@@ -793,7 +793,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L402-402" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L408-408" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Starts redirecting the output streams and collects all data at the end.</p>
@@ -805,14 +805,34 @@ Throws if the stream is not redirected (ie is Inherit).</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
-            replaceFilePath newFilePath c
+            redirectOutputIfNotRedirected(c)
           </code>
           <div class="tip" id="1267">
-            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?18320&gt; -&gt; CreateProcess&lt;&#39;?18320&gt;<br />
-                          <strong>Type parameters:</strong> '?18320                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L221-221" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L440-440" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Starts redirecting the output streams if they are not already redirected.
+Be careful when using this function. Using redirectOutput is the preferred variant</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
+            replaceFilePath newFilePath c
+          </code>
+          <div class="tip" id="1268">
+            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?18348&gt; -&gt; CreateProcess&lt;&#39;?18348&gt;<br />
+                          <strong>Type parameters:</strong> '?18348                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L224-224" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replace the file-path</p>
@@ -823,15 +843,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
+          <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
             setEnvironmentVariable envKey envVar c
           </code>
-          <div class="tip" id="1268">
-            <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; c:CreateProcess&lt;&#39;?18378&gt; -&gt; CreateProcess&lt;&#39;?18378&gt;<br />
-                          <strong>Type parameters:</strong> '?18378                      </div>
+          <div class="tip" id="1269">
+            <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L356-356" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L362-362" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the given environment variable.</p>
@@ -842,15 +862,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
+          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
             warnOnExitCode msg r
           </code>
-          <div class="tip" id="1269">
+          <div class="tip" id="1270">
             <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;unit&gt; -&gt; CreateProcess&lt;unit&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L537-537" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L606-606" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like<code>ensureExitCode</code> but only triggers a warning instead of failing.</p>
@@ -861,15 +881,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
             withCommand command c
           </code>
-          <div class="tip" id="1270">
-            <strong>Signature:</strong> command:Command -&gt; c:CreateProcess&lt;&#39;?18318&gt; -&gt; CreateProcess&lt;&#39;?18318&gt;<br />
-                          <strong>Type parameters:</strong> '?18318                      </div>
+          <div class="tip" id="1271">
+            <strong>Signature:</strong> command:Command -&gt; c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L216-216" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L219-219" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the command to the given one.</p>
@@ -880,15 +900,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
             withEnvironment env c
           </code>
-          <div class="tip" id="1271">
-            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?18372&gt; -&gt; CreateProcess&lt;&#39;?18372&gt;<br />
-                          <strong>Type parameters:</strong> '?18372                      </div>
+          <div class="tip" id="1272">
+            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?18400&gt; -&gt; CreateProcess&lt;&#39;?18400&gt;<br />
+                          <strong>Type parameters:</strong> '?18400                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L341-341" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L346-346" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the given environment variables</p>
@@ -899,15 +919,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
             withEnvironmentMap env c
           </code>
-          <div class="tip" id="1272">
-            <strong>Signature:</strong> env:EnvMap -&gt; c:CreateProcess&lt;&#39;?18374&gt; -&gt; CreateProcess&lt;&#39;?18374&gt;<br />
-                          <strong>Type parameters:</strong> '?18374                      </div>
+          <div class="tip" id="1273">
+            <strong>Signature:</strong> env:EnvMap -&gt; c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L346-346" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L351-351" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the given environment map.</p>
@@ -918,15 +938,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
             withOutputEvents onStdOut onStdErr c
           </code>
-          <div class="tip" id="1273">
+          <div class="tip" id="1274">
             <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L433-433" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L502-502" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Calls the given functions whenever a new output-line is received.</p>
@@ -937,15 +957,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
             withOutputEventsNotNull(...)
           </code>
-          <div class="tip" id="1274">
-            <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18396&gt; -&gt; CreateProcess&lt;&#39;?18396&gt;<br />
-                          <strong>Type parameters:</strong> '?18396                      </div>
+          <div class="tip" id="1275">
+            <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;b&gt; -&gt; CreateProcess&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L484-484" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L553-553" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like <code>withOutputEvents</code> but skips <code>null</code> objects.</p>
@@ -956,15 +976,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
             withStandardError stdErr c
           </code>
-          <div class="tip" id="1275">
-            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18382&gt; -&gt; CreateProcess&lt;&#39;?18382&gt;<br />
-                          <strong>Type parameters:</strong> '?18382                      </div>
+          <div class="tip" id="1276">
+            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18410&gt; -&gt; CreateProcess&lt;&#39;?18410&gt;<br />
+                          <strong>Type parameters:</strong> '?18410                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L370-370" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L376-376" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard error stream.</p>
@@ -975,15 +995,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             withStandardInput stdIn c
           </code>
-          <div class="tip" id="1276">
-            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18384&gt; -&gt; CreateProcess&lt;&#39;?18384&gt;<br />
-                          <strong>Type parameters:</strong> '?18384                      </div>
+          <div class="tip" id="1277">
+            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18412&gt; -&gt; CreateProcess&lt;&#39;?18412&gt;<br />
+                          <strong>Type parameters:</strong> '?18412                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L376-376" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L382-382" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard input stream.</p>
@@ -994,15 +1014,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
+          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
             withStandardOutput stdOut c
           </code>
-          <div class="tip" id="1277">
-            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18380&gt; -&gt; CreateProcess&lt;&#39;?18380&gt;<br />
-                          <strong>Type parameters:</strong> '?18380                      </div>
+          <div class="tip" id="1278">
+            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18408&gt; -&gt; CreateProcess&lt;&#39;?18408&gt;<br />
+                          <strong>Type parameters:</strong> '?18408                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L364-364" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L370-370" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard output stream.</p>
@@ -1013,15 +1033,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
+          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
             withTimeout timeout c
           </code>
-          <div class="tip" id="1278">
+          <div class="tip" id="1279">
             <strong>Signature:</strong> timeout:TimeSpan -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L556-556" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L625-625" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the given timeout</p>
@@ -1032,15 +1052,15 @@ Throws if the stream is not redirected (ie is Inherit).</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
+          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
             withWorkingDirectory workDir c
           </code>
-          <div class="tip" id="1279">
+          <div class="tip" id="1280">
             <strong>Signature:</strong> workDir:string -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L206-206" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L209-209" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the working directory of the new process.</p>
@@ -1087,7 +1107,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

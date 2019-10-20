@@ -1184,7 +1184,7 @@ You can manage:</p>
 </table>
 <div class="tip" id="fs1">namespace Fake</div>
 <div class="tip" id="fs2">namespace Fake.Core</div>
-<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------</div>
 <div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
 <div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
 <div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
@@ -1418,6 +1418,16 @@ Make sure to read the documentation in the <a href="fake-core-semverinfo.html">S
 
           </td>
         </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-createprocessdotnetext.html">CreateProcessDotNetExt</a>
+          </td>
+          <td class="xmldoc">
+          <p>Some extensions for the <code>CreateProcess</code> module, opened automatically (use add <code>open Fake.Core</code>)</p>
+
+
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -1640,6 +1650,34 @@ Make sure to read the documentation in the <a href="fake-core-semverinfo.html">S
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-dotnet-dotnetfddoptions.html">DotNetFDDOptions</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnetlocaltool.html">DotNetLocalTool</a>
+          </td>
+          <td class="xmldoc">
+            <p>Information about a dotnet tool</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-tooltype.html">ToolType</a>
+          </td>
+          <td class="xmldoc">
+            <p>Describes which kind of application ToolPath references</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-dotnet-buildexception.html">BuildException</a>
           </td>
           <td class="xmldoc">
@@ -1761,6 +1799,14 @@ See <a href="https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-comma
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-dotnet.html">DotNet</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-tooltypemodule.html">ToolType</a>
           </td>
           <td class="xmldoc">
           
@@ -3109,7 +3155,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.17.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
