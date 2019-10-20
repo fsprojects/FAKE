@@ -149,6 +149,9 @@ let internal createProcess setParams (reports : string seq) =
     |> CreateProcess.withToolType (parameters.ToolType.WithDefaultToolCommandName "reportgenerator")
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
+    |> fun command ->
+        Trace.trace command.CommandLine
+        command
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
