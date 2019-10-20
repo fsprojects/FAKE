@@ -56,7 +56,7 @@ let runCmdOrSh f cmdArgs shArgs =
     result
 
 let runEcho f text =
-    runCmdOrSh f (sprintf "/c echo %s" text) (sprintf "-c 'echo %s'" text)
+    runCmdOrSh f (sprintf "/c echo %s" text) (sprintf "-c \"echo '%s'\"" text)
 
 let redirectNormal = CreateProcess.redirectOutput
 let redirectAdvanced c =
