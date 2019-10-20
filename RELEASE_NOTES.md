@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.18.0-alpha - 2019-10-21
+## 5.18.0 - 2019-10-21
 
 * ENHANCEMENT: Add core support for local tools via `CreateProcess.withToolType`, this helper is part of `Fake.DotNet.Cli` and available after `open Fake.Core` - https://github.com/fsharp/FAKE/pull/2399
 * ENHANCEMENT: Add `ToolType` support in `ReportGenerator` and `Paket`, thanks @SteveGilham and @Tarmil - https://github.com/fsharp/FAKE/pull/2399
