@@ -135,33 +135,33 @@ let tests =
             //    Expect.isTrue (fileExists tempDir dependenciesFile) "the dependencies file should exist"
             //}
 
-            yield test "can build with the project-style template" {
-                let tempDir = tempDir()
-                runTemplate tempDir Project File Fake
-                invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
-            }
+            //yield test "can build with the project-style template" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Project File Fake
+            //    invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
+            //}
 
-            yield test "fails to build a target that doesn't exist" {
-                let tempDir = tempDir()
-                runTemplate tempDir Project File Fake
-                let result = invokeScript tempDir scriptFile "build -t Nonexistent"
-                Expect.isFalse result.OK "the script should have failed"
-                Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
-            }            
+            //yield test "fails to build a target that doesn't exist" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Project File Fake
+            //    let result = invokeScript tempDir scriptFile "build -t Nonexistent"
+            //    Expect.isFalse result.OK "the script should have failed"
+            //    Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
+            //}            
 
-            yield test "can install a inline-dependencies template" {
-                let tempDir = tempDir()
-                runTemplate tempDir Project Inline Fake
-                Expect.isTrue (fileContainsText tempDir buildFile "#r \"paket:") "the build file should contain inline dependencies"
-                Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
-            }
+            //yield test "can install a inline-dependencies template" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Project Inline Fake
+            //    Expect.isTrue (fileContainsText tempDir buildFile "#r \"paket:") "the build file should contain inline dependencies"
+            //    Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
+            //}
 
-            yield test "can install a buildtask-dsl file-dependencies template" {
-                let tempDir = tempDir()
-                runTemplate tempDir Project File BuildTask
-                Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
-                Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
-            }
+            //yield test "can install a buildtask-dsl file-dependencies template" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Project File BuildTask
+            //    Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
+            //    Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
+            //}
 
             yield test "can build a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
