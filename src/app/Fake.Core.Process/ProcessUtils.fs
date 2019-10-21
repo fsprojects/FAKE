@@ -42,7 +42,12 @@ module ProcessUtils =
             |> String.split ';'
             |> Seq.collect (fun postFix -> findFilesInternal dirs (tool + postFix))
             |> fun findings -> Seq.append findings (findFilesInternal dirs tool)
-        else findFilesInternal dirs tool
+        else
+            // On unix we still want to find some extensions (paket.exe!), but we prefer without
+            Environment.environVarOrDefault "PATHEXT" ".EXE;.SH"
+            |> String.split ';'
+            |> Seq.collect (fun postFix -> findFilesInternal dirs (tool + postFix))
+            |> fun findings -> Seq.append (findFilesInternal dirs tool) findings
 
     /// Searches the given directories for all occurrences of the given file name. Considers PATHEXT on Windows.
     let tryFindFile dirs tool =
