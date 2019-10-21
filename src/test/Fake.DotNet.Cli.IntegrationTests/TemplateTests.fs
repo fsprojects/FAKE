@@ -191,11 +191,12 @@ let tests =
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
-            yield test "can build with the local-style template" {
-                let tempDir = tempDir()
-                runTemplate tempDir Local Inline BuildTask
-                invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
-            }
+            // Enable after https://github.com/fsharp/FAKE/pull/2403
+            //yield test "can build with the local-style template" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Local Inline BuildTask
+            //    invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
+            //}
 
             /// ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
             yield ptest "can install a tool-style template" {
