@@ -782,7 +782,7 @@ module DotNet =
         let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
         let currentPath = Environment.environVar "PATH"
         if not (currentPath.Contains (dotnetFolder)) then
-            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.DirectorySeparatorChar + currentPath)
+            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.PathSeparator + currentPath)
 
     /// dotnet --info command options
     type InfoOptions =

@@ -44,7 +44,8 @@ module ProcessUtils =
             |> fun findings -> Seq.append findings (findFilesInternal dirs tool)
         else
             // On unix we still want to find some extensions (paket.exe!), but we prefer without
-            Environment.environVarOrDefault "PATHEXT" ".EXE;.SH"
+            // filesystem is case sensitive!
+            Environment.environVarOrDefault "PATHEXT" ".exe;.sh"
             |> String.split ';'
             |> Seq.collect (fun postFix -> findFilesInternal dirs (tool + postFix))
             |> fun findings -> Seq.append (findFilesInternal dirs tool) findings

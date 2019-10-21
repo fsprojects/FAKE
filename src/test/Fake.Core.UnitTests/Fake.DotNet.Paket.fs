@@ -7,6 +7,8 @@ open Fake.DotNet.Testing
 open Fake.Testing
 open Expecto
 
+let expectedPath = if Environment.isWindows then ".paket\\paket.EXE" else ".paket/paket.exe"
+
 [<Tests>]
 let tests =
   testList "Fake.DotNet.Paket.Tests" [
@@ -19,7 +21,7 @@ let tests =
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
       let cmd = args |> Arguments.toStartInfo  
-      Expect.equal file ".paket\\paket.EXE" "Expected paket.exe"
+      Expect.equal file expectedPath "Expected paket.exe"
       Expect.equal cmd "restore" "expected restore argument"
     testCase "Test pack is not missing, #2411" <| fun _ ->
       let cp =
@@ -30,7 +32,7 @@ let tests =
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
       let cmd = args |> Arguments.toStartInfo  
-      Expect.equal file ".paket\\paket.EXE" "Expected paket.exe"
+      Expect.equal file expectedPath "Expected paket.exe"
       Expect.equal cmd "pack" "expected pack argument"
     testCase "Test push is not missing, #2411" <| fun _ ->
       let cp =
@@ -41,6 +43,6 @@ let tests =
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
       let cmd = args |> Arguments.toStartInfo  
-      Expect.equal file ".paket\\paket.EXE" "Expected paket.exe"
+      Expect.equal file expectedPath "Expected paket.exe"
       Expect.equal cmd "push testfile" "expected push command line"
   ]
