@@ -256,7 +256,7 @@ let getDependenciesForReferencesFile (referencesFile:string) =
 let restore setParams =
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let args =
-        Arguments.Empty
+        Arguments.OfArgs ["restore"]
         |> Arguments.appendNotEmpty "--group" parameters.Group
         |> Arguments.appendIf parameters.ForceDownloadOfPackages "--force"
         |> Arguments.appendIf parameters.OnlyReferencedFiles "--only-referenced"
