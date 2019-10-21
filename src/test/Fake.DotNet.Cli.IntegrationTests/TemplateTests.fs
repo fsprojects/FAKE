@@ -104,18 +104,8 @@ let tests =
             Process.setEnableProcessTracing true            
             uninstallTemplate () |> shouldSucceed "should clear out preexisting templates"
             printfn "%s" Environment.CurrentDirectory
-            let p = Environment.GetEnvironmentVariable "PATH"
-            let c = DotNet.Options.Create() |> dotnetSdk.Value
-            let d = Path.GetDirectoryName c.DotNetCliPath
-            if not (p.StartsWith d) then
-                Environment.SetEnvironmentVariable("PATH", sprintf "%s%c%s" d Path.PathSeparator p)
             
-            printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
-
-            let r = Environment.GetEnvironmentVariable("DOTNET_ROOT")
-            if String.IsNullOrEmpty r then
-                Environment.SetEnvironmentVariable("DOTNET_ROOT", d)
-            printfn "DOTNET_ROOT: %s" <| Environment.GetEnvironmentVariable "DOTNET_ROOT"
+            DotNet.setupEnv dotnetSdk.Value
             let templateNupkg =
                 GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg"
                 |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__
