@@ -1,8 +1,10 @@
 # Release Notes
 
-## 5.18.1-alpha - tbd
+## 5.18.1 - 2019-10-22
 
-* tbd
+* BUGFIX: Paket module was broken - https://github.com/fsharp/FAKE/pull/2413
+* BUGFIX: New `CreateProcess.withToolType` wasn't working for `ToolType.FrameworkDependentDeployment` - https://github.com/fsharp/FAKE/issues/2412
+* ENHANCEMENT: Add support for local dotnet tool to fake-template and make it the default.
 
 ## 5.18.0 - 2019-10-21
 
