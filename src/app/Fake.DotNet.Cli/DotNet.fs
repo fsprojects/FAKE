@@ -779,10 +779,15 @@ module DotNet =
         let dotnetTool = System.IO.Path.GetFullPath options.DotNetCliPath
         let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
         let currentPath = Environment.environVar "PATH"
-        if not (currentPath.Contains (dotnetFolder)) then
+        match currentPath with
+        | null | "" ->
+            Environment.setEnvironVar "PATH" (dotnetFolder)
+        | _ when not (currentPath.Contains (dotnetFolder)) ->
             Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.PathSeparator + currentPath)
+        | _ -> ()
+
         let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
-        if not (currentDotNetRoot.Contains (dotnetFolder)) then
+        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (dotnetFolder)) then
             Environment.setEnvironVar "DOTNET_ROOT" (dotnetFolder)
 
     /// dotnet --info command options
