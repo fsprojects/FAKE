@@ -54,7 +54,12 @@ let shouldSucceed message (r: ProcessResult) =
         r.Results
         |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message)
         |> fun s -> String.Join("\n", s)
-    Expect.isTrue r.OK (sprintf "%s. Exit code '%d' Results:\n%s\n" message r.ExitCode errorStr)
+    Expect.isTrue
+        r.OK
+        (sprintf 
+            "%s. Exit code '%d'.\nDOTNET_ROOT: %s\nPATH: %s\n Results:\n%s\n"
+            message r.ExitCode (Environment.GetEnvironmentVariable("DOTNET_ROOT"))
+            (Environment.GetEnvironmentVariable "PATH") errorStr)
 
 let timeout = (System.TimeSpan.FromMinutes 10.)
 
@@ -107,6 +112,9 @@ let tests =
             
             printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
 
+            let r = Environment.GetEnvironmentVariable("DOTNET_ROOT")
+            if String.IsNullOrEmpty r then
+                Environment.SetEnvironmentVariable("DOTNET_ROOT", d)
             printfn "DOTNET_ROOT: %s" <| Environment.GetEnvironmentVariable "DOTNET_ROOT"
             let templateNupkg =
                 GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg"
