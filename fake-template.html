@@ -320,7 +320,8 @@ to run your build. Have a look at the <a href="fake-commandline.html">fake comma
 <h3><a name="bootstrap" class="anchor" href="#bootstrap">--bootstrap</a></h3>
 <p>Specifies your prefered way to bootstrap FAKE.</p>
 <ul>
-<li><code>tool</code> (default) - Installs the FAKE dotnet sdk global tool into the <code>--tool-path</code> folder</li>
+<li><code>local</code> (default) - Installs the FAKE dotnet sdk local tool into the <code>dotnet-tools.json</code> manifest. This requires an dotnet SDK version 3 or higher.</li>
+<li><code>tool</code> - Installs the FAKE dotnet sdk global tool into the <code>--tool-path</code> folder</li>
 <li><code>project</code> - Creates a <code>build.proj</code> and uses <code>DotNetCliToolReference</code> to bootstrap FAKE</li>
 <li><code>none</code> - Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE</li>
 </ul>
@@ -340,7 +341,7 @@ to run your build. Have a look at the <a href="fake-commandline.html">fake comma
 <h3><a name="tool-path" class="anchor" href="#tool-path">--tool-path</a></h3>
 <p>Specifies the folder for the fake-cli tool. This parameter is only applicable when <code>tool</code> option is used for bootstrapping with <code>--bootstrap</code>. Defaults to <code>.fake</code>.</p>
 <h3><a name="version" class="anchor" href="#version">--version</a></h3>
-<p>Specifies the version of FAKE to install. Defaults to <code>5.*</code>. This parameter is only applicable when either <code>tool</code> or <code>project</code> is used for bootstrapping.</p>
+<p>Specifies the version of FAKE to install. Defaults to <code>5.*</code>. This parameter is only applicable when either <code>local</code>, <code>tool</code> or <code>project</code> is used for bootstrapping.</p>
 
 				
 			</article>
@@ -379,7 +380,7 @@ to run your build. Have a look at the <a href="fake-commandline.html">fake comma
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
