@@ -4,6 +4,7 @@ module Fake.DotNet.Testing.Coverlet
 
 open Fake.DotNet
 
+/// The coverage report file format.
 type OutputFormat =
     | Json
     | Lcov
@@ -11,21 +12,23 @@ type OutputFormat =
     | Cobertura
     | TeamCity
 
+/// The type of coverage to use when failing under a threshold.
 type ThresholdType =
     | Line
     | Branch
     | Method
 
+/// The statistic to use when failing under a threshold.
 type ThresholdStat =
     | Minimum
     | Total
     | Average
 
-/// Coverlet MSBuild parameters, for more details see: https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md.
+/// Coverlet MSBuild parameters. For more details see: https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md
 type CoverletParams =
     { /// (Required) Format of the generated output.
         OutputFormat : OutputFormat
-        /// (Required) Path to the generated output file, or directory if it ends with a /.
+        /// (Required) Path to the generated output file, or directory if it ends with a `/`.
         Output : string
         /// Namespaces to include, as (AssemblyName, Namespace) pairs. Supports `*` and `?` globbing.
         Include : (string * string) list
@@ -46,6 +49,7 @@ type CoverletParams =
         /// Generate results with URL links from SourceLink instead of file paths.
         UseSourceLink : bool }
 
+/// The default parameters.
 let Defaults =
     { OutputFormat = OutputFormat.Json
       Output = "./"
@@ -80,6 +84,7 @@ let private thresholdStatToString = function
     | ThresholdStat.Total -> "total"
     | ThresholdStat.Average -> "average"
 
+/// Add Coverlet parameters to the MSBuild command.
 let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuild.CliArguments) =
     let param = param Defaults
     let properties =
@@ -109,5 +114,6 @@ let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuil
         ]
     { args with Properties = args.Properties @ properties }
 
+/// Add Coverlet parameters to the dotnet test command.
 let withDotNetTestOptions (param: CoverletParams -> CoverletParams) (options: DotNet.TestOptions) =
     { options with MSBuildParams = withMSBuildArguments param options.MSBuildParams }
