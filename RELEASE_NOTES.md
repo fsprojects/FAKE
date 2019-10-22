@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.18.2-alpha - tbd
+
+* tbd
+
 ## 5.18.1 - 2019-10-22
 
 * BUGFIX: Paket module was broken - https://github.com/fsharp/FAKE/pull/2413
