@@ -787,8 +787,21 @@ module DotNet =
         | _ -> ()
 
         let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
-        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (dotnetFolder)) then
-            Environment.setEnvironVar "DOTNET_ROOT" (dotnetFolder)
+        let realFolder =
+            if not Environment.isWindows then
+#if !FX_NO_POSIX        
+                // resolve potential symbolic link to the real location
+                // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
+                Mono.Unix.UnixPath.GetRealPath(dotnetTool)
+                |> System.IO.Path.GetDirectoryName
+#else
+                eprintf "Setting 'DOTNET_ROOT' to '%s' this might be wrong as we didn't follow the symlink. Please upgrade to netcore." dotnetFolder
+                dotnetFolder
+#endif        
+            else dotnetFolder
+        
+        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (realFolder)) then
+            Environment.setEnvironVar "DOTNET_ROOT" (realFolder)
 
     /// dotnet --info command options
     type InfoOptions =
