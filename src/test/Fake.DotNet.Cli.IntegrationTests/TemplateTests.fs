@@ -34,8 +34,9 @@ let installTemplateFrom pathToNupkg =
 type BootstrapKind =
 | Tool
 | Project
+| Local
 | None
-with override x.ToString () = match x with | Tool -> "tool" | Project -> "project" | None -> "none"
+with override x.ToString () = match x with | Tool -> "tool" | Project -> "project" | Local -> "local" | None -> "none"
 
 type DslKind =
 | Fake
@@ -53,7 +54,12 @@ let shouldSucceed message (r: ProcessResult) =
         r.Results
         |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message)
         |> fun s -> String.Join("\n", s)
-    Expect.isTrue r.OK (sprintf "%s. Exit code '%d' Results:\n%s\n" message r.ExitCode errorStr)
+    Expect.isTrue
+        r.OK
+        (sprintf 
+            "%s. Exit code '%d'.\nDOTNET_ROOT: %s\nPATH: %s\n Results:\n%s\n"
+            message r.ExitCode (Environment.GetEnvironmentVariable("DOTNET_ROOT"))
+            (Environment.GetEnvironmentVariable "PATH") errorStr)
 
 let timeout = (System.TimeSpan.FromMinutes 10.)
 
@@ -98,17 +104,19 @@ let tests =
             Process.setEnableProcessTracing true            
             uninstallTemplate () |> shouldSucceed "should clear out preexisting templates"
             printfn "%s" Environment.CurrentDirectory
-            let p = Environment.GetEnvironmentVariable "PATH"
-            let c = DotNet.Options.Create() |> dotnetSdk.Value
-            let d = Path.GetDirectoryName c.DotNetCliPath
-            if not (p.StartsWith d) then
-                Environment.SetEnvironmentVariable("PATH", sprintf "%s%c%s" d Path.PathSeparator p)
             
-            printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
-
-            printfn "DOTNET_ROOT: %s" <| Environment.GetEnvironmentVariable "DOTNET_ROOT"
-            let templateNupkg = GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg" |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__ |> Seq.last
-            installTemplateFrom templateNupkg |> shouldSucceed "should install new FAKE template"
+            DotNet.setupEnv dotnetSdk.Value
+            let templateNupkg =
+                GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg"
+                |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__
+                |> Seq.toList
+                |> List.rev
+                |> List.tryHead
+            let installArgument =
+                match templateNupkg with
+                | Some t -> t
+                | Option.None -> "fake-template"   
+            installTemplateFrom installArgument |> shouldSucceed "should install new FAKE template"
 
             let scriptFile =
                 if Environment.isUnix
@@ -141,45 +149,52 @@ let tests =
             //    invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             //}
 
-            //yield test "fails to build a target that doesn't exist" {
-            //    let tempDir = tempDir()
-            //    runTemplate tempDir Project File Fake
-            //    let result = invokeScript tempDir scriptFile "build -t Nonexistent"
-            //    Expect.isFalse result.OK "the script should have failed"
-            //    Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
-            //}            
+            yield test "fails to build a target that doesn't exist" {
+                let tempDir = tempDir()
+                runTemplate tempDir Tool File Fake
+                let result = invokeScript tempDir scriptFile "build -t Nonexistent"
+                Expect.isFalse result.OK "the script should have failed"
+                Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
+            }            
 
-            //yield test "can install a inline-dependencies template" {
-            //    let tempDir = tempDir()
-            //    runTemplate tempDir Project Inline Fake
-            //    Expect.isTrue (fileContainsText tempDir buildFile "#r \"paket:") "the build file should contain inline dependencies"
-            //    Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
-            //}
+            yield test "can install a inline-dependencies template" {
+                let tempDir = tempDir()
+                runTemplate tempDir Tool Inline Fake
+                Expect.isTrue (fileContainsText tempDir buildFile "#r \"paket:") "the build file should contain inline dependencies"
+                Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
+            }
 
-            //yield test "can install a buildtask-dsl file-dependencies template" {
-            //    let tempDir = tempDir()
-            //    runTemplate tempDir Project File BuildTask
-            //    Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
-            //    Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
-            //}
+            yield test "can install a buildtask-dsl file-dependencies template" {
+                let tempDir = tempDir()
+                runTemplate tempDir Tool File BuildTask
+                Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
+                Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
+            }
 
             yield test "can build a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project File BuildTask
+                runTemplate tempDir Tool File BuildTask
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
             yield test "can install a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project Inline BuildTask
+                runTemplate tempDir Tool Inline BuildTask
                 Expect.isTrue (fileContainsText tempDir buildFile "nuget BlackFox.Fake.BuildTask") "the build file should contain blackfox dependency"
             }
 
             yield test "can build a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
-                runTemplate tempDir Project Inline BuildTask
+                runTemplate tempDir Tool Inline BuildTask
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
+
+            // Enable after https://github.com/fsharp/FAKE/pull/2403
+            //yield test "can build with the local-style template" {
+            //    let tempDir = tempDir()
+            //    runTemplate tempDir Local Inline BuildTask
+            //    invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
+            //}
 
             /// ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
             yield ptest "can install a tool-style template" {

@@ -106,23 +106,31 @@ let private startPaket (toolType: ToolType) toolPath workDir timeout args =
     |> CreateProcess.withToolType toolType
     |> CreateProcess.withWorkingDirectory workDir
     |> CreateProcess.withTimeout timeout
+
+let private start (c:CreateProcess<ProcessResult<_>>) =
+    c
     |> Proc.run
     |> fun r -> r.ExitCode
 
-/// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
-/// ## Parameters
-///
-///  - `setParams` - Function used to manipulate the default parameters.
-let pack setParams =
-    let parameters : PaketPackParams = PaketPackDefaults() |> setParams
-    use __ = Trace.traceTask "PaketPack" parameters.WorkingDir
+type internal StartType =
+    | PushFile of parameters:(PaketPushParams) * files:string
+    | Pack of parameters:(PaketPackParams)
+    | Restore of parameters:(PaketRestoreParams)
 
-    let xmlEncode (notEncodedText : string) =
-        if String.IsNullOrWhiteSpace notEncodedText then ""
-        else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
-
-    let packResult =
-        Arguments.Empty
+let internal createProcess (runType:StartType) =
+    match runType with
+    | PushFile (parameters, file) ->
+        Arguments.OfArgs ["push"]
+        |> Arguments.appendNotEmpty "--url" parameters.PublishUrl
+        |> Arguments.appendNotEmpty "--endpoint" parameters.EndPoint
+        |> Arguments.appendNotEmpty "--api-key" parameters.ApiKey
+        |> Arguments.append [file]
+        |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
+    | Pack (parameters) ->
+        let xmlEncode (notEncodedText : string) =
+            if String.IsNullOrWhiteSpace notEncodedText then ""
+            else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
+        Arguments.OfArgs ["pack"]
         |> Arguments.appendNotEmpty "--version" parameters.Version
         |> Arguments.appendNotEmpty "--build-config" parameters.BuildConfig
         |> Arguments.appendNotEmpty "--build-platform" parameters.BuildPlatform
@@ -137,9 +145,29 @@ let pack setParams =
         |> List.foldBack (fun t -> Arguments.append ["--exclude"; t]) parameters.ExcludedTemplates
         |> List.foldBack (fun (id, v) -> Arguments.append ["--specific-version"; id; v]) parameters.SpecificVersions
         |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
+    | Restore (parameters) ->
+        Arguments.OfArgs ["restore"]
+        |> Arguments.appendNotEmpty "--group" parameters.Group
+        |> Arguments.appendIf parameters.ForceDownloadOfPackages "--force"
+        |> Arguments.appendIf parameters.OnlyReferencedFiles "--only-referenced"
+        |> List.foldBack (fun ref -> Arguments.append ["--reference-files"; ref]) parameters.ReferenceFiles
+        |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
+
+/// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default parameters.
+let pack setParams =
+    let parameters : PaketPackParams = PaketPackDefaults() |> setParams
+    use __ = Trace.traceTask "PaketPack" parameters.WorkingDir
+
+    let packResult =
+        createProcess (Pack parameters)
+        |> start
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     __.MarkSuccess()
+
 
 /// Pushes the given NuGet packages to the server by using Paket push.
 /// ## Parameters
@@ -158,12 +186,6 @@ let pushFiles setParams files =
     | None -> ()
     
     let packages = Seq.toList files
-    let args =
-        Arguments.Empty
-        |> Arguments.appendNotEmpty "--url" parameters.PublishUrl
-        |> Arguments.appendNotEmpty "--endpoint" parameters.EndPoint
-        |> Arguments.appendNotEmpty "--api-key" parameters.ApiKey
-
     use __ = Trace.traceTask "PaketPush" (String.separated ", " packages)
 
     if parameters.DegreeOfParallelism > 0 then
@@ -185,9 +207,8 @@ let pushFiles setParams files =
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
                         let pushResult =
-                            args
-                            |> Arguments.append [package]
-                            |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
+                            createProcess (PushFile(parameters, package))
+                            |> start
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -197,9 +218,8 @@ let pushFiles setParams files =
     else
         for package in packages do
             let pushResult =
-                args
-                |> Arguments.append [package]
-                |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
+                createProcess (PushFile(parameters, package))
+                |> start
             if pushResult <> 0 then failwithf "Error during pushing %s." package
     __.MarkSuccess()
 
@@ -255,17 +275,11 @@ let getDependenciesForReferencesFile (referencesFile:string) =
 ///  - `setParams` - Function used to manipulate the default parameters.
 let restore setParams =
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
-    let args =
-        Arguments.Empty
-        |> Arguments.appendNotEmpty "--group" parameters.Group
-        |> Arguments.appendIf parameters.ForceDownloadOfPackages "--force"
-        |> Arguments.appendIf parameters.OnlyReferencedFiles "--only-referenced"
-        |> List.foldBack (fun ref -> Arguments.append ["--reference-files"; ref]) parameters.ReferenceFiles
-
     use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir
 
     let restoreResult =
-        startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut args
+        createProcess (Restore parameters)
+        |> start
 
     if restoreResult <> 0 then failwithf "Error during restore %s." parameters.WorkingDir
     __.MarkSuccess()

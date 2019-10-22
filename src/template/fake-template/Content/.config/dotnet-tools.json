@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "fake-cli": {
+//#if (version == "latest")
+      "version": "5.17.0",
+////#else
+      //"version": "(version)",
+//#endif
+      "commands": [
+        "fake"
+      ]
+    }
+  }
+}

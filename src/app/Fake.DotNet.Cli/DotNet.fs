@@ -769,20 +769,39 @@ module DotNet =
         |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
         |> CreateProcess.map fst
 
-    /// Setup the environment in such a way that started processes use the given dotnet SDK installation.
+    /// Setup the environment (`PATH` and `DOTNET_ROOT`) in such a way that started processes use the given dotnet SDK installation.
     /// This is useful for example when using fable, see https://github.com/fsharp/FAKE/issues/2405
     /// ## Parameters
     ///
-    /// - 'buildOptions' - build common execution options
-    /// - 'firstArg' - the first argument (like t)
-    /// - 'args' - command arguments
+    /// - 'install' - The SDK to use (result of `DotNet.install`)
     let setupEnv (install: Options -> Options) = 
         let options = setOptions install
         let dotnetTool = System.IO.Path.GetFullPath options.DotNetCliPath
         let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
         let currentPath = Environment.environVar "PATH"
-        if not (currentPath.Contains (dotnetFolder)) then
-            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.DirectorySeparatorChar + currentPath)
+        match currentPath with
+        | null | "" ->
+            Environment.setEnvironVar "PATH" (dotnetFolder)
+        | _ when not (currentPath.Contains (dotnetFolder)) ->
+            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.PathSeparator + currentPath)
+        | _ -> ()
+
+        let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
+        let realFolder =
+            if not Environment.isWindows then
+#if !FX_NO_POSIX        
+                // resolve potential symbolic link to the real location
+                // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
+                Mono.Unix.UnixPath.GetRealPath(dotnetTool)
+                |> System.IO.Path.GetDirectoryName
+#else
+                eprintf "Setting 'DOTNET_ROOT' to '%s' this might be wrong as we didn't follow the symlink. Please upgrade to netcore." dotnetFolder
+                dotnetFolder
+#endif        
+            else dotnetFolder
+        
+        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (realFolder)) then
+            Environment.setEnvironVar "DOTNET_ROOT" (realFolder)
 
     /// dotnet --info command options
     type InfoOptions =

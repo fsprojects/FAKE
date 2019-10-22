@@ -230,11 +230,11 @@ open Fake.IO.FileSystemOperators
 open Fake.Core.GuardedAwaitObservable
 
 
-#if !FX_NO_HANDLE
 module internal Kernel32 =
     open System
     open System.Text
     open System.Diagnostics
+#if !FX_NO_HANDLE
     open System.Runtime.InteropServices
     [<DllImport("Kernel32.dll", SetLastError = true)>]
     extern UInt32 QueryFullProcessImageName(IntPtr hProcess, UInt32 flags, StringBuilder text, [<Out>] UInt32& size)
@@ -252,6 +252,9 @@ module internal Kernel32 =
             Marshal.ThrowExceptionForHR hresult
             "Error = " + string hresult + " when calling GetProcessImageFileName"
 #endif
+    // TODO: complete, see https://github.com/dotnet/corefx/issues/1086
+    [<DllImport("Kernel32.dll", SetLastError = true)>]
+    extern UInt32 GetFinalPathNameByHandleA(IntPtr hFile, StringBuilder lpszFilePath, uint32 cchFilePath, uint32 dwFlags)
 
 type AsyncProcessResult<'a> = { Result : System.Threading.Tasks.Task<'a>; Raw : System.Threading.Tasks.Task<RawProcessResult> }
 

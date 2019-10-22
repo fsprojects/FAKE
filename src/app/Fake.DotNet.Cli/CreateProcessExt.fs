@@ -120,6 +120,7 @@ module CreateProcessDotNetExt =
         |> CreateProcess.withFramework
       | ToolType.FrameworkDependentDeployment dotnetOptions -> // dotnet ToolPath (can be a dll)
         c
+        |> DotNet.prefixProcess dotnetOptions.Options [c.Command.Executable]
       | ToolType.SelfContainedDeployment// just ToolPath
       | ToolType.GlobalTool -> // just ToolPath
         c
