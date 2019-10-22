@@ -3,3 +3,5 @@ group netcore
 FSharp.Core
 NETStandard.Library
 Newtonsoft.Json
+// https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
+Mono.Posix.NETStandard
