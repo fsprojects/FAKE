@@ -50,7 +50,7 @@ type CoverletParams =
         UseSourceLink : bool }
 
 /// The default parameters.
-let Defaults =
+let private defaults =
     { OutputFormat = OutputFormat.Json
       Output = "./"
       Include = []
@@ -86,7 +86,7 @@ let private thresholdStatToString = function
 
 /// Add Coverlet parameters to the MSBuild command.
 let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuild.CliArguments) =
-    let param = param Defaults
+    let param = param defaults
     let properties =
         [
             "CollectCoverage", "true"
