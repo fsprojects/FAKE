@@ -130,7 +130,7 @@ let internal createProcess (runType:StartType) =
         let xmlEncode (notEncodedText : string) =
             if String.IsNullOrWhiteSpace notEncodedText then ""
             else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
-        Arguments.OfArgs ["pack"]
+        Arguments.OfArgs ["pack"; parameters.OutputPath]
         |> Arguments.appendNotEmpty "--version" parameters.Version
         |> Arguments.appendNotEmpty "--build-config" parameters.BuildConfig
         |> Arguments.appendNotEmpty "--build-platform" parameters.BuildPlatform
