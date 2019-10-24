@@ -130,7 +130,7 @@ let internal createProcess (runType:StartType) =
         let xmlEncode (notEncodedText : string) =
             if String.IsNullOrWhiteSpace notEncodedText then ""
             else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
-        Arguments.OfArgs ["pack"; parameters.OutputPath]
+        Arguments.OfArgs ["pack"]
         |> Arguments.appendNotEmpty "--version" parameters.Version
         |> Arguments.appendNotEmpty "--build-config" parameters.BuildConfig
         |> Arguments.appendNotEmpty "--build-platform" parameters.BuildPlatform
@@ -144,6 +144,7 @@ let internal createProcess (runType:StartType) =
         |> Arguments.appendIf parameters.IncludeReferencedProjects "--include-referenced-projects"
         |> List.foldBack (fun t -> Arguments.append ["--exclude"; t]) parameters.ExcludedTemplates
         |> List.foldBack (fun (id, v) -> Arguments.append ["--specific-version"; id; v]) parameters.SpecificVersions
+        |> Arguments.append [parameters.OutputPath]
         |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
     | Restore (parameters) ->
         Arguments.OfArgs ["restore"]
