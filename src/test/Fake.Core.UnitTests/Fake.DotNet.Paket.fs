@@ -33,7 +33,7 @@ let tests =
         |> ArgumentHelper.checkIfMono
       let cmd = args |> Arguments.toStartInfo  
       Expect.equal file expectedPath "Expected paket.exe"
-      Expect.equal cmd "pack" "expected pack argument"
+      Expect.equal cmd "pack ./temp" "expected pack command line"
     testCase "Test push is not missing, #2411" <| fun _ ->
       let cp =
         Paket.createProcess (Paket.StartType.PushFile (Paket.PaketPushDefaults(), "testfile"))

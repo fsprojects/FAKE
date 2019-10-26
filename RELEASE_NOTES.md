@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.18.2 - 2019-10-26
+
+* NEW: Add `Fake.DotNet.Testing.Coverlet`, thanks @Tarmil - https://github.com/fsharp/FAKE/pull/2413
+* BUGFIX: `paket pack` module was broken, thanks @sergey-tihon - https://github.com/fsharp/FAKE/pull/2418
+
 ## 5.18.1 - 2019-10-22
 
 * BUGFIX: Paket module was broken - https://github.com/fsharp/FAKE/pull/2413

@@ -275,6 +275,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
+      "Fake.DotNet.Testing.Coverlet", "Code coverage with Coverlet"
       "Fake.DotNet.Testing.DotCover", "Code coverage with DotCover"
       "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
