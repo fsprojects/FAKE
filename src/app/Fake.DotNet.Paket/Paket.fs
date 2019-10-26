@@ -144,6 +144,7 @@ let internal createProcess (runType:StartType) =
         |> Arguments.appendIf parameters.IncludeReferencedProjects "--include-referenced-projects"
         |> List.foldBack (fun t -> Arguments.append ["--exclude"; t]) parameters.ExcludedTemplates
         |> List.foldBack (fun (id, v) -> Arguments.append ["--specific-version"; id; v]) parameters.SpecificVersions
+        |> Arguments.append [parameters.OutputPath]
         |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
     | Restore (parameters) ->
         Arguments.OfArgs ["restore"]
