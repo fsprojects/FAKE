@@ -34,7 +34,8 @@ let tests =
                     ThresholdStat = Coverlet.ThresholdStat.Total
                     UseSourceLink = true
                 })
-            Expect.containsAll [
+            Expect.isTrue (props.Length > 0) "Result should contain some elements"
+            Expect.containsAll props [
                 "CollectCoverage", "true"
                 "CoverletOutput", "coverage.json"
                 "OutputFormat", "cobertura"
@@ -47,13 +48,14 @@ let tests =
                 "ThresholdType", "branch"
                 "ThresholdStat", "total"
                 "UseSourceLink", "true"
-            ] props "expected proper MSBuild properties"
+            ] "expected proper MSBuild properties"
 
         testCase "Test that default properties are converted" <| fun _ ->
             let props = getProps id
-            Expect.containsAll [
+            Expect.isTrue (props.Length > 0) "Result should contain some elements"
+            Expect.containsAll props [
                 "CollectCoverage", "true"
                 "CoverletOutput", "./"
                 "OutputFormat", "json"
-            ] props "expected proper MSBuild properties"
+            ] "expected proper MSBuild properties"
     ]
