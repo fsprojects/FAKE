@@ -89,28 +89,28 @@ let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuil
     let param = param defaults
     let properties =
         [
-            "CollectCoverage", "true"
-            "OutputFormat", outputFormatToString param.OutputFormat
-            "CoverletOutput", param.Output
+            yield "CollectCoverage", "true"
+            yield "OutputFormat", outputFormatToString param.OutputFormat
+            yield "CoverletOutput", param.Output
             if not (List.isEmpty param.Include) then
-                "Include", namespacesToString param.Include
+                yield "Include", namespacesToString param.Include
             if not (List.isEmpty param.Exclude) then
-                "Exclude", namespacesToString param.Exclude
+                yield "Exclude", namespacesToString param.Exclude
             if not (List.isEmpty param.ExcludeByAttribute) then
-                "ExcludeByAttribute", String.concat "," param.ExcludeByAttribute
+                yield "ExcludeByAttribute", String.concat "," param.ExcludeByAttribute
             if not (List.isEmpty param.ExcludeByFile) then
-                "ExcludeByFile", String.concat "," param.ExcludeByFile
+                yield "ExcludeByFile", String.concat "," param.ExcludeByFile
             match param.MergeWith with
-            | Some f -> "MergeWith", f
+            | Some f -> yield "MergeWith", f
             | None -> ()
             match param.Threshold with
             | Some t ->
-                "Threshold", string t
-                "ThresholdType", thresholdTypeToString param.ThresholdType
-                "ThresholdStat", thresholdStatToString param.ThresholdStat
+                yield "Threshold", string t
+                yield "ThresholdType", thresholdTypeToString param.ThresholdType
+                yield "ThresholdStat", thresholdStatToString param.ThresholdStat
             | None -> ()
             if param.UseSourceLink then
-                "UseSourceLink", "true"
+                yield "UseSourceLink", "true"
         ]
     { args with Properties = args.Properties @ properties }
 
