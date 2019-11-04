@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.18.4-alpha - tbd
+
+* tbd
+
 ## 5.18.3 - 2019-11-04
 
 * BUGFIX: `Fake.DotNet.Testing.Coverlet` was not working, thanks @Tarmil - https://github.com/fsharp/FAKE/pull/2424
