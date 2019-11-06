@@ -251,7 +251,6 @@ let private commandLine command =
         sprintf " push%s" (pushCommandLine opts)
 
 let private exec command options =
-    
     let serverCommandLineForTracing (opts: ServerOptions) = 
         serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
@@ -282,33 +281,52 @@ let private exec command options =
         failwithf "Octo %s failed. Process finished with exit code %i" commandString result
         result
 
-/// Creates a release.
-let createRelease setParams = 
+/// Creates a release and returns the exit code.
+let createReleaseWithExitCode setParams = 
     let options = setParams releaseOptions
     exec (CreateRelease (options, None)) options.Common
 
-/// Creates a release, and optionally deploys it to one or more environments.
-let createReleaseAndDeploy setReleaseParams setDeployParams =
+/// Creates a release, and optionally deploys it to one or more environments and returns the exit code.
+let createReleaseAndDeployWithExitCode setReleaseParams setDeployParams =
     let releaseOptions = setReleaseParams releaseOptions
     let deployOptions = setDeployParams deployOptions
     exec (CreateRelease (releaseOptions, deployOptions)) releaseOptions.Common
 
-/// Deploys releases that have already been created.
-let deployRelease setParams =
+/// Deploys releases that have already been created and returns the exit code.
+let deployReleaseWithExitCode setParams =
     let options = setParams deployOptions
     exec (DeployRelease options) options.Common
 
-/// Deletes a range of releases.
-let deleteReleases setParams = 
+/// Deletes a range of releases and returns the exit code.
+let deleteReleasesWithExitCode setParams = 
     let options = setParams deleteOptions
     exec (DeleteReleases options) options.Common
 
-/// Lists all environments.
-let listEnvironments setParams =
+/// Lists all environments and returns the exit code.
+let listEnvironmentsWithExitCode setParams =
     let options = setParams commonOptions
     exec ListEnvironments options
 
-/// Pushes one or more packages to the Octopus built-in repository.
-let push setParams = 
+/// Pushes one or more packages to the Octopus built-in repository and returns the exit code.
+let pushWithExitCode setParams = 
     let options = setParams pushOptions
     exec (Push options) options.Common
+
+/// Creates a release.
+let createRelease = createReleaseWithExitCode |> ignore
+
+/// Creates a release, and optionally deploys it to one or more environments.
+let createReleaseAndDeploy = createReleaseAndDeployWithExitCode |> ignore
+
+/// Deploys releases that have already been created.
+let deployRelease = deployReleaseWithExitCode |> ignore
+
+/// Deletes a range of releases.
+let deleteReleases = deleteReleasesWithExitCode |> ignore
+
+/// Lists all environments.
+let listEnvironments = listEnvironmentsWithExitCode |> ignore
+
+/// Pushes one or more packages to the Octopus built-in repository.
+let push = pushWithExitCode |> ignore
+
