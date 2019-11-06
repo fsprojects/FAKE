@@ -261,7 +261,7 @@ let private exec command options =
     
     let commandString = command.ToString()
 
-    use __ = Trace.traceTask "Octo "commandString
+    use __ = Trace.traceTask "Octo " commandString
     Trace.trace (tool + traceArgs)
         
     let result = 
@@ -274,8 +274,13 @@ let private exec command options =
         ) options.Timeout
 
     match result with
-    | 0 -> ()
-    | _ -> failwithf "Octo %s failed. Process finished with exit code %i" commandString result
+    | 0 ->
+        __.MarkSuccess()
+        result
+    | _ ->
+        __.MarkFailed()
+        failwithf "Octo %s failed. Process finished with exit code %i" commandString result
+        result
 
 /// Creates a release.
 let createRelease setParams = 
