@@ -313,20 +313,20 @@ let pushWithExitCode setParams =
     exec (Push options) options.Common
 
 /// Creates a release.
-let createRelease = createReleaseWithExitCode |> ignore
+let createRelease setParams = createReleaseWithExitCode setParams |> ignore
 
 /// Creates a release, and optionally deploys it to one or more environments.
-let createReleaseAndDeploy = createReleaseAndDeployWithExitCode |> ignore
+let createReleaseAndDeploy setReleaseParams setDeployParams = createReleaseAndDeployWithExitCode setReleaseParams setDeployParams |> ignore
 
 /// Deploys releases that have already been created.
-let deployRelease = deployReleaseWithExitCode |> ignore
+let deployRelease setParams = deployReleaseWithExitCode setParams |> ignore
 
 /// Deletes a range of releases.
-let deleteReleases = deleteReleasesWithExitCode |> ignore
+let deleteReleases setParams = deleteReleasesWithExitCode setParams |> ignore
 
 /// Lists all environments.
-let listEnvironments = listEnvironmentsWithExitCode |> ignore
+let listEnvironments setParams = listEnvironmentsWithExitCode setParams |> ignore
 
 /// Pushes one or more packages to the Octopus built-in repository.
-let push = pushWithExitCode |> ignore
+let push setParams = pushWithExitCode setParams |> ignore
 
