@@ -174,18 +174,18 @@ let private pushOptions = {
 
 let private optionalStringParam p o = 
     match o with
-    | Some s -> sprintf " --%s=\"%s\"" p s
+    | Some s -> sprintf "--%s=%s" p s
     | None -> ""
 
 let private optionalObjParam p o = 
     match o with
-    | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
+    | Some x -> sprintf "--%s=%s" p (x.ToString())
     | None -> ""
 
 let private stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
-        sb.Append (sprintf " --%s=\"%s\"" p (o.ToString())) |> ignore
+        sb.Append (sprintf " --%s=%s" p (o.ToString())) |> ignore
     sb.ToString()
 
 let private flag p b = if b then sprintf " --%s" p else ""
@@ -200,9 +200,9 @@ let private releaseCommandLine (opts:CreateReleaseOptions) =
       (optionalStringParam "releasenotesfile" (String.liftString opts.ReleaseNotesFile))
       (flag "ignoreExisting" opts.IgnoreExisting)
       (optionalStringParam "channel" opts.Channel)
-      (flag "ignorechannelrules" opts.IgnoreChannelRules) ] 
-    |> List.fold (+) ""
-
+      (flag "ignorechannelrules" opts.IgnoreChannelRules) ]
+    |> List.filter String.isNotNullOrEmpty
+    
 let private deployCommandLine (opts:DeployReleaseOptions) = 
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "deployto" (String.liftString opts.DeployTo))
@@ -214,49 +214,50 @@ let private deployCommandLine (opts:DeployReleaseOptions) =
       (optionalObjParam "deploymenttimeout" opts.DeploymentTimeout)
       (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle)
       (optionalStringParam "specificmachines" opts.SpecificMachines)
-      (optionalStringParam "channel" opts.Channel) ] 
-    |> List.fold (+) ""
+      (optionalStringParam "channel" opts.Channel) ]
+    |> List.filter String.isNotNullOrEmpty
 
 let private deleteCommandLine (opts:DeleteReleasesOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "minversion" (String.liftString opts.MinVersion))
       (optionalStringParam "maxversion" (String.liftString opts.MaxVersion)) 
-      (optionalStringParam "channel" (opts.Channel)) ] 
-    |> List.fold (+) ""
+      (optionalStringParam "channel" (opts.Channel)) ]
+    |> List.filter String.isNotNullOrEmpty
 
 let private serverCommandLine (opts:ServerOptions) = 
     [ (optionalStringParam "server" (String.liftString opts.ServerUrl))
-      (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ] 
-    |> List.fold (+) ""
+      (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ]
+    |> List.filter String.isNotNullOrEmpty
 
 let private pushCommandLine (opts : PushOptions) =
     [ stringListParam "package" opts.Packages
       flag "replace-existing" opts.ReplaceExisting ]
-    |> List.fold (+) ""
+    |> List.filter String.isNotNullOrEmpty
 
 /// Maps a command to string input for the octopus tools cli.
 let private commandLine command =
     match command with
     | CreateRelease (opts, None) ->
-        sprintf " create-release%s" (releaseCommandLine opts)
+        "create-release" :: (releaseCommandLine opts)
     | CreateRelease (opts, Some (dopts)) ->
-        sprintf " create-release%s%s" (releaseCommandLine opts) (deployCommandLine dopts)
+        "create-release" :: ( List.append (releaseCommandLine opts) (deployCommandLine dopts) )
     | DeployRelease opts ->
-        sprintf " deploy-release%s" (deployCommandLine opts)
+        "deploy-release" :: (deployCommandLine opts)
     | DeleteReleases opts ->
-        sprintf " delete-releases%s" (deleteCommandLine opts)
+        "delete-releases" :: (deleteCommandLine opts)
     | ListEnvironments -> 
-        " list-environments" 
+        ["list-environments"] 
     | Push opts -> 
-        sprintf " push%s" (pushCommandLine opts)
+        "push" :: (pushCommandLine opts)
 
 let private exec command options =
     let serverCommandLineForTracing (opts: ServerOptions) = 
         serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
     let tool = options.ToolPath @@ options.ToolName
-    let args = commandLine command |>(+)<| serverCommandLine options.Server
-    let traceArgs = commandLine command |>(+)<| serverCommandLineForTracing options.Server
+    let args = List.append (commandLine command) (serverCommandLine options.Server)
+               |> Arguments.OfArgs
+    let traceArgs = (List.append (commandLine command) (serverCommandLineForTracing options.Server)) |> List.fold (+) ""
     
     let commandString = command.ToString()
 
@@ -264,13 +265,12 @@ let private exec command options =
     Trace.trace (tool + traceArgs)
         
     let result = 
-        Process.execSimple (fun info -> 
-            {info with 
-                Arguments = args
-                WorkingDirectory = options.WorkingDirectory
-                FileName = tool
-            }
-        ) options.Timeout
+        RawCommand (tool, args)
+        |> CreateProcess.fromCommand
+        |> CreateProcess.withWorkingDirectory options.WorkingDirectory
+        |> CreateProcess.withTimeout options.Timeout
+        |> Proc.run
+        |> (fun finishedProccess -> finishedProccess.ExitCode)
 
     match result with
     | 0 ->
