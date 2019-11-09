@@ -38,7 +38,7 @@ let tests =
             Expect.containsAll props [
                 "CollectCoverage", "true"
                 "CoverletOutput", "coverage.json"
-                "OutputFormat", "cobertura"
+                "CoverletOutputFormat", "cobertura"
                 "Include", "[Incl.Asm1]Incl.Ns1,[Incl.Asm2]Incl.Ns2"
                 "Exclude", "[Excl.Asm1]Excl.Ns1,[Excl.Asm2]Excl.Ns2"
                 "ExcludeByAttribute", "Attr1,Attr2"
@@ -56,6 +56,6 @@ let tests =
             Expect.containsAll props [
                 "CollectCoverage", "true"
                 "CoverletOutput", "./"
-                "OutputFormat", "json"
+                "CoverletOutputFormat", "json"
             ] "expected proper MSBuild properties"
     ]
