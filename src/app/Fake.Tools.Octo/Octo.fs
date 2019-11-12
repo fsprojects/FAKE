@@ -316,7 +316,7 @@ let pushWithExitCode setParams =
     exec (Push options) options.Common
 
 
-let private handelIgnoreExitCode commandString result =
+let private handleIgnoreExitCode commandString result =
     match result with
     | 0 ->
         ()
@@ -327,34 +327,34 @@ let private handelIgnoreExitCode commandString result =
 let createRelease setParams =
     let commandLine = (CreateRelease ((setParams releaseOptions), None)).ToString()
     createReleaseWithExitCode setParams 
-    |> (handelIgnoreExitCode <| commandLine)
+    |> (handleIgnoreExitCode <| commandLine)
 
 /// Creates a release, and optionally deploys it to one or more environments.
 let createReleaseAndDeploy setReleaseParams setDeployParams =
     let commandLine = (CreateRelease ((setReleaseParams releaseOptions), (setDeployParams deployOptions))).ToString()
     createReleaseAndDeployWithExitCode setReleaseParams setDeployParams 
-    |> (handelIgnoreExitCode <| commandLine )
+    |> (handleIgnoreExitCode <| commandLine )
 
 /// Deploys releases that have already been created.
 let deployRelease setParams =
     let commandLine = (DeployRelease (setParams deployOptions)).ToString()
     deployReleaseWithExitCode setParams
-    |> (handelIgnoreExitCode <| commandLine )
+    |> (handleIgnoreExitCode <| commandLine )
 
 /// Deletes a range of releases.
 let deleteReleases setParams = 
     let commandLine = (DeleteReleases ((setParams deleteOptions))).ToString()
     deleteReleasesWithExitCode setParams 
-    |> (handelIgnoreExitCode <| commandLine )
+    |> (handleIgnoreExitCode <| commandLine )
 
 /// Lists all environments.
 let listEnvironments setParams = 
     let commandLine = (ListEnvironments).ToString()
     listEnvironmentsWithExitCode setParams
-    |> (handelIgnoreExitCode <| commandLine)
+    |> (handleIgnoreExitCode <| commandLine)
 
 /// Pushes one or more packages to the Octopus built-in repository.
 let push setParams =
     let commandLine = (Push ((setParams pushOptions))).ToString()
     pushWithExitCode setParams
-    |> (handelIgnoreExitCode <| commandLine)
+    |> (handleIgnoreExitCode <| commandLine)
