@@ -7,6 +7,10 @@ open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
 open System
 open System.IO
+open System.Runtime.CompilerServices
+
+[<assembly: InternalsVisibleTo("Fake.Core.UnitTests")>]
+do()
 
 /// Octo.exe server options
 type ServerOptions = {
@@ -133,7 +137,7 @@ type PushOptions = {
     Common: Options}
 
 /// Option type for selecting one command
-type private Command = 
+type internal Command = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
 | DeleteReleases of DeleteReleasesOptions
@@ -144,7 +148,7 @@ type private Command =
 let private serverOptions = { ServerUrl = ""; ApiKey = ""; }
 
 /// Default parameters to call octo.exe.
-let private commonOptions =
+let internal commonOptions =
     let toolName = "Octo.exe"
     { ToolPath = Tools.findToolFolderInSubPath toolName (Directory.GetCurrentDirectory() @@ "tools" @@ "OctopusTools")
       ToolName = toolName
@@ -153,23 +157,23 @@ let private commonOptions =
       WorkingDirectory = "" }
 
 /// Default options for 'CreateRelease'
-let private releaseOptions = {
+let internal releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
     IgnoreExisting = false; Channel = None; IgnoreChannelRules = false; Common = commonOptions}
 
 /// Default options for 'DeployRelease'
-let private deployOptions = {
+let internal deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
     DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
     NoRawLog = false; Progress = false; Channel = None; Common = commonOptions }
 
 /// Default options for 'DeleteReleases'
-let private deleteOptions = { 
+let internal deleteOptions = { 
     Project = ""; MinVersion = ""; MaxVersion = ""; Channel = None; Common = commonOptions }
 
 /// Default options for 'Push'
-let private pushOptions = {
+let internal pushOptions = {
     Packages = []; ReplaceExisting = false; Common = commonOptions}
 
 let private optionalStringParam p o = 
@@ -235,7 +239,7 @@ let private pushCommandLine (opts : PushOptions) =
     |> List.filter String.isNotNullOrEmpty
 
 /// Maps a command to string input for the octopus tools cli.
-let private commandLine command =
+let internal commandLine command =
     match command with
     | CreateRelease (opts, None) ->
         "create-release" :: (releaseCommandLine opts)
@@ -278,7 +282,6 @@ let private exec command options =
         result
     | _ ->
         __.MarkFailed()
-        failwithf "Octo %s failed. Process finished with exit code %i" commandString result
         result
 
 /// Creates a release and returns the exit code.
@@ -312,21 +315,46 @@ let pushWithExitCode setParams =
     let options = setParams pushOptions
     exec (Push options) options.Common
 
+
+let private handelIgnoreExitCode commandString result =
+    match result with
+    | 0 ->
+        ()
+    | _ ->
+        failwithf "Octo %s failed. Process finished with exit code %i" commandString result
+
 /// Creates a release.
-let createRelease setParams = createReleaseWithExitCode setParams |> ignore
+let createRelease setParams =
+    let commandLine = (CreateRelease ((setParams releaseOptions), None)).ToString()
+    createReleaseWithExitCode setParams 
+    |> (handelIgnoreExitCode <| commandLine)
 
 /// Creates a release, and optionally deploys it to one or more environments.
-let createReleaseAndDeploy setReleaseParams setDeployParams = createReleaseAndDeployWithExitCode setReleaseParams setDeployParams |> ignore
+let createReleaseAndDeploy setReleaseParams setDeployParams =
+    let commandLine = (CreateRelease ((setReleaseParams releaseOptions), (setDeployParams deployOptions))).ToString()
+    createReleaseAndDeployWithExitCode setReleaseParams setDeployParams 
+    |> (handelIgnoreExitCode <| commandLine )
 
 /// Deploys releases that have already been created.
-let deployRelease setParams = deployReleaseWithExitCode setParams |> ignore
+let deployRelease setParams =
+    let commandLine = (DeployRelease (setParams deployOptions)).ToString()
+    deployReleaseWithExitCode setParams
+    |> (handelIgnoreExitCode <| commandLine )
 
 /// Deletes a range of releases.
-let deleteReleases setParams = deleteReleasesWithExitCode setParams |> ignore
+let deleteReleases setParams = 
+    let commandLine = (DeleteReleases ((setParams deleteOptions))).ToString()
+    deleteReleasesWithExitCode setParams 
+    |> (handelIgnoreExitCode <| commandLine )
 
 /// Lists all environments.
-let listEnvironments setParams = listEnvironmentsWithExitCode setParams |> ignore
+let listEnvironments setParams = 
+    let commandLine = (ListEnvironments).ToString()
+    listEnvironmentsWithExitCode setParams
+    |> (handelIgnoreExitCode <| commandLine)
 
 /// Pushes one or more packages to the Octopus built-in repository.
-let push setParams = pushWithExitCode setParams |> ignore
-
+let push setParams =
+    let commandLine = (Push ((setParams pushOptions))).ToString()
+    pushWithExitCode setParams
+    |> (handelIgnoreExitCode <| commandLine)
