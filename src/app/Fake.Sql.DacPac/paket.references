@@ -1,4 +1,4 @@
 group netcore
-
 FSharp.Core
 NETStandard.Library
+Microsoft.SqlServer.DacFx

@@ -172,6 +172,7 @@ group netcore
 
     nuget DotNet.Xdt
     nuget FSharp.Compiler.Service content: none
+    nuget Microsoft.SqlServer.DacFx
 
     nuget NETStandard.Library ~> 2.0
     
@@ -187,11 +188,11 @@ group netcore
     nuget System.Reactive.Compatibility
     nuget System.Security.Cryptography.Algorithms
     nuget MSBuild.StructuredLogger
-        // support net462
-        nuget Microsoft.Build < 16
-        nuget Microsoft.Build.Framework < 16
-        nuget Microsoft.Build.Tasks.Core < 16
-        nuget Microsoft.Build.Utilities.Core < 16
+    // support net462
+    nuget Microsoft.Build < 16
+    nuget Microsoft.Build.Framework < 16
+    nuget Microsoft.Build.Tasks.Core < 16
+    nuget Microsoft.Build.Utilities.Core < 16
     nuget BlackFox.VsWhere
 
     nuget System.Net.Http
