@@ -29,8 +29,14 @@ type ReleasifyParams = {
     /// The full path to an optional icon, which will be used for the generated installer.
     SetupIcon : string option
 
+    /// Don't generate delta packages to save time
+    NoDelta : bool
+
     /// Do not create an MSI file
     NoMsi : bool
+
+    /// Mark the MSI as 64-bit, which is useful in Enterprise deployment scenarios
+    MsiWin64 : bool
 
     /// The path to Squirrel: `squirrel.exe`
     ToolPath : string
@@ -46,6 +52,12 @@ type ReleasifyParams = {
 
     /// The secret key for the code signing certificate
     SigningSecret : string option
+
+    /// Set the required .NET framework version, e.g. net461
+    FrameworkVersion : string option
+
+    /// Add other arguments, in case Squirrel adds new arguments in future
+    AdditionalArguments : string list
 }
 
 let internal defaultParams = lazy(
@@ -55,12 +67,16 @@ let internal defaultParams = lazy(
       BootstrapperExe = None
       LoadingGif = None
       SetupIcon = None
+      FrameworkVersion = None
+      NoDelta = false
       NoMsi = false
+      MsiWin64 = false
       ToolPath = Tools.findToolInSubPath toolname ( Directory.GetCurrentDirectory() </> "tools" </> "Squirrel")
       TimeOut = TimeSpan.FromMinutes 10.
       SignExecutable = None
       SigningKeyFile = None
-      SigningSecret = None })
+      SigningSecret = None
+      AdditionalArguments = [] })
 
 let private createSigningArgs (parameters : ReleasifyParams) =
     new StringBuilder()
@@ -72,12 +88,19 @@ let private createSigningArgs (parameters : ReleasifyParams) =
     |> StringBuilder.toText
 
 let internal buildSquirrelArgs parameters nugetPackage =
-    new StringBuilder()
+    let sb = new StringBuilder()
+
+    parameters.AdditionalArguments |> Seq.iter (fun arg -> StringBuilder.appendIfNotNullOrEmpty arg "" sb |> ignore)
+
+    sb
     |> StringBuilder.appendIfNotNullOrEmpty nugetPackage "--releasify="
     |> StringBuilder.appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
+    |> StringBuilder.appendIfSome parameters.FrameworkVersion (sprintf "--framework-version=%s")
     |> StringBuilder.appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
     |> StringBuilder.appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
+    |> StringBuilder.appendIfTrue parameters.NoDelta "--no-delta"
     |> StringBuilder.appendIfTrue parameters.NoMsi "--no-msi"
+    |> StringBuilder.appendIfTrue parameters.MsiWin64 "--msi-win64"
     |> StringBuilder.appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
     |> StringBuilder.appendIfSome parameters.SignExecutable (fun _ -> createSigningArgs parameters)
     |> StringBuilder.toText
@@ -109,7 +132,7 @@ module internal ResultHandling =
 ///     Target.create "CreatePackage" (fun _ ->
 ///         Squirrel.releasify "./my.nupkg" (fun p -> { p with ReleaseDir = "./squirrel_release")
 ///     )
-/// 
+///
 /// ## Defaults for setParams
 ///
 /// - `ReleaseDir` - `""`
@@ -138,5 +161,5 @@ let releasify (nugetPackage: string) (setParams: ReleasifyParams -> ReleasifyPar
             parameters.TimeOut
 
     ResultHandling.failBuildIfSquirrelReportedError result
-    
+
     __.MarkSuccess()
