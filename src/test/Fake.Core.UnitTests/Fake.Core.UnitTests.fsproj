@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Tools.Octo\Fake.Tools.Octo.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fake.ContextHelper.fs" />
@@ -62,6 +63,7 @@
     <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
+    <Compile Include="Fake.Tools.Testing.Octo.fs" />
     <Compile Include="Main.fs" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.fs" CopyToOutputDirectory="PreserveNewest" />
