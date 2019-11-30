@@ -833,7 +833,10 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "SourceLinkCreate" "false"
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
-    Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
+    Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageRepositoryType" "git"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
     // for github package management to allow uploading the package... -> We need to re-package...
     //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
 
