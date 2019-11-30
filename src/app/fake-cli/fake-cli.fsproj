@@ -4,23 +4,11 @@
         <OutputType>Exe</OutputType>
         <ToolCommandName>fake</ToolCommandName>
         <TargetFramework>netcoreapp2.1</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+        <!-- Debian packaging -->
+        <Prefix>/opt/fake</Prefix>
+        <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/debian-postinst.sh'))</PostInstallScript>
     </PropertyGroup>
 
-    <!-- Debian packaging -->
-    <PropertyGroup Condition=" '$(CustomTarget)' == 'CreateDeb' ">
-        <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
-        <PackAsTool></PackAsTool>
-        <ToolCommandName></ToolCommandName>
-        <Prefix>/opt/fake</Prefix>
-        <PreInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/preinst'))</PreInstallScript>
-        <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/postinst'))</PostInstallScript>
-        <PreRemoveScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/prerm'))</PreRemoveScript>
-        <PostRemoveScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/postrm'))</PostRemoveScript>
-    </PropertyGroup>
-    
     <ItemGroup>
         <Compile Include="AssemblyInfo.fs" />
         <Compile Include="..\Fake.netcore\Cli.fs" />

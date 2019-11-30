@@ -934,28 +934,22 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
-            sprintf "/restore"
-            sprintf "/t:%s" "CreateDeb"
-            sprintf "/p:TargetFramework=%s" targetFramework
-            sprintf "/p:CustomTarget=%s" "CreateDeb"
-            sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release"
-            sprintf "/p:PackageVersion=%s" simpleVersion
+            sprintf "--runtime %s" runtime
+            sprintf "--framework %s" targetFramework
+            sprintf "--configuration %s" "Release"
+            sprintf "--output %s" nugetDncDir
         ] |> String.concat " "
     let result =
         DotNet.exec (fun opt ->
             { opt with
                 WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
-        ) "msbuild" args
-    if result.OK |> not then
+        ) "deb" args
+    if not result.OK then
         failwith "Debian package creation failed"
 
 
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
-    let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
-    Directory.ensure nugetDncDir
     let target = sprintf "%s/%s" nugetDncDir fileName
-    File.Copy(sourceFile, target, true)
     publish target
 )
 

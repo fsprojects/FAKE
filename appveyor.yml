@@ -1,6 +1,7 @@
 image: Visual Studio 2019
 install:
   - cinst fake
+  - dotnet tool install -g dotnet-deb
 
 build_script:
   # See https://stackoverflow.com/a/12866669/1269722
