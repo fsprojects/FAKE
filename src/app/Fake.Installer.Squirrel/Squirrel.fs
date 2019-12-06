@@ -57,7 +57,7 @@ type ReleasifyParams = {
     FrameworkVersion : string option
 
     /// Add other arguments, in case Squirrel adds new arguments in future
-    AdditionalArguments : string list
+    AdditionalArguments : string option
 }
 
 let internal defaultParams = lazy(
@@ -76,7 +76,7 @@ let internal defaultParams = lazy(
       SignExecutable = None
       SigningKeyFile = None
       SigningSecret = None
-      AdditionalArguments = [] })
+      AdditionalArguments = None })
 
 let private createSigningArgs (parameters : ReleasifyParams) =
     new StringBuilder()
@@ -87,23 +87,37 @@ let private createSigningArgs (parameters : ReleasifyParams) =
     |> StringBuilder.appendWithoutQuotes "\""
     |> StringBuilder.toText
 
+let internal valueIfTrue (arg : bool) (value : string) =
+    match arg with
+    | true -> value
+    | false -> ""
+
+let internal argIfSome (arg : string option) (prefix : string) =
+    match arg with
+    | Some v -> prefix + v
+    | None -> ""
+
+let internal argIfNotEmpty (arg : string) (prefix : string) =
+    match arg with
+    | "" -> ""
+    | _ -> prefix + arg
+
 let internal buildSquirrelArgs parameters nugetPackage =
-    let sb = new StringBuilder()
+    let args = [
+        argIfSome parameters.AdditionalArguments ""
+        argIfNotEmpty nugetPackage "--releasify="
+        argIfNotEmpty parameters.ReleaseDir "--releaseDir="
+        argIfSome parameters.FrameworkVersion "--framework-version="
+        argIfSome parameters.LoadingGif "--loadingGif="
+        argIfSome parameters.SetupIcon "--setupIcon="
+        valueIfTrue parameters.NoDelta "--no-delta"
+        valueIfTrue parameters.NoMsi "--no-msi"
+        valueIfTrue parameters.MsiWin64 "--msi-win64"
+        argIfSome parameters.BootstrapperExe "--bootstrapperExe="
+        (match parameters.SignExecutable with | Some true -> createSigningArgs parameters | _ -> "")
+        ]
 
-    parameters.AdditionalArguments |> Seq.iter (fun arg -> StringBuilder.appendIfNotNullOrEmpty arg "" sb |> ignore)
-
-    sb
-    |> StringBuilder.appendIfNotNullOrEmpty nugetPackage "--releasify="
-    |> StringBuilder.appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
-    |> StringBuilder.appendIfSome parameters.FrameworkVersion (sprintf "--framework-version=%s")
-    |> StringBuilder.appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
-    |> StringBuilder.appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
-    |> StringBuilder.appendIfTrue parameters.NoDelta "--no-delta"
-    |> StringBuilder.appendIfTrue parameters.NoMsi "--no-msi"
-    |> StringBuilder.appendIfTrue parameters.MsiWin64 "--msi-win64"
-    |> StringBuilder.appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
-    |> StringBuilder.appendIfSome parameters.SignExecutable (fun _ -> createSigningArgs parameters)
-    |> StringBuilder.toText
+    args |> List.filter (fun arg -> arg <> "")
 
 module internal ResultHandling =
     let (|OK|Failure|) = function
@@ -140,26 +154,30 @@ module internal ResultHandling =
 /// - `BootstrapperExe` - `None`
 /// - `LoadingGif` - `None`
 /// - `SetupIcon` - `None`
+/// - `NoDelta` - `false`
 /// - `NoMsi` - `false`
+/// - `MsiWin64` - `false`
 /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
 /// - `TimeOut` - 10 minutes
 /// - `SignExecutable` - `None`
 /// - `SigningKeyFile` - `None`
 /// - `SigningSecret` - `None`
+/// - `FrameworkVersion` - `None`
+/// - `AdditionalArguments` - `None` A string with additional arguments that will be added to the command line
 let releasify (nugetPackage: string) (setParams: ReleasifyParams -> ReleasifyParams): unit =
     use __ = Trace.traceTask "Squirrel" nugetPackage
     let parameters = defaultParams.Value |> setParams
     let args = buildSquirrelArgs parameters nugetPackage
-    Trace.tracefn "%s" args
+    Trace.tracefn "%O" args
 
-    let result =
-        Process.execSimple
-            (fun info -> { info with
-                            FileName = parameters.ToolPath
-                            WorkingDirectory = defaultArg parameters.WorkingDir "."
-                            Arguments = args})
-            parameters.TimeOut
+    let workingDir = defaultArg parameters.WorkingDir "."
 
-    ResultHandling.failBuildIfSquirrelReportedError result
+    let result = Command.RawCommand(parameters.ToolPath, Arguments.OfArgs args)
+                    |> CreateProcess.fromCommand
+                    |> CreateProcess.withWorkingDirectory workingDir
+                    |> CreateProcess.withTimeout parameters.TimeOut
+                    |> Proc.run
+
+    ResultHandling.failBuildIfSquirrelReportedError result.ExitCode
 
     __.MarkSuccess()
