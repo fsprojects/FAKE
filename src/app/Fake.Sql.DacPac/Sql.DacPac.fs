@@ -30,19 +30,17 @@ module DacPac =
         /// Path to destination (path to DACPAC or Connection String).
         Destination : string
         /// Timeout for deploy (defaults to 120 seconds).
-        Timeout : int option
+        Timeout : int
         /// Block deployment if data loss can occur. Defaults to true.
-        BlockOnPossibleDataLoss : bool option
+        BlockOnPossibleDataLoss : bool
         /// Drops objects in the destination that do not exist in the source. Defaults to false.
-        DropObjectsNotInSource : bool option
+        DropObjectsNotInSource : bool
         /// Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.
-        RecreateDb : bool option
+        RecreateDb : bool
         /// Additional configuration parameters required by sqlpackage.exe
         AdditionalSqlPackageProperties : (string * string) list
         /// SQLCMD variables
-        Variables : (string * string) list
-        ///Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs.
-        Profile : string }
+        Variables : (string * string) list }
 
     let validPaths =
         let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
@@ -65,33 +63,12 @@ module DacPac =
           Action = Deploy
           Source = ""
           Destination = ""
-          Timeout = None
-          BlockOnPossibleDataLoss = None
-          DropObjectsNotInSource = None
-          RecreateDb = None
+          Timeout = 120
+          BlockOnPossibleDataLoss = true
+          DropObjectsNotInSource = false
+          RecreateDb = false
           AdditionalSqlPackageProperties = []
-          Variables = []
-          Profile = "" }
-
-    let private formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
-
-        match argumentName with
-        | "Action" -> sprintf "/Action:%s" action
-        | "Source" -> sprintf """/SourceFile:"%s" """ args.Source
-        | "Destination" when not(String.isNullOrEmpty(args.Destination)) -> sprintf """/TargetConnectionString:"%s" """ args.Destination
-        | "OutputPath" -> sprintf "%s" outputPath
-        | "BlockOnPossibleDataLoss" when args.BlockOnPossibleDataLoss.IsSome -> sprintf "/p:BlockOnPossibleDataLoss=%b" args.BlockOnPossibleDataLoss.Value
-        | "BlockOnPossibleDataLoss" when String.isNullOrEmpty(args.Profile) && args.BlockOnPossibleDataLoss.IsNone -> sprintf "/p:BlockOnPossibleDataLoss=%b" false
-        | "DropObjectsNotInSource" when args.DropObjectsNotInSource.IsSome -> sprintf "/p:DropObjectsNotInSource=%b" args.DropObjectsNotInSource.Value
-        | "DropObjectsNotInSource" when String.isNullOrEmpty(args.Profile) && args.DropObjectsNotInSource.IsNone -> sprintf "/p:DropObjectsNotInSource=%b" false
-        | "Timeout" when args.Timeout.IsSome -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | "Timeout" when String.isNullOrEmpty(args.Profile) && args.Timeout.IsNone -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | "RecreateDb" when args.RecreateDb.IsSome -> sprintf "/p:CreateNewDatabase=%b" args.RecreateDb.Value
-        | "RecreateDb" when String.isNullOrEmpty(args.Profile) && args.RecreateDb.IsNone -> sprintf "/p:CreateNewDatabase=%b" false
-        | "AdditionalSqlPackageProperties" when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
-        | "Variables" when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
-        | "Profile" when not(System.String.IsNullOrEmpty(args.Profile)) -> sprintf "/pr:%s" args.Profile
-        | _ -> ""
+          Variables = [] }
 
     module PropertyKeys =
         /// When creating a new SQL Azure database, specifies the database service tier to use e.g. S2, P1
@@ -106,32 +83,10 @@ module DacPac =
         let outputPath = defaultArg(outputPath |> Option.map(sprintf """/OutputPath:"%s" """)) ""
         action, outputPath
 
-    let private formatDacPacArguments args action outputPath additionalParameters variables =
-
-        let format = formatArgument args action outputPath additionalParameters variables
-
-        let actionParameter = format "Action"
-        let sourceParameter = format "Source"
-        let destinationParameter = format "Destination"
-        let outputPathParameter = format "OutputPath"
-        let blockOnPossibleDataLossParameter = format "BlockOnPossibleDataLoss"
-        let dropObjectsNotInSourceParameter = format "DropObjectsNotInSource"
-        let timeoutParameter = format "Timeout"
-        let recreateDbParameter = format "RecreateDb"
-        let additionalSqlPackagePropertiesParameter = format "AdditionalSqlPackageProperties"
-        let variablesParameter = format "Variables"
-        let profileParameter = format "Profile"
-        
-        [ actionParameter; sourceParameter; destinationParameter; outputPathParameter; blockOnPossibleDataLossParameter; dropObjectsNotInSourceParameter; timeoutParameter; recreateDbParameter; additionalSqlPackagePropertiesParameter; variablesParameter; profileParameter ]
-            |> List.filter (fun item -> item <> "")
-            |> String.concat " "
-
     /// Deploys a SQL DacPac or database to another database or DacPac.
     let deployDb setParams =
         let args = setParams DefaultDeploymentArgs
         let action, outputPath = generateCommandLine args.Action
-
-        printfn "%A" args
 
         let concat parameter =
             List.map (fun (key, value) -> sprintf "/%s:%s=%s" parameter key value)
@@ -141,8 +96,6 @@ module DacPac =
 
         let variables = args.Variables |> concat "v"
 
-        let arguments = formatDacPacArguments args action outputPath additionalParameters variables
-
         if System.String.IsNullOrWhiteSpace args.SqlPackageToolPath then
             failwith "No SqlPackage.exe filename was given."
 
@@ -151,10 +104,10 @@ module DacPac =
                 if validPaths |> List.contains args.SqlPackageToolPath then validPaths
                 else [ args.SqlPackageToolPath ]
             failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
-                 
+    
         let result =
             Process.execRaw
-                (fun psi -> { psi with Arguments = arguments; FileName = args.SqlPackageToolPath })
+                (fun psi -> { psi with Arguments = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b %s %s""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb additionalParameters variables; FileName = args.SqlPackageToolPath })
                 TimeSpan.MaxValue
                 true
                 (printfn "SqlPackage error: %s")
@@ -162,5 +115,5 @@ module DacPac =
 
         match result with
         | 0 -> ()
-        | _ -> failwith "Error executing DACPAC deployment. Please see output for error details"
+        | _ -> failwith "Error executing DACPAC deployment. Please see output for error details."
 
