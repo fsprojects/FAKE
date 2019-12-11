@@ -1420,6 +1420,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             /// Doesn't execute an implicit restore during build. (--no-restore)
             NoRestore: bool
             /// Other msbuild specific parameters
@@ -1435,6 +1437,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            NoLogo = false
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
@@ -1463,6 +1466,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             (if param.Native then [ "--native" ] else [])
+            (if param.NoLogo then [ "--nologo" ] else [])
             param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
