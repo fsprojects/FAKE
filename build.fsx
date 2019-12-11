@@ -940,8 +940,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
             sprintf "--configuration %s" "Release"
             sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
-    setBuildEnvVars()    
-    DotNet.exec dtntSmpl "tool" "restore" |> ignore<ProcessResult>
+    setBuildEnvVars()
     let result =
         DotNet.exec (fun opt ->
             { opt with
