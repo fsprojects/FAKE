@@ -236,6 +236,8 @@ let legacyAssemblyInfos =
         AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
 
 let publish f =
+    if not (File.Exists f) && not (Directory.Exists f) then
+        failwithf "The path '%s' is not a file and not a directory so the publish call failed!" f
     Trace.publish ImportData.BuildArtifact f
 
 Target.create "_Legacy_BuildSolution" (fun _ ->

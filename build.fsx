@@ -815,16 +815,7 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     publishRuntime "portable"
 )
 
-Target.create "_DotNetPackage" (fun _ ->
-    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
-    // This lines actually ensures we get the correct version checked in
-    // instead of the one previously bundled with `fake` or `paket`
-    callpaket "." "restore" // first make paket restire its target file if it feels like it.
-    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
-
-
-    //Environment.setEnvironVar "IncludeSource" "true"
-    //Environment.setEnvironVar "IncludeSymbols" "false"
+let setBuildEnvVars() =
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
     Environment.setEnvironVar "PackageVersion" nugetVersion
     Environment.setEnvironVar "Version" nugetVersion
@@ -838,9 +829,19 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageRepositoryType" "git"
     Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    //Environment.setEnvironVar "IncludeSource" "true"
+    //Environment.setEnvironVar "IncludeSymbols" "false"
     // for github package management to allow uploading the package... -> We need to re-package...
     //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
 
+Target.create "_DotNetPackage" (fun _ ->
+    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
+    // This lines actually ensures we get the correct version checked in
+    // instead of the one previously bundled with `fake` or `paket`
+    callpaket "." "restore" // first make paket restire its target file if it feels like it.
+    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
+
+    setBuildEnvVars()
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -932,14 +933,15 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1"
-    // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
             sprintf "--runtime %s" runtime
             sprintf "--framework %s" targetFramework
             sprintf "--configuration %s" "Release"
-            sprintf "--output %s" nugetDncDir
+            sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
+    setBuildEnvVars()    
+    DotNet.exec dtntSmpl "tool" "restore" |> ignore<ProcessResult>
     let result =
         DotNet.exec (fun opt ->
             { opt with
