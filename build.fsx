@@ -206,7 +206,7 @@ let restoreTools =
 let callpaket wd args =
     restoreTools()
     
-    let res = DotNet.exec (dtntWorkDir wd) "tool" (sprintf "paket %s" args)
+    let res = DotNet.exec (dtntWorkDir wd) "paket" args
     if not res.OK then
         failwithf "paket failed to start: %A" res
 
