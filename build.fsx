@@ -834,10 +834,12 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "SourceLinkCreate" "false"
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
-    Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
+    Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageRepositoryType" "git"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
     // for github package management to allow uploading the package... -> We need to re-package...
     //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
-    Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack
     DotNet.pack (fun c ->
@@ -933,28 +935,22 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
-            sprintf "/restore"
-            sprintf "/t:%s" "CreateDeb"
-            sprintf "/p:TargetFramework=%s" targetFramework
-            sprintf "/p:CustomTarget=%s" "CreateDeb"
-            sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release"
-            sprintf "/p:PackageVersion=%s" simpleVersion
+            sprintf "--runtime %s" runtime
+            sprintf "--framework %s" targetFramework
+            sprintf "--configuration %s" "Release"
+            sprintf "--output %s" nugetDncDir
         ] |> String.concat " "
     let result =
         DotNet.exec (fun opt ->
             { opt with
                 WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
-        ) "msbuild" args
-    if result.OK |> not then
+        ) "deb" args
+    if not result.OK then
         failwith "Debian package creation failed"
 
 
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
-    let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
-    Directory.ensure nugetDncDir
     let target = sprintf "%s/%s" nugetDncDir fileName
-    File.Copy(sourceFile, target, true)
     publish target
 )
 
