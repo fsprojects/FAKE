@@ -2,7 +2,11 @@
 
 ## 5.18.4-alpha - tbd
 
-* tbd
+* EHNANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2403
+* ENHANCEMENT: Update bundled paket - https://github.com/fsharp/FAKE/pull/2425
+* BUGFIX: Fix typo in Rsync.fs options, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2432
+* BUGFIX: Fix Coverlet output property name, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2427
+* BUGFIX: Octopus deploy trace always marked failures, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2428
 
 ## 5.18.3 - 2019-11-04
 
