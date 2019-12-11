@@ -1,13 +1,18 @@
 image: Visual Studio 2019
-install:
-  - cinst fake
 
+# via chocolatey
+##install:
+##  - cinst fake
+##build_script:
+##  # See https://stackoverflow.com/a/12866669/1269722
+##  # Problem is that colors are lost
+##  # Don't blame me but powershell is the bigest crap on earth
+##  - cmd: fake.exe run build.fsx --parallel 3
+##  #- ps: .\build.cmd
 build_script:
-  # See https://stackoverflow.com/a/12866669/1269722
-  # Problem is that colors are lost
-  # Don't blame me but powershell is the bigest crap on earth
-  - cmd: fake.exe run build.fsx --parallel 3
-  #- ps: .\build.cmd
+  - dotnet tool restore
+  - dotnet fake run build.fsx --parallel 3
+
 on_failure:
   - appveyor PushArtifact FAKE.svclog
 test: off
