@@ -28,8 +28,9 @@ env:
 mono:
   - 5.18.1
 
-script: 
-  - dotnet build build.proj /nologo /verbosity:minimal /p:Parallel=true
+script:
+  - dotnet tool restore
+  - dotnet fake build --parallel 3
 
 branches:
   except:

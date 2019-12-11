@@ -13,6 +13,12 @@
       "commands": [
         "paket"
       ]
+    },
+    "fake-cli": {
+      "version": "5.18.3",
+      "commands": [
+        "fake"
+      ]
     }
   }
 }
