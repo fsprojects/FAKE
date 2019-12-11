@@ -13,7 +13,6 @@ addons:
       - rubygems-integration
 
 before_install:
-  - dotnet tool install -g dotnet-deb
   - gem install --no-ri --no-rdoc fpm 
   
   #- wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
