@@ -195,15 +195,20 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     |> File.deleteAll
 )
 
+let restoreTools =
+    let mutable alreadyRestored = false
+    (fun () ->
+        if not alreadyRestored then
+            DotNet.exec dtntSmpl "tool" "restore" |> ignore<ProcessResult>
+            alreadyRestored <- true
+    )
+
 let callpaket wd args =
-    if 0 <> Process.execSimple (fun info ->
-            { info with
-                FileName = wd </> ".paket/paket.exe"
-                WorkingDirectory = wd
-                Arguments = args }
-            |> Process.withFramework
-            ) (System.TimeSpan.FromMinutes 5.0) then
-        failwith "paket failed to start"
+    restoreTools()
+    
+    let res = DotNet.exec (dtntWorkDir wd) "tool" (sprintf "paket %s" args)
+    if not res.OK then
+        failwithf "paket failed to start: %A" res
 
 // Targets
 Target.create "Clean" (fun _ ->
@@ -413,10 +418,6 @@ Target.create "StartBootstrapBuild" (fun _ ->
     | Result.Error combStatus ->
         System.String.Join("\n - ", combStatus.Statuses |> Seq.map formatState)
         |> failwithf "At least one CI failed:\n - %s"
-)
-
-Target.create "DownloadPaket" (fun _ ->
-    callpaket "." "--version"
 )
 
 Target.create "UnskipAssemblyInfo" (fun _ ->
@@ -841,6 +842,7 @@ Target.create "_DotNetPackage" (fun _ ->
     callpaket "." "restore" // first make paket restire its target file if it feels like it.
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
+    restoreTools()
     setBuildEnvVars()
     // dotnet pack
     DotNet.pack (fun c ->
@@ -1193,14 +1195,11 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "_StartDnc"
-    ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "_DotNetPackage"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "_StartDnc"
-    ==> "_DotNetPackage"
-"DownloadPaket"
     ==> "_DotNetPackage"
 "_DotNetPackage"
     ==> "DotNetPackage"
@@ -1220,9 +1219,6 @@ for runtime in "current" :: "portable" :: runtimes do
         ==> targetName
         |> ignore
     "_StartDnc"
-        ==> targetName
-        |> ignore
-    "DownloadPaket"
         ==> targetName
         |> ignore
     targetName
