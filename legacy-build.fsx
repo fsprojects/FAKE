@@ -55,7 +55,7 @@ let packages =
 
 let additionalFiles = [
     "License.txt"
-    "README.markdown"
+    "README.md"
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
