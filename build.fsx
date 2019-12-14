@@ -113,6 +113,8 @@ let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
 let githubtoken = releaseSecret "<githubtoken>" "github_token"
 
+do Environment.setEnvVar "COREHOST_TRACE" "0"
+
 BuildServer.install [
     AppVeyor.Installer
     TeamCity.Installer

@@ -22,7 +22,7 @@ before_install:
   #- sudo apt-get install dotnet-sdk-2.1=2.1.508* -y
 
 env:
- - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
+ - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis COREHOST_TRACE=1
 
 
 mono:
