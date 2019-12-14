@@ -816,10 +816,10 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     publishRuntime "portable"
 )
 
-let setBuildEnvVars() =
+let setBuildEnvVars(versionVar) =
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
-    Environment.setEnvironVar "PackageVersion" nugetVersion
-    Environment.setEnvironVar "Version" nugetVersion
+    Environment.setEnvironVar "PackageVersion" versionVar
+    Environment.setEnvironVar "Version" versionVar
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
@@ -843,7 +843,7 @@ Target.create "_DotNetPackage" (fun _ ->
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
     restoreTools()
-    setBuildEnvVars()
+    setBuildEnvVars(nugetVersion)
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -942,7 +942,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
             sprintf "--configuration %s" "Release"
             sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
-    setBuildEnvVars()
+    setBuildEnvVars(simpleVersion)
     let result =
         DotNet.exec (fun opt ->
             { opt with
