@@ -30,7 +30,7 @@ mono:
 
 script:
   - dotnet tool restore
-  - dotnet fake build --parallel 3
+  - ./runwithdots.sh
 
 branches:
   except:
