@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dotnet fake build --parallel 3 > output.txt 2> error.txt &
+COREHOST_TRACE=1 dotnet fake build --parallel 3 > output.txt 2> error.txt &
 #echo "wtf123" > output.txt &
 
 pid=$!
