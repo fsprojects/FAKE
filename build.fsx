@@ -63,8 +63,6 @@ open Fake.DotNet.Testing
 let disableBootstrap = false
 
 // properties
-let projectName = "FAKE"
-let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 
@@ -81,19 +79,14 @@ let chocoReleaseDir = nugetDncDir </> "chocolatey"
 let nugetLegacyDir = releaseDir </> "legacy"
 
 let reportDir = "./report"
-let packagesDir = "./packages"
-let buildMergedDir = buildDir </> "merged"
 
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
 let templateDir = srcDir</>"template"
-let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-
-let vault = ``Legacy-build``.vault
 let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 

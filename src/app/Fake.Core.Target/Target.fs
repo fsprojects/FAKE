@@ -18,12 +18,11 @@ Usage:
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
-    -t, --target <target>
-                          Run the given target (ignored if positional argument 'target' is given)
+    -t, --target <target>    Run the given target (ignored if positional argument 'target' is given)
     -e, --environment-variable <keyval> [*]
-                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
-    -s, --single-target    Run only the specified target.
-    -p, --parallel <num>  Run parallel with the given number of tasks.
+                             Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
+    -s, --single-target      Run only the specified target.
+    -p, --parallel <num>     Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
