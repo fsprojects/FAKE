@@ -11,49 +11,25 @@ module ExpectoHelpers =
                 let filteredTests = config.filter test
                 f filteredTests }
 
-    let withTimeout (timeout:TimeSpan) (labelPath:string) (testCode) =
-        match testCode with
-        | Sync (stest: (unit -> unit)) ->
-            Async (async {
-                let t = Async.StartAsTask(async { return stest() })
-                let delay = Task.Delay(timeout)
-                let! result = Task.WhenAny(t, delay) |> Async.AwaitTask
-                if result = delay then
-                    Tests.failtestf "Test '%s' timed out" labelPath
-            })
-        | SyncWithCancel (stest: (CancellationToken -> unit))  ->
-            Async (async {
-                let! tok = Async.CancellationToken
-                let t = Async.StartAsTask(async { return stest tok })
-                let delay = Task.Delay(timeout)
-                let! result = Task.WhenAny(t, delay) |> Async.AwaitTask
-                if result = delay then
-                    Tests.failtestf "Test '%s' timed out" labelPath
-            })
-        
-        | Async (atest: Async<unit>) ->
-            Async (async {
-                let! t = Async.StartChild(atest, int timeout.TotalMilliseconds)
-                try
-                    let! result = t
-                    return result
-                with :? System.TimeoutException ->
-                    Tests.failtestf "Test '%s' timed out" labelPath
-            })
-        
-        | AsyncFsCheck (testConfig: FsCheckConfig option,
-                        stressConfig: FsCheckConfig option,
-                        test: (FsCheckConfig -> Async<unit>)) ->
-            AsyncFsCheck (testConfig, stressConfig, fun config -> async {
-                let! t = Async.StartChild(test config, int timeout.TotalMilliseconds)
-                try
-                    let! result = t
-                    return result
-                with :? System.TimeoutException ->
-                    Tests.failtestf "Test '%s' timed out" labelPath
-            })
-        
+    let withTimeout (timeout:TimeSpan) (labelPath:string) (test: TestCode) : TestCode =
+        let timeoutAsync testAsync =
+          async {
+              let t = Async.StartAsTask(testAsync)
+              let delay = Task.Delay(timeout)
+              let! result = Task.WhenAny(t, delay) |> Async.AwaitTask
+              if result = delay then
+                Tests.failtestf "Test '%s' timed out" labelPath
+          }
 
+        match test with
+        | Sync test -> async { test() } |> timeoutAsync |> Async
+        | SyncWithCancel test ->
+          SyncWithCancel (fun ct ->
+            Async.StartImmediate(async { test ct } |> timeoutAsync)
+          )
+        | Async test -> timeoutAsync test |> Async
+        | AsyncFsCheck (testConfig, stressConfig, test) ->
+          AsyncFsCheck (testConfig, stressConfig, test >> timeoutAsync)
 
     let mapTest f test =
         let rec recMapping labelPath test =
