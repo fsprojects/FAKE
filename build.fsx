@@ -642,37 +642,30 @@ Target.create "HostDocs" (fun _ ->
     System.Console.ReadKey() |> ignore
 )
 
+let runExpecto dllPath resultsXml =
+    let processResult =
+        DotNet.exec (dtntWorkDir root) (sprintf "%s" dllPath) "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) resultsXml
+
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    runExpecto "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
-    let processResult =
-        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
+    runExpecto "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    runExpecto "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" ("Fake_Core_UnitTests.TestResults.xml")
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    runExpecto "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" ("Fake_Core_CommandLine_UnitTests.TestResults.xml")
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->

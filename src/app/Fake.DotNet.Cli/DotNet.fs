@@ -1060,6 +1060,7 @@ module DotNet =
                       Version = common.Version
                       Environment = common.Environment
                       WorkingDirectory = common.WorkingDirectory
+                      Timeout = None
                       CustomParams = None
                       Verbosity = None
                       Diagnostics = false }) "msbuild" args
