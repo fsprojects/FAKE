@@ -11,8 +11,8 @@ done
 
 exitCode=`wait $pid`
 
-tail -n 1000 output.txt
-tail -n 1000 error.txt
+tail -n 10000 output.txt
+tail -n 10000 error.txt
 printf "\nExitted with ${pid}" > /dev/tty
 
 exit ${pid}
