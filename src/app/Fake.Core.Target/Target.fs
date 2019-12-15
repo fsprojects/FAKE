@@ -783,6 +783,10 @@ module Target =
                                         failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                    let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
+                                    let openList = System.String.Join(", ", runnable |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                    Trace.tracefn "FAKE worker idle because %d Targets (%s) are still running and all open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
+                                        runningTasks.Length running openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
