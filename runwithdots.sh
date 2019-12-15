@@ -15,5 +15,5 @@ tail -n 10000 output.txt
 tail -n 10000 error.txt
 printf "\nExitted with ${pid}" > /dev/tty
 
-exit ${pid}
+exit ${exitCode}
 
