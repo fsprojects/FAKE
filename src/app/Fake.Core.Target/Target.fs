@@ -18,12 +18,11 @@ Usage:
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
-    -t, --target <target>
-                          Run the given target (ignored if positional argument 'target' is given)
+    -t, --target <target>    Run the given target (ignored if positional argument 'target' is given)
     -e, --environment-variable <keyval> [*]
-                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
-    -s, --single-target    Run only the specified target.
-    -p, --parallel <num>  Run parallel with the given number of tasks.
+                             Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
+    -s, --single-target      Run only the specified target.
+    -p, --parallel <num>     Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
@@ -784,6 +783,10 @@ module Target =
                                         failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                    let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
+                                    let openList = System.String.Join(", ", runnable |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                    Trace.tracefn "FAKE worker idle because %d Targets (%s) are still running and all open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
+                                        runningTasks.Length running openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->

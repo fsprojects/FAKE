@@ -63,8 +63,6 @@ open Fake.DotNet.Testing
 let disableBootstrap = false
 
 // properties
-let projectName = "FAKE"
-let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 
@@ -81,19 +79,14 @@ let chocoReleaseDir = nugetDncDir </> "chocolatey"
 let nugetLegacyDir = releaseDir </> "legacy"
 
 let reportDir = "./report"
-let packagesDir = "./packages"
-let buildMergedDir = buildDir </> "merged"
 
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
 let templateDir = srcDir</>"template"
-let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-
-let vault = ``Legacy-build``.vault
 let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
@@ -112,6 +105,8 @@ let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
 let githubtoken = releaseSecret "<githubtoken>" "github_token"
+
+do Environment.setEnvironVar "COREHOST_TRACE" "0"
 
 BuildServer.install [
     AppVeyor.Installer
@@ -647,37 +642,30 @@ Target.create "HostDocs" (fun _ ->
     System.Console.ReadKey() |> ignore
 )
 
+let runExpecto workDir dllPath resultsXml =
+    let processResult =
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
+
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
-    let processResult =
-        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
+    runExpecto targetDir "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" ("Fake_Core_UnitTests.TestResults.xml")
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" ("Fake_Core_CommandLine_UnitTests.TestResults.xml")
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -816,10 +804,10 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     publishRuntime "portable"
 )
 
-let setBuildEnvVars() =
+let setBuildEnvVars(versionVar) =
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
-    Environment.setEnvironVar "PackageVersion" nugetVersion
-    Environment.setEnvironVar "Version" nugetVersion
+    Environment.setEnvironVar "PackageVersion" versionVar
+    Environment.setEnvironVar "Version" versionVar
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
@@ -843,7 +831,7 @@ Target.create "_DotNetPackage" (fun _ ->
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
     restoreTools()
-    setBuildEnvVars()
+    setBuildEnvVars(nugetVersion)
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -942,7 +930,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
             sprintf "--configuration %s" "Release"
             sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
-    setBuildEnvVars()
+    setBuildEnvVars(simpleVersion)
     let result =
         DotNet.exec (fun opt ->
             { opt with

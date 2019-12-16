@@ -513,6 +513,8 @@ module DotNet =
             Version : string option
             /// Command working directory
             WorkingDirectory: string
+            /// Process timeout, kills the process after the specified time
+            Timeout: TimeSpan option
             /// Custom parameters
             CustomParams: string option
             /// Logging verbosity (--verbosity)
@@ -548,6 +550,7 @@ module DotNet =
                 )
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
+            Timeout = None
             CustomParams = None
             Version = None
             Verbosity = None
@@ -596,6 +599,8 @@ module DotNet =
 
         let inline withWorkingDirectory wd x =
             lift (fun o -> { o with WorkingDirectory = wd}) x
+        let inline withTimeout t x =
+            lift (fun o -> { o with Timeout = t}) x
         let inline withDiagnostics diag x =
             lift (fun o -> { o with Diagnostics = diag}) x
         let inline withVerbosity verb x =
@@ -711,6 +716,7 @@ module DotNet =
         c
         |> CreateProcess.withCommand cmd
         |> (if c.WorkingDirectory.IsNone then CreateProcess.withWorkingDirectory options.WorkingDirectory else id)
+        |> (match options.Timeout with Some timeout -> CreateProcess.withTimeout timeout | None -> id)
         //|> CreateProcess.withArguments (Args.toWindowsCommandLine cmdArgs)
         |> CreateProcess.withEnvironmentMap (EnvMap.ofMap options.Environment)
         |> CreateProcess.setEnvironmentVariable "PATH" (
@@ -1054,6 +1060,7 @@ module DotNet =
                       Version = common.Version
                       Environment = common.Environment
                       WorkingDirectory = common.WorkingDirectory
+                      Timeout = None
                       CustomParams = None
                       Verbosity = None
                       Diagnostics = false }) "msbuild" args

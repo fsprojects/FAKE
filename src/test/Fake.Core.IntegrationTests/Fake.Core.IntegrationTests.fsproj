@@ -12,6 +12,7 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
+    <ProjectReference Include="..\Fake.ExpectoSupport\Fake.ExpectoSupport.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestHelpers.fs" />
