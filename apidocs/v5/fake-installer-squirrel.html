@@ -346,15 +346,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
+          <code onmouseout="hideTip(event, '1028', 1028)" onmouseover="showTip(event, '1028', 1028)">
             Squirrel.releasify(...)
           </code>
-          <div class="tip" id="1027">
+          <div class="tip" id="1028">
             <strong>Signature:</strong> nugetPackage:string -&gt; setParams:(ReleasifyParams -&gt; ReleasifyParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Squirrel/Squirrel.fs#L126-126" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Squirrel/Squirrel.fs#L167-167" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a Squirrel installer for given NuGet package
@@ -382,12 +382,16 @@ Will fail if Squirrel terminates with non-zero exit code.</p>
 <li><code>BootstrapperExe</code> - <code>None</code></li>
 <li><code>LoadingGif</code> - <code>None</code></li>
 <li><code>SetupIcon</code> - <code>None</code></li>
+<li><code>NoDelta</code> - <code>false</code></li>
 <li><code>NoMsi</code> - <code>false</code></li>
+<li><code>MsiWin64</code> - <code>false</code></li>
 <li><code>ToolPath</code> - The <code>squirrel.exe</code> path if it exists in a subdirectory of the current directory.</li>
 <li><code>TimeOut</code> - 10 minutes</li>
 <li><code>SignExecutable</code> - <code>None</code></li>
 <li><code>SigningKeyFile</code> - <code>None</code></li>
 <li><code>SigningSecret</code> - <code>None</code></li>
+<li><code>FrameworkVersion</code> - <code>None</code></li>
+<li><code>AdditionalArguments</code> - <code>None</code> A string with additional arguments that will be added to the command line</li>
 </ul>
 
 
@@ -433,7 +437,7 @@ Will fail if Squirrel terminates with non-zero exit code.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.3</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1439</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -394,15 +394,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2348', 2348)" onmouseover="showTip(event, '2348', 2348)">
+          <code onmouseout="hideTip(event, '2349', 2349)" onmouseover="showTip(event, '2349', 2349)">
             Octo.createRelease(setParams)
           </code>
-          <div class="tip" id="2348">
+          <div class="tip" id="2349">
             <strong>Signature:</strong> setParams:(CreateReleaseOptions -&gt; CreateReleaseOptions) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L281-281" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L327-327" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a release.</p>
@@ -413,15 +413,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2349', 2349)" onmouseover="showTip(event, '2349', 2349)">
+          <code onmouseout="hideTip(event, '2350', 2350)" onmouseover="showTip(event, '2350', 2350)">
             Octo.createReleaseAndDeploy(...)
           </code>
-          <div class="tip" id="2349">
+          <div class="tip" id="2350">
             <strong>Signature:</strong> setReleaseParams:(CreateReleaseOptions -&gt; CreateReleaseOptions) -&gt; setDeployParams:(DeployReleaseOptions -&gt; DeployReleaseOptions option) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L286-286" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L333-333" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a release, and optionally deploys it to one or more environments.</p>
@@ -432,15 +432,53 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2350', 2350)" onmouseover="showTip(event, '2350', 2350)">
+          <code onmouseout="hideTip(event, '2351', 2351)" onmouseover="showTip(event, '2351', 2351)">
+            Octo.createReleaseAndDeployWithExitCode(...)
+          </code>
+          <div class="tip" id="2351">
+            <strong>Signature:</strong> setReleaseParams:(CreateReleaseOptions -&gt; CreateReleaseOptions) -&gt; setDeployParams:(DeployReleaseOptions -&gt; DeployReleaseOptions option) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L293-293" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Creates a release, and optionally deploys it to one or more environments and returns the exit code.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2352', 2352)" onmouseover="showTip(event, '2352', 2352)">
+            Octo.createReleaseWithExitCode(...)
+          </code>
+          <div class="tip" id="2352">
+            <strong>Signature:</strong> setParams:(CreateReleaseOptions -&gt; CreateReleaseOptions) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L288-288" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Creates a release and returns the exit code.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2353', 2353)" onmouseover="showTip(event, '2353', 2353)">
             Octo.deleteReleases(setParams)
           </code>
-          <div class="tip" id="2350">
+          <div class="tip" id="2353">
             <strong>Signature:</strong> setParams:(DeleteReleasesOptions -&gt; DeleteReleasesOptions) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L297-297" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L345-345" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes a range of releases.</p>
@@ -451,15 +489,34 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2351', 2351)" onmouseover="showTip(event, '2351', 2351)">
+          <code onmouseout="hideTip(event, '2354', 2354)" onmouseover="showTip(event, '2354', 2354)">
+            Octo.deleteReleasesWithExitCode(...)
+          </code>
+          <div class="tip" id="2354">
+            <strong>Signature:</strong> setParams:(DeleteReleasesOptions -&gt; DeleteReleasesOptions) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L304-304" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Deletes a range of releases and returns the exit code.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2355', 2355)" onmouseover="showTip(event, '2355', 2355)">
             Octo.deployRelease(setParams)
           </code>
-          <div class="tip" id="2351">
+          <div class="tip" id="2355">
             <strong>Signature:</strong> setParams:(DeployReleaseOptions -&gt; DeployReleaseOptions) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L292-292" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L339-339" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deploys releases that have already been created.</p>
@@ -470,15 +527,34 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2352', 2352)" onmouseover="showTip(event, '2352', 2352)">
+          <code onmouseout="hideTip(event, '2356', 2356)" onmouseover="showTip(event, '2356', 2356)">
+            Octo.deployReleaseWithExitCode(...)
+          </code>
+          <div class="tip" id="2356">
+            <strong>Signature:</strong> setParams:(DeployReleaseOptions -&gt; DeployReleaseOptions) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L299-299" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Deploys releases that have already been created and returns the exit code.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2357', 2357)" onmouseover="showTip(event, '2357', 2357)">
             Octo.listEnvironments(setParams)
           </code>
-          <div class="tip" id="2352">
+          <div class="tip" id="2357">
             <strong>Signature:</strong> setParams:(Options -&gt; Options) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L302-302" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L351-351" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Lists all environments.</p>
@@ -489,18 +565,56 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2353', 2353)" onmouseover="showTip(event, '2353', 2353)">
+          <code onmouseout="hideTip(event, '2358', 2358)" onmouseover="showTip(event, '2358', 2358)">
+            Octo.listEnvironmentsWithExitCode(...)
+          </code>
+          <div class="tip" id="2358">
+            <strong>Signature:</strong> setParams:(Options -&gt; Options) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L309-309" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Lists all environments and returns the exit code.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2359', 2359)" onmouseover="showTip(event, '2359', 2359)">
             Octo.push(setParams)
           </code>
-          <div class="tip" id="2353">
+          <div class="tip" id="2359">
             <strong>Signature:</strong> setParams:(PushOptions -&gt; PushOptions) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L307-307" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L357-357" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Pushes one or more packages to the Octopus built-in repository.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2360', 2360)" onmouseover="showTip(event, '2360', 2360)">
+            Octo.pushWithExitCode(setParams)
+          </code>
+          <div class="tip" id="2360">
+            <strong>Signature:</strong> setParams:(PushOptions -&gt; PushOptions) -&gt; int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L314-314" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Pushes one or more packages to the Octopus built-in repository and returns the exit code.</p>
 
 
         </td>
@@ -544,7 +658,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.18.3</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1439</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
