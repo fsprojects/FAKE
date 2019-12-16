@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 dist: xenial # Ubuntu 16.04
 
-dotnet : 2.1.508
+dotnet: 3.1.100
 
 addons:
   apt:
@@ -28,8 +28,9 @@ env:
 mono:
   - 5.18.1
 
-script: 
-  - dotnet build build.proj /nologo /verbosity:minimal /p:Parallel=true
+script:
+  - dotnet tool restore
+  - dotnet fake build
 
 branches:
   except:

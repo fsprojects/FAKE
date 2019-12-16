@@ -21,7 +21,7 @@ do_build:
     - "echo 'Package: *\nPin: origin \"archive.debian.org\"\nPin-Priority: 500' | tee -a /etc/apt/preferences.d/10-archive-pin"
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
-    - wget https://github.com/fsharp/FAKE/releases/download/5.16.0/fake-dotnetcore-linux-x64.zip -O /tmp/fake-dotnetcore-linux-x64.zip
+    - wget https://github.com/fsharp/FAKE/releases/download/5.18.3/fake-dotnetcore-linux-x64.zip -O /tmp/fake-dotnetcore-linux-x64.zip
     - mkdir fake-dotnetcore
     - unzip -n /tmp/fake-dotnetcore-linux-x64.zip -d fake-dotnetcore || echo unzip returned $?
     - chmod +x $PWD/fake-dotnetcore/fake

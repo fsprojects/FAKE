@@ -1,6 +1,9 @@
 # FAKE - F# Make
 
 [![Join the chat at https://gitter.im/fsharp/FAKE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsharp/FAKE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Azure Pipelines build status](https://dev.azure.com/fakebuild/FSProjects/_apis/build/status/FAKE-CI?branchName=release/next)](https://dev.azure.com/fakebuild/FSProjects/_build/latest?definitionId=1&branchName=release/next)
+[![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/matthid/fake-6w516)
 
 "FAKE - F# Make" is a cross platform build automation system. Due to its integration 
 in F#, all benefits of the .NET Framework and functional programming can be used, including 
@@ -15,10 +18,6 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 
 * Quick: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet build build.proj`
 * Fake5: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
-
-[![Azure Pipelines build status](https://dev.azure.com/fakebuild/FSProjects/_apis/build/status/FAKE-CI?branchName=release/next)](https://dev.azure.com/fakebuild/FSProjects/_build/latest?definitionId=1&branchName=release/next)
-[![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake) [![CircleCI build status](https://circleci.com/gh/fsharp/FAKE.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/fsharp/FAKE) [![Gitlab CI build status](https://gitlab.com/matthid/FAKE/badges/release/next/build.svg)](https://gitlab.com/matthid/FAKE)
 
 > Note: The build of the "legacy" parts (FAKE 4) will most likely fail
 >
