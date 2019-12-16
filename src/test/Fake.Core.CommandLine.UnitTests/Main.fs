@@ -5,6 +5,7 @@ open System
 
 [<EntryPoint>]
 let main argv =
+    ExpectoHelpers.setThreadPool()
     let writeResults = TestResults.writeNUnitSummary ("Fake_Core_CommandLine_UnitTests.TestResults.xml", "Fake.Core.CommandLine.UnitTests")
     let config =
         defaultConfig.appendSummaryHandler writeResults

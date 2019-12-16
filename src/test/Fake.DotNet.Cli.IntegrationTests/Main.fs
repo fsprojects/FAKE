@@ -5,6 +5,7 @@ open System
 
 [<EntryPoint>]
 let main argv =
+    ExpectoHelpers.setThreadPool()
     let writeResults = TestResults.writeNUnitSummary ("Fake_DotNet_Cli_IntegrationTests.TestResults.xml", "Fake.DotNet.Cli.IntegrationTests")
     let config =
         defaultConfig.appendSummaryHandler writeResults
