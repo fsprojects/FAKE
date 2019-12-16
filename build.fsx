@@ -144,6 +144,7 @@ let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
+    >> DotNet.Options.withTimeout (Some (System.TimeSpan.FromMinutes 20.))
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
 
 let publish f =``Legacy-build``.publish f
