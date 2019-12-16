@@ -748,14 +748,18 @@ module Target =
                                 waitList <- []
                                 reply.Reply (async.Return(ctx, None))
                             else
-                                let isRunnable (t:Target) =
-                                    not (known.ContainsKey (String.toLower t.Name)) && // not already finised
-                                    not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) && // not already running
-                                    t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
-                                    |> Seq.forall (String.toLower >> known.ContainsKey)
-                                let runnable =
+                                let calculateOpenTargets() =
+                                    let isOpen (t:Target) =
+                                        not (known.ContainsKey (String.toLower t.Name)) && // not already finised
+                                        not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) // not already running
                                     order
                                     |> Seq.concat
+                                    |> Seq.filter isOpen
+                                let runnable =
+                                    let isRunnable (t:Target) =
+                                        t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
+                                        |> Seq.forall (String.toLower >> known.ContainsKey)
+                                    calculateOpenTargets()
                                     |> Seq.filter isRunnable
                                     |> Seq.toList
 
@@ -784,9 +788,25 @@ module Target =
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
                                     let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
-                                    let openList = System.String.Join(", ", runnable |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
-                                    Trace.tracefn "FAKE worker idle because %d Targets (%s) are still running and all open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
-                                        runningTasks.Length running openList
+                                    // recalculate openTargets as getNextFreeRunableTarget could change runningTasks
+                                    let openTargets = calculateOpenTargets() |> Seq.toList
+                                    let orderedOpen =
+                                        let isDependencyResolved =
+                                            String.toLower >> known.ContainsKey
+                                        let isDependencyRunning t =
+                                            runningTasks
+                                            |> Seq.exists (fun running -> String.toLower running.Name = t)
+                                        let isDependencyResolvedOrRunning t = isDependencyResolved t || isDependencyRunning t
+                                        openTargets
+                                        |> List.sortBy (fun t ->
+                                            t.Dependencies @ List.filter inResolution t.SoftDependencies // Order by unresolved dependencies
+                                            |> Seq.filter (isDependencyResolvedOrRunning >> not)
+                                            |> Seq.length)
+                                    let openList = 
+                                        System.String.Join(", ", orderedOpen :> seq<_> |> (if orderedOpen.Length > 3 then Seq.take 3 else id) |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                          + (if orderedOpen.Length > 3 then ", ..." else "")
+                                    Trace.tracefn "FAKE worker idle because '%d' targets (%s) are still running and all ('%d') open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
+                                        runningTasks.Length running openTargets.Length openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
