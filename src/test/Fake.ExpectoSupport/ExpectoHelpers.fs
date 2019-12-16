@@ -5,8 +5,6 @@ open System.Threading
 open System.Threading.Tasks
 
 module ExpectoHelpers =
-    let setThreadPool () =
-      ThreadPool.SetMinThreads(100, 100)
     let addFilter f (config:Impl.ExpectoConfig) =
         { config with
              filter = fun test ->
