@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <AssemblyName>Fake.DotNet.Testing.DotCover</AssemblyName>
     <OutputType>Library</OutputType>

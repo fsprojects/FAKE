@@ -256,7 +256,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         paketApi.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
         |> ignore
       with
-      | e when e.Message.Contains "Did you restore groups" ->
+      | e when e.Message.Contains "Did you restore group" ->
         // See https://github.com/fsharp/FAKE/issues/1672
         // and https://github.com/fsprojects/Paket/issues/2785
         // We do a restore anyway.
@@ -265,10 +265,14 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       if needLocalLock then File.Copy(lockFilePath.FullName, localLock, true)
     
     // Restore
-    if config.RestoreOnlyGroup then 
-        paketApi.Restore(false,group,[],false,false,false,None,None)
+    if config.RestoreOnlyGroup then
+        if config.UseSimpleRestore
+        then RestoreProcess.Restore(paketApi.DependenciesFile,RestoreProcess.RestoreProjectOptions.NoProjects,false,Option.map Paket.Domain.GroupName group,true,false,None,None,true)
+        else paketApi.Restore(false,group,[],false,false,false,None,None)
     else
-        paketApi.Restore()
+        if config.UseSimpleRestore
+        then paketApi.SimplePackagesRestore()
+        else paketApi.Restore()
     
   // https://github.com/fsharp/FAKE/issues/1908
   writeIntellisenseFile cacheDir // write intellisense.fsx immediately
@@ -378,8 +382,8 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
                          FsiOptions = newAdditionalArgs}
                     RuntimeOptions =
                       { context.Config.RuntimeOptions with
-                         RuntimeDependencies = runtimeAssemblies @ context.Config.RuntimeOptions.RuntimeDependencies
-                         NativeLibraries = nativeLibraries @ context.Config.RuntimeOptions.NativeLibraries }
+                         _RuntimeDependencies = runtimeAssemblies @ context.Config.RuntimeOptions.RuntimeDependencies
+                         _NativeLibraries = nativeLibraries @ context.Config.RuntimeOptions.NativeLibraries }
 
                 }
           },
@@ -442,15 +446,23 @@ type PrepareInfo =
   member x.CacheDir = x._CacheDir
   member x.DependencyType = x._DependencyType
 
+type TryPrepareInfo =
+    | Prepared of PrepareInfo
+    | NoHeader of cacheDir:Lazy<string> * saveCache:(unit->unit)
 
-let prepareFakeScript (config:FakeConfig) =
+/// Doesn't create the .fake folder for this file if we don't detect a fake script
+let tryPrepareFakeScript (config:FakeConfig) : TryPrepareInfo =
     let script = config.ScriptFilePath
     let scriptDir = Path.GetDirectoryName (script)
-    let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
-    Directory.CreateDirectory (cacheDir) |> ignore
+    let cacheDirUnsafe = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
+    let cacheDir =
+        lazy
+            Directory.CreateDirectory (cacheDirUnsafe)  |> ignore<DirectoryInfo>
+            cacheDirUnsafe
     
-    let scriptSectionHashFile = Path.Combine(cacheDir, "fake-section.cached")
-    let scriptSectionCacheFile = Path.Combine(cacheDir, "fake-section.txt")
+    let mutable actions = []
+    let scriptSectionHashFile = Path.Combine(cacheDirUnsafe, "fake-section.cached")
+    let scriptSectionCacheFile = Path.Combine(cacheDirUnsafe, "fake-section.txt")
     let inline getSectionUncached () =
         use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
         let newSection = FakeHeader.tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
@@ -459,16 +471,20 @@ let prepareFakeScript (config:FakeConfig) =
         | None ->
           tryFindGroupFromDepsFile scriptDir
     let writeToCache (section : FakeHeader.FakeSection option) =
-        match section with 
-        | Some (FakeHeader.PaketDependencies(headerType, p, _, group)) ->
-            let s =
-              match headerType with
-              | FakeHeader.PaketInline -> "paket-inline"
-              | FakeHeader.PaketDependenciesRef -> "paket-ref"
-            sprintf "paket: %s, %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>") s
-        | None -> "none"
-        |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
-        File.Copy (script, scriptSectionHashFile, true)
+        let content =
+            match section with 
+            | Some (FakeHeader.PaketDependencies(headerType, p, _, group)) ->
+                let s =
+                  match headerType with
+                  | FakeHeader.PaketInline -> "paket-inline"
+                  | FakeHeader.PaketDependenciesRef -> "paket-ref"
+                sprintf "paket: %s, %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>") s
+            | None -> "none"
+        actions <- (fun () ->
+            ignore cacheDir.Value // init cache
+            File.WriteAllText(scriptSectionCacheFile, content)
+            File.Copy (script, scriptSectionHashFile, true)) :: actions
+        
         
     let readFromCache () =
         let t = File.ReadAllText(scriptSectionCacheFile).Trim()
@@ -500,29 +516,40 @@ let prepareFakeScript (config:FakeConfig) =
 
     match section with
     | Some section ->
-        { _CacheDir = cacheDir
+        actions |> List.rev |> List.iter (fun f -> f())
+        { _CacheDir = cacheDir.Value
           _Config = config
           _Section = section
           _DependencyType =
             match section with
             | FakeHeader.PaketDependencies(FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
             | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) -> PreparedDependencyType.PaketDependenciesRef }
+        |> Prepared      
     | None ->
+        NoHeader(cacheDir, (fun () -> actions |> List.rev |> List.iter (fun f -> f())))
+
+
+let prepareFakeScript (config:FakeConfig) : PrepareInfo =
+    match tryPrepareFakeScript config with
+    | Prepared s -> s
+    | NoHeader(cacheDir, saveCache) ->
+        saveCache()
+
         let defaultPaketCode = """
-source https://api.nuget.org/v3/index.json
-storage: none
-framework: netstandard2.0
-nuget FSharp.Core
-        """
+        source https://api.nuget.org/v3/index.json
+        storage: none
+        framework: netstandard2.0
+        nuget FSharp.Core
+                """
         if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
-          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "paket: nuget FSharp.Core //"'.
+            Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "paket: nuget FSharp.Core //"'.
 See https://fake.build/fake-fake5-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =
-          { FakeHeader.Header = FakeHeader.PaketInline
-            FakeHeader.Section = defaultPaketCode }
-          |> FakeHeader.writeFixedPaketDependencies cacheDir
-        { _CacheDir = cacheDir
+            { FakeHeader.Header = FakeHeader.PaketInline
+              FakeHeader.Section = defaultPaketCode }
+            |> FakeHeader.writeFixedPaketDependencies cacheDir
+        { _CacheDir = cacheDir.Value
           _Config = config
           _Section = section
           _DependencyType = PreparedDependencyType.DefaultDependencies }
@@ -553,7 +580,8 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
     Runners.FakeConfig.CompileOptions =
       { FsiOptions = newFsiOptions }
     Runners.FakeConfig.RuntimeOptions =
-      { RuntimeDependencies = []; NativeLibraries = [] }
+      { _RuntimeDependencies = []; _NativeLibraries = [] }
+    Runners.FakeConfig.UseSimpleRestore = false
     Runners.FakeConfig.UseCache = useCache
     Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
     Runners.FakeConfig.Out = out

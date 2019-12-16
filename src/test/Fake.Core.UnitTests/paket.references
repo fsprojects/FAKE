@@ -1,5 +1,7 @@
 group netcorerunner
 
+YoloDev.Expecto.TestSdk
+Microsoft.TestPlatform.TestHost
 Paket.Core
 FSharp.Core
 NETStandard.Library

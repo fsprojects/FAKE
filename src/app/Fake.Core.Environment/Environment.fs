@@ -151,7 +151,7 @@ module Environment =
     /// Determines if the current system is an Unix system.
     /// See http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform
     let isUnix = 
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.Linux) || 
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
@@ -162,7 +162,7 @@ module Environment =
 
     /// Determines if the current system is a MacOs system
     let isMacOS =
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.OSX)
     #else
@@ -173,7 +173,7 @@ module Environment =
 
     /// Determines if the current system is a Linux system
     let isLinux = 
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.Linux)
     #else
@@ -182,7 +182,7 @@ module Environment =
 
     /// Determines if the current system is a Windows system
     let isWindows =
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.Windows)
     #else
@@ -194,14 +194,14 @@ module Environment =
     /// Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
     /// Todo: Detect mono on windows
     let isMono = 
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         not (isNull (Type.GetType("Mono.Runtime")))
     #else
         isUnix
     #endif
 
     let isDotNetCore = 
-    #if NETSTANDARD1_6
+    #if !FX_NO_RUNTIME_INFORMATION
         // See https://github.com/dotnet/corefx/blob/master/src/System.Runtime.InteropServices.RuntimeInformation/src/System/Runtime/InteropServices/RuntimeInformation/RuntimeInformation.cs
         System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core")
     #else
@@ -237,7 +237,7 @@ module Environment =
     let monoVersion =
         let t = Type.GetType("Mono.Runtime")
         if (not (isNull t)) then
-#if NETSTANDARD1_6
+#if NETSTANDARD
             let t = t.GetTypeInfo()
 #endif
             let displayNameMeth = t.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic ||| System.Reflection.BindingFlags.Static)
@@ -291,14 +291,41 @@ module Environment =
     /// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.
     let getDefaultEncoding() = 
         match environVarOrDefault "encoding" "default" with
-#if !DOTNETCORE
+#if !NETSTANDARD
         | "default" -> Text.Encoding.Default
 #else
         | "default" -> Text.Encoding.UTF8
 #endif
         | enc -> Text.Encoding.GetEncoding(enc)
 
-#if !DOTNETCORE
+    let private getEnvDir specialPath =
+        let dir = Environment.GetFolderPath specialPath 
+        if String.IsNullOrEmpty dir then None else Some dir
+    let private localRootForTempData() =
+        getEnvDir Environment.SpecialFolder.UserProfile
+        |> Option.orElse (getEnvDir Environment.SpecialFolder.LocalApplicationData)
+        |> Option.defaultWith (fun _ ->
+            let fallback = Path.GetFullPath ".paket"
+            //Logging.traceWarnfn "Could not detect a root for our (user specific) temporary files. Try to set the 'HOME' or 'LocalAppData' environment variable!. Using '%s' instead." fallback
+            if not (Directory.Exists fallback) then
+                Directory.CreateDirectory fallback |> ignore
+            fallback
+        )
+    let [<Literal>] private globalPackagesFolderEnvironmentKey = "NUGET_PACKAGES"
+    let private nugetPackagesFolder =
+        lazy
+            environVarOrNone globalPackagesFolderEnvironmentKey 
+            |> Option.map (fun path ->
+                path.Replace (Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            ) |> Option.defaultWith (fun _ ->
+                Path.Combine (localRootForTempData(),".nuget","packages")
+            )
+    /// Returns the path to the user-specific nuget packages folder
+    let getNuGetPackagesCacheFolder() = nugetPackagesFolder.Value
+
+
+
+#if !NETSTANDARD
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
     /// Returns a sequence with all installed .NET framework versions
     let getInstalledDotNetFrameworks() = 

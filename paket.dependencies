@@ -1,16 +1,16 @@
-version 5.206.0
+version 6.0.0-alpha006
 content: none
-// just in case we need some special nuget feature again...
-//source https://ci.appveyor.com/nuget/paket
+//source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
 
 nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core //prerelease
+nuget Paket.Core prerelease
+nuget FSharp.Compiler.Tools
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
-nuget Argu >= 3.3.0
+nuget Argu ~> 5.5.0 // support net461
 nuget FsCheck
 nuget FsCheck.Xunit
 nuget Unquote
@@ -28,6 +28,7 @@ nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
+nuget Nuget.Protocol ~> 4.0 strategy: min // To support net462...
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
@@ -69,8 +70,9 @@ nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 nuget FSharp.Control.Reactive
 nuget System.Reactive.Compatibility
-// From FSharp.Compiler.Service, but manually managed because of rename
-nuget System.ValueTuple copy_local: true, redirects:force
+// From FSharp.Compiler.Service, but manually managed because of rename, use 4.4.0 because of some msbuild weirdness in legacy...
+// no matter what we specify here it seems to always copy 4.4.0 into the output directory. Probably some clash with some implicit dependency somewhere
+nuget System.ValueTuple copy_local: true, redirects:force 4.4.0
 
 group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
@@ -89,7 +91,6 @@ group Build
     source https://api.nuget.org/v3/index.json
     //source https://ci.appveyor.com/nuget/fake
     //source https://ci.appveyor.com/nuget/fsharp-formatting
-    source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1
     nuget NuGet.CommandLine
@@ -98,23 +99,20 @@ group Build
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
-    nuget RoslynTools.ReferenceAssemblies
     nuget Newtonsoft.Json
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     // FAKE_MYGET_FEED (don't edit this line)
-    //source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
-    //source https://ci.appveyor.com/nuget/fake
 
-    // 2018-07-08: Until we use a runner > 5.1, see https://github.com/fsharp/FAKE/pull/2011
-    nuget FSharp.Core < 4.5
+    nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core // prerelease
+    nuget Paket.Core prerelease
     nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
@@ -144,11 +142,12 @@ group NetcoreBuild
 // New group because of FSharp.Core 4.5 upgrade, see https://github.com/fsharp/FAKE/pull/2011
 group netcorerunner
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
 
-    nuget Paket.Core
+    nuget Paket.Core prerelease
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
@@ -158,6 +157,8 @@ group netcorerunner
 
     // Testing
     nuget Expecto >= 5.0
+    nuget YoloDev.Expecto.TestSdk
+    nuget Microsoft.TestPlatform.TestHost
     nuget Expecto.TestResults
     nuget Expecto.FsCheck
     nuget FsCheck
@@ -165,26 +166,24 @@ group netcorerunner
     nuget Newtonsoft.Json
 
 group netcore
-    //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
     nuget FSharp.Compiler.Service content: none
 
     nuget NETStandard.Library ~> 2.0
     
-    // Starting from 2018-07-08 this needs to be <4.5 to not break 5.0 and 5.1 releases
-    // After some time we can upgrade this (and consolidate the netcore and netcorerunner groups)
-    // but not before 2018-11
-    nuget FSharp.Core < 4.5
+    nuget FSharp.Core ~> 4.0
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core // prerelease
+    nuget Paket.Core prerelease
     nuget NuGet.Protocol ~> 4.0 strategy: min // To support net462...
     nuget Mono.Cecil prerelease
+    nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
     nuget System.Security.Cryptography.Algorithms
@@ -196,6 +195,7 @@ group netcore
         nuget Microsoft.Build.Utilities.Core < 16
     nuget BlackFox.VsWhere
 
+    nuget System.Net.Http
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath
     nuget System.Xml.XPath.XDocument

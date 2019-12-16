@@ -18,12 +18,11 @@ Usage:
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
-    -t, --target <target>
-                          Run the given target (ignored if positional argument 'target' is given)
+    -t, --target <target>    Run the given target (ignored if positional argument 'target' is given)
     -e, --environment-variable <keyval> [*]
-                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
-    -s, --single-target    Run only the specified target.
-    -p, --parallel <num>  Run parallel with the given number of tasks.
+                             Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
+    -s, --single-target      Run only the specified target.
+    -p, --parallel <num>     Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
@@ -78,7 +77,7 @@ and [<NoComparison>] [<NoEquality>] Target =
         | _ -> null
 
 type internal DeclarationInfo =
-    { File: string; Line: int; Column: int }
+    { File: string; Line: int; Column: int; ErrorDetail: string }
 type internal Dependency =
     { Name: string; Declaration: DeclarationInfo }
 type [<NoComparison>] [<NoEquality>] internal InternalTarget =
@@ -166,7 +165,7 @@ module Target =
     let internal getDeclaration () =
         if shouldCollectStack () then
             let ctx = Fake.Core.Context.forceFakeContext ()
-            let st1 = new System.Diagnostics.StackTrace(1, true)
+            let st1 = System.Diagnostics.StackTrace(1, true)
             let frames =
                 [ 0 .. st1.FrameCount - 1 ]
                 |> Seq.map (fun idx -> st1.GetFrame idx)
@@ -174,15 +173,28 @@ module Target =
                 |> Seq.cache
             let normalizedScriptFile = getNormalizedFileName(ctx.ScriptFile)
             let fn =
-                frames
-                |> Seq.tryFind (fun (fn, sf) ->
-                    let scriptName = getNormalizedFileName fn
-                    not (String.IsNullOrEmpty fn) && scriptName = normalizedScriptFile)
+                let compiledAssembly =
+                    frames
+                    |> Seq.tryFind (fun (fn, sf) ->
+                        // Find a frame where we are quite positive it belongs to us
+                        let scriptName = getNormalizedFileName fn
+                        not (String.IsNullOrEmpty fn) && (scriptName = normalizedScriptFile))
+                    |> Option.map (fun (fn, frame) -> frame.GetMethod().DeclaringType.Assembly)
+
+                compiledAssembly
+                // First try to find the first frame with the correct assembly
+                |> Option.bind (fun ass ->
+                    let fullName = ass.FullName
+                    frames
+                    |> Seq.tryFind (fun (fn, sf) ->
+                        not (String.IsNullOrEmpty fn) && sf.GetMethod().DeclaringType.Assembly.FullName = fullName))
+                // if not found fallback to any script
                 |> Option.orElseWith (fun _ ->
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
-                        // fallback to first script file
-                        not (String.IsNullOrEmpty fn) && fn.EndsWith ".fsx"))
+                        let scriptName = getNormalizedFileName fn
+                        not (String.IsNullOrEmpty fn) && (fn.EndsWith ".fsx" || scriptName = normalizedScriptFile)))
+                // if not found fallback to any information we might have
                 |> Option.orElseWith (fun _ ->
                     frames
                     |> Seq.tryFind (fun (fn, sf) ->
@@ -190,9 +202,22 @@ module Target =
                         not (String.IsNullOrEmpty fn)))
             fn
             |> Option.map (fun (fn, sf) ->
-                 { File = fn; Line = sf.GetFileLineNumber(); Column = sf.GetFileColumnNumber() })
-            |> Option.defaultValue { File = null; Line = 0; Column = 0 }
-        else { File = null; Line = 0; Column = 0}
+                { File = fn; Line = sf.GetFileLineNumber(); Column = sf.GetFileColumnNumber(); ErrorDetail = null })
+            |> Option.defaultWith (fun _ ->
+                let framesString =
+                    if frames |> Seq.isEmpty then
+                        " no frames available"
+                    else
+                        frames
+                        |> Seq.map (fun (f, frame) ->
+                            let mt = frame.GetMethod()
+                            let tbase = mt.DeclaringType.FullName
+                            let line = frame.GetFileLineNumber()
+                            let column = frame.GetFileColumnNumber()
+                            sprintf "%s.%s in %s:%d:%d" tbase mt.Name f line column)
+                        |> fun s -> "\n - " + String.Join("\n - ", s)                                                
+                { File = null; Line = 0; Column = 0; ErrorDetail = sprintf "stackframe not found, available:%s" framesString })
+        else { File = null; Line = 0; Column = 0; ErrorDetail = "not requested" }
 
     /// Sets the Description for the next target.
     /// [omit]
@@ -460,9 +485,10 @@ module Target =
             | null -> "null"
             | s -> "\"" + escapeJson s + "\""
         let createDeclJson (decl:DeclarationInfo) =
-            sprintf "{ \"file\": %s, \"line\": %d, \"column\": %d }"
+            sprintf "{ \"file\": %s, \"line\": %d, \"column\": %d, \"errorDetail\": %s }"
                 (createJsonString decl.File)
                 decl.Line decl.Column
+                (createJsonString decl.ErrorDetail)
         let createDepJson (dep:Dependency) =
             sprintf "{ \"name\": %s, \"declaration\": %s }"
                 (createJsonString dep.Name)
@@ -605,29 +631,24 @@ module Target =
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
-        let _ = get target
-
-        let rec visitDependenciesAux previousDependencies = function
+        let visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        let visitedTargets = new List<Target>()
+        let rec visitDependenciesAux = function
             // NOTE: should be tail recursive
-            | (visited, level, targetName) :: workLeft ->
-                let target = get targetName
-                let isVisited =
-                    visited
-                    |> Seq.exists (fun t -> String.Equals(t, targetName, StringComparison.OrdinalIgnoreCase))
-                if isVisited then
-                    visitDependenciesAux previousDependencies workLeft
+            | targetName :: workLeft ->
+                if visited.Add(targetName)
+                then
+                    let target = get targetName
+                    visitedTargets.Add(target)
+                    let newLeft = target.Dependencies @ workLeft
+                    visitDependenciesAux newLeft
                 else
-                    let deps =
-                        target.Dependencies
-                        |> List.map (fun (t) -> (String.toLower targetName::visited), level + 1, t)
-                    let newVisitedDeps = target :: previousDependencies
-                    visitDependenciesAux newVisitedDeps (deps @ workLeft)
-            | _ ->
-                previousDependencies
-                |> List.distinctBy (fun (t) -> String.toLower t.Name)
+                    visitDependenciesAux workLeft                        
+            | _ -> visitedTargets |> Seq.toList
+
 
         // first find the list of targets we "have" to build
-        let targets = visitDependenciesAux [] [[], 0, target]
+        let targets = visitDependenciesAux [target]
 
         // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
         let targetLeftSet = HashSet<_>(StringComparer.OrdinalIgnoreCase)
@@ -762,6 +783,10 @@ module Target =
                                         failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                    let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
+                                    let openList = System.String.Join(", ", runnable |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                    Trace.tracefn "FAKE worker idle because %d Targets (%s) are still running and all open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
+                                        runningTasks.Length running openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
@@ -876,7 +901,7 @@ module Target =
                         targets |> Array.fold (fun context target -> runSingleTarget target context) context
 
             if context.HasError && not context.CancellationToken.IsCancellationRequested then
-                    runBuildFailureTargets context
+                runBuildFailureTargets context
             else 
                 context
 
@@ -960,7 +985,7 @@ module Target =
     /// [omit]
     let private argResultsVar = "Fake.Core.Target.ArgResults"
     /// [omit]
-    let private getArgResults, private removeArgResults, private setArgResults =
+    let private privGetArgResults, private removeArgResults, private setArgResults =
         Fake.Core.FakeVar.define argResultsVar
 
     let internal parseArgsAndSetEnvironment () =
@@ -1043,12 +1068,13 @@ module Target =
             // To ensure exit code.
             raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
+    let internal getArgs () =
+        match privGetArgResults () with
+        | Some s -> s
+        | None -> parseArgsAndSetEnvironment() 
+
     let internal getRunFunction allowAdditionalArgs defaultTarget =
-        let argResults =
-            match getArgResults () with
-            | Some s -> s
-            | None -> parseArgsAndSetEnvironment()
-        match argResults with
+        match getArgs() with
         | ListTargets ->
             listAvailable()
             None
@@ -1070,7 +1096,16 @@ module Target =
         match targetFunction with
         | Some f -> OptionalTargetContext.MaybeSet(f())
         | _ -> OptionalTargetContext.MaybeSet(None)
-    
+        
+    /// allows to initialize FAKE, see initEnvironment and getArguments
+    let internal initAndProcess (proc) =
+        match privGetArgResults () with
+        | Some args -> proc args
+        | None ->
+            let res = parseArgsAndSetEnvironment()
+            setArgResults res
+            proc res
+
 
     /// Run functions which don't throw and return the context after all targets have been executed.
     module WithContext =
@@ -1088,12 +1123,26 @@ module Target =
         /// Runs the target given by the target parameter or lists the available targets & get context
         let runOrList() =
             getRunFunction false None |> runFunction
-    
+
     /// allows to initialize the environment before defining targets
     /// This function should be used at the start of your fake script
     /// see https://github.com/fsharp/FAKE/issues/2283
+    /// Alternatively, you can use Target.getArguments() instead
     let initEnvironment () =
-        setArgResults (parseArgsAndSetEnvironment())
+        initAndProcess ignore
+
+    /// allows to retrieve the arguments passed into the current execution, 
+    /// when `Target.run*withArguments` overloads are used, see https://fake.build/core-targets.html#Targets-with-arguments
+    /// This function should be used at the start of your fake script
+    /// Alternatively, you can use Target.initEnvironment() instead,
+    /// Note: This function usually returns `Some [||]`, it will return `None` when 
+    /// No actual execution was requested (for example because of `--list`),
+    /// you shouldn't execute any side effects when `None` is returned 
+    /// (you should never execute side effects but you can use this flag to check if needed)
+    let getArguments () =
+        initAndProcess (function 
+            | ExecuteTarget (_, args, _, _) -> args |> List.toArray |> Some
+            | _ -> None)
 
     /// Runs a target and its dependencies
     let run parallelJobs targetName args : unit =

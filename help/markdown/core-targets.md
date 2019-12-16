@@ -105,6 +105,49 @@ Now we have the following options:
 - `fake run build.fsx -s -t Build` --> starts only the *Build* target and runs no dependencies
 - `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
 
+## Script with arguments
+
+Example:
+
+```fsharp
+let args = Target.getArguments() // use this at the top of your script isntead of `Target.initEnvironment()`
+
+// So some stuff depending on the args
+match args with
+| Some args ->
+    Trace.tracefn "Arguments: %A" args
+| None ->
+    // This case happens when no execution is requested (for example `--list` for listing targets)
+    // Even for empty arguments `Some [||]` is given, read docs for `Target.GetArguments()`
+    // never execute any side-effects outside of targets when `None` is given. 
+    // NOTE: IDE will only show targets defined in this code-path, so never define targets based on arguments or environment variables.
+    ()
+
+// Set your own variable/s based on the args
+let myVerbose, myArg =
+    match args with
+    | Some args -> 
+        // Or use Fake.Core.CommandLineParsing here: https://fake.build/core-commandlineparsing.html
+        args |> Seq.contains "--myverbose",
+        args |> Seq.contains "--arg"
+    | None -> false
+
+Target.create "Default" (fun _ ->
+    if myArg then
+        printfn "do something special" 
+)
+
+
+// Feature is opt-in in order to provide good error messages out of the box
+// see https://github.com/fsharp/FAKE/issues/1896
+Target.runOrDefaultWithArguments "Default"
+```
+
+Everything after the target will be interpreted as argument for the target:
+
+- `fake run build.fsx target MyTarget --arg` --> `--arg` will be contained in `args`
+- `fake build -t MyTarget --arg` --> `--arg` will be contained in `args`, because `--arg` is not a valid argument for the `Fake.Core.Target` (see command line spec above)
+
 ## Targets with arguments
 
 Example:
@@ -201,7 +244,7 @@ Target.activateBuildFailure "ReportErrorViaMail"
 Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
 number of threads used for traversing the dependency tree.
 This option of course only affects independent targets whereas dependent targets will
-still be exectued in order.
+still be executed in order.
 
 ### Setting the number of threads
 

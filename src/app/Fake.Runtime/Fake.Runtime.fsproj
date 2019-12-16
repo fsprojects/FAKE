@@ -14,6 +14,7 @@
   <ItemGroup>
     <Compile Include="YaafFSharpScripting.fs" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="ThisAssemblyInfo.fs" />
     <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
     <Compile Include="Profile.fs" />
     <Compile Include="LegacyApiHelper.fs" />
@@ -29,6 +30,7 @@
     <Compile Include="CoreCache.fs" />
     <Compile Include="FakeHeader.fs" />
     <Compile Include="FakeRuntime.fs" />
+    <Compile Include="Tooling.fs" />
     <Compile Include="FakeRuntimeHints.fs" />
   </ItemGroup>
   <ItemGroup>

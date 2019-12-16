@@ -4,7 +4,6 @@ open Fake.Runtime.Environment
 open Fake.Runtime.String
 open Fake.Runtime.Trace
 open Fake.Runtime.ScriptRunner
-open Fake.Runtime.HashGeneration
 open Fake.Runtime.CoreCache
 open Fake.Runtime.FakeRuntime
 open System.IO
@@ -327,9 +326,19 @@ let main (args:string[]) =
       |> Observable.subscribe Paket.Logging.traceToConsole
     reportExn VerboseLevel.Normal exn
     exitCode <- 1
-  Console.OutputEncoding <- encoding
-  // Potential fix for https://github.com/fsharp/FAKE/issues/2173
-  Console.ResetColor()
+  try
+    Console.OutputEncoding <- encoding
+  with e ->
+    // See https://github.com/fsharp/FAKE/issues/2406
+    printfn "(Warning) Error while resetting OutputEncoding to '%O':" encoding
+    reportExn VerboseLevel.Normal e
+  try
+    // Potential fix for https://github.com/fsharp/FAKE/issues/2173
+    Console.ResetColor()
+  with e ->
+    // See https://github.com/fsharp/FAKE/issues/2406
+    printfn "(Warning) Error while Console.ResetColor:"
+    reportExn VerboseLevel.Normal e
 #if !NETSTANDARD1_6
   //if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
   if Environment.ExitCode <> 0 then exitCode <- Environment.ExitCode

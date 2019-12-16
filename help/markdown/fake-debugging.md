@@ -1,17 +1,27 @@
 # Debugging of FAKE 5 build scripts
 
-Currently debugging support (and documentation around it) is limited. Please help to improve the situation by improving the code and the docs!
+We recommend [Visual Studio Code](https://code.visualstudio.com/) with the [Ionide extension](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) for best FAKE tooling support, including proper debugging.
+The easiest way to debug a script is by using the "Debug" buttons in the FAKE targets outline
+
+<video loop autoplay>
+  <source src="pics/targets/targets-outline.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+## Non-Ionide or no Fake.Core.Targets
+
+If you don't use Ionide or if you don't use `Fake.Core.Targets` the Outline stays empty and you (currently) cannot run or debug via UI. Please see the following sections on how to debug and run.
+
+## General considerations
+
+- Run with more verbose logging `-v`
+- If an error happens while restoring packages (before even running the script), consider using `-vv` or `-v -v` to increase the logging even more.
 
 <div class="alert alert-warning">
     <h5>WARNING</h5>
     <p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
 </div>
 
-
-## General considerations
-
-- Run with more verbose logging `-v`
-- If an error happens while restoring packages (before even running the script), consider using `-vv` or `-v -v` to increase the logging even more.
 
 ## Visual Studio Code && portable.zip
 
@@ -27,7 +37,7 @@ Debugging works (on windows) in the following way:
     "type": "coreclr",
     "request": "launch",
     "program": "E:\\fake-dotnetcore-portable\\fake.dll",
-    "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
+    "args": ["run", "--nocache", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
     "cwd": "${workspaceRoot}",
     "stopAtEntry": false,
     "console": "internalConsole"
@@ -53,7 +63,7 @@ System.Console.ReadKey() |> ignore
 ```
 
 - Delete `.fake` directory
-- Start your build script via `dotnet fake run build.fsx --fsiargs "--debug:portable --optimize-"` and wait for the `Press any key to continue...` Message
+- Start your build script via `dotnet fake run --nocache build.fsx --fsiargs "--debug:portable --optimize-"` and wait for the `Press any key to continue...` Message
 - Select ".NET Core Attach" in the Visual Studio Code Debugger View
 - Press play and select the `dotnet exec --depsfile ".../fake..."` process.
 

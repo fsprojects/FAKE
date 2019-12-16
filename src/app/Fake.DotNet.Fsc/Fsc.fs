@@ -5,7 +5,7 @@
 module Fake.DotNet.Fsc
 
 open System
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 open Fake.IO
 open Fake.Core
 
@@ -425,15 +425,17 @@ Compile using a path to Fsc.exe
 *)
 /// An external fsc.exe compiler
 let private extFscCompile (fscTool: string) (optsArr: string []) = 
-    let args = (Arguments.OfArgs optsArr).ToWindowsCommandLine
-    let r = 
-        Process.execWithResult (fun info -> 
-        { info with
-            FileName = fscTool
-            Arguments = args
-        } ) TimeSpan.MaxValue
+    let args = Arguments.OfArgs optsArr
+    let splitLines (text:string)=let variants=[|"\n"; "\r\n"; "\r"|]
+                                 text.Split(variants, StringSplitOptions.RemoveEmptyEntries)
 
-    let errors = r.Errors |> List.map FscResultMessage.Warning |> List.toArray
+    let r = Command.RawCommand(fscTool, args)
+            |> CreateProcess.fromCommand
+            |> CreateProcess.redirectOutput
+            |> CreateProcess.withFramework // start with mono if needed.
+            |> Proc.run
+
+    let errors = r.Result.Error|> splitLines |> Array.map FscResultMessage.Warning
     errors, r.ExitCode
 
 /// Compiles the given F# source files with the specified parameters.

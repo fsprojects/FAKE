@@ -114,7 +114,7 @@ module internal Cache =
                                 }
                               RuntimeOptions =
                                 { context.Config.RuntimeOptions with
-                                    RuntimeDependencies = context.Config.RuntimeOptions.RuntimeDependencies @ readXml
+                                    _RuntimeDependencies = context.Config.RuntimeOptions._RuntimeDependencies @ readXml
                                 }
                           }
                     }, Some config
@@ -166,7 +166,10 @@ module internal Cache =
                         |> Seq.filter (fun r -> not (System.IO.Path.GetFileName(r).ToLowerInvariant().StartsWith("api-ms")))
                         |> Seq.choose (fun r ->
                             try Some (AssemblyInfo.ofLocation r)
-                            with e -> None)
+                            with e ->
+                                if context.Config.VerboseLevel.PrintVerbose then
+                                    Trace.tracefn "Error while trying to load assembly metainformation: %O" e
+                                None)
                         |> Seq.toList
                     let newAdditionalArgs =
                         { fsiOpts with
@@ -181,7 +184,7 @@ module internal Cache =
                                 }
                               RuntimeOptions =
                                 { context.Config.RuntimeOptions with
-                                    RuntimeDependencies = references @ context.Config.RuntimeOptions.RuntimeDependencies
+                                    _RuntimeDependencies = references @ context.Config.RuntimeOptions._RuntimeDependencies
                                 }
                           }
                     }, None
@@ -217,6 +220,29 @@ let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel)
     with ex ->
         if logLevel.PrintVerbose then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
+
+let findInAssemblyList (name:AssemblyName) (runtimeDependencies:AssemblyInfo list) =
+    let strName = name.FullName
+    match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
+    | Some a ->
+        Some (true, a)
+    | _ ->
+        let token = name.GetPublicKeyToken()
+        // When null or empty accept what we have
+        // See https://github.com/fsharp/FAKE/issues/2381
+        let emptyToken = isNull token || token.Length = 0
+        let emptyVersion = isNull name.Version
+        match runtimeDependencies
+              |> Seq.map (fun r -> AssemblyName(r.FullName), r)
+              |> Seq.tryFind (fun (n, _) ->
+                  n.Name = name.Name &&
+                  (emptyToken || 
+                      n.GetPublicKeyToken() = token)) with
+        | Some (otherName, info) ->
+            // Then the version matches or is null and the public token is null we still accept this as perfect match
+            Some ((emptyToken && (emptyVersion || otherName.Version = name.Version)), info)
+        | _ ->
+            None
 
 let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
@@ -265,22 +291,11 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
         | None ->                
 #endif
             if logLevel.PrintVerbose then tracefn "Could not find assembly in the default load-context: %s" strName
-            match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
-            | Some a ->
-                true, loadAssembly loadContext logLevel a
-            | _ ->
-                let token = name.GetPublicKeyToken()
-                match runtimeDependencies
-                      |> Seq.map (fun r -> AssemblyName(r.FullName), r)
-                      |> Seq.tryFind (fun (n, _) ->
-                          n.Name = name.Name &&
-                          (isNull token || // When null accept what we have.
-                              n.GetPublicKeyToken() = token)) with
-                | Some (otherName, info) ->
-                    // Then the version matches and the public token is null we still accept this as perfect match
-                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext logLevel info
-                | _ ->
-                    false, None
+            match runtimeDependencies |> findInAssemblyList name  with
+            | Some (perfectMatch, a) ->
+                perfectMatch, loadAssembly loadContext logLevel a
+            | None ->
+                false, None
     match result with
     | Some (location, a) ->
         if logLevel.PrintVerbose then
@@ -331,7 +346,7 @@ This can happen for various reasons:
                     tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
         result
 
-let findUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
+let findUnmanagedInRuntimeDeps (unmanagedDllName:string) (logLevel:Trace.VerboseLevel) (nativeLibraries:NativeLibrary list) =
     if logLevel.PrintVerbose then tracefn "Trying to resolve native library: %s" unmanagedDllName
     match nativeLibraries |> Seq.tryFind (fun l ->
             let fnExt = Path.GetFileName l.File
@@ -343,7 +358,7 @@ let findUnmanagedInRuntimeDeps (loadFromPath:string -> nativeint) (unmanagedDllN
         path
     | None ->
         // will failwithf later anyway.
-        if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s'!" unmanagedDllName
+        if logLevel.PrintVerbose then tracefn "Could not resolve native library '%s', fallback to CLR-host!" unmanagedDllName
         null
 
 let resolveUnmanagedDependencyCached =
@@ -352,17 +367,19 @@ let resolveUnmanagedDependencyCached =
         let mutable wasCalled = false
         let path = libCache.GetOrAdd(unmanagedDllName, (fun _ ->
             wasCalled <- true
-            findUnmanagedInRuntimeDeps loadFromPath unmanagedDllName logLevel nativeLibraries))
-        
-        if wasCalled && isNull path then
-            let available =
-                if nativeLibraries.Length > 0 then
-                    "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
-                else "No native libraries found!"
-            failwithf """Could not resolve native library '%s'.
+            findUnmanagedInRuntimeDeps unmanagedDllName logLevel nativeLibraries))
+
+        //if wasCalled && not wasFound then
+            //let available =
+            //    if nativeLibraries.Length > 0 then
+            //        "Available native libraries:\n - " + String.Join("\n - ", nativeLibraries |> Seq.map (fun n -> n.File))
+            //    else "No native libraries found!"
+            // TODO: In the future use the unmanaged assembly resolve event to throw this.            
+            (*failwithf """Could not resolve native library '%s'.
 %s
 
 This can happen for various reasons:
+- The file '%s' could not be found in the PATH environment variable.
 - The nuget cache (or packages folder) might be broken.
   -> Please save your state, open an issue and then
   - delete the source package of '%s' from the '~/.nuget' cache (and the 'packages' folder)
@@ -371,11 +388,12 @@ This can happen for various reasons:
   - try running fake again
   - the package should be downloaded again
 
--> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName
+-> If the above doesn't apply or you need help please open an issue!""" unmanagedDllName available unmanagedDllName unmanagedDllName*)
         if not wasCalled && not (isNull path) then
             if logLevel.PrintVerbose then
                 tracefn "Redirect native library '%s' to previous loaded library '%s'" unmanagedDllName path
-        loadFromPath path
+        // Zero means use CLR-Host strategy, see https://github.com/fsharp/FAKE/issues/2342
+        if isNull path then IntPtr.Zero else loadFromPath path
 
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
@@ -408,7 +426,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
     let getHashUncached () =
         //TODO this is only calculating the hash for the input file, not anything #load-ed
-        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
+        let allScriptContents = getAllScripts true config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
         let combined = getCombinedString allScriptContents (getOpts config.CompileOptions)
         allScriptContents, combined, getStringHash combined
     

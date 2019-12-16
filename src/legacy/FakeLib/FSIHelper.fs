@@ -225,7 +225,7 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     Thread.Sleep 1000
     (result, messages)
 
-open Microsoft.FSharp.Compiler.Interactive.Shell
+open FSharp.Compiler.Interactive.Shell
 open System.Reflection
 
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]

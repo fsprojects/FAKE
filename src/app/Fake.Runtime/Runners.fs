@@ -52,7 +52,9 @@ type CompileOptions =
     member x.AsArgs = x.FsiOptions.AsArgs
 
 type RuntimeOptions =
-    internal { RuntimeDependencies : AssemblyInfo list; NativeLibraries : NativeLibrary list }
+    internal { _RuntimeDependencies : AssemblyInfo list; _NativeLibraries : NativeLibrary list }
+    member x.RuntimeDependencies : AssemblyInfo list = x._RuntimeDependencies
+    member x.NativeLibraries : NativeLibrary list = x._NativeLibraries
 type FakeConfig =
   { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
@@ -60,6 +62,7 @@ type FakeConfig =
     RuntimeOptions : RuntimeOptions
     CompileOptions : CompileOptions
     UseCache : bool
+    UseSimpleRestore : bool
     RestoreOnlyGroup : bool
     Out: TextWriter
     Err: TextWriter

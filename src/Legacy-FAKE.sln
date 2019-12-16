@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		fake.sh = fake.sh
 		script\obtain_fake.sh = script\obtain_fake.sh
 		paket.dependencies = paket.dependencies
-		README.markdown = README.markdown
+		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
@@ -39,15 +39,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "legacy\Fake.SQL
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Gallio", "legacy\Fake.Gallio\Fake.Gallio.fsproj", "{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "legacy\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "legacy\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "legacy\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "legacy\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Experimental", "legacy\Fake.Experimental\Fake.Experimental.fsproj", "{437FC69D-3EB5-4139-B9CD-86198AFDFD93}"
 EndProject
@@ -83,6 +77,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9
 		help\markdown\legacy-core-targets.md = help\markdown\legacy-core-targets.md
 		help\markdown\legacy-gettingstarted.md = help\markdown\legacy-gettingstarted.md
 		help\markdown\legacy-index.md = help\markdown\legacy-index.md
+		help\markdown\legacy-slacknotification.md = help\markdown\legacy-slacknotification.md
 		help\markdown\net-http.md = help\markdown\net-http.md
 		help\markdown\testing-sonarqube.md = help\markdown\testing-sonarqube.md
 		help\markdown\todo-androidpublisher.md = help\markdown\todo-androidpublisher.md
@@ -97,7 +92,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9
 		help\markdown\todo-iis.md = help\markdown\todo-iis.md
 		help\markdown\todo-msteamsnotification.md = help\markdown\todo-msteamsnotification.md
 		help\markdown\todo-octopusdeploy.md = help\markdown\todo-octopusdeploy.md
-		help\markdown\legacy-slacknotification.md = help\markdown\legacy-slacknotification.md
 		help\markdown\todo-stylecop.md = help\markdown\todo-stylecop.md
 		help\markdown\todo-teamcity.md = help\markdown\todo-teamcity.md
 		help\markdown\todo-teamcityadvanced.md = help\markdown\todo-teamcityadvanced.md
@@ -231,16 +225,6 @@ Global
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}.Release|x86.ActiveCfg = Release|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -251,26 +235,6 @@ Global
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|x86.ActiveCfg = Release|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|x86.ActiveCfg = Release|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|x86.ActiveCfg = Release|Any CPU
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -312,10 +276,7 @@ Global
 		{AD03BF13-802D-4E5F-A939-24484299E014} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{12319188-8893-4FE4-BF1D-62B85661DEA9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{ED164049-BCFD-4837-96F4-9A5FA417931D} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{0203A0DD-836B-4F9E-A766-73396DDE8F34} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{791651E4-4422-4A31-8DDE-6B1AD79B377A} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
@@ -323,5 +284,8 @@ Global
 		{7D2A5639-80A5-4F01-9527-69FEBEB65344} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{791E2077-80ED-430A-A16F-1705E79214B2} = {7D2A5639-80A5-4F01-9527-69FEBEB65344}
 		{7E947549-B069-4884-B4C5-D572D46E6D58} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A53599E2-44B2-488A-820C-530FBB5A2E2D}
 	EndGlobalSection
 EndGlobal

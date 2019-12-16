@@ -157,7 +157,7 @@ let run (setParams: Params -> Params) =
 ///                         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) 
 let merge (setParams: MergeParams -> MergeParams) =
     let parameters = (MergeDefaults |> setParams)
-    buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir false 
+    buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir true 
    
 /// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
 /// ## Parameters
@@ -172,7 +172,7 @@ let merge (setParams: MergeParams -> MergeParams) =
 ///                         ReportType = ReportType.Xml })
 let report (setParams: ReportParams -> ReportParams) =
     let parameters = (ReportDefaults |> setParams)
-    buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir
+    buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir true
 
 /// Runs the dotCover "cover" command against the NUnit test runner.
 /// ## Parameters

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>Fake.Core.Process</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
@@ -10,11 +10,8 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <DefineConstants>$(DefineConstants);FX_PASSWORD_CLEAR_TEXT;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_ERROR_DIALOG</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <DefineConstants>$(DefineConstants);FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>$(DefineConstants);FX_PASSWORD_CLEAR_TEXT;FX_NO_HANDLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
@@ -23,7 +20,7 @@
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' " >
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' " >
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>

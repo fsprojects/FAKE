@@ -187,6 +187,17 @@ module DotNet =
         /// Take version from global.json and fail if it is not found.
         | GlobalJson
 
+    /// Specifies the source channel for the installation. 
+    module CliChannel =
+        /// Long-Term Support channel (most current supported release).
+        let LTS = Some "LTS"
+        /// Most current release.
+        let Current = Some "Current"
+        /// Two-part version in X.Y format representing a specific release (for example, 2.0 or 1.0).
+        let Version major minor = Some (sprintf "%d.%d" major minor)  
+        /// Branch name. For example, release/2.0.0, release/2.0.0-preview2, or master (for nightly releases).
+        let Branch branchName = Some branchName
+
     /// .NET Core SDK install options
     [<NoComparison>]
     [<NoEquality>]
@@ -201,6 +212,8 @@ module DotNet =
             /// - Branch name. For example, release/2.0.0, release/2.0.0-preview2, or master (for nightly releases).
             /// 
             /// The default value is `LTS`. For more information on .NET support channels, see the .NET Support Policy page.
+            /// 
+            /// Use the `CliChannel` module, for example `CliChannel.Current`
             Channel: string option
             /// .NET Core SDK version
             Version: CliVersion
@@ -500,6 +513,8 @@ module DotNet =
             Version : string option
             /// Command working directory
             WorkingDirectory: string
+            /// Process timeout, kills the process after the specified time
+            Timeout: TimeSpan option
             /// Custom parameters
             CustomParams: string option
             /// Logging verbosity (--verbosity)
@@ -535,6 +550,7 @@ module DotNet =
                 )
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
+            Timeout = None
             CustomParams = None
             Version = None
             Verbosity = None
@@ -583,6 +599,8 @@ module DotNet =
 
         let inline withWorkingDirectory wd x =
             lift (fun o -> { o with WorkingDirectory = wd}) x
+        let inline withTimeout t x =
+            lift (fun o -> { o with Timeout = t}) x
         let inline withDiagnostics diag x =
             lift (fun o -> { o with Diagnostics = diag}) x
         let inline withVerbosity verb x =
@@ -624,12 +642,12 @@ module DotNet =
 
     /// [omit]
     let private buildSdkOptionsArgs (param: Options) =
-        [   param.Diagnostics |> argOption "--diagostics"
+        [   param.Diagnostics |> argOption "--diagnostics"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
-    let internal withGlobalJson workDir version f =
+    let internal withGlobalJsonDispose workDir version =
         let globalJsonPath =
             if (Path.GetFullPath workDir).StartsWith(Path.GetFullPath ".") then "global.json"
             else workDir </> "global.json"
@@ -648,20 +666,31 @@ module DotNet =
                     File.WriteAllText(globalJsonPath, template)
                     true
             | _ -> false
-        try f ()
-        finally if writtenJson then File.delete globalJsonPath
+        { new IDisposable with
+            member x.Dispose () = if writtenJson then File.delete globalJsonPath }
 
-    /// Execute raw dotnet cli command
-    /// ## Parameters
-    ///
-    /// - 'options' - common execution options
-    /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
-    /// - 'args' - command arguments
-    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
+    let internal withGlobalJson workDir version f =
+        use d = withGlobalJsonDispose workDir version
+        f ()
+
+    /// [omit]
+    let internal buildCommand command args options =
+        let sdkOptions = buildSdkOptionsArgs options
+        let commonOptions = buildCommonArgs options
+        [ sdkOptions
+          command // |> Args.fromWindowsCommandLine |> Seq.toList
+          commonOptions
+          args ] // |> Args.fromWindowsCommandLine |> Seq.toList ]
+        |> List.concat
+
+    [<RequireQualifiedAccess>]
+    type FirstArgReplacement =
+        | UsePreviousFile
+        | ReplaceWith of string list
+
+    let internal runRaw (firstArg:FirstArgReplacement) options (c:CreateProcess<'a>) =
+        //let timeout = TimeSpan.MaxValue
         let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
-        let timeout = TimeSpan.MaxValue
-
-        let options = buildOptions (Options.Create())
         let errorF msg =
             if options.PrintRedirectedOutput then
                 Trace.traceError msg
@@ -672,39 +701,113 @@ module DotNet =
                 Trace.trace msg
             results.Add (ConsoleMessage.CreateOut msg)
 
-        let sdkOptions = buildSdkOptionsArgs options
-        let commonOptions = buildCommonArgs options
-        let cmdArgs = 
-            [ sdkOptions
-              command |> Args.fromWindowsCommandLine |> Seq.toList
-              commonOptions
-              args |> Args.fromWindowsCommandLine |> Seq.toList ]
-            |> List.concat          
+        let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+        let oldPath =
+            options
+            |> Process.getEnvironmentVariable "PATH"
 
-        let result =
-            let f (info:ProcStartInfo) =
-                let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
-                let oldPath =
-                    options
-                    |> Process.getEnvironmentVariable "PATH"
-                { info with
-                    FileName = options.DotNetCliPath
-                    WorkingDirectory = options.WorkingDirectory
-                    Arguments = Args.toWindowsCommandLine cmdArgs }
-                |> Process.setEnvironment options.Environment
-                |> Process.setEnvironmentVariable "PATH" (
-                    match oldPath with
-                    | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
-                    | None -> dir)
+        let newArgs =
+            match firstArg with
+            | FirstArgReplacement.UsePreviousFile -> Arguments.withPrefix [c.Command.Executable] c.Command.Arguments
+            | FirstArgReplacement.ReplaceWith args ->
+                (Arguments.ofList args).ToStartInfo + " " + c.Command.Arguments.ToStartInfo
+                |> Arguments.OfStartInfo
+        let cmd = RawCommand(options.DotNetCliPath, newArgs)
+        c
+        |> CreateProcess.withCommand cmd
+        |> (if c.WorkingDirectory.IsNone then CreateProcess.withWorkingDirectory options.WorkingDirectory else id)
+        |> (match options.Timeout with Some timeout -> CreateProcess.withTimeout timeout | None -> id)
+        //|> CreateProcess.withArguments (Args.toWindowsCommandLine cmdArgs)
+        |> CreateProcess.withEnvironmentMap (EnvMap.ofMap options.Environment)
+        |> CreateProcess.setEnvironmentVariable "PATH" (
+            match oldPath with
+            | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+            | None -> dir)
+        |> CreateProcess.appendSimpleFuncs
+            (fun _ -> withGlobalJsonDispose options.WorkingDirectory options.Version)
+            (fun state p -> ())
+            (fun prev state exitCode -> prev)
+            (fun s -> s.Dispose())
+        //|> CreateProcess.withTimeout timeout        
+        |> (if options.RedirectOutput then 
+                CreateProcess.redirectOutputIfNotRedirected
+                >> CreateProcess.withOutputEventsNotNull messageF errorF
+            else id)
+        |> CreateProcess.map (fun prev ->
+            prev, (results |> List.ofSeq))
 
+    /// [omit]
+    let internal run cmdArgs options : ProcessResult =
+        CreateProcess.fromCommand (Command.RawCommand(options.DotNetCliPath, Arguments.ofList (List.ofSeq cmdArgs)))
+        |> runRaw (FirstArgReplacement.ReplaceWith []) options
+        |> CreateProcess.map (fun (r, results) ->
+            ProcessResult.New r.ExitCode results)
+        |> Proc.run
 
-            withGlobalJson options.WorkingDirectory options.Version (fun () ->
-                if options.RedirectOutput then
-                  Process.execRaw f timeout true errorF messageF
-                else Process.execSimple f timeout
-            )
-        ProcessResult.New result (results |> List.ofSeq)
+    let internal setOptions (buildOptions: Options -> Options) =
+      buildOptions (Options.Create())
 
+    /// Execute raw dotnet cli command
+    /// ## Parameters
+    ///
+    /// - 'buildOptions' - build common execution options
+    /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
+    /// - 'args' - command arguments
+    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
+        let options = setOptions buildOptions
+
+        let cmdArgs = buildCommand (command |> Args.fromWindowsCommandLine |> Seq.toList)
+                                   (args |> Args.fromWindowsCommandLine |> Seq.toList)
+                                   options
+
+        run cmdArgs options
+
+    /// Replace the current `CreateProcess` instance to run with dotnet.exe
+    /// ## Parameters
+    ///
+    /// - 'buildOptions' - build common execution options
+    /// - 'firstArg' - the first argument (like t)
+    /// - 'args' - command arguments
+    let prefixProcess (buildOptions: Options -> Options) (firstArgs:string list) (c:CreateProcess<'a>) =
+        let options = setOptions buildOptions
+
+        c
+        |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
+        |> CreateProcess.map fst
+
+    /// Setup the environment (`PATH` and `DOTNET_ROOT`) in such a way that started processes use the given dotnet SDK installation.
+    /// This is useful for example when using fable, see https://github.com/fsharp/FAKE/issues/2405
+    /// ## Parameters
+    ///
+    /// - 'install' - The SDK to use (result of `DotNet.install`)
+    let setupEnv (install: Options -> Options) = 
+        let options = setOptions install
+        let dotnetTool = System.IO.Path.GetFullPath options.DotNetCliPath
+        let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
+        let currentPath = Environment.environVar "PATH"
+        match currentPath with
+        | null | "" ->
+            Environment.setEnvironVar "PATH" (dotnetFolder)
+        | _ when not (currentPath.Contains (dotnetFolder)) ->
+            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.PathSeparator + currentPath)
+        | _ -> ()
+
+        let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
+        let realFolder =
+            if not Environment.isWindows then
+#if !FX_NO_POSIX        
+                // resolve potential symbolic link to the real location
+                // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
+                Mono.Unix.UnixPath.GetRealPath(dotnetTool)
+                |> System.IO.Path.GetDirectoryName
+#else
+                eprintf "Setting 'DOTNET_ROOT' to '%s' this might be wrong as we didn't follow the symlink. Please upgrade to netcore." dotnetFolder
+                dotnetFolder
+#endif        
+            else dotnetFolder
+        
+        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (realFolder)) then
+            Environment.setEnvironVar "DOTNET_ROOT" (realFolder)
 
     /// dotnet --info command options
     type InfoOptions =
@@ -957,6 +1060,7 @@ module DotNet =
                       Version = common.Version
                       Environment = common.Environment
                       WorkingDirectory = common.WorkingDirectory
+                      Timeout = None
                       CustomParams = None
                       Verbosity = None
                       Diagnostics = false }) "msbuild" args
@@ -1323,6 +1427,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             /// Doesn't execute an implicit restore during build. (--no-restore)
             NoRestore: bool
             /// Other msbuild specific parameters
@@ -1338,6 +1444,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            NoLogo = false
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
@@ -1366,6 +1473,7 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             (if param.Native then [ "--native" ] else [])
+            (if param.NoLogo then [ "--nologo" ] else [])
             param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat

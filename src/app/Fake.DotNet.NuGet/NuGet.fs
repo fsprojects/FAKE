@@ -1,6 +1,6 @@
 
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
-/// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
+/// There is also a tutorial about [nuget package creating](/dotnet-nuget.html) available.
 module Fake.DotNet.NuGet.NuGet
 
 open Fake.IO
@@ -85,6 +85,7 @@ type NuGetParams =
       SymbolPackage : NugetSymbolPackage
       Properties : list<string * string>
       Files : list<string*string option*string option>
+      ContentFiles : list<string*string option*string option*bool option*bool option>
       Language : string}
 
 /// NuGet default parameters
@@ -123,6 +124,7 @@ let NuGetDefaults() =
       SymbolPackage = NugetSymbolPackage.ProjectFile
       Properties = []
       Files = []
+      ContentFiles = []
       Language = null }
 
 /// Creates a string which tells NuGet that you require exactly this package version.
@@ -226,6 +228,31 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
 
     let dependenciesXml = sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
 
+    let contentFilesTags =
+        parameters.ContentFiles
+        |> Seq.map (fun (incl, exclArg, buildActionArg, copyToOutputArg, flattenArg) ->
+            let excl = 
+                match exclArg with
+                | Some x -> sprintf " exclude=\"%s\"" x
+                | _ -> String.Empty
+            let buildAction = 
+                match buildActionArg with
+                | Some x -> sprintf " buildAction=\"%s\"" x
+                | _ -> String.Empty
+            let copyToOutput = 
+                match copyToOutputArg with
+                | Some x -> sprintf " copyToOutput=\"%b\"" x
+                | _ -> String.Empty
+            let flatten = 
+                match flattenArg with
+                | Some x -> sprintf " flatten=\"%b\"" x
+                | _ -> String.Empty
+
+            sprintf "<files include=\"%s\"%s%s%s%s />" incl excl buildAction copyToOutput flatten)
+        |> String.toLines
+
+    let contentFilesXml = sprintf "<contentFiles>%s</contentFiles>" contentFilesTags
+
     let filesTags =
         parameters.Files
         |> Seq.map (fun (source, target, exclude) ->
@@ -265,6 +292,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
         |> List.append [ "@dependencies@", dependenciesXml
                          "@references@", referencesXml
                          "@frameworkAssemblies@", frameworkAssembliesXml
+                         "@contentFiles@", contentFilesXml
                          "@files@", filesXml ]
 
     Templates.replaceInFiles replacements [ specFile ]

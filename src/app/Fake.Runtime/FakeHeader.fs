@@ -28,10 +28,10 @@ type InlinePaketDependenciesSection =
   { Header : HeaderType
     Section : string }
 
-let writeFixedPaketDependencies scriptCacheDir (f : InlinePaketDependenciesSection) =
+let writeFixedPaketDependencies (scriptCacheDir:Lazy<string>) (f : InlinePaketDependenciesSection) =
   match f.Header with
   | HeaderType.PaketInline ->
-    let dependenciesFile = Path.Combine(scriptCacheDir, dependenciesFileName)
+    let dependenciesFile = Path.Combine(scriptCacheDir.Value, dependenciesFileName)
     let fixedSection =
       f.Section.Split([| "\r\n"; "\r"; "\n" |], System.StringSplitOptions.None)
       |> Seq.map (fun line ->

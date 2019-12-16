@@ -63,13 +63,8 @@ open Fake.DotNet.Testing
 let disableBootstrap = false
 
 // properties
-let projectName = "FAKE"
-let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-
-// The name of the project on GitHub
-let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
@@ -84,23 +79,21 @@ let chocoReleaseDir = nugetDncDir </> "chocolatey"
 let nugetLegacyDir = releaseDir </> "legacy"
 
 let reportDir = "./report"
-let packagesDir = "./packages"
-let buildMergedDir = buildDir </> "merged"
 
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
 let templateDir = srcDir</>"template"
-let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-
-let vault = ``Legacy-build``.vault
 let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
 let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+
+// The name of the project on GitHub
+let gitName = getVarOrDefault "github_repository_name" "FAKE"
 let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = getVarOrDefault "artifactsdirectory" ""
@@ -112,6 +105,8 @@ let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
 let githubtoken = releaseSecret "<githubtoken>" "github_token"
+
+do Environment.setEnvironVar "COREHOST_TRACE" "0"
 
 BuildServer.install [
     AppVeyor.Installer
@@ -149,6 +144,7 @@ let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
+    >> DotNet.Options.withTimeout (Some (System.TimeSpan.FromMinutes 20.))
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
 
 let publish f =``Legacy-build``.publish f
@@ -184,6 +180,8 @@ let cleanForTests () =
     !! "integrationtests/*/temp"
     |> Seq.iter rmdir
 
+Target.initEnvironment()
+
 Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
@@ -193,15 +191,20 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     |> File.deleteAll
 )
 
+let restoreTools =
+    let mutable alreadyRestored = false
+    (fun () ->
+        if not alreadyRestored then
+            DotNet.exec dtntSmpl "tool" "restore" |> ignore<ProcessResult>
+            alreadyRestored <- true
+    )
+
 let callpaket wd args =
-    if 0 <> Process.execSimple (fun info ->
-            { info with
-                FileName = wd </> ".paket/paket.exe"
-                WorkingDirectory = wd
-                Arguments = args }
-            |> Process.withFramework
-            ) (System.TimeSpan.FromMinutes 5.0) then
-        failwith "paket failed to start"
+    restoreTools()
+    
+    let res = DotNet.exec (dtntWorkDir wd) "paket" args
+    if not res.OK then
+        failwithf "paket failed to start: %A" res
 
 // Targets
 Target.create "Clean" (fun _ ->
@@ -273,6 +276,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
+      "Fake.DotNet.Testing.Coverlet", "Code coverage with Coverlet"
       "Fake.DotNet.Testing.DotCover", "Code coverage with DotCover"
       "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
@@ -395,7 +399,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
             match whileResult with
             | Some r -> return r
             | None ->                
-                // time is up                                                    
+                // time is up
                 let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
                 return
                     match combStatus.State.Value with
@@ -410,10 +414,6 @@ Target.create "StartBootstrapBuild" (fun _ ->
     | Result.Error combStatus ->
         System.String.Join("\n - ", combStatus.Statuses |> Seq.map formatState)
         |> failwithf "At least one CI failed:\n - %s"
-)
-
-Target.create "DownloadPaket" (fun _ ->
-    callpaket "." "--version"
 )
 
 Target.create "UnskipAssemblyInfo" (fun _ ->
@@ -558,7 +558,6 @@ Target.create "GenerateDocs" (fun _ ->
               -- (toolsDir + "/FSharp.Compiler.Service.dll")
               -- (toolsDir + "/FAKE.FSharp.Compiler.Service.dll")
               -- (toolsDir + "/Fake.IIS.dll")
-              -- (toolsDir + "/Fake.Deploy.Lib.dll")
             |> dllsAndLibDirs
 
         fakeLegacyDlls
@@ -583,7 +582,6 @@ Target.create "GenerateDocs" (fun _ ->
               -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
               -- "build/**/FAKE.FSharp.Compiler.Service.dll"
               -- "build/**/Fake.IIS.dll"
-              -- "build/**/Fake.Deploy.Lib.dll"
             |> dllsAndLibDirs
 
         fake5LegacyDlls
@@ -612,9 +610,18 @@ let startWebServer () =
         if portIsTaken then findPort (port + 1) else port
 
     let port = findPort 8083
+    
+    let inline (@@) a b = Suave.WebPart.concatenate a b
+    let mimeTypes =
+        Suave.Writers.defaultMimeTypesMap
+        @@ (function
+            | ".avi" -> Suave.Writers.createMimeType "video/avi" false
+            | ".mp4" -> Suave.Writers.createMimeType "video/mp4" false
+            | _ -> None)    
     let serverConfig =
         { Suave.Web.defaultConfig with
            homeFolder = Some (Path.GetFullPath docsDir)
+           mimeTypesMap = mimeTypes
            bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
         }
     let (>=>) = Suave.Operators.(>=>)
@@ -636,37 +643,30 @@ Target.create "HostDocs" (fun _ ->
     System.Console.ReadKey() |> ignore
 )
 
+let runExpecto workDir dllPath resultsXml =
+    let processResult =
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
+
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
-    let processResult =
-        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
+    runExpecto targetDir "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" ("Fake_Core_UnitTests.TestResults.xml")
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" ("Fake_Core_CommandLine_UnitTests.TestResults.xml")
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -742,6 +742,14 @@ module CircleCi =
     let isCircleCi = Environment.environVarAsBool "CIRCLECI"
 
 
+let publishRuntime runtimeName =
+    let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtimeName
+    let zipFile = sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtimeName
+    !! (sprintf "%s/**" runtimeDir)
+    |> Zip.zip runtimeDir zipFile
+
+    publish zipFile
+
 // Create target for each runtime
 let info = lazy DotNet.info dtntSmpl
 runtimes
@@ -774,6 +782,10 @@ runtimes
                 let target = outDir </> "fake"
                 if File.Exists target then File.Delete target
                 File.Move(source, target)
+
+            // Create zip
+            if runtimeName <> "current" then
+                publishRuntime runtimeName
         )
     )
 )
@@ -789,29 +801,38 @@ Target.create "_DotNetPublish_portable" (fun _ ->
             Framework = Some "netcoreapp2.1"
             OutputPath = Some outDir
         } |> dtntSmpl) netcoreFsproj
+
+    publishRuntime "portable"
 )
 
-Target.create "_DotNetPackage" (fun _ ->
-    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
-    // This line actually ensures we get the correct version checked in
-    // instead of the one previously bundled with 'fake`
-    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
-
-
-    //Environment.setEnvironVar "IncludeSource" "true"
-    //Environment.setEnvironVar "IncludeSymbols" "false"
+let setBuildEnvVars(versionVar) =
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
-    Environment.setEnvironVar "PackageVersion" nugetVersion
-    Environment.setEnvironVar "Version" nugetVersion
+    Environment.setEnvironVar "PackageVersion" versionVar
+    Environment.setEnvironVar "Version" versionVar
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
     Environment.setEnvironVar "SourceLinkCreate" "false"
     Environment.setEnvironVar "PackageTags" "build;fake;f#"
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
-    Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
-    Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
+    Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
+    Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageRepositoryType" "git"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    //Environment.setEnvironVar "IncludeSource" "true"
+    //Environment.setEnvironVar "IncludeSymbols" "false"
+    // for github package management to allow uploading the package... -> We need to re-package...
+    //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
 
+Target.create "_DotNetPackage" (fun _ ->
+    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
+    // This lines actually ensures we get the correct version checked in
+    // instead of the one previously bundled with `fake` or `paket`
+    callpaket "." "restore" // first make paket restire its target file if it feels like it.
+    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
+
+    restoreTools()
+    setBuildEnvVars(nugetVersion)
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -823,32 +844,20 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
+    // build zip package
+    Directory.ensure (nugetDncDir </> "Fake.netcore")
+    let zipFile = nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip"
+    !! (nugetDncDir </> "*.nupkg")
+    -- (nugetDncDir </> "*.symbols.nupkg")
+    |> Zip.zip nugetDncDir zipFile
+    publish zipFile
+
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
     !! "src/test/*/bin/Release/netcoreapp2.1/**"
     |> Zip.zip "src/test" testZip
     publish testZip
-)
-
-Target.create "DotNetCoreCreateZipPackages" (fun _ ->
-    Environment.setEnvironVar "Version" nugetVersion
-
-    // build zip packages
-    !! (nugetDncDir </> "*.nupkg")
-    -- (nugetDncDir </> "*.symbols.nupkg")
-    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
-
-    ("portable" :: runtimes)
-    |> Seq.iter (fun runtime ->
-        let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtime
-        !! (sprintf "%s/**" runtimeDir)
-        |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtime)
-    )
-
-    runtimes @ [ "portable"; "packages" ]
-    |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
-    |> List.iter publish
 )
 
 let getChocoWrapper () =
@@ -915,31 +924,25 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1"
-    // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
-            sprintf "/restore"
-            sprintf "/t:%s" "CreateDeb"
-            sprintf "/p:TargetFramework=%s" targetFramework
-            sprintf "/p:CustomTarget=%s" "CreateDeb"
-            sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release"
-            sprintf "/p:PackageVersion=%s" simpleVersion
+            sprintf "--runtime %s" runtime
+            sprintf "--framework %s" targetFramework
+            sprintf "--configuration %s" "Release"
+            sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
+    setBuildEnvVars(simpleVersion)
     let result =
         DotNet.exec (fun opt ->
             { opt with
                 WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
-        ) "msbuild" args
-    if result.OK |> not then
+        ) "deb" args
+    if not result.OK then
         failwith "Debian package creation failed"
 
 
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
-    let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
-    Directory.ensure nugetDncDir
     let target = sprintf "%s/%s" nugetDncDir fileName
-    File.Copy(sourceFile, target, true)
     publish target
 )
 
@@ -1051,7 +1054,6 @@ Target.create "PrepareArtifacts" (fun _ ->
         Trace.trace "ensure artifacts."
         let files =
             !! (artifactsDir </> "fake-dotnetcore-*.zip")
-            |> GlobbingPattern.setBaseDir "C:\\" // workaround a globbing bug, remove me with 5.0.0-rc014
             |> Seq.toList
         Trace.tracefn "files: %A" files
         files
@@ -1182,14 +1184,11 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "_StartDnc"
-    ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "_DotNetPackage"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "_StartDnc"
-    ==> "_DotNetPackage"
-"DownloadPaket"
     ==> "_DotNetPackage"
 "_DotNetPackage"
     ==> "DotNetPackage"
@@ -1209,9 +1208,6 @@ for runtime in "current" :: "portable" :: runtimes do
         ==> targetName
         |> ignore
     "_StartDnc"
-        ==> targetName
-        |> ignore
-    "DownloadPaket"
         ==> targetName
         |> ignore
     targetName
@@ -1251,8 +1247,6 @@ if buildLegacy then
 // Build artifacts only (no testing)
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
-"DotNetCoreCreateZipPackages"
-    ==> "BuildArtifacts"
 
 
 // Test the dotnetcore build
@@ -1286,7 +1280,6 @@ if buildLegacy then
 
 "DotNetPackage"
     ==> "TemplateIntegrationTests"
-    ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
 

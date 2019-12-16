@@ -12,6 +12,8 @@ open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 open Fake.Core.TargetOperators
 
+Target.initEnvironment ()
+
 Target.create "Clean" (fun _ ->
     !! "src/**/bin"
     ++ "src/**/obj"

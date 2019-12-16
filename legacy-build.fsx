@@ -49,14 +49,13 @@ let packages =
      "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "Fake.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."
      "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
 
 let additionalFiles = [
     "License.txt"
-    "README.markdown"
+    "README.md"
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
@@ -140,11 +139,16 @@ let version =
                 ) |> Option.defaultWith (fun _ ->
                     Path.Combine (LocalRootForTempData,".nuget","packages")
             )
-
             let currentVer =
                 Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local.*")
-                |> Seq.map (fun n -> n.Substring(release.NugetVersion.Length + ".local.".Length))
-                |> Seq.choose (fun v -> match System.Numerics.BigInteger.TryParse(v) with | true, v -> Some v | _ -> None)
+                |> Seq.choose (fun dir ->
+                    let n = Path.GetFileName dir
+                    let v = n.Substring(release.NugetVersion.Length + ".local.".Length)
+                    match System.Numerics.BigInteger.TryParse(v) with
+                    | true, v -> Some v
+                    | _ ->
+                        eprintfn "Could not parse '%s' to a bigint to retrieve the latest version (from '%s')" v dir
+                        None)
                 |> Seq.append [ 0I ]
                 |> Seq.max
             [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], ""
@@ -175,10 +179,10 @@ let nugetVersion =
     then version.AsString
     else sprintf "%s+%s" version.AsString version.BuildMetaData
 
+Target.initEnvironment()
 Target.create "Legacy_RenameFSharpCompilerService" (fun _ ->
-  for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
-    // for framework in ["net40"; "net45"] do
-    for framework in ["netstandard2.0"; "net45"] do
+  for packDir in ["FSharp.Compiler.Service"] do
+    for framework in ["netstandard2.0"; "net461"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
       File.delete targetFile
@@ -217,15 +221,6 @@ let legacyAssemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Command line tool"
         AssemblyInfo.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
-    legacyDir </> "Fake.Deploy/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy tool"
-        AssemblyInfo.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
-    legacyDir </> "deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy Web"
-        AssemblyInfo.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    legacyDir </> "Fake.Deploy.Lib/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy Lib"
-        AssemblyInfo.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
     legacyDir </> "FakeLib/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Lib"
         AssemblyInfo.InternalsVisibleTo "Test.FAKECore"
@@ -241,10 +236,12 @@ let legacyAssemblyInfos =
         AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
 
 let publish f =
+    if not (File.Exists f) && not (Directory.Exists f) then
+        failwithf "The path '%s' is not a file and not a directory so the publish call failed!" f
     Trace.publish ImportData.BuildArtifact f
 
 Target.create "_Legacy_BuildSolution" (fun _ ->
-    MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
+    MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"]
     |> Trace.logItems "AppBuild-Output: "
 
     // TODO: Check if we run the test in the current build!
@@ -354,12 +351,10 @@ Target.create "Legacy_CreateNuGet" (fun _ ->
                 prefs |> List.head
 
     for package,description in packages do
-        let nugetDocsDir = nugetLegacyDir @@ "docs"
         let nugetToolsDir = nugetLegacyDir @@ "tools"
         let nugetLibDir = nugetLegacyDir @@ "lib"
         let nugetLib451Dir = nugetLibDir @@ "net451"
 
-        Shell.cleanDir nugetDocsDir
         Shell.cleanDir nugetToolsDir
         Shell.cleanDir nugetLibDir
         Shell.deleteDir nugetLibDir
@@ -375,11 +370,9 @@ Target.create "Legacy_CreateNuGet" (fun _ ->
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
             deleteFCS nugetToolsDir
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
             deleteFCS nugetToolsDir
         | p when p = "FAKE.Lib" ->
             Shell.cleanDir nugetLib451Dir

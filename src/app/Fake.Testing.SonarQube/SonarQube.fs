@@ -8,12 +8,14 @@ module Fake.Testing.SonarQube
 
     /// [omit]
     /// The supported commands of SonarQube. It is called with Begin before compilation, and End after compilation.
-    type private SonarQubeCall = Begin | End
+    type internal SonarQubeCall = Begin | End
 
     /// Parameter type to configure the SonarQube runner.
     type SonarQubeParams = {
         /// FileName of the SonarQube runner exe. 
         ToolsPath : string
+        /// Organization which owns the SonarQube project
+        Organization : string option
         /// Key to identify the SonarQube project
         Key : string
         /// Name of the project
@@ -27,8 +29,9 @@ module Fake.Testing.SonarQube
     }
 
     /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
-    let SonarQubeDefaults = 
+    let internal SonarQubeDefaults = 
         { ToolsPath = Tools.findToolInSubPath "MSBuild.SonarQube.Runner.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "SonarQube")
+          Organization = None
           Key = null
           Name = null
           Version = "1.0"
@@ -37,26 +40,41 @@ module Fake.Testing.SonarQube
 
     /// [omit]
     /// Execute the external msbuild runner of SonarQube. Parameters are given to the command line tool as required.
-    let private SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
-      let sonarPath = parameters.ToolsPath 
-      let setArgs = parameters.Settings |> List.fold (fun acc x -> acc + "/d:" + x + " ") ""
-
-      let cfgArgs = 
-        match parameters.Config with
-        | Some(x) -> (" /s:"+x) 
-        | None -> ""
-      
-      let args = 
+    let internal getSonarQubeCallParams (call: SonarQubeCall) (parameters : SonarQubeParams) =
+        let beginInitialArguments =
+            Arguments.Empty
+            |> Arguments.appendRaw "begin"
+            |> Arguments.appendRawEscapedNotEmpty "/k:" parameters.Key
+            |> Arguments.appendRawEscapedNotEmpty "/n:" parameters.Name
+            |> Arguments.appendRawEscapedNotEmpty "/v:" parameters.Version
+            |> Arguments.appendRawEscapedOption "/o:" parameters.Organization
+            |> Arguments.appendRawEscapedOption "/s:" parameters.Config
+           
+        let beginCall =
+            parameters.Settings
+            |> List.fold (fun arguments x ->  arguments |> Arguments.appendRawEscaped "/d:" x) beginInitialArguments
+           
+        let endInitialArguments =
+            Arguments.Empty
+            |> Arguments.appendRaw "end"
+            |> Arguments.appendRawEscapedOption "/s:" parameters.Config
+        let endCall =   
+            parameters.Settings
+            |> List.fold (fun arguments x ->  arguments |> Arguments.appendRawEscaped "/d:" x) endInitialArguments
+        
         match call with
-        | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs
-        | End -> "end " + setArgs + cfgArgs
+        | Begin -> beginCall
+        | End -> endCall
 
-      let result =
-        Process.execSimple ((fun info ->
-        { info with
-            FileName = sonarPath
-            Arguments = args }) >> Process.withFramework) System.TimeSpan.MaxValue
-      if result <> 0 then failwithf "Error during sonar qube call %s" (call.ToString())
+    let private sonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
+        let sonarPath = parameters.ToolsPath 
+        let result =
+            getSonarQubeCallParams call parameters
+            |> Arguments.toStartInfo
+            |> CreateProcess.fromRawCommandLine sonarPath
+            |> CreateProcess.withFramework
+            |> Proc.run
+        if result.ExitCode <> 0 then failwithf "Error during sonar qube call %s" (call.ToString())
 
     /// This task to can be used to run the begin command of [Sonar Qube](http://sonarqube.org/) on a project.
     /// ## Parameters
@@ -76,7 +94,7 @@ module Fake.Testing.SonarQube
     let start setParams = 
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
-        SonarQubeCall Begin parameters
+        sonarQubeCall Begin parameters
         __.MarkSuccess()
 
     /// This task to can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
@@ -99,5 +117,5 @@ module Fake.Testing.SonarQube
         let parameters = match setParams with
                          | Some setParams -> setParams SonarQubeDefaults
                          | None -> (fun p -> { p with Settings = [] }) SonarQubeDefaults
-        SonarQubeCall End parameters
+        sonarQubeCall End parameters
         __.MarkSuccess()

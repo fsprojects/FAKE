@@ -49,7 +49,7 @@ let tests =
             Expect.isTrue false "Expected an exception"
         with e ->
             let s = e.Message.Contains "FileDoesntExist.exe"
-            Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'")
+            Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'. Error was: " + string e)
 
     yield testCase "Test that CreateProcess.ofStartInfo works (1)" <| fun _ ->
         let shell, command = "cmd", "/C \"echo 1&& echo 2\""

@@ -20,7 +20,7 @@ It is using an easy domain-specific language (DSL) so that you can start using i
 If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
     </description>
     <summary>A DSL for build tasks</summary>
-    <tags>fake make dotnet csharp fsharp foss cross-platform</tags>
+    <tags>fake make dotnet csharp fsharp foss cross-platform automation scripting</tags>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <packageSourceUrl>https://github.com/fsharp/FAKE</packageSourceUrl>
     @dependencies@

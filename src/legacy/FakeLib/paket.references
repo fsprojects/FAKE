@@ -1,10 +1,12 @@
 FSharp.Core
 Paket.Core
+FSharp.Compiler.Tools
 Mono.Web.Xdt
 FParsec
 Mono.Cecil
 Octokit
 Nuget.Core
+NuGet.Protocol
 Newtonsoft.Json
 System.Net.Http
 HashLib

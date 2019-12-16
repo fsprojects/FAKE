@@ -1,8 +1,99 @@
 # Release Notes
 
-## 5.15.1-alpha tbd
+## 5.19-alpha - 2019-12-15
 
-* tbd
+* EHNANCEMENT: `Fake.DotNet.Cli` Add timeout field to kill the process after the given timeout - https://github.com/fsharp/FAKE/pull/2425
+* EHNANCEMENT: `Fake.Core.Target` Add notification when a fake worker is idle - https://github.com/fsharp/FAKE/pull/2425
+* EHNANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2403
+* ENHANCEMENT: `fake-cli` Update bundled paket - https://github.com/fsharp/FAKE/pull/2425
+* ENHANCEMENT: `Fake.DotNet.Cli` Suppress copyright messages when invoking `dotnet build`, thanks @objectx - https://github.com/fsharp/FAKE/pull/2436
+* EHNANCEMENT: `Fake.Installer.Squirrel` Add additional Squirrel parameters, thanks @pchinery - https://github.com/fsharp/FAKE/pull/2431
+* BUGFIX: `Fake.Tools.Rsync` Fix typo in Rsync.fs options, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2432
+* BUGFIX: `Fake.DotNet.Testing.Coverlet` Fix Coverlet output property name, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2427
+* BUGFIX: `Fake.Tools.Octo` Octopus deploy trace always marked failures, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2428
+* DOCS: Change the README badges and their placement, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2437
+
+## 5.18.3 - 2019-11-04
+
+* BUGFIX: `Fake.DotNet.Testing.Coverlet` was not working, thanks @Tarmil - https://github.com/fsharp/FAKE/pull/2424
+
+## 5.18.2 - 2019-10-26
+
+* NEW: Add `Fake.DotNet.Testing.Coverlet`, thanks @Tarmil - https://github.com/fsharp/FAKE/pull/2413
+* BUGFIX: `paket pack` module was broken, thanks @sergey-tihon - https://github.com/fsharp/FAKE/pull/2418
+
+## 5.18.1 - 2019-10-22
+
+* BUGFIX: Paket module was broken - https://github.com/fsharp/FAKE/pull/2413
+* BUGFIX: New `CreateProcess.withToolType` wasn't working for `ToolType.FrameworkDependentDeployment` - https://github.com/fsharp/FAKE/issues/2412
+* ENHANCEMENT: Add support for local dotnet tool to fake-template and make it the default.
+
+## 5.18.0 - 2019-10-21
+
+* ENHANCEMENT: Add core support for local tools via `CreateProcess.withToolType`, this helper is part of `Fake.DotNet.Cli` and available after `open Fake.Core` - https://github.com/fsharp/FAKE/pull/2399
+* ENHANCEMENT: Add `ToolType` support in `ReportGenerator` and `Paket`, thanks @SteveGilham and @Tarmil - https://github.com/fsharp/FAKE/pull/2399
+* ENHANCEMENT: Add `FAKE_COREFX_VERBOSE` in order to increase verbosity for the FAKE libraries
+* ENHANCEMENT: Add `DotNet.setupEnv` in order to improve working with installed SDKs (for example when calling fable), fixes https://github.com/fsharp/FAKE/issues/2405
+* BUGFIX: Address https://github.com/fsharp/FAKE/issues/2406 by only printing a warning instead of crashing
+* BUGFIX: Partially address https://github.com/fsharp/FAKE/issues/2401 by allowing the user to continue and request additional info.
+* BUGFIX: Fix "FindLocalTools fails to search Paket.exe in Subdirectory" - https://github.com/fsharp/FAKE/issues/2390
+
+## 5.17.0 - 2019-10-10
+
+* DOCS: Remove Issue Stats, thanks @vbfox - https://github.com/fsharp/FAKE/pull/2393
+* ENHANCEMENT: Support VSTest parallel test execution setting, thanks @dungpa - https://github.com/fsharp/FAKE/pull/2385
+* ENHANCEMENT: Update dotnet new template, thanks @Krzysztof-Cieslak - https://github.com/fsharp/FAKE/pull/2391
+* BUGFIX: Fix API for DotCover.report, thanks @TomasMorton - https://github.com/fsharp/FAKE/pull/2389
+* ENHANCEMENT: Add installFrozenLockFile option for Yarn, thanks @rfrerebe - https://github.com/fsharp/FAKE/pull/2388
+* ENHANCEMENT: Add the extra OpenCover registration options, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2387
+* ENHANCEMENT: Allow FSI evaluation option for FSharp.Formatting, thanks @kurtschelfthout - https://github.com/fsharp/FAKE/pull/2158
+* BUGFIX: Fixed DocFx bug, thanks @DigitalFlow - https://github.com/fsharp/FAKE/pull/2188
+* ENHANCEMENT: Add support for contentFiles to Fake.DotNet.NuGet packaging, thanks @chappoo - https://github.com/fsharp/FAKE/pull/2165
+* ENHANCEMENT: Support mono in Fake.DotNet.Fsc, thanks @wallymathieu - https://github.com/fsharp/FAKE/pull/2397
+
+## 5.16.1 - 2019-08-25
+
+* BUGFIX: Fix that `generate_load_scripts` prevents restore after update - https://github.com/fsharp/FAKE/issues/2382
+* BUGFIX: Fix FAKE unable to load assemblies in some scenarios - https://github.com/fsharp/FAKE/issues/2381
+* BUGFIX: Fix File.getVersion fails if version is not set, thanks @SCullman - https://github.com/fsharp/FAKE/issues/2378
+* ENHANCEMENT: make `Fake.DotNet.Paket` work with the dotnet tool based version of Paket, thanks @seanamosw - https://github.com/fsharp/FAKE/pull/2364
+* ENHANCEMENT: add `Organization` field to `Fake.Testing.SonarQube`, thanks @Lutando - https://github.com/fsharp/FAKE/pull/2358
+* ENHANCEMENT: Added `Arguments.appendRaw*` functions to handle weird microsoft escaping.
+* ENHANCEMENT: Added `Environment.getNuGetPackagesCacheFolder()`, returns the NuGet packages path.
+* ENHANCEMENT: Added `ProcessUtils.tryFindLocalTool` to resolve tools via a common logic (`Fake.IO.Globbing.Tools` is now obsolete)
+* DOCS: Fix some broken links - https://github.com/fsharp/FAKE/issues/2351
+
+## 5.16.0 - 2019-08-17
+
+* LEGACY: Remove `Fake.Deploy` from repository and NuGet package, see https://github.com/fsharp/FAKE/issues/1820
+* LEGACY: Update to `net461` to support latest `FSharp.Compiler.Service` to fix https://github.com/fsharp/FAKE/issues/2362
+* LEGACY: Release a new version of `FakeLib.dll` (the original FAKE NuGet package) 
+* BUGFIX: Fake.Api.Slack uses `Username` not `From`, thanks @mastion - https://github.com/fsharp/FAKE/pull/2360
+* ENHANCEMENT: add rollforward policy to next-major to make `fake-cli` work in future dotnet sdk  major version, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2372
+* ENHANCEMENT: `ProcessUtils` now considers `PATHEXT` on windows - https://github.com/fsharp/FAKE/pull/2368
+* ENHANCEMENT: [`Fake.Api.GitHub`] Added `TargetCommitish` parameter to the `CreateReleaseParams` record. This parameter is passed to Octokit's 'NewRelease', and allows for the creation of releases from arbitrary commits when the release tag does not exist yet, thanks @nikolamilekic - https://github.com/fsharp/FAKE/pull/2367
+* (Minor) BREAKING: Drop support for `netstandard1.6` and `net46` (please open an issue if that actually hits you). All fake modules are now compiled for `netstandard2.0`, `net462` and `FSharp.Core 4.7`, you should consider to upgrade your runtime.
+* ENHANCEMENT: `Fake.DotNet.Fsc` and `Fake.DotNet.Fsi` now use latest `FSharp.Compiler.Service`
+* ENHANCEMENT: The fake runtime now supports `FSharp.Core 4.7`, thanks @drssoccer55 - https://github.com/fsharp/FAKE/pull/2373
+
+## 5.15.4 - 2019-07-16
+
+* BUGFIX: Fix high memory use and slowness with a large number of targets/dependencies - https://github.com/fsharp/FAKE/pull/2354
+
+## 5.15.3 - 2019-07-03
+
+* BUGFIX: Disable fast restore for MSBuild version < 15.8 - https://github.com/fsprojects/Paket/pull/3611
+
+## 5.15.2 - 2019-07-03
+
+* BUGFIX: Fast Restore (bugfix from paket) - https://github.com/fsprojects/Paket/pull/3608
+
+## 5.15.1 - 2019-06-30
+
+* ENHANCEMENT: Some internal improvements in `Fake.Runtime` for Ionide - https://github.com/fsharp/FAKE/pull/2341
+* ENHANCEMENT: Add new `Target.getArguments()` function in order to retrieve arguments globally - https://github.com/fsharp/FAKE/pull/2341
+* BUGFIX: Make sure to detect proper code locations when using `#load` (Ionide tooling, `Fake.Core.Target`) - https://github.com/fsharp/FAKE/pull/2341
+* DOCS: Consolidate getting started, recommend Ionide, add FAQ section to menu and some feature updates - https://github.com/fsharp/FAKE/pull/2341
 
 ## 5.15.0 - 2019-06-17
 

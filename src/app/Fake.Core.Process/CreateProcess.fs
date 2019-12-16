@@ -40,14 +40,17 @@ type ProcessResult<'a> = { Result : 'a; ExitCode : int }
 /// Handle for creating a process and returning potential results.
 type CreateProcess<'TRes> =
     internal {
-        Command : Command
+        InternalCommand : Command
         TraceCommand : bool
-        WorkingDirectory : string option
-        Environment : EnvMap option
+        InternalWorkingDirectory : string option
+        InternalEnvironment : EnvMap option
         Streams : StreamSpecs
         Hook : IProcessHook<'TRes>
     }
-    member x.CommandLine = x.Command.CommandLine
+    member x.CommandLine = x.InternalCommand.CommandLine
+    member x.Command = x.InternalCommand
+    member x.WorkingDirectory = x.InternalWorkingDirectory
+    member x.Environment = x.InternalEnvironment
 
 
 /// Module for creating and modifying CreateProcess<'TRes> instances.
@@ -102,11 +105,11 @@ module CreateProcess =
     ///     |> Proc.run
     ///     |> ignore
     let fromCommand command =
-        {   Command = command
-            WorkingDirectory = None
+        {   InternalCommand = command
+            InternalWorkingDirectory = None
             TraceCommand = true
             // Problem: Environment not allowed when using ShellCommand
-            Environment = None
+            InternalEnvironment = None
             Streams =
                 { // Problem: Redirection not allowed when using ShellCommand
                   StandardInput = Inherit
@@ -161,10 +164,10 @@ module CreateProcess =
 
     /// Create a CreateProcess from the given `ProcessStartInfo`
     let ofStartInfo (p:System.Diagnostics.ProcessStartInfo) =
-        {   Command = if p.UseShellExecute then ShellCommand p.FileName else RawCommand(p.FileName, Arguments.OfStartInfo p.Arguments)
+        {   InternalCommand = if p.UseShellExecute then ShellCommand p.FileName else RawCommand(p.FileName, Arguments.OfStartInfo p.Arguments)
             TraceCommand = true
-            WorkingDirectory = if System.String.IsNullOrWhiteSpace p.WorkingDirectory then None else Some p.WorkingDirectory
-            Environment = 
+            InternalWorkingDirectory = if System.String.IsNullOrWhiteSpace p.WorkingDirectory then None else Some p.WorkingDirectory
+            InternalEnvironment = 
                 p.Environment
                 |> Seq.map (fun kv -> kv.Key, kv.Value)
                 |> EnvMap.ofSeq
@@ -205,7 +208,7 @@ module CreateProcess =
     /// Set the working directory of the new process.
     let withWorkingDirectory workDir (c:CreateProcess<_>)=
         { c with
-            WorkingDirectory = Some workDir }
+            InternalWorkingDirectory = Some workDir }
 
     /// Disable the default trace of started processes.
     let disableTraceCommand (c:CreateProcess<_>)=
@@ -215,12 +218,12 @@ module CreateProcess =
     /// Set the command to the given one.
     let withCommand command (c:CreateProcess<_>)=
         { c with
-            Command = command }
+            InternalCommand = command }
 
     /// Replace the file-path
     let replaceFilePath newFilePath (c:CreateProcess<_>)=
         { c with
-            Command =
+            InternalCommand =
                 match c.Command with
                 | ShellCommand s -> failwith "Expected RawCommand"
                 | RawCommand (_, c) -> RawCommand(newFilePath, c) }
@@ -232,12 +235,13 @@ module CreateProcess =
 
 
     let internal withHook h (c:CreateProcess<_>) =
-      { Command = c.Command
+      { InternalCommand = c.Command
         TraceCommand = c.TraceCommand
-        WorkingDirectory = c.WorkingDirectory
-        Environment = c.Environment
+        InternalWorkingDirectory = c.InternalWorkingDirectory
+        InternalEnvironment = c.InternalEnvironment
         Streams = c.Streams
         Hook = h }
+
     let internal withHookImpl h (c:CreateProcess<_>) =
         c
         |> withHook (h |> ProcessHook.toRawHook)
@@ -260,6 +264,7 @@ module CreateProcess =
                 if not (isNull x.State1) then
                     x.State1.Dispose()
                 x.State2.Dispose()
+
     let internal hookAppendFuncs prepareState prepareStreams onStart onResult (c:IProcessHook<'TRes>) =    
         { new IProcessHookImpl<_, _> with
             member __.PrepareState () =
@@ -314,17 +319,17 @@ module CreateProcess =
     /// Execute the given function before the process is started 
     let addOnSetup f (c:CreateProcess<_>) =
         c
-        |> appendSimpleFuncs 
+        |> appendSimpleFuncs
             (fun _ -> f())
             (fun state p -> ())
             (fun prev state exitCode -> prev)
-            (fun _ -> ())
+            ignore
 
     /// Execute the given function when the process is cleaned up.        
     let addOnFinally f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
-            (fun _ -> ())
+            ignore
             (fun state p -> ())
             (fun prev state exitCode -> prev)
             (fun _ -> f ())
@@ -332,20 +337,21 @@ module CreateProcess =
     let addOnStarted f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
-            (fun _ -> ())
+            ignore
             (fun state p -> f ())
             (fun prev state exitCode -> prev)
-            (fun _ -> ())
+            ignore
 
     /// Sets the given environment variables
     let withEnvironment (env: (string * string) list) (c:CreateProcess<_>)=
         { c with
-            Environment = Some (EnvMap.ofSeq env) }
+            InternalEnvironment = Some (EnvMap.ofSeq env) }
             
     /// Sets the given environment map.        
     let withEnvironmentMap (env: EnvMap) (c:CreateProcess<_>)=
         { c with
-            Environment = Some env }
+            InternalEnvironment = Some env }
+
     /// Retrieve the current environment map.    
     let getEnvironmentMap (c:CreateProcess<_>)=
         match c.Environment with
@@ -355,7 +361,7 @@ module CreateProcess =
     /// Set the given environment variable.
     let setEnvironmentVariable envKey (envVar:string) (c:CreateProcess<_>) =
         { c with
-            Environment =
+            InternalEnvironment =
                 getEnvironmentMap c
                 |> IMap.add envKey envVar
                 |> Some }
@@ -383,14 +389,14 @@ module CreateProcess =
     let map f c =
         c
         |> appendSimpleFuncs 
-            (fun _ -> ())
+            ignore
             (fun state p -> ())
             (fun prev state exitCode -> 
                 async {
                     let! old = prev
                     return f old
                 })
-            (fun _ -> ())
+            ignore
     
     /// Map only the result object and leave the exit code in the result type.
     let mapResult f (c:CreateProcess<ProcessResult<_>>) =
@@ -428,7 +434,70 @@ module CreateProcess =
             (fun (outMem, errMem) ->
                 outMem.Dispose()
                 errMem.Dispose())
+        
+    /// Starts redirecting the output streams if they are not already redirected.
+    /// Be careful when using this function. Using redirectOutput is the preferred variant
+    let redirectOutputIfNotRedirected (c:CreateProcess<_>) =
+        let refOut = StreamRef.Empty
+        let refErr = StreamRef.Empty
+        let pipeOut = CreatePipe refOut
+        let pipeErr = CreatePipe refErr
 
+        let startReadStream t (s:Stream) =
+            async {
+                try
+                    let pool = System.Buffers.ArrayPool<byte>.Shared
+                    let length = 1024 * 10
+                    let rented = pool.Rent(length)
+                    try
+                        let mutable lastRead = 1
+                        while lastRead > 0 do
+                            let! read = s.ReadAsync(rented, 0, length)
+                            lastRead <- read
+                    finally
+                        pool.Return rented
+                with e ->
+                    Trace.traceError <| sprintf "Error in startReadStream ('%s') of process '%s': %O" t c.CommandLine e
+            }
+            |> Async.StartAsTask
+
+        { c with
+            Streams =
+                { c.Streams with
+                    StandardOutput =
+                        match c.Streams.StandardOutput with
+                        | Inherit -> pipeOut
+                        | _ -> c.Streams.StandardOutput
+                    StandardError =
+                        match c.Streams.StandardError with
+                        | Inherit -> pipeErr
+                        | _ -> c.Streams.StandardError
+                }
+        }
+        |> appendFuncsDispose 
+            (fun () -> ())
+            (fun r streams -> streams)
+            (fun () p -> ())
+            (fun prev () exitCode ->
+                async {
+                    // Make sure to read the streams
+                    let outTask =
+                        match refOut.value with
+                        | None -> System.Threading.Tasks.Task.CompletedTask
+                        | Some s -> startReadStream "Standard Output" s :> _
+                    let errTask =                    
+                        match refErr.value with
+                        | None -> System.Threading.Tasks.Task.CompletedTask
+                        | Some s -> startReadStream "Standard Error" s :> _
+                    let! prevResult = prev
+
+                    // follow up mappings have the complete stream read (for example 'withOutputEvents')
+                    do! Threading.Tasks.Task.WhenAll([errTask; outTask])
+
+                    return prevResult
+                })
+            (fun () -> ())
+        
     /// Calls the given functions whenever a new output-line is received.
     let withOutputEvents onStdOut onStdErr (c:CreateProcess<_>) =
         let watchStream onF (stream:System.IO.Stream) =
@@ -552,7 +621,7 @@ module CreateProcess =
     type internal TimeoutState =
         { Stopwatch : System.Diagnostics.Stopwatch
           mutable HasExited : bool }
-    /// Set the given timeout      
+    /// Set the given timeout, kills the process after the specified timespan
     let withTimeout (timeout:System.TimeSpan) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
@@ -584,7 +653,7 @@ module CreateProcess =
                     | 0 ->
                         return prevResult
                     | _ when state.Stopwatch.Elapsed > timeout -> 
-                        return failwithf "Process '%s' timed out." c.CommandLine
+                        return raise <| TimeoutException(sprintf "Process '%s' timed out." c.CommandLine)
                     | _ ->
                         return prevResult
                 })

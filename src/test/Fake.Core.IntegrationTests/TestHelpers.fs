@@ -27,6 +27,17 @@ let createTestDir () =
         |> ignore<DirectoryInfo>
     { Dir = testFile }
 
+let testDirLocation = System.IO.Path.GetDirectoryName (typeof<TestDir>.Assembly.Location)
+
+let createTestDirInCurrent () =
+    let folder = testDirLocation </> ((Guid.NewGuid ()).ToString())
+    Directory.CreateDirectory folder 
+        |> ignore<DirectoryInfo>
+    { Dir = folder }
+
+let getTestFile testFile =
+    Path.Combine(testDirLocation, "testdata", testFile)
+
 exception FakeExecutionFailed of ProcessResult
   with
     override x.ToString() =
@@ -53,7 +64,13 @@ let prepare scenario =
     if Directory.Exists scenarioPath then
       Directory.Delete(scenarioPath, true)
     Directory.ensure scenarioPath
-    Shell.copyDir scenarioPath originalScenarioPath (fun _ -> true)
+    Shell.copyDir scenarioPath originalScenarioPath (fun file ->
+        // this should be in sync with integrationtests/.gitignore, but CI should ensure that
+        let fp = Path.GetFullPath file
+        let scfp = Path.GetFullPath scenarioPath
+        let isFakeTmp = fp.Substring(scfp.Length).Contains ".fake"
+        let isLockFile = fp.EndsWith ".lock"
+        not isFakeTmp && not isLockFile)
 
 let directFakeInPath command workingDir target =
     let result =
@@ -76,6 +93,16 @@ let handleAndFormat f =
         let stdErr = String.Join("\n", result.Errors)
         Expect.isTrue (sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
         reraise() // for return value
+
+let expectFailure msg f =
+    try
+        f()
+        Expect.isTrue msg false
+        failwithf "%s" msg
+    with FakeExecutionFailed(result) ->
+        result
+
+
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
 
