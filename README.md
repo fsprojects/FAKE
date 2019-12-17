@@ -3,7 +3,7 @@
 [![Join the chat at https://gitter.im/fsharp/FAKE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsharp/FAKE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Azure Pipelines build status](https://dev.azure.com/fakebuild/FSProjects/_apis/build/status/FAKE-CI?branchName=release/next)](https://dev.azure.com/fakebuild/FSProjects/_build/latest?definitionId=1&branchName=release/next)
 [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/matthid/fake-6w516)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/9sbpw80a36x7qmca/branch/release/next?svg=true)](https://ci.appveyor.com/project/matthid/fake-6w516/branch/release/next)
 
 "FAKE - F# Make" is a cross platform build automation system. Due to its integration 
 in F#, all benefits of the .NET Framework and functional programming can be used, including 
