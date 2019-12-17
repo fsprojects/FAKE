@@ -82,6 +82,9 @@ module ExpectoHelpers =
     let setFakePrinter (config:Expecto.Impl.ExpectoConfig) =
         setPrinter fakeDefaultPrinter config
 
+    let appendSummaryHandler summaryPrinter (config:Expecto.Impl.ExpectoConfig) =
+        config.appendSummaryHandler summaryPrinter
+
     let addFilter f (config:Expecto.Impl.ExpectoConfig) =
         { config with
              filter = fun test ->
