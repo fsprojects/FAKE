@@ -7,6 +7,9 @@ open System
 let main argv =
     let writeResults = TestResults.writeNUnitSummary ("Fake_DotNet_Cli_IntegrationTests.TestResults.xml", "Fake.DotNet.Cli.IntegrationTests")
     let config =
-        defaultConfig.appendSummaryHandler writeResults
+        defaultConfig
         |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
-    Tests.runTestsInAssembly { config with parallel = false } argv
+        |> ExpectoHelpers.setFakePrinter
+        |> ExpectoHelpers.appendSummaryHandler writeResults
+
+    Expecto.Tests.runTestsInAssembly { config with parallel = false } argv

@@ -7,7 +7,9 @@ open System
 let main argv =
     let writeResults = TestResults.writeNUnitSummary ("Fake_Core_CommandLine_UnitTests.TestResults.xml", "Fake.Core.CommandLine.UnitTests")
     let config =
-        defaultConfig.appendSummaryHandler writeResults
+        defaultConfig
         |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
+        |> ExpectoHelpers.setFakePrinter
+        |> ExpectoHelpers.appendSummaryHandler writeResults
 
-    Tests.runTestsInAssembly { config with parallel = false } argv
+    Expecto.Tests.runTestsInAssembly { config with parallel = false } argv

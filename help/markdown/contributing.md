@@ -34,7 +34,7 @@ For FAKE development, [Visual Studio Code](https://code.visualstudio.com/Downloa
 
 - JetBrains Rider [[download](https://www.jetbrains.com/rider/download)]
 - Visual Studio for Mac [[download](https://visualstudio.microsoft.com/vs/mac/)]
-- Visual Studio for Windows [[download](https://www.jetbrains.com/rider/download)]
+- Visual Studio for Windows [[download](https://visualstudio.microsoft.com/vs/)]
 
 
 ### Install FAKE
