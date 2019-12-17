@@ -1304,8 +1304,8 @@ module Tests =
               consoleSemaphore = obj()) :> Logger
       }
 
-    let config = { config with
-                    printer = TestPrinters.silent }
+    //let config = { config with
+    //                printer = TestPrinters.silent }
 
     config.logName |> Option.iter setLogName
     if config.failOnFocusedTests && passesFocusTestCheck config tests |> not then
