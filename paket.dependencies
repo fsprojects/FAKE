@@ -1,4 +1,4 @@
-version 6.0.0-alpha006
+version 5.241.2
 content: none
 //source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
@@ -6,7 +6,7 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core prerelease
+nuget Paket.Core // prerelease
 nuget FSharp.Compiler.Tools
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
@@ -147,7 +147,7 @@ group netcorerunner
     framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
 
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
@@ -180,7 +180,7 @@ group netcore
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget NuGet.Protocol ~> 4.0 strategy: min // To support net462...
     nuget Mono.Cecil prerelease
     nuget Mono.Posix.NETStandard
