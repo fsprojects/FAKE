@@ -44,7 +44,7 @@ module SqlPackage =
         ///Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs.
         Profile : string }
 
-    let validPaths =
+    let internal validPaths =
         let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
         let getVsVersion path = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
         let sql = !!(Environment.ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
@@ -57,7 +57,7 @@ module SqlPackage =
         |> List.map fst
 
     /// The default DacPac deployment arguments.
-    let DefaultDeploymentArgs = 
+    let internal DefaultDeploymentArgs = 
         { SqlPackageToolPath = 
             validPaths
             |> List.tryHead
@@ -74,37 +74,37 @@ module SqlPackage =
           Profile = "" }
 
     [<Literal>]
-    let Action = "Action"
+    let internal Action = "Action"
 
     [<Literal>]
-    let Source = "Source"
+    let internal Source = "Source"
 
     [<Literal>]
-    let Destination = "Destination"
+    let internal Destination = "Destination"
 
     [<Literal>]
-    let OutputPath = "OutputPath"
+    let internal OutputPath = "OutputPath"
 
     [<Literal>]
-    let BlockOnPossibleDataLoss = "BlockOnPossibleDataLoss"
+    let internal BlockOnPossibleDataLoss = "BlockOnPossibleDataLoss"
 
     [<Literal>]
-    let DropObjectsNotInSource = "DropObjectsNotInSource"
+    let internal DropObjectsNotInSource = "DropObjectsNotInSource"
 
     [<Literal>]
-    let Timeout = "Timeout"
+    let internal Timeout = "Timeout"
 
     [<Literal>]
-    let RecreateDb = "RecreateDb"
+    let internal RecreateDb = "RecreateDb"
 
     [<Literal>]
-    let AdditionalSqlPackageProperties = "AdditionalSqlPackageProperties"
+    let internal AdditionalSqlPackageProperties = "AdditionalSqlPackageProperties"
 
     [<Literal>]
-    let Variables = "Variables"
+    let internal Variables = "Variables"
 
     [<Literal>]
-    let Profile = "Profile"
+    let internal Profile = "Profile"
 
     let private formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
 
