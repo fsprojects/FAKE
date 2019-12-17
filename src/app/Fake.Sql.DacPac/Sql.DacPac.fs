@@ -1,14 +1,16 @@
 ﻿namespace Fake.Sql
 
+open System
+
 /// Contains helpers around deploying databases.
 [<RequireQualifiedAccess>]
+[<Obsolete("Use SqlPackage instead")>]
 module DacPac =
 
     open Fake.Core
     open Fake.IO.FileSystemOperators
     open Fake.IO.Globbing.Operators
     open System.IO
-    open System
 
     /// The type of action to execute.
     type DeployAction =
