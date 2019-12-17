@@ -5,11 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="FakeExpecto.fs" />
     <None Include="paket.references" />
     <Compile Include="ExpectoHelpers.fs" />
   </ItemGroup>
-
-  <ItemGroup />
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 
 </Project>

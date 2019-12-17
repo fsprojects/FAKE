@@ -9,5 +9,6 @@ let main argv =
     let config =
         defaultConfig.appendSummaryHandler writeResults
         |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
+        |> ExpectoHelpers.setFakePrinter
 
-    FakeExpecto.Tests.runTestsInAssembly { config with parallel = false } argv
+    Expecto.Tests.runTestsInAssembly { config with parallel = false } argv
