@@ -132,6 +132,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{03CB61B6-EBB8-4C4A-B6A3-0D84D1F78A92}"
 	ProjectSection(SolutionItems) = preProject
 		.gitlab-ci.yml = .gitlab-ci.yml
+		.travis.yml = .travis.yml
 		build.fsx = build.fsx
 		legacy-build.fsx = legacy-build.fsx
 		paket.dependencies = paket.dependencies
@@ -181,7 +182,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Xdt", "src\app\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.Coverlet", "src\app\Fake.DotNet.Testing.Coverlet\Fake.DotNet.Testing.Coverlet.fsproj", "{664A121E-17A2-453E-BC2E-1C59A67875D2}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.ExpectoSupport", "src\test\Fake.ExpectoSupport\Fake.ExpectoSupport.fsproj", "{D063FC91-8F84-406D-AA48-9E946B7E4323}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.ExpectoSupport", "src\test\Fake.ExpectoSupport\Fake.ExpectoSupport.fsproj", "{D063FC91-8F84-406D-AA48-9E946B7E4323}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
