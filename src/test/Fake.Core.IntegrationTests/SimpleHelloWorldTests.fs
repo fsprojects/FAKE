@@ -38,24 +38,35 @@ let getInfoVersion () =
     let attr = typeof<Fake.Core.Process.ProcessList>.Assembly.GetCustomAttributes(typeof<System.Reflection.AssemblyInformationalVersionAttribute>, false)
     match attr |> Seq.tryHead with
     | Some (:? Reflection.AssemblyInformationalVersionAttribute as attr) -> attr.InformationalVersion
-    | None -> failwithf "Could not retrieve version"
+    | _ -> failwithf "Could not retrieve version"
 
 [<Tests>]
 let tests = 
   testList "Fake.Core.IntegrationTests" [
-    //testCase "fake-cli local tool works" <| fun _ ->
-    //    // dotnet tool install --version 5.19.0-alpha.local.1 fake-cli --add-source /e/Projects/FAKE/release/dotnetcore/
-    //    let res =
-    //        [
-    //            yield! ["tool"; "install"]
-    //            yield! [ "--version"; getInfoVersion ()  ]
-    //            yield "fake-cli"
-    //            yield!  ["--add-source" ]
-    //        ]
-    //        |> runDotNetRaw
-    //        |> CreateProcess.withWorkingDirectory ""
-    //        |> Proc.run
-    //    ()
+    testCase "fake-cli local tool works, #2425" <| fun _ ->
+        let scenario = "i002425-dotnet-cli-tool-works"
+        prepare scenario
+        let scenarioPath = resolvePath scenario ""
+        let version = getInfoVersion ()
+        // dotnet tool install --version 5.19.0-alpha.local.1 fake-cli --add-source /e/Projects/FAKE/release/dotnetcore/
+        [
+            yield! ["tool"; "install"; "--version"; version; "fake-cli"; "--add-source"; releaseDotnetCoreDir ]
+        ]
+        |> runDotNetRaw
+        |> CreateProcess.withWorkingDirectory scenarioPath
+        |> CreateProcess.ensureExitCode
+        |> CreateProcess.map ignore
+        |> Proc.run
+
+        [
+            yield! ["fake"; "--version" ]
+        ]
+        |> runDotNetRaw
+        |> CreateProcess.withWorkingDirectory scenarioPath
+        |> CreateProcess.ensureExitCode
+        |> CreateProcess.map ignore
+        |> Proc.run
+        
 
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
         let result =

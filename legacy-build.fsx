@@ -152,7 +152,7 @@ let version =
                 |> Seq.append [ 0I ]
                 |> Seq.max
             let d = System.DateTime.Now
-            [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], d.ToString("yyyy-MM-dd_HHmm")
+            [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], d.ToString("yyyy-MM-dd-HH-mm")
 
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =

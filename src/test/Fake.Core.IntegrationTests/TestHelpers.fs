@@ -66,8 +66,12 @@ exception FakeExecutionFailed of ProcessResult
         let stdOut = String.Join(Environment.NewLine,result.Messages)
         sprintf "FAKE Process exited with %d:\n%s\nStdout: \n%s" result.ExitCode stdErr stdOut
 
+let fakeRootPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../")
+let releaseDir = Path.getFullName(fakeRootPath + "/release")
+let releaseDotnetCoreDir = Path.getFullName(releaseDir + "/dotnetcore")
+
 let fakeToolPath = 
-    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../release/dotnetcore/Fake.netcore/current/fake")
+    let rawWithoutExtension = Path.getFullName(releaseDir + "/dotnetcore/Fake.netcore/current/fake")
     if Environment.isUnix then rawWithoutExtension
     else rawWithoutExtension + ".exe"
 let integrationTestPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../integrationtests")
