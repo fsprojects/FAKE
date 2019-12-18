@@ -2,6 +2,7 @@
 module Fake.Core.IntegrationTests.TestHelpers
 
 open Fake.Core
+open Fake.DotNet
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open System
@@ -20,6 +21,25 @@ type TestDir =
             with e ->
                 eprintf "Failed to delete '%s': %O" x.Dir e
                 ()
+
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
+
+let runDotNetRaw args =
+    let options = dotnetSdk.Value (Fake.DotNet.DotNet.Options.Create())
+
+    let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+    let oldPath =
+        options
+        |> Process.getEnvironmentVariable "PATH"
+
+    args
+    |> CreateProcess.fromRawCommand options.DotNetCliPath
+    |> CreateProcess.withEnvironment (options.Environment |> Map.toList)
+    |> CreateProcess.setEnvironmentVariable "PATH" (
+        match oldPath with
+        | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+        | None -> dir)
+    |> CreateProcess.withWorkingDirectory options.WorkingDirectory
 
 let createTestDir () =
     let testFile = Path.combine (Path.GetTempPath ()) (Path.GetRandomFileName ())

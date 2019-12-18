@@ -8,31 +8,16 @@ open Expecto
 open Fake.Core.IntegrationTests.TestHelpers
 open System.Diagnostics
 
-let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
-
 let dllPath = System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
 
 let runProjectRaw noBuild proj args =
-    let options = dotnetSdk.Value (DotNet.Options.Create())
-    
-    let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
-    let oldPath =
-        options
-        |> Process.getEnvironmentVariable "PATH"
-    
     [
         yield "run"
         if noBuild then yield "--no-build"
         yield! [ "--project"; proj; "--" ]
         yield! args |> Args.fromWindowsCommandLine |> Seq.toList
     ]
-    |> CreateProcess.fromRawCommand options.DotNetCliPath
-    |> CreateProcess.withEnvironment (options.Environment |> Map.toList)
-    |> CreateProcess.setEnvironmentVariable "PATH" (
-        match oldPath with
-        | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
-        | None -> dir)
-    |> CreateProcess.withWorkingDirectory options.WorkingDirectory
+    |> runDotNetRaw
     
 let runProject noBuild f proj args =
     runProjectRaw noBuild proj args

@@ -8,9 +8,11 @@ open System.IO
 open System.Diagnostics
 open Newtonsoft.Json
 open Newtonsoft.Json.Linq
+open Fake.Core
 
 let fail s = Expect.isTrue s false
 let ignProc = ignore<Fake.Core.ProcessResult>
+
 
 
 type Declaration =
@@ -32,10 +34,29 @@ type Target =
       Declaration : Declaration
       Description : string }
 
+let getInfoVersion () =
+    let attr = typeof<Fake.Core.Process.ProcessList>.Assembly.GetCustomAttributes(typeof<System.Reflection.AssemblyInformationalVersionAttribute>, false)
+    match attr |> Seq.tryHead with
+    | Some (:? Reflection.AssemblyInformationalVersionAttribute as attr) -> attr.InformationalVersion
+    | None -> failwithf "Could not retrieve version"
 
 [<Tests>]
 let tests = 
   testList "Fake.Core.IntegrationTests" [
+    //testCase "fake-cli local tool works" <| fun _ ->
+    //    // dotnet tool install --version 5.19.0-alpha.local.1 fake-cli --add-source /e/Projects/FAKE/release/dotnetcore/
+    //    let res =
+    //        [
+    //            yield! ["tool"; "install"]
+    //            yield! [ "--version"; getInfoVersion ()  ]
+    //            yield "fake-cli"
+    //            yield!  ["--add-source" ]
+    //        ]
+    //        |> runDotNetRaw
+    //        |> CreateProcess.withWorkingDirectory ""
+    //        |> Proc.run
+    //    ()
+
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
         let result =
             if Paket.Utils.isWindows then
