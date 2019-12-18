@@ -7,6 +7,7 @@ namespace StandardOutputErrorTool
 {
     class Program
     {
+        // From https://stackoverflow.com/a/796558/1269722
         static void Main(string[] args)
         {
             var buffer = new char[100];
