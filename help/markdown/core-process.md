@@ -192,8 +192,7 @@ let p1 =
 
 let p2 =
     CreateProcess.fromRawCommand "outgen.exe" []
-    |> CreateProcess.withStandardOutput (UseStream(false, input.Value))
+    |> CreateProcess.withStandardOutput (UseStream(true, input.Value))
     |> Proc.run
-
 
 ```

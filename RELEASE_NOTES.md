@@ -13,6 +13,7 @@
 * BUGFIX: `Fake.Tools.Rsync` Fix typo in Rsync.fs options, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2432
 * BUGFIX: `Fake.DotNet.Testing.Coverlet` Fix Coverlet output property name, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2427
 * BUGFIX: `Fake.Tools.Octo` Octopus deploy trace always marked failures, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2428
+* BUGFIX: `Fake.Core.Process` Process redirection was not working as advertised, thanks @ZeekoZhu - https://github.com/fsharp/FAKE/issues/2445
 * DOCS: Change the README badges and their placement, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2437
 * DOCS: Several documentation improvements, thanks to @jhromadik - https://github.com/fsharp/FAKE/pull/2441 https://github.com/fsharp/FAKE/pull/2442 https://github.com/fsharp/FAKE/pull/2443
 

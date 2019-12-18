@@ -80,7 +80,7 @@ type DataRef<'T> =
         let previousSet = inner.onSet
         inner.onSet <- fun newVal -> previousSet newVal; newCell.value <- Some (f newVal)
         newCell
-    member x.Value = match x.value with Some s -> s | None -> invalidOp "Can retrieve data cell before it has been set!"
+    member x.Value = match x.value with Some s -> s | None -> invalidOp "Cannot retrieve data cell before it has been set!"
 
 type StreamRef = DataRef<System.IO.Stream>
 
@@ -223,6 +223,7 @@ module internal RawProc =
                                     if isInputStream then
                                         do! stream.CopyToAsync(processStream, 81920, tok.Token)
                                             |> Async.AwaitTaskWithoutAggregate
+                                        processStream.Close()
                                     else
                                         do! processStream.CopyToAsync(stream, 81920, tok.Token)
                                             |> Async.AwaitTaskWithoutAggregate
@@ -231,6 +232,7 @@ module internal RawProc =
                                 | CreatePipe (r) ->
                                     match originalParameter with
                                     | CreatePipe o ->
+                                        Debugger.Break();
                                         // first set the "original" cell
                                         o.value <- Some processStream
                                         // Call onSet to "produce" the high-level stream
@@ -238,8 +240,9 @@ module internal RawProc =
                                         // Set the "high"-level stream to the "original" cell
                                         let stream = r.Value
                                         o.value <- Some stream
-                                        // Mark the "high"-level stream empty in order to prevent invalid usage
-                                        r.value <- None
+                                        if not (obj.ReferenceEquals(o, r)) then
+                                            // Mark the "high"-level stream empty in order to prevent invalid usage
+                                            r.value <- None
                                     | _ -> failwithf "Unexpected value"
                                     return Stream.Null
                             }

@@ -6,12 +6,13 @@ open Fake.DotNet
 open System.IO
 open Expecto
 open Fake.Core.IntegrationTests.TestHelpers
+open System.Diagnostics
 
 let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
 let dllPath = System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
 
-let runProject noBuild f proj args =
+let runProjectRaw noBuild proj args =
     let options = dotnetSdk.Value (DotNet.Options.Create())
     
     let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
@@ -19,44 +20,55 @@ let runProject noBuild f proj args =
         options
         |> Process.getEnvironmentVariable "PATH"
     
-    let result =
-        [
-            yield "run"
-            if noBuild then yield "--no-build"
-            yield! [ "--project"; proj; "--" ]
-            yield! args |> Args.fromWindowsCommandLine |> Seq.toList
-        ]
-        |> CreateProcess.fromRawCommand options.DotNetCliPath
-        |> CreateProcess.withEnvironment (options.Environment |> Map.toList)
-        |> CreateProcess.setEnvironmentVariable "PATH" (
-            match oldPath with
-            | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
-            | None -> dir)
-        |> CreateProcess.withWorkingDirectory options.WorkingDirectory
-        |> f
-        |> Proc.run
-    result
+    [
+        yield "run"
+        if noBuild then yield "--no-build"
+        yield! [ "--project"; proj; "--" ]
+        yield! args |> Args.fromWindowsCommandLine |> Seq.toList
+    ]
+    |> CreateProcess.fromRawCommand options.DotNetCliPath
+    |> CreateProcess.withEnvironment (options.Environment |> Map.toList)
+    |> CreateProcess.setEnvironmentVariable "PATH" (
+        match oldPath with
+        | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+        | None -> dir)
+    |> CreateProcess.withWorkingDirectory options.WorkingDirectory
+    
+let runProject noBuild f proj args =
+    runProjectRaw noBuild proj args
+    |> f
+    |> Proc.run
+
+let runTestToolRaw noBuild name args =
+    runProjectRaw noBuild (sprintf "%s/../../../../TestTools/%s" dllPath name) args
 
 let runTestTool noBuild f name args =
-    runProject noBuild f (sprintf "%s/../../../../TestTools/%s" dllPath name) args
+    runTestToolRaw noBuild name args
+    |> f
+    |> Proc.run
 
-let runCmdOrSh f cmdArgs shArgs =
+let runCmdOrShRaw cmdArgs shArgs =
     let shell, args =
         if Environment.isWindows then
             "cmd", cmdArgs
         else
             "sh", shArgs 
-    let result =
-        args |> Args.fromWindowsCommandLine |> Seq.toList
-        |> CreateProcess.fromRawCommand shell
-        //|> CreateProcess.withEnvironment (options.Environment |> Map.toList)
-        //|> CreateProcess.withWorkingDirectory options.WorkingDirectory
-        |> f
-        |> Proc.run
-    result
 
-let runEcho f text =
-    runCmdOrSh f (sprintf "/c echo %s" text) (sprintf "-c \"echo '%s'\"" text)
+    args
+    |> Args.fromWindowsCommandLine |> Seq.toList
+    |> CreateProcess.fromRawCommand shell
+    //|> CreateProcess.withEnvironment (options.Environment |> Map.toList)
+    //|> CreateProcess.withWorkingDirectory options.WorkingDirectory
+
+let runCmdOrSh f cmdArgs shArgs =
+    runCmdOrShRaw cmdArgs shArgs
+    |> f
+    |> Proc.run
+
+let runEchoRaw text =
+    runCmdOrShRaw (sprintf "/c echo %s" text) (sprintf "-c \"echo '%s'\"" text)
+
+let runEcho f text = runEchoRaw text |> f |> Proc.run
 
 let redirectNormal = CreateProcess.redirectOutput
 let redirectAdvanced c =
@@ -92,6 +104,11 @@ let runs = 10
 let tests =
     // warm-up and build
     runTestTool false redirectNormal "StandardOutputErrorTool" "" |> ignore
+    let mem = new System.IO.MemoryStream()
+    runTestToolRaw false "TeeTool" ""
+        |> CreateProcess.withStandardInput (UseStream(false, mem)) 
+        |> Proc.run
+        |> ignore
 
     testList "Fake.Core.ProcessIntegrationTests" [
         redirectTestCases (runs / 10) "Make sure process with lots of output and error doesn't hang - #2401" <| fun run redirect ->
@@ -117,4 +134,17 @@ let tests =
         testCase "ProcessUtils.findLocalTool doesn't fail on non-existent path, #2390" <| fun _ ->
             let p = ProcessUtils.findLocalTool "test_not_existing" "test_not_existing" [ "./not/existing/path" ]
             Expect.equal p "test_not_existing" "Expected findLocalTool to fallback to parameter"
+
+        testCase "Pipe based redirect should work, #2445" <| fun _ ->
+            let input = StreamRef.Empty
+            Debugger.Break();
+            let p1 =
+                runTestToolRaw true "TeeTool" ""
+                |> CreateProcess.withStandardInput (CreatePipe input)
+                |> Proc.start
+            let p2 =
+                runEchoRaw "can not pipe output"
+                |> CreateProcess.withStandardOutput (UseStream (true, input.Value))
+                |> Proc.run
+            p1.Wait()
     ]
