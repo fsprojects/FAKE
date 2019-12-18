@@ -137,7 +137,6 @@ let tests =
 
         testCase "Pipe based redirect should work, #2445" <| fun _ ->
             let input = StreamRef.Empty
-            Debugger.Break();
             let p1 =
                 runTestToolRaw true "TeeTool" ""
                 |> CreateProcess.withStandardInput (CreatePipe input)

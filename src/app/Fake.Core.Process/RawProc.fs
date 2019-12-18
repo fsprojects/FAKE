@@ -232,7 +232,6 @@ module internal RawProc =
                                 | CreatePipe (r) ->
                                     match originalParameter with
                                     | CreatePipe o ->
-                                        Debugger.Break();
                                         // first set the "original" cell
                                         o.value <- Some processStream
                                         // Call onSet to "produce" the high-level stream
