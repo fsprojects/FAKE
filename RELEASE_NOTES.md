@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.19.0-alpha - 2019-12-19
+## 5.19.0 - 2019-12-19
 
 * NEW: Added `Fake.Sql.SqlPackage` which is a redesign or `Fake.Sql.DacPac` and added support for publish profiles, thanks @kmadof - https://github.com/fsharp/FAKE/pull/2366
 * EHNANCEMENT: `Fake.DotNet.Cli` Add timeout field to kill the process after the given timeout - https://github.com/fsharp/FAKE/pull/2425
