@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Tools.SignTool\Fake.Tools.SignTool.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fake.ContextHelper.fs" />
@@ -54,6 +55,7 @@
     <Compile Include="Fake.Testing.SonarQube.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.Tools.Pickles.fs" />
+    <Compile Include="Fake.Tools.SignTool.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
     <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
