@@ -204,6 +204,7 @@
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+								<a href="/sql-sqlpackage.html" class="navbar-item">SqlPackage</a>
 								<a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
 							</div>
 						</div>
@@ -412,8 +413,8 @@ You can manage:</p>
             addOnStarted f c
           </code>
           <div class="tip" id="1250">
-            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18408&gt; -&gt; CreateProcess&lt;&#39;?18408&gt;<br />
-                          <strong>Type parameters:</strong> '?18408                      </div>
+            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?18396&gt; -&gt; CreateProcess&lt;&#39;?18396&gt;<br />
+                          <strong>Type parameters:</strong> '?18396                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L337-337" class="github-link">
@@ -450,8 +451,8 @@ You can manage:</p>
             copyRedirectedProcessOutputsToStandardOutputs(...)
           </code>
           <div class="tip" id="1252">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18350&gt; -&gt; CreateProcess&lt;&#39;?18350&gt;<br />
-                          <strong>Type parameters:</strong> '?18350                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18338&gt; -&gt; CreateProcess&lt;&#39;?18338&gt;<br />
+                          <strong>Type parameters:</strong> '?18338                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L197-197" class="github-link">
@@ -488,8 +489,8 @@ You can manage:</p>
             ensureExitCode(r)
           </code>
           <div class="tip" id="1254">
-            <strong>Signature:</strong> r:CreateProcess&lt;&#39;?18444&gt; -&gt; CreateProcess&lt;&#39;?18444&gt;<br />
-                          <strong>Type parameters:</strong> '?18444                      </div>
+            <strong>Signature:</strong> r:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L590-590" class="github-link">
@@ -676,8 +677,8 @@ You can manage:</p>
             getEnvironmentMap(c)
           </code>
           <div class="tip" id="1260">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18414&gt; -&gt; EnvMap<br />
-                          <strong>Type parameters:</strong> '?18414                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18402&gt; -&gt; EnvMap<br />
+                          <strong>Type parameters:</strong> '?18402                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L356-356" class="github-link">
@@ -734,8 +735,8 @@ Throws if the stream is not redirected (ie is Inherit).</p>
             mapFilePath f c
           </code>
           <div class="tip" id="1263">
-            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?18360&gt; -&gt; CreateProcess&lt;&#39;?18360&gt;<br />
-                          <strong>Type parameters:</strong> '?18360                      </div>
+            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?18348&gt; -&gt; CreateProcess&lt;&#39;?18348&gt;<br />
+                          <strong>Type parameters:</strong> '?18348                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L232-232" class="github-link">
@@ -830,8 +831,8 @@ Be careful when using this function. Using redirectOutput is the preferred varia
             replaceFilePath newFilePath c
           </code>
           <div class="tip" id="1268">
-            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?18358&gt; -&gt; CreateProcess&lt;&#39;?18358&gt;<br />
-                          <strong>Type parameters:</strong> '?18358                      </div>
+            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?18346&gt; -&gt; CreateProcess&lt;&#39;?18346&gt;<br />
+                          <strong>Type parameters:</strong> '?18346                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L224-224" class="github-link">
@@ -906,8 +907,8 @@ Be careful when using this function. Using redirectOutput is the preferred varia
             withEnvironment env c
           </code>
           <div class="tip" id="1272">
-            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?18410&gt; -&gt; CreateProcess&lt;&#39;?18410&gt;<br />
-                          <strong>Type parameters:</strong> '?18410                      </div>
+            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?18398&gt; -&gt; CreateProcess&lt;&#39;?18398&gt;<br />
+                          <strong>Type parameters:</strong> '?18398                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L346-346" class="github-link">
@@ -982,8 +983,8 @@ Be careful when using this function. Using redirectOutput is the preferred varia
             withStandardError stdErr c
           </code>
           <div class="tip" id="1276">
-            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18420&gt; -&gt; CreateProcess&lt;&#39;?18420&gt;<br />
-                          <strong>Type parameters:</strong> '?18420                      </div>
+            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18408&gt; -&gt; CreateProcess&lt;&#39;?18408&gt;<br />
+                          <strong>Type parameters:</strong> '?18408                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L376-376" class="github-link">
@@ -1001,8 +1002,8 @@ Be careful when using this function. Using redirectOutput is the preferred varia
             withStandardInput stdIn c
           </code>
           <div class="tip" id="1277">
-            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18422&gt; -&gt; CreateProcess&lt;&#39;?18422&gt;<br />
-                          <strong>Type parameters:</strong> '?18422                      </div>
+            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18410&gt; -&gt; CreateProcess&lt;&#39;?18410&gt;<br />
+                          <strong>Type parameters:</strong> '?18410                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L382-382" class="github-link">
@@ -1020,8 +1021,8 @@ Be careful when using this function. Using redirectOutput is the preferred varia
             withStandardOutput stdOut c
           </code>
           <div class="tip" id="1278">
-            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18418&gt; -&gt; CreateProcess&lt;&#39;?18418&gt;<br />
-                          <strong>Type parameters:</strong> '?18418                      </div>
+            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?18406&gt; -&gt; CreateProcess&lt;&#39;?18406&gt;<br />
+                          <strong>Type parameters:</strong> '?18406                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L370-370" class="github-link">
@@ -1109,7 +1110,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1439</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1473</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

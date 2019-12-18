@@ -36,9 +36,11 @@ function generateTableOfContent() {
                 menuHtml += `<ul class="menu-list"><li><a href="${href}">${heading.innerText}</a>`;
                 levels++;
             } else if (currentHeadingCount < headingNumber) {
-                // decrease level
-                menuHtml += `</li></ul><li><a href="${href}">${heading.innerText}</a>`;
-                levels--;
+                // decrease level, could go down more than one level (say a previous section ends with h4 and a new section starts with h2)
+                let headingNumDif = headingNumber - currentHeadingCount;
+                for (let d = 0; d < headingNumDif; d++) { menuHtml += "</li></ul>" }
+                menuHtml += `<li><a href="${href}">${heading.innerText}</a>`;
+                levels-=headingNumDif;
             } else if (currentHeadingCount == headingNumber) {
                 // same level
                 menuHtml += `</li><li><a href="${href}">${heading.innerText}</a>`;

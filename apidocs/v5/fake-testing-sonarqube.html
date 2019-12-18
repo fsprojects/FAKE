@@ -204,6 +204,7 @@
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+								<a href="/sql-sqlpackage.html" class="navbar-item">SqlPackage</a>
 								<a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
 							</div>
 						</div>
@@ -309,7 +310,8 @@
 <h1><a name="SonarQube" class="anchor" href="#SonarQube">SonarQube</a></h1>
 
 <div class="xmldoc">
-<p>Contains a task to run the msbuild runner of <a href="http://sonarqube.org">SonarQube analyzer</a>.</p>
+<p>Contains a task to run the <a href="http://sonarqube.org">SonarQube</a> static code analyzer.
+It uses the <a href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/">SonarScanner for MSBuild</a></p>
 
 </div>
 
@@ -345,21 +347,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1140', 1140)" onmouseover="showTip(event, '1140', 1140)">
+          <code onmouseout="hideTip(event, '1142', 1142)" onmouseover="showTip(event, '1142', 1142)">
             finish(setParams)
           </code>
-          <div class="tip" id="1140">
+          <div class="tip" id="1142">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) option -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L115-115" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L122-122" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>open Fake.Testing</p>
+          <p>This task can be used to run the end command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the SonarQube default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<p>open Fake.Testing</p>
 <p>SonarQube.finish None</p>
 <p>SonarQube.finish (Some (fun p -&gt;
-{p with
+{ p with
 Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
 
 
@@ -368,20 +376,105 @@ Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1141', 1141)" onmouseover="showTip(event, '1141', 1141)">
+          <code onmouseout="hideTip(event, '1143', 1143)" onmouseover="showTip(event, '1143', 1143)">
+            scan setParams doBetween
+          </code>
+          <div class="tip" id="1143">
+            <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; doBetween:(unit -&gt; unit) -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L166-166" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>This task can be used to execute some code between
+the <code>begin</code> and <code>end</code> <a href="http://sonarqube.org/">Sonar Qube</a> on a project.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the SonarQube default parameters.</li>
+<li><code>doBetween</code> - Function executed between <code>begin</code> and <code>end</code> <a href="http://sonarqube.org/">Sonar Qube</a> commands.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Testing</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;StaticAnalysis&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="k">let</span> <span class="id">setParams</span> <span class="id">p</span> <span class="o">=</span>
+    <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;ProjectKey&quot;</span>
+             <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;ProjectName&quot;</span>
+             <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;3.2.1&quot;</span>
+             <span class="id">Settings</span> <span class="o">=</span>
+                <span class="pn">[</span> <span class="s">&quot;sonar.host.url=&quot;</span> <span class="o">+</span> <span class="id">SONAR_HOST_URL</span>
+                  <span class="s">&quot;sonar.login=&quot;</span> <span class="o">+</span> <span class="id">SONAR_TOKEN</span>
+                  <span class="s">&quot;sonar.cs.opencover.reportsPaths=opencovercoverage.xml&quot;</span>
+                <span class="pn">]</span>
+             <span class="c">// choose what you need</span>
+             <span class="c">// https://fake.build/dotnet-cli.html#SDK-tools-local-global-clireference</span>
+             <span class="id">ToolType</span> <span class="o">=</span> <span class="id">ToolType</span><span class="pn">.</span><span class="id">CreateGlobalTool</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// Start as dotnet global tool (`sonarscanner`)</span>
+             <span class="id">ToolType</span> <span class="o">=</span> <span class="id">ToolType</span><span class="pn">.</span><span class="id">CreateLocalTool</span><span class="pn">(</span><span class="pn">)</span>  <span class="c">// Start as dotnet local tool (`dotnet sonarscanner`)</span>
+    <span class="pn">}</span>
+  <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">SonarQube</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">scan</span> <span class="id">setParams</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
+        <span class="id">DotNet</span><span class="pn">.</span><span class="id">build</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">id</span>
+        <span class="id">DotNet</span><span class="pn">.</span><span class="id">test</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">id</span>
+  <span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">namespace Fake</div>
+<div class="tip" id="fs2">namespace Fake.Testing</div>
+<div class="tip" id="fs3">module SonarQube<br /><br />from Fake.Testing</div>
+<div class="tip" id="fs4">val scan : setParams:(SonarQube.SonarQubeParams -&gt; SonarQube.SonarQubeParams) -&gt; doBetween:(unit -&gt; unit) -&gt; unit</div>
+<div class="tip" id="fs5">val id : x:&#39;T -&gt; &#39;T</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1144', 1144)" onmouseover="showTip(event, '1144', 1144)">
             start(setParams)
           </code>
-          <div class="tip" id="1141">
+          <div class="tip" id="1144">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L101-101" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>open Fake.Testing</p>
+          <p>This task can be used to run the begin command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the SonarQube default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<p>open Fake.Testing</p>
 <p>SonarQube.start (fun p -&gt;
-{p with
+{ p with
 Key = "MyProject"
 Name = "MainTool"
 Version = "1.0 })</p>
@@ -429,7 +522,7 @@ Version = "1.0 })</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1439</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1473</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -204,6 +204,7 @@
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+								<a href="/sql-sqlpackage.html" class="navbar-item">SqlPackage</a>
 								<a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
 							</div>
 						</div>
@@ -4763,6 +4764,10 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
             <a href="fake-sql-dacpac.html">DacPac</a>
           </td>
           <td class="xmldoc">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use SqlPackage instead</p>
+            </div> 
           <p>Contains helpers around deploying databases.</p>
 
 
@@ -4814,7 +4819,8 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
             <a href="fake-testing-sonarqube.html">SonarQube</a>
           </td>
           <td class="xmldoc">
-          <p>Contains a task to run the msbuild runner of <a href="http://sonarqube.org">SonarQube analyzer</a>.</p>
+          <p>Contains a task to run the <a href="http://sonarqube.org">SonarQube</a> static code analyzer.
+It uses the <a href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/">SonarScanner for MSBuild</a></p>
 
 
           </td>
@@ -5196,7 +5202,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1439</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0-alpha.1473</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
