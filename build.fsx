@@ -806,7 +806,7 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     publishRuntime "portable"
 )
 
-let setBuildEnvVars(versionVar) =
+let setBuildEnvVars versionVar isDebianPackaging =
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
     Environment.setEnvironVar "PackageVersion" versionVar
     Environment.setEnvironVar "Version" versionVar
@@ -820,6 +820,7 @@ let setBuildEnvVars(versionVar) =
     Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageRepositoryType" "git"
     Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    Environment.setEnvironVar "IsDebianPackaging" (if isDebianPackaging then "true" else "false")
     //Environment.setEnvironVar "IncludeSource" "true"
     //Environment.setEnvironVar "IncludeSymbols" "false"
     // for github package management to allow uploading the package... -> We need to re-package...
@@ -833,7 +834,7 @@ Target.create "_DotNetPackage" (fun _ ->
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
     restoreTools()
-    setBuildEnvVars(nugetVersion)
+    setBuildEnvVars nugetVersion false
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -924,7 +925,7 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework =  "netcoreapp2.1"
+    let targetFramework = "netcoreapp2.1"
     let args =
         [
             sprintf "--runtime %s" runtime
@@ -932,7 +933,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
             sprintf "--configuration %s" "Release"
             sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
-    setBuildEnvVars(simpleVersion)
+    setBuildEnvVars simpleVersion true
     let result =
         DotNet.exec (fun opt ->
             { opt with

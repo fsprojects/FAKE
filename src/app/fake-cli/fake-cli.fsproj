@@ -22,7 +22,7 @@
         <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Packaging.Targets">
+        <PackageReference Include="Packaging.Targets" Condition="'$(IsDebianPackaging)' == 'true'">
             <Version>0.1.153-*</Version>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
