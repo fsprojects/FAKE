@@ -18,12 +18,11 @@ Usage:
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
-    -t, --target <target>
-                          Run the given target (ignored if positional argument 'target' is given)
+    -t, --target <target>    Run the given target (ignored if positional argument 'target' is given)
     -e, --environment-variable <keyval> [*]
-                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
-    -s, --single-target    Run only the specified target.
-    -p, --parallel <num>  Run parallel with the given number of tasks.
+                             Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
+    -s, --single-target      Run only the specified target.
+    -p, --parallel <num>     Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
@@ -749,14 +748,18 @@ module Target =
                                 waitList <- []
                                 reply.Reply (async.Return(ctx, None))
                             else
-                                let isRunnable (t:Target) =
-                                    not (known.ContainsKey (String.toLower t.Name)) && // not already finised
-                                    not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) && // not already running
-                                    t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
-                                    |> Seq.forall (String.toLower >> known.ContainsKey)
-                                let runnable =
+                                let calculateOpenTargets() =
+                                    let isOpen (t:Target) =
+                                        not (known.ContainsKey (String.toLower t.Name)) && // not already finised
+                                        not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) // not already running
                                     order
                                     |> Seq.concat
+                                    |> Seq.filter isOpen
+                                let runnable =
+                                    let isRunnable (t:Target) =
+                                        t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
+                                        |> Seq.forall (String.toLower >> known.ContainsKey)
+                                    calculateOpenTargets()
                                     |> Seq.filter isRunnable
                                     |> Seq.toList
 
@@ -784,6 +787,26 @@ module Target =
                                         failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                    let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
+                                    // recalculate openTargets as getNextFreeRunableTarget could change runningTasks
+                                    let openTargets = calculateOpenTargets() |> Seq.toList
+                                    let orderedOpen =
+                                        let isDependencyResolved =
+                                            String.toLower >> known.ContainsKey
+                                        let isDependencyRunning t =
+                                            runningTasks
+                                            |> Seq.exists (fun running -> String.toLower running.Name = t)
+                                        let isDependencyResolvedOrRunning t = isDependencyResolved t || isDependencyRunning t
+                                        openTargets
+                                        |> List.sortBy (fun t ->
+                                            t.Dependencies @ List.filter inResolution t.SoftDependencies // Order by unresolved dependencies
+                                            |> Seq.filter (isDependencyResolvedOrRunning >> not)
+                                            |> Seq.length)
+                                    let openList = 
+                                        System.String.Join(", ", orderedOpen :> seq<_> |> (if orderedOpen.Length > 3 then Seq.take 3 else id) |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                          + (if orderedOpen.Length > 3 then ", ..." else "")
+                                    Trace.tracefn "FAKE worker idle because '%d' targets (%s) are still running and all ('%d') open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
+                                        runningTasks.Length running openTargets.Length openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->

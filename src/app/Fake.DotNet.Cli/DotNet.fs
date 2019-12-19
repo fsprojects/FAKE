@@ -513,6 +513,8 @@ module DotNet =
             Version : string option
             /// Command working directory
             WorkingDirectory: string
+            /// Process timeout, kills the process after the specified time
+            Timeout: TimeSpan option
             /// Custom parameters
             CustomParams: string option
             /// Logging verbosity (--verbosity)
@@ -548,6 +550,7 @@ module DotNet =
                 )
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
+            Timeout = None
             CustomParams = None
             Version = None
             Verbosity = None
@@ -596,6 +599,8 @@ module DotNet =
 
         let inline withWorkingDirectory wd x =
             lift (fun o -> { o with WorkingDirectory = wd}) x
+        let inline withTimeout t x =
+            lift (fun o -> { o with Timeout = t}) x
         let inline withDiagnostics diag x =
             lift (fun o -> { o with Diagnostics = diag}) x
         let inline withVerbosity verb x =
@@ -711,6 +716,7 @@ module DotNet =
         c
         |> CreateProcess.withCommand cmd
         |> (if c.WorkingDirectory.IsNone then CreateProcess.withWorkingDirectory options.WorkingDirectory else id)
+        |> (match options.Timeout with Some timeout -> CreateProcess.withTimeout timeout | None -> id)
         //|> CreateProcess.withArguments (Args.toWindowsCommandLine cmdArgs)
         |> CreateProcess.withEnvironmentMap (EnvMap.ofMap options.Environment)
         |> CreateProcess.setEnvironmentVariable "PATH" (
@@ -1054,6 +1060,7 @@ module DotNet =
                       Version = common.Version
                       Environment = common.Environment
                       WorkingDirectory = common.WorkingDirectory
+                      Timeout = None
                       CustomParams = None
                       Verbosity = None
                       Diagnostics = false }) "msbuild" args
@@ -1246,6 +1253,8 @@ module DotNet =
             BuildBasePath: string option
             /// Output path (--output)
             OutputPath: string option
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             /// No build flag (--no-build)
             NoBuild: bool
             /// Doesn't execute an implicit restore when running the command. (--no-restore)
@@ -1261,6 +1270,7 @@ module DotNet =
             VersionSuffix = None
             BuildBasePath = None
             OutputPath = None
+            NoLogo = false
             NoBuild = false
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
@@ -1287,6 +1297,7 @@ module DotNet =
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
+            param.NoLogo |> argOption "nologo"
             param.NoBuild |> argOption "no-build"
             param.NoRestore |> argOption "no-restore"
         ]
@@ -1330,6 +1341,8 @@ module DotNet =
             /// Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
             /// The default is 'true' if a runtime identifier is specified. (--self-contained)
             SelfContained: bool option
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             /// No build flag (--no-build)
             NoBuild: bool
             /// Doesn't execute an implicit restore when running the command. (--no-restore)
@@ -1350,6 +1363,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             VersionSuffix = None
+            NoLogo = false
             NoBuild = false
             NoRestore = false
             Force = None
@@ -1382,6 +1396,7 @@ module DotNet =
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.Manifest |> Option.toList |> List.collect id |> argList2 "manifest"
+            param.NoLogo |> argOption "nologo"
             param.NoBuild |> argOption "no-build"
             param.NoRestore |> argOption "no-restore"
             param.SelfContained |> Option.map (argOptionExplicit "self-contained") |> Option.defaultValue []
@@ -1420,6 +1435,8 @@ module DotNet =
             OutputPath: string option
             /// Native flag (--native)
             Native: bool
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             /// Doesn't execute an implicit restore during build. (--no-restore)
             NoRestore: bool
             /// Other msbuild specific parameters
@@ -1435,6 +1452,7 @@ module DotNet =
             BuildBasePath = None
             OutputPath = None
             Native = false
+            NoLogo = false
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
@@ -1462,7 +1480,8 @@ module DotNet =
             param.Runtime |> Option.toList |> argList2 "runtime"
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
-            (if param.Native then [ "--native" ] else [])
+            param.Native |> argOption "native"
+            param.NoLogo |> argOption "nologo"
             param.NoRestore |> argOption "no-restore"
         ]
         |> List.concat
@@ -1509,6 +1528,8 @@ module DotNet =
             Output: string option
             /// Enable verbose logs for test platform. Logs are written to the provided file. (--diag)
             Diag: string option
+            /// Don't show copyright messages. (--nologo)
+            NoLogo: bool
             ///  Do not build project before testing. (--no-build)
             NoBuild: bool
             /// The directory where the test results are going to be placed. The specified directory will be created if it does not exist. (--results-directory)
@@ -1537,6 +1558,7 @@ module DotNet =
             Framework = None
             Output = None
             Diag = None
+            NoLogo = false
             NoBuild = false
             ResultsDirectory = None
             Collect = None
@@ -1572,6 +1594,7 @@ module DotNet =
             param.Framework |> Option.toList |> argList2 "framework"
             param.Output |> Option.toList |> argList2 "output"
             param.Diag |> Option.toList |> argList2 "diag"
+            param.NoLogo |> argOption "nologo"
             param.NoBuild |> argOption "no-build"
             param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
             param.Collect |> Option.toList |> argList2 "collect"

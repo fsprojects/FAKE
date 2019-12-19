@@ -70,7 +70,7 @@ let tests =
             if Environment.isWindows then
                 "cmd", "/C \"echo 1&& echo 2\""
             else
-                "sh", "-c \"echo '1'; echo '2'\""            
+                "sh", "-c \"echo '1'; echo '2'\""
         let result =
             Process.execWithResult(fun proc ->
                     { proc with

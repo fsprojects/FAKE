@@ -621,7 +621,7 @@ module CreateProcess =
     type internal TimeoutState =
         { Stopwatch : System.Diagnostics.Stopwatch
           mutable HasExited : bool }
-    /// Set the given timeout      
+    /// Set the given timeout, kills the process after the specified timespan
     let withTimeout (timeout:System.TimeSpan) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 

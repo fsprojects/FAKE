@@ -1,6 +1,5 @@
 ﻿module Fake.Testing.SonarQubeTests
 
-open System.IO
 open Fake.Core
 open Fake.Testing
 open Expecto

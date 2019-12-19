@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Welcome to the FAKE community! Thank you so much for creating your first issue and therefore improving the project!'
+        pr-message: 'Welcome to the FAKE community! Thank you so much for directly helping to improve FAKE! You are now in good company and we hope this only the first in a long list of contributions :)'

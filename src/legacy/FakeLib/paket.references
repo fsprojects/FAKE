@@ -1,5 +1,6 @@
 FSharp.Core
 Paket.Core
+FSharp.Compiler.Tools
 Mono.Web.Xdt
 FParsec
 Mono.Cecil

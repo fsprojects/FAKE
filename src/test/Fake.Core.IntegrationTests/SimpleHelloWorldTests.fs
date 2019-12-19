@@ -8,9 +8,11 @@ open System.IO
 open System.Diagnostics
 open Newtonsoft.Json
 open Newtonsoft.Json.Linq
+open Fake.Core
 
 let fail s = Expect.isTrue s false
 let ignProc = ignore<Fake.Core.ProcessResult>
+
 
 
 type Declaration =
@@ -32,10 +34,49 @@ type Target =
       Declaration : Declaration
       Description : string }
 
+let getInfoVersion () =
+    let attr = typeof<Fake.Core.Process.ProcessList>.Assembly.GetCustomAttributes(typeof<System.Reflection.AssemblyInformationalVersionAttribute>, false)
+    match attr |> Seq.tryHead with
+    | Some (:? Reflection.AssemblyInformationalVersionAttribute as attr) -> attr.InformationalVersion
+    | _ -> failwithf "Could not retrieve version"
+
+let skipIfNoVersion () =
+    if getInfoVersion() = "1.0.0" then
+        skiptestf "This test is skipped as 1.0.0 is probably not a valid version and this test requires the current version of the package. Use 'fake build -t DotNetCoreIntegrationTests' to run this test."
 
 [<Tests>]
 let tests = 
   testList "Fake.Core.IntegrationTests" [
+    testCase "fake-cli local tool works, #2425" <| fun _ ->
+        skipIfNoVersion ()
+        let scenario = "i002425-dotnet-cli-tool-works"
+        prepare scenario
+        let scenarioPath = resolvePath scenario ""
+        let version = getInfoVersion ()
+        // dotnet tool install --version 5.19.0-alpha.local.1 fake-cli --add-source /e/Projects/FAKE/release/dotnetcore/
+        [
+            yield! ["tool"; "install"; "--version"; version; "fake-cli"; "--add-source"; releaseDotnetCoreDir ]
+        ]
+        |> runDotNetRaw
+        |> CreateProcess.withWorkingDirectory scenarioPath
+        |> CreateProcess.ensureExitCode
+        |> CreateProcess.map ignore
+        |> Proc.run
+
+        let output =
+            [
+                yield! ["fake"; "--version" ]
+            ]
+            |> runDotNetRaw
+            |> CreateProcess.withWorkingDirectory scenarioPath
+            |> CreateProcess.redirectOutput
+            |> CreateProcess.ensureExitCode
+            |> Proc.run
+        
+        Expect.stringContains "Expected version in stderror string" output.Result.Error version
+        Expect.stringContains "Expected Fake.Runtime.dll in stderror string" output.Result.Output "Fake.Runtime.dll"
+
+
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
         let result =
             if Paket.Utils.isWindows then
