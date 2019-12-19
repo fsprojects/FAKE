@@ -4,13 +4,13 @@ Thank you for your interest in contributing to FAKE! This guide explains everyth
 
 __Before diving in__, please note:
 
-* You are encouraged to **improve this document** by sending a pull request to the FAKE project on GitHub. If you learn something while playing with FAKE, please record your [findings here](https://github.com/fsharp/FAKE/blob/master/help/markdown/contributing.md)!
+* You are encouraged to **improve this document** by sending a pull request to the FAKE project on GitHub. If you learn something while playing with FAKE, please record your [findings here](https://github.com/fsharp/FAKE/blob/release/next/help/markdown/contributing.md)!
 
 * If you'd like to discuss a feature (a good idea!) or are looking for suggestions on how to to contribute:
   * **Check the [Issue list](https://github.com/fsharp/FAKE/issues)** on GitHub,
   * **Visit the [Gitter room](https://gitter.im/fsharp/FAKE)**
 
-* Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the **Apache 2.0 license**. See [`/License.txt`](https://github.com/fsharp/FAKE/tree/master/License.txt) for details.
+* Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the **Apache 2.0 license**. See [`/License.txt`](https://github.com/fsharp/FAKE/tree/release/next/License.txt) for details.
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ Before building and developing FAKE, you must:
 
 **Linux and Mac** users should install the .NET Core SDK and Mono per this guide, "[Cross-Platform Development with F#](http://fsharp.org/guides/mac-linux-cross-platform/)".
 
-**Windows** users can install **Visual Studio 2017**. The [Community Edition](https://www.visualstudio.com/de/vs/community/) 
+**Windows** users can install **Visual Studio**. The [Community Edition](https://www.visualstudio.com/de/vs/community/) 
   is freely available for open-source projects.
 
 <div class="alert alert-info">
@@ -39,10 +39,12 @@ For FAKE development, [Visual Studio Code](https://code.visualstudio.com/Downloa
 
 ### Install FAKE
 
-You can quickly install FAKE using the dotnet SDK:
+You can quickly install and use FAKE with the dotnet SDK (we use fake-cli as local tool):
 <pre>
     <code class="lang-bash">
-    dotnet tool install fake-cli -g
+    cd /projects/FAKE
+    dotnet tool restore
+    dotnet fake --version
     </code>
 </pre>
 
@@ -61,17 +63,17 @@ For alternative methods of installing FAKE, please see the [Getting Started guid
     </code>
 </pre>
 
-4. **Checkout** the `master` branch. 
+4. **Checkout** the `release/next` branch. 
 <pre>
     <code class="lang-bash">
-    git checkout master
+    git checkout release/next
     </code>
 </pre>
 
-5. To verify that everything works, **build** `master` via:
+5. To verify that everything works, **build** `release/next` via:
 <pre>
     <code class="lang-bash">
-    fake run build.fsx
+    dotnet fake build
     </code>
 </pre>
 
@@ -89,7 +91,7 @@ For alternative methods of installing FAKE, please see the [Getting Started guid
 9. Re-run the build script to **confirm that all tests pass**.
 <pre>
     <code class="lang-bash">
-    fake run build.fsx
+    dotnet fake build
     </code>
 </pre>
 
@@ -99,7 +101,7 @@ For alternative methods of installing FAKE, please see the [Getting Started guid
     <pre>
         <code class="lang-bash">
         git fetch upstream
-        git rebase upstream/master
+        git rebase upstream/release/next
         git push origin myfeature -f
         </code>
     </pre>
@@ -108,7 +110,7 @@ For alternative methods of installing FAKE, please see the [Getting Started guid
 
 ## Contributing Documentation
 
-The code for all documentation can be found in the [`help` directory on GitHub](https://github.com/fsharp/FAKE/tree/master/help). If you find a bug or add a new feature, *make sure you document it*!
+The code for all documentation can be found in the [`help` directory on GitHub](https://github.com/fsharp/FAKE/tree/release/next/help). If you find a bug or add a new feature, *make sure you document it*!
 
 ### Building the Documentation
 
@@ -118,14 +120,14 @@ It turns Markdown files `*.md` with embedded code snippets and F# script `*.fsx`
 To build the documentation from scratch, simply run: 
 <pre>
     <code class="lang-bash">
-    fake build target GenerateDocs
+    dotnet fake build target GenerateDocs
     </code>
 </pre>
 
 To save time, you may skip the prerequisite build steps and run the `GenerateDocs` target directly using the single target `-s` switch:
 <pre>
     <code class="lang-bash">
-    fake build -s target GenerateDocs
+    dotnet fake build -s target GenerateDocs
     </code>
 </pre>
 (Note: this assumes binaries are already built and have not been modified.)
@@ -136,7 +138,7 @@ To save time, you may skip the prerequisite build steps and run the `GenerateDoc
 Running the following target spins up a webserver on localhost and opens the newly built docs in a browser window:
 <pre>
     <code class="lang-bash">
-    fake build target HostDocs
+    dotnet fake build target HostDocs
     </code>
 </pre>
 
@@ -165,7 +167,7 @@ e.g: Using dotnet cli
 
 ## Style Guidlines
 
-* When working on FAKE 5 core, [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) helps a lot!
+* When working on FAKE 5, [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) helps a lot!
 
 * Read the [F# component design guidelines](http://fsharp.org/specs/component-design-guidelines/).
 
@@ -173,7 +175,7 @@ e.g: Using dotnet cli
 
 * Add documentation for your feature
 
-* If you add new markdown documentation, make sure to link if from an existing site. Ideally, add it to the [menu](https://github.com/fsharp/FAKE/blob/master/help/templates/template.cshtml)
+* If you add new markdown documentation, make sure to link if from an existing site. Ideally, add it to the [menu](https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml)
 
 * If you write API documentation but no extra markdown, please consider adding it to the menu as well.
 
@@ -207,25 +209,23 @@ e.g: Using dotnet cli
 
 * Fake 4 still allows hotfixes. Please send the PR against the [hotfix_fake4 branch](https://github.com/fsharp/FAKE/tree/hotfix_fake4).
 
-  It would be helpful if a second PR against `master` is sent that merges the hotfix into `master` and adds the hotfix to the FAKE 5 code as well.
+  It would be helpful if a second PR against `release/next` is sent that merges the hotfix into `release/next` and adds the hotfix to the FAKE 5 code as well.
 
 ## Porting Modules to FAKE 5
 
 As mentioned in the ["Fake 5 learn more"](fake-fake5-learn-more.html) section, we could use your help porting modules to FAKE 5. To save you from some pitfalls, this section provides a working approach to migrating modules.
 
-Tooling in netcore is not optimal yet, so some things have to be done by hand. These steps will enable pretty good IDE support:
+Try the following:
 
 * Copy one of the existing netcore projects and edit the project file by hand (rename)
 * Copy the old implementation files from `src/app/FakeLib` to `/src/app/Fake.<ModuleType>.<Name>` (update project file again if required)
-* Reference the new files in FakeLib (again updating `FakeLib.fsproj` by hand to properly reference the stuff)
-* Open `Fake.sln` and go from there. Because in F# you can only reference stuff defines in files ABOVE, this is ALMOST perfect
-* Once stuff compiles in the (`Fake.sln`) solution the remaining changes to make the netcore project compile are usually straightforward (you basically only need to fix project references or add framework nuget packages if needed). Let us know if you struggle at this point (in the PR or a new issue).
+* (Optionally, there is no need for new stuff to appear in FakeLib at this point) Reference the new files in FakeLib (again updating `FakeLib.fsproj` by hand to properly reference the stuff)
+* Open `Fake.sln`, add the project and go from there.
+* Once stuff compiles in the (`Fake.sln`) solution you are usually good to go. Let us know if you struggle at this point (in the PR or a new issue).
 * Add the info about the new module to the `dotnetAssemblyInfos` variable in `build.fsx`. From this point on the build script will let you know if anything is missing. Again, if you have problems let us know.
 * Mark the old module with the `Obsolete` attribute.
+* Test everything with a full `dotnet fake build`
 
-    <div class="alert alert-info">
-    <h5>INFO</h5> <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.
-    </div>
 These steps will ensure:
 
 * People using the NuGet package will get the warnings to update the new API

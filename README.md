@@ -14,17 +14,12 @@ The new DSL was designed to be succinct, typed, declarative, extensible and easy
 
 See the [project home page](https://fake.build/) for tutorials and [API documentation](http://fake.build/apidocs/v5/index.html).
 
-# Build the project
+## Build the project
 
-* Quick: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet build build.proj`
-* Fake5: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
+* Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
+* Or: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
 
-> Note: The build of the "legacy" parts (FAKE 4) will most likely fail
->
-> - when you are on linux and do not have mono installed
-> - when you are on windows and do not have Visual Studio installed
->
-> Either build only the `netcore` parts via `fake build target FullDotNetCore` or install the requirements according to the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
+> Note: You can find more details on the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
 
 Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise the test-suite will fail (However, the compilation should work)
