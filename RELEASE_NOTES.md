@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.19.1-alpha - tbd
+
+* tbd
+
 ## 5.19.0 - 2019-12-19
 
 * NEW: Added `Fake.Sql.SqlPackage` which is a redesign or `Fake.Sql.DacPac` and added support for publish profiles, thanks @kmadof - https://github.com/fsharp/FAKE/pull/2366
