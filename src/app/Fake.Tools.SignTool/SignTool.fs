@@ -126,7 +126,7 @@ type SignOptions =
         /// Output verbosity. (signtool options: /q, /v)
         Verbosity: Verbosity option
         /// Specifies the certificate to use for signing. (signtool options: /a, /f, /p, /csp, /kc, /i, /n, /r, /s, /sha1, /sm)
-        Certificate: SignCertificate option
+        Certificate: SignCertificate
         /// Specifies the file digest algorithm to use to create file signatures. The default algorithm is Secure Hash Algorithm (SHA-1). (signtool option: /fd)
         DigestAlgorithm: DigestAlgorithm option
         /// Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server. (signtool option: /t, /td, /tr)
@@ -146,11 +146,11 @@ type SignOptions =
     }
 
     /// Options default values.
-    static member Create() = {
+    static member Create(certificate) = {
         ToolOptions = None
         Debug = None
         Verbosity = None
-        Certificate = None
+        Certificate = certificate
         DigestAlgorithm = None
         TimeStamp = None
         AdditionalCertificate = None
@@ -328,12 +328,12 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
         yield! yieldIfTrue "as" options.AppendSignature
 
         match options.Certificate with
-        | Some (File f) ->
+        | File f ->
             yield sarg "f" f.Path
             yield! yieldIfSome (sarg "p") f.Password
             yield! yieldIfSome (sarg "csp") f.CspName
             yield! yieldIfSome (sarg "kc") f.PrivateKeyKey
-        | Some (Store s) ->
+        | Store s ->
             yield! yieldIfTrue "a" s.AutomaticallySelectCertificate
             yield! yieldIfSome (sarg "i") s.IssuerName
             yield! yieldIfSome (sarg "n") s.SubjectName
@@ -341,8 +341,6 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
             yield! yieldIfSome (sarg "s") s.StoreName
             yield! yieldIfSome (sarg "sha1") s.Hash
             yield! yieldIfTrue "sm" s.UseComputerStore
-        | None ->
-            failwith "A certificate is required for signing but none was provided. Make sure the 'Certificate' option is set."
 
         yield digesting options.DigestAlgorithm
         yield! timestamping options.TimeStamp
@@ -354,7 +352,7 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
     }
     // hide password in trace output
     match Context.isFakeContext (), options.Certificate with
-    | true, Some (File f) ->
+    | true, File f ->
         if f.Password.IsSome then
             // surround in quotes to lower chances of replacing non-password occurences of password-string
             TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
@@ -391,12 +389,8 @@ let internal verifyInternal runner signtoolexeLocator (options: VerifyOptions) (
 
 
 /// Signs files according to the options specified.
-let sign (setOptions: SignOptions -> SignOptions) (files: seq<string>) =
-    let options = setOptions (SignOptions.Create())
-    signInternal defaultRunner defaultSigntoolexeLocator options files
-
-/// Signs files according to the options specified.
-let signo (options: SignOptions) (files: seq<string>) =
+let sign (certificate: SignCertificate) (setOptions: SignOptions -> SignOptions) (files: seq<string>) =
+    let options = setOptions (SignOptions.Create(certificate))
     signInternal defaultRunner defaultSigntoolexeLocator options files
 
 /// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
@@ -404,17 +398,8 @@ let timeStamp (setOptions: TimeStampOptions -> TimeStampOptions) (files: seq<str
     let options = setOptions (TimeStampOptions.Create())
     timeStampInternal defaultRunner defaultSigntoolexeLocator options files
 
-/// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
-let timeStampo (options: TimeStampOptions) (files: seq<string>) =
-    timeStampInternal defaultRunner defaultSigntoolexeLocator options files
-
 /// Verifies files according to the options specified.
 /// The SignTool verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.
 let verify (setOptions: VerifyOptions -> VerifyOptions) (files: seq<string>) =
     let options = setOptions (VerifyOptions.Create())
-    verifyInternal defaultRunner defaultSigntoolexeLocator options files
-
-/// Verifies files according to the options specified.
-/// The SignTool verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.
-let verifyo (options: VerifyOptions) (files: seq<string>) =
     verifyInternal defaultRunner defaultSigntoolexeLocator options files
