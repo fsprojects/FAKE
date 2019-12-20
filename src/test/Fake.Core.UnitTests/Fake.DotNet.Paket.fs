@@ -7,7 +7,7 @@ open Fake.DotNet.Testing
 open Fake.Testing
 open Expecto
 
-let expectedPath = if Environment.isWindows then ".paket\\paket.EXE" else ".paket/paket.exe"
+let expectedPath =  "paket" // if Environment.isWindows then ".paket\\paket.EXE" else ".paket/paket.exe"
 
 [<Tests>]
 let tests =

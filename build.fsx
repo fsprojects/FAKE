@@ -63,8 +63,6 @@ open Fake.DotNet.Testing
 let disableBootstrap = false
 
 // properties
-let projectName = "FAKE"
-let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 
@@ -81,19 +79,14 @@ let chocoReleaseDir = nugetDncDir </> "chocolatey"
 let nugetLegacyDir = releaseDir </> "legacy"
 
 let reportDir = "./report"
-let packagesDir = "./packages"
-let buildMergedDir = buildDir </> "merged"
 
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
 let templateDir = srcDir</>"template"
-let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-
-let vault = ``Legacy-build``.vault
 let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
 let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
@@ -112,6 +105,8 @@ let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
 let githubtoken = releaseSecret "<githubtoken>" "github_token"
+
+do Environment.setEnvironVar "COREHOST_TRACE" "0"
 
 BuildServer.install [
     AppVeyor.Installer
@@ -149,6 +144,7 @@ let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
+    >> DotNet.Options.withTimeout (Some (System.TimeSpan.FromMinutes 20.))
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
 
 let publish f =``Legacy-build``.publish f
@@ -195,15 +191,20 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     |> File.deleteAll
 )
 
+let restoreTools =
+    let mutable alreadyRestored = false
+    (fun () ->
+        if not alreadyRestored then
+            DotNet.exec dtntSmpl "tool" "restore" |> ignore<ProcessResult>
+            alreadyRestored <- true
+    )
+
 let callpaket wd args =
-    if 0 <> Process.execSimple (fun info ->
-            { info with
-                FileName = wd </> ".paket/paket.exe"
-                WorkingDirectory = wd
-                Arguments = args }
-            |> Process.withFramework
-            ) (System.TimeSpan.FromMinutes 5.0) then
-        failwith "paket failed to start"
+    restoreTools()
+    
+    let res = DotNet.exec (dtntWorkDir wd) "paket" args
+    if not res.OK then
+        failwithf "paket failed to start: %A" res
 
 // Targets
 Target.create "Clean" (fun _ ->
@@ -297,7 +298,8 @@ let dotnetAssemblyInfos =
       "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
-      "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
+      "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations (Obsolete: Use Fake.Sql.SqlPackage instead)"
+      "Fake.Sql.SqlPackage", "Sql Server Data Tools DacPac operations"
       "Fake.Sql.SqlServer", "Helpers around interacting with SQL Server databases"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
@@ -414,10 +416,6 @@ Target.create "StartBootstrapBuild" (fun _ ->
     | Result.Error combStatus ->
         System.String.Join("\n - ", combStatus.Statuses |> Seq.map formatState)
         |> failwithf "At least one CI failed:\n - %s"
-)
-
-Target.create "DownloadPaket" (fun _ ->
-    callpaket "." "--version"
 )
 
 Target.create "UnskipAssemblyInfo" (fun _ ->
@@ -647,37 +645,30 @@ Target.create "HostDocs" (fun _ ->
     System.Console.ReadKey() |> ignore
 )
 
+let runExpecto workDir dllPath resultsXml =
+    let processResult =
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
+
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
-    let processResult =
-        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
-    if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
+    runExpecto targetDir "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" ("Fake_Core_UnitTests.TestResults.xml")
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
-    let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
-
-    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    runExpecto root "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" ("Fake_Core_CommandLine_UnitTests.TestResults.xml")
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -816,6 +807,26 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     publishRuntime "portable"
 )
 
+let setBuildEnvVars versionVar isDebianPackaging =
+    Environment.setEnvironVar "GenerateDocumentationFile" "true"
+    Environment.setEnvironVar "PackageVersion" versionVar
+    Environment.setEnvironVar "Version" versionVar
+    Environment.setEnvironVar "Authors" (String.separated ";" authors)
+    Environment.setEnvironVar "Description" projectDescription
+    Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
+    Environment.setEnvironVar "SourceLinkCreate" "false"
+    Environment.setEnvironVar "PackageTags" "build;fake;f#"
+    Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
+    Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
+    Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
+    Environment.setEnvironVar "PackageRepositoryType" "git"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    Environment.setEnvironVar "IsDebianPackaging" (if isDebianPackaging then "true" else "false")
+    //Environment.setEnvironVar "IncludeSource" "true"
+    //Environment.setEnvironVar "IncludeSymbols" "false"
+    // for github package management to allow uploading the package... -> We need to re-package...
+    //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
+
 Target.create "_DotNetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
     // This lines actually ensures we get the correct version checked in
@@ -823,23 +834,8 @@ Target.create "_DotNetPackage" (fun _ ->
     callpaket "." "restore" // first make paket restire its target file if it feels like it.
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
-
-    //Environment.setEnvironVar "IncludeSource" "true"
-    //Environment.setEnvironVar "IncludeSymbols" "false"
-    Environment.setEnvironVar "GenerateDocumentationFile" "true"
-    Environment.setEnvironVar "PackageVersion" nugetVersion
-    Environment.setEnvironVar "Version" nugetVersion
-    Environment.setEnvironVar "Authors" (String.separated ";" authors)
-    Environment.setEnvironVar "Description" projectDescription
-    Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
-    Environment.setEnvironVar "SourceLinkCreate" "false"
-    Environment.setEnvironVar "PackageTags" "build;fake;f#"
-    Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/7305422ea912e23c1c5300b23b3d0d7d8ec7d27f/help/content/pics/logo.png"
-    Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
-    // for github package management to allow uploading the package... -> We need to re-package...
-    //Environment.setEnvironVar "PackageProjectUrl" (sprintf "https://github.com/%s/%s" github_release_user gitName)
-    Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
-
+    restoreTools()
+    setBuildEnvVars nugetVersion false
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -930,32 +926,26 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework =  "netcoreapp2.1"
-    // See https://github.com/dotnet/cli/issues/9823
+    let targetFramework = "netcoreapp2.1"
     let args =
         [
-            sprintf "/restore"
-            sprintf "/t:%s" "CreateDeb"
-            sprintf "/p:TargetFramework=%s" targetFramework
-            sprintf "/p:CustomTarget=%s" "CreateDeb"
-            sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release"
-            sprintf "/p:PackageVersion=%s" simpleVersion
+            sprintf "--runtime %s" runtime
+            sprintf "--framework %s" targetFramework
+            sprintf "--configuration %s" "Release"
+            sprintf "--output %s" (Path.GetFullPath nugetDncDir)
         ] |> String.concat " "
+    setBuildEnvVars simpleVersion true
     let result =
         DotNet.exec (fun opt ->
             { opt with
                 WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
-        ) "msbuild" args
-    if result.OK |> not then
+        ) "deb" args
+    if not result.OK then
         failwith "Debian package creation failed"
 
 
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
-    let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
-    Directory.ensure nugetDncDir
     let target = sprintf "%s/%s" nugetDncDir fileName
-    File.Copy(sourceFile, target, true)
     publish target
 )
 
@@ -1197,14 +1187,11 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "_StartDnc"
-    ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "_DotNetPackage"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "_StartDnc"
-    ==> "_DotNetPackage"
-"DownloadPaket"
     ==> "_DotNetPackage"
 "_DotNetPackage"
     ==> "DotNetPackage"
@@ -1224,9 +1211,6 @@ for runtime in "current" :: "portable" :: runtimes do
         ==> targetName
         |> ignore
     "_StartDnc"
-        ==> targetName
-        |> ignore
-    "DownloadPaket"
         ==> targetName
         |> ignore
     targetName

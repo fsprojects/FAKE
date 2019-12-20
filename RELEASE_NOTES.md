@@ -1,5 +1,26 @@
 # Release Notes
 
+## 5.19.1-alpha - tbd
+
+* tbd
+
+## 5.19.0 - 2019-12-19
+
+* NEW: Added `Fake.Sql.SqlPackage` which is a redesign or `Fake.Sql.DacPac` and added support for publish profiles, thanks @kmadof - https://github.com/fsharp/FAKE/pull/2366
+* EHNANCEMENT: `Fake.DotNet.Cli` Add timeout field to kill the process after the given timeout - https://github.com/fsharp/FAKE/pull/2425
+* EHNANCEMENT: `Fake.Core.Target` Add notification when a fake worker is idle - https://github.com/fsharp/FAKE/pull/2425
+* EHNANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2403
+* ENHANCEMENT: `fake-cli` Update bundled paket - https://github.com/fsharp/FAKE/pull/2425
+* ENHANCEMENT: `Fake.DotNet.Cli` Add support for suppressing copyright messages (`--nologo`) when invoking `dotnet`, thanks @objectx - https://github.com/fsharp/FAKE/pull/2436
+* EHNANCEMENT: `Fake.Installer.Squirrel` Add additional Squirrel parameters, thanks @pchinery - https://github.com/fsharp/FAKE/pull/2431
+* EHNANCEMENT: `Fake.Testing.SonarQube` Several improvements like workdir and local tool support, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2438
+* BUGFIX: `Fake.Tools.Rsync` Fix typo in Rsync.fs options, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2432
+* BUGFIX: `Fake.DotNet.Testing.Coverlet` Fix Coverlet output property name, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2427
+* BUGFIX: `Fake.Tools.Octo` Octopus deploy trace always marked failures, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2428
+* BUGFIX: `Fake.Core.Process` Process redirection was not working as advertised, thanks @ZeekoZhu - https://github.com/fsharp/FAKE/issues/2445
+* DOCS: Change the README badges and their placement, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2437
+* DOCS: Several documentation improvements, thanks to @jhromadik - https://github.com/fsharp/FAKE/pull/2441 https://github.com/fsharp/FAKE/pull/2442 https://github.com/fsharp/FAKE/pull/2443
+
 ## 5.18.3 - 2019-11-04
 
 * BUGFIX: `Fake.DotNet.Testing.Coverlet` was not working, thanks @Tarmil - https://github.com/fsharp/FAKE/pull/2424

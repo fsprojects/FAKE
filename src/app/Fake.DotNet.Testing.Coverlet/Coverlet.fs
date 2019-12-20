@@ -90,7 +90,7 @@ let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuil
     let properties =
         [
             yield "CollectCoverage", "true"
-            yield "OutputFormat", outputFormatToString param.OutputFormat
+            yield "CoverletOutputFormat", outputFormatToString param.OutputFormat
             yield "CoverletOutput", param.Output
             if not (List.isEmpty param.Include) then
                 yield "Include", namespacesToString param.Include

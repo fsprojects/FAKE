@@ -315,7 +315,7 @@ module Rsync =
         | OneFileSystem -> "--one-file-system"
         | BlockSize size -> "--block-size=" + size
         | Rsh command -> "--rsh=" + command
-        | RsyncPath program -> "--zsync-path=" + program
+        | RsyncPath program -> "--rsync-path=" + program
         | Existing -> "--existing"
         | IgnoreExisting -> "--ignore-existing"
         | RemoveSourceFiles -> "--remove-source-files"
