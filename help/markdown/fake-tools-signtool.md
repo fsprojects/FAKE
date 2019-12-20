@@ -22,13 +22,41 @@ Additional information:
 
 API Reference:
 
- - [`SignTool`](apidocs/v5/fake-tools-signtool.html)
+ - [`SignTool`](apidocs/v5/fake-tools-signtool.html): The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
+ - [`CertificateFromFile`](apidocs/v5/fake-tools-signtool-certificatefromfile.html): Specifies parameters to use when using a certificate from a file.
+ - [`CertificateFromStore`](apidocs/v5/fake-tools-signtool-certificatefromstore.html): Specifies parameters to use when using a certificate from a certificate store.
+ - [`DigestAlgorithm`](apidocs/v5/fake-tools-signtool-digestalgorithm.html): Digest algorithm
+ - [`SignCertificate`](apidocs/v5/fake-tools-signtool-signcertificate.html): Specifies what type of certificate to use.
+ - [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html): Sign command options
+ - [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html): Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.
+ - [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html): Timestamp command options
+ - [`ToolOptions`](apidocs/v5/fake-tools-signtool-tooloptions.html): Tool options
+ - [`Verbosity`](apidocs/v5/fake-tools-signtool-verbosity.html): Verbosity
+ - [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html): Verify command options
+
+<hr /><hr />
+
+## Open namespace
+
+```fsharp
+open Fake.Tools
+```
 
 <hr /><hr />
 
 ## Signing
 
-Digitally signing files. A [certificate](#Certificates) is needed to do this.
+Digitally signing files.
+
+A [certificate](#Certificates) is needed to do this.
+
+The `sign` function may be called in 2 ways, code samples are provided for both:
+```fsharp
+// set options function
+val SignTool.sign : setOptions:(SignOptions -> SignOptions) -> files:seq<string> -> unit
+// options record
+val SignTool.signo : options:SignOptions -> files:seq<string> -> unit
+```
 
 
 ### When the certificate is located in a .pfx file
@@ -36,44 +64,56 @@ Digitally signing files. A [certificate](#Certificates) is needed to do this.
 Only PFX files are supported by signtool.exe.
 
 ```fsharp
-open Fake.Tools
-
-// certificate is in a file
+SignTool.sign
+    (fun o ->
+        { o with
+            Certificate = Some (SignTool.SignCertificate.File {
+                SignTool.CertificateFromFile.Create("path/to/certificate-file.pfx") with
+                    Password = Some "certificate-password" } ) } )
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let certificate = SignTool.SignCertificate.File { SignTool.CertificateFromFile.Create("path/to/certificate-file.pfx") with
                                                       Password = Some "certificate-password" }
-// create SignOptions
-let signOptions = SignTool.SignOptions.Create(certificate)
-// files to sign
+let signOptions = { SignTool.SignOptions.Create() with
+                        Certificate = Some certificate }
 let filesToSign = ["program.exe"; "library.dll"]
-// sign
-SignTool.sign signOptions filesToSign
+
+SignTool.signo signOptions filesToSign
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`CertificateFromFile`](apidocs/v5/fake-tools-signtool-certificatefromfile.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`CertificateFromFile`](apidocs/v5/fake-tools-signtool-certificatefromfile.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
 
 ### When the certificate is located in a certificate store
 
-All options are optional and any combination may be used, depending on specific needs.
+All options are optional, and any combination may be used, depending on specific needs.
 
 If no `StoreName` is specified, the "My" store is opened.
 
 ```fsharp
-open Fake.Tools
-
-// certificate is in a store
+SignTool.sign
+    (fun o ->
+        { o with
+            Certificate = Some (SignTool.SignCertificate.Store {
+                SignTool.CertificateFromStore.Create() with
+                    AutomaticallySelectCertificate = Some true
+                    SubjectName = Some "subject"
+                    StoreName = Some "My" } ) } )
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let certificate = SignTool.SignCertificate.Store { SignTool.CertificateFromStore.Create() with
                                                        AutomaticallySelectCertificate = Some true
                                                        SubjectName = Some "subject"
                                                        StoreName = Some "My" }
-// create SignOptions
-let signOptions = SignTool.SignOptions.Create(certificate)
-// files to sign
+let signOptions = { SignTool.SignOptions.Create() with
+                        Certificate = Some certificate }
 let filesToSign = ["program.exe"; "library.dll"]
-// sign
-SignTool.sign signOptions filesToSign
+
+SignTool.signo signOptions filesToSign
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`CertificateFromStore`](apidocs/v5/fake-tools-signtool-certificatefromstore.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`CertificateFromStore`](apidocs/v5/fake-tools-signtool-certificatefromstore.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
 
 ### Adding a time stamp
 
@@ -86,12 +126,24 @@ Digest algorithm used for time stamping is set separately from the digest algori
 Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// add time stamp to the signature
-let signOptions = { SignTool.SignOptions.Create(certificate) with
+SignTool.sign
+    (fun o ->
+        { o with
+            Certificate = ...
+            TimeStamp = Some (SignTool.TimeStampOption.Create()) } )
+    ["program.exe"; "library.dll"]
+```
+```fsharp
+let certificate = ...
+let signOptions = { SignTool.SignOptions.Create() with
+                        Certificate = Some certificate
                         TimeStamp = Some (SignTool.TimeStampOption.Create()) }
+let filesToSign = ["program.exe"; "library.dll"]
+
+SignTool.signo signOptions filesToSign
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
 
 <hr /><hr />
 
@@ -99,10 +151,16 @@ Only a subset of all options is shown in the example, see API Reference for all 
 
 Time stamping previously signed files.
 
-When signing a file, the signature is valid only as long as the certificate used to create it is valid. The moment the certificated expires, the signature becomes invalid.
+When signing a file, the signature is valid only as long as the certificate used to create it is valid. The moment the certificate expires, the signature becomes invalid.
 Time stamping is used to extend the validity of the signature. A time stamp proves that the signature was created while the certificate was still valid and effectively extends the signature's validity indefinitely.
 
-Release binaries should be time stamped. Testing and dev binaries are really only useful for a limited time and so it is not neccessary to time stamp them - this will also speed up builds, as time stamping takes a bit of time (mostly because of the need to communicate with a time stamping server).
+The `timeStamp` function may be called in 2 ways, code samples are provided for both:
+```fsharp
+// set options function
+val SignTool.timeStamp : setOptions:(TimeStampOptions -> TimeStampOptions) -> files:seq<string> -> unit
+// options record
+val SignTool.timeStampo : options:TimeStampOptions -> files:seq<string> -> unit
+```
 
 
 ### Default options
@@ -112,37 +170,43 @@ Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 Time stamp server does not have to be from the same CA as the certificate. The default is "http://timestamp.digicert.com".
 
 ```fsharp
-open Fake.Tools
-
-// create TimeStampOptions
+SignTool.timeStamp
+    (fun o -> o)
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let timestampOptions = SignTool.TimeStampOptions.Create()
-// files to time stamp
 let filesToTimestamp = ["program.exe"; "library.dll"]
-// sign
-SignTool.timeStamp timestampOptions filesToTimestamp
+
+SignTool.timeStampo timestampOptions filesToTimestamp
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html).
 
 ### Custom options
 
 Use SHA1 and a custom time stamp server.
 
 ```fsharp
-open Fake.Tools
-
-// create TimeStampOptions
+SignTool.timeStamp
+    (fun o ->
+        { o with
+            TimeStamp = Some { SignTool.TimeStampOption.Create() with
+                                   Algorithm = Some SignTool.DigestAlgorithm.SHA1
+                                   ServerUrl = Some "http://timestamp.digicert.com" } } )
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let timestampOptions = { SignTool.TimeStampOptions.Create() with
-                            TimeStamp = { SignTool.TimeStampOption.Create() with
-                                            Algorithm = Some SignTool.DigestAlgorithm.SHA1
-                                            ServerUrl = Some "http://timestamp.digicert.com" } }
-// files to time stamp
+                            TimeStamp = Some { SignTool.TimeStampOption.Create() with
+                                                   Algorithm = Some SignTool.DigestAlgorithm.SHA1
+                                                   ServerUrl = Some "http://timestamp.digicert.com" } }
 let filesToTimestamp = ["program.exe"; "library.dll"]
-// sign
-SignTool.timeStamp timestampOptions filesToTimestamp
+
+SignTool.timeStampo timestampOptions filesToTimestamp
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html).
 
 <hr /><hr />
 
@@ -152,40 +216,54 @@ Verify signed files.
 
 The verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.
 
+The `verify` function may be called in 2 ways, code samples are provided for both:
+```fsharp
+// set options function
+val SignTool.verify : setOptions:(VerifyOptions -> VerifyOptions) -> files:seq<string> -> unit
+// options record
+val SignTool.verifyo : options:VerifyOptions -> files:seq<string> -> unit
+```
+
 
 ### Default options
 
 ```fsharp
-open Fake.Tools
-
-// create VerifyOptions
+SignTool.verify
+    (fun o -> o)
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let verifyOptions = SignTool.VerifyOptions.Create()
-// files to verify
 let filesToVerify = ["program.exe"; "library.dll"]
-// verify
-SignTool.verify verifyOptions filesToVerify
+
+SignTool.verifyo verifyOptions filesToVerify
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html).
 
 
 ### Custom options
 
 ```fsharp
-open Fake.Tools
-
-// create VerifyOptions
+SignTool.verify
+    (fun o ->
+        { o with
+            AllSignatures = Some true
+            RootSubjectName = Some "root subject"
+            WarnIfNotTimeStamped = Some true } )
+    ["program.exe"; "library.dll"]
+```
+```fsharp
 let verifyOptions = { SignTool.VerifyOptions.Create() with
                           AllSignatures = Some true
                           RootSubjectName = Some "root subject"
                           WarnIfNotTimeStamped = Some true }
-// files to verify
 let filesToVerify = ["program.exe"; "library.dll"]
-// verify
-SignTool.verify verifyOptions filesToVerify
+
+SignTool.verifyo verifyOptions filesToVerify
 ```
 
-Only a subset of all options is shown in the example, see API Reference for all available options: [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html).
 
 <hr /><hr />
 
@@ -196,6 +274,23 @@ All functions share some common options.
 
 ### ToolOptions
 
+```fsharp
+// set path to signtool.exe - if you want to use a specific version or you don't have Windows SDKs installed
+// by default, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'
+{ o with
+    ToolOptions = Some { SignTool.ToolOptions.Create() with
+                             ToolPath = Some "path/to/signtool.exe" } }
+
+// set the timeout - default value is 10 seconds per file
+{ o with
+    ToolOptions = Some { SignTool.ToolOptions.Create() with
+                             Timeout = Some (TimeSpan.FromMinutes 1.0) } }
+
+// set the working directory - uses current directory by default
+{ o with
+    ToolOptions = Some { SignTool.ToolOptions.Create() with
+                             WorkingDir = Some (Directory.GetCurrentDirectory()) } }
+```
 ```fsharp
 // set path to signtool.exe - if you want to use a specific version or you don't have Windows SDKs installed
 // by default, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'
@@ -222,6 +317,19 @@ Displays debugging information (signtool option: /debug). This option is not set
 
 ```fsharp
 // display debugging information (/debug)
+{ o with
+    Debug = Some true }
+
+// do not display debugging information
+{ o with
+    Debug = Some false }
+
+// use default
+{ o with
+    Debug = None }
+```
+```fsharp
+// display debugging information (/debug)
 let signOptionsWithDebug = { signOptions with
                                  Debug = Some true }
 
@@ -238,6 +346,19 @@ let verifyOptionsWithoutDebug = { verifyOptions with
 
 Output verbosity (signtool options: /q, /v). This option is not set by default.
 
+```fsharp
+// set verbosity to verbose (/v)
+{ o with
+    Verbosity = Some SignTool.Verbosity.Verbose }
+
+// set verbosity to quiet (/q)
+{ o with
+    Verbosity = Some SignTool.Verbosity.Quiet }
+
+// use default
+{ o with
+    Verbosity = None }
+```
 ```fsharp
 // set verbosity to verbose (/v)
 let signOptionsWithVerbosity = { signOptions with
@@ -263,12 +384,12 @@ The SignTool needs a certificate to sign files.
 
 ### Prod / release
 
-For production / release purposes a proper publically trusted code signing certificate can be purchased from many CA's.
+For production / release purposes a proper publically trusted code signing certificate may be purchased from many CA's.
 
 
 ### Dev / test
 
-For dev and testing purposes a certificate can be created using [`New-SelfSignedCertificate` PowerShell cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate):
+For dev and testing purposes a certificate can be created using the [`New-SelfSignedCertificate` PowerShell cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate):
 ```powershell
 New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my `
 -Subject "CN=My Company, Inc.;O=My Company, Inc.;L=My City;C=SK" `
@@ -281,10 +402,10 @@ New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my `
 ```
 This creates the certificate under "Certificates - Current User" -> "Personal" -> "Certificates" and prints the certificate Thumbprint. The certificate can be used as-is using the [`CertificateFromStore`](#When-the-certificate-is-located-in-a-certificate-store) option.
 
-If you want to export the certificate to a file, use [`Export-PfxCertificate` PowerShell cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/export-pfxcertificate). Replace "{thumbprint}" with the value from `New-SelfSignedCertificate` output:
+If you want to export the certificate to a file, use the [`Export-PfxCertificate` PowerShell cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/export-pfxcertificate). Replace "{Thumbprint}" with the value from `New-SelfSignedCertificate` output:
 ```powershell
 $certpwd = ConvertTo-SecureString -String "mycertpassword" -Force -AsPlainText
-Get-ChildItem -Path cert:\currentuser\my\{thumbprint} | Export-PfxCertificate -FilePath C:\certificate.pfx -Password $certpwd
+Get-ChildItem -Path cert:\currentuser\my\{Thumbprint} | Export-PfxCertificate -FilePath C:\certificate.pfx -Password $certpwd
 ```
 Now the certificate can be used with the [`CertificateFromFile`](#When-the-certificate-is-located-in-a-pfx-file) option.
 
