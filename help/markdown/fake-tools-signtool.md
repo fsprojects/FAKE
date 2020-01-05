@@ -56,11 +56,11 @@ A [certificate](#Certificates) is needed to do this.
 Only PFX files are supported by signtool.exe.
 
 ```fsharp
-// val SignTool.sign : certificate:SignCertificate -> setOptions:(SignOptions -> SignOptions) -> files:seq<string> -> unit
+// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
 SignTool.sign
     (SignTool.SignCertificate.File {
         SignTool.CertificateFromFile.Create("path/to/certificate-file.pfx") with
-            Password = Some "certificate-password" })
+            Password = Some "certificate-password" } )
     (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
@@ -74,13 +74,13 @@ All options are optional, and any combination may be used, depending on specific
 If no `StoreName` is specified, the "My" store is opened.
 
 ```fsharp
-// val SignTool.sign : certificate:SignCertificate -> setOptions:(SignOptions -> SignOptions) -> files:seq<string> -> unit
+// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
 SignTool.sign
     (SignTool.SignCertificate.Store {
         SignTool.CertificateFromStore.Create() with
             AutomaticallySelectCertificate = Some true
             SubjectName = Some "subject"
-            StoreName = Some "My" })
+            StoreName = Some "My" } )
     (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
@@ -98,7 +98,7 @@ Digest algorithm used for time stamping is set separately from the digest algori
 Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// val SignTool.sign : certificate:SignCertificate -> setOptions:(SignOptions -> SignOptions) -> files:seq<string> -> unit
+// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
 SignTool.sign
     ... certificate ...
     (fun o ->
@@ -126,7 +126,7 @@ Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 Time stamp server does not have to be from the same CA as the certificate. The default is "http://timestamp.digicert.com".
 
 ```fsharp
-// val SignTool.timeStamp : setOptions:(TimeStampOptions -> TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp : setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
 SignTool.timeStamp
     (fun o -> o)
     ["program.exe"; "library.dll"]
@@ -139,7 +139,7 @@ Only a subset of options is shown in the example, see API Reference for all avai
 Use SHA1 and a custom time stamp server.
 
 ```fsharp
-// val SignTool.timeStamp : setOptions:(TimeStampOptions -> TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp : setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
 SignTool.timeStamp
     (fun o ->
         { o with
@@ -163,7 +163,7 @@ The verify command determines whether the signing certificate was issued by a tr
 ### Default options
 
 ```fsharp
-// val SignTool.verify : setOptions:(VerifyOptions -> VerifyOptions) -> files:seq<string> -> unit
+// val verify : setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions) -> files:seq<string> -> unit
 SignTool.verify
     (fun o -> o)
     ["program.exe"; "library.dll"]
@@ -175,7 +175,7 @@ Only a subset of options is shown in the example, see API Reference for all avai
 ### Custom options
 
 ```fsharp
-// val SignTool.verify : setOptions:(VerifyOptions -> VerifyOptions) -> files:seq<string> -> unit
+// val verify : setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions) -> files:seq<string> -> unit
 SignTool.verify
     (fun o ->
         { o with

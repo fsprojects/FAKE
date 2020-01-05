@@ -304,18 +304,16 @@ let private verbosing verbosity = seq {
                 | Verbose -> yield "/v"
     | None -> ()
 }
-let private yieldIfTrue yieldVal value =
-    seq {
-        match value with
-        | Some _ -> yield sprintf "/%s" yieldVal
-        | None -> ()
-    }
-let private yieldIfSome yieldGen value =
-    seq {
-        match value with
-        | Some v -> yield yieldGen v
-        | None -> ()
-    }
+let private yieldIfTrue yieldVal value = seq {
+    match value with
+    | Some _ -> yield sprintf "/%s" yieldVal
+    | None -> ()
+}
+let private yieldIfSome yieldGen value = seq {
+    match value with
+    | Some v -> yield yieldGen v
+    | None -> ()
+}
 let private sarg = sprintf "/%s \"%s\""
 let private iarg = sprintf "/%s %i"
 
