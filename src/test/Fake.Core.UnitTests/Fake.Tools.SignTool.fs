@@ -7,53 +7,73 @@ open Fake.Tools
 open FsCheck
 
 
-let testRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan) =
-    (signtoolPath, signtoolArgs, signtoolWorkingDir, signtoolTimeout)
+let private testRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan) =
+    signtoolPath, signtoolArgs, signtoolWorkingDir, signtoolTimeout
 
-let testSigntoolexePath =
+let private testSigntoolexePath =
     "test/path/to/signtool.exe"
-let testSigntoolexeLocator () =
+let private testSigntoolexeLocator () =
     Some testSigntoolexePath
 
-let getDefaultWorkingDir =
+let private getDefaultWorkingDir =
     Directory.GetCurrentDirectory()
 
 
-let genFiles =
-    Gen.elements ["file1"; "subfolder"; "path"; "file2"; "to"; "file3"; ".ext"]
-    |> Gen.nonEmptyListOf
-    |> Gen.sample 3 5
-    |> List.map (fun l -> String.Join("/", l))
-let getExpectedToolOptions topts filesCount =
+let private getExpectedToolOptions topts filesCount =
     let filesTimeout = TimeSpan.FromSeconds (10.0 * float filesCount)
     match topts with
     | Some t ->
         let toolPath = t.ToolPath |> Option.defaultValue testSigntoolexePath
         let workingDir = t.WorkingDir |> Option.defaultValue getDefaultWorkingDir
         let timeout = t.Timeout |> Option.defaultValue filesTimeout
-        (toolPath, workingDir, timeout)
-    | None -> testSigntoolexePath, getDefaultWorkingDir, filesTimeout
+        toolPath, workingDir, timeout
+    | None ->
+        testSigntoolexePath, getDefaultWorkingDir, filesTimeout
 
-let expectIfOption c (o: bool option) m args =
+let private expectIfOption c (o: bool option) m args =
     if o.IsSome && o.Value then
         Expect.stringContains (args + " ") (sprintf " %s " c) (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
     args
-let expectIfString c (o: string option) m args =
+let private expectIfString c (o: string option) m args =
     if o.IsSome then
         Expect.stringContains (args + " ") (sprintf " %s \"%s\" " c o.Value) (sprintf "Option '%s' was set but arguments do not contain '%s \"%s\"'" m c o.Value)
     args
-let expectIfInt c (o: int option) m args =
+let private expectIfInt c (o: int option) m args =
     if o.IsSome then
         Expect.stringContains (args + " ") (sprintf " %s %i " c o.Value) (sprintf "Option '%s' was set but arguments do not contain '%s %i'" m c o.Value)
     args
-let expectIfEnum c (o: 'a option) (v: 'a) m args =
+let private expectIfEnum c (o: 'a option) (v: 'a) m args =
     if o.IsSome && o.Value = v then
         Expect.stringContains (args + " ") (sprintf " %s " c) (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
     args
 
 
-let quoteAndJoinWithSpace xs =
+let private quoteAndJoinWithSpace xs =
     String.Join(" ", List.map (sprintf "\"%s\"") xs)
+
+
+type FilesList = string list
+type SignToolArbitrary =
+    static member String () =
+        { new Arbitrary<String>() with
+            override this.Generator = gen {
+                let! c = Gen.choose (3, 23)
+                let chars =
+                    Arb.generate<char>
+                    |> Gen.sample c c
+                    |> Array.ofList
+                return new string(chars) } }
+    static member FilesList () =
+        { new Arbitrary<FilesList>() with
+            override this.Generator = gen {
+                let! s = Gen.choose (1, 5)
+                let! c = Gen.choose (1, 5)
+                return Gen.elements ["file1"; "subfolder"; "path"; "file2"; "to"; "file3"; ".ext"]
+                    |> Gen.nonEmptyListOf
+                    |> Gen.sample s c
+                    |> List.map (fun l -> String.Join(Path.DirectorySeparatorChar, l)) } }
+
+let private signtoolTestConfig = { FsCheckConfig.defaultConfig with arbitrary = [ typeof<SignToolArbitrary> ] }
 
 
 [<Tests>]
@@ -71,8 +91,7 @@ let tests =
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
             Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
-        testProperty "sign options" <| fun (signOptions: SignTool.SignOptions) ->
-            let signFiles = genFiles
+        testPropertyWithConfig signtoolTestConfig "sign options" <| fun (signOptions: SignTool.SignOptions) (signFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
                 getExpectedToolOptions signOptions.ToolOptions (List.length signFiles)
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
@@ -135,8 +154,7 @@ let tests =
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
             Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
-        testProperty "time stamp options" <| fun (timestampOptions: SignTool.TimeStampOptions) ->
-            let timestampFiles = genFiles
+        testPropertyWithConfig signtoolTestConfig "time stamp options" <| fun (timestampOptions: SignTool.TimeStampOptions) (timestampFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
                 getExpectedToolOptions timestampOptions.ToolOptions (List.length timestampFiles)
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
@@ -177,8 +195,7 @@ let tests =
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
             Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
-        testProperty "verify options" <| fun (verifyOptions: SignTool.VerifyOptions) ->
-            let verifyFiles = genFiles
+        testPropertyWithConfig signtoolTestConfig "verify options" <| fun (verifyOptions: SignTool.VerifyOptions) (verifyFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
                 getExpectedToolOptions verifyOptions.ToolOptions (List.length verifyFiles)
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
