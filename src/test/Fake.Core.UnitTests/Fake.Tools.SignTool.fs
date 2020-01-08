@@ -129,10 +129,9 @@ let tests =
             |> (fun args ->
                 match signOptions.TimeStamp with
                 | Some t ->
-                    let serverUrl = t.ServerUrl |> Option.defaultValue "http://timestamp.digicert.com"
                     args
-                    |> expectIfEnum (sprintf "/t \"%s\"" serverUrl) t.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
-                    |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" serverUrl) t.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
+                    |> expectIfEnum (sprintf "/t \"%s\"" t.ServerUrl) t.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
+                    |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" t.ServerUrl) t.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
                 | None -> args )
             |> expectIfString "/ac" signOptions.AdditionalCertificate "AdditionalCertificate"
             |> expectIfOption "/as" signOptions.AppendSignature "AppendSignature"
@@ -144,13 +143,13 @@ let tests =
             Expect.stringEnds actualSigntoolArgs (" " + (quoteAndJoinWithSpace signFiles)) "Expected arguments to end with a quoted space-separated list of files"
 
         testCase "default time stamp options" <| fun _ ->
-            let timestampOptions = SignTool.TimeStampOptions.Create()
+            let timestampOptions = SignTool.TimeStampOptions.Create("http://timestamp.example-ca.com/")
             let timestampFiles = ["file1.ext"; "file2.ext"]
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
                 SignTool.timeStampInternal testRunner testSigntoolexeLocator timestampOptions timestampFiles
 
             Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
-            Expect.equal actualSigntoolArgs "timestamp /tr \"http://timestamp.digicert.com\" /td \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
+            Expect.equal actualSigntoolArgs "timestamp /tr \"http://timestamp.example-ca.com/\" /td \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
             Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
@@ -170,16 +169,8 @@ let tests =
             |> expectIfOption "/debug" timestampOptions.Debug "Debug"
             |> expectIfEnum "/v" timestampOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
             |> expectIfEnum "/q" timestampOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
-            |> (fun args ->
-                match timestampOptions.TimeStamp with
-                | Some t ->
-                    let serverUrl = t.ServerUrl |> Option.defaultValue "http://timestamp.digicert.com"
-                    args
-                    |> expectIfEnum (sprintf "/t \"%s\"" serverUrl) t.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
-                    |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" serverUrl) t.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
-                | None ->
-                    Expect.stringContains args " /tr \"http://timestamp.digicert.com\" /td \"sha256\" " "Unexpected default value for TimeStamp option"
-                    args )
+            |> expectIfEnum (sprintf "/t \"%s\"" timestampOptions.ServerUrl) timestampOptions.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
+            |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" timestampOptions.ServerUrl) timestampOptions.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
             |> expectIfInt "/tp" timestampOptions.TimestampIndex "TimestampIndex"
             |> ignore
             Expect.stringEnds actualSigntoolArgs (" " + (quoteAndJoinWithSpace timestampFiles)) "Expected arguments to end with a quoted space-separated list of files"

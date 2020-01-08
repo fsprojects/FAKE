@@ -47,14 +47,14 @@ type DigestAlgorithm = SHA1 | SHA256
 type TimeStampOption =
     {
         /// Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)
-        ServerUrl: string option
+        ServerUrl: string
         /// Used to request a digest algorithm used by the RFC 3161 time stamp server. (signtool option: /td alg)
         Algorithm: DigestAlgorithm option
     }
 
     /// Options default values.
-    static member Create() = {
-        ServerUrl = None
+    static member Create(serverUrl) = {
+        ServerUrl = serverUrl
         Algorithm = None
     }
 
@@ -179,18 +179,21 @@ type TimeStampOptions =
         Debug: bool option
         /// Output verbosity. (signtool options: /q, /v)
         Verbosity: Verbosity option
-        /// Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server. (signtool options: /t, /td, /tr)
-        TimeStamp: TimeStampOption option
+        /// Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)
+        ServerUrl: string
+        /// Used to request a digest algorithm used by the RFC 3161 time stamp server. (signtool option: /td alg)
+        Algorithm: DigestAlgorithm option
         /// Adds a timestamp to the signature at index. (signtool option: /tp Index)
         TimestampIndex: int option
     }
 
     /// Options default values.
-    static member Create() = {
+    static member Create(serverUrl) = {
         ToolOptions = None
         Debug = None
         Verbosity = None
-        TimeStamp = None
+        ServerUrl = serverUrl
+        Algorithm = None
         TimestampIndex = None
     }
 
@@ -293,15 +296,10 @@ let internal defaultSigntoolexeLocator () =
     ProcessUtils.tryFindFile winSdksDirs "signtool.exe"
 
 
-let private timestamping timestamp = seq {
-    match timestamp with
-    | Some t ->
-        let serverUrl = t.ServerUrl |> Option.defaultValue "http://timestamp.digicert.com"
-        yield match t.Algorithm with
-              | Some SHA1 -> sprintf "/t \"%s\"" serverUrl
-              | Some SHA256 | None -> sprintf "/tr \"%s\" /td \"sha256\"" serverUrl
-    | None ->
-        ()
+let private timestamping serverUrl algorithm = seq {
+    yield match algorithm with
+          | Some SHA1 -> sprintf "/t \"%s\"" serverUrl
+          | Some SHA256 | None -> sprintf "/tr \"%s\" /td \"sha256\"" serverUrl
 }
 let private digesting = function
     | Some SHA1 -> "/fd \"sha1\""
@@ -350,7 +348,9 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
             yield! yieldIfTrue "sm" s.UseComputerStore
 
         yield digesting options.DigestAlgorithm
-        yield! timestamping options.TimeStamp
+        match options.TimeStamp with
+        | Some t -> yield! timestamping t.ServerUrl t.Algorithm
+        | None -> ()
         yield! yieldIfSome (sarg "ac") options.AdditionalCertificate
         yield! yieldIfSome (sarg "c") options.CertificateTemplateName
         yield! yieldIfSome (sarg "d") options.Description
@@ -371,7 +371,7 @@ let internal timeStampInternal runner signtoolexeLocator (options: TimeStampOpti
     let signtoolOptions = seq {
         yield! yieldIfTrue "debug" options.Debug
         yield! verbosing options.Verbosity
-        yield! timestamping (Some (options.TimeStamp |> Option.defaultValue (TimeStampOption.Create())))
+        yield! timestamping options.ServerUrl options.Algorithm
         yield! yieldIfSome (iarg "tp") options.TimestampIndex
     }
     signtool runner signtoolexeLocator "timestamp" signtoolOptions options.ToolOptions files
@@ -401,8 +401,8 @@ let sign (certificate: SignCertificate) (setOptions: SignOptions -> SignOptions)
     signInternal defaultRunner defaultSigntoolexeLocator options files
 
 /// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
-let timeStamp (setOptions: TimeStampOptions -> TimeStampOptions) (files: seq<string>) =
-    let options = setOptions (TimeStampOptions.Create())
+let timeStamp (serverUrl: string) (setOptions: TimeStampOptions -> TimeStampOptions) (files: seq<string>) =
+    let options = setOptions (TimeStampOptions.Create(serverUrl))
     timeStampInternal defaultRunner defaultSigntoolexeLocator options files
 
 /// Verifies files according to the options specified.

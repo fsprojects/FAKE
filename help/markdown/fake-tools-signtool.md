@@ -124,11 +124,12 @@ Time stamping is used to extend the validity of the signature. A time stamp prov
 
 Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 
-Time stamp server does not have to be from the same CA as the certificate. The default is "http://timestamp.digicert.com".
+Time stamp server does not have to be from the same CA as the certificate.
 
 ```fsharp
-// val timeStamp : setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp : serverUrl:string -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
 SignTool.timeStamp
+    "http://timestamp.example-ca.com"
     (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
@@ -137,16 +138,14 @@ Only a subset of options is shown in the example, see API Reference for all avai
 
 ### Custom options
 
-Use SHA1 and a custom time stamp server.
+Use SHA1 ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// val timeStamp : setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp : serverUrl:string -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
 SignTool.timeStamp
-    (fun o ->
-        { o with
-            TimeStamp = Some { SignTool.TimeStampOption.Create() with
-                                   Algorithm = Some SignTool.DigestAlgorithm.SHA1
-                                   ServerUrl = Some "http://timestamp.digicert.com" } } )
+    "http://timestamp.example-ca.com"
+    (fun o -> { o with
+                    Algorithm = Some SignTool.DigestAlgorithm.SHA1 } )
     ["program.exe"; "library.dll"]
 ```
 
