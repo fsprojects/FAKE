@@ -138,8 +138,6 @@ type SignOptions =
         Certificate: SignCertificate
         /// Specifies the file digest algorithm to use to create file signatures. The default algorithm is Secure Hash Algorithm (SHA-1). (signtool option: /fd)
         DigestAlgorithm: DigestAlgorithm option
-        /// Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server. (signtool option: /t, /td, /tr)
-        TimeStamp: TimeStampOption option
         /// Specifies a file that contains an additional certificate to add to the signature block. (signtool option: /ac FileName)
         AdditionalCertificate: string option
         /// Appends this signature. If no primary signature is present, this signature is made the primary signature. (signtool option: /as)
@@ -161,7 +159,6 @@ type SignOptions =
         Verbosity = None
         Certificate = certificate
         DigestAlgorithm = None
-        TimeStamp = None
         AdditionalCertificate = None
         AppendSignature = None
         CertificateTemplateName = None
@@ -348,9 +345,6 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
             yield! yieldIfTrue "sm" s.UseComputerStore
 
         yield digesting options.DigestAlgorithm
-        match options.TimeStamp with
-        | Some t -> yield! timestamping t.ServerUrl t.Algorithm
-        | None -> ()
         yield! yieldIfSome (sarg "ac") options.AdditionalCertificate
         yield! yieldIfSome (sarg "c") options.CertificateTemplateName
         yield! yieldIfSome (sarg "d") options.Description
@@ -365,6 +359,45 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
             TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
     | _ -> ()
     signtool runner signtoolexeLocator "sign" signtoolOptions options.ToolOptions files
+
+/// run the sign command with time stamping using a runner
+let internal signWithTimeStampInternal runner signtoolexeLocator (signOptions: SignOptions) (timeStampOptions: TimeStampOption) (files: seq<string>) =
+    let signtoolOptions = seq {
+        yield! yieldIfTrue "debug" signOptions.Debug
+        yield! verbosing signOptions.Verbosity
+        yield! yieldIfTrue "as" signOptions.AppendSignature
+
+        match signOptions.Certificate with
+        | File f ->
+            yield sarg "f" f.Path
+            yield! yieldIfSome (sarg "p") f.Password
+            yield! yieldIfSome (sarg "csp") f.CspName
+            yield! yieldIfSome (sarg "kc") f.PrivateKeyKey
+        | Store s ->
+            yield! yieldIfTrue "a" s.AutomaticallySelectCertificate
+            yield! yieldIfSome (sarg "i") s.IssuerName
+            yield! yieldIfSome (sarg "n") s.SubjectName
+            yield! yieldIfSome (sarg "r") s.RootSubjectName
+            yield! yieldIfSome (sarg "s") s.StoreName
+            yield! yieldIfSome (sarg "sha1") s.Hash
+            yield! yieldIfTrue "sm" s.UseComputerStore
+
+        yield digesting signOptions.DigestAlgorithm
+        yield! timestamping timeStampOptions.ServerUrl timeStampOptions.Algorithm
+        yield! yieldIfSome (sarg "ac") signOptions.AdditionalCertificate
+        yield! yieldIfSome (sarg "c") signOptions.CertificateTemplateName
+        yield! yieldIfSome (sarg "d") signOptions.Description
+        yield! yieldIfSome (sarg "u") signOptions.EnhancedKeyUsage
+        yield! yieldIfTrue "uw" signOptions.EnhancedKeyUsageW
+    }
+    // hide password in trace output
+    match Context.isFakeContext (), signOptions.Certificate with
+    | true, File f ->
+        if f.Password.IsSome then
+            // surround in quotes to lower chances of replacing non-password occurences of password-string
+            TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
+    | _ -> ()
+    signtool runner signtoolexeLocator "sign" signtoolOptions signOptions.ToolOptions files
 
 /// run the timestamp command using a runner
 let internal timeStampInternal runner signtoolexeLocator (options: TimeStampOptions) (files: seq<string>) =
@@ -399,6 +432,12 @@ let internal verifyInternal runner signtoolexeLocator (options: VerifyOptions) (
 let sign (certificate: SignCertificate) (setOptions: SignOptions -> SignOptions) (files: seq<string>) =
     let options = setOptions (SignOptions.Create(certificate))
     signInternal defaultRunner defaultSigntoolexeLocator options files
+
+/// Signs and time stamps files according to the options specified.
+let signWithTimeStamp (certificate: SignCertificate) (setSignOptions: SignOptions -> SignOptions) (serverUrl: string) (setTimeStampOptions: TimeStampOption -> TimeStampOption) (files: seq<string>) =
+    let signOptions = setSignOptions (SignOptions.Create(certificate))
+    let timeStampOptions = setTimeStampOptions (TimeStampOption.Create(serverUrl))
+    signWithTimeStampInternal defaultRunner defaultSigntoolexeLocator signOptions timeStampOptions files
 
 /// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
 let timeStamp (serverUrl: string) (setOptions: TimeStampOptions -> TimeStampOptions) (files: seq<string>) =

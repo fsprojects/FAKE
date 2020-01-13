@@ -90,7 +90,11 @@ Only a subset of options is shown in the example, see API Reference for all avai
 
 ### Adding a time stamp
 
-This option specifies that time stamping be done at the same time as signing. If you do not want to time stamp signed files, do not set this option. If you want to time stamp previously signed files, use the [Time stamping](#Time-stamping) function.
+Time stamp at the same time as signing.
+
+There is a separate function `signWithTimeStamp` that, compared to `sign`, has 2 additional parameters to set time stamping options.
+
+If you want to time stamp previously signed files, use the [Time stamping](#Time-stamping) function.
 
 For more information about time stamping [see Time stamping](#Time-stamping).
 
@@ -99,16 +103,33 @@ Digest algorithm used for time stamping is set separately from the digest algori
 Uses SHA256 by default ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
-SignTool.sign
-    ... certificate ...
-    (fun o ->
-        { o with
-            TimeStamp = Some (SignTool.TimeStampOption.Create()) } )
+// val signWithTimeStamp : certificate:SignTool.SignCertificate -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> serverUrl:string -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption) -> files:seq<string> -> unit
+SignTool.signWithTimeStamp
+    (SignTool.SignCertificate.From..(..))
+    (fun o -> o)
+    "http://timestamp.example-ca.com"
+    (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
 
-Only a subset of options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html), [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html).
+
+#### Custom time stamp options
+
+Use SHA1 ([see SHA1/SHA256](#SHA1-SHA256)).
+
+```fsharp
+// val signWithTimeStamp : certificate:SignTool.SignCertificate -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> serverUrl:string -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption) -> files:seq<string> -> unit
+SignTool.signWithTimeStamp
+    (SignTool.SignCertificate.From..(..))
+    (fun o -> o)
+    "http://timestamp.example-ca.com"
+    (fun o -> { o with
+                    Algorithm = Some SignTool.DigestAlgorithm.SHA1 } )
+    ["program.exe"; "library.dll"]
+```
+
+Only a subset of options is shown in the example, see API Reference for all available options: [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html), [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html).
 
 <hr /><hr />
 

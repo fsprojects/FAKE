@@ -78,6 +78,50 @@ let private signtoolTestConfig = { FsCheckConfig.defaultConfig with arbitrary = 
 
 [<Tests>]
 let tests =
+    let checkSignOptions (signOptions: SignOptions) signFiles signtool additionalChecks =
+        let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
+            getExpectedToolOptions signOptions.ToolOptions (List.length signFiles)
+        let actualSigntoolPath, (actualSigntoolArgs: string), actualSigntoolWorkingDir, actualSigntoolTimeout = signtool ()
+
+        Expect.equal actualSigntoolPath expectedSigntoolPath "Expected correct signtool.exe path"
+        Expect.equal actualSigntoolWorkingDir expectedSigntoolWorkingDir "Expected correct working directory"
+        Expect.equal actualSigntoolTimeout expectedSigntoolTimeout "Expected correct timeout"
+
+        Expect.stringStarts actualSigntoolArgs "sign" "Expected arguments to start with 'sign'"
+        Expect.isFalse (actualSigntoolArgs.EndsWith(' ')) "Expected arguments to not end with a space"
+        actualSigntoolArgs
+        |> expectIfOption "/debug" signOptions.Debug "Debug"
+        |> expectIfEnum "/v" signOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
+        |> expectIfEnum "/q" signOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
+        |> (fun args ->
+            match signOptions.Certificate with
+            | SignTool.SignCertificate.File f ->
+                Expect.stringContains args (sprintf "/f \"%s\"" f.Path) "Expected arguments to contain certificate 'Path'"
+                args
+                |> expectIfString "/p" f.Password "Password"
+                |> expectIfString "/csp" f.CspName "CspName"
+                |> expectIfString "/kc" f.PrivateKeyKey "PrivateKeyKey"
+            | SignTool.SignCertificate.Store s ->
+                args
+                |> expectIfOption "/a" s.AutomaticallySelectCertificate "AutomaticallySelectCertificate"
+                |> expectIfString "/i" s.IssuerName "IssuerName"
+                |> expectIfString "/n" s.SubjectName "SubjectName"
+                |> expectIfString "/r" s.RootSubjectName "RootSubjectName"
+                |> expectIfString "/s" s.StoreName "StoreName"
+                |> expectIfString "/sha1" s.Hash "Hash"
+                |> expectIfOption "/sm" s.UseComputerStore "UseComputerStore" )
+        |> expectIfEnum "/fd \"sha1\"" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA1 "DigestAlgorithm.SHA1"
+        |> expectIfEnum "/fd \"sha256\"" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA256 "DigestAlgorithm.SHA256"
+        |> expectIfString "/ac" signOptions.AdditionalCertificate "AdditionalCertificate"
+        |> expectIfOption "/as" signOptions.AppendSignature "AppendSignature"
+        |> expectIfString "/c" signOptions.CertificateTemplateName "CertificateTemplateName"
+        |> expectIfString "/d" signOptions.Description "Description"
+        |> expectIfString "/u" signOptions.EnhancedKeyUsage "EnhancedKeyUsage"
+        |> expectIfOption "/uw" signOptions.EnhancedKeyUsageW "EnhancedKeyUsageW"
+        |> ignore
+        Expect.stringEnds actualSigntoolArgs (" " + (quoteAndJoinWithSpace signFiles)) "Expected arguments to end with a quoted space-separated list of files"
+        additionalChecks actualSigntoolArgs
+
     testList "Fake.Tools.SignTool.Tests" [
         testCase "default sign options" <| fun _ ->
             let certificate = SignTool.SignCertificate.File (SignTool.CertificateFromFile.Create("path/to/certificate.pfx"))
@@ -92,55 +136,38 @@ let tests =
             Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
         testPropertyWithConfig signtoolTestConfig "sign options" <| fun (signOptions: SignTool.SignOptions) (signFiles: FilesList) ->
-            let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-                getExpectedToolOptions signOptions.ToolOptions (List.length signFiles)
+            checkSignOptions
+                signOptions
+                signFiles
+                (fun () -> SignTool.signInternal testRunner testSigntoolexeLocator signOptions signFiles)
+                (fun args ->
+                    Expect.isFalse (args.Contains(" /t ")) "Expected arguments not to contain time stamping option /t"
+                    Expect.isFalse (args.Contains(" /tr ")) "Expected arguments not to contain time stamping option /tr"
+                    Expect.isFalse (args.Contains(" /td ")) "Expected arguments not to contain time stamping option /td" )
+
+        testCase "default sign with time stamp options" <| fun _ ->
+            let certificate = SignTool.SignCertificate.File (SignTool.CertificateFromFile.Create("path/to/certificate.pfx"))
+            let signOptions = SignTool.SignOptions.Create(certificate)
+            let timeStampOptions = SignTool.TimeStampOption.Create("http://timestamp.example-ca.com/")
+            let signFiles = ["file1.ext"; "file2.ext"]
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
-                SignTool.signInternal testRunner testSigntoolexeLocator signOptions signFiles
+                SignTool.signWithTimeStampInternal testRunner testSigntoolexeLocator signOptions timeStampOptions signFiles
 
-            Expect.equal actualSigntoolPath expectedSigntoolPath "Expected correct signtool.exe path"
-            Expect.equal actualSigntoolWorkingDir expectedSigntoolWorkingDir "Expected correct working directory"
-            Expect.equal actualSigntoolTimeout expectedSigntoolTimeout "Expected correct timeout"
+            Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
+            Expect.equal actualSigntoolArgs "sign /f \"path/to/certificate.pfx\" /fd \"sha256\" /tr \"http://timestamp.example-ca.com/\" /td \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
+            Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
+            Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
 
-            Expect.stringStarts actualSigntoolArgs "sign" "Expected arguments to start with 'sign'"
-            Expect.isFalse (actualSigntoolArgs.EndsWith(' ')) "Expected arguments to not end with a space"
-            actualSigntoolArgs
-            |> expectIfOption "/debug" signOptions.Debug "Debug"
-            |> expectIfEnum "/v" signOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
-            |> expectIfEnum "/q" signOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
-            |> (fun args ->
-                match signOptions.Certificate with
-                | SignTool.SignCertificate.File f ->
-                    Expect.stringContains args (sprintf "/f \"%s\"" f.Path) "Expected arguments to contain certificate 'Path'"
+        testPropertyWithConfig signtoolTestConfig "sign with time stamp options" <| fun (signOptions: SignTool.SignOptions) (timeStampOptions: SignTool.TimeStampOption) (signFiles: FilesList) ->
+            checkSignOptions
+                signOptions
+                signFiles
+                (fun () -> SignTool.signWithTimeStampInternal testRunner testSigntoolexeLocator signOptions timeStampOptions signFiles)
+                (fun args ->
                     args
-                    |> expectIfString "/p" f.Password "Password"
-                    |> expectIfString "/csp" f.CspName "CspName"
-                    |> expectIfString "/kc" f.PrivateKeyKey "PrivateKeyKey"
-                | SignTool.SignCertificate.Store s ->
-                    args
-                    |> expectIfOption "/a" s.AutomaticallySelectCertificate "AutomaticallySelectCertificate"
-                    |> expectIfString "/i" s.IssuerName "IssuerName"
-                    |> expectIfString "/n" s.SubjectName "SubjectName"
-                    |> expectIfString "/r" s.RootSubjectName "RootSubjectName"
-                    |> expectIfString "/s" s.StoreName "StoreName"
-                    |> expectIfString "/sha1" s.Hash "Hash"
-                    |> expectIfOption "/sm" s.UseComputerStore "UseComputerStore" )
-            |> expectIfEnum "/fd \"sha1\"" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA1 "DigestAlgorithm.SHA1"
-            |> expectIfEnum "/fd \"sha256\"" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA256 "DigestAlgorithm.SHA256"
-            |> (fun args ->
-                match signOptions.TimeStamp with
-                | Some t ->
-                    args
-                    |> expectIfEnum (sprintf "/t \"%s\"" t.ServerUrl) t.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
-                    |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" t.ServerUrl) t.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
-                | None -> args )
-            |> expectIfString "/ac" signOptions.AdditionalCertificate "AdditionalCertificate"
-            |> expectIfOption "/as" signOptions.AppendSignature "AppendSignature"
-            |> expectIfString "/c" signOptions.CertificateTemplateName "CertificateTemplateName"
-            |> expectIfString "/d" signOptions.Description "Description"
-            |> expectIfString "/u" signOptions.EnhancedKeyUsage "EnhancedKeyUsage"
-            |> expectIfOption "/uw" signOptions.EnhancedKeyUsageW "EnhancedKeyUsageW"
-            |> ignore
-            Expect.stringEnds actualSigntoolArgs (" " + (quoteAndJoinWithSpace signFiles)) "Expected arguments to end with a quoted space-separated list of files"
+                    |> expectIfEnum (sprintf "/t \"%s\"" timeStampOptions.ServerUrl) timeStampOptions.Algorithm SignTool.DigestAlgorithm.SHA1 "TimeStamp.Algorithm.SHA1"
+                    |> expectIfEnum (sprintf "/tr \"%s\" /td \"sha256\"" timeStampOptions.ServerUrl) timeStampOptions.Algorithm SignTool.DigestAlgorithm.SHA256 "TimeStamp.Algorithm.SHA256"
+                    |> ignore )
 
         testCase "default time stamp options" <| fun _ ->
             let timestampOptions = SignTool.TimeStampOptions.Create("http://timestamp.example-ca.com/")
