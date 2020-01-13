@@ -116,6 +116,15 @@ type SignCertificate =
     /// Use a certificate stored in a certificate store.
     | Store of CertificateFromStore
 
+    /// Use a certificate stored in a file with options
+    static member FromFile(path, setOptions) =
+        let options = setOptions (CertificateFromFile.Create(path))
+        File options
+    /// Use a certificate stored in a certificate store with options.
+    static member FromStore(setOptions) =
+        let options = setOptions (CertificateFromStore.Create())
+        Store options
+
 /// Sign command options
 type SignOptions =
     {

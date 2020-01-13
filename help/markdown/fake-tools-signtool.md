@@ -58,9 +58,10 @@ Only PFX files are supported by signtool.exe.
 ```fsharp
 // val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
 SignTool.sign
-    (SignTool.SignCertificate.File {
-        SignTool.CertificateFromFile.Create("path/to/certificate-file.pfx") with
-            Password = Some "certificate-password" } )
+    (SignTool.SignCertificate.FromFile(
+        "path/to/certificate-file.pfx",
+        fun o -> { o with
+                    Password = Some "certificate-password" } ) )
     (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
@@ -76,11 +77,11 @@ If no `StoreName` is specified, the "My" store is opened.
 ```fsharp
 // val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
 SignTool.sign
-    (SignTool.SignCertificate.Store {
-        SignTool.CertificateFromStore.Create() with
-            AutomaticallySelectCertificate = Some true
-            SubjectName = Some "subject"
-            StoreName = Some "My" } )
+    (SignTool.SignCertificate.FromStore(
+        fun o -> { o with
+                    AutomaticallySelectCertificate = Some true
+                    SubjectName = Some "subject"
+                    StoreName = Some "My" } ) )
     (fun o -> o)
     ["program.exe"; "library.dll"]
 ```
