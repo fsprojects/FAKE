@@ -173,8 +173,8 @@ module CreateProcess =
                 |> EnvMap.ofSeq
                 |> Some
             Streams =
-                {   StandardInput = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
-                    StandardOutput = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
+                {   StandardInput = if p.RedirectStandardInput then CreatePipe StreamRef.Empty else Inherit
+                    StandardOutput = if p.RedirectStandardOutput then CreatePipe StreamRef.Empty else Inherit
                     StandardError = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
                 }
             Hook = emptyHook
