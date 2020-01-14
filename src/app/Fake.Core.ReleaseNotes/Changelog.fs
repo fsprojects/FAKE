@@ -1,5 +1,5 @@
 /// Contains helpers which allow to parse Change log text files.
-/// These files have to be in a format as described on http://keepachangelog.com/en/0.1.0/
+/// These files have to be in a format as described on http://keepachangelog.com/en/1.1.0/
 ///
 /// ## Sample
 ///
