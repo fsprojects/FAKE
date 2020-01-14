@@ -334,12 +334,23 @@ module CreateProcess =
             (fun prev state exitCode -> prev)
             (fun _ -> f ())
     /// Execute the given function right after the process is started.
-    /// PID for process can be obtained from p parameter (p.Id).
     let addOnStarted f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> f (p))
+            (fun state p -> f ())
+            (fun prev state exitCode -> prev)
+            ignore
+
+    type StartedProcessInfo = { Process : Process }
+    
+    /// Execute the given function right after the process is started.
+    /// PID for process can be obtained from p parameter (p.Process.Id).
+    let addOnStartedEx f (c:CreateProcess<_>) =
+        c
+        |> appendSimpleFuncs 
+            ignore
+            (fun state p -> f { Process = p })
             (fun prev state exitCode -> prev)
             ignore
 
