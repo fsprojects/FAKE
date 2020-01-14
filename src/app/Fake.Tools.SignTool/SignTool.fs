@@ -19,7 +19,6 @@ type ToolOptions =
         /// If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.
         ToolPath: string option
         /// Timeout.
-        /// If not provided, default value is 10 seconds per file.
         Timeout: TimeSpan option
         /// Working directory.
         /// If not provided, current directory will be used.
@@ -246,7 +245,6 @@ type VerifyOptions =
 /// run signtool command with options and files
 let internal signtool runner (signtoolexeLocator: unit -> string option) command (options: seq<string>) (toolOptions: ToolOptions option) (files: seq<string>) =
     let filesList = files |> List.ofSeq
-    let getTimeout = Option.defaultValue (TimeSpan.FromSeconds (10.0 * float (List.length filesList)))
     let getToolPath = function
         | Some p -> p
         | None ->
@@ -256,8 +254,8 @@ let internal signtool runner (signtoolexeLocator: unit -> string option) command
     let getWorkingDir = Option.defaultValue (Directory.GetCurrentDirectory())
     let signtoolPath, signtoolTimeout, signtoolWorkingDir =
         match toolOptions with
-        | Some o -> getToolPath o.ToolPath, getTimeout o.Timeout, getWorkingDir o.WorkingDir
-        | None -> getToolPath None, getTimeout None, getWorkingDir None
+        | Some o -> getToolPath o.ToolPath, o.Timeout, getWorkingDir o.WorkingDir
+        | None -> getToolPath None, None, getWorkingDir None
     // if there are any options, join them with a space and prepend a space separator, otherwise nothing
     let optionsString = String.Join(" ", options) |> fun o -> if String.isNullOrWhiteSpace o then String.Empty else (" " + o)
     // if there are any files, quote them and join them with a space and prepend a space separator, otherwise nothing
@@ -268,13 +266,16 @@ let internal signtool runner (signtoolexeLocator: unit -> string option) command
 
 
 /// default runner
-let internal defaultRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan) =
+let internal defaultRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan option) =
     let stdOut = StringBuilder()
     let stdErr = StringBuilder()
     let result =
         CreateProcess.fromRawCommandLine signtoolPath signtoolArgs
         |> CreateProcess.withWorkingDirectory signtoolWorkingDir
-        |> CreateProcess.withTimeout signtoolTimeout
+        |> (fun cp ->
+            match signtoolTimeout with
+            | Some t -> CreateProcess.withTimeout t cp
+            | None -> cp)
         |> CreateProcess.redirectOutput
         |> CreateProcess.withOutputEvents (stdOut.AppendLine >> ignore) (stdErr.AppendLine >> ignore)
         |> Proc.run

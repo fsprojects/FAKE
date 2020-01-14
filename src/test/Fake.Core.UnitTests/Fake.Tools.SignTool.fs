@@ -7,7 +7,7 @@ open Fake.Tools
 open FsCheck
 
 
-let private testRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan) =
+let private testRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan option) =
     signtoolPath, signtoolArgs, signtoolWorkingDir, signtoolTimeout
 
 let private testSigntoolexePath =
@@ -19,16 +19,14 @@ let private getDefaultWorkingDir =
     Directory.GetCurrentDirectory()
 
 
-let private getExpectedToolOptions topts filesCount =
-    let filesTimeout = TimeSpan.FromSeconds (10.0 * float filesCount)
+let private getExpectedToolOptions topts =
     match topts with
     | Some t ->
         let toolPath = t.ToolPath |> Option.defaultValue testSigntoolexePath
         let workingDir = t.WorkingDir |> Option.defaultValue getDefaultWorkingDir
-        let timeout = t.Timeout |> Option.defaultValue filesTimeout
-        toolPath, workingDir, timeout
+        toolPath, workingDir, t.Timeout
     | None ->
-        testSigntoolexePath, getDefaultWorkingDir, filesTimeout
+        testSigntoolexePath, getDefaultWorkingDir, None
 
 let private expectIfOption c (o: bool option) m args =
     if o.IsSome && o.Value then
@@ -80,7 +78,7 @@ let private signtoolTestConfig = { FsCheckConfig.defaultConfig with arbitrary = 
 let tests =
     let checkSignOptions (signOptions: SignOptions) signFiles signtool additionalChecks =
         let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-            getExpectedToolOptions signOptions.ToolOptions (List.length signFiles)
+            getExpectedToolOptions signOptions.ToolOptions
         let actualSigntoolPath, (actualSigntoolArgs: string), actualSigntoolWorkingDir, actualSigntoolTimeout = signtool ()
 
         Expect.equal actualSigntoolPath expectedSigntoolPath "Expected correct signtool.exe path"
@@ -133,7 +131,7 @@ let tests =
             Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
             Expect.equal actualSigntoolArgs "sign /f \"path/to/certificate.pfx\" /fd \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
-            Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
+            Expect.isNone actualSigntoolTimeout "Expected no timeout"
 
         testPropertyWithConfig signtoolTestConfig "sign options" <| fun (signOptions: SignTool.SignOptions) (signFiles: FilesList) ->
             checkSignOptions
@@ -156,7 +154,7 @@ let tests =
             Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
             Expect.equal actualSigntoolArgs "sign /f \"path/to/certificate.pfx\" /fd \"sha256\" /tr \"http://timestamp.example-ca.com/\" /td \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
-            Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
+            Expect.isNone actualSigntoolTimeout "Expected no timeout"
 
         testPropertyWithConfig signtoolTestConfig "sign with time stamp options" <| fun (signOptions: SignTool.SignOptions) (timeStampOptions: SignTool.TimeStampOption) (signFiles: FilesList) ->
             checkSignOptions
@@ -178,11 +176,11 @@ let tests =
             Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
             Expect.equal actualSigntoolArgs "timestamp /tr \"http://timestamp.example-ca.com/\" /td \"sha256\" \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
-            Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
+            Expect.isNone actualSigntoolTimeout "Expected no timeout"
 
         testPropertyWithConfig signtoolTestConfig "time stamp options" <| fun (timestampOptions: SignTool.TimeStampOptions) (timestampFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-                getExpectedToolOptions timestampOptions.ToolOptions (List.length timestampFiles)
+                getExpectedToolOptions timestampOptions.ToolOptions
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
                 SignTool.timeStampInternal testRunner testSigntoolexeLocator timestampOptions timestampFiles
 
@@ -211,11 +209,11 @@ let tests =
             Expect.equal actualSigntoolPath testSigntoolexePath "Expected correct signtool.exe path"
             Expect.equal actualSigntoolArgs "verify \"file1.ext\" \"file2.ext\"" "Expected correct arguments"
             Expect.equal actualSigntoolWorkingDir (Directory.GetCurrentDirectory()) "Expected correct working directory"
-            Expect.equal actualSigntoolTimeout (TimeSpan.FromSeconds 20.0) "Expected correct timeout"
+            Expect.isNone actualSigntoolTimeout "Expected no timeout"
 
         testPropertyWithConfig signtoolTestConfig "verify options" <| fun (verifyOptions: SignTool.VerifyOptions) (verifyFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-                getExpectedToolOptions verifyOptions.ToolOptions (List.length verifyFiles)
+                getExpectedToolOptions verifyOptions.ToolOptions
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
                 SignTool.verifyInternal testRunner testSigntoolexeLocator verifyOptions verifyFiles
 

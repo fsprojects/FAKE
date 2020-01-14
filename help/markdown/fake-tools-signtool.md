@@ -224,7 +224,7 @@ All functions share some common options.
     ToolOptions = Some { SignTool.ToolOptions.Create() with
                              ToolPath = Some "path/to/signtool.exe" } }
 
-// set the timeout - default value is 10 seconds per file
+// set the timeout
 { o with
     ToolOptions = Some { SignTool.ToolOptions.Create() with
                              Timeout = Some (TimeSpan.FromMinutes 1.0) } }
