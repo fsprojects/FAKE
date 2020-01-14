@@ -354,7 +354,7 @@ module CreateProcess =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> f { Process = p })
+            (fun state p -> f { InternalProcess = p })
             (fun prev state exitCode -> prev)
             ignore
 
