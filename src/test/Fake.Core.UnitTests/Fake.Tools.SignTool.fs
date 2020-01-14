@@ -19,14 +19,8 @@ let private getDefaultWorkingDir =
     Directory.GetCurrentDirectory()
 
 
-let private getExpectedToolOptions topts =
-    match topts with
-    | Some t ->
-        let toolPath = t.ToolPath |> Option.defaultValue testSigntoolexePath
-        let workingDir = t.WorkingDir |> Option.defaultValue getDefaultWorkingDir
-        toolPath, workingDir, t.Timeout
-    | None ->
-        testSigntoolexePath, getDefaultWorkingDir, None
+let private getExpectedToolOptions toolPath timeout workingDir =
+    toolPath |> Option.defaultValue testSigntoolexePath, workingDir |> Option.defaultValue getDefaultWorkingDir, timeout
 
 let private expectIfOption c (o: bool option) m args =
     if o.IsSome && o.Value then
@@ -78,7 +72,7 @@ let private signtoolTestConfig = { FsCheckConfig.defaultConfig with arbitrary = 
 let tests =
     let checkSignOptions (signOptions: SignOptions) signFiles signtool additionalChecks =
         let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-            getExpectedToolOptions signOptions.ToolOptions
+            getExpectedToolOptions signOptions.ToolPath signOptions.Timeout signOptions.WorkingDir
         let actualSigntoolPath, (actualSigntoolArgs: string), actualSigntoolWorkingDir, actualSigntoolTimeout = signtool ()
 
         Expect.equal actualSigntoolPath expectedSigntoolPath "Expected correct signtool.exe path"
@@ -180,7 +174,7 @@ let tests =
 
         testPropertyWithConfig signtoolTestConfig "time stamp options" <| fun (timestampOptions: SignTool.TimeStampOptions) (timestampFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-                getExpectedToolOptions timestampOptions.ToolOptions
+                getExpectedToolOptions timestampOptions.ToolPath timestampOptions.Timeout timestampOptions.WorkingDir
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
                 SignTool.timeStampInternal testRunner testSigntoolexeLocator timestampOptions timestampFiles
 
@@ -213,7 +207,7 @@ let tests =
 
         testPropertyWithConfig signtoolTestConfig "verify options" <| fun (verifyOptions: SignTool.VerifyOptions) (verifyFiles: FilesList) ->
             let expectedSigntoolPath, expectedSigntoolWorkingDir, expectedSigntoolTimeout =
-                getExpectedToolOptions verifyOptions.ToolOptions
+                getExpectedToolOptions verifyOptions.ToolPath verifyOptions.Timeout verifyOptions.WorkingDir
             let actualSigntoolPath, actualSigntoolArgs, actualSigntoolWorkingDir, actualSigntoolTimeout =
                 SignTool.verifyInternal testRunner testSigntoolexeLocator verifyOptions verifyFiles
 

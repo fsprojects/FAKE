@@ -25,13 +25,10 @@ API Reference:
  - [`SignTool`](apidocs/v5/fake-tools-signtool.html): The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
  - [`CertificateFromFile`](apidocs/v5/fake-tools-signtool-certificatefromfile.html): Specifies parameters to use when using a certificate from a file.
  - [`CertificateFromStore`](apidocs/v5/fake-tools-signtool-certificatefromstore.html): Specifies parameters to use when using a certificate from a certificate store.
- - [`DigestAlgorithm`](apidocs/v5/fake-tools-signtool-digestalgorithm.html): Digest algorithm
  - [`SignCertificate`](apidocs/v5/fake-tools-signtool-signcertificate.html): Specifies what type of certificate to use.
  - [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html): Sign command options
  - [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html): Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.
  - [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html): Timestamp command options
- - [`ToolOptions`](apidocs/v5/fake-tools-signtool-tooloptions.html): Tool options
- - [`Verbosity`](apidocs/v5/fake-tools-signtool-verbosity.html): Verbosity
  - [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html): Verify command options
 
 <hr /><hr />
@@ -215,65 +212,50 @@ Only a subset of options is shown in the example, see API Reference for all avai
 All functions share some common options.
 
 
-### ToolOptions
+Tool options - path to signtool.exe, execution timeout, working directory. These options are not set by default.
 
 ```fsharp
 // set path to signtool.exe - if you want to use a specific version or you don't have Windows SDKs installed
 // by default, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'
 { o with
-    ToolOptions = Some { SignTool.ToolOptions.Create() with
-                             ToolPath = Some "path/to/signtool.exe" } }
-
+    ToolPath = Some "path/to/signtool.exe" }
 // set the timeout
 { o with
-    ToolOptions = Some { SignTool.ToolOptions.Create() with
-                             Timeout = Some (TimeSpan.FromMinutes 1.0) } }
-
+    Timeout = Some (TimeSpan.FromMinutes 1.0) }
 // set the working directory - uses current directory by default
 { o with
-    ToolOptions = Some { SignTool.ToolOptions.Create() with
-                             WorkingDir = Some (Directory.GetCurrentDirectory()) } }
+    WorkingDir = Some (Directory.GetCurrentDirectory()) }
 ```
 
-API Reference: [`ToolOptions`](apidocs/v5/fake-tools-signtool-tooloptions.html).
-
-### Debug
-
-Displays debugging information (signtool option: /debug). This option is not set by default.
+Debug - displays debugging information (signtool option: /debug). This option is not set by default.
 
 ```fsharp
 // display debugging information (/debug)
 { o with
     Debug = Some true }
-
 // do not display debugging information
 { o with
     Debug = Some false }
-
 // use default
 { o with
     Debug = None }
 ```
 
-### Verbosity
-
-Output verbosity (signtool options: /q, /v). This option is not set by default.
+Verbosity - output verbosity (signtool options: /q, /v). This option is not set by default.
 
 ```fsharp
 // set verbosity to verbose (/v)
 { o with
     Verbosity = Some SignTool.Verbosity.Verbose }
-
 // set verbosity to quiet (/q)
 { o with
     Verbosity = Some SignTool.Verbosity.Quiet }
-
 // use default
 { o with
     Verbosity = None }
 ```
 
-API Reference: [`Verbosity`](apidocs/v5/fake-tools-signtool-verbosity.html).
+API Reference: [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html), [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html), [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html), [`Verbosity`](apidocs/v5/fake-tools-signtool-verbosity.html).
 
 <hr /><hr />
 

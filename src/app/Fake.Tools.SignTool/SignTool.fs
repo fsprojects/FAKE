@@ -12,26 +12,6 @@ open Fake.Core
 open Fake.IO
 
 
-/// Tool options
-type ToolOptions =
-    {
-        /// Path to signtool.exe.
-        /// If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.
-        ToolPath: string option
-        /// Timeout.
-        Timeout: TimeSpan option
-        /// Working directory.
-        /// If not provided, current directory will be used.
-        WorkingDir: string option
-    }
-
-    /// Options default values.
-    static member Create() = {
-        ToolPath = None
-        Timeout = None
-        WorkingDir = None
-    }
-
 /// Verbosity
 type Verbosity =
     /// Displays no output on successful execution and minimal output for failed execution. (signtool option: /q)
@@ -127,12 +107,6 @@ type SignCertificate =
 /// Sign command options
 type SignOptions =
     {
-        /// Tool options
-        ToolOptions: ToolOptions option
-        /// Displays debugging information. (signtool option: /debug)
-        Debug: bool option
-        /// Output verbosity. (signtool options: /q, /v)
-        Verbosity: Verbosity option
         /// Specifies the certificate to use for signing. (signtool options: /a, /f, /p, /csp, /kc, /i, /n, /r, /s, /sha1, /sm)
         Certificate: SignCertificate
         /// Specifies the file digest algorithm to use to create file signatures. The default algorithm is Secure Hash Algorithm (SHA-1). (signtool option: /fd)
@@ -149,13 +123,22 @@ type SignOptions =
         EnhancedKeyUsage: string option
         /// Specifies using "Windows System Component Verification" (1.3.6.1.4.1.311.10.3.6). (signtool option: /uw)
         EnhancedKeyUsageW: bool option
+        /// Displays debugging information. (signtool option: /debug)
+        Debug: bool option
+        /// Output verbosity. (signtool options: /q, /v)
+        Verbosity: Verbosity option
+        /// Path to signtool.exe.
+        /// If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.
+        ToolPath: string option
+        /// Timeout.
+        Timeout: TimeSpan option
+        /// Working directory.
+        /// If not provided, current directory will be used.
+        WorkingDir: string option
     }
 
     /// Options default values.
     static member Create(certificate) = {
-        ToolOptions = None
-        Debug = None
-        Verbosity = None
         Certificate = certificate
         DigestAlgorithm = None
         AdditionalCertificate = None
@@ -164,44 +147,51 @@ type SignOptions =
         Description = None
         EnhancedKeyUsage = None
         EnhancedKeyUsageW = None
+        Debug = None
+        Verbosity = None
+        ToolPath = None
+        Timeout = None
+        WorkingDir = None
     }
 
 /// Timestamp command options
 type TimeStampOptions =
     {
-        /// Tool options
-        ToolOptions: ToolOptions option
-        /// Displays debugging information. (signtool option: /debug)
-        Debug: bool option
-        /// Output verbosity. (signtool options: /q, /v)
-        Verbosity: Verbosity option
         /// Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)
         ServerUrl: string
         /// Used to request a digest algorithm used by the RFC 3161 time stamp server. (signtool option: /td alg)
         Algorithm: DigestAlgorithm option
         /// Adds a timestamp to the signature at index. (signtool option: /tp Index)
         TimestampIndex: int option
+        /// Displays debugging information. (signtool option: /debug)
+        Debug: bool option
+        /// Output verbosity. (signtool options: /q, /v)
+        Verbosity: Verbosity option
+        /// Path to signtool.exe.
+        /// If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.
+        ToolPath: string option
+        /// Timeout.
+        Timeout: TimeSpan option
+        /// Working directory.
+        /// If not provided, current directory will be used.
+        WorkingDir: string option
     }
 
     /// Options default values.
     static member Create(serverUrl) = {
-        ToolOptions = None
-        Debug = None
-        Verbosity = None
         ServerUrl = serverUrl
         Algorithm = None
         TimestampIndex = None
+        Debug = None
+        Verbosity = None
+        ToolPath = None
+        Timeout = None
+        WorkingDir = None
     }
 
 /// Verify command options
 type VerifyOptions =
     {
-        /// Tool options
-        ToolOptions: ToolOptions option
-        /// Displays debugging information. (signtool option: /debug)
-        Debug: bool option
-        /// Output verbosity. (signtool options: /q, /v)
-        Verbosity: Verbosity option
         /// Specifies that all methods can be used to verify the file. First, the catalog databases are searched to determine whether the file is signed in a catalog. If the file is not signed in any catalog, SignTool attempts to verify the file's embedded signature. This option is recommended when verifying files that may or may not be signed in a catalog. Examples of files that may or may not be signed include Windows files or drivers. (signtool option: /a)
         AllMethods: bool option
         /// Verifies all signatures in a file with multiple signatures. (signtool option: /all)
@@ -222,13 +212,22 @@ type VerifyOptions =
         RootSubjectName: string option
         /// Specifies that a warning is generated if the signature is not time stamped. (signtool option: /tw)
         WarnIfNotTimeStamped: bool option
+        /// Displays debugging information. (signtool option: /debug)
+        Debug: bool option
+        /// Output verbosity. (signtool options: /q, /v)
+        Verbosity: Verbosity option
+        /// Path to signtool.exe.
+        /// If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.
+        ToolPath: string option
+        /// Timeout.
+        Timeout: TimeSpan option
+        /// Working directory.
+        /// If not provided, current directory will be used.
+        WorkingDir: string option
     }
 
     /// Options default values.
     static member Create() = {
-        ToolOptions = None
-        Debug = None
-        Verbosity = None
         AllMethods = None
         AllSignatures = None
         PrintDescription = None
@@ -239,30 +238,32 @@ type VerifyOptions =
         UseDefaultAuthenticationVerificationPolicy = None
         RootSubjectName = None
         WarnIfNotTimeStamped = None
+        Debug = None
+        Verbosity = None
+        ToolPath = None
+        Timeout = None
+        WorkingDir = None
     }
 
 
 /// run signtool command with options and files
-let internal signtool runner (signtoolexeLocator: unit -> string option) command (options: seq<string>) (toolOptions: ToolOptions option) (files: seq<string>) =
+let internal signtool runner (signtoolexeLocator: unit -> string option) command (options: seq<string>) toolPath timeout workingDir (files: seq<string>) =
     let filesList = files |> List.ofSeq
-    let getToolPath = function
+    let signtoolPath =
+        match toolPath with
         | Some p -> p
         | None ->
             match signtoolexeLocator () with
             | Some p -> p
             | None -> failwith "SignTool failed: Could not locate signtool.exe. Make sure you have Windows SDKs installed or provide direct path in the ToolPath option."
-    let getWorkingDir = Option.defaultValue (Directory.GetCurrentDirectory())
-    let signtoolPath, signtoolTimeout, signtoolWorkingDir =
-        match toolOptions with
-        | Some o -> getToolPath o.ToolPath, o.Timeout, getWorkingDir o.WorkingDir
-        | None -> getToolPath None, None, getWorkingDir None
+    let signtoolWorkingDir = workingDir |> Option.defaultValue (Directory.GetCurrentDirectory())
     // if there are any options, join them with a space and prepend a space separator, otherwise nothing
     let optionsString = String.Join(" ", options) |> fun o -> if String.isNullOrWhiteSpace o then String.Empty else (" " + o)
     // if there are any files, quote them and join them with a space and prepend a space separator, otherwise nothing
     let filesString = if List.isEmpty filesList then String.Empty else (" \"" + String.Join("\" \"", filesList) + "\"")
     let signtoolArgs = command + optionsString + filesString
 
-    runner signtoolPath signtoolArgs signtoolWorkingDir signtoolTimeout
+    runner signtoolPath signtoolArgs signtoolWorkingDir timeout
 
 
 /// default runner
@@ -359,7 +360,7 @@ let internal signInternal runner signtoolexeLocator (options: SignOptions) (file
             // surround in quotes to lower chances of replacing non-password occurences of password-string
             TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
     | _ -> ()
-    signtool runner signtoolexeLocator "sign" signtoolOptions options.ToolOptions files
+    signtool runner signtoolexeLocator "sign" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
 
 /// run the sign command with time stamping using a runner
 let internal signWithTimeStampInternal runner signtoolexeLocator (signOptions: SignOptions) (timeStampOptions: TimeStampOption) (files: seq<string>) =
@@ -398,7 +399,7 @@ let internal signWithTimeStampInternal runner signtoolexeLocator (signOptions: S
             // surround in quotes to lower chances of replacing non-password occurences of password-string
             TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
     | _ -> ()
-    signtool runner signtoolexeLocator "sign" signtoolOptions signOptions.ToolOptions files
+    signtool runner signtoolexeLocator "sign" signtoolOptions signOptions.ToolPath signOptions.Timeout signOptions.WorkingDir files
 
 /// run the timestamp command using a runner
 let internal timeStampInternal runner signtoolexeLocator (options: TimeStampOptions) (files: seq<string>) =
@@ -408,7 +409,7 @@ let internal timeStampInternal runner signtoolexeLocator (options: TimeStampOpti
         yield! timestamping options.ServerUrl options.Algorithm
         yield! yieldIfSome (iarg "tp") options.TimestampIndex
     }
-    signtool runner signtoolexeLocator "timestamp" signtoolOptions options.ToolOptions files
+    signtool runner signtoolexeLocator "timestamp" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
 
 /// run the verify command using a runner
 let internal verifyInternal runner signtoolexeLocator (options: VerifyOptions) (files: seq<string>) =
@@ -426,7 +427,7 @@ let internal verifyInternal runner signtoolexeLocator (options: VerifyOptions) (
         yield! yieldIfSome (sarg "r") options.RootSubjectName
         yield! yieldIfTrue "tw" options.WarnIfNotTimeStamped
     }
-    signtool runner signtoolexeLocator "verify" signtoolOptions options.ToolOptions files
+    signtool runner signtoolexeLocator "verify" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
 
 
 /// Signs files according to the options specified.
