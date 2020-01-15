@@ -73,8 +73,8 @@ let tests =
             |> CreateProcess.ensureExitCode
             |> Proc.run
         
-        Expect.stringContains "Expected version in stderror string" output.Result.Error version
-        Expect.stringContains "Expected Fake.Runtime.dll in stderror string" output.Result.Output "Fake.Runtime.dll"
+        Expect.stringContains "Expected version in stderror string" version output.Result.Error 
+        Expect.stringContains "Expected Fake.Runtime.dll in stderror string" "Fake.Runtime.dll" output.Result.Output
 
 
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
