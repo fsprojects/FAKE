@@ -99,13 +99,14 @@ module ExpectoHelpers =
               let! result = Task.WhenAny(t, delay) |> Async.AwaitTask
               if result = delay then
                 Expecto.Tests.failtestf "Test '%s' timed out" labelPath
+              return result.GetAwaiter().GetResult()
           }
 
         match test with
         | Expecto.Sync test -> async { test() } |> timeoutAsync |> Expecto.Async
         | Expecto.SyncWithCancel test ->
           Expecto.SyncWithCancel (fun ct ->
-            Async.StartImmediate(async { test ct } |> timeoutAsync)
+            Async.StartImmediate(async { test (CancellationToken.None) } |> timeoutAsync)
           )
         | Expecto.Async test -> timeoutAsync test |> Expecto.Async
         | Expecto.AsyncFsCheck (testConfig, stressConfig, test) ->

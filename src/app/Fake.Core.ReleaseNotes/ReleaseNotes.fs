@@ -22,10 +22,11 @@
 ///
 /// ## Sample
 ///
-///     let release =
-///         ReadFile "RELEASE_NOTES.md"
-///         |> ReleaseNotesHelper.parseReleaseNotes
-///
+///     
+///     #r "paket:
+///     nuget Fake.Core.ReleaseNotes //"
+///     
+///     let release = ReleaseNotes.load "RELEASE_NOTES.md"
 ///
 ///     Target "AssemblyInfo" (fun _ ->
 ///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
