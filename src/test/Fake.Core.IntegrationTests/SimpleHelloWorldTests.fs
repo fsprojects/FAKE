@@ -74,7 +74,7 @@ let tests =
             |> Proc.run
         
         Expect.stringContains "Expected version in stderror string" version output.Result.Error 
-        Expect.stringContains "Expected Fake.Runtime.dll in stderror string" "Fake.Runtime.dll" output.Result.Output
+        Expect.stringContains "Expected Fake.Runtime.dll in stderror string" "Fake.Runtime.dll" output.Result.Error
 
 
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
