@@ -12,14 +12,14 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
-See the [project home page](https://fake.build/) for tutorials and [API documentation](http://fake.build/apidocs/v5/index.html).
+See the [project home page](https://fake.build/) for tutorials and [API documentation](https://fake.build/apidocs/v5/index.html).
 
 ## Build the project
 
 * Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
 * Or: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
 
-> Note: You can find more details on the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
+> Note: You can find more details on the [contributing page](https:fake.build/contributing.html)
 
 Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise the test-suite will fail (However, the compilation should work)
@@ -29,8 +29,8 @@ Otherwise the test-suite will fail (However, the compilation should work)
 
 ## How to contribute code
 
-See the [contributing page](http://fsharp.github.com/FAKE/contributing.html).
+See the [contributing page](https:fake.build/contributing.html).
 
 ## Maintainers
 
-Although this project is hosted in the [fsharp](https://github.com/fsharp) repository for historical reasons, it is _not_ maintained and managed by the F# Core Engineering Group. The F# Core Engineering Group acknowledges that the independent owner and maintainer of this project is [Steffen Forkmann](http://github.com/forki).
+Although this project is hosted in the [fsharp](https://github.com/fsharp) repository for historical reasons, it is _not_ maintained and managed by the F# Core Engineering Group. The F# Core Engineering Group acknowledges that the independent owner and maintainer of this project is [Steffen Forkmann](https://github.com/forki).
