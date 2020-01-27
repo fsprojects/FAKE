@@ -9,7 +9,7 @@ let fakeArgsHint =
   """
 General:
 
-  Fake command line is devided into runtime and script arguments.
+  The Fake command line is divided into runtime and script arguments.
   Runtime arguments control compilation and processing of the script,
   while script arguments are specific for the script or provided by
   a NuGet package.
