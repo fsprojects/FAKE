@@ -71,3 +71,4 @@ paket-files/
 
 Samples/WebNpmGrunt/node_modules
 .fake
+/.ionide
