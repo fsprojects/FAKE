@@ -1,3 +1,6 @@
+#### 4.64.18 - 30.01.2020
+* Add Dynamics Business Central 365 support
+
 #### 4.64.17 - 19.03.2019
 * Add support for MSBuild16 
 
