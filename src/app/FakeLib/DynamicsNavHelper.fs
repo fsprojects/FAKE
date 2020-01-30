@@ -98,6 +98,7 @@ let getNAVClassicPath navClientVersion =
         | "1000" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\100\RoleTailored Client"
         | "1100" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\110\RoleTailored Client"
         | "1300" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\130\RoleTailored Client"
+        | "1400" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\140\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
         | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
@@ -119,11 +120,12 @@ let getNAVServicePath navClientVersion =
             | "1000" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\100\Service"
             | "1100" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\110\Service"
             | "1300" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\130\Service"
+            | "1400" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\140\Service"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
 
         match navClientVersion with
         | "601" | "602" -> getRegistryValue HKEYLocalMachine subKey "Path"
-        | "700"| "701"| "800" | "900" | "1000" | "1100" | "1300" -> getRegistryValue64 HKEYLocalMachine subKey "Path"
+        | "700"| "701"| "800" | "900" | "1000" | "1100" | "1300" | "1400" -> getRegistryValue64 HKEYLocalMachine subKey "Path"
         | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
 
     (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
@@ -541,6 +543,8 @@ let StartNavServiceTier serverMode navClientVersion =
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV110"
         | "1300" ->
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV130"
+        | "1400" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV140"
         | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
 
 let StopNavServiceTier serverMode navClientVersion =
@@ -555,3 +559,4 @@ let StopNavServiceTier serverMode navClientVersion =
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV100"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV110"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV130"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV140"
