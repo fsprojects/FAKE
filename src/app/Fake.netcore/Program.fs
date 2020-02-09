@@ -209,19 +209,28 @@ type CliAction =
   | ShowHelp
   | InvalidUsage of string
 
-let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
+let private initPaket (verboseLevel:VerboseLevel) =
   if verboseLevel.PrintPaket then
     Paket.Logging.verbose <- true
     Paket.Logging.verboseWarnings <- true
   Paket.Utils.autoAnswer <- Some true
+  // When silent we don't want Paket output
+  if verboseLevel.PrintNormal then
+    Paket.Logging.event.Publish
+    |> Observable.subscribe Paket.Logging.traceToConsole
+  else
+    { new System.IDisposable with 
+        member __.Dispose() = () }
+      
+exception PaketInitException of Exception
+
+let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
+
   use consoleTrace =
-    // When silent we don't want Paket output
-    if verboseLevel.PrintNormal then
-      Paket.Logging.event.Publish
-      |> Observable.subscribe Paket.Logging.traceToConsole
-    else
-      { new System.IDisposable with 
-          member __.Dispose() = () }
+    try initPaket verboseLevel
+    with e ->
+      // Hard to debug, see https://github.com/isaacabraham/vsts-fsharp/issues/33
+      raise (PaketInitException e)
 
   match action with
   | ShowVersion ->
@@ -313,6 +322,10 @@ let main (args:string[]) =
       parseAction rawResults
     exitCode <- handleAction verbLevel results
   with
+  | PaketInitException exn ->
+    printfn "Error while initializing Paket.Core (please report this to Paket):"
+    reportExn VerboseLevel.VerbosePaket exn
+    exitCode <- 1
   | exn ->
     printfn "Error while parsing command line, usage is:"
     printf "%s" Cli.fakeArgsHint
