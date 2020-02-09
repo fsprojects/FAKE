@@ -19,7 +19,7 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 * Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
 * Or: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
 
-> Note: You can find more details on the [contributing page](https:fake.build/contributing.html)
+> Note: You can find more details on the [contributing page](https://fake.build/contributing.html)
 
 Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise the test-suite will fail (However, the compilation should work)
@@ -29,7 +29,7 @@ Otherwise the test-suite will fail (However, the compilation should work)
 
 ## How to contribute code
 
-See the [contributing page](https:fake.build/contributing.html).
+See the [contributing page](https://fake.build/contributing.html).
 
 ## Maintainers
 
