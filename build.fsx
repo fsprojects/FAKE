@@ -818,7 +818,7 @@ let setBuildEnvVars versionVar isDebianPackaging =
     Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
     Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageRepositoryType" "git"
-    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0 OR MS-PL"
     Environment.setEnvironVar "IsDebianPackaging" (if isDebianPackaging then "true" else "false")
     //Environment.setEnvironVar "IncludeSource" "true"
     //Environment.setEnvironVar "IncludeSymbols" "false"
