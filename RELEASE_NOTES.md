@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.19.2-alpha - tbd
+
+* tbd
+
 ## 5.19.1 - 2019-02-10
 
 * ENHANCEMENT: Update MSTest.fs for VS 2019, thanks @0x53A - https://github.com/fsharp/FAKE/pull/2450
