@@ -203,7 +203,13 @@
 * DOCS: Resort TraceSecrets.register indexed parameters - https://github.com/fsharp/FAKE/pull/2254
 * DOCS: fix broken links #2241 - https://github.com/fsharp/FAKE/pull/2241
 
-## 4.64.16 - 2019-02-15
+#### 4.64.18 - 2020-01-30
+* Add Dynamics Business Central 365 support
+
+#### 4.64.17 - 2019-03-19
+* Add support for MSBuild16 
+
+#### 4.64.16 - 2019-02-15
 * Add Dynamics NAV FullCompile function
 
 ## 4.64.14 - 2019-01-07
