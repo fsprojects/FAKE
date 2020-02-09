@@ -31,7 +31,6 @@ Specifies your prefered way to bootstrap FAKE.
 
 - `local` (default) - Installs the FAKE dotnet sdk local tool into the `dotnet-tools.json` manifest. This requires an dotnet SDK version 3 or higher.
 - `tool` - Installs the FAKE dotnet sdk global tool into the `--tool-path` folder
-- `project` - Creates a `build.proj` and uses `DotNetCliToolReference` to bootstrap FAKE
 - `none` - Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE
 
 ### --dependencies
@@ -51,4 +50,4 @@ Specifies your prefered way to define build tasks inside your build script:
 Specifies the folder for the fake-cli tool. This parameter is only applicable when `tool` option is used for bootstrapping with `--bootstrap`. Defaults to `.fake`.
 
 ### --version
-Specifies the version of FAKE to install. Defaults to `5.*`. This parameter is only applicable when either `local`, `tool` or `project` is used for bootstrapping.
+Specifies the version of FAKE to install. Defaults to `5.*`. This parameter is only applicable when either `local` or `tool` is used for bootstrapping.

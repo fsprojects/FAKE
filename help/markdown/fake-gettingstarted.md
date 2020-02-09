@@ -79,10 +79,6 @@ There are various ways to install FAKE 5:
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* (No longer recommended) Use it as a dotnet tool (legacy): Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
-
-* (No longer recommended) Bootstrap via paket `clitool` (legacy), this is basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) branch of `fake-bootstrap` in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
-
 now you can use
 
 <pre><code class="lang-bash">fake --help</code></pre>

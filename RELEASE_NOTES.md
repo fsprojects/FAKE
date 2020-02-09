@@ -1,15 +1,24 @@
 # Release Notes
 
+## 5.19.1 - 2019-02-10
+
+* ANNOUNCEMENT: `dotnet-fake` cli tool via `DotNetCliToolReference` is now history - https://github.com/fsharp/FAKE/issues/2465
+* ENHANCEMENT: Update MSTest.fs for VS 2019, thanks @0x53A - https://github.com/fsharp/FAKE/pull/2450
+* ENHANCEMENT: Added `CreateProcess.addOnStartedEx` in order to retrieve the .NET Process object, thanks @maciej-izak - https://github.com/fsharp/FAKE/pull/2451
+* BUGFIX: Improved error reporting when paket initialization fails, see https://github.com/isaacabraham/vsts-fsharp/issues/33
+* DOCS: Fixed typos and improved docs, thanks @ncave, @rmunn, @jeremyabbott, @mjul, @smoothdeveloper - https://github.com/fsharp/FAKE/pull/2449 https://github.com/fsharp/FAKE/pull/2452 https://github.com/fsharp/FAKE/pull/2454 https://github.com/fsharp/FAKE/pull/2459 https://github.com/fsharp/FAKE/pull/2460
+* INFRASTRUCTURE: Use stable version of reference assemblies package, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2463
+
 ## 5.19.0 - 2019-12-19
 
 * NEW: Added `Fake.Sql.SqlPackage` which is a redesign or `Fake.Sql.DacPac` and added support for publish profiles, thanks @kmadof - https://github.com/fsharp/FAKE/pull/2366
-* EHNANCEMENT: `Fake.DotNet.Cli` Add timeout field to kill the process after the given timeout - https://github.com/fsharp/FAKE/pull/2425
-* EHNANCEMENT: `Fake.Core.Target` Add notification when a fake worker is idle - https://github.com/fsharp/FAKE/pull/2425
-* EHNANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2403
+* ENHANCEMENT: `Fake.DotNet.Cli` Add timeout field to kill the process after the given timeout - https://github.com/fsharp/FAKE/pull/2425
+* ENHANCEMENT: `Fake.Core.Target` Add notification when a fake worker is idle - https://github.com/fsharp/FAKE/pull/2425
+* ENHANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2403
 * ENHANCEMENT: `fake-cli` Update bundled paket - https://github.com/fsharp/FAKE/pull/2425
 * ENHANCEMENT: `Fake.DotNet.Cli` Add support for suppressing copyright messages (`--nologo`) when invoking `dotnet`, thanks @objectx - https://github.com/fsharp/FAKE/pull/2436
-* EHNANCEMENT: `Fake.Installer.Squirrel` Add additional Squirrel parameters, thanks @pchinery - https://github.com/fsharp/FAKE/pull/2431
-* EHNANCEMENT: `Fake.Testing.SonarQube` Several improvements like workdir and local tool support, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2438
+* ENHANCEMENT: `Fake.Installer.Squirrel` Add additional Squirrel parameters, thanks @pchinery - https://github.com/fsharp/FAKE/pull/2431
+* ENHANCEMENT: `Fake.Testing.SonarQube` Several improvements like workdir and local tool support, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2438
 * BUGFIX: `Fake.Tools.Rsync` Fix typo in Rsync.fs options, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2432
 * BUGFIX: `Fake.DotNet.Testing.Coverlet` Fix Coverlet output property name, thanks @SteveGilham - https://github.com/fsharp/FAKE/pull/2427
 * BUGFIX: `Fake.Tools.Octo` Octopus deploy trace always marked failures, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2428
@@ -191,7 +200,13 @@
 * DOCS: Resort TraceSecrets.register indexed parameters - https://github.com/fsharp/FAKE/pull/2254
 * DOCS: fix broken links #2241 - https://github.com/fsharp/FAKE/pull/2241
 
-## 4.64.16 - 2019-02-15
+#### 4.64.18 - 2020-01-30
+* Add Dynamics Business Central 365 support
+
+#### 4.64.17 - 2019-03-19
+* Add support for MSBuild16 
+
+#### 4.64.16 - 2019-02-15
 * Add Dynamics NAV FullCompile function
 
 ## 4.64.14 - 2019-01-07

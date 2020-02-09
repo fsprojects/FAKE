@@ -93,4 +93,45 @@ let tests =
             |> CreateProcess.fromRawCommandLine "./folder/mytool.exe"
             |> getRawCommandLine
         Expect.equal actual original "Expected to retrieve exact match"
+
+    yield testCase "Test CreateProcess.ofStartInfo with different streams - reported on gitter" <| fun _ ->
+        let isRedirected s =
+            match s with
+            | StreamSpecification.Inherit -> false
+            | _ -> true
+        
+        let si = System.Diagnostics.ProcessStartInfo()
+        let actual =
+            si
+            |> CreateProcess.ofStartInfo
+        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+        
+        let si = System.Diagnostics.ProcessStartInfo()
+        si.RedirectStandardInput <- true
+        let actual =
+            si
+            |> CreateProcess.ofStartInfo
+        Expect.isTrue (isRedirected actual.Streams.StandardInput) "Expect Std Input to be redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+        
+        let si = System.Diagnostics.ProcessStartInfo()
+        si.RedirectStandardOutput <- true
+        let actual =
+            si
+            |> CreateProcess.ofStartInfo
+        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+        Expect.isTrue (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+
+        let si = System.Diagnostics.ProcessStartInfo()
+        si.RedirectStandardError <- true
+        let actual =
+            si
+            |> CreateProcess.ofStartInfo
+        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+        Expect.isTrue (isRedirected actual.Streams.StandardError) "Expect Std Error to be redirected"
   ]

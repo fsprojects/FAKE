@@ -52,6 +52,12 @@ type CreateProcess<'TRes> =
     member x.WorkingDirectory = x.InternalWorkingDirectory
     member x.Environment = x.InternalEnvironment
 
+/// Some information regaring the started process
+type StartedProcessInfo =
+    internal {
+        InternalProcess : Process
+    }
+    member x.Process = x.InternalProcess
 
 /// Module for creating and modifying CreateProcess<'TRes> instances.
 /// You can manage:
@@ -173,8 +179,8 @@ module CreateProcess =
                 |> EnvMap.ofSeq
                 |> Some
             Streams =
-                {   StandardInput = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
-                    StandardOutput = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
+                {   StandardInput = if p.RedirectStandardInput then CreatePipe StreamRef.Empty else Inherit
+                    StandardOutput = if p.RedirectStandardOutput then CreatePipe StreamRef.Empty else Inherit
                     StandardError = if p.RedirectStandardError then CreatePipe StreamRef.Empty else Inherit
                 }
             Hook = emptyHook
@@ -333,12 +339,22 @@ module CreateProcess =
             (fun state p -> ())
             (fun prev state exitCode -> prev)
             (fun _ -> f ())
-    /// Execute the given function right after the process is started.          
+    /// Execute the given function right after the process is started.
     let addOnStarted f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
             ignore
             (fun state p -> f ())
+            (fun prev state exitCode -> prev)
+            ignore
+    
+    /// Execute the given function right after the process is started.
+    /// PID for process can be obtained from p parameter (p.Process.Id).
+    let addOnStartedEx (f:StartedProcessInfo -> _) (c:CreateProcess<_>) =
+        c
+        |> appendSimpleFuncs 
+            ignore
+            (fun state p -> f { InternalProcess = p })
             (fun prev state exitCode -> prev)
             ignore
 

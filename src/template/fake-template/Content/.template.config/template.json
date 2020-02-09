@@ -16,10 +16,7 @@
             "type": "parameter",
             "dataType": "choice",
             "defaultValue": "local",
-            "choices": [{
-                    "choice": "project",
-                    "description": "Creates a build.proj file to bootstrap FAKE"
-                },
+            "choices": [
                 {
                     "choice": "tool",
                     "description": "Uses the FAKE dotnet sdk global tool to bootstrap FAKE. The tool is installed into 'tool--path'"
@@ -75,7 +72,7 @@
         },
         "version": {
             "type": "parameter",
-            "description": "Version of FAKE to install. This parameter is only applicable when either 'local', 'tool' or 'project' is used for bootstrapping",
+            "description": "Version of FAKE to install. This parameter is only applicable when either 'local' or 'tool' is used for bootstrapping",
             "dataType": "string",
             "defaultValue": "latest",
             "replaces": "(version)"
@@ -107,10 +104,6 @@
                     "fake.local.sh": "fake.sh",
                     "fake.local.cmd": "fake.cmd"
                 }
-            },
-            {
-                "exclude": ["**/fake.proj.*", "**/build.proj"],
-                "condition": "(bootstrap != \"project\")"
             },
             {
                 "rename": {

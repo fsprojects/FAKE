@@ -4,7 +4,7 @@
   "tools": {
     "fake-cli": {
 //#if (version == "latest")
-      "version": "5.17.0",
+      "version": "5.19.0",
 ////#else
       //"version": "(version)",
 //#endif
