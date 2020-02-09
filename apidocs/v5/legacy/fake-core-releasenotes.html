@@ -366,10 +366,10 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">release</span> <span class="o">=</span>
-    <span class="id">ReadFile</span> <span class="s">&quot;RELEASE_NOTES.md&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">ReleaseNotesHelper</span><span class="pn">.</span><span class="id">parseReleaseNotes</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.ReleaseNotes //&quot;</span>
 
+<span class="k">let</span> <span class="id">release</span> <span class="o">=</span> <span class="id">ReleaseNotes</span><span class="pn">.</span><span class="id">load</span> <span class="s">&quot;RELEASE_NOTES.md&quot;</span>
 
 <span class="id">Target</span> <span class="s">&quot;AssemblyInfo&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">CreateFSharpAssemblyInfo</span> <span class="s">&quot;src/Common/AssemblyInfo.fs&quot;</span>
@@ -417,15 +417,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1436', 1436)" onmouseover="showTip(event, '1436', 1436)">
+          <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
             ReleaseNotes.load(fileName)
           </code>
-          <div class="tip" id="1436">
+          <div class="tip" id="1437">
             <strong>Signature:</strong> fileName:string -&gt; ReleaseNotes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L174-174" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parses a Release Notes text file and returns the lastest release notes.</p>
@@ -440,15 +440,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
+          <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
             ReleaseNotes.parse(data)
           </code>
-          <div class="tip" id="1437">
+          <div class="tip" id="1438">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L162-162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parses a Release Notes text and returns the lastest release notes.</p>
@@ -463,15 +463,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
+          <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
             ReleaseNotes.parseAll(data)
           </code>
-          <div class="tip" id="1438">
+          <div class="tip" id="1439">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; ReleaseNotes list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L139-139" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L140-140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parses a Release Notes text and returns all release notes.</p>
@@ -522,7 +522,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

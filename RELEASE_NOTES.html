@@ -300,16 +300,25 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-19-1-2019-02-10" class="anchor" href="#5-19-1-2019-02-10">5.19.1 - 2019-02-10</a></h2>
+<ul>
+<li>ANNOUNCEMENT: <code>dotnet-fake</code> cli tool via <code>DotNetCliToolReference</code> is now history - <a href="https://github.com/fsharp/FAKE/issues/2465">https://github.com/fsharp/FAKE/issues/2465</a></li>
+<li>ENHANCEMENT: Update MSTest.fs for VS 2019, thanks @0x53A - <a href="https://github.com/fsharp/FAKE/pull/2450">https://github.com/fsharp/FAKE/pull/2450</a></li>
+<li>ENHANCEMENT: Added <code>CreateProcess.addOnStartedEx</code> in order to retrieve the .NET Process object, thanks @maciej-izak - <a href="https://github.com/fsharp/FAKE/pull/2451">https://github.com/fsharp/FAKE/pull/2451</a></li>
+<li>BUGFIX: Improved error reporting when paket initialization fails, see <a href="https://github.com/isaacabraham/vsts-fsharp/issues/33">https://github.com/isaacabraham/vsts-fsharp/issues/33</a></li>
+<li>DOCS: Fixed typos and improved docs, thanks @ncave, @rmunn, @jeremyabbott, @mjul, @smoothdeveloper - <a href="https://github.com/fsharp/FAKE/pull/2449">https://github.com/fsharp/FAKE/pull/2449</a> <a href="https://github.com/fsharp/FAKE/pull/2452">https://github.com/fsharp/FAKE/pull/2452</a> <a href="https://github.com/fsharp/FAKE/pull/2454">https://github.com/fsharp/FAKE/pull/2454</a> <a href="https://github.com/fsharp/FAKE/pull/2459">https://github.com/fsharp/FAKE/pull/2459</a> <a href="https://github.com/fsharp/FAKE/pull/2460">https://github.com/fsharp/FAKE/pull/2460</a></li>
+<li>INFRASTRUCTURE: Use stable version of reference assemblies package, thanks @teo-tsirpanis - <a href="https://github.com/fsharp/FAKE/pull/2463">https://github.com/fsharp/FAKE/pull/2463</a></li>
+</ul>
 <h2><a name="5-19-0-2019-12-19" class="anchor" href="#5-19-0-2019-12-19">5.19.0 - 2019-12-19</a></h2>
 <ul>
 <li>NEW: Added <code>Fake.Sql.SqlPackage</code> which is a redesign or <code>Fake.Sql.DacPac</code> and added support for publish profiles, thanks @kmadof - <a href="https://github.com/fsharp/FAKE/pull/2366">https://github.com/fsharp/FAKE/pull/2366</a></li>
-<li>EHNANCEMENT: <code>Fake.DotNet.Cli</code> Add timeout field to kill the process after the given timeout - <a href="https://github.com/fsharp/FAKE/pull/2425">https://github.com/fsharp/FAKE/pull/2425</a></li>
-<li>EHNANCEMENT: <code>Fake.Core.Target</code> Add notification when a fake worker is idle - <a href="https://github.com/fsharp/FAKE/pull/2425">https://github.com/fsharp/FAKE/pull/2425</a></li>
-<li>EHNANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - <a href="https://github.com/fsharp/FAKE/pull/2403">https://github.com/fsharp/FAKE/pull/2403</a></li>
+<li>ENHANCEMENT: <code>Fake.DotNet.Cli</code> Add timeout field to kill the process after the given timeout - <a href="https://github.com/fsharp/FAKE/pull/2425">https://github.com/fsharp/FAKE/pull/2425</a></li>
+<li>ENHANCEMENT: <code>Fake.Core.Target</code> Add notification when a fake worker is idle - <a href="https://github.com/fsharp/FAKE/pull/2425">https://github.com/fsharp/FAKE/pull/2425</a></li>
+<li>ENHANCEMENT: Use SPDX license expressions in the nuspec files, thanks @teo-tsirpanis - <a href="https://github.com/fsharp/FAKE/pull/2403">https://github.com/fsharp/FAKE/pull/2403</a></li>
 <li>ENHANCEMENT: <code>fake-cli</code> Update bundled paket - <a href="https://github.com/fsharp/FAKE/pull/2425">https://github.com/fsharp/FAKE/pull/2425</a></li>
 <li>ENHANCEMENT: <code>Fake.DotNet.Cli</code> Add support for suppressing copyright messages (<code>--nologo</code>) when invoking <code>dotnet</code>, thanks @objectx - <a href="https://github.com/fsharp/FAKE/pull/2436">https://github.com/fsharp/FAKE/pull/2436</a></li>
-<li>EHNANCEMENT: <code>Fake.Installer.Squirrel</code> Add additional Squirrel parameters, thanks @pchinery - <a href="https://github.com/fsharp/FAKE/pull/2431">https://github.com/fsharp/FAKE/pull/2431</a></li>
-<li>EHNANCEMENT: <code>Fake.Testing.SonarQube</code> Several improvements like workdir and local tool support, thanks @vilinski - <a href="https://github.com/fsharp/FAKE/pull/2438">https://github.com/fsharp/FAKE/pull/2438</a></li>
+<li>ENHANCEMENT: <code>Fake.Installer.Squirrel</code> Add additional Squirrel parameters, thanks @pchinery - <a href="https://github.com/fsharp/FAKE/pull/2431">https://github.com/fsharp/FAKE/pull/2431</a></li>
+<li>ENHANCEMENT: <code>Fake.Testing.SonarQube</code> Several improvements like workdir and local tool support, thanks @vilinski - <a href="https://github.com/fsharp/FAKE/pull/2438">https://github.com/fsharp/FAKE/pull/2438</a></li>
 <li>BUGFIX: <code>Fake.Tools.Rsync</code> Fix typo in Rsync.fs options, thanks @rmunn - <a href="https://github.com/fsharp/FAKE/pull/2432">https://github.com/fsharp/FAKE/pull/2432</a></li>
 <li>BUGFIX: <code>Fake.DotNet.Testing.Coverlet</code> Fix Coverlet output property name, thanks @SteveGilham - <a href="https://github.com/fsharp/FAKE/pull/2427">https://github.com/fsharp/FAKE/pull/2427</a></li>
 <li>BUGFIX: <code>Fake.Tools.Octo</code> Octopus deploy trace always marked failures, thanks @ids-pfinn - <a href="https://github.com/fsharp/FAKE/pull/2428">https://github.com/fsharp/FAKE/pull/2428</a></li>
@@ -491,7 +500,15 @@
 <li>DOCS: Resort TraceSecrets.register indexed parameters - <a href="https://github.com/fsharp/FAKE/pull/2254">https://github.com/fsharp/FAKE/pull/2254</a></li>
 <li>DOCS: fix broken links #2241 - <a href="https://github.com/fsharp/FAKE/pull/2241">https://github.com/fsharp/FAKE/pull/2241</a></li>
 </ul>
-<h2><a name="4-64-16-2019-02-15" class="anchor" href="#4-64-16-2019-02-15">4.64.16 - 2019-02-15</a></h2>
+<h4><a name="4-64-18-2020-01-30" class="anchor" href="#4-64-18-2020-01-30">4.64.18 - 2020-01-30</a></h4>
+<ul>
+<li>Add Dynamics Business Central 365 support</li>
+</ul>
+<h4><a name="4-64-17-2019-03-19" class="anchor" href="#4-64-17-2019-03-19">4.64.17 - 2019-03-19</a></h4>
+<ul>
+<li>Add support for MSBuild16</li>
+</ul>
+<h4><a name="4-64-16-2019-02-15" class="anchor" href="#4-64-16-2019-02-15">4.64.16 - 2019-02-15</a></h4>
 <ul>
 <li>Add Dynamics NAV FullCompile function</li>
 </ul>
@@ -2339,7 +2356,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.19.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
