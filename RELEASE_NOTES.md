@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.19.2-alpha - tbd
+
+* tbd
+
 ## 5.19.1 - 2019-02-10
 
 * ANNOUNCEMENT: `dotnet-fake` cli tool via `DotNetCliToolReference` is now history - https://github.com/fsharp/FAKE/issues/2465
