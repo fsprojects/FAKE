@@ -1,11 +1,8 @@
 # Release Notes
 
-## 5.19.2-alpha - tbd
-
-* tbd
-
 ## 5.19.1 - 2019-02-10
 
+* ANNOUNCEMENT: `dotnet-fake` cli tool via `DotNetCliToolReference` is now history - https://github.com/fsharp/FAKE/issues/2465
 * ENHANCEMENT: Update MSTest.fs for VS 2019, thanks @0x53A - https://github.com/fsharp/FAKE/pull/2450
 * ENHANCEMENT: Added `CreateProcess.addOnStartedEx` in order to retrieve the .NET Process object, thanks @maciej-izak - https://github.com/fsharp/FAKE/pull/2451
 * BUGFIX: Improved error reporting when paket initialization fails, see https://github.com/isaacabraham/vsts-fsharp/issues/33

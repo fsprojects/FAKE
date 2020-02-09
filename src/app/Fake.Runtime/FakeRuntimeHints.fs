@@ -160,10 +160,6 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
       [
         if findException (fun e -> e :? MissingMethodException) err then
           yield { Important = false; Text = "The given error might indicate a problem with the fake cache. Backup the '.fake' directory, delete it and try again. If it works or you need help consider reporting a new issue." }
-        if err |> findException (function 
-            | :? FileNotFoundException as f when f.Message.Contains "System.Memory" -> true
-            | _ -> false) then
-          yield { Important = true; Text = "The error might indicate that you are using dotnet-fake with an incorrect project file.\nTry adding '<DotnetCliToolTargetFramework>netcoreapp2.0</DotnetCliToolTargetFramework>' to your project file, see https://github.com/fsharp/FAKE/issues/2097 for details." }
         if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
           yield { Important = false; Text = "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'" }
         

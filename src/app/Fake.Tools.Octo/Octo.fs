@@ -134,7 +134,7 @@ type PushOptions = {
     /// if the package already exists, should this package overwrite it?
     ReplaceExisting : bool
     /// Common parameters
-    Common: Options}
+    Common: Options }
 
 /// Option type for selecting one command
 type internal Command = 
