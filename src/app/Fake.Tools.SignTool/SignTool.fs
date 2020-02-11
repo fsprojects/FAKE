@@ -247,8 +247,7 @@ type VerifyOptions =
 
 
 /// run signtool command with options and files
-let internal signtool runner (signtoolexeLocator: unit -> string option) command (options: seq<string>) toolPath timeout workingDir (files: seq<string>) =
-    let filesList = files |> List.ofSeq
+let internal signtool runner (signtoolexeLocator: unit -> string option) (args: Arguments) toolPath timeout workingDir =
     let signtoolPath =
         match toolPath with
         | Some p -> p
@@ -257,21 +256,15 @@ let internal signtool runner (signtoolexeLocator: unit -> string option) command
             | Some p -> p
             | None -> failwith "SignTool failed: Could not locate signtool.exe. Make sure you have Windows SDKs installed or provide direct path in the ToolPath option."
     let signtoolWorkingDir = workingDir |> Option.defaultValue (Directory.GetCurrentDirectory())
-    // if there are any options, join them with a space and prepend a space separator, otherwise nothing
-    let optionsString = String.Join(" ", options) |> fun o -> if String.isNullOrWhiteSpace o then String.Empty else (" " + o)
-    // if there are any files, quote them and join them with a space and prepend a space separator, otherwise nothing
-    let filesString = if List.isEmpty filesList then String.Empty else (" \"" + String.Join("\" \"", filesList) + "\"")
-    let signtoolArgs = command + optionsString + filesString
-
-    runner signtoolPath signtoolArgs signtoolWorkingDir timeout
+    runner signtoolPath args signtoolWorkingDir timeout
 
 
 /// default runner
-let internal defaultRunner (signtoolPath: string) (signtoolArgs: string) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan option) =
+let internal defaultRunner (signtoolPath: string) (signtoolArgs: Arguments) (signtoolWorkingDir: string) (signtoolTimeout: TimeSpan option) =
     let stdOut = StringBuilder()
     let stdErr = StringBuilder()
     let result =
-        CreateProcess.fromRawCommandLine signtoolPath signtoolArgs
+        CreateProcess.fromCommand (RawCommand (signtoolPath, signtoolArgs))
         |> CreateProcess.withWorkingDirectory signtoolWorkingDir
         |> (fun cp ->
             match signtoolTimeout with
@@ -295,139 +288,120 @@ let internal defaultSigntoolexeLocator () =
     ProcessUtils.tryFindFile winSdksDirs "signtool.exe"
 
 
-let private timestamping serverUrl algorithm = seq {
-    yield match algorithm with
-          | Some SHA1 -> sprintf "/t \"%s\"" serverUrl
-          | Some SHA256 | None -> sprintf "/tr \"%s\" /td \"sha256\"" serverUrl
-}
-let private digesting = function
-    | Some SHA1 -> "/fd \"sha1\""
-    | Some SHA256 | None -> "/fd \"sha256\""
-let private verbosing verbosity = seq {
-    match verbosity with
-    | Some v -> match v with
-                | Quiet -> yield "/q"
-                | Verbose -> yield "/v"
-    | None -> ()
-}
-let private yieldIfTrue yieldVal value = seq {
-    match value with
-    | Some _ -> yield sprintf "/%s" yieldVal
-    | None -> ()
-}
-let private yieldIfSome yieldGen value = seq {
-    match value with
-    | Some v -> yield yieldGen v
-    | None -> ()
-}
-let private sarg = sprintf "/%s \"%s\""
-let private iarg = sprintf "/%s %i"
+/// append common arguments
+let commonArguments command debug verbosity arguments =
+    arguments
+    |> Arguments.withPrefix [command]
+    |> Arguments.appendIf (debug |> Option.defaultValue false) "/debug"
+    |> fun args ->
+        match verbosity with
+        | Some v ->
+            match v with
+            | Quiet ->
+                args |> Arguments.append ["/q"]
+            | Verbose ->
+                args |> Arguments.append ["/v"]
+        | None ->
+            args
+
+/// append "sign"-specific arguments
+let signArguments (options: SignOptions) additionalArguments files =
+    let signtoolArgs =
+        Arguments.Empty
+        |> commonArguments "sign" options.Debug options.Verbosity
+        |> Arguments.appendIf (options.AppendSignature |> Option.defaultValue false) "/as"
+        |> fun args ->
+            match options.Certificate with
+            | File f ->
+                args
+                |> Arguments.append ["/f"; f.Path]
+                |> Arguments.appendOption "/p" f.Password
+                |> Arguments.appendOption "/csp" f.CspName
+                |> Arguments.appendOption "/kc" f.PrivateKeyKey
+            | Store s ->
+                args
+                |> Arguments.appendIf (s.AutomaticallySelectCertificate |> Option.defaultValue false) "/a"
+                |> Arguments.appendOption "/i" s.IssuerName
+                |> Arguments.appendOption "/n" s.SubjectName
+                |> Arguments.appendOption "/r" s.RootSubjectName
+                |> Arguments.appendOption "/s" s.StoreName
+                |> Arguments.appendOption "/sha1" s.Hash
+                |> Arguments.appendIf (s.UseComputerStore |> Option.defaultValue false) "/sm"
+        |> fun args ->
+            match options.DigestAlgorithm with
+            | Some SHA1 ->
+                args |> Arguments.append ["/fd"; "sha1"]
+            | Some SHA256 | None ->
+                args |> Arguments.append ["/fd"; "sha256"]
+        |> Arguments.appendOption "/ac" options.AdditionalCertificate
+        |> Arguments.appendOption "/c" options.CertificateTemplateName
+        |> Arguments.appendOption "/d" options.Description
+        |> Arguments.appendOption "/u" options.EnhancedKeyUsage
+        |> Arguments.appendIf (options.EnhancedKeyUsageW |> Option.defaultValue false) "/uw"
+        |> additionalArguments
+        |> Arguments.append files
+    signtoolArgs
+
+/// append "timestamp"-specific arguments
+let timestampArguments serverUrl algorithm arguments =
+    match algorithm with
+    | Some SHA1 ->
+        arguments |> Arguments.append ["/t"; serverUrl]
+    | Some SHA256 | None ->
+        // Note from signtool.exe docs:
+        // The /td switch must be declared after the /tr switch, not before.
+        // If the /td switch is declared before the /tr switch, the timestamp that is returned is from an SHA1 algorithm instead of the intended SHA256 algorithm.
+        arguments |> Arguments.append ["/tr"; serverUrl; "/td"; "sha256"]
+
+/// hide password in trace output
+let hidePasswordInTrace certificate =
+    match Context.isFakeContext (), certificate with
+    | true, File f ->
+        if f.Password.IsSome then
+            TraceSecrets.register "<PASSWORD>" f.Password.Value
+    | _ ->
+        ()
 
 
 /// run the sign command using a runner
 let internal signInternal runner signtoolexeLocator (options: SignOptions) (files: seq<string>) =
-    let signtoolOptions = seq {
-        yield! yieldIfTrue "debug" options.Debug
-        yield! verbosing options.Verbosity
-        yield! yieldIfTrue "as" options.AppendSignature
-
-        match options.Certificate with
-        | File f ->
-            yield sarg "f" f.Path
-            yield! yieldIfSome (sarg "p") f.Password
-            yield! yieldIfSome (sarg "csp") f.CspName
-            yield! yieldIfSome (sarg "kc") f.PrivateKeyKey
-        | Store s ->
-            yield! yieldIfTrue "a" s.AutomaticallySelectCertificate
-            yield! yieldIfSome (sarg "i") s.IssuerName
-            yield! yieldIfSome (sarg "n") s.SubjectName
-            yield! yieldIfSome (sarg "r") s.RootSubjectName
-            yield! yieldIfSome (sarg "s") s.StoreName
-            yield! yieldIfSome (sarg "sha1") s.Hash
-            yield! yieldIfTrue "sm" s.UseComputerStore
-
-        yield digesting options.DigestAlgorithm
-        yield! yieldIfSome (sarg "ac") options.AdditionalCertificate
-        yield! yieldIfSome (sarg "c") options.CertificateTemplateName
-        yield! yieldIfSome (sarg "d") options.Description
-        yield! yieldIfSome (sarg "u") options.EnhancedKeyUsage
-        yield! yieldIfTrue "uw" options.EnhancedKeyUsageW
-    }
-    // hide password in trace output
-    match Context.isFakeContext (), options.Certificate with
-    | true, File f ->
-        if f.Password.IsSome then
-            // surround in quotes to lower chances of replacing non-password occurences of password-string
-            TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
-    | _ -> ()
-    signtool runner signtoolexeLocator "sign" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
+    let signtoolArgs = signArguments options (fun args -> args) files
+    hidePasswordInTrace options.Certificate |> ignore
+    signtool runner signtoolexeLocator signtoolArgs options.ToolPath options.Timeout options.WorkingDir
 
 /// run the sign command with time stamping using a runner
 let internal signWithTimeStampInternal runner signtoolexeLocator (signOptions: SignOptions) (timeStampOptions: TimeStampOption) (files: seq<string>) =
-    let signtoolOptions = seq {
-        yield! yieldIfTrue "debug" signOptions.Debug
-        yield! verbosing signOptions.Verbosity
-        yield! yieldIfTrue "as" signOptions.AppendSignature
-
-        match signOptions.Certificate with
-        | File f ->
-            yield sarg "f" f.Path
-            yield! yieldIfSome (sarg "p") f.Password
-            yield! yieldIfSome (sarg "csp") f.CspName
-            yield! yieldIfSome (sarg "kc") f.PrivateKeyKey
-        | Store s ->
-            yield! yieldIfTrue "a" s.AutomaticallySelectCertificate
-            yield! yieldIfSome (sarg "i") s.IssuerName
-            yield! yieldIfSome (sarg "n") s.SubjectName
-            yield! yieldIfSome (sarg "r") s.RootSubjectName
-            yield! yieldIfSome (sarg "s") s.StoreName
-            yield! yieldIfSome (sarg "sha1") s.Hash
-            yield! yieldIfTrue "sm" s.UseComputerStore
-
-        yield digesting signOptions.DigestAlgorithm
-        yield! timestamping timeStampOptions.ServerUrl timeStampOptions.Algorithm
-        yield! yieldIfSome (sarg "ac") signOptions.AdditionalCertificate
-        yield! yieldIfSome (sarg "c") signOptions.CertificateTemplateName
-        yield! yieldIfSome (sarg "d") signOptions.Description
-        yield! yieldIfSome (sarg "u") signOptions.EnhancedKeyUsage
-        yield! yieldIfTrue "uw" signOptions.EnhancedKeyUsageW
-    }
-    // hide password in trace output
-    match Context.isFakeContext (), signOptions.Certificate with
-    | true, File f ->
-        if f.Password.IsSome then
-            // surround in quotes to lower chances of replacing non-password occurences of password-string
-            TraceSecrets.register "\"<PASSWORD>\"" (sprintf "\"%s\"" f.Password.Value)
-    | _ -> ()
-    signtool runner signtoolexeLocator "sign" signtoolOptions signOptions.ToolPath signOptions.Timeout signOptions.WorkingDir files
+    let signtoolArgs = signArguments signOptions (timestampArguments timeStampOptions.ServerUrl timeStampOptions.Algorithm) files
+    hidePasswordInTrace signOptions.Certificate |> ignore
+    signtool runner signtoolexeLocator signtoolArgs signOptions.ToolPath signOptions.Timeout signOptions.WorkingDir
 
 /// run the timestamp command using a runner
 let internal timeStampInternal runner signtoolexeLocator (options: TimeStampOptions) (files: seq<string>) =
-    let signtoolOptions = seq {
-        yield! yieldIfTrue "debug" options.Debug
-        yield! verbosing options.Verbosity
-        yield! timestamping options.ServerUrl options.Algorithm
-        yield! yieldIfSome (iarg "tp") options.TimestampIndex
-    }
-    signtool runner signtoolexeLocator "timestamp" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
+    let signtoolArgs =
+        Arguments.Empty
+        |> commonArguments "timestamp" options.Debug options.Verbosity
+        |> timestampArguments options.ServerUrl options.Algorithm
+        |> Arguments.appendOption "/tp" (options.TimestampIndex |> Option.map (fun i -> i.ToString()))
+        |> Arguments.append files
+    signtool runner signtoolexeLocator signtoolArgs options.ToolPath options.Timeout options.WorkingDir
 
 /// run the verify command using a runner
 let internal verifyInternal runner signtoolexeLocator (options: VerifyOptions) (files: seq<string>) =
-    let signtoolOptions = seq {
-        yield! yieldIfTrue "debug" options.Debug
-        yield! verbosing options.Verbosity
-        yield! yieldIfTrue "a" options.AllMethods
-        yield! yieldIfTrue "all" options.AllSignatures
-        yield! yieldIfTrue "d" options.PrintDescription
-        yield! yieldIfSome (iarg "ds") options.VerifyIndex
-        yield! yieldIfTrue "kp" options.UseX64KernelModeDriverSigningPolicy
-        yield! yieldIfTrue "ms" options.UseMultipleVerificationSemantics
-        yield! yieldIfSome (sarg "o") options.VerifyByOperatingSystemVersion
-        yield! yieldIfTrue "pa" options.UseDefaultAuthenticationVerificationPolicy
-        yield! yieldIfSome (sarg "r") options.RootSubjectName
-        yield! yieldIfTrue "tw" options.WarnIfNotTimeStamped
-    }
-    signtool runner signtoolexeLocator "verify" signtoolOptions options.ToolPath options.Timeout options.WorkingDir files
+    let signtoolArgs =
+        Arguments.Empty
+        |> commonArguments "verify" options.Debug options.Verbosity
+        |> Arguments.appendIf (options.AllMethods |> Option.defaultValue false) "/a"
+        |> Arguments.appendIf (options.AllSignatures |> Option.defaultValue false) "/all"
+        |> Arguments.appendIf (options.PrintDescription |> Option.defaultValue false) "/d"
+        |> Arguments.appendOption "/ds" (options.VerifyIndex |> Option.map (fun i -> i.ToString()))
+        |> Arguments.appendIf (options.UseX64KernelModeDriverSigningPolicy |> Option.defaultValue false) "/kp"
+        |> Arguments.appendIf (options.UseMultipleVerificationSemantics |> Option.defaultValue false) "/ms"
+        |> Arguments.appendOption "/o" options.VerifyByOperatingSystemVersion
+        |> Arguments.appendIf (options.UseDefaultAuthenticationVerificationPolicy |> Option.defaultValue false) "/pa"
+        |> Arguments.appendOption "/r" options.RootSubjectName
+        |> Arguments.appendIf (options.WarnIfNotTimeStamped |> Option.defaultValue false) "/tw"
+        |> Arguments.append files
+    signtool runner signtoolexeLocator signtoolArgs options.ToolPath options.Timeout options.WorkingDir
 
 
 /// Signs files according to the options specified.
