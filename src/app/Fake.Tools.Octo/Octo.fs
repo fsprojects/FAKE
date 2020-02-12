@@ -228,7 +228,7 @@ let private deleteCommandLine (opts:DeleteReleasesOptions) =
       (optionalStringParam "channel" (opts.Channel)) ]
     |> List.filter String.isNotNullOrEmpty
 
-let private serverCommandLine (opts:ServerOptions) = 
+let internal serverCommandLine (opts:ServerOptions) = 
     [ (optionalStringParam "server" (String.liftString opts.ServerUrl))
       (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ]
     |> List.filter String.isNotNullOrEmpty

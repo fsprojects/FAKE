@@ -48,6 +48,28 @@ let defaultTests =
                 (releaseOptions, None) 
                 |> Fake.Tools.Octo.Command.CreateRelease  
                 |> Fake.Tools.Octo.commandLine
-            Expect.hasLength actual expectedCommand.Length "With default options only expect the command"
-            Expect.sequenceEqual actual expectedCommand "CreateRelease command should be the create-release string"
+            Expect.hasLength actual expectedCommand.Length ""
+            Expect.sequenceEqual actual expectedCommand ""
+
+        testCase "Realistic Octo Args To Windows Command Line" <| fun _ ->
+            let setCommon (ps:Fake.Tools.Octo.Options) =
+                {
+                    ps with
+                        ToolPath = "Z:\tools"
+                        ToolName = "octo.exe"
+                        Server = {
+                            ServerUrl = "https://myoctopus-server.com"
+                            ApiKey = "octoApiKey"
+                        }
+                }
+            let setReleaseParams = (fun (ro:Fake.Tools.Octo.CreateReleaseOptions) ->
+                { ro with Project = "MyProject"; Version = "1234567890.12.34"; Packages=["MyPackage:1234567890.12.34"]; Common = setCommon ro.Common })
+            let setDeployParams = (fun (dOpt: Fake.Tools.Octo.DeployReleaseOptions) ->
+                { dOpt with Project = "MyProject"; Version = "1234567890.12.34"; DeployTo = "MyEnvironment"; Common = setCommon dOpt.Common; Progress=true } |> Some)
+            let command = (Fake.Tools.Octo.CreateRelease ((setReleaseParams Fake.Tools.Octo.releaseOptions), (setDeployParams Fake.Tools.Octo.deployOptions)))
+            let releaseOptions = setReleaseParams Fake.Tools.Octo.releaseOptions
+
+            let args = (List.append (Fake.Tools.Octo.commandLine command) (Fake.Tools.Octo.serverCommandLine releaseOptions.Common.Server)) |> Fake.Core.Arguments.OfArgs
+            let command = args.ToWindowsCommandLine
+            Expect.equal command "create-release --project=MyProject --version=1234567890.12.34 --package=MyPackage:1234567890.12.34 --project=MyProject --deployto=MyEnvironment --version=1234567890.12.34 --progress --server=https://myoctopus-server.com --apikey=octoApiKey" "The output should be runnable on windows."
             ]
