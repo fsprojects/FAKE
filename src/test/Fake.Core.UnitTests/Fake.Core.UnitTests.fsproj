@@ -66,7 +66,7 @@
     <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
-    <Compile Include="Fake.Tools.Testing.Octo.fs" />
+    <Compile Include="Fake.Tools.Octo.fs" />
     <Compile Include="Main.fs" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.fs" CopyToOutputDirectory="PreserveNewest" />
