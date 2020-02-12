@@ -189,10 +189,10 @@ let private optionalObjParam p o =
 let private stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
-        sb.Append (sprintf " --%s=%s" p (o.ToString())) |> ignore
-    sb.ToString()
+        sb.Append (sprintf "--%s=%s " p (o.ToString())) |> ignore
+    sb.ToString().Trim()
 
-let private flag p b = if b then sprintf " --%s" p else ""
+let private flag p b = if b then sprintf "--%s" p else ""
     
 let private releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
