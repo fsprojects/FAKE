@@ -23,23 +23,41 @@ let private getDefaultWorkingDir =
 let private getExpectedToolOptions toolPath timeout workingDir =
     toolPath |> Option.defaultValue testSigntoolexePath, workingDir |> Option.defaultValue getDefaultWorkingDir, timeout
 
+/// chceck that args contain the expected value and then remove it from args string
+/// -- this is to make sure that in the end args only contain what they are supposed to contain, and nothing more
+let private expectAndRemove args expected message =
+    let argss = args + " "
+    let expecteds = " " + expected + " "
+    Expect.stringContains argss expecteds message
+    argss
+        // remove the expected value from args
+        .Replace(expecteds, " ")
+        // also remove the just-added space at the end
+        .Substring(0, argss.Length - expecteds.Length)
+
 let private expectIfOption c (o: bool option) m args =
     if o.IsSome && o.Value then
-        Expect.stringContains (args + " ") (sprintf " %s " c) (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
-    args
+        expectAndRemove args c (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
+    else
+        args
 let private expectIfString c (o: string option) m args =
     if o.IsSome then
         let arg = Arguments.toWindowsCommandLine (Arguments.ofList [o.Value])
-        Expect.stringContains (args + " ") (sprintf " %s %s " c arg) (sprintf "Option '%s' was set but arguments do not contain '%s %s'" m c arg)
-    args
+        let expected = sprintf "%s %s" c arg
+        expectAndRemove args expected (sprintf "Option '%s' was set but arguments do not contain '%s %s'" m c arg)
+    else
+        args
 let private expectIfInt c (o: int option) m args =
     if o.IsSome then
-        Expect.stringContains (args + " ") (sprintf " %s %i " c o.Value) (sprintf "Option '%s' was set but arguments do not contain '%s %i'" m c o.Value)
-    args
-let private expectIfEnum c (o: 'a option) (v: 'a) m args =
-    if o.IsSome && o.Value = v then
-        Expect.stringContains (args + " ") (sprintf " %s " c) (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
-    args
+        let expected = sprintf "%s %i" c o.Value
+        expectAndRemove args expected (sprintf "Option '%s' was set but arguments do not contain '%s %i'" m c o.Value)
+    else
+        args
+let private expectIfEnum c (o: 'a option) (v: 'a option) m args =
+    if o = v then
+        expectAndRemove args c (sprintf "Option '%s' was set but arguments do not contain '%s'" m c)
+    else
+        args
 
 
 let private argumentFiles files =
@@ -85,9 +103,9 @@ let tests =
         Expect.isFalse (actualSigntoolArgs.EndsWith(' ')) "Expected arguments to not end with a space"
         actualSigntoolArgs
         |> expectIfOption "/debug" signOptions.Debug "Debug"
-        |> expectIfEnum "/v" signOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
-        |> expectIfEnum "/q" signOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
-        |> (fun args ->
+        |> expectIfEnum "/v" signOptions.Verbosity (Some SignTool.Verbosity.Verbose) "Verbosity.Verbose"
+        |> expectIfEnum "/q" signOptions.Verbosity (Some SignTool.Verbosity.Quiet) "Verbosity.Quiet"
+        |> fun args ->
             match signOptions.Certificate with
             | SignTool.SignCertificate.File f ->
                 args
@@ -103,9 +121,10 @@ let tests =
                 |> expectIfString "/r" s.RootSubjectName "RootSubjectName"
                 |> expectIfString "/s" s.StoreName "StoreName"
                 |> expectIfString "/sha1" s.Hash "Hash"
-                |> expectIfOption "/sm" s.UseComputerStore "UseComputerStore" )
-        |> expectIfEnum "/fd sha1" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA1 "DigestAlgorithm.SHA1"
-        |> expectIfEnum "/fd sha256" signOptions.DigestAlgorithm SignTool.DigestAlgorithm.SHA256 "DigestAlgorithm.SHA256"
+                |> expectIfOption "/sm" s.UseComputerStore "UseComputerStore"
+        |> expectIfEnum "/fd sha256" signOptions.DigestAlgorithm None "DigestAlgorithm.None"
+        |> expectIfEnum "/fd sha256" signOptions.DigestAlgorithm (Some SignTool.DigestAlgorithm.SHA256) "DigestAlgorithm.SHA256"
+        |> expectIfEnum "/fd sha1" signOptions.DigestAlgorithm (Some SignTool.DigestAlgorithm.SHA1) "DigestAlgorithm.SHA1"
         |> expectIfString "/ac" signOptions.AdditionalCertificate "AdditionalCertificate"
         |> expectIfOption "/as" signOptions.AppendSignature "AppendSignature"
         |> expectIfString "/c" signOptions.CertificateTemplateName "CertificateTemplateName"
@@ -113,8 +132,8 @@ let tests =
         |> expectIfString "/u" signOptions.EnhancedKeyUsage "EnhancedKeyUsage"
         |> expectIfOption "/uw" signOptions.EnhancedKeyUsageW "EnhancedKeyUsageW"
         |> additionalChecks
-        |> ignore
-        Expect.stringEnds actualSigntoolArgs (" " + (argumentFiles signFiles)) "Expected arguments to end with a list of files"
+        |> fun args ->
+            Expect.equal args ("sign " + (argumentFiles signFiles)) "Expected arguments to end with a list of files"
 
     let checkTimestampOptions serverUrl algorithm args =
         match algorithm with
@@ -195,12 +214,12 @@ let tests =
             Expect.isFalse (actualSigntoolArgs.EndsWith(' ')) "Expected arguments to not end with a space"
             actualSigntoolArgs
             |> expectIfOption "/debug" timestampOptions.Debug "Debug"
-            |> expectIfEnum "/v" timestampOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
-            |> expectIfEnum "/q" timestampOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
+            |> expectIfEnum "/v" timestampOptions.Verbosity (Some SignTool.Verbosity.Verbose) "Verbosity.Verbose"
+            |> expectIfEnum "/q" timestampOptions.Verbosity (Some SignTool.Verbosity.Quiet) "Verbosity.Quiet"
             |> (checkTimestampOptions timestampOptions.ServerUrl timestampOptions.Algorithm)
             |> expectIfInt "/tp" timestampOptions.TimestampIndex "TimestampIndex"
-            |> ignore
-            Expect.stringEnds actualSigntoolArgs (" " + (argumentFiles timestampFiles)) "Expected arguments to end with a list of files"
+            |> fun args ->
+                Expect.equal args ("timestamp " + (argumentFiles timestampFiles)) "Expected arguments to end with a list of files"
 
         testCase "default verify options" <| fun _ ->
             let verifyOptions = SignTool.VerifyOptions.Create()
@@ -227,8 +246,8 @@ let tests =
             Expect.isFalse (actualSigntoolArgs.EndsWith(' ')) "Expected arguments to not end with a space"
             actualSigntoolArgs
             |> expectIfOption "/debug" verifyOptions.Debug "Debug"
-            |> expectIfEnum "/v" verifyOptions.Verbosity SignTool.Verbosity.Verbose "Verbosity.Verbose"
-            |> expectIfEnum "/q" verifyOptions.Verbosity SignTool.Verbosity.Quiet "Verbosity.Quiet"
+            |> expectIfEnum "/v" verifyOptions.Verbosity (Some SignTool.Verbosity.Verbose) "Verbosity.Verbose"
+            |> expectIfEnum "/q" verifyOptions.Verbosity (Some SignTool.Verbosity.Quiet) "Verbosity.Quiet"
             |> expectIfOption "/a" verifyOptions.AllMethods "AllMethods"
             |> expectIfOption "/all" verifyOptions.AllSignatures "AllSignatures"
             |> expectIfOption "/d" verifyOptions.PrintDescription "PrintDescription"
@@ -239,8 +258,8 @@ let tests =
             |> expectIfOption "/pa" verifyOptions.UseDefaultAuthenticationVerificationPolicy "UseDefaultAuthenticationVerificationPolicy"
             |> expectIfString "/r" verifyOptions.RootSubjectName "RootSubjectName"
             |> expectIfOption "/tw" verifyOptions.WarnIfNotTimeStamped "WarnIfNotTimeStamped"
-            |> ignore
-            Expect.stringEnds actualSigntoolArgs (" " + (argumentFiles verifyFiles)) "Expected arguments to end with a list of files"
+            |> fun args ->
+                Expect.equal args ("verify " + (argumentFiles verifyFiles)) "Expected arguments to end with a list of files"
 
         testCase "sign TraceSecrets include password replacement" <| fun _ ->
             use execContext = Context.FakeExecutionContext.Create false "build.fsx" []
@@ -253,7 +272,7 @@ let tests =
             let traceSecrets = TraceSecrets.getAll () |> List.map (fun s -> s.Value, s.Replacement)
 
             Expect.contains traceSecrets (password, "<PASSWORD>") "Expected TraceSecrets to contain password replacement"
-            
+
         testCase "sign with time stamp TraceSecrets include password replacement" <| fun _ ->
             use execContext = Context.FakeExecutionContext.Create false "build.fsx" []
             Context.setExecutionContext (Context.RuntimeContext.Fake execContext)
