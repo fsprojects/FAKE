@@ -86,7 +86,7 @@ let defaultTests =
             Expect.hasLength actual expectedCommand.Length ""
             Expect.sequenceEqual actual expectedCommand ""
 
-        testCase "Create Relsease With Common" <| fun _ ->
+        testCase "Create Release With Common" <| fun _ ->
             let expectedCommand = [
                 "create-release"
                 "--project=Project-1"
@@ -103,6 +103,10 @@ let defaultTests =
                 "--deployto=Env-1"
                 "--version=Version-1"
                 "--progress"
+                "--deploymenttimeout=10675199.02:48:05.4775807"
+                "--deploymentchecksleepcycle=10675199.02:48:05.4775807"
+                "--specificmachines=Machine-1"
+                "--channel=Channel-1"
                 ]
             let releaseOptions = {
                 Fake.Tools.Octo.releaseOptions with
@@ -147,7 +151,7 @@ let defaultTests =
                 |> Fake.Tools.Octo.Command.CreateRelease
                 |> Fake.Tools.Octo.commandLine
             Expect.hasLength actual expectedCommand.Length ""
-            Expect.sequenceEqual expectedCommand actual ""
+            Expect.sequenceEqual actual expectedCommand ""
 
         testCase "Create Deploy Full Filled Out" <| fun _ ->
             let expected = [
@@ -248,4 +252,4 @@ let defaultTests =
             let args = (List.append (Fake.Tools.Octo.commandLine command) (Fake.Tools.Octo.serverCommandLine releaseOptions.Common.Server)) |> Fake.Core.Arguments.OfArgs
             let command = args.ToWindowsCommandLine
             Expect.equal command "create-release --project=MyProject --version=1234567890.12.34 --package=MyPackage:1234567890.12.34 --project=MyProject --deployto=MyEnvironment --version=1234567890.12.34 --progress --server=https://myoctopus-server.com --apikey=octoApiKey" "The output should be runnable on windows."
-            ]
+    ]
