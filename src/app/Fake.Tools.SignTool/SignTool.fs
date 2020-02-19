@@ -329,9 +329,11 @@ let signArguments (options: SignOptions) additionalArguments files =
                 |> Arguments.appendIf (s.UseComputerStore |> Option.defaultValue false) "/sm"
         |> fun args ->
             match options.DigestAlgorithm with
+            | None ->
+                args
             | Some SHA1 ->
                 args |> Arguments.append ["/fd"; "sha1"]
-            | Some SHA256 | None ->
+            | Some SHA256 ->
                 args |> Arguments.append ["/fd"; "sha256"]
         |> Arguments.appendOption "/ac" options.AdditionalCertificate
         |> Arguments.appendOption "/c" options.CertificateTemplateName
@@ -345,9 +347,9 @@ let signArguments (options: SignOptions) additionalArguments files =
 /// append "timestamp"-specific arguments
 let timestampArguments serverUrl algorithm arguments =
     match algorithm with
-    | Some SHA1 ->
+    | None | Some SHA1 ->
         arguments |> Arguments.append ["/t"; serverUrl]
-    | Some SHA256 | None ->
+    | Some SHA256 ->
         // Note from signtool.exe docs:
         // The /td switch must be declared after the /tr switch, not before.
         // If the /td switch is declared before the /tr switch, the timestamp that is returned is from an SHA1 algorithm instead of the intended SHA256 algorithm.
