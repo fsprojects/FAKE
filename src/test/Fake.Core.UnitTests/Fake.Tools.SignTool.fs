@@ -153,7 +153,7 @@ let private checkSignOptions (signOptions: SignOptions) signFiles signtool (addi
     |> expectIfString "/c" signOptions.CertificateTemplateName "CertificateTemplateName"
     |> expectIfString "/d" signOptions.Description "Description"
     |> expectIfString "/u" signOptions.EnhancedKeyUsage "EnhancedKeyUsage"
-    |> expectIfOption "/uw" signOptions.EnhancedKeyUsageW "EnhancedKeyUsageW"
+    |> expectIfOption "/uw" signOptions.WindowsSystemComponentVerification "WindowsSystemComponentVerification"
     |> additionalChecks
     |> fun args ->
         Expect.equal args ("sign " + (argumentFiles signFiles)) "Expected arguments to end with a list of files"

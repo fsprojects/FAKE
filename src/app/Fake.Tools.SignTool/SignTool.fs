@@ -122,7 +122,7 @@ type SignOptions =
         /// Specifies the enhanced key usage (EKU) that must be present in the signing certificate. The usage value can be specified by OID or string. The default usage is "Code Signing" (1.3.6.1.5.5.7.3.3). (signtool option: /u Usage)
         EnhancedKeyUsage: string option
         /// Specifies using "Windows System Component Verification" (1.3.6.1.4.1.311.10.3.6). (signtool option: /uw)
-        EnhancedKeyUsageW: bool option
+        WindowsSystemComponentVerification: bool option
         /// Displays debugging information. (signtool option: /debug)
         Debug: bool option
         /// Output verbosity. (signtool options: /q, /v)
@@ -146,7 +146,7 @@ type SignOptions =
         CertificateTemplateName = None
         Description = None
         EnhancedKeyUsage = None
-        EnhancedKeyUsageW = None
+        WindowsSystemComponentVerification = None
         Debug = None
         Verbosity = None
         ToolPath = None
@@ -289,7 +289,7 @@ let internal defaultSigntoolexeLocator () =
 
 
 /// append common arguments
-let commonArguments command debug verbosity arguments =
+let private commonArguments command debug verbosity arguments =
     arguments
     |> Arguments.withPrefix [command]
     |> Arguments.appendIf (debug |> Option.defaultValue false) "/debug"
@@ -305,7 +305,7 @@ let commonArguments command debug verbosity arguments =
             args
 
 /// append "sign"-specific arguments
-let signArguments (options: SignOptions) additionalArguments files =
+let private signArguments (options: SignOptions) additionalArguments files =
     let signtoolArgs =
         Arguments.Empty
         |> commonArguments "sign" options.Debug options.Verbosity
@@ -339,13 +339,13 @@ let signArguments (options: SignOptions) additionalArguments files =
         |> Arguments.appendOption "/c" options.CertificateTemplateName
         |> Arguments.appendOption "/d" options.Description
         |> Arguments.appendOption "/u" options.EnhancedKeyUsage
-        |> Arguments.appendIf (options.EnhancedKeyUsageW |> Option.defaultValue false) "/uw"
+        |> Arguments.appendIf (options.WindowsSystemComponentVerification |> Option.defaultValue false) "/uw"
         |> additionalArguments
         |> Arguments.append files
     signtoolArgs
 
 /// append "timestamp"-specific arguments
-let timestampArguments serverUrl algorithm arguments =
+let private timestampArguments serverUrl algorithm arguments =
     match algorithm with
     | None | Some SHA1 ->
         arguments |> Arguments.append ["/t"; serverUrl]
@@ -356,7 +356,7 @@ let timestampArguments serverUrl algorithm arguments =
         arguments |> Arguments.append ["/tr"; serverUrl; "/td"; "sha256"]
 
 /// hide password in trace output
-let hidePasswordInTrace certificate =
+let private hidePasswordInTrace certificate =
     match Context.isFakeContext (), certificate with
     | true, File f ->
         if f.Password.IsSome then

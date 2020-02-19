@@ -53,7 +53,11 @@ A [certificate](#Certificates) is needed to do this.
 Only PFX files are supported by signtool.exe.
 
 ```fsharp
-// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
+// val sign :
+//  certificate:SignTool.SignCertificate
+//  -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.sign
     (SignTool.SignCertificate.FromFile(
         "path/to/certificate-file.pfx",
@@ -72,7 +76,11 @@ All options are optional, and any combination may be used, depending on specific
 If no `StoreName` is specified, the "My" store is opened.
 
 ```fsharp
-// val sign : certificate:SignTool.SignCertificate -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> files:seq<string> -> unit
+// val sign :
+//  certificate:SignTool.SignCertificate
+//  -> setOptions:(SignTool.SignOptions -> SignTool.SignOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.sign
     (SignTool.SignCertificate.FromStore(
         fun o -> { o with
@@ -115,7 +123,13 @@ If you want to time stamp previously signed files, use the [Time stamping](#Time
 For more information about time stamping [see Time stamping](#Time-stamping).
 
 ```fsharp
-// val signWithTimeStamp : certificate:SignTool.SignCertificate -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> serverUrl:string -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption) -> files:seq<string> -> unit
+// val signWithTimeStamp :
+//  certificate:SignTool.SignCertificate
+//  -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions)
+//  -> serverUrl:string
+//  -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption)
+//  -> files:seq<string>
+//  -> unit
 SignTool.signWithTimeStamp
     (SignTool.SignCertificate.From..(..))
     (fun o -> o)
@@ -131,7 +145,13 @@ Only a subset of options is shown in the example, see API Reference for all avai
 Use SHA256 ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// val signWithTimeStamp : certificate:SignTool.SignCertificate -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions) -> serverUrl:string -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption) -> files:seq<string> -> unit
+// val signWithTimeStamp :
+//  certificate:SignTool.SignCertificate
+//  -> setSignOptions:(SignTool.SignOptions -> SignTool.SignOptions)
+//  -> serverUrl:string
+//  -> setTimeStampOptions:(SignTool.TimeStampOption -> SignTool.TimeStampOption)
+//  -> files:seq<string>
+//  -> unit
 SignTool.signWithTimeStamp
     (SignTool.SignCertificate.From..(..))
     (fun o -> o)
@@ -158,7 +178,11 @@ Time stamping is used to extend the validity of the signature. A time stamp prov
 Time stamp server does not have to be from the same CA as the certificate.
 
 ```fsharp
-// val timeStamp : serverUrl:string -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp :
+//  serverUrl:string
+//  -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.timeStamp
     "http://timestamp.example-ca.com"
     (fun o -> o)
@@ -172,7 +196,11 @@ Only a subset of options is shown in the example, see API Reference for all avai
 Use SHA256 ([see SHA1/SHA256](#SHA1-SHA256)).
 
 ```fsharp
-// val timeStamp : serverUrl:string -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions) -> files:seq<string> -> unit
+// val timeStamp :
+//  serverUrl:string
+//  -> setOptions:(SignTool.TimeStampOptions -> SignTool.TimeStampOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.timeStamp
     "http://timestamp.example-ca.com"
     (fun o -> { o with
@@ -194,7 +222,10 @@ The verify command determines whether the signing certificate was issued by a tr
 ### Default options
 
 ```fsharp
-// val verify : setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions) -> files:seq<string> -> unit
+// val verify :
+//  setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.verify
     (fun o -> o)
     ["program.exe"; "library.dll"]
@@ -206,7 +237,10 @@ Only a subset of options is shown in the example, see API Reference for all avai
 ### Custom options
 
 ```fsharp
-// val verify : setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions) -> files:seq<string> -> unit
+// val verify :
+//  setOptions:(SignTool.VerifyOptions -> SignTool.VerifyOptions)
+//  -> files:seq<string>
+//  -> unit
 SignTool.verify
     (fun o ->
         { o with
