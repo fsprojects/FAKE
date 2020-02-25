@@ -151,7 +151,7 @@ let internal createProcess (runType:StartType) =
         |> Arguments.appendNotEmpty "--group" parameters.Group
         |> Arguments.appendIf parameters.ForceDownloadOfPackages "--force"
         |> Arguments.appendIf parameters.OnlyReferencedFiles "--only-referenced"
-        |> List.foldBack (fun ref -> Arguments.append ["--reference-files"; ref]) parameters.ReferenceFiles
+        |> List.foldBack (fun ref -> Arguments.append ["--references-files"; ref]) parameters.ReferenceFiles
         |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
