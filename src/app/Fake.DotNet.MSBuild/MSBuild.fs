@@ -941,7 +941,7 @@ module MSBuild =
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFile` - The project file path.
-  let buildWebsiteConfig setParams outputPath configuration projectFile  =
+  let buildWebsiteConfig setParams (outputPath: string) configuration projectFile  =
     use __ = Trace.traceTask "BuildWebsite" projectFile
     let projectName = Path.GetFileNameWithoutExtension projectFile
 

@@ -295,7 +295,7 @@ let AndroidBuildPackages setParams =
 
         [ mostRecentFileInDirMatching param.OutputPath ]
 
-    let buildSpecificApk param manifestFile name transformVersion target =
+    let buildSpecificApk param (manifestFile: string) name transformVersion target =
         let specificManifest = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-" + name + ".xml")
         rewriteManifestFile manifestFile specificManifest transformVersion target
         // workaround for xamarin bug: https://bugzilla.xamarin.com/show_bug.cgi?id=30571
