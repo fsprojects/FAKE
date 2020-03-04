@@ -10,6 +10,7 @@ open System.IO
 open System.Text
 open Fake.Core
 open Fake.IO
+open Fake.IO.Globbing.Operators
 
 
 /// Verbosity
@@ -281,10 +282,11 @@ let internal defaultRunner (signtoolPath: string) (signtoolArgs: Arguments) (sig
 
 /// default signtool.exe locator
 let internal defaultSigntoolexeLocator () =
-    let winSdksDirs = [
-        @"[ProgramFilesX86]\Windows Kits\8.1\bin\x86"
-        @"[ProgramFilesX86]\Windows Kits\10\bin\**\x86"
-    ]
+    let winSdksDirs = seq {
+        // tryFindFile doesn't understand globbing, so it has to be done beforehand
+        yield! !!(Environment.ProgramFilesX86 + @"\Windows Kits\10\bin\**\x86") |> Seq.sortDescending
+        yield @"[ProgramFilesX86]\Windows Kits\8.1\bin\x86"
+    }
     ProcessUtils.tryFindFile winSdksDirs "signtool.exe"
 
 
