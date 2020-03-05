@@ -24,7 +24,7 @@ let inline isNullOrWhiteSpace value = isNullOrEmpty value || value |> Seq.forall
 let inline replace (pattern : string) replacement (text : string) = text.Replace(pattern, replacement)
 
 /// Converts a sequence of strings to a string with delimiters
-let inline separated delimiter (items : string seq) = String.Join(delimiter, Array.ofSeq items)
+let inline separated (delimiter: string) (items : string seq) = String.Join(delimiter, Array.ofSeq items)
 
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s : string) = s.TrimEnd('\\')
@@ -40,10 +40,10 @@ let inline splitStr (delimiterStr : string) (text : string) =
 let inline toLines text = separated Environment.NewLine text
 
 /// Checks whether the given text starts with the given prefix
-let startsWith prefix (text : string) = text.StartsWith prefix
+let startsWith (prefix: string) (text : string) = text.StartsWith prefix
 
 /// Checks whether the given text ends with the given suffix
-let endsWith suffix (text : string) = text.EndsWith suffix
+let endsWith (suffix: string) (text : string) = text.EndsWith suffix
 
 /// Determines whether the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.         
@@ -95,17 +95,17 @@ let inline trim (x : string) =
     else x.Trim()
 
 /// Trims the given string
-let inline trimChars chars (x : string) = 
+let inline trimChars (chars: char []) (x : string) =
     if isNullOrEmpty x then x
     else x.Trim chars
 
 /// Trims the start of the given string
-let inline trimStartChars chars (x : string) =
+let inline trimStartChars (chars: char []) (x : string) =
     if isNullOrEmpty x then x
     else x.TrimStart chars
 
 /// Trims the end of the given string
-let inline trimEndChars chars (x : string) =
+let inline trimEndChars (chars: char []) (x : string) =
     if isNullOrEmpty x then x
     else x.TrimEnd chars
 
