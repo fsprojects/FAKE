@@ -1,10 +1,14 @@
 # Release Notes
 
-## 5.19.2-alpha - tbd
+## 5.19.2-alpha - 2020-03-06
 
-* tbd
+* ENHANCEMENT: Gitlab collapsible trace reporter, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2477
+* ENHANCEMENT: Added SignTool for v5, thanks @jhromadik - https://github.com/fsharp/FAKE/pull/2444
+* BUGFIX: Update FCS, fixes ionide FAKE support, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475
+* BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - https://github.com/fsharp/FAKE/pull/2474
+* BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2469
 
-## 5.19.1 - 2019-02-10
+## 5.19.1 - 2020-02-10
 
 * ANNOUNCEMENT: `dotnet-fake` cli tool via `DotNetCliToolReference` is now history - https://github.com/fsharp/FAKE/issues/2465
 * ENHANCEMENT: Update MSTest.fs for VS 2019, thanks @0x53A - https://github.com/fsharp/FAKE/pull/2450
