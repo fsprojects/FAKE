@@ -308,6 +308,7 @@ let dotnetAssemblyInfos =
       "Fake.Tools.Octo", "Octopus Deploy octo.exe tool helper"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
       "Fake.Tools.Rsync", "Running Rsync commands"
+      "Fake.Tools.SignTool", "Running signtool commands"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
