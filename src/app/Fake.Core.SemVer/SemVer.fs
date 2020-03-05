@@ -244,7 +244,7 @@ module SemVer =
             false
 
     /// Matches if str is convertible to Int and not less than zero, and returns the value as UInt.
-    let inline private (|Int|_|) str =
+    let inline private (|Int|_|) (str: string) =
         match Int32.TryParse (str, NumberStyles.Integer, null) with
         | true, num when num > -1 -> Some num
         | _ -> None
