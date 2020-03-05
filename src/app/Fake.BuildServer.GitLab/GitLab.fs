@@ -186,11 +186,15 @@ module GitLab =
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
+                    let unixTimestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                    let sectionHeader = sprintf "section_start:%d:%s_%s\r\e[0K%s" unixTimestamp tag.Type tag.Name
                     match descr with
-                    | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
-                    | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
+                    | Some d -> write false color true (sectionHeader d)
+                    | None -> write false color true (sectionHeader "")
                 | TraceData.CloseTag (tag, time, state) ->
-                    write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
+                    let unixTimestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                    let sectionFooter = sprintf "section_end:%d:%s_%s\r\e[0K" unixTimestamp tag.Type tag.Name
+                    write false color true sectionFooter
                 | TraceData.BuildState (state, _) ->
                     write false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.ImportData (typ, path) ->
