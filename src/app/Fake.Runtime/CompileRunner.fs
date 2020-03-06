@@ -92,6 +92,17 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     | None -> RunResult.SuccessRun c.Warnings
     | Some e -> RunResult.RuntimeError e
 
+/// options that must be added to compilations to circumvent compilation errors from the DependencyManager preview feature
+let fcsDependencyManagerOptions =
+    let dummyPaketDependencyManagerOption =
+        match typeof<Marker>.Assembly.Location with
+        | "" -> ""
+        | s ->
+            let currentDir = Path.GetDirectoryName s
+            sprintf "--compilertool:%s" currentDir
+
+    "--langversion:preview" :: [ dummyPaketDependencyManagerOption ]
+
 let compile (context:FakeContext) outDll =
     use _untilCompileFinished = Fake.Profile.startCategory Fake.Profile.Category.Compiling
 
@@ -106,19 +117,13 @@ let compile (context:FakeContext) outDll =
     if (destinationFile.Exists) then destinationFile.Delete()
 
     let co = context.Config.CompileOptions
-    let dummyPaketDependencyManagerOption =
-        match typeof<Marker>.Assembly.Location with
-        | "" -> ""
-        | s ->
-            let currentDir = Path.GetDirectoryName s
-            sprintf "--compilertool:%s" currentDir
 
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
         { co.FsiOptions with
             FullPaths = true
-            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "--langversion:preview" :: dummyPaketDependencyManagerOption :: "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: fcsDependencyManagerOptions @ "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s:string list) =
