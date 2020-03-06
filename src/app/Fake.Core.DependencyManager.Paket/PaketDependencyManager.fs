@@ -38,7 +38,8 @@ module Internals =
     type TFM = string
 
     [<DependencyManager>]
-    type PaketDependencyManager() =
+    /// the type _must_ take an optional output directory
+    type PaketDependencyManager(outputDir: string option) =
 
         /// Name of the dependency manager
         member val Name = "Dummy Paket Dependency Manager" with get
