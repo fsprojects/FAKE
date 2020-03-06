@@ -216,9 +216,9 @@ type Changelog =
         match x.Unreleased with
         | None -> x
         | Some u -> 
-            let newEntry = ChangelogEntry.New(assemblyVersion, nugetVersion, Some (System.DateTime.Today), u.Description, u.Changes, false)
-
-            Changelog.New(x.Header, x.Description, None, newEntry :: x.Entries)
+            let newEntry = ChangelogEntry.New(assemblyVersion, nugetVersion, Some DateTime.Today, u.Description, u.Changes, false)
+            let unreleased' = Some { Description = None; Changes = [] }
+            Changelog.New(x.Header, x.Description, unreleased', newEntry :: x.Entries)
 
     member x.PromoteUnreleased(version: string) : Changelog =
         let assemblyVersion, nugetVersion = version |> parseVersions
