@@ -168,10 +168,6 @@ module GitLab =
         /// Number of attempts to restore the cache running a job
         static member RestoreCacheAttempts = Environment.environVar "RESTORE_CACHE_ATTEMPTS"
 
-    type KnownTags with
-        member x.LogSectionName =
-            sprintf "%s_%s" (x.Type.Trim()) (x.Name.Trim())
-
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -183,7 +179,7 @@ module GitLab =
             member __.Write msg = 
                 let color = ConsoleWriter.colorMap msg
                 let importantMessagesToStdErr = true
-                let write = ConsoleWriter.write
+                let write = ConsoleWriter.writeAnsiColor //else ConsoleWriter.write
                 match msg with
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     write importantMessagesToStdErr color true text
@@ -191,13 +187,13 @@ module GitLab =
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
                     let unixTimestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
-                    let sectionHeader = sprintf "section_start:%d:%s\r\e[0K%s" unixTimestamp tag.LogSectionName
+                    let sectionHeader = sprintf "section_start:%d:%s_%s\r\e[0K%s" unixTimestamp tag.Type tag.Name
                     match descr with
                     | Some d -> write false color true (sectionHeader d)
-                    | None -> write false color true (sectionHeader System.String.Empty)
+                    | None -> write false color true (sectionHeader "")
                 | TraceData.CloseTag (tag, time, state) ->
                     let unixTimestamp = System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
-                    let sectionFooter = sprintf "section_end:%d:%s\r\e[0K" unixTimestamp tag.LogSectionName
+                    let sectionFooter = sprintf "section_end:%d:%s_%s\r\e[0K" unixTimestamp tag.Type tag.Name
                     write false color true sectionFooter
                 | TraceData.BuildState (state, _) ->
                     write false color true (sprintf "Changing BuildState to: %A" state)
