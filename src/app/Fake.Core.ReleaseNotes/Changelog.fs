@@ -1,6 +1,27 @@
 /// Contains helpers which allow to parse Change log text files.
 /// These files have to be in a format as described on http://keepachangelog.com/en/1.1.0/
 ///
+/// ## Format
+///
+/// ```markdown
+/// # Changelog
+///
+/// All notable changes to this project will be documented in this file.
+///
+/// The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+/// and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+///
+/// ## [Unreleased]
+///
+/// ## [0.1.0] - 2020-03-17
+/// First release
+///
+/// ### Added
+/// - This release already has lots of features
+///
+/// [0.1.0]: https://github.com/user/MyCoolNewLib.git/releases/tag/v0.1.0
+/// ```
+///
 /// ## Sample
 ///
 ///     let changelogFile = "CHANGELOG.md"
@@ -216,9 +237,9 @@ type Changelog =
         match x.Unreleased with
         | None -> x
         | Some u -> 
-            let newEntry = ChangelogEntry.New(assemblyVersion, nugetVersion, Some (System.DateTime.Today), u.Description, u.Changes, false)
-
-            Changelog.New(x.Header, x.Description, None, newEntry :: x.Entries)
+            let newEntry = ChangelogEntry.New(assemblyVersion, nugetVersion, Some DateTime.Today, u.Description, u.Changes, false)
+            let unreleased' = Some { Description = None; Changes = [] }
+            Changelog.New(x.Header, x.Description, unreleased', newEntry :: x.Entries)
 
     member x.PromoteUnreleased(version: string) : Changelog =
         let assemblyVersion, nugetVersion = version |> parseVersions
