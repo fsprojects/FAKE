@@ -107,8 +107,11 @@ let compile (context:FakeContext) outDll =
 
     let co = context.Config.CompileOptions
     let dummyPaketDependencyManagerOption =
-        let currentDir = Path.GetDirectoryName typeof<Marker>.Assembly.Location
-        sprintf "--compilertool:\"%s\"" currentDir
+        match typeof<Marker>.Assembly.Location with
+        | "" -> ""
+        | s ->
+            let currentDir = Path.GetDirectoryName s
+            sprintf "--compilertool:%s" currentDir
 
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
