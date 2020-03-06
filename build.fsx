@@ -252,6 +252,7 @@ let dotnetAssemblyInfos =
       "Fake.BuildServer.Travis", "Integration into Travis buildserver"
       "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
       "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.Core.DependencyManager.Paket", "Paket Dependency Manager"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
