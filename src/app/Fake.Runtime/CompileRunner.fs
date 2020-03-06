@@ -102,7 +102,7 @@ let fcsDependencyManagerOptions =
             [ sprintf "--compilertool:%s" currentDir ]
 
     "--langversion:preview"  // needed because of a design choice(bug?) in FCS that parses dependency managers regardless of langversion
-    @ dummyPaketDependencyManagerOption // needed to handle and swallow the `paket` dependency manager type
+    :: dummyPaketDependencyManagerOption // needed to handle and swallow the `paket` dependency manager type
     @ [ "--nowarn:3186" ] // needed because the paket dependencymanager build right now throws some kind of pickling warning.
 
 let compile (context:FakeContext) outDll =
