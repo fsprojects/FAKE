@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
-    <<ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
+    <ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

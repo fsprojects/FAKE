@@ -13,6 +13,8 @@ open System.IO
 open Yaaf.FSharp.Scripting
 open FSharp.Compiler.SourceCodeServices
 
+type Marker = class end
+
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
 /// therefore might eat other exceptions. And a caching error is not critical.
@@ -104,12 +106,16 @@ let compile (context:FakeContext) outDll =
     if (destinationFile.Exists) then destinationFile.Delete()
 
     let co = context.Config.CompileOptions
+    let dummyPaketDependencyManagerOption =
+        let currentDir = Path.GetDirectoryName typeof<Marker>.Assembly.Location
+        sprintf "--compilertool:\"%s\"" currentDir
+
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
         { co.FsiOptions with
             FullPaths = true
-            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: dummyPaketDependencyManagerOption :: "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s:string list) =
