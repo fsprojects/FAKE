@@ -103,7 +103,6 @@ let fcsDependencyManagerOptions =
 
     "--langversion:preview"  // needed because of a design choice(bug?) in FCS that parses dependency managers regardless of langversion
     :: dummyPaketDependencyManagerOption // needed to handle and swallow the `paket` dependency manager type
-    @ [ "--nowarn:3186" ] // needed because the paket dependencymanager build right now throws some kind of pickling warning.
 
 let compile (context:FakeContext) outDll =
     use _untilCompileFinished = Fake.Profile.startCategory Fake.Profile.Category.Compiling
@@ -159,7 +158,9 @@ let compile (context:FakeContext) outDll =
     let errors, returnCode = fsc.Compile (("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
     let errors =
         errors
-        |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
+        // --nowarn: doesn't work
+        // needed because the paket dependencymanager build right now throws some kind of pickling warning, see https://github.com/dotnet/fsharp/issues/8678
+        |> Seq.filter (fun e -> e.ErrorNumber <> 3186 && not (e.Message.Contains "Fake.Core.DependencyManager.Paket"))
         |> Seq.toList
     let compileErrors = CompilationErrors.ofErrors errors
     compileErrors, returnCode
