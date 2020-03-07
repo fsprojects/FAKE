@@ -3,6 +3,7 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
+    <NoWarn>FS3186</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <!-- NOTE: The defines are required to still build legacy Fakelib (where the same files are used) -->

@@ -8,6 +8,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>fake</AssemblyName>
     <OutputType>Exe</OutputType>
+    <NoWarn>FS3186</NoWarn>
     <RuntimeIdentifiers>win7-x86;win7-x64;osx.10.11-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
