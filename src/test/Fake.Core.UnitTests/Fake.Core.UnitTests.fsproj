@@ -35,10 +35,12 @@
     <ProjectReference Include="..\..\app\Fake.Tools.Octo\Fake.Tools.Octo.fsproj" />
     <ProjectReference Include="..\Fake.ExpectoSupport\Fake.ExpectoSupport.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.SignTool\Fake.Tools.SignTool.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.BuildServer.GitLab\Fake.BuildServer.GitLab.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="runtimeconfig.template.json" />
     <None Include="paket.references" />
+    <Compile Include="Fake.BuildServer.GitLab.fs" />
     <Compile Include="Fake.ContextHelper.fs" />
     <Compile Include="Fake.Testing.ArgumentHelper.fs" />
     <Compile Include="Fake.IO.Globbing.fs" />
