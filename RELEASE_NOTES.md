@@ -2,9 +2,10 @@
 
 ## 5.20.0-alpha - 2020-03-06
 
-* ENHANCEMENT: Gitlab collapsible trace reporter, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2477, https://github.com/fsharp/FAKE/pull/2478
+* ENHANCEMENT: Keep unreleased changelog section when promote to new version, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2480
+* ENHANCEMENT: Gitlab collapsible trace reporter, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2477, https://github.com/fsharp/FAKE/pull/2478, https://github.com/fsharp/FAKE/pull/2484
 * ENHANCEMENT: Added SignTool for v5, thanks @jhromadik - https://github.com/fsharp/FAKE/pull/2444
-* BUGFIX: Update FCS, fixes ionide FAKE support, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479
+* BUGFIX: Update FCS, fixes ionide FAKE support (https://github.com/fsharp/FsAutoComplete/issues/561), thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479, https://github.com/fsharp/FAKE/pull/2481
 * BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - https://github.com/fsharp/FAKE/pull/2474
 * BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2469
 
