@@ -172,9 +172,9 @@ module GitLab =
         member x.LogSectionName =
             sprintf "%s_%s" (x.Type.Trim()) (x.Name.Trim())
 
-    type Writer = bool -> System.ConsoleColor -> bool -> string -> unit
-    type Ticks = unit -> int64
-    type ColorMapper = TraceData -> System.ConsoleColor
+    type internal Writer = bool -> System.ConsoleColor -> bool -> string -> unit
+    type internal Ticks = unit -> int64
+    type internal ColorMapper = TraceData -> System.ConsoleColor
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -215,7 +215,7 @@ module GitLab =
                     write false color true (sprintf "Build Number: %s" number)
                 | TraceData.TestStatus (test, status) ->
                     write false color true (sprintf "Test '%s' status: %A" test status)
-    let currentTicks () =
+    let internal currentTicks () =
         System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
     let defaultTraceListener =
       GitLabTraceListener(ConsoleWriter.write, ConsoleWriter.colorMap, currentTicks) :> ITraceListener
