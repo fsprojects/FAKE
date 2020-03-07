@@ -168,38 +168,29 @@ module GitLab =
         /// Number of attempts to restore the cache running a job
         static member RestoreCacheAttempts = Environment.environVar "RESTORE_CACHE_ATTEMPTS"
 
-    type KnownTags with
-        member x.LogSectionName =
-            sprintf "%s_%s" (x.Type.Trim()) (x.Name.Trim())
-
-    type internal Writer = bool -> System.ConsoleColor -> bool -> string -> unit
-    type internal Ticks = unit -> int64
-    type internal ColorMapper = TraceData -> System.ConsoleColor
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
-    type internal GitLabTraceListener(write: Writer, colorMapper: ColorMapper, getTicks: Ticks) =
+    type internal GitLabTraceListener() =
+
         interface ITraceListener with
             /// Writes the given message to the Console.
             member __.Write msg = 
-                let color = colorMapper msg
+                let color = ConsoleWriter.colorMap msg
                 let importantMessagesToStdErr = true
+                let write = ConsoleWriter.writeAnsiColor //else ConsoleWriter.write
                 match msg with
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     write importantMessagesToStdErr color true text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
-                    let unixTimestamp = getTicks ()
-                    let sectionHeader = sprintf @"section_start:%d:%s\r\e[0K%s" unixTimestamp tag.LogSectionName
                     match descr with
-                    | Some d -> write false color true (sectionHeader d)
-                    | None -> write false color true (sectionHeader System.String.Empty)
+                    | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                    | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
-                    let unixTimestamp = getTicks()
-                    let sectionFooter = sprintf @"section_end:%d:%s\r\e[0K" unixTimestamp tag.LogSectionName
-                    write false color true sectionFooter
+                    write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.BuildState (state, _) ->
                     write false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.ImportData (typ, path) ->
@@ -215,10 +206,9 @@ module GitLab =
                     write false color true (sprintf "Build Number: %s" number)
                 | TraceData.TestStatus (test, status) ->
                     write false color true (sprintf "Test '%s' status: %A" test status)
-    let internal currentTicks () =
-        System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+
     let defaultTraceListener =
-      GitLabTraceListener(ConsoleWriter.write, ConsoleWriter.colorMap, currentTicks) :> ITraceListener
+      GitLabTraceListener() :> ITraceListener
     let detect () =
         BuildServer.buildServer = BuildServer.GitLabCI
     let install(force:bool) =

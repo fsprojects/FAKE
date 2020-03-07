@@ -40,7 +40,6 @@
   <ItemGroup>
     <Content Include="runtimeconfig.template.json" />
     <None Include="paket.references" />
-    <Compile Include="Fake.BuildServer.GitLab.fs" />
     <Compile Include="Fake.ContextHelper.fs" />
     <Compile Include="Fake.Testing.ArgumentHelper.fs" />
     <Compile Include="Fake.IO.Globbing.fs" />
