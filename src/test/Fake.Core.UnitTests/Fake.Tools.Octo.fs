@@ -42,6 +42,7 @@ let defaultTests =
                         ApiKey="ApiKey"
                     }
                     Timeout=System.TimeSpan.MaxValue
+                    UseManifestTool = false
                 }
             }
             let actual =
@@ -143,6 +144,7 @@ let defaultTests =
                         ApiKey="ApiKey"
                     }
                     Timeout=System.TimeSpan.MaxValue
+                    UseManifestTool=false
                 }
             }
 
@@ -189,6 +191,7 @@ let defaultTests =
                         ApiKey="ApiKey"
                     }
                     Timeout=System.TimeSpan.MaxValue
+                    UseManifestTool=false
                     }
                 }
 
@@ -221,6 +224,7 @@ let defaultTests =
                         ApiKey="ApiKey"
                     }
                     Timeout=System.TimeSpan.MaxValue
+                    UseManifestTool=false
                 }
             }
 
@@ -252,4 +256,49 @@ let defaultTests =
             let args = (List.append (Fake.Tools.Octo.commandLine command) (Fake.Tools.Octo.serverCommandLine releaseOptions.Common.Server)) |> Fake.Core.Arguments.OfArgs
             let command = args.ToWindowsCommandLine
             Expect.equal command "create-release --project=MyProject --version=1234567890.12.34 --package=MyPackage:1234567890.12.34 --project=MyProject --deployto=MyEnvironment --version=1234567890.12.34 --progress --server=https://myoctopus-server.com --apikey=octoApiKey" "The output should be runnable on windows."
+
+        testCase "UseManifestTool=true produces correct tool" <| fun _ ->
+            let expected = "dotnet"
+            let opts = { Fake.Tools.Octo.commonOptions with UseManifestTool = true }
+            let actual = 
+                opts 
+                |> Fake.Tools.Octo.getTool 
+            Expect.equal actual expected "UseManifestTool=true should return dotnet"
+
+        testCase "UseManifestTool=false produces correct tool" <| fun _ ->
+            let expected = "Octo.exe"
+            let opts = { Fake.Tools.Octo.commonOptions with UseManifestTool = true }
+            let actual = 
+                opts 
+                |> Fake.Tools.Octo.getTool 
+            Expect.stringEnds actual expected "UseManifestTool=true should return dotnet"
+
+        testCase "Create Release Default with UseManifestTool=true" <| fun _ ->
+            let expectedCommand = [
+                "dotnet-octo"
+                "create-release"
+                ]
+            let opts = { Fake.Tools.Octo.commonOptions with UseManifestTool = true }
+            let releaseOptions = 
+                ({ Fake.Tools.Octo.releaseOptions with Common = opts }, None) 
+                |> Fake.Tools.Octo.Command.CreateRelease  
+            let actual = 
+                opts
+                |> Fake.Tools.Octo.getArgs releaseOptions
+            Expect.hasLength actual expectedCommand.Length "With UseManifestTool options expects two commands"
+            Expect.sequenceEqual actual expectedCommand "CreateRelease command with UseManifestTool should have dotnet-octo and create-release"
+        
+        testCase "Create Release Default with UseManifestTool=false" <| fun _ ->
+            let expectedCommand = [
+                "create-release"
+                ]
+            let opts = Fake.Tools.Octo.commonOptions
+            let releaseOptions = 
+                (Fake.Tools.Octo.releaseOptions, None) 
+                |> Fake.Tools.Octo.Command.CreateRelease  
+            let actual = 
+                opts
+                |> Fake.Tools.Octo.getArgs releaseOptions
+            Expect.hasLength actual expectedCommand.Length "With default options only expect the command"
+            Expect.sequenceEqual actual expectedCommand "CreateRelease command should be the create-release string"
     ]
