@@ -19,6 +19,13 @@ You will also need to install and configure at least one [Tentacle](http://octop
 
 This module is a wrapper around the [Octo.exe](https://octopus.com/docs/api-and-integration/octo.exe-command-line) CLI tool which controls Octopus Deploy API. You'll need the Octo.exe tool itself accessible to your FAKE script. Download it from [here](https://octopus.com/downloads).
 
+This module also supports use via a .NET Core Tool-Manifest. Installation is simple! From the root of your repository run the following
+
+```bash
+dotnet new tool-manifest # if one doesn't already exist
+dotnet tool install Octopus.DotNet.Cli 
+```
+
 ### Generate an API Key
 
 In order to communicate with the Octopus Deploy API you will need an *API key* to authenticate with.
@@ -42,6 +49,7 @@ let setCommon (ps:Octo.Options) =
 			    Server = {
     	                    ServerUrl = "Your Octopus Server URL"
                		        ApiKey = "Your API key"
+                            UseManifestTool = "true" // if using a .net core tool-manifest installed executable. Defaults to false.
                           }
     }
 ```
