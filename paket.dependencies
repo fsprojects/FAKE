@@ -104,6 +104,7 @@ group Build
 
 // [ FAKE GROUP ]
 group NetcoreBuild
+    framework: netstandard2.0
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     // FAKE_MYGET_FEED (don't edit this line)
