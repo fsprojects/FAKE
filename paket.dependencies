@@ -144,7 +144,7 @@ group netcorerunner
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.1
     nuget FSharp.Core
 
     nuget Paket.Core // prerelease
@@ -156,7 +156,7 @@ group netcorerunner
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     // Testing
-    nuget Expecto >= 5.0
+    nuget Expecto ~> 8
     nuget YoloDev.Expecto.TestSdk
     nuget Microsoft.TestPlatform.TestHost
     nuget Expecto.TestResults
@@ -169,13 +169,11 @@ group netcore
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    framework: net462, netstandard2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
     nuget FSharp.Compiler.Service content: none
 
-    nuget NETStandard.Library ~> 2.0
-    
     nuget FSharp.Core ~> 4.0
     nuget FParsec
     nuget Octokit
@@ -185,27 +183,16 @@ group netcore
     nuget Mono.Cecil prerelease
     nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
-    nuget System.Reactive.Compatibility
-    nuget System.Security.Cryptography.Algorithms
     nuget MSBuild.StructuredLogger
         // support net462
-        nuget Microsoft.Build < 16
-        nuget Microsoft.Build.Framework < 16
-        nuget Microsoft.Build.Tasks.Core < 16
-        nuget Microsoft.Build.Utilities.Core < 16
+        nuget Microsoft.Build < 16 framework: net462
+        nuget Microsoft.Build.Framework < 16 framework: net462
+        nuget Microsoft.Build.Tasks.Core < 16 framework: net462
+        nuget Microsoft.Build.Utilities.Core < 16 framework: net462
     nuget BlackFox.VsWhere
 
-    nuget System.Net.Http
-    nuget System.Runtime.Numerics
-    nuget System.Xml.XPath
-    nuget System.Xml.XPath.XDocument
-    nuget System.Xml.XPath.XmlDocument
-    nuget System.Linq.Parallel
-    nuget System.Diagnostics.FileVersionInfo
-    nuget System.Diagnostics.Process
-    nuget System.IO.Compression
-    nuget System.IO.Compression.ZipFile
+
     nuget System.Runtime.Loader
-    nuget System.IO.FileSystem.Watcher
+    nuget System.Collections.Immutable
     nuget System.Data.SqlClient
     nuget Microsoft.SqlServer.SqlManagementObjects
