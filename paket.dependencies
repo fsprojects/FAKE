@@ -147,7 +147,7 @@ group netcorerunner
     framework: net462, netstandard2.0, netcoreapp2.0, netcoreapp2.1
     nuget FSharp.Core
 
-    nuget Paket.Core // prerelease
+    nuget Paket.Core 6.0.0-alpha022 // prerelease
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
