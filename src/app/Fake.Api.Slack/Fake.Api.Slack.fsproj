@@ -14,5 +14,8 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="SlackNotification.fs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net462'" />
+  </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

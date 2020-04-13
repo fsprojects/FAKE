@@ -9,7 +9,7 @@ open Newtonsoft.Json
 
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
 [<RequireQualifiedAccess>]
-module Slack = 
+module Slack =
     /// The Slack notification attachment field parameter type
     type NotificationAttachmentFieldParams = {
         /// (Required) The field title
@@ -19,7 +19,7 @@ module Slack =
         /// Whether the value is short enough to be displayed side-by-side with other values
         Short: bool
     }
-    
+
     /// The Slack notification attachment parameter type
     type NotificationAttachmentParams = {
         /// (Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them
@@ -37,7 +37,7 @@ module Slack =
         /// Text to be displayed as a table below the message
         Fields: NotificationAttachmentFieldParams[]
     }
-    
+
     /// The Slack notification parameter type
     type NotificationParams = {
         /// (Required) The message body
@@ -57,7 +57,7 @@ module Slack =
         // Whether or not to link names of users or channels (beginning with @ or #), Default value : false
         LinkNames: bool
     }
-    
+
     /// The default Slack notification parameters
     let NotificationDefaults = {
         Text = ""
@@ -69,7 +69,7 @@ module Slack =
         Attachments = Array.empty
         LinkNames = false
     }
-    
+
     /// The default parameters for Slack notification attachments
     let NotificationAttachmentDefaults = {
         Fallback = ""
@@ -80,20 +80,20 @@ module Slack =
         Color = null
         Fields = Array.empty
     }
-    
+
     /// The default parameters for Slack notification attachment fields
     let NotificationAttachmentFieldDefaults = {
         Title = ""
         Value = ""
         Short = false
     }
-    
+
     /// [omit]
     let private lowerCaseContractResolver = { new Newtonsoft.Json.Serialization.DefaultContractResolver() with
         override this.ResolvePropertyName (key : string) =
             key.ToLower()
     }
-    
+
     /// [omit]
     let private ValidateParams webhookURL (param : NotificationParams) =
         if webhookURL = "" then failwith "You must specify a webhook URL"
@@ -105,13 +105,13 @@ module Slack =
             if attachment.Fallback = "" then failwith "Each attachment must have a fallback"
             Array.iter(fun field -> validateField field) attachment.Fields
         Array.iter(fun attachment -> validateAttachment attachment) param.Attachments
-    
+
         param
-    
+
     /// [omit]
     let private SerializeData data =
         JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings(NullValueHandling = NullValueHandling.Ignore, ContractResolver = lowerCaseContractResolver))
-    
+
     /// Sends a notification to a Slack Channel
     /// ## Parameters
     ///  - `webhookURL` - The Slack webhook URL
@@ -127,7 +127,7 @@ module Slack =
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
             client.UploadString(webhookURL, "POST", SerializeData param)
 #endif
-        NotificationDefaults 
+        NotificationDefaults
         |> setParams
         |> ValidateParams webhookURL
         |> sendNotification

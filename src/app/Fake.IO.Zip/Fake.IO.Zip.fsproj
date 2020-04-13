@@ -13,6 +13,9 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Zip.fs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" Condition="'$(TargetFramework)' == 'net462'" />
+  </ItemGroup>
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD;NETSTANDARD1_6</DefineConstants>
