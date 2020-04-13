@@ -4,9 +4,12 @@
 
 * ENHANCEMENT: Keep unreleased changelog section when promote to new version, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2480
 * ENHANCEMENT: Added SignTool for v5, thanks @jhromadik - https://github.com/fsharp/FAKE/pull/2444
-* BUGFIX: Update FCS, fixes ionide FAKE support (https://github.com/fsharp/FsAutoComplete/issues/561), thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479, https://github.com/fsharp/FAKE/pull/2481
+* ENHANCEMENT: Remove old netstandard1.6 dependencies, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2493
+* BUGFIX: Update FCS, fixes ionide FAKE support (https://github.com/fsharp/FsAutoComplete/issues/561), thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479, https://github.com/fsharp/FAKE/pull/2481, https://github.com/fsharp/FAKE/pull/2500
 * BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - https://github.com/fsharp/FAKE/pull/2474
 * BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2469
+* BUGFIX: Fix an AppVeyor environment variable (`APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED`) returning `null`, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2448
+* DOCS: Fixed typos and improved docs, thanks @milbrandt, @jzabroski - https://github.com/fsharp/FAKE/pull/2492, https://github.com/fsharp/FAKE/pull/2497
 
 ## 5.19.1 - 2020-02-10
 
