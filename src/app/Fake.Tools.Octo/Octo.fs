@@ -2,6 +2,7 @@
 module Fake.Tools.Octo
 
 open Fake.Core
+open Fake.DotNet
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
@@ -22,7 +23,7 @@ type ServerOptions = {
 
 /// Common Octo.exe CLI params
 type Options = {
-    UseManifestTool     : bool
+    ToolType            : ToolType
     ToolName            : string
     ToolPath            : string
     WorkingDirectory    : string
@@ -156,7 +157,7 @@ let internal commonOptions =
       Server = serverOptions
       Timeout = TimeSpan.MaxValue
       WorkingDirectory = ""
-      UseManifestTool = false }
+      ToolType = ToolType.Create() }
 
 /// Default options for 'CreateRelease'
 let internal releaseOptions = {
@@ -256,23 +257,13 @@ let internal commandLine command =
     | Push opts -> 
         "push" :: (pushCommandLine opts)
 
-let internal getTool options =
-    if options.UseManifestTool then "dotnet"
-    else  options.ToolPath @@ options.ToolName
-
-let internal getArgs command options =
-    List.append (commandLine command) (serverCommandLine options.Server)
-    |> List.append [if options.UseManifestTool then yield "dotnet-octo"]
-
 let private exec command options =
     let serverCommandLineForTracing (opts: ServerOptions) = 
         serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
-    let tool = getTool options
-
-    let args = getArgs command options |> Arguments.OfArgs
+    let tool = options.ToolPath @@ options.ToolName
+    let args = List.append (commandLine command) (serverCommandLine options.Server) |> Arguments.OfArgs
     let traceArgs = (List.append (commandLine command) (serverCommandLineForTracing options.Server)) |> List.fold (+) ""
-    
     let commandString = command.ToString()
 
     use __ = Trace.traceTask "Octo " commandString
@@ -281,6 +272,7 @@ let private exec command options =
     let result = 
         RawCommand (tool, args)
         |> CreateProcess.fromCommand
+        |> CreateProcess.withToolType (options.ToolType.WithDefaultToolCommandName "dotnet-octo")
         |> CreateProcess.withWorkingDirectory options.WorkingDirectory
         |> CreateProcess.withTimeout options.Timeout
         |> Proc.run
