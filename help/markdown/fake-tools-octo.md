@@ -41,6 +41,7 @@ It is a good idea to create an account in Octopus Deploy for your Continuous Int
 You can define a function defining shared parameters like `ToolPath`  or your Octopus Deploy instance details. Then the function can be used in subsequent `Octo` calls.
 
 ```fsharp
+open Fake.DotNet // needed for ToolType
 open Fake.Tools
 
 let setCommon (ps:Octo.Options) = 
@@ -49,7 +50,7 @@ let setCommon (ps:Octo.Options) =
 			    Server = {
     	                    ServerUrl = "Your Octopus Server URL"
                		        ApiKey = "Your API key"
-                            UseManifestTool = "true" // if using a .net core tool-manifest installed executable. Defaults to false.
+                            ToolType = ToolType.CreateLocalTool() // default is ToolType.FullFramework
                           }
     }
 ```
