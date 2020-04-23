@@ -110,7 +110,7 @@ Now we have the following options:
 Example:
 
 ```fsharp
-let args = Target.getArguments() // use this at the top of your script isntead of `Target.initEnvironment()`
+let args = Target.getArguments() // use this at the top of your script instead of `Target.initEnvironment()`
 
 // So some stuff depending on the args
 match args with
