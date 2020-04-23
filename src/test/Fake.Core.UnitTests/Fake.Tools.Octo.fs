@@ -1,6 +1,7 @@
 module Fake.Tools.Testing.Octo
 
 open Expecto
+open Fake.DotNet
 
 [<Tests>]
 let defaultTests =
@@ -36,6 +37,7 @@ let defaultTests =
                 Common={
                     ToolName="ToolName-1"
                     ToolPath="ToolPath-1"
+                    ToolType = ToolType.FullFramework
                     WorkingDirectory="WorkingDirectory-1"
                     Server = {
                         ServerUrl="ServerUrl"
@@ -137,6 +139,7 @@ let defaultTests =
                 Common = {
                     ToolName="ToolName-1"
                     ToolPath="ToolPath-1"
+                    ToolType=ToolType.FullFramework
                     WorkingDirectory="WorkingDirectory-1"
                     Server = {
                         ServerUrl="ServerUrl"
@@ -183,6 +186,7 @@ let defaultTests =
                 Common={
                     ToolName="ToolName-1"
                     ToolPath="ToolPath-1"
+                    ToolType=ToolType.FullFramework
                     WorkingDirectory="WorkingDirectory-1"
                     Server = {
                         ServerUrl="ServerUrl"
@@ -215,6 +219,7 @@ let defaultTests =
                 Common={
                     ToolName="ToolName-1"
                     ToolPath="ToolPath-1"
+                    ToolType=ToolType.FullFramework
                     WorkingDirectory="WorkingDirectory-1"
                     Server = {
                         ServerUrl="ServerUrl"
