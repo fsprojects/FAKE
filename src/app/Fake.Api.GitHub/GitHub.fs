@@ -3,6 +3,8 @@
 open Octokit
 open Octokit.Internal
 open System
+open System.Net
+open System.Net.Http
 open System.IO
 
 /// Contains tasks to interact with [GitHub](https://github.com/) releases
@@ -51,8 +53,20 @@ module GitHub =
 
     let private timeout = TimeSpan.FromMinutes 20.
 
-    let private createHttpClient () =
-        new HttpClientAdapter(Func<_> HttpMessageHandlerFactory.CreateDefault)
+    let private createHttpClient =
+        let handlerFactory () =
+            let handler = HttpMessageHandlerFactory.CreateDefault()
+#if NETSTANDARD2_0
+            // Ensure the default credentials are used with any system-configured proxy
+            // https://github.com/dotnet/runtime/issues/25745#issuecomment-378322214
+            match handler with
+            | :? HttpClientHandler as h ->
+                h.DefaultProxyCredentials <- CredentialCache.DefaultCredentials
+            | _ -> ()
+#endif
+            handler
+
+        fun () -> new HttpClientAdapter(Func<_> handlerFactory)
 
     /// A version of 'reraise' that can work inside computation expressions
     let private captureAndReraise ex =
