@@ -3,9 +3,6 @@
 open Octokit
 open Octokit.Internal
 open System
-open System.Threading
-open System.Net.Http
-open System.Reflection
 open System.IO
 
 /// Contains tasks to interact with [GitHub](https://github.com/) releases
@@ -52,24 +49,10 @@ module GitHub =
           /// If left unspecified, and the tag does not already exist, the default branch is used instead.
           TargetCommitish : string }
 
-    // wrapper re-implementation of HttpClientAdapter which works around
-    // known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
-    // https://github.com/octokit/octokit.net/issues/963
-    type private HttpClientWithTimeout(timeout : TimeSpan) as this =
-        inherit HttpClientAdapter(fun () -> HttpMessageHandlerFactory.CreateDefault())
-        let setter = lazy(
-            match typeof<HttpClientAdapter>.GetTypeInfo().GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
-            | null -> ()
-            | f ->
-                match f.GetValue(this) with
-                | :? HttpClient as http -> http.Timeout <- timeout
-                | _ -> ())
+    let private timeout = TimeSpan.FromMinutes 20.
 
-        interface IHttpClient with
-            member __.Send(request : IRequest, ct : CancellationToken) =
-                setter.Force()
-                match request with :? Request as r -> r.Timeout <- timeout | _ -> ()
-                base.Send(request, ct)
+    let private createHttpClient () =
+        new HttpClientAdapter(Func<_> HttpMessageHandlerFactory.CreateDefault)
 
     /// A version of 'reraise' that can work inside computation expressions
     let private captureAndReraise ex =
@@ -105,20 +88,22 @@ module GitHub =
     /// Creates a GitHub API v3 client using the specified credentials
     let createClient (user:string) (password:string) =
         async {
-            let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+            let httpClient = createHttpClient()
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
             let github = GitHubClient(connection)
             github.Credentials <- Credentials(user, password)
+            github.SetRequestTimeout timeout
             return github
         }
 
     /// Creates a GitHub API v3 client using the specified token
     let createClientWithToken (token:string) =
         async {
-            let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+            let httpClient = createHttpClient()
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
             let github = GitHubClient(connection)
             github.Credentials <- Credentials(token)
+            github.SetRequestTimeout timeout
             return github
         }
 
@@ -126,10 +111,11 @@ module GitHub =
     let createGHEClient url (user:string) (password:string) =
         async {
             let credentials = Credentials(user, password)
-            let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+            let httpClient = createHttpClient()
             let connection = Connection(ProductHeaderValue("FAKE"), Uri(url), InMemoryCredentialStore(credentials), httpClient, SimpleJsonSerializer())
             let github = GitHubClient(connection)
             github.Credentials <- credentials
+            github.SetRequestTimeout timeout
             return github
         }
 
@@ -137,10 +123,11 @@ module GitHub =
     let createGHEClientWithToken url (token:string) =
         async {
             let credentials = Credentials(token)
-            let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+            let httpClient = createHttpClient()
             let connection = Connection(ProductHeaderValue("FAKE"), Uri(url), InMemoryCredentialStore(credentials), httpClient, SimpleJsonSerializer())
             let github = GitHubClient(connection)
             github.Credentials <- credentials
+            github.SetRequestTimeout timeout
             return github
         }
 
@@ -209,7 +196,7 @@ module GitHub =
             | None -> ()                        
 
             let archiveContents = File.OpenRead(fi.FullName)
-            let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
+            let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable timeout)
             
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload)
             printfn "Uploaded %s" asset.Name
