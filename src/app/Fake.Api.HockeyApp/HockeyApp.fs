@@ -1,10 +1,6 @@
 namespace Fake.Api
 
-#if NETSTANDARD
 open System.Net.Http
-#else
-open System.Net
-#endif
 
 open Microsoft.FSharp.Core
 open System

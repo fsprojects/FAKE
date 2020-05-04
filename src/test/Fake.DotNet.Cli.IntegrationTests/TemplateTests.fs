@@ -88,8 +88,9 @@ let fileContainsText dir fileName text =
     let content = File.ReadAllText(filePath)
     content.Contains(text: string)
 
-let missingTarget targetName (r: ProcessResult) = 
-    r.Errors |> Seq.exists (fun err -> err.Contains (sprintf "Target \"%s\" is not defined" targetName))
+let expectMissingTarget targetName (r: ProcessResult) = 
+    let contains = r.Errors |> Seq.exists (fun err -> err.Contains (sprintf "Target \"%s\" is not defined" targetName))
+    Expect.isTrue contains (sprintf "Expected the message 'Target %%s is not defined' but got: %s" (String.Join("\n", r.Errors)))
 
 let tempDir() = Path.Combine("../../../test/fake-template", Path.GetRandomFileName())
 
@@ -128,14 +129,17 @@ let tests =
             yield test "fails to build a target that doesn't exist" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool File Fake
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
                 let result = invokeScript tempDir scriptFile "build -t Nonexistent"
                 Expect.isFalse result.OK "the script should have failed"
-                Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
+                expectMissingTarget "Nonexistent" result
             }            
 
             yield test "can install a inline-dependencies template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool Inline Fake
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 Expect.isTrue (fileContainsText tempDir buildFile "#r \"paket:") "the build file should contain inline dependencies"
                 Expect.isFalse (fileExists tempDir dependenciesFile) "the dependencies file should not exist"
             }
@@ -143,6 +147,8 @@ let tests =
             yield test "can install a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool File BuildTask
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 Expect.isTrue (fileContainsText tempDir buildFile "open BlackFox.Fake") "the build file should contain blackfox"
                 Expect.isTrue (fileContainsText tempDir dependenciesFile "nuget BlackFox.Fake.BuildTask") "the dependencies file should contain blackfox"
             }
@@ -150,18 +156,24 @@ let tests =
             yield test "can build a buildtask-dsl file-dependencies template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool File BuildTask
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
             yield test "can install a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool Inline BuildTask
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 Expect.isTrue (fileContainsText tempDir buildFile "nuget BlackFox.Fake.BuildTask") "the build file should contain blackfox dependency"
             }
 
             yield test "can build a buildtask-dsl inline-dependencies template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool Inline BuildTask
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
@@ -176,6 +188,8 @@ let tests =
             yield ptest "can install a tool-style template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool File Fake
+                Expect.isFalse (Directory.Exists (Path.Combine(tempDir, ".fake"))) "After creating the template the '.fake' directory should not exist!"
+                
                 invokeScript tempDir scriptFile "--help" |> shouldSucceed "should invoke help"
             }
         ]

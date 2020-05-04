@@ -13,7 +13,7 @@
     <AssemblyName>Fake.Experimental</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Experimental</Name>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWarn>44</NoWarn>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

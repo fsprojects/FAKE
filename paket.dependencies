@@ -1,4 +1,4 @@
-version 5.241.2
+version 5.244.2
 content: none
 //source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
@@ -9,7 +9,7 @@ nuget NuGet.CommandLine
 nuget Paket.Core // prerelease
 nuget FSharp.Compiler.Tools
 nuget RavenDB.Server
-nuget serilog.sinks.nlog 1.5.4
+nuget serilog.sinks.nlog
 nuget Argu ~> 5.5.0 // support net461
 nuget FsCheck
 nuget FsCheck.Xunit
@@ -24,20 +24,20 @@ nuget Nancy.Hosting.Aspnet
 nuget Nancy.Viewengines.Razor
 nuget SSH.NET
 // Because of net45 support
-nuget Microsoft.Web.Administration 7.0.0
+nuget Microsoft.Web.Administration
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
-nuget Nuget.Protocol ~> 4.0 strategy: min // To support net462...
+nuget Nuget.Protocol
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
-nuget log4net 2.0.5
+nuget log4net
 nuget System.Web.Razor.Unofficial
 nuget toastr
-nuget RavenDB.Client < 3
-nuget Machine.Specifications.Should 0.8
-nuget Machine.Specifications 0.9.3
+nuget RavenDB.Client < 4.1
+nuget Machine.Specifications.Should
+nuget Machine.Specifications
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.runner.console
@@ -45,24 +45,24 @@ nuget xunit
 nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
-nuget FluentMigrator                        2.0.6
-nuget FluentMigrator.Abstractions           2.0.6
-nuget FluentMigrator.Extensions.SqlAnywhere 2.0.6
-nuget FluentMigrator.Extensions.SqlServer   2.0.6
-nuget FluentMigrator.Runner                 2.0.6
-nuget FluentMigrator.Runner.Core            2.0.6
-nuget FluentMigrator.Runner.Db2             2.0.6
-nuget FluentMigrator.Runner.Firebird        2.0.6
-nuget FluentMigrator.Runner.Hana            2.0.6
-nuget FluentMigrator.Runner.Jet             2.0.6
-nuget FluentMigrator.Runner.MySql           2.0.6
-nuget FluentMigrator.Runner.Oracle          2.0.6
-nuget FluentMigrator.Runner.Postgres        2.0.6
-nuget FluentMigrator.Runner.Redshift        2.0.6
-nuget FluentMigrator.Runner.SqlAnywhere     2.0.6
-nuget FluentMigrator.Runner.SQLite          2.0.6
-nuget FluentMigrator.Runner.SqlServer       2.0.6
-nuget FluentMigrator.Runner.SqlServerCe     2.0.6
+nuget FluentMigrator
+nuget FluentMigrator.Abstractions
+nuget FluentMigrator.Extensions.SqlAnywhere
+nuget FluentMigrator.Extensions.SqlServer
+nuget FluentMigrator.Runner 
+nuget FluentMigrator.Runner.Core
+nuget FluentMigrator.Runner.Db2
+nuget FluentMigrator.Runner.Firebird
+nuget FluentMigrator.Runner.Hana
+nuget FluentMigrator.Runner.Jet
+nuget FluentMigrator.Runner.MySql
+nuget FluentMigrator.Runner.Oracle
+nuget FluentMigrator.Runner.Postgres
+nuget FluentMigrator.Runner.Redshift
+nuget FluentMigrator.Runner.SqlAnywhere
+nuget FluentMigrator.Runner.SQLite
+nuget FluentMigrator.Runner.SqlServer
+nuget FluentMigrator.Runner.SqlServerCe
 nuget HashLib
 nuget FSharp.Compiler.Service content: none
 nuget Octokit
@@ -130,7 +130,7 @@ group NetcoreBuild
     nuget Fake.DotNet.Cli prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.NuGet prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Paket prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
+    // nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.MSpec prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.XUnit2 prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.NUnit prerelease // FAKE_VERSION (don't edit this line)
@@ -145,7 +145,7 @@ group netcorerunner
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net462, netstandard2.0, netcoreapp2.1
+    framework: net472, netstandard2.0, netcoreapp2.1
     nuget FSharp.Core
 
     nuget Paket.Core // prerelease
@@ -170,7 +170,7 @@ group netcore
     source https://api.nuget.org/v3/index.json
     //source C:\Users\matth\.nuget\localsource
     storage: none
-    framework: net462, netstandard2.0, netcoreapp2.1
+    framework: net472, netstandard2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
     nuget FSharp.Compiler.Service content: none
@@ -180,16 +180,15 @@ group netcore
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core // prerelease
-    nuget NuGet.Protocol ~> 4.0 strategy: min // To support net462...
+    nuget NuGet.Protocol
     nuget Mono.Cecil prerelease
     nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
     nuget MSBuild.StructuredLogger
-        // support net462
-        nuget Microsoft.Build < 16 framework: net462
-        nuget Microsoft.Build.Framework < 16 framework: net462
-        nuget Microsoft.Build.Tasks.Core < 16 framework: net462
-        nuget Microsoft.Build.Utilities.Core < 16 framework: net462
+        nuget Microsoft.Build
+        nuget Microsoft.Build.Framework
+        nuget Microsoft.Build.Tasks.Core
+        nuget Microsoft.Build.Utilities.Core
     nuget BlackFox.VsWhere
 
 

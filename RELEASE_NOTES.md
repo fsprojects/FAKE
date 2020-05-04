@@ -1,15 +1,21 @@
 # Release Notes
 
-## 5.20.0-alpha - 2020-03-06
+## 5.20.0-alpha - 2020-05-04
 
+* (Minor) BREAKING: Drop support for `net462` and update to `net472`.
 * ENHANCEMENT: Keep unreleased changelog section when promote to new version, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2480
 * ENHANCEMENT: Added SignTool for v5, thanks @jhromadik - https://github.com/fsharp/FAKE/pull/2444
 * ENHANCEMENT: Remove old netstandard1.6 dependencies, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2493
+* ENHANCEMENT: Add support for running Octo as dotnet tool, thanks @jeremyabbott - https://github.com/fsharp/FAKE/pull/2489
+* ENHANCEMENT: Add support for `--include-symbols` in `dotnet pack`, thanks @devployment - https://github.com/fsharp/FAKE/pull/2508
+* ENHANCEMENT: Add support for default proxy credentials to GitHub (Octokit), thanks @csmager - https://github.com/fsharp/FAKE/pull/2507
+* ENHANCEMENT: `Fake.DotNet.FSFormatting` supports the 4.0 RC release
 * BUGFIX: Update FCS, fixes ionide FAKE support (https://github.com/fsharp/FsAutoComplete/issues/561), thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479, https://github.com/fsharp/FAKE/pull/2481, https://github.com/fsharp/FAKE/pull/2500
 * BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - https://github.com/fsharp/FAKE/pull/2474
 * BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2469
 * BUGFIX: Fix an AppVeyor environment variable (`APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED`) returning `null`, thanks @teo-tsirpanis - https://github.com/fsharp/FAKE/pull/2448
-* DOCS: Fixed typos and improved docs, thanks @milbrandt, @jzabroski - https://github.com/fsharp/FAKE/pull/2492, https://github.com/fsharp/FAKE/pull/2497
+* BUGFIX: Fix potential `FileNotFoundException` when cache is outdated.
+* DOCS: Fixed typos and improved docs, thanks @milbrandt, @jzabroski, @objectx - https://github.com/fsharp/FAKE/pull/2492, https://github.com/fsharp/FAKE/pull/2497, https://github.com/fsharp/FAKE/pull/2502
 
 ## 5.19.1 - 2020-02-10
 
@@ -210,18 +216,6 @@
 * BUGFIX: Fixed getBaseDirectoryInclude when one directory name include the oth…  - https://github.com/fsharp/FAKE/pull/2235
 * DOCS: Resort TraceSecrets.register indexed parameters - https://github.com/fsharp/FAKE/pull/2254
 * DOCS: fix broken links #2241 - https://github.com/fsharp/FAKE/pull/2241
-
-#### 4.64.18 - 2020-01-30
-* Add Dynamics Business Central 365 support
-
-#### 4.64.17 - 2019-03-19
-* Add support for MSBuild16 
-
-#### 4.64.16 - 2019-02-15
-* Add Dynamics NAV FullCompile function
-
-## 4.64.14 - 2019-01-07
-* Add DynamicsNAV 365 Business Central support - https://github.com/fsharp/FAKE/pull/2224
 
 ## 5.12.0 - 2019-01-12
 
@@ -532,11 +526,6 @@
 * BUGFIX: Fake being unable to compile when `intellisense.fsx` doesn't exist - https://github.com/fsharp/FAKE/issues/1908
 * ENHANCEMENT: Some improvements to the target build order algorithm - https://github.com/fsharp/FAKE/pull/1903
 
-## 4.64.13 - 2019-05-02
-
-* Download x86 version of dotnet core on win x86 - https://github.com/SAFE-Stack/SAFE-BookStore/issues/328
-
-
 ## 5.0.0-rc010 - 2018-05-01
 
 * BUGFIX: Some minor issues after last performance release - https://github.com/fsharp/FAKE/pull/1902
@@ -827,7 +816,6 @@
 * DOCS: Fix menu on mobile - https://github.com/fsharp/FAKE/pull/1668
 * ENHANCEMENT: Add Paket helper to push specific files - https://github.com/fsharp/FAKE/pull/1665
 
-
 ## 5.0.0-alpha015 - 2017-08-27
 
 * Update Paket.core
@@ -892,22 +880,48 @@
 * Fix NuGet key leak if push fails - https://github.com/matthid/FAKE/pull/2
 * Coreclr nunit3 params - https://github.com/matthid/FAKE/pull/3
 
-#### 4.64.11 - 2018-03-09
+## 4.64.18 - 2020-01-30
+
+* Add Dynamics Business Central 365 support
+
+## 4.64.17 - 2019-03-19
+
+* Add support for MSBuild16 
+
+## 4.64.16 - 2019-02-15
+
+* Add Dynamics NAV FullCompile function
+
+## 4.64.14 - 2019-01-07
+
+* Add DynamicsNAV 365 Business Central support - https://github.com/fsharp/FAKE/pull/2224
+
+## 4.64.13 - 2019-05-02
+
+* Download x86 version of dotnet core on win x86 - https://github.com/SAFE-Stack/SAFE-BookStore/issues/328
+
+## 4.64.11 - 2018-03-09
+
 * Added SynchronizeSchemaChanges for DynamicsNAV
 
-#### 4.64.10 - 2018-03-06
+## 4.64.10 - 2018-03-06
+
 * Added RunCodeunitWithSettings for DynamicsNAV - https://github.com/fsharp/FAKE/pull/1811
 
-#### 4.64.9 - 2018-03-05
+## 4.64.9 - 2018-03-05
+
 * CompileWithFilter for DynamicsNAV
 
-#### 4.64.7 - 2018-03-01
+## 4.64.7 - 2018-03-01
+
 * Allow REST calls without credentials
 
-#### 4.64.6 - 2018-02-21
+## 4.64.6 - 2018-02-21
+
 * ConvertFileFromWin7ToWin8 reads file line by line
 
 ## 4.64.4 - 2018-01-17
+
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
 
 ## 4.64.3 - 2017-12-19
