@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
@@ -304,8 +303,6 @@
 								</p>
                 
 							
-
-
 
 
 <h1><a name="MSBuild" class="anchor" href="#MSBuild">MSBuild</a></h1>
@@ -344,7 +341,6 @@
     <tbody>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '710', 710)" onmouseover="showTip(event, '710', 710)">
             MSBuild.build setParams project
           </code>
@@ -400,7 +396,7 @@
 <div class="tip" id="fs3">val buildMode : string</div>
 <div class="tip" id="fs4">val setParams : defaults:MSBuildParams -&gt; MSBuildParams</div>
 <div class="tip" id="fs5">val defaults : MSBuildParams</div>
-<div class="tip" id="fs6">type MSBuildParams =<br />&#160;&#160;{ToolPath: string;<br />&#160;&#160;&#160;WorkingDirectory: string;<br />&#160;&#160;&#160;Targets: string list;<br />&#160;&#160;&#160;Properties: (string * string) list;<br />&#160;&#160;&#160;MaxCpuCount: int option option;<br />&#160;&#160;&#160;DoRestore: bool;<br />&#160;&#160;&#160;NoLogo: bool;<br />&#160;&#160;&#160;NodeReuse: bool;<br />&#160;&#160;&#160;RestorePackagesFlag: bool;<br />&#160;&#160;&#160;ToolsVersion: string option;<br />&#160;&#160;&#160;...}<br />&#160;&#160;&#160;&#160;member WithEnvironment : map:Map&lt;string,string&gt; -&gt; MSBuildParams<br />&#160;&#160;&#160;&#160;static member Create : unit -&gt; MSBuildParams</div>
+<div class="tip" id="fs6">type MSBuildParams =<br />&#160;&#160;{ ToolPath: string<br />&#160;&#160;&#160;&#160;WorkingDirectory: string<br />&#160;&#160;&#160;&#160;Targets: string list<br />&#160;&#160;&#160;&#160;Properties: (string * string) list<br />&#160;&#160;&#160;&#160;MaxCpuCount: int option option<br />&#160;&#160;&#160;&#160;DoRestore: bool<br />&#160;&#160;&#160;&#160;NoLogo: bool<br />&#160;&#160;&#160;&#160;NodeReuse: bool<br />&#160;&#160;&#160;&#160;RestorePackagesFlag: bool<br />&#160;&#160;&#160;&#160;ToolsVersion: string option<br />&#160;&#160;&#160;&#160;... }<br />&#160;&#160;&#160;&#160;member WithEnvironment : map:Map&lt;string,string&gt; -&gt; MSBuildParams<br />&#160;&#160;&#160;&#160;static member Create : unit -&gt; MSBuildParams</div>
 <div class="tip" id="fs7">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 <div class="tip" id="fs8">union case MSBuildVerbosity.Quiet: MSBuildVerbosity</div>
 <div class="tip" id="fs9">module MSBuild<br /><br />from Fake.DotNet</div>
@@ -411,7 +407,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '711', 711)" onmouseover="showTip(event, '711', 711)">
             MSBuild.buildArgs(setParams)
           </code>
@@ -428,7 +423,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '712', 712)" onmouseover="showTip(event, '712', 712)">
             MSBuild.buildWebsite(...)
           </code>
@@ -452,7 +446,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
             MSBuild.buildWebsiteConfig(...)
           </code>
@@ -478,7 +471,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '714', 714)" onmouseover="showTip(event, '714', 714)">
             MSBuild.buildWebsites(...)
           </code>
@@ -502,7 +494,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '715', 715)" onmouseover="showTip(event, '715', 715)">
             MSBuild.buildWebsitesConfig(...)
           </code>
@@ -528,7 +519,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '716', 716)" onmouseover="showTip(event, '716', 716)">
             MSBuild.msBuildExe
           </code>
@@ -553,7 +543,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
             MSBuild.run(...)
           </code>
@@ -580,7 +569,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
             MSBuild.runDebug(...)
           </code>
@@ -606,7 +594,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
             MSBuild.runRelease(...)
           </code>
@@ -632,7 +619,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '720', 720)" onmouseover="showTip(event, '720', 720)">
             MSBuild.runReleaseExt(...)
           </code>
@@ -659,7 +645,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
             MSBuild.runWithDefaults targets projects
           </code>
@@ -683,7 +668,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
             MSBuild.runWithProperties(...)
           </code>
@@ -748,7 +732,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

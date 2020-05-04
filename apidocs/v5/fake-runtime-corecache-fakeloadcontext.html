@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>TeamCityLogger - FAKE - F# Make</title>
+	<title>FakeLoadContext - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -294,33 +294,19 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-msbuildlogger-teamcitylogger.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.Runtime" >Fake.Runtime</a> module.
+								</p>
                 
+							
 
 
-
-  <p>
-    <div class="alert alert-warning">
-    <h5>OBSOLETE</h5>
-    <p>Use Fake.DotNet.MSBuild instead</p>
-    </div> 
-  </p>
-
-<h1><a name="TeamCityLogger" class="anchor" href="#TeamCityLogger">TeamCityLogger</a></h1>
+<h1><a name="FakeLoadContext" class="anchor" href="#FakeLoadContext">FakeLoadContext</a></h1>
 <div class="xmldoc">
-<p>TeamCity Logger for MSBuild</p>
-
 </div>
   <h2><a name="Constructors" class="anchor" href="#Constructors">Constructors</a></h2>
   <table class="table table-bordered member-list">
@@ -330,16 +316,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3420', 3420)" onmouseover="showTip(event, '3420', 3420)">
-            new()
+          <code onmouseout="hideTip(event, '3480', 3480)" onmouseover="showTip(event, '3480', 3480)">
+            new(...)
           </code>
-          <div class="tip" id="3420">
-            <strong>Signature:</strong> unit -&gt; TeamCityLogger<br />
+          <div class="tip" id="3480">
+            <strong>Signature:</strong> (printDetails:VerboseLevel * dependencies:AssemblyInfo list * nativeLibraries:NativeLibrary list) -&gt; FakeLoadContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MsBuildLogger.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L400-400" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -356,6 +341,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -384,7 +370,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

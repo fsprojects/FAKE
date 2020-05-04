@@ -295,7 +295,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
@@ -427,7 +426,7 @@ or <code>fake build --list</code> to list your targets.</p>
 <p>Now we have the following options:</p>
 <ul>
 <li><code>fake run build.fsx -t "Build"</code> --&gt; starts the <em>Build</em> target and runs the dependency <em>Clean</em></li>
-<li><code>fake run build.fsx -t "Build"</code> --single-target --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
+<li><code>fake run build.fsx -t "Build" --single-target</code> --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
 <li><code>fake run build.fsx -s -t Build</code> --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
 <li><code>fake run build.fsx</code> --&gt; starts the Deploy target (and runs the dependencies <em>Clean</em> and <em>Build</em>)</li>
 </ul>
@@ -465,7 +464,7 @@ or <code>fake build --list</code> to list your targets.</p>
 <span class="l">30: </span>
 <span class="l">31: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">args</span> <span class="o">=</span> <span class="id">Target</span><span class="pn">.</span><span class="id">getArguments</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// use this at the top of your script isntead of `Target.initEnvironment()`</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">args</span> <span class="o">=</span> <span class="id">Target</span><span class="pn">.</span><span class="id">getArguments</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// use this at the top of your script instead of `Target.initEnvironment()`</span>
 
 <span class="c">// So some stuff depending on the args</span>
 <span class="k">match</span> <span class="id">args</span> <span class="k">with</span>
@@ -799,7 +798,7 @@ say that target B has a soft dependency on target A:</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

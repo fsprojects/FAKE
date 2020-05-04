@@ -295,7 +295,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
@@ -312,6 +311,13 @@
 <p>You will also need to install and configure at least one <a href="http://octopusdeploy.com/documentation/install/tentacle">Tentacle</a> which you will deploy your software and services to.</p>
 <h2><a name="Octo-exe-CLI-tool" class="anchor" href="#Octo-exe-CLI-tool">Octo.exe CLI tool</a></h2>
 <p>This module is a wrapper around the <a href="https://octopus.com/docs/api-and-integration/octo.exe-command-line">Octo.exe</a> CLI tool which controls Octopus Deploy API. You'll need the Octo.exe tool itself accessible to your FAKE script. Download it from <a href="https://octopus.com/downloads">here</a>.</p>
+<p>This module also supports use via a .NET Core Tool-Manifest. Installation is simple! From the root of your repository run the following</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="bash">dotnet new tool-manifest # if one doesn't already exist
+dotnet tool install Octopus.DotNet.Cli 
+</code></pre></td></tr></table>
 <h3><a name="Generate-an-API-Key" class="anchor" href="#Generate-an-API-Key">Generate an API Key</a></h3>
 <p>In order to communicate with the Octopus Deploy API you will need an <em>API key</em> to authenticate with.</p>
 <p>It is a good idea to create an account in Octopus Deploy for your Continuous Integration systems (eg: <a href="docs/teamcity.html">TeamCity</a>) - and then generate a new API key for that account, that can be safely used from within your build process.</p>
@@ -329,15 +335,19 @@
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span> <span class="c">// needed for ToolType</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">setCommon</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">ps</span><span class="pn">:</span><span class="id">Octo</span><span class="pn">.</span><span class="id">Options</span><span class="pn">)</span> <span class="o">=</span> 
+<span class="k">let</span> <span class="id">setCommon</span> <span class="pn">(</span><span class="id">ps</span><span class="pn">:</span><span class="id">Octo</span><span class="pn">.</span><span class="id">Options</span><span class="pn">)</span> <span class="o">=</span> 
 	<span class="pn">{</span>
-		<span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">ps</span> <span class="k">with</span> <span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;path to your octo.exe&quot;</span>
+		<span class="id">ps</span> <span class="k">with</span> <span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;path to your octo.exe&quot;</span>
 			    <span class="id">Server</span> <span class="o">=</span> <span class="pn">{</span>
     	                    <span class="id">ServerUrl</span> <span class="o">=</span> <span class="s">&quot;Your Octopus Server URL&quot;</span>
                		        <span class="id">ApiKey</span> <span class="o">=</span> <span class="s">&quot;Your API key&quot;</span>
+                            <span class="id">ToolType</span> <span class="o">=</span> <span class="id">ToolType</span><span class="pn">.</span><span class="id">CreateLocalTool</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// default is ToolType.FullFramework</span>
                           <span class="pn">}</span>
     <span class="pn">}</span>
 </code></pre></td>
@@ -353,7 +363,7 @@
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
 
 <span class="id">Octo</span><span class="pn">.</span><span class="id">push</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Packages</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;mypackage.nupkg&quot;</span><span class="pn">;</span> <span class="s">&quot;mypackage2.nupkg&quot;</span><span class="pn">]</span>
-                              <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span><span class="pn">}</span><span class="pn">)</span> 
+                              <span class="id">Common</span> <span class="o">=</span> <span class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span><span class="pn">}</span><span class="pn">)</span> 
 </code></pre></td>
 </tr>
 </table>
@@ -371,7 +381,7 @@
 
 <span class="id">Octo</span><span class="pn">.</span><span class="id">createRelease</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Your Project&quot;</span>
 								       <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;latest&quot;</span>
-								       <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
+								       <span class="id">Common</span> <span class="o">=</span> <span class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
 							<span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -392,15 +402,13 @@
 <span class="id">Octo</span><span class="pn">.</span><span class="id">deployRelease</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Your Project&quot;</span>
 						               <span class="id">DeployTo</span> <span class="o">=</span> <span class="s">&quot;Staging&quot;</span>
 								       <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;latest&quot;</span>
-								       <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
+								       <span class="id">Common</span> <span class="o">=</span> <span class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
 							<span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
 
-				<div class="tip" id="fs1">val setCommon : ps:&#39;a -&gt; &#39;a</div>
-<div class="tip" id="fs2">val ps : &#39;a</div>
-
+				
 			</article>
 		</div>
 
@@ -437,7 +445,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

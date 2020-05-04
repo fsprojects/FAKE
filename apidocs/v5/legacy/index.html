@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">            
@@ -307,7 +306,6 @@
                 </div>
 
                 
-
 <h1><a name="FAKE - F# Make" class="anchor" href="#FAKE - F# Make">FAKE - F# Make</a></h1>
 
     <h2><a name="Fake" class="anchor" href="#Fake">Fake Namespace</a></h2>
@@ -2124,7 +2122,7 @@ functions from the Side-by-side helper module</p>
 </table>
 <div class="tip" id="fs1">val not : value:bool -&gt; bool</div>
 <div class="tip" id="fs2">namespace System</div>
-<div class="tip" id="fs3">Multiple items<br />type String =<br />&#160;&#160;new : value:char -&gt; string + 7 overloads<br />&#160;&#160;member Chars : int -&gt; char<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;member Contains : value:string -&gt; bool<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:char[] * destinationIndex:int * count:int -&gt; unit<br />&#160;&#160;member EndsWith : value:string -&gt; bool + 2 overloads<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 2 overloads<br />&#160;&#160;member GetEnumerator : unit -&gt; CharEnumerator<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;...<br /><br />--------------------<br />System.String(value: nativeptr&lt;char&gt;) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;) : System.String<br />System.String(value: char []) : System.String<br />System.String(c: char, count: int) : System.String<br />System.String(value: nativeptr&lt;char&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int) : System.String<br />System.String(value: char [], startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int, enc: System.Text.Encoding) : System.String</div>
+<div class="tip" id="fs3">Multiple items<br />type String =<br />&#160;&#160;new : value:char[] -&gt; string + 8 overloads<br />&#160;&#160;member Chars : int -&gt; char<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;member Contains : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:char[] * destinationIndex:int * count:int -&gt; unit<br />&#160;&#160;member EndsWith : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member EnumerateRunes : unit -&gt; StringRuneEnumerator<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 2 overloads<br />&#160;&#160;member GetEnumerator : unit -&gt; CharEnumerator<br />&#160;&#160;...<br /><br />--------------------<br />System.String(value: char []) : System.String<br />System.String(value: nativeptr&lt;char&gt;) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;) : System.String<br />System.String(value: System.ReadOnlySpan&lt;char&gt;) : System.String<br />System.String(c: char, count: int) : System.String<br />System.String(value: char [], startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;char&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int, enc: System.Text.Encoding) : System.String</div>
 <div class="tip" id="fs4">System.String.IsNullOrWhiteSpace(value: string) : bool</div>
 <div class="tip" id="fs5">val failwith : message:string -&gt; &#39;T</div>
 <div class="tip" id="fs6">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;&#160;&#160;interface IReadOnlyList&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IReadOnlyCollection&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IEnumerable<br />&#160;&#160;&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;&#160;&#160;member Head : &#39;T<br />&#160;&#160;&#160;&#160;member IsEmpty : bool<br />&#160;&#160;&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;&#160;&#160;member Length : int<br />&#160;&#160;&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;&#160;&#160;...</div>
@@ -3062,7 +3060,7 @@ You can manage:</p>
 </table>
 <div class="tip" id="fs1">namespace Fake</div>
 <div class="tip" id="fs2">namespace Fake.Core</div>
-<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------<br />type CreateProcess&lt;&#39;TRes&gt; =<br />&#160;&#160;private { InternalCommand: Command<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;TraceCommand: bool<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;InternalWorkingDirectory: string option<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;InternalEnvironment: EnvMap option<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Streams: StreamSpecs<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Hook: IProcessHook&lt;&#39;TRes&gt; }<br />&#160;&#160;&#160;&#160;member Command : Command<br />&#160;&#160;&#160;&#160;member CommandLine : string<br />&#160;&#160;&#160;&#160;member Environment : EnvMap option<br />&#160;&#160;&#160;&#160;member WorkingDirectory : string option</div>
 <div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
 <div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
 <div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
@@ -4450,7 +4448,7 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 <div class="tip" id="fs7">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
 <div class="tip" id="fs8">val projectFiles : Fake.IO.IGlobbingPattern</div>
 <div class="tip" id="fs9">namespace Fake.Core</div>
-<div class="tip" id="fs10">Multiple items<br />module Target<br /><br />from Fake.Core<br /><br />--------------------<br />type Target =<br />&#160;&#160;{Name: string;<br />&#160;&#160;&#160;Dependencies: string list;<br />&#160;&#160;&#160;SoftDependencies: string list;<br />&#160;&#160;&#160;Description: TargetDescription option;<br />&#160;&#160;&#160;Function: TargetParameter -&gt; unit;}<br />&#160;&#160;&#160;&#160;member DescriptionAsString : TargetDescription</div>
+<div class="tip" id="fs10">Multiple items<br />module Target<br /><br />from Fake.Core<br /><br />--------------------<br />type Target =<br />&#160;&#160;{ Name: string<br />&#160;&#160;&#160;&#160;Dependencies: string list<br />&#160;&#160;&#160;&#160;SoftDependencies: string list<br />&#160;&#160;&#160;&#160;Description: TargetDescription option<br />&#160;&#160;&#160;&#160;Function: TargetParameter -&gt; unit }<br />&#160;&#160;&#160;&#160;member DescriptionAsString : TargetDescription</div>
 <div class="tip" id="fs11">val create : name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit</div>
 <div class="tip" id="fs12">module File<br /><br />from Fake.IO</div>
 <div class="tip" id="fs13">val deleteAll : files:seq&lt;string&gt; -&gt; unit</div>
@@ -5224,7 +5222,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

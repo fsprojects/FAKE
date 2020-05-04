@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
@@ -304,8 +303,6 @@
 								</p>
                 
 							
-
-
 
 
 <h1><a name="GitHub" class="anchor" href="#GitHub">GitHub</a></h1>
@@ -349,7 +346,7 @@
 </table>
 <div class="tip" id="fs1">val not : value:bool -&gt; bool</div>
 <div class="tip" id="fs2">namespace System</div>
-<div class="tip" id="fs3">Multiple items<br />type String =<br />&#160;&#160;new : value:char -&gt; string + 7 overloads<br />&#160;&#160;member Chars : int -&gt; char<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;member Contains : value:string -&gt; bool<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:char[] * destinationIndex:int * count:int -&gt; unit<br />&#160;&#160;member EndsWith : value:string -&gt; bool + 2 overloads<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 2 overloads<br />&#160;&#160;member GetEnumerator : unit -&gt; CharEnumerator<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;...<br /><br />--------------------<br />System.String(value: nativeptr&lt;char&gt;) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;) : System.String<br />System.String(value: char []) : System.String<br />System.String(c: char, count: int) : System.String<br />System.String(value: nativeptr&lt;char&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int) : System.String<br />System.String(value: char [], startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int, enc: System.Text.Encoding) : System.String</div>
+<div class="tip" id="fs3">Multiple items<br />type String =<br />&#160;&#160;new : value:char[] -&gt; string + 8 overloads<br />&#160;&#160;member Chars : int -&gt; char<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;member Contains : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:char[] * destinationIndex:int * count:int -&gt; unit<br />&#160;&#160;member EndsWith : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member EnumerateRunes : unit -&gt; StringRuneEnumerator<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 2 overloads<br />&#160;&#160;member GetEnumerator : unit -&gt; CharEnumerator<br />&#160;&#160;...<br /><br />--------------------<br />System.String(value: char []) : System.String<br />System.String(value: nativeptr&lt;char&gt;) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;) : System.String<br />System.String(value: System.ReadOnlySpan&lt;char&gt;) : System.String<br />System.String(c: char, count: int) : System.String<br />System.String(value: char [], startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;char&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int) : System.String<br />System.String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int, enc: System.Text.Encoding) : System.String</div>
 <div class="tip" id="fs4">System.String.IsNullOrWhiteSpace(value: string) : bool</div>
 <div class="tip" id="fs5">val failwith : message:string -&gt; &#39;T</div>
 <div class="tip" id="fs6">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;&#160;&#160;interface IReadOnlyList&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IReadOnlyCollection&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IEnumerable<br />&#160;&#160;&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;&#160;&#160;member Head : &#39;T<br />&#160;&#160;&#160;&#160;member IsEmpty : bool<br />&#160;&#160;&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;&#160;&#160;member Length : int<br />&#160;&#160;&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;&#160;&#160;...</div>
@@ -398,7 +395,6 @@
     <tbody>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
             GitHub.createClient user password
           </code>
@@ -407,7 +403,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L106-106" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L103-103" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a GitHub API v3 client using the specified credentials</p>
@@ -417,7 +413,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
             GitHub.createClientWithToken(token)
           </code>
@@ -426,7 +421,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L116-116" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L114-114" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a GitHub API v3 client using the specified token</p>
@@ -436,7 +431,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
             GitHub.createGHEClient url user password
           </code>
@@ -445,7 +439,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L126-126" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L125-125" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials</p>
@@ -455,7 +449,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
             GitHub.createGHEClientWithToken(...)
           </code>
@@ -474,7 +467,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
             GitHub.createRelease(...)
           </code>
@@ -483,7 +475,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L154-154" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L155-155" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a GitHub Release for the specified repository and tag name</p>
@@ -501,7 +493,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
             GitHub.downloadAsset(...)
           </code>
@@ -510,7 +501,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L275-275" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L276-276" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Downloads the asset with the specified id to the specified destination</p>
@@ -520,7 +511,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
             GitHub.downloadAssets(...)
           </code>
@@ -529,7 +519,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L289-289" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L290-290" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Downloads all assets for the specified release to the specified destination</p>
@@ -539,7 +529,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
             GitHub.draftNewRelease(...)
           </code>
@@ -548,7 +537,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L191-191" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L192-192" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a draft GitHub Release for the specified repository and tag name</p>
@@ -567,7 +556,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
             GitHub.getLastRelease(...)
           </code>
@@ -576,7 +564,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L237-237" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L238-238" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the latest release for the specified repository</p>
@@ -586,7 +574,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
             GitHub.getReleaseByTag(...)
           </code>
@@ -595,7 +582,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L253-253" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L254-254" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets release with the specified tag for the specified repository</p>
@@ -605,7 +592,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
             GitHub.publishDraft(release)
           </code>
@@ -614,7 +600,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L228-228" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L229-229" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Publishes the specified release by removing its draft status</p>
@@ -624,7 +610,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
             GitHub.uploadFile fileName release
           </code>
@@ -633,7 +618,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L200-200" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Uploads and attaches the specified file to the specified release</p>
@@ -643,7 +628,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
             GitHub.uploadFiles fileNames release
           </code>
@@ -652,7 +636,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L220-220" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L221-221" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Uploads and attaches the specified files to the specified release</p>
@@ -700,7 +684,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

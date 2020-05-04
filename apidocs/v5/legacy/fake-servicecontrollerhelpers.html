@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">            
@@ -307,8 +306,6 @@
                 </div>
 
                 
-
-
 
   <p>
     <div class="alert alert-warning">
@@ -334,7 +331,6 @@
     <tbody>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
             checkRemoteServiceExists host name
           </code>
@@ -366,7 +362,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
             checkServiceExists(name)
           </code>
@@ -397,7 +392,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '671', 671)" onmouseover="showTip(event, '671', 671)">
             ensureRemoteServiceHasStarted(...)
           </code>
@@ -430,7 +424,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '672', 672)" onmouseover="showTip(event, '672', 672)">
             ensureRemoteServiceHasStopped(...)
           </code>
@@ -463,7 +456,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '673', 673)" onmouseover="showTip(event, '673', 673)">
             ensureServiceHasStarted name timeout
           </code>
@@ -495,7 +487,6 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '674', 674)" onmouseover="showTip(event, '674', 674)">
             ensureServiceHasStopped name timeout
           </code>
@@ -527,232 +518,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '675', 675)" onmouseover="showTip(event, '675', 675)">
-            getRemoteService host name
-          </code>
-          <div class="tip" id="675">
-            <strong>Signature:</strong> host:string -&gt; name:string -&gt; ServiceController option<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the first remote service with given name or None.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>host</code> - The hostname of the remote machine.</li>
-<li><code>name</code> - The name of the service in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '676', 676)" onmouseover="showTip(event, '676', 676)">
-            getRemoteServices host name
-          </code>
-          <div class="tip" id="676">
-            <strong>Signature:</strong> host:string -&gt; name:string -&gt; seq&lt;ServiceController&gt;<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns sequence of remote services with given name.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>host</code> - The hostname of the remote machine.</li>
-<li><code>name</code> - The name of the services in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '677', 677)" onmouseover="showTip(event, '677', 677)">
-            getRemoteServiceStatus host name
-          </code>
-          <div class="tip" id="677">
-            <strong>Signature:</strong> host:string -&gt; name:string -&gt; ServiceControllerStatus<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns status of the remote service with given name or fails when service is not found.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>host</code> - The hostname of the remote machine.</li>
-<li><code>name</code> - The name of the service in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '678', 678)" onmouseover="showTip(event, '678', 678)">
-            getService(name)
-          </code>
-          <div class="tip" id="678">
-            <strong>Signature:</strong> name:string -&gt; ServiceController option<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the first local service with given name or None.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>name</code> - The name of the service in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '679', 679)" onmouseover="showTip(event, '679', 679)">
-            getServices(name)
-          </code>
-          <div class="tip" id="679">
-            <strong>Signature:</strong> name:string -&gt; seq&lt;ServiceController&gt;<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns sequence of local services with given name.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>name</code> - The name of the services in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '680', 680)" onmouseover="showTip(event, '680', 680)">
-            getServiceStatus(name)
-          </code>
-          <div class="tip" id="680">
-            <strong>Signature:</strong> name:string -&gt; ServiceControllerStatus<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns status of the local service with given name or fails when service is not found.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>name</code> - The name of the service in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '681', 681)" onmouseover="showTip(event, '681', 681)">
-            isService name service
-          </code>
-          <div class="tip" id="681">
-            <strong>Signature:</strong> name:string -&gt; service:ServiceController -&gt; bool<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns whether the given service has the given name as display or service name.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>name</code> - The name to check for.</li>
-<li><code>service</code> - The service in question.</li>
-</ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '682', 682)" onmouseover="showTip(event, '682', 682)">
             startRemoteService host name
           </code>
-          <div class="tip" id="682">
+          <div class="tip" id="675">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -780,11 +549,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '683', 683)" onmouseover="showTip(event, '683', 683)">
+          <code onmouseout="hideTip(event, '676', 676)" onmouseover="showTip(event, '676', 676)">
             startService(name)
           </code>
-          <div class="tip" id="683">
+          <div class="tip" id="676">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -811,11 +579,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '684', 684)" onmouseover="showTip(event, '684', 684)">
+          <code onmouseout="hideTip(event, '677', 677)" onmouseover="showTip(event, '677', 677)">
             stopRemoteService host name
           </code>
-          <div class="tip" id="684">
+          <div class="tip" id="677">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -843,11 +610,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '685', 685)" onmouseover="showTip(event, '685', 685)">
+          <code onmouseout="hideTip(event, '678', 678)" onmouseover="showTip(event, '678', 678)">
             stopService(name)
           </code>
-          <div class="tip" id="685">
+          <div class="tip" id="678">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -911,7 +677,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

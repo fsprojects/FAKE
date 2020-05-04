@@ -295,22 +295,27 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
-<h2><a name="5-20-0-alpha-2020-03-06" class="anchor" href="#5-20-0-alpha-2020-03-06">5.20.0-alpha - 2020-03-06</a></h2>
+<h2><a name="5-20-0-alpha-2020-05-04" class="anchor" href="#5-20-0-alpha-2020-05-04">5.20.0-alpha - 2020-05-04</a></h2>
 <ul>
+<li>(Minor) BREAKING: Drop support for <code>net462</code> and update to <code>net472</code>.</li>
 <li>ENHANCEMENT: Keep unreleased changelog section when promote to new version, thanks @vilinski - <a href="https://github.com/fsharp/FAKE/pull/2480">https://github.com/fsharp/FAKE/pull/2480</a></li>
 <li>ENHANCEMENT: Added SignTool for v5, thanks @jhromadik - <a href="https://github.com/fsharp/FAKE/pull/2444">https://github.com/fsharp/FAKE/pull/2444</a></li>
 <li>ENHANCEMENT: Remove old netstandard1.6 dependencies, thanks @teo-tsirpanis - <a href="https://github.com/fsharp/FAKE/pull/2493">https://github.com/fsharp/FAKE/pull/2493</a></li>
+<li>ENHANCEMENT: Add support for running Octo as dotnet tool, thanks @jeremyabbott - <a href="https://github.com/fsharp/FAKE/pull/2489">https://github.com/fsharp/FAKE/pull/2489</a></li>
+<li>ENHANCEMENT: Add support for <code>--include-symbols</code> in <code>dotnet pack</code>, thanks @devployment - <a href="https://github.com/fsharp/FAKE/pull/2508">https://github.com/fsharp/FAKE/pull/2508</a></li>
+<li>ENHANCEMENT: Add support for default proxy credentials to GitHub (Octokit), thanks @csmager - <a href="https://github.com/fsharp/FAKE/pull/2507">https://github.com/fsharp/FAKE/pull/2507</a></li>
+<li>ENHANCEMENT: <code>Fake.DotNet.FSFormatting</code> supports the 4.0 RC release</li>
 <li>BUGFIX: Update FCS, fixes ionide FAKE support (<a href="https://github.com/fsharp/FsAutoComplete/issues/561),">https://github.com/fsharp/FsAutoComplete/issues/561),</a> thanks @baronfel - <a href="https://github.com/fsharp/FAKE/pull/2475,">https://github.com/fsharp/FAKE/pull/2475,</a> <a href="https://github.com/fsharp/FAKE/pull/2479,">https://github.com/fsharp/FAKE/pull/2479,</a> <a href="https://github.com/fsharp/FAKE/pull/2481,">https://github.com/fsharp/FAKE/pull/2481,</a> <a href="https://github.com/fsharp/FAKE/pull/2500">https://github.com/fsharp/FAKE/pull/2500</a></li>
 <li>BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - <a href="https://github.com/fsharp/FAKE/pull/2474">https://github.com/fsharp/FAKE/pull/2474</a></li>
 <li>BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - <a href="https://github.com/fsharp/FAKE/pull/2469">https://github.com/fsharp/FAKE/pull/2469</a></li>
 <li>BUGFIX: Fix an AppVeyor environment variable (<code>APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED</code>) returning <code>null</code>, thanks @teo-tsirpanis - <a href="https://github.com/fsharp/FAKE/pull/2448">https://github.com/fsharp/FAKE/pull/2448</a></li>
-<li>DOCS: Fixed typos and improved docs, thanks @milbrandt, @jzabroski - <a href="https://github.com/fsharp/FAKE/pull/2492,">https://github.com/fsharp/FAKE/pull/2492,</a> <a href="https://github.com/fsharp/FAKE/pull/2497">https://github.com/fsharp/FAKE/pull/2497</a></li>
+<li>BUGFIX: Fix potential <code>FileNotFoundException</code> when cache is outdated.</li>
+<li>DOCS: Fixed typos and improved docs, thanks @milbrandt, @jzabroski, @objectx - <a href="https://github.com/fsharp/FAKE/pull/2492,">https://github.com/fsharp/FAKE/pull/2492,</a> <a href="https://github.com/fsharp/FAKE/pull/2497,">https://github.com/fsharp/FAKE/pull/2497,</a> <a href="https://github.com/fsharp/FAKE/pull/2502">https://github.com/fsharp/FAKE/pull/2502</a></li>
 </ul>
 <h2><a name="5-19-1-2020-02-10" class="anchor" href="#5-19-1-2020-02-10">5.19.1 - 2020-02-10</a></h2>
 <ul>
@@ -511,22 +516,6 @@
 <li>BUGFIX: Fixed getBaseDirectoryInclude when one directory name include the oth…  - <a href="https://github.com/fsharp/FAKE/pull/2235">https://github.com/fsharp/FAKE/pull/2235</a></li>
 <li>DOCS: Resort TraceSecrets.register indexed parameters - <a href="https://github.com/fsharp/FAKE/pull/2254">https://github.com/fsharp/FAKE/pull/2254</a></li>
 <li>DOCS: fix broken links #2241 - <a href="https://github.com/fsharp/FAKE/pull/2241">https://github.com/fsharp/FAKE/pull/2241</a></li>
-</ul>
-<h4><a name="4-64-18-2020-01-30" class="anchor" href="#4-64-18-2020-01-30">4.64.18 - 2020-01-30</a></h4>
-<ul>
-<li>Add Dynamics Business Central 365 support</li>
-</ul>
-<h4><a name="4-64-17-2019-03-19" class="anchor" href="#4-64-17-2019-03-19">4.64.17 - 2019-03-19</a></h4>
-<ul>
-<li>Add support for MSBuild16</li>
-</ul>
-<h4><a name="4-64-16-2019-02-15" class="anchor" href="#4-64-16-2019-02-15">4.64.16 - 2019-02-15</a></h4>
-<ul>
-<li>Add Dynamics NAV FullCompile function</li>
-</ul>
-<h2><a name="4-64-14-2019-01-07" class="anchor" href="#4-64-14-2019-01-07">4.64.14 - 2019-01-07</a></h2>
-<ul>
-<li>Add DynamicsNAV 365 Business Central support - <a href="https://github.com/fsharp/FAKE/pull/2224">https://github.com/fsharp/FAKE/pull/2224</a></li>
 </ul>
 <h2><a name="5-12-0-2019-01-12" class="anchor" href="#5-12-0-2019-01-12">5.12.0 - 2019-01-12</a></h2>
 <ul>
@@ -842,10 +831,6 @@ Install</a> via <code>dotnet tool install fake-cli -g --version 5.0.0-*</code>
 <li>BUGFIX: API-Reference documentation showing invalid tool-tips - <a href="https://github.com/fsharp/FAKE/pull/1912">https://github.com/fsharp/FAKE/pull/1912</a></li>
 <li>BUGFIX: Fake being unable to compile when <code>intellisense.fsx</code> doesn't exist - <a href="https://github.com/fsharp/FAKE/issues/1908">https://github.com/fsharp/FAKE/issues/1908</a></li>
 <li>ENHANCEMENT: Some improvements to the target build order algorithm - <a href="https://github.com/fsharp/FAKE/pull/1903">https://github.com/fsharp/FAKE/pull/1903</a></li>
-</ul>
-<h2><a name="4-64-13-2019-05-02" class="anchor" href="#4-64-13-2019-05-02">4.64.13 - 2019-05-02</a></h2>
-<ul>
-<li>Download x86 version of dotnet core on win x86 - <a href="https://github.com/SAFE-Stack/SAFE-BookStore/issues/328">https://github.com/SAFE-Stack/SAFE-BookStore/issues/328</a></li>
 </ul>
 <h2><a name="5-0-0-rc010-2018-05-01" class="anchor" href="#5-0-0-rc010-2018-05-01">5.0.0-rc010 - 2018-05-01</a></h2>
 <ul>
@@ -1212,23 +1197,43 @@ Migration guide is available in the documentation.
 <li>Fix NuGet key leak if push fails - <a href="https://github.com/matthid/FAKE/pull/2">https://github.com/matthid/FAKE/pull/2</a></li>
 <li>Coreclr nunit3 params - <a href="https://github.com/matthid/FAKE/pull/3">https://github.com/matthid/FAKE/pull/3</a></li>
 </ul>
-<h4><a name="4-64-11-2018-03-09" class="anchor" href="#4-64-11-2018-03-09">4.64.11 - 2018-03-09</a></h4>
+<h2><a name="4-64-18-2020-01-30" class="anchor" href="#4-64-18-2020-01-30">4.64.18 - 2020-01-30</a></h2>
+<ul>
+<li>Add Dynamics Business Central 365 support</li>
+</ul>
+<h2><a name="4-64-17-2019-03-19" class="anchor" href="#4-64-17-2019-03-19">4.64.17 - 2019-03-19</a></h2>
+<ul>
+<li>Add support for MSBuild16</li>
+</ul>
+<h2><a name="4-64-16-2019-02-15" class="anchor" href="#4-64-16-2019-02-15">4.64.16 - 2019-02-15</a></h2>
+<ul>
+<li>Add Dynamics NAV FullCompile function</li>
+</ul>
+<h2><a name="4-64-14-2019-01-07" class="anchor" href="#4-64-14-2019-01-07">4.64.14 - 2019-01-07</a></h2>
+<ul>
+<li>Add DynamicsNAV 365 Business Central support - <a href="https://github.com/fsharp/FAKE/pull/2224">https://github.com/fsharp/FAKE/pull/2224</a></li>
+</ul>
+<h2><a name="4-64-13-2019-05-02" class="anchor" href="#4-64-13-2019-05-02">4.64.13 - 2019-05-02</a></h2>
+<ul>
+<li>Download x86 version of dotnet core on win x86 - <a href="https://github.com/SAFE-Stack/SAFE-BookStore/issues/328">https://github.com/SAFE-Stack/SAFE-BookStore/issues/328</a></li>
+</ul>
+<h2><a name="4-64-11-2018-03-09" class="anchor" href="#4-64-11-2018-03-09">4.64.11 - 2018-03-09</a></h2>
 <ul>
 <li>Added SynchronizeSchemaChanges for DynamicsNAV</li>
 </ul>
-<h4><a name="4-64-10-2018-03-06" class="anchor" href="#4-64-10-2018-03-06">4.64.10 - 2018-03-06</a></h4>
+<h2><a name="4-64-10-2018-03-06" class="anchor" href="#4-64-10-2018-03-06">4.64.10 - 2018-03-06</a></h2>
 <ul>
 <li>Added RunCodeunitWithSettings for DynamicsNAV - <a href="https://github.com/fsharp/FAKE/pull/1811">https://github.com/fsharp/FAKE/pull/1811</a></li>
 </ul>
-<h4><a name="4-64-9-2018-03-05" class="anchor" href="#4-64-9-2018-03-05">4.64.9 - 2018-03-05</a></h4>
+<h2><a name="4-64-9-2018-03-05" class="anchor" href="#4-64-9-2018-03-05">4.64.9 - 2018-03-05</a></h2>
 <ul>
 <li>CompileWithFilter for DynamicsNAV</li>
 </ul>
-<h4><a name="4-64-7-2018-03-01" class="anchor" href="#4-64-7-2018-03-01">4.64.7 - 2018-03-01</a></h4>
+<h2><a name="4-64-7-2018-03-01" class="anchor" href="#4-64-7-2018-03-01">4.64.7 - 2018-03-01</a></h2>
 <ul>
 <li>Allow REST calls without credentials</li>
 </ul>
-<h4><a name="4-64-6-2018-02-21" class="anchor" href="#4-64-6-2018-02-21">4.64.6 - 2018-02-21</a></h4>
+<h2><a name="4-64-6-2018-02-21" class="anchor" href="#4-64-6-2018-02-21">4.64.6 - 2018-02-21</a></h2>
 <ul>
 <li>ConvertFileFromWin7ToWin8 reads file line by line</li>
 </ul>
@@ -2368,7 +2373,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

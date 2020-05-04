@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">            
@@ -306,8 +305,6 @@
                 </div>
 
                 
-
-
 
 
 <h1><a name="RegistryHelper" class="anchor" href="#RegistryHelper">RegistryHelper</a></h1>
@@ -348,11 +345,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
+          <code onmouseout="hideTip(event, '659', 659)" onmouseover="showTip(event, '659', 659)">
             createRegistrySubKey baseKey subKey
           </code>
-          <div class="tip" id="660">
+          <div class="tip" id="659">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; unit<br />
                                   </div>
         </td>
@@ -364,11 +360,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
+          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
             deleteRegistrySubKey baseKey subKey
           </code>
-          <div class="tip" id="661">
+          <div class="tip" id="660">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; unit<br />
                                   </div>
         </td>
@@ -380,11 +375,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
+          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
             deleteRegistryValue baseKey subKey name
           </code>
-          <div class="tip" id="662">
+          <div class="tip" id="661">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
@@ -396,11 +390,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
+          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
             getRegistryKey(...)
           </code>
-          <div class="tip" id="663">
+          <div class="tip" id="662">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                                   </div>
         </td>
@@ -412,11 +405,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
+          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
             getRegistryKey64(...)
           </code>
-          <div class="tip" id="664">
+          <div class="tip" id="663">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                                   </div>
         </td>
@@ -428,11 +420,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
+          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
             getRegistrySubKeyNames baseKey subKey
           </code>
-          <div class="tip" id="665">
+          <div class="tip" id="664">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
                                   </div>
         </td>
@@ -444,9 +435,23 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
+          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
             getRegistryValue baseKey subKey name
+          </code>
+          <div class="tip" id="665">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Gets a registry value as string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
+            getRegistryValue64 baseKey subKey name
           </code>
           <div class="tip" id="666">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
@@ -460,27 +465,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
           <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
-            getRegistryValue64 baseKey subKey name
-          </code>
-          <div class="tip" id="667">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    <p>Gets a registry value as string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
             getRegistryValueNames baseKey subKey
           </code>
-          <div class="tip" id="668">
+          <div class="tip" id="667">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
                                   </div>
         </td>
@@ -492,11 +480,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
+          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
             setRegistryValue(...)
           </code>
-          <div class="tip" id="669">
+          <div class="tip" id="668">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; value:&#39;T -&gt; unit<br />
                           <strong>Type parameters:</strong> 'T                      </div>
         </td>
@@ -508,11 +495,10 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
+          <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
             valueExistsForKey baseKey subKey name
           </code>
-          <div class="tip" id="670">
+          <div class="tip" id="669">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; bool<br />
                                   </div>
         </td>
@@ -561,7 +547,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

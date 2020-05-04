@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>MSBuildLogger - FAKE - F# Make</title>
+	<title>ICachingProvider - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -294,49 +294,20 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This API documentation is for FAKE version 4. The migration API documentation can be found 
-                    <a href="/apidocs/v5/legacy/fake-msbuildlogger-msbuildlogger.html">here</a>. The API documentation for the new fake 5 modules can be found 
-                    <a href="/apidocs/v5/index.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.Runtime" >Fake.Runtime</a> module.
+								</p>
                 
+							
 
 
-
-
-<h1><a name="MSBuildLogger" class="anchor" href="#MSBuildLogger">MSBuildLogger</a></h1>
+<h1><a name="ICachingProvider" class="anchor" href="#ICachingProvider">ICachingProvider</a></h1>
 <div class="xmldoc">
-<p>Abstract MSBuild Logger class.</p>
-
 </div>
-  <h2><a name="Constructors" class="anchor" href="#Constructors">Constructors</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
-            new()
-          </code>
-          <div class="tip" id="2236">
-            <strong>Signature:</strong> unit -&gt; MSBuildLogger<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-    </tbody>
-  </table>
   <h2><a name="Instance members" class="anchor" href="#Instance members">Instance members</a></h2>
   <table class="table table-bordered member-list">
     <thead>
@@ -345,19 +316,53 @@
     <tbody>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2237', 2237)" onmouseover="showTip(event, '2237', 2237)">
-            x.RegisterEvents(arg1)
+          <code onmouseout="hideTip(event, '3481', 3481)" onmouseover="showTip(event, '3481', 3481)">
+            x.CleanCache(context)
           </code>
-          <div class="tip" id="2237">
-            <strong>Signature:</strong> IEventSource -&gt; unit<br />
+          <div class="tip" id="3481">
+            <strong>Signature:</strong> context:FakeContext -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                    <p>Abstract function which registers an event listener.</p>
-
-
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L46-46" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3482', 3482)" onmouseover="showTip(event, '3482', 3482)">
+            x.SaveCache(context, cache)
+          </code>
+          <div class="tip" id="3482">
+            <strong>Signature:</strong> (context:FakeContext * cache:CoreCacheInfo) -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L45-45" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3483', 3483)" onmouseover="showTip(event, '3483', 3483)">
+            x.TryLoadCache(context)
+          </code>
+          <div class="tip" id="3483">
+            <strong>Signature:</strong> context:FakeContext -&gt; FakeContext * CoreCacheInfo option<br />
+              <strong>Modifiers:</strong> abstract<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/CoreCache.fs#L44-44" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
         </td>
       </tr>
     </tbody>
@@ -371,6 +376,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -399,7 +405,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

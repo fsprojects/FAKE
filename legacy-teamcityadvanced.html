@@ -295,7 +295,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">
@@ -385,13 +384,13 @@ when they come from a branch that isn't the default one or from a personal build
     <span class="k">if</span> <span class="id">buildServer</span> <span class="o">=</span> <span class="id">TeamCity</span> <span class="k">then</span>
         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 14)" onmouseover="showTip(event, 'fs10', 14)" class="id">buildNumber</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs11', 15)" onmouseover="showTip(event, 'fs11', 15)" class="fn">int</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs12', 16)" onmouseover="showTip(event, 'fs12', 16)" class="fn">defaultArg</span> <span class="id">TeamCityBuildNumber</span> <span class="s">&quot;0&quot;</span><span class="pn">)</span>
         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 17)" onmouseover="showTip(event, 'fs13', 17)" class="id">asmVer</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs14', 18)" onmouseover="showTip(event, 'fs14', 18)" class="fn">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs15', 19)" onmouseover="showTip(event, 'fs15', 19)" class="rt">Version</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs16', 20)" onmouseover="showTip(event, 'fs16', 20)" class="id">Parse</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs9', 21)" onmouseover="showTip(event, 'fs9', 21)" class="id">fromFile</span><span class="pn">.</span><span class="id">AssemblyVersion</span><span class="pn">)</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 22)" onmouseover="showTip(event, 'fs13', 22)" class="id">asmVer</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs14', 23)" onmouseover="showTip(event, 'fs14', 23)" class="rt">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs15', 24)" onmouseover="showTip(event, 'fs15', 24)" class="id">Version</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs13', 25)" onmouseover="showTip(event, 'fs13', 25)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs17', 26)" onmouseover="showTip(event, 'fs17', 26)" class="id">Major</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs13', 27)" onmouseover="showTip(event, 'fs13', 27)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs18', 28)" onmouseover="showTip(event, 'fs18', 28)" class="id">Minor</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs10', 29)" onmouseover="showTip(event, 'fs10', 29)" class="id">buildNumber</span><span class="pn">)</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs19', 30)" onmouseover="showTip(event, 'fs19', 30)" class="id">prerelease</span> <span class="o">=</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 22)" onmouseover="showTip(event, 'fs17', 22)" class="id">asmVer</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs14', 23)" onmouseover="showTip(event, 'fs14', 23)" class="rt">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs15', 24)" onmouseover="showTip(event, 'fs15', 24)" class="id">Version</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs17', 25)" onmouseover="showTip(event, 'fs17', 25)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs18', 26)" onmouseover="showTip(event, 'fs18', 26)" class="id">Major</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs17', 27)" onmouseover="showTip(event, 'fs17', 27)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs19', 28)" onmouseover="showTip(event, 'fs19', 28)" class="id">Minor</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs10', 29)" onmouseover="showTip(event, 'fs10', 29)" class="id">buildNumber</span><span class="pn">)</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 30)" onmouseover="showTip(event, 'fs20', 30)" class="id">prerelease</span> <span class="o">=</span>
             <span class="k">if</span> <span class="id">TeamCityBuildIsPersonal</span> <span class="k">then</span> <span class="s">&quot;-personal&quot;</span>
             <span class="k">else</span> <span class="k">if</span> <span class="id">getTeamCityBranchIsDefault</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">then</span> <span class="s">&quot;&quot;</span> <span class="k">else</span> <span class="s">&quot;-branch&quot;</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 31)" onmouseover="showTip(event, 'fs20', 31)" class="id">nugetVersion</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 32)" onmouseover="showTip(event, 'fs13', 32)" class="fn">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs21', 33)" onmouseover="showTip(event, 'fs21', 33)" class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs19', 34)" onmouseover="showTip(event, 'fs19', 34)" class="id">prerelease</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 31)" onmouseover="showTip(event, 'fs21', 31)" class="id">nugetVersion</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs17', 32)" onmouseover="showTip(event, 'fs17', 32)" class="fn">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs22', 33)" onmouseover="showTip(event, 'fs22', 33)" class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs20', 34)" onmouseover="showTip(event, 'fs20', 34)" class="id">prerelease</span>
 
-        <span class="id">ReleaseNotesHelper</span><span class="pn">.</span><span class="id">ReleaseNotes</span><span class="pn">.</span><span class="id">New</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs13', 35)" onmouseover="showTip(event, 'fs13', 35)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs21', 36)" onmouseover="showTip(event, 'fs21', 36)" class="id">ToString</span><span class="pn">(</span><span class="pn">)</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs20', 37)" onmouseover="showTip(event, 'fs20', 37)" class="id">nugetVersion</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs9', 38)" onmouseover="showTip(event, 'fs9', 38)" class="id">fromFile</span><span class="pn">.</span><span class="id">Date</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs9', 39)" onmouseover="showTip(event, 'fs9', 39)" class="id">fromFile</span><span class="pn">.</span><span class="id">Notes</span><span class="pn">)</span>
+        <span class="id">ReleaseNotesHelper</span><span class="pn">.</span><span class="id">ReleaseNotes</span><span class="pn">.</span><span class="id">New</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs17', 35)" onmouseover="showTip(event, 'fs17', 35)" class="id">asmVer</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs22', 36)" onmouseover="showTip(event, 'fs22', 36)" class="id">ToString</span><span class="pn">(</span><span class="pn">)</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs21', 37)" onmouseover="showTip(event, 'fs21', 37)" class="id">nugetVersion</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs9', 38)" onmouseover="showTip(event, 'fs9', 38)" class="id">fromFile</span><span class="pn">.</span><span class="id">Date</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs9', 39)" onmouseover="showTip(event, 'fs9', 39)" class="id">fromFile</span><span class="pn">.</span><span class="id">Notes</span><span class="pn">)</span>
     <span class="k">else</span>
         <span onmouseout="hideTip(event, 'fs9', 40)" onmouseover="showTip(event, 'fs9', 40)" class="id">fromFile</span>
 
@@ -449,15 +448,16 @@ enough to set <code>TeamCity = (BuildServer = TeamCity)</code> in
 <div class="tip" id="fs10">val buildNumber : int</div>
 <div class="tip" id="fs11">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />--------------------<br />type int = int32<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int</div>
 <div class="tip" id="fs12">val defaultArg : arg:&#39;T option -&gt; defaultValue:&#39;T -&gt; &#39;T</div>
-<div class="tip" id="fs13">val asmVer : System.Version</div>
+<div class="tip" id="fs13">val asmVer : obj</div>
 <div class="tip" id="fs14">namespace System</div>
 <div class="tip" id="fs15">Multiple items<br />type Version =<br />&#160;&#160;new : unit -&gt; Version + 4 overloads<br />&#160;&#160;member Build : int<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : version:obj -&gt; int + 1 overload<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 1 overload<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;member Major : int<br />&#160;&#160;member MajorRevision : int16<br />&#160;&#160;member Minor : int<br />&#160;&#160;member MinorRevision : int16<br />&#160;&#160;...<br /><br />--------------------<br />System.Version() : System.Version<br />System.Version(version: string) : System.Version<br />System.Version(major: int, minor: int) : System.Version<br />System.Version(major: int, minor: int, build: int) : System.Version<br />System.Version(major: int, minor: int, build: int, revision: int) : System.Version</div>
-<div class="tip" id="fs16">System.Version.Parse(input: string) : System.Version</div>
-<div class="tip" id="fs17">property System.Version.Major: int</div>
-<div class="tip" id="fs18">property System.Version.Minor: int</div>
-<div class="tip" id="fs19">val prerelease : string</div>
-<div class="tip" id="fs20">val nugetVersion : string</div>
-<div class="tip" id="fs21">System.Version.ToString() : string<br />System.Version.ToString(fieldCount: int) : string</div>
+<div class="tip" id="fs16">System.Version.Parse(input: System.ReadOnlySpan&lt;char&gt;) : System.Version<br />System.Version.Parse(input: string) : System.Version</div>
+<div class="tip" id="fs17">val asmVer : System.Version</div>
+<div class="tip" id="fs18">property System.Version.Major: int with get</div>
+<div class="tip" id="fs19">property System.Version.Minor: int with get</div>
+<div class="tip" id="fs20">val prerelease : string</div>
+<div class="tip" id="fs21">val nugetVersion : string</div>
+<div class="tip" id="fs22">System.Version.ToString() : string<br />System.Version.ToString(fieldCount: int) : string</div>
 
 			</article>
 		</div>
@@ -495,7 +495,7 @@ enough to set <code>TeamCity = (BuildServer = TeamCity)</code> in
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

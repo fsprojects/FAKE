@@ -294,7 +294,6 @@
 	</nav>
 
 	
-
 <section id="content" class="section">
 	<div class="columns">
 		<div class="column is-9-desktop is-12-mobile">            
@@ -307,8 +306,6 @@
                 </div>
 
                 
-
-
 
 
 <h1><a name="Proc" class="anchor" href="#Proc">Proc</a></h1>
@@ -334,7 +331,7 @@
 </table>
 <div class="tip" id="fs1">namespace Fake</div>
 <div class="tip" id="fs2">namespace Fake.Core</div>
-<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessDotNetExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------<br />type CreateProcess&lt;&#39;TRes&gt; =<br />&#160;&#160;private { InternalCommand: Command<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;TraceCommand: bool<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;InternalWorkingDirectory: string option<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;InternalEnvironment: EnvMap option<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Streams: StreamSpecs<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Hook: IProcessHook&lt;&#39;TRes&gt; }<br />&#160;&#160;&#160;&#160;member Command : Command<br />&#160;&#160;&#160;&#160;member CommandLine : string<br />&#160;&#160;&#160;&#160;member Environment : EnvMap option<br />&#160;&#160;&#160;&#160;member WorkingDirectory : string option</div>
 <div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
 <div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
 <div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
@@ -352,11 +349,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
+          <code onmouseout="hideTip(event, '1340', 1340)" onmouseover="showTip(event, '1340', 1340)">
             Proc.run(c)
           </code>
-          <div class="tip" id="1348">
+          <div class="tip" id="1340">
             <strong>Signature:</strong> c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -371,13 +367,12 @@
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
+          <code onmouseout="hideTip(event, '1341', 1341)" onmouseover="showTip(event, '1341', 1341)">
             Proc.start(c)
           </code>
-          <div class="tip" id="1349">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18698&gt; -&gt; Task&lt;&#39;?18698&gt;<br />
-                          <strong>Type parameters:</strong> '?18698                      </div>
+          <div class="tip" id="1341">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?17967&gt; -&gt; Task&lt;&#39;?17967&gt;<br />
+                          <strong>Type parameters:</strong> '?17967                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1087-1087" class="github-link">
@@ -391,13 +386,12 @@ In most common scenarios the <a href="fake-net-result-result.html" title="Result
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
+          <code onmouseout="hideTip(event, '1342', 1342)" onmouseover="showTip(event, '1342', 1342)">
             Proc.startAndAwait(c)
           </code>
-          <div class="tip" id="1350">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18700&gt; -&gt; Async&lt;&#39;?18700&gt;<br />
-                          <strong>Type parameters:</strong> '?18700                      </div>
+          <div class="tip" id="1342">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?17969&gt; -&gt; Async&lt;&#39;?17969&gt;<br />
+                          <strong>Type parameters:</strong> '?17969                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1092-1092" class="github-link">
@@ -412,13 +406,12 @@ when used incorrectly this might lead to race conditions
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
+          <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
             Proc.startRaw(c)
           </code>
-          <div class="tip" id="1351">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18694&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?18694&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?18694                      </div>
+          <div class="tip" id="1343">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?17963&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?17963&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?17963                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1080-1080" class="github-link">
@@ -437,13 +430,12 @@ For example consider a long running process where you are only interested in the
       </tr>
       <tr>
         <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1352', 1352)" onmouseover="showTip(event, '1352', 1352)">
+          <code onmouseout="hideTip(event, '1344', 1344)" onmouseover="showTip(event, '1344', 1344)">
             Proc.startRawSync(c)
           </code>
-          <div class="tip" id="1352">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?18696&gt; -&gt; AsyncProcessResult&lt;&#39;?18696&gt;<br />
-                          <strong>Type parameters:</strong> '?18696                      </div>
+          <div class="tip" id="1344">
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?17965&gt; -&gt; AsyncProcessResult&lt;&#39;?17965&gt;<br />
+                          <strong>Type parameters:</strong> '?17965                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1083-1083" class="github-link">
@@ -493,7 +485,7 @@ For example consider a long running process where you are only interested in the
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1566</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.0-alpha.1580</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
