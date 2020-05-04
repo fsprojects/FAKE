@@ -23,7 +23,7 @@ nuget Fake.DotNet.MSBuild prerelease
 nuget Fake.DotNet.Cli prerelease
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Paket prerelease
-// nuget Fake.DotNet.FSFormatting prerelease
+nuget Fake.DotNet.FSFormatting prerelease
 nuget Fake.DotNet.Testing.MSpec prerelease
 nuget Fake.DotNet.Testing.XUnit2 prerelease
 nuget Fake.DotNet.Testing.NUnit prerelease
@@ -40,8 +40,6 @@ nuget Octokit //"
 // This is the reason why we need to checkin the "intellisense.fsx" file for now...
 #load ".fake/build.fsx/intellisense.fsx"
 #load "legacy-build.fsx"
-
-#load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
 
 open System.Reflection
 

@@ -130,7 +130,7 @@ group NetcoreBuild
     nuget Fake.DotNet.Cli prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.NuGet prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Paket prerelease // FAKE_VERSION (don't edit this line)
-    // nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
+    nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.MSpec prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.XUnit2 prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.DotNet.Testing.NUnit prerelease // FAKE_VERSION (don't edit this line)
