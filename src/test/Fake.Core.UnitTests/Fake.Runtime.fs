@@ -165,7 +165,7 @@ printfn "other.fsx"
         Expect.equal expected actual "Expected to find script."
       finally
         Directory.Delete(tmpDir, true)
-        
+
     testCase "Test #1947 - good error message" <| fun _ ->
       let tmpDir = Path.GetTempFileName()
       File.Delete tmpDir

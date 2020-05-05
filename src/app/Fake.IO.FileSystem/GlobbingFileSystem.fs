@@ -97,7 +97,7 @@ module GlobbingPatternExtensions =
         
         /// Checks if a particular file is matched
         member this.IsMatch (path : string) =
-            let fullDir pattern = 
+            let fullDir (pattern: string) = 
                 if Path.IsPathRooted(pattern) then
                     pattern
                 else

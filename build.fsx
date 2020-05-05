@@ -201,7 +201,7 @@ let restoreTools =
 
 let callpaket wd args =
     restoreTools()
-    
+
     let res = DotNet.exec (dtntWorkDir wd) "paket" args
     if not res.OK then
         failwithf "paket failed to start: %A" res
@@ -252,6 +252,7 @@ let dotnetAssemblyInfos =
       "Fake.BuildServer.Travis", "Integration into Travis buildserver"
       "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
       "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.Core.DependencyManager.Paket", "Paket Dependency Manager"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
@@ -308,6 +309,7 @@ let dotnetAssemblyInfos =
       "Fake.Tools.Octo", "Octopus Deploy octo.exe tool helper"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
       "Fake.Tools.Rsync", "Running Rsync commands"
+      "Fake.Tools.SignTool", "Running signtool commands"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
@@ -371,7 +373,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
     let formatState (state:Octokit.CommitStatus) =
         sprintf "{ State: %O, Description: %O, TargetUrl: %O }"
             state.State state.Description state.TargetUrl
-    let result = 
+    let result =
         async {
             let! client = GitHub.createClientWithToken token
             let mutable whileResult = None
@@ -398,7 +400,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
                     do! doWait()
             match whileResult with
             | Some r -> return r
-            | None ->                
+            | None ->
                 // time is up
                 let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
                 return
@@ -610,14 +612,14 @@ let startWebServer () =
         if portIsTaken then findPort (port + 1) else port
 
     let port = findPort 8083
-    
+
     let inline (@@) a b = Suave.WebPart.concatenate a b
     let mimeTypes =
         Suave.Writers.defaultMimeTypesMap
         @@ (function
             | ".avi" -> Suave.Writers.createMimeType "video/avi" false
             | ".mp4" -> Suave.Writers.createMimeType "video/mp4" false
-            | _ -> None)    
+            | _ -> None)
     let serverConfig =
         { Suave.Web.defaultConfig with
            homeFolder = Some (Path.GetFullPath docsDir)
@@ -818,7 +820,7 @@ let setBuildEnvVars versionVar isDebianPackaging =
     Environment.setEnvironVar "PackageProjectUrl" "https://fake.build"
     Environment.setEnvironVar "PackageRepositoryUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageRepositoryType" "git"
-    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0"
+    Environment.setEnvironVar "PackageLicenseExpression" "Apache-2.0 OR MS-PL"
     Environment.setEnvironVar "IsDebianPackaging" (if isDebianPackaging then "true" else "false")
     //Environment.setEnvironVar "IncludeSource" "true"
     //Environment.setEnvironVar "IncludeSymbols" "false"
@@ -829,7 +831,7 @@ Target.create "_DotNetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
     // This lines actually ensures we get the correct version checked in
     // instead of the one previously bundled with `fake` or `paket`
-    callpaket "." "restore" // first make paket restire its target file if it feels like it.
+    callpaket "." "restore" // first make paket restore its target file if it feels like it.
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets" // now restore ours
 
     restoreTools()

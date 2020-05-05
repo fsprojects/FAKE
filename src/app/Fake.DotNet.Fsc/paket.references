@@ -1,7 +1,6 @@
 group netcore
 
 FSharp.Core
-System.Runtime.Loader
 NETStandard.Library
 
 FSharp.Compiler.Service

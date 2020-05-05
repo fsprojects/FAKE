@@ -8,5 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <!-- Workaround The type referenced through 'System.Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'netstandard'. -->
+    <Reference Condition=" '$(TargetFramework)' == 'net472' " Include="netstandard" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,8 @@ open System.IO
 open Yaaf.FSharp.Scripting
 open FSharp.Compiler.SourceCodeServices
 
+type Marker = class end
+
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
 /// therefore might eat other exceptions. And a caching error is not critical.
@@ -90,6 +92,18 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     | None -> RunResult.SuccessRun c.Warnings
     | Some e -> RunResult.RuntimeError e
 
+/// options that must be added to compilations to circumvent compilation errors from the DependencyManager preview feature
+let fcsDependencyManagerOptions =
+    let dummyPaketDependencyManagerOption =
+        match typeof<Marker>.Assembly.Location with
+        | "" -> []
+        | s ->
+            let currentDir = Path.GetDirectoryName s
+            [ sprintf "--compilertool:%s" currentDir ]
+
+    "--langversion:preview"  // needed because of a design choice(bug?) in FCS that parses dependency managers regardless of langversion
+    :: dummyPaketDependencyManagerOption // needed to handle and swallow the `paket` dependency manager type
+
 let compile (context:FakeContext) outDll =
     use _untilCompileFinished = Fake.Profile.startCategory Fake.Profile.Category.Compiling
 
@@ -104,12 +118,13 @@ let compile (context:FakeContext) outDll =
     if (destinationFile.Exists) then destinationFile.Delete()
 
     let co = context.Config.CompileOptions
+
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
         { co.FsiOptions with
             FullPaths = true
-            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: fcsDependencyManagerOptions @ "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s:string list) =
@@ -143,7 +158,9 @@ let compile (context:FakeContext) outDll =
     let errors, returnCode = fsc.Compile (("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
     let errors =
         errors
-        |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
+        // --nowarn: doesn't work
+        // needed because the paket dependencymanager build right now throws some kind of pickling warning, see https://github.com/dotnet/fsharp/issues/8678
+        |> Seq.filter (fun e -> e.ErrorNumber <> 3186 && not (e.Message.Contains "Fake.Core.DependencyManager.Paket"))
         |> Seq.toList
     let compileErrors = CompilationErrors.ofErrors errors
     compileErrors, returnCode

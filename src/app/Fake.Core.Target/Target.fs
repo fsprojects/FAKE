@@ -157,7 +157,7 @@ module Target =
         | None -> false
 
     let internal isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
-    let internal getNormalizedFileName fileName =
+    let internal getNormalizedFileName (fileName: string) =
         let fn = System.IO.Path.GetFileName fileName
         if isWindows then if isNull fn then null else fn.ToLowerInvariant()
         else fn

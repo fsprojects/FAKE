@@ -46,7 +46,7 @@ module SqlPackage =
 
     let internal validPaths =
         let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
-        let getVsVersion path = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
+        let getVsVersion (path: string) = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
         let sql = !!(Environment.ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
         let vs = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
         let vs2017 = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)

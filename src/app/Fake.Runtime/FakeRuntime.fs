@@ -495,6 +495,9 @@ let tryPrepareFakeScript (config:FakeConfig) : TryPrepareInfo =
               raise <| CoreCache.CacheOutdated
             else
               let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
+              // An old version of the template created the cache
+              if not (File.Exists depsFile) then
+                  raise <| CoreCache.CacheOutdated
               let group =
                   let trimmed = splits.[1].Trim()
                   if trimmed = "<null>" then None else Some trimmed
