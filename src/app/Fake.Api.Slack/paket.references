@@ -2,5 +2,4 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
-System.Net.Http
 Newtonsoft.Json

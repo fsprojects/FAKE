@@ -34,6 +34,8 @@
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Octo\Fake.Tools.Octo.fsproj" />
     <ProjectReference Include="..\Fake.ExpectoSupport\Fake.ExpectoSupport.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Tools.SignTool\Fake.Tools.SignTool.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.BuildServer.GitLab\Fake.BuildServer.GitLab.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="runtimeconfig.template.json" />
@@ -58,6 +60,7 @@
     <Compile Include="Fake.Testing.SonarQube.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.Tools.Pickles.fs" />
+    <Compile Include="Fake.Tools.SignTool.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
     <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
@@ -66,7 +69,7 @@
     <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
-    <Compile Include="Fake.Tools.Testing.Octo.fs" />
+    <Compile Include="Fake.Tools.Octo.fs" />
     <Compile Include="Main.fs" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.fs" CopyToOutputDirectory="PreserveNewest" />

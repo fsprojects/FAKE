@@ -8,6 +8,7 @@
         <!-- Debian packaging -->
         <Prefix>/opt/fake</Prefix>
         <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/debian-postinst.sh'))</PostInstallScript>
+        <NoWarn>FS3186</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

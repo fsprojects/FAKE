@@ -5,24 +5,36 @@ open System
 open System.Diagnostics
 open System.IO
 open Fake.Core
+open Fake.DotNet
 open Fake.IO.Globbing
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
 /// Specifies the fsformatting executable
-let mutable toolPath =
-    Tools.findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
+let private defaultToolPath =
+    lazy
+        let toolDll = ProcessUtils.tryFindLocalTool "FSFORMATTING" "fsformatting.dll" [ "." ]
+        match toolDll with
+        | Some s when s.EndsWith ".dll" -> s, ToolType.CreateFrameworkDependentDeployment()
+        | _ ->
+            match ProcessUtils.tryFindLocalTool "FSFORMATTING" "fsformatting" [ "." ] with
+            | Some s -> s, ToolType.Create()
+            | None -> "fsformatting.exe", ToolType.Create()
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
-let private run toolPath command = 
-    if 0 <> Process.execSimple ((fun info ->
-            { info with
-                FileName = toolPath
-                Arguments = command }) >> Process.withFramework) System.TimeSpan.MaxValue
-    then failwithf "FSharp.Formatting %s failed." command
+let private run (toolType:ToolType) toolPath (command:string) =
+    CreateProcess.fromRawCommandLine toolPath command
+    // RawCommand (, command)
+    //|> CreateProcess.fromCommand
+    |> CreateProcess.withToolType (toolType.WithDefaultToolCommandName "dotnet-fsformatting")
+    |> CreateProcess.withTimeout System.TimeSpan.MaxValue
+    |> CreateProcess.ensureExitCodeWithMessage "FSharp.Formatting failed"
+    |> Proc.run
+    |> ignore
 
 type LiterateArguments =
     { ToolPath : string
+      ToolType : ToolType
       Source : string
       OutputDirectory : string 
       Template : string
@@ -30,8 +42,10 @@ type LiterateArguments =
       LayoutRoots : string list 
       FsiEval : bool }
 
-let defaultLiterateArguments =
+let private createDefaultLiterateArguments() =
+    let toolPath, toolType = defaultToolPath.Value
     { ToolPath = toolPath
+      ToolType = toolType
       Source = ""
       OutputDirectory = ""
       Template = ""
@@ -40,7 +54,7 @@ let defaultLiterateArguments =
       FsiEval = false }
 
 let createDocs p =
-    let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
+    let arguments = (p:LiterateArguments->LiterateArguments) (createDefaultLiterateArguments())
     let layoutroots =
         if arguments.LayoutRoots.IsEmpty then []
         else [ "--layoutRoots" ] @ arguments.LayoutRoots
@@ -60,11 +74,12 @@ let createDocs p =
                if s.StartsWith "\"" then s
                else sprintf "\"%s\"" s)
         |> String.separated " "
-    run arguments.ToolPath command
+    run arguments.ToolType arguments.ToolPath command
     printfn "Successfully generated docs for %s" source
 
 type MetadataFormatArguments =
     { ToolPath : string
+      ToolType : ToolType
       Source : string
       SourceRepository : string
       OutputDirectory : string 
@@ -73,8 +88,10 @@ type MetadataFormatArguments =
       LayoutRoots : string list
       LibDirs : string list }
 
-let defaultMetadataFormatArguments =
+let private createDefaultMetadataFormatArguments() =
+    let toolPath, toolType = defaultToolPath.Value
     { ToolPath = toolPath
+      ToolType = toolType
       Source = Directory.GetCurrentDirectory()
       SourceRepository = ""
       OutputDirectory = ""
@@ -84,7 +101,7 @@ let defaultMetadataFormatArguments =
       LibDirs = [] }
 
 let createDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
-    let arguments = p defaultMetadataFormatArguments
+    let arguments = p (createDefaultMetadataFormatArguments())
     let outputDir = arguments.OutputDirectory
     let projectParameters = arguments.ProjectParameters
     let sourceRepo = arguments.SourceRepository
@@ -108,7 +125,7 @@ let createDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFi
             else sprintf "\"%s\"" s)
     |> String.separated " "
     |> fun prefix -> sprintf "%s --dllfiles %s" prefix (String.separated " " (dllFiles |> Seq.map (sprintf "\"%s\"")))
-    |> run arguments.ToolPath
+    |> run arguments.ToolType arguments.ToolPath
 
     
     printfn "Successfully generated docs for DLLs: %s" (String.separated ", " dllFiles)

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <AssemblyName>Fake.IO.FileSystem</AssemblyName>
     <OutputType>Library</OutputType>

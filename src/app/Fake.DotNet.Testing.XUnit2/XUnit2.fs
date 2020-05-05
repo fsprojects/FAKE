@@ -261,9 +261,11 @@ module internal ResultHandling =
 ///
 /// ## Sample usage
 ///
-///     Target "Test" (fun _ ->
+///     open Fake.DotNet.Testing
+///     open Fake.IO.Globbing.Operators
+///     Target.create "Test" (fun _ ->
 ///         !! (testDir @@ "xUnit.Test.*.dll")
-///         |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
+///         |> XUnit2.run (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 ///     )
 let run setParams assemblies =
     let details = String.separated ", " assemblies

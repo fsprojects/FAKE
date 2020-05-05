@@ -4,7 +4,7 @@ namespace Test.FAKECore.PackageMgt
     {
         public static string RepositoryUrl
         {
-            get { return "https://packages.nuget.org/v1/FeedService.svc"; }
+            get { return "https://www.nuget.org/v1/FeedService.svc"; }
         }
 
         public static string OutputDir

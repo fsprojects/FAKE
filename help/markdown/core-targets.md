@@ -101,7 +101,7 @@ Target.runOrDefault "Deploy"
 Now we have the following options:
 
 - `fake run build.fsx -t "Build"` --> starts the *Build* target and runs the dependency *Clean*
-- `fake run build.fsx -t "Build"` --single-target --> starts only the *Build* target and runs no dependencies
+- `fake run build.fsx -t "Build" --single-target` --> starts only the *Build* target and runs no dependencies
 - `fake run build.fsx -s -t Build` --> starts only the *Build* target and runs no dependencies
 - `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
 
@@ -110,7 +110,7 @@ Now we have the following options:
 Example:
 
 ```fsharp
-let args = Target.getArguments() // use this at the top of your script isntead of `Target.initEnvironment()`
+let args = Target.getArguments() // use this at the top of your script instead of `Target.initEnvironment()`
 
 // So some stuff depending on the args
 match args with

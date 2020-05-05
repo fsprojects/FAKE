@@ -51,13 +51,13 @@ let changeExtension extension fileName = Path.ChangeExtension(fileName, extensio
 ///
 /// - 'extension' - The extension to fine containing the leading '.'.
 /// - 'fileName' - Name of the file from which the extension is retrieved.
-let hasExtension extension fileName = System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.OrdinalIgnoreCase)
+let hasExtension extension (fileName: string) = System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.OrdinalIgnoreCase)
 
 /// Get the directory of the specified path
 /// ## Parameters
 ///
 /// - 'path' - The path from which the directory is retrieved.
-let getDirectory path = Path.GetDirectoryName path
+let getDirectory (path: string) = Path.GetDirectoryName path
 
 /// The directory separator string. On most systems / or \
 let directorySeparator =

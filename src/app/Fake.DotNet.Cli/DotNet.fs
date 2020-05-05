@@ -1261,6 +1261,8 @@ module DotNet =
             NoRestore: bool
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
+            /// Includes the debug symbols NuGet packages in addition to the regular NuGet packages in the output directory (--include-symbols)
+            IncludeSymbols: bool
         }
 
         /// Parameter default values.
@@ -1274,6 +1276,7 @@ module DotNet =
             NoBuild = false
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
+            IncludeSymbols = false
         }
         [<Obsolete("Use PackOptions.Create instead")>]
         static member Default = PackOptions.Create()
@@ -1300,6 +1303,7 @@ module DotNet =
             param.NoLogo |> argOption "nologo"
             param.NoBuild |> argOption "no-build"
             param.NoRestore |> argOption "no-restore"
+            param.IncludeSymbols |> argOption "include-symbols"
         ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
@@ -1310,6 +1314,16 @@ module DotNet =
     ///
     /// - 'setParams' - set pack command parameters
     /// - 'project' - project to pack
+    ///
+    /// ## Sample
+    ///
+    ///     let packConfiguration (defaults:DotNet.PackOptions) =
+    ///         { defaults with
+    ///               Configuration = DotNet.Debug
+    ///               OutputPath = Some "./packages"
+    ///               IncludeSymbols = true }
+    /// 
+    ///     DotNet.pack packConfiguration "./MyProject.csproj"
     let pack setParams project =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams

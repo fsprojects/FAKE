@@ -13,6 +13,7 @@
         Content/packages/**/*;
         Content/bin/**/*;
         Content/obj/**/*;
+        Content/.fake/**/*;
         Content/src/bin/**/*;
         Content/src/obj/**/*;
         </ExcludeFromPackage>

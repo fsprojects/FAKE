@@ -385,7 +385,7 @@ module internal TeamCityRest =
         |> Xml.createDoc
         |> Xml.getDocElement
 
-    let private parseBooleanOrFalse s =
+    let private parseBooleanOrFalse (s: string) =
         let ok, parsed = System.Boolean.TryParse s
         if ok then parsed else false
 

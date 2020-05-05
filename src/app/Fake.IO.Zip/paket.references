@@ -2,5 +2,3 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
-System.IO.Compression
-System.IO.Compression.ZipFile

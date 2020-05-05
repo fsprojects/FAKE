@@ -3,6 +3,7 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
+    <NoWarn>FS3186</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <!-- NOTE: The defines are required to still build legacy Fakelib (where the same files are used) -->
@@ -35,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

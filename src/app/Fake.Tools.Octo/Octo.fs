@@ -2,6 +2,7 @@
 module Fake.Tools.Octo
 
 open Fake.Core
+open Fake.DotNet
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
@@ -22,6 +23,7 @@ type ServerOptions = {
 
 /// Common Octo.exe CLI params
 type Options = {
+    ToolType            : ToolType
     ToolName            : string
     ToolPath            : string
     WorkingDirectory    : string
@@ -154,7 +156,8 @@ let internal commonOptions =
       ToolName = toolName
       Server = serverOptions
       Timeout = TimeSpan.MaxValue
-      WorkingDirectory = "" }
+      WorkingDirectory = ""
+      ToolType = ToolType.Create() }
 
 /// Default options for 'CreateRelease'
 let internal releaseOptions = {
@@ -189,10 +192,10 @@ let private optionalObjParam p o =
 let private stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
-        sb.Append (sprintf " --%s=%s" p (o.ToString())) |> ignore
-    sb.ToString()
+        sb.Append (sprintf "--%s=%s " p (o.ToString())) |> ignore
+    sb.ToString().Trim()
 
-let private flag p b = if b then sprintf " --%s" p else ""
+let private flag p b = if b then sprintf "--%s" p else ""
     
 let private releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
@@ -228,7 +231,7 @@ let private deleteCommandLine (opts:DeleteReleasesOptions) =
       (optionalStringParam "channel" (opts.Channel)) ]
     |> List.filter String.isNotNullOrEmpty
 
-let private serverCommandLine (opts:ServerOptions) = 
+let internal serverCommandLine (opts:ServerOptions) = 
     [ (optionalStringParam "server" (String.liftString opts.ServerUrl))
       (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ]
     |> List.filter String.isNotNullOrEmpty
@@ -259,10 +262,8 @@ let private exec command options =
         serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
     let tool = options.ToolPath @@ options.ToolName
-    let args = List.append (commandLine command) (serverCommandLine options.Server)
-               |> Arguments.OfArgs
+    let args = List.append (commandLine command) (serverCommandLine options.Server) |> Arguments.OfArgs
     let traceArgs = (List.append (commandLine command) (serverCommandLineForTracing options.Server)) |> List.fold (+) ""
-    
     let commandString = command.ToString()
 
     use __ = Trace.traceTask "Octo " commandString
@@ -271,6 +272,7 @@ let private exec command options =
     let result = 
         RawCommand (tool, args)
         |> CreateProcess.fromCommand
+        |> CreateProcess.withToolType (options.ToolType.WithDefaultToolCommandName "dotnet-octo")
         |> CreateProcess.withWorkingDirectory options.WorkingDirectory
         |> CreateProcess.withTimeout options.Timeout
         |> Proc.run

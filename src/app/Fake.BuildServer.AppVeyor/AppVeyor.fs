@@ -177,7 +177,11 @@ module AppVeyor =
         static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
 
         /// The rest of the commit message after line break (if exists)
-        static member RepoCommitMessageExtended = environVar "APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
+        static member RepoCommitMessageExtended =
+            match environVar "APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED" with
+            // https://github.com/appveyor/ci/issues/2939
+            | null -> String.Empty
+            | x -> x
 
         /// If the build runs by scheduler;
         static member IsScheduledBuild = environVar "APPVEYOR_SCHEDULED_BUILD"

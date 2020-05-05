@@ -2,8 +2,8 @@
   "profiles": {
     "Fake.netcore": {
       "commandName": "Project",
-      "commandLineArgs": "-vv build",
-      "workingDirectory": "C:\\proj\\FAKE"
+      "commandLineArgs": "-v build -t Nonexistent",
+      "workingDirectory": "E:\\projects\\FAKE"
     }
   }
 }

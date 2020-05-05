@@ -2,7 +2,7 @@
 
 <div class="alert alert-info">
     <h5>INFO</h5>
-    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs to be updated, please help!</p>
 </div>
 
 [FluentMigrator](https://github.com/schambers/fluentmigrator/) is a .NET library which helps to version database schema using incremental migrations which are described in C#.

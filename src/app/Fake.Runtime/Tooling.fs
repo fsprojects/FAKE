@@ -132,6 +132,7 @@ let detectFakeScript (file) : DetectionInfo option =
         match FakeRuntime.tryPrepareFakeScript config with
         | FakeRuntime.TryPrepareInfo.Prepared prepared -> Some { Config = config; Prepared = prepared }
         | _ -> None
+
 let getProjectOptions { Config = config; Prepared = prepared } : string[] =
     checkLogging()
     let prov = FakeRuntime.restoreAndCreateCachingProvider prepared
@@ -141,7 +142,7 @@ let getProjectOptions { Config = config; Prepared = prepared } : string[] =
       args |> Seq.toList
       |> List.filter (fun arg -> arg <> "--")
     
-    "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: args
+    "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: CompileRunner.fcsDependencyManagerOptions @ args
     |> List.toArray
 
 type GetTargetsWarningOrErrorType =

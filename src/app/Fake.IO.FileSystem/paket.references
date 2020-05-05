@@ -1,6 +1,4 @@
 group netcore
 
 FSharp.Core
-System.Diagnostics.FileVersionInfo
 NETStandard.Library
-System.IO.FileSystem.Watcher
