@@ -48,7 +48,8 @@ module BuildServer =
 
     /// Checks if we are on Bamboo
     /// [omit]
-    let isBambooBuild = String.IsNullOrEmpty bambooBuildNumber |> not
+    let isBambooBuild =
+        String.IsNullOrEmpty bambooBuildNumber |> not
 
     /// Checks if we are on Team Foundation
     /// [omit]
