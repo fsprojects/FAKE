@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.20.0-alpha - 2020-05-04
+## 5.20.0 - 2020-05-05
 
 * (Minor) BREAKING: Drop support for `net462` and update to `net472`.
 * ENHANCEMENT: Keep unreleased changelog section when promote to new version, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2480
@@ -10,6 +10,7 @@
 * ENHANCEMENT: Add support for `--include-symbols` in `dotnet pack`, thanks @devployment - https://github.com/fsharp/FAKE/pull/2508
 * ENHANCEMENT: Add support for default proxy credentials to GitHub (Octokit), thanks @csmager - https://github.com/fsharp/FAKE/pull/2507
 * ENHANCEMENT: `Fake.DotNet.FSFormatting` supports the 4.0 RC release
+* ENHANCEMENT: Update paket to support `netcoreapp5.0`, thanks @TheAngryByrd, @fc1943s - https://github.com/fsharp/FAKE/issues/2496
 * BUGFIX: Update FCS, fixes ionide FAKE support (https://github.com/fsharp/FsAutoComplete/issues/561), thanks @baronfel - https://github.com/fsharp/FAKE/pull/2475, https://github.com/fsharp/FAKE/pull/2479, https://github.com/fsharp/FAKE/pull/2481, https://github.com/fsharp/FAKE/pull/2500
 * BUGFIX: Fix Paket.restore references-files, thanks @nilshelmig - https://github.com/fsharp/FAKE/pull/2474
 * BUGFIX: Fix/octo args to string bug, thanks @ids-pfinn - https://github.com/fsharp/FAKE/pull/2469
