@@ -378,7 +378,7 @@ NUGET
     NUnit.Extension.TeamCityEventListener (1.0.7)
     NUnit.Extension.VSProjectLoader (3.8)
     Octokit (0.47)
-    Paket.Core (5.245)
+    Paket.Core (5.245.1)
       Chessie (>= 0.6) - restriction: || (>= net45) (>= netstandard2.0)
       FSharp.Compiler.Tools  - restriction: >= net45
       FSharp.Core (> 4.3) - restriction: >= net45
@@ -2184,7 +2184,7 @@ NUGET
       System.Dynamic.Runtime (>= 4.3) - restriction: || (== netcoreapp2.1) (== netstandard2.0)
     NuGet.Versioning (5.5.1)
     Octokit (0.47)
-    Paket.Core (5.245)
+    Paket.Core (5.245.1)
       Chessie (>= 0.6)
       FSharp.Compiler.Tools  - restriction: || (== net472) (&& (== netcoreapp2.1) (>= net45)) (&& (== netstandard2.0) (>= net45))
       FSharp.Core (> 4.3) - restriction: || (== net472) (&& (== netcoreapp2.1) (>= net45)) (&& (== netstandard2.0) (>= net45))
@@ -3580,7 +3580,7 @@ NUGET
     NuGet.Frameworks (5.5.1) - restriction: || (&& (== net472) (>= netcoreapp2.1)) (&& (== net472) (>= uap10.0)) (== netcoreapp2.1) (&& (== netstandard2.0) (>= netcoreapp2.1)) (&& (== netstandard2.0) (>= uap10.0))
     Packaging.Targets (0.1.155)
       System.Buffers (>= 4.5)
-    Paket.Core (5.245)
+    Paket.Core (5.245.1)
       Chessie (>= 0.6)
       FSharp.Compiler.Tools  - restriction: || (== net472) (&& (== netcoreapp2.1) (>= net45)) (&& (== netstandard2.0) (>= net45))
       FSharp.Core (> 4.3) - restriction: || (== net472) (&& (== netcoreapp2.1) (>= net45)) (&& (== netstandard2.0) (>= net45))
