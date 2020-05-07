@@ -2,6 +2,7 @@
 
 ## 5.20.1-alpha - tbd
 
+* BUGFIX: Change internal standard error and standard input redirection and support UTF8, fixes https://github.com/fsharp/FAKE/issues/2503 if you have problems try setting `FAKE_DISABLE_UTF8`
 * tbd
 
 ## 5.20.0 - 2020-05-05

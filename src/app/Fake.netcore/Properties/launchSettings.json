@@ -2,8 +2,8 @@
   "profiles": {
     "Fake.netcore": {
       "commandName": "Project",
-      "commandLineArgs": "-v build -t Nonexistent",
-      "workingDirectory": "E:\\projects\\FAKE"
+      "commandLineArgs": "-s run test.fsx",
+      "workingDirectory": "E:\\projects\\FAKE\\temp"
     }
   }
 }

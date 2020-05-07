@@ -560,7 +560,7 @@ If you know what you are doing you can silence this warning by setting the envir
 let restoreAndCreateCachingProvider (p:PrepareInfo) =
     restoreDependencies p._Config p._CacheDir p._Section
 
-let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
+let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs redirectConfig useCache restoreOnlyGroup =
   // fixes https://github.com/fsharp/FAKE/issues/2314
   let scriptPath = Path.normalizeFileName scriptPath
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
@@ -573,8 +573,15 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
         Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
 #endif
       }
-  use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
-  use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
+
+  // Make sure to not access forward-writer, see https://github.com/fsharp/FAKE/issues/2503
+  let redirectWriter =
+      redirectConfig
+      |> Option.map (fun (onOutMsg, onErrMsg) ->
+        let out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
+        let err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
+        { Out = out; Err = err }
+      )
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
 
   { Runners.FakeConfig.VerboseLevel = logLevel
@@ -587,12 +594,11 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
     Runners.FakeConfig.UseSimpleRestore = false
     Runners.FakeConfig.UseCache = useCache
     Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
-    Runners.FakeConfig.Out = out
-    Runners.FakeConfig.Err = err
+    Runners.FakeConfig.Redirect = redirectWriter
     Runners.FakeConfig.ScriptArgs = scriptArgs }
 
 let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
-    createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
+    createConfig logLevel fsiOptions scriptPath scriptArgs None useCache restoreOnlyGroup
 
 let runScript (preparedScript:PrepareInfo) : RunResult * ResultCoreCacheInfo * FakeContext =
     let cachingProvider = restoreAndCreateCachingProvider preparedScript
