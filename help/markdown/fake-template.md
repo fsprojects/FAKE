@@ -11,11 +11,11 @@ dotnet new -i "fake-template::*"
 to install or update the template.
 
 ## Usage
-After you installed the template you can setup FAKE by running:
+After you have installed the template you can setup FAKE by running:
 <pre><code class="lang-bash">
 dotnet new fake
 </code></pre>
-This will create a default `build.fsx` file, a `paket.dependencies` file used to mangage your build dependencies and two shell scripts `fake.sh` and `fake.cmd`. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed directly to FAKE so you can run:
+This will create a default `build.fsx` file and two shell scripts `fake.sh` and `fake.cmd`. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed directly to FAKE so you can run:
 <pre><code class="lang-bash">
 .\fake.cmd build
 </code></pre>
@@ -27,21 +27,21 @@ to run your build. Have a look at the [fake commandline](fake-commandline.html) 
 Specifies the name of the generated build-script. Defaults to `build.fsx`.
 
 ### --bootstrap
-Specifies your prefered way to bootstrap FAKE.
+Specifies your preferred way to bootstrap FAKE.
 
-- `local` (default) - Installs the FAKE dotnet sdk local tool into the `dotnet-tools.json` manifest. This requires an dotnet SDK version 3 or higher.
+- `local` (default) - Installs the FAKE dotnet sdk local tool into the `dotnet-tools.json` manifest. This requires dotnet SDK version 3 or higher.
 - `tool` - Installs the FAKE dotnet sdk global tool into the `--tool-path` folder
 - `none` - Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE
 
 ### --dependencies
-Specifies your prefered way to define the nuget packages used in your build:
+Specifies your preferred way to define the nuget packages used in your build:
 
 - `file` (default) - Creates a `paket.dependencies` file to define build dependencies
 - `inline` - Defines build dependencies inside the build script
 - `none` - Use this if you already have a `paket.dependencies` in your folder
 
 ### --dsl
-Specifies your prefered way to define build tasks inside your build script:
+Specifies your preferred way to define build tasks inside your build script:
 
 - `fake` (default) - Uses the default FAKE domain specific language
 - `buildtask` - Uses a string free domain specific language, called [BuildTask](https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md)
