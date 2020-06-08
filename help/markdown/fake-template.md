@@ -36,8 +36,8 @@ Specifies your preferred way to bootstrap FAKE.
 ### --dependencies
 Specifies your preferred way to define the nuget packages used in your build:
 
-- `file` (default) - Creates a `paket.dependencies` file to define build dependencies
-- `inline` - Defines build dependencies inside the build script
+- `inline` (default) - Defines build dependencies inside the build script
+- `file` - Creates a `paket.dependencies` file to define build dependencies
 - `none` - Use this if you already have a `paket.dependencies` in your folder
 
 ### --dsl
