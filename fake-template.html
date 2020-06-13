@@ -102,6 +102,7 @@
 								<a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
 									DevOps</a>
 								<a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
 							</div>
@@ -308,11 +309,11 @@ dotnet new -i "fake-template::*"
 </code></pre>
 to install or update the template.</p>
 <h2><a name="Usage" class="anchor" href="#Usage">Usage</a></h2>
-<p>After you installed the template you can setup FAKE by running:
+<p>After you have installed the template you can setup FAKE by running:
 <pre><code class="lang-bash">
 dotnet new fake
 </code></pre>
-This will create a default <code>build.fsx</code> file, a <code>paket.dependencies</code> file used to mangage your build dependencies and two shell scripts <code>fake.sh</code> and <code>fake.cmd</code>. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed directly to FAKE so you can run:
+This will create a default <code>build.fsx</code> file and two shell scripts <code>fake.sh</code> and <code>fake.cmd</code>. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed directly to FAKE so you can run:
 <pre><code class="lang-bash">
 .\fake.cmd build
 </code></pre>
@@ -321,21 +322,21 @@ to run your build. Have a look at the <a href="fake-commandline.html">fake comma
 <h3><a name="script-name" class="anchor" href="#script-name">--script-name</a></h3>
 <p>Specifies the name of the generated build-script. Defaults to <code>build.fsx</code>.</p>
 <h3><a name="bootstrap" class="anchor" href="#bootstrap">--bootstrap</a></h3>
-<p>Specifies your prefered way to bootstrap FAKE.</p>
+<p>Specifies your preferred way to bootstrap FAKE.</p>
 <ul>
-<li><code>local</code> (default) - Installs the FAKE dotnet sdk local tool into the <code>dotnet-tools.json</code> manifest. This requires an dotnet SDK version 3 or higher.</li>
+<li><code>local</code> (default) - Installs the FAKE dotnet sdk local tool into the <code>dotnet-tools.json</code> manifest. This requires dotnet SDK version 3 or higher.</li>
 <li><code>tool</code> - Installs the FAKE dotnet sdk global tool into the <code>--tool-path</code> folder</li>
 <li><code>none</code> - Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE</li>
 </ul>
 <h3><a name="dependencies" class="anchor" href="#dependencies">--dependencies</a></h3>
-<p>Specifies your prefered way to define the nuget packages used in your build:</p>
+<p>Specifies your preferred way to define the nuget packages used in your build:</p>
 <ul>
-<li><code>file</code> (default) - Creates a <code>paket.dependencies</code> file to define build dependencies</li>
-<li><code>inline</code> - Defines build dependencies inside the build script</li>
+<li><code>inline</code> (default) - Defines build dependencies inside the build script</li>
+<li><code>file</code> - Creates a <code>paket.dependencies</code> file to define build dependencies</li>
 <li><code>none</code> - Use this if you already have a <code>paket.dependencies</code> in your folder</li>
 </ul>
 <h3><a name="dsl" class="anchor" href="#dsl">--dsl</a></h3>
-<p>Specifies your prefered way to define build tasks inside your build script:</p>
+<p>Specifies your preferred way to define build tasks inside your build script:</p>
 <ul>
 <li><code>fake</code> (default) - Uses the default FAKE domain specific language</li>
 <li><code>buildtask</code> - Uses a string free domain specific language, called <a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BuildTask</a></li>
@@ -382,7 +383,7 @@ to run your build. Have a look at the <a href="fake-commandline.html">fake comma
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1-alpha.1590</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

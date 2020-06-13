@@ -101,6 +101,7 @@
 								<a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
 									DevOps</a>
 								<a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
 							</div>
@@ -322,10 +323,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1175', 1175)" onmouseover="showTip(event, '1175', 1175)">
+          <code onmouseout="hideTip(event, '1179', 1179)" onmouseover="showTip(event, '1179', 1179)">
             checkout repositoryDir create branch
           </code>
-          <div class="tip" id="1175">
+          <div class="tip" id="1179">
             <strong>Signature:</strong> repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -346,10 +347,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1176', 1176)" onmouseover="showTip(event, '1176', 1176)">
+          <code onmouseout="hideTip(event, '1180', 1180)" onmouseover="showTip(event, '1180', 1180)">
             checkoutBranch repositoryDir branch
           </code>
-          <div class="tip" id="1176">
+          <div class="tip" id="1180">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -369,10 +370,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1177', 1177)" onmouseover="showTip(event, '1177', 1177)">
+          <code onmouseout="hideTip(event, '1181', 1181)" onmouseover="showTip(event, '1181', 1181)">
             checkoutNewBranch(...)
           </code>
-          <div class="tip" id="1177">
+          <div class="tip" id="1181">
             <strong>Signature:</strong> repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -393,10 +394,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1178', 1178)" onmouseover="showTip(event, '1178', 1178)">
+          <code onmouseout="hideTip(event, '1182', 1182)" onmouseover="showTip(event, '1182', 1182)">
             checkoutTracked(...)
           </code>
-          <div class="tip" id="1178">
+          <div class="tip" id="1182">
             <strong>Signature:</strong> repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -417,10 +418,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1179', 1179)" onmouseover="showTip(event, '1179', 1179)">
+          <code onmouseout="hideTip(event, '1183', 1183)" onmouseover="showTip(event, '1183', 1183)">
             createBranch(...)
           </code>
-          <div class="tip" id="1179">
+          <div class="tip" id="1183">
             <strong>Signature:</strong> repositoryDir:string -&gt; newBranchName:string -&gt; commit:string -&gt; unit<br />
                                   </div>
         </td>
@@ -441,10 +442,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1180', 1180)" onmouseover="showTip(event, '1180', 1180)">
+          <code onmouseout="hideTip(event, '1184', 1184)" onmouseover="showTip(event, '1184', 1184)">
             deleteBranch repositoryDir force branch
           </code>
-          <div class="tip" id="1180">
+          <div class="tip" id="1184">
             <strong>Signature:</strong> repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -465,10 +466,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1181', 1181)" onmouseover="showTip(event, '1181', 1181)">
+          <code onmouseout="hideTip(event, '1185', 1185)" onmouseover="showTip(event, '1185', 1185)">
             deleteTag repositoryDir tag
           </code>
-          <div class="tip" id="1181">
+          <div class="tip" id="1185">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                                   </div>
         </td>
@@ -488,10 +489,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1182', 1182)" onmouseover="showTip(event, '1182', 1182)">
+          <code onmouseout="hideTip(event, '1186', 1186)" onmouseover="showTip(event, '1186', 1186)">
             findMergeBase(...)
           </code>
-          <div class="tip" id="1182">
+          <div class="tip" id="1186">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; string<br />
                                   </div>
         </td>
@@ -512,10 +513,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1183', 1183)" onmouseover="showTip(event, '1183', 1183)">
+          <code onmouseout="hideTip(event, '1187', 1187)" onmouseover="showTip(event, '1187', 1187)">
             getAllBranches(repositoryDir)
           </code>
-          <div class="tip" id="1183">
+          <div class="tip" id="1187">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                   </div>
         </td>
@@ -530,10 +531,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1184', 1184)" onmouseover="showTip(event, '1184', 1184)">
+          <code onmouseout="hideTip(event, '1188', 1188)" onmouseover="showTip(event, '1188', 1188)">
             getLocalBranches(repositoryDir)
           </code>
-          <div class="tip" id="1184">
+          <div class="tip" id="1188">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                   </div>
         </td>
@@ -548,10 +549,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1185', 1185)" onmouseover="showTip(event, '1185', 1185)">
+          <code onmouseout="hideTip(event, '1189', 1189)" onmouseover="showTip(event, '1189', 1189)">
             getRemoteBranches(repositoryDir)
           </code>
-          <div class="tip" id="1185">
+          <div class="tip" id="1189">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                   </div>
         </td>
@@ -566,10 +567,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1186', 1186)" onmouseover="showTip(event, '1186', 1186)">
+          <code onmouseout="hideTip(event, '1190', 1190)" onmouseover="showTip(event, '1190', 1190)">
             getSHA1 repositoryDir commit
           </code>
-          <div class="tip" id="1186">
+          <div class="tip" id="1190">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; string<br />
                                   </div>
         </td>
@@ -589,10 +590,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1187', 1187)" onmouseover="showTip(event, '1187', 1187)">
+          <code onmouseout="hideTip(event, '1191', 1191)" onmouseover="showTip(event, '1191', 1191)">
             pull repositoryDir remote branch
           </code>
-          <div class="tip" id="1187">
+          <div class="tip" id="1191">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -613,10 +614,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1188', 1188)" onmouseover="showTip(event, '1188', 1188)">
+          <code onmouseout="hideTip(event, '1192', 1192)" onmouseover="showTip(event, '1192', 1192)">
             push(repositoryDir)
           </code>
-          <div class="tip" id="1188">
+          <div class="tip" id="1192">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -635,10 +636,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1189', 1189)" onmouseover="showTip(event, '1189', 1189)">
+          <code onmouseout="hideTip(event, '1193', 1193)" onmouseover="showTip(event, '1193', 1193)">
             pushBranch repositoryDir remote branch
           </code>
-          <div class="tip" id="1189">
+          <div class="tip" id="1193">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
@@ -659,10 +660,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1190', 1190)" onmouseover="showTip(event, '1190', 1190)">
+          <code onmouseout="hideTip(event, '1194', 1194)" onmouseover="showTip(event, '1194', 1194)">
             pushTag repositoryDir remote tag
           </code>
-          <div class="tip" id="1190">
+          <div class="tip" id="1194">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; tag:string -&gt; unit<br />
                                   </div>
         </td>
@@ -683,10 +684,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1191', 1191)" onmouseover="showTip(event, '1191', 1191)">
+          <code onmouseout="hideTip(event, '1195', 1195)" onmouseover="showTip(event, '1195', 1195)">
             revisionsBetween(...)
           </code>
-          <div class="tip" id="1191">
+          <div class="tip" id="1195">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; int<br />
                                   </div>
         </td>
@@ -707,10 +708,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1192', 1192)" onmouseover="showTip(event, '1192', 1192)">
+          <code onmouseout="hideTip(event, '1196', 1196)" onmouseover="showTip(event, '1196', 1196)">
             tag repositoryDir tag
           </code>
-          <div class="tip" id="1192">
+          <div class="tip" id="1196">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                                   </div>
         </td>
@@ -768,7 +769,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1-alpha.1590</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

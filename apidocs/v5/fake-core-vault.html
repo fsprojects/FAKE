@@ -101,6 +101,7 @@
 								<a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
 									DevOps</a>
 								<a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
 							</div>
@@ -374,10 +375,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '488', 488)" onmouseover="showTip(event, '488', 488)">
+          <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
             Vault.createKey(file)
           </code>
-          <div class="tip" id="488">
+          <div class="tip" id="492">
             <strong>Signature:</strong> file:string option -&gt; KeyInfo<br />
                                   </div>
         </td>
@@ -392,10 +393,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '489', 489)" onmouseover="showTip(event, '489', 489)">
+          <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
             Vault.decryptVariable key base64Val
           </code>
-          <div class="tip" id="489">
+          <div class="tip" id="493">
             <strong>Signature:</strong> key:KeyInfo -&gt; base64Val:string -&gt; string<br />
                                   </div>
         </td>
@@ -410,10 +411,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '490', 490)" onmouseover="showTip(event, '490', 490)">
+          <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
             Vault.empty
           </code>
-          <div class="tip" id="490">
+          <div class="tip" id="494">
             <strong>Signature:</strong> Vault<br />
                                   </div>
         </td>
@@ -428,10 +429,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '491', 491)" onmouseover="showTip(event, '491', 491)">
+          <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
             Vault.encryptVariable key value
           </code>
-          <div class="tip" id="491">
+          <div class="tip" id="495">
             <strong>Signature:</strong> key:KeyInfo -&gt; value:string -&gt; string<br />
                                   </div>
         </td>
@@ -446,10 +447,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
+          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
             Vault.fromEncryptedVariables key vars
           </code>
-          <div class="tip" id="492">
+          <div class="tip" id="496">
             <strong>Signature:</strong> key:KeyInfo -&gt; vars:seq&lt;Variable&gt; -&gt; Vault<br />
                                   </div>
         </td>
@@ -464,10 +465,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
+          <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
             Vault.fromEnvironmentVariable(envVar)
           </code>
-          <div class="tip" id="493">
+          <div class="tip" id="497">
             <strong>Signature:</strong> envVar:string -&gt; Vault<br />
                                   </div>
         </td>
@@ -482,10 +483,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
+          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
             Vault.fromEnvironmentVariableOrNone(...)
           </code>
-          <div class="tip" id="494">
+          <div class="tip" id="498">
             <strong>Signature:</strong> envVar:string -&gt; Vault option<br />
                                   </div>
         </td>
@@ -500,10 +501,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
+          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
             Vault.fromFakeEnvironmentOrNone()
           </code>
-          <div class="tip" id="495">
+          <div class="tip" id="499">
             <strong>Signature:</strong> unit -&gt; Vault option<br />
                                   </div>
         </td>
@@ -518,10 +519,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
+          <code onmouseout="hideTip(event, '500', 500)" onmouseover="showTip(event, '500', 500)">
             Vault.fromFakeEnvironmentVariable()
           </code>
-          <div class="tip" id="496">
+          <div class="tip" id="500">
             <strong>Signature:</strong> unit -&gt; Vault<br />
                                   </div>
         </td>
@@ -536,10 +537,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
+          <code onmouseout="hideTip(event, '501', 501)" onmouseover="showTip(event, '501', 501)">
             Vault.fromJson(s)
           </code>
-          <div class="tip" id="497">
+          <div class="tip" id="501">
             <strong>Signature:</strong> s:string -&gt; Vault<br />
                                   </div>
         </td>
@@ -554,10 +555,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
+          <code onmouseout="hideTip(event, '502', 502)" onmouseover="showTip(event, '502', 502)">
             Vault.get name v
           </code>
-          <div class="tip" id="498">
+          <div class="tip" id="502">
             <strong>Signature:</strong> name:string -&gt; v:Vault -&gt; string<br />
                                   </div>
         </td>
@@ -572,10 +573,10 @@ Please read the <a href="/core-vault.html">documentation</a></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
+          <code onmouseout="hideTip(event, '503', 503)" onmouseover="showTip(event, '503', 503)">
             Vault.tryGet name v
           </code>
-          <div class="tip" id="499">
+          <div class="tip" id="503">
             <strong>Signature:</strong> name:string -&gt; v:Vault -&gt; string option<br />
                                   </div>
         </td>
@@ -628,7 +629,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1-alpha.1590</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.1</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
