@@ -12,6 +12,7 @@ type BuildServer =
     | Travis
     | AppVeyor
     | GitLabCI
+    | GitHubActions
     | Bamboo
     | BitbucketPipelines
     | LocalBuild
@@ -84,6 +85,18 @@ module BuildServer =
             else s
         else ""
 
+    // Checks if we are on GitHub Actions
+    /// [omit]
+    let isGitHubActionsBuild =
+        Environment.environVarAsBoolOrDefault "GITHUB_ACTIONS" false
+
+    /// Build number retrieved from GitHub Actions
+    /// [omit]
+    let gitHubActionsBuildNumber =
+        if isGitHubActionsBuild
+        then Environment.environVar "GITHUB_RUN_NUMBER"
+        else ""
+
     /// Build number retrieved from Jenkins
     /// [omit]
     let jenkinsBuildNumber = tcBuildNumber
@@ -104,6 +117,7 @@ module BuildServer =
         elif not (String.IsNullOrEmpty travisBuildNumber) then Travis
         elif not (String.IsNullOrEmpty appVeyorBuildVersion) then AppVeyor
         elif isGitlabCI then GitLabCI
+        elif isGitHubActionsBuild then GitHubActions
         elif isTFBuild then TeamFoundation
         elif isBambooBuild then Bamboo
         elif Environment.hasEnvironVar "BITBUCKET_COMMIT" then BitbucketPipelines
@@ -119,6 +133,7 @@ module BuildServer =
         | Travis -> getVersion travisBuildNumber
         | AppVeyor -> getVersion appVeyorBuildVersion
         | GitLabCI -> getVersion gitlabCIBuildNumber
+        | GitHubActions -> getVersion gitHubActionsBuildNumber
         | TeamFoundation -> getVersion tfBuildNumber
         | Bamboo -> getVersion bambooBuildNumber
         | LocalBuild -> getVersion localBuildLabel
@@ -135,6 +150,7 @@ module BuildServer =
         | Travis -> true
         | AppVeyor -> true
         | GitLabCI -> true
+        | GitHubActions -> true
         | TeamFoundation -> false
         | Bamboo -> false
         | BitbucketPipelines -> false
