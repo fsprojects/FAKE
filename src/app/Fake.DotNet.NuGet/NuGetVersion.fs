@@ -25,17 +25,17 @@ type NuGetVersionIncrement = SemVerInfo -> SemVerInfo
 /// Increment patch version
 let IncPatch:NuGetVersionIncrement =
     fun (v:SemVerInfo) ->
-        { v with Build=""; Patch=(v.Patch+1) }
+        { v with Build=""; Patch=(v.Patch+1); Original = None }
 
 /// Increment minor version
 let IncMinor:NuGetVersionIncrement =
     fun (v:SemVerInfo) ->
-        { v with Build=""; Patch=0; Minor=(v.Minor+1) }
+        { v with Build=""; Patch=0; Minor=(v.Minor+1); Original = None }
 
 /// Increment major version
 let IncMajor:NuGetVersionIncrement =
     fun (v:SemVerInfo) ->
-        { v with Build=""; Patch=0; Minor=0; Major=(v.Major+1) }
+        { v with Build=""; Patch=0; Minor=0; Major=(v.Major+1); Original = None }
 
 /// Arguments for the next NuGet version number computing
 type NuGetVersionArg =
