@@ -49,8 +49,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     let assemblyContext = context.CreateAssemblyContext()
     let result =
       try
-        let result =
-          Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+        let run () =
             let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
             let ass = assemblyContext.LoadFromAssemblyPath fullPath
             let types =
@@ -78,7 +77,11 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
                   Some targetInvocation.InnerException
               | ex ->
                   Some ex
-            | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
+            | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly
+        let result =
+            match context.Config.Redirect with
+            | Some r -> Yaaf.FSharp.Scripting.Helper.consoleCapture r.Out r.Err run
+            | None -> run()
 
         use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
         (execContext :> System.IDisposable).Dispose()

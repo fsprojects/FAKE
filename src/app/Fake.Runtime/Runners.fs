@@ -55,6 +55,10 @@ type RuntimeOptions =
     internal { _RuntimeDependencies : AssemblyInfo list; _NativeLibraries : NativeLibrary list }
     member x.RuntimeDependencies : AssemblyInfo list = x._RuntimeDependencies
     member x.NativeLibraries : NativeLibrary list = x._NativeLibraries
+
+type RedirectConfig =
+  { Out : TextWriter
+    Err : TextWriter }
 type FakeConfig =
   { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
@@ -64,8 +68,7 @@ type FakeConfig =
     UseCache : bool
     UseSimpleRestore : bool
     RestoreOnlyGroup : bool
-    Out: TextWriter
-    Err: TextWriter
+    Redirect: RedirectConfig option
     ScriptArgs: string list }
   member x.FsArgs = x.CompileOptions.FsiOptions.AsArgs
 

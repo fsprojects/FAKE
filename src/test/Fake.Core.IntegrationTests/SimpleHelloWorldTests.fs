@@ -138,7 +138,12 @@ let tests =
         let expected = "GlobalArgs: [|\"--test\"|]"
         stdOut.Contains expected
             |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
-        stdErr.Trim() |> Expect.equal "empty exected" ""
+        // Depending on the CI this string should be in the standard-output or the standard-error
+        let expected =
+            if CoreTracing.importantMessagesToStdErr then
+                "Some Info from FAKE"
+            else ""
+        stdErr.Trim() |> Expect.equal "exected correct stderr" expected
 
         // Check if --write-info <file> works
         let tempFile = Path.GetTempFileName()

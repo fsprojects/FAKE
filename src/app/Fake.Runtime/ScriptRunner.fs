@@ -138,7 +138,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-    Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+    let run () =
 #if NETSTANDARD1_6
         let loadContext = AssemblyLoadContext.Default
         let ass = loadContext.LoadFromAssemblyPath(c.CompiledAssembly)
@@ -156,8 +156,10 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
               RunResult.SuccessRun c.Warnings
           with ex ->
               RunResult.RuntimeError ex
-        | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
-
+        | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly
+    match context.Config.Redirect with
+    | Some r -> Yaaf.FSharp.Scripting.Helper.consoleCapture r.Out r.Err run
+    | None -> run()
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     let co = context.Config.CompileOptions
@@ -202,15 +204,27 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
     let session =
-      try ScriptHost.Create
-            (options, preventStdOut = true,
-              fsiErrWriter = ScriptHost.CreateForwardWriter
-                ((fun s ->
-                    if String.IsNullOrWhiteSpace s |> not then
-                        fsiErrorOutput.AppendLine s |> ignore),
-                  removeNewLines = true),
-              outWriter = context.Config.Out,
-              errWriter = context.Config.Err)
+      try 
+          match context.Config.Redirect with
+          | Some r ->
+              ScriptHost.Create
+                (options, preventStdOut = true,
+                  fsiErrWriter = ScriptHost.CreateForwardWriter
+                    ((fun s ->
+                        if String.IsNullOrWhiteSpace s |> not then
+                            fsiErrorOutput.AppendLine s |> ignore),
+                      removeNewLines = true),
+                  outWriter = r.Out,
+                  errWriter = r.Err)
+          | None ->
+              ScriptHost.Create
+                (options, preventStdOut = true,
+                  fsiErrWriter = ScriptHost.CreateForwardWriter
+                    ((fun s ->
+                        if String.IsNullOrWhiteSpace s |> not then
+                            fsiErrorOutput.AppendLine s |> ignore),
+                      removeNewLines = true))
+
       with :? FsiEvaluationException as e ->
           traceError "FsiEvaluationSession could not be created."
           traceError e.Result.Error.Merged

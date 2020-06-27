@@ -1,5 +1,15 @@
 # Release Notes
 
+## 5.20.2-alpha
+
+* BUGFIX: Fix secrets leakage in certain scenarios (NuGet key, Paket key), thanks @zvirja - https://github.com/fsharp/FAKE/pull/2527
+
+## 5.20.1 - 2020-06-13
+
+* ENHANCEMENT: add basic support for GitHub Actions, thanks @Bomret - https://github.com/fsharp/FAKE/pull/2512
+* BUGFIX: Change internal standard error and standard input redirection and support UTF8, fixes https://github.com/fsharp/FAKE/issues/2503 if you have problems try setting `FAKE_DISABLE_UTF8`
+* DOCS: Update documentation following "bug" #2486, thanks @DavidSSL - https://github.com/fsharp/FAKE/pull/2520
+
 ## 5.20.0 - 2020-05-05
 
 * (Minor) BREAKING: Drop support for `net462` and update to `net472`.

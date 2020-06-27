@@ -302,6 +302,12 @@ let main (args:string[]) =
   if System.String.IsNullOrEmpty resolution then
     Environment.SetEnvironmentVariable ("PAKET_DISABLE_RUNTIME_RESOLUTION", "true")
 
+  let encoding = Console.OutputEncoding
+  let disableUtf8 = Environment.GetEnvironmentVariable ("FAKE_DISABLE_UTF8")
+  if disableUtf8 <> "true" && disableUtf8 <> "yes" then
+      Console.OutputEncoding <- System.Text.Encoding.UTF8
+      Console.InputEncoding <- System.Text.Encoding.UTF8
+
   // Immediatly start to build up some performance maps in the background
   let paketPerfTask =
       async {
@@ -311,9 +317,8 @@ let main (args:string[]) =
         with e -> eprintfn "Building paket performance maps failed: %O" e
       }
       |> Async.StartAsTask
-      
+
   let mutable exitCode = 0
-  let encoding = Console.OutputEncoding
   try
     let verbLevel, results =
       use __ = Fake.Profile.startCategory Fake.Profile.Category.Cli
