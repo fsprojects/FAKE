@@ -2,6 +2,7 @@
 
 ## 5.20.2-alpha
 
+* ENHANCEMENT: Update bundled paket.
 * BUGFIX: Fix secrets leakage in certain scenarios (NuGet key, Paket key), thanks @zvirja - https://github.com/fsharp/FAKE/pull/2527
 
 ## 5.20.1 - 2020-06-13
