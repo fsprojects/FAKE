@@ -105,6 +105,7 @@ type Docopt(doc', ?soptChars':string) =
           |> addKey opt.DefaultValue opt.FullLong
           |> addKey opt.DefaultValue opt.FullShort
         ) map) result
+    member this.Parse(argv':#seq<string>) = this.Parse(argv' |> Seq.toArray)
 
     member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
