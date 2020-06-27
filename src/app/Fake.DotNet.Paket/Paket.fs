@@ -178,12 +178,12 @@ let pack setParams =
 let pushFiles setParams files =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
-    TraceSecrets.register parameters.ApiKey "<PaketApiKey>"
+    TraceSecrets.register "<PaketApiKey>" parameters.ApiKey
     match Environment.environVarOrNone "nugetkey" with
-    | Some k -> TraceSecrets.register k "<PaketApiKey>"
+    | Some k -> TraceSecrets.register "<PaketApiKey>" k
     | None -> ()
     match Environment.environVarOrNone "nuget-key" with
-    | Some k -> TraceSecrets.register k "<PaketApiKey>"
+    | Some k -> TraceSecrets.register "<PaketApiKey>" k
     | None -> ()
     
     let packages = Seq.toList files
