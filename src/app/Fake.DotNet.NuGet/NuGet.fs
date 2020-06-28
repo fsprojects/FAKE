@@ -315,8 +315,8 @@ let private propertiesParam = function
 
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
-    TraceSecrets.register parameters.AccessKey "<NuGetKey>"
-    TraceSecrets.register parameters.SymbolAccessKey "<NuGetSymbolKey>"
+    TraceSecrets.register "<NuGetKey>" parameters.AccessKey
+    TraceSecrets.register "<NuGetSymbolKey>" parameters.SymbolAccessKey
     let nuspecFile = Path.getFullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let basePath = parameters.BasePath |> Option.map (sprintf "-BasePath \"%s\"") |> Option.defaultValue ""
@@ -433,8 +433,8 @@ let internal toPushCliArgs param =
     |> List.filter (not << String.IsNullOrEmpty)
 
 let rec private push (options : ToolOptions) (parameters : NuGetPushParams) nupkg =
-    parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetKey>")
-    parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register key "<NuGetSymbolKey>")
+    parameters.ApiKey |> Option.iter (fun key -> TraceSecrets.register "<NuGetKey>" key)
+    parameters.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register "<NuGetSymbolKey>" key)
 
     let pushArgs = parameters |> toPushCliArgs |> Args.toWindowsCommandLine
     let args = sprintf "%s \"%s\" %s" options.Command nupkg pushArgs

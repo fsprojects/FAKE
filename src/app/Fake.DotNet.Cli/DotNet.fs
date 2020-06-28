@@ -1645,7 +1645,7 @@ module DotNet =
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
-    /// nuget push paramters for `dotnet nuget push`
+    /// nuget push parameters for `dotnet nuget push`
     type NuGetPushOptions =
         { Common: Options
           PushParams: NuGet.NuGetPushParams }
@@ -1681,6 +1681,9 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:nuget:push" nupkg
         let param = NuGetPushOptions.Create() |> setParams
         let pushParams = param.PushParams
+        pushParams.ApiKey |> Option.iter (fun key -> TraceSecrets.register "<ApiKey>" key)
+        pushParams.SymbolApiKey |> Option.iter (fun key -> TraceSecrets.register "<SymbolApiKey>" key)
+
         let args = Args.toWindowsCommandLine (nupkg :: buildNugetPushArgs pushParams)
         let result = exec (fun _ -> param.Common) "nuget push" args
 

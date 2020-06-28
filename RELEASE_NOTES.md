@@ -1,7 +1,10 @@
 # Release Notes
 
-## 5.20.2-alpha
+## 5.20.2 - 2020-06-27
 
+* ENHANCEMENT: Update bundled paket
+* ENHANCEMENT: Add seq overload for `Docopt.Parse`, thanks @rmunn - https://github.com/fsharp/FAKE/pull/2525
+* BUGFIX: Fixed increments in SemVerInfo, thanks @MecuSorin - https://github.com/fsharp/FAKE/pull/2523
 * BUGFIX: Fix secrets leakage in certain scenarios (NuGet key, Paket key), thanks @zvirja - https://github.com/fsharp/FAKE/pull/2527
 
 ## 5.20.1 - 2020-06-13
