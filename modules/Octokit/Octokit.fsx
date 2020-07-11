@@ -1,8 +1,8 @@
 #nowarn "211"
 #I __SOURCE_DIRECTORY__
-#I @"../../../../../packages/Octokit/lib/net45"
-#I @"../../packages/Octokit/lib/net45"
-#I @"../../../../../../packages/build/Octokit/lib/net45"
+#I @"../../../../../packages/Octokit/lib/net46"
+#I @"../../packages/Octokit/lib/net46"
+#I @"../../../../../../packages/build/Octokit/lib/net46"
 #r "System.Net.Http"
 #r "Octokit.dll"
 
