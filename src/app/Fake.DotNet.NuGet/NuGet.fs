@@ -315,8 +315,8 @@ let private propertiesParam = function
 
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
-    if not (isNull parameters.AccessKey) then TraceSecrets.register "<NuGetKey>" parameters.AccessKey
-    if not (isNull parameters.SymbolAccessKey) then TraceSecrets.register "<NuGetSymbolKey>" parameters.SymbolAccessKey
+    if String.isNotNullOrEmpty parameters.AccessKey then TraceSecrets.register "<NuGetKey>" parameters.AccessKey
+    if String.isNotNullOrEmpty parameters.SymbolAccessKey then TraceSecrets.register "<NuGetSymbolKey>" parameters.SymbolAccessKey
     let nuspecFile = Path.getFullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let basePath = parameters.BasePath |> Option.map (sprintf "-BasePath \"%s\"") |> Option.defaultValue ""
