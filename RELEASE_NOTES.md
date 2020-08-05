@@ -1,8 +1,10 @@
 # Release Notes
 
-## 5.20.3-alpha - tbd
+## 5.20.3 - 2020-08-05
 
-* tbd
+* BUGFIX: Fix unintentional unit return, thanks @objectx - https://github.com/fsharp/FAKE/pull/2534
+* BUGFIX: Add null check for values with null as default value, thanks @aklefdal - https://github.com/fsharp/FAKE/pull/2531
+* BUGFIX: Small Copy&Paste issue, thanks @vilinski - https://github.com/fsharp/FAKE/pull/2537
 
 ## 5.20.2 - 2020-06-27
 
