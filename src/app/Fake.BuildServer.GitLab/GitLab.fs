@@ -212,7 +212,7 @@ module GitLab =
     let detect () =
         BuildServer.buildServer = BuildServer.GitLabCI
     let install(force:bool) =
-        if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
+        if not (detect()) then failwithf "Cannot run 'install()' on a non-GitLab environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
         () 
