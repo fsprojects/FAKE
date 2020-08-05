@@ -322,10 +322,12 @@ module TraceSecrets =
         | None -> []
 
     let register replacement secret =
-        getAll()
-        |> List.filter (fun s -> s.Value <> secret)
-        |> fun l -> { Value = secret; Replacement = replacement } :: l
-        |> fun l -> setTraceSecrets l
+        if isNull replacement then invalidArg "replacement" "replacement cannot be null"
+        if not <| String.IsNullOrEmpty(secret) then
+            getAll()
+            |> List.filter (fun s -> s.Value <> secret)
+            |> fun l -> { Value = secret; Replacement = replacement } :: l
+            |> setTraceSecrets
 
     let guardMessage (s:string) =
         getAll()
