@@ -95,8 +95,6 @@ group Build
     nuget FSharp.Core ~> 4.1
     nuget NuGet.CommandLine
     nuget FAKE prerelease
-    nuget FSharp.Formatting ~> 4.1
-    nuget FSharp.Formatting.CommandTool ~> 4.1
     nuget SourceLink.Fake
     nuget ILRepack
     nuget Newtonsoft.Json
