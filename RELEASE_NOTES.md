@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.20.4-alpha - tbd
+
+* tbd
+
 ## 5.20.3 - 2020-08-05
 
 * BUGFIX: Fix unintentional unit return, thanks @objectx - https://github.com/fsharp/FAKE/pull/2534
