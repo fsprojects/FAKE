@@ -631,8 +631,8 @@ module CreateProcess =
                     | None ->
                         (sprintf "%s. exit code '%d' <> 0. Command Line: %s" msg exitCode r.CommandLine)
                 //if Env.isVerbose then
-                eprintfn "%s" msg    
-            else data)
+                eprintfn "%s" msg
+            data)
 
     type internal TimeoutState =
         { Stopwatch : System.Diagnostics.Stopwatch
