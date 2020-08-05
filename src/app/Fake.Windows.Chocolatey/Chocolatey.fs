@@ -835,7 +835,7 @@ module Fake.Windows.Choco
             try
                 callChoco parameters.ToolPath args parameters.Timeout
             with e when n > 1 ->
-                eprintf "pushing to chocolatey server failed, trying again: %O"
+                eprintf "pushing to chocolatey server failed, trying again: %O" e
                 tries (n - 1)
         tries 3         
                 
