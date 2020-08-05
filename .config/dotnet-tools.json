@@ -9,7 +9,7 @@
       ]
     },
     "paket": {
-      "version": "5.247.4",
+      "version": "5.249.0",
       "commands": [
         "paket"
       ]
