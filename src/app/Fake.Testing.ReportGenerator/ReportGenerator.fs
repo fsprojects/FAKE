@@ -7,9 +7,9 @@
 /// open Fake.Testing
 ///
 /// Target.create "Generate Reports" (fun _ ->
-///   let parameters p = { p with TargetDir = "c:/reports/" }
 ///   !! "**/opencover.xml"
-///   |> ReportGenerator.generateReports parameters
+///   |> Seq.toList
+///   |> ReportGenerator.generateReports (fun p -> { p with TargetDir = "c:/reports/" })
 /// )
 /// ```
 [<RequireQualifiedAccess>]
@@ -158,7 +158,7 @@ let internal createProcess setParams (reports : string seq) =
 ///
 ///  - `setParams` - Function used to overwrite the default ReportGenerator parameters.
 ///  - `reports` - Coverage reports.
-let generateReports setParams (reports : string list) =
+let generateReports setParams (reports : string seq) =
     use __ = Trace.traceTask "ReportGenerator" "Generating reports"
 
     match reports with

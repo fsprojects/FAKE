@@ -19,7 +19,7 @@ See https://github.com/danielpalme/ReportGenerator
 ## Minimal working example
 
 ```fsharp
-"#r "paket:
+"#r paket:
 nuget Fake.Core.Target
 nuget Fake.Testing.ReportGenerator"
 
@@ -27,22 +27,12 @@ open Fake.Core
 open Fake.Core.TargetOperators
 open Fake.Testing
 
-...
-
 Target.create "Generate Reports" (fun _ ->
-   let parameters p = { p with TargetDir = "c:/reports/" }
    !! "**/opencover.xml"
-   |> ReportGenerator.generateReports parameters
+   |> Seq.toList
+   |> ReportGenerator.generateReports (fun p -> { p with TargetDir = "c:/reports/" })
  )
 
-Target.create "Default" DoNothing
 
-"Clean"
-  ==> "SetAssemblyInfo"
-  ==> "Build"
-  ==> "RunCoverage"
-  ==> "Generate Reports"
-  ==> "Default"
-
-Target.runOrDefault "Default"
+Target.runOrDefault "Generate Reports"
 ```
