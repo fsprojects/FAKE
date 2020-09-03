@@ -160,8 +160,9 @@ let internal createProcess setParams (reports : string seq) =
 ///  - `reports` - Coverage reports.
 let generateReports setParams (reports : string seq) =
     use __ = Trace.traceTask "ReportGenerator" "Generating reports"
-
-    match reports with
+    
+    let list = reports |> Seq.toList
+    match list with
     | [] ->
         Trace.trace "No reports given. Ignoring task"
     | reports ->
