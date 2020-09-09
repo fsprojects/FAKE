@@ -338,6 +338,7 @@ let internal createProcess createTempFile (setParams : NUnit3Params -> NUnit3Par
     let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
     CreateProcess.fromRawCommandLine tool argLine
     |> CreateProcess.withFramework
+    |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
     |> CreateProcess.withEnvironment  (parameters.Environment |> Map.toList)
     //|> CreateProcess.withTimeout processTimeout
     |> CreateProcess.addOnSetup (fun () ->
