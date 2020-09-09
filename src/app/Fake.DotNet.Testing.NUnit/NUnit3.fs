@@ -219,8 +219,11 @@ type NUnit3Params =
       Params : string
 
       /// list or environment variables that will be set in the nunit-console.exe process
-      EnvironmentVariables : (string * string) list
+      Environment : Map<string, string>
     }
+    /// Sets the current environment variables.
+    member x.WithEnvironment map =
+        { x with Environment = map }
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
 ///
@@ -277,7 +280,7 @@ let NUnit3Defaults =
       TraceLevel= NUnit3TraceLevel.Default
       SkipNonTestAssemblies = false
       Params = ""
-      EnvironmentVariables = []
+      Environment = Map.empty
     }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
@@ -335,10 +338,7 @@ let internal createProcess createTempFile (setParams : NUnit3Params -> NUnit3Par
     let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
     CreateProcess.fromRawCommandLine tool argLine
     |> CreateProcess.withFramework
-    |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
-    |> fun cp -> 
-        parameters.EnvironmentVariables 
-            |> Seq.fold (fun acc (k,v)-> CreateProcess.setEnvironmentVariable k v acc) cp  
+    |> CreateProcess.withEnvironment  (parameters.Environment |> Map.toList)
     //|> CreateProcess.withTimeout processTimeout
     |> CreateProcess.addOnSetup (fun () ->
         File.WriteAllText(path, generatedArgs)
