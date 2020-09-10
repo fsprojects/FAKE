@@ -8,20 +8,14 @@ module MSTest =
 
     open System
     open System.Text
+    open BlackFox.VsWhere
     open Fake.Core
+    open Fake.IO
     open Fake.Testing.Common
-
-    let internal mstestPaths =
-        [| @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Professional\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Community\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Professional\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Community\Common7\IDE\"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 10.0\Common7\IDE" |]
+    
+    let private getAllVsPath () =
+        VsInstances.getWithPackage "Microsoft.VisualStudio.PackageGroup.TestTools.MSTestV2.Managed" false
+        |> List.map (fun vs -> Path.combine vs.InstallationPath "Common7\\Tools")
 
     let internal msTestExe =
         if Environment.isWindows then
@@ -86,7 +80,7 @@ module MSTest =
           Tests = []
           TimeOut = TimeSpan.FromMinutes 5.
           ToolPath =
-            match ProcessUtils.tryFindLocalTool "TOOL" msTestExe mstestPaths with
+            match ProcessUtils.tryFindLocalTool "TOOL" msTestExe (getAllVsPath ()) with
             | Some path -> path
             | None -> ""
           Details = []
