@@ -30,6 +30,10 @@ nuget Mono.Cecil prerelease
 nuget Nuget.Core
 nuget NuGet.Protocol < 5.7
 nuget NuGet.Packaging < 5.7
+nuget NuGet.Common < 5.7
+nuget NuGet.Configuration < 5.7
+nuget NuGet.Frameworks < 5.7
+nuget NuGet.Versioning < 5.7
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
