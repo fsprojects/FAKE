@@ -27,7 +27,7 @@ nuget SSH.NET
 nuget Microsoft.Web.Administration
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
-nuget Nuget.Core
+nuget NuGet.Core
 nuget NuGet.Protocol < 5.7
 nuget NuGet.Packaging < 5.7
 nuget NuGet.Common < 5.7
