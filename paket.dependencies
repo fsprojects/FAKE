@@ -69,7 +69,7 @@ nuget FluentMigrator.Runner.SQLite
 nuget FluentMigrator.Runner.SqlServer
 nuget FluentMigrator.Runner.SqlServerCe
 nuget HashLib
-nuget FSharp.Compiler.Service content: none
+nuget FSharp.Compiler.Service < 37 content: none 
 nuget Octokit
 nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
