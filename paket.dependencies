@@ -1,4 +1,4 @@
-version 5.249.0
+version 5.251.0
 content: none
 //source C:\Users\matth\.nuget\localsource
 source https://api.nuget.org/v3/index.json
@@ -28,7 +28,8 @@ nuget Microsoft.Web.Administration
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
-nuget Nuget.Protocol
+nuget NuGet.Protocol < 5.7
+nuget NuGet.Packaging < 5.7
 nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
@@ -180,7 +181,8 @@ group netcore
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core // prerelease
-    nuget NuGet.Protocol
+    nuget NuGet.Protocol < 5.7
+    nuget NuGet.Packaging < 5.7
     nuget Mono.Cecil prerelease
     nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
