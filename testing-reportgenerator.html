@@ -327,48 +327,30 @@
 <span class="l">14: </span>
 <span class="l">15: </span>
 <span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;#r &quot;</span><span class="id">paket</span><span class="pn">:</span>
-<span class="id">nuget</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Target</span>
-<span class="id">nuget</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Testing</span><span class="pn">.</span><span class="id">ReportGenerator</span><span class="s">&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;#r paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.Testing.ReportGenerator&quot;</span>
 
-<span class="s">open Fake.Core</span>
-<span class="s">open Fake.Core.TargetOperators</span>
-<span class="s">open Fake.Testing</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Testing</span>
 
-<span class="s">...</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Generate Reports&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+   <span class="o">!!</span> <span class="s">&quot;**/opencover.xml&quot;</span>
+   <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">toList</span>
+   <span class="o">|&gt;</span> <span class="id">ReportGenerator</span><span class="pn">.</span><span class="id">generateReports</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">TargetDir</span> <span class="o">=</span> <span class="s">&quot;c:/reports/&quot;</span> <span class="pn">}</span><span class="pn">)</span>
+ <span class="pn">)</span>
 
-<span class="s">Target.create &quot;</span><span class="id">Generate</span> <span class="id">Reports</span><span class="s">&quot; (fun _ -&gt;</span>
-<span class="s">   let parameters p = { p with TargetDir = &quot;</span><span class="id">c</span><span class="pn">:</span><span class="o">/</span><span class="id">reports</span><span class="o">/</span><span class="s">&quot; }</span>
-<span class="s">   !! &quot;</span><span class="o">**/</span><span class="id">opencover</span><span class="pn">.</span><span class="id">xml</span><span class="s">&quot;</span>
-<span class="s">   |&gt; ReportGenerator.generateReports parameters</span>
-<span class="s"> )</span>
 
-<span class="s">Target.create &quot;</span><span class="id">Default</span><span class="s">&quot; DoNothing</span>
-
-<span class="s">&quot;</span><span class="id">Clean</span><span class="s">&quot;</span>
-<span class="s">  ==&gt; &quot;</span><span class="id">SetAssemblyInfo</span><span class="s">&quot;</span>
-<span class="s">  ==&gt; &quot;B</span><span class="id">uild</span><span class="s">&quot;</span>
-<span class="s">  ==&gt; &quot;</span><span class="id">RunCoverage</span><span class="s">&quot;</span>
-<span class="s">  ==&gt; &quot;</span><span class="id">Generate</span> <span class="id">Reports</span><span class="s">&quot;</span>
-<span class="s">  ==&gt; &quot;</span><span class="id">Default</span><span class="s">&quot;</span>
-
-<span class="s">Target.runOrDefault &quot;</span><span class="id">Default</span><span class="s">&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Generate Reports&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 
-				
+				<div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs2">val toList : source:seq&lt;&#39;T&gt; -&gt; &#39;T list</div>
+
 			</article>
 		</div>
 
@@ -405,7 +387,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.3</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4-alpha.1642</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
