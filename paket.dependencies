@@ -118,7 +118,7 @@ group NetcoreBuild
     nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
