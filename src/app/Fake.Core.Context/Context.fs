@@ -1,4 +1,4 @@
-﻿/// This module tracks the context of the build.
+/// This module tracks the context of the build.
 /// This allows us to run some modules without any context and change behavior depending on the context
 /// (For example `Fake.Process` kills all processes when the Fake Context exists, but it should not when used as library)
 module Fake.Core.Context
@@ -162,3 +162,18 @@ let fakeVarAllowNoContext name =
     if isFakeContext() then
       setFakeVar name v |> ignore
     else varWithoutContext <- Some v)
+
+/// <summary>Set Fake context for use in F# script files</summary>
+/// <param name="scriptFile">scriptFile</param>
+/// <example><code>
+/// open Fake.Core
+///
+/// Context.setFsxContext false __SOURCE_FILE__
+/// </code></example>
+let setScriptContext isCached scriptFile =
+    System.Environment.GetCommandLineArgs()
+    |> Array.skip 2 // skip fsi.exe; scriptFile.fsx
+    |> Array.toList
+    |> FakeExecutionContext.Create isCached scriptFile
+    |> Fake
+    |> setExecutionContext
