@@ -28,7 +28,8 @@ let defaultTests =
         testCase "Push Command" <| fun _ ->
             let expect = [
                     "push"
-                    "--package=Package-1 --package=Package-2"
+                    "--package=Package-1"
+                    "--package=Package-2"
                     "--replace-existing"
                 ]
             let (pushOption: Fake.Tools.Octo.PushOptions) = {
@@ -56,10 +57,11 @@ let defaultTests =
         testCase "Create Release Fully Filled Out" <| fun _ ->
             let expectedCommand = [
                 "create-release"
+                "--package=Package-1"
+                "--package=Package-2"
                 "--project=Project-1"
                 "--version=Version-1"
                 "--packageversion=PackageVersion-1"
-                "--package=Package-1 --package=Package-2"
                 "--packagesfolder=PackageFolder-1"
                 "--releasenotes=ReleaseNotes-1"
                 "--releasenotesfile=ReleaseNotesFile-1"
@@ -88,13 +90,38 @@ let defaultTests =
             Expect.hasLength actual expectedCommand.Length ""
             Expect.sequenceEqual actual expectedCommand ""
 
-        testCase "Create Release With Common" <| fun _ ->
+        testCase "Create Release Without Explicit Packages" <| fun _ ->
             let expectedCommand = [
                 "create-release"
                 "--project=Project-1"
                 "--version=Version-1"
                 "--packageversion=PackageVersion-1"
-                "--package=Package-1 --package=Package-2"
+                "--packagesfolder=PackageFolder-1"
+                ]
+            let releaseOptions = {
+                Fake.Tools.Octo.releaseOptions with
+                    Project="Project-1"
+                    Version="Version-1"
+                    PackageVersion="PackageVersion-1"
+                    PackagesFolder=Some "PackageFolder-1"
+                    Common=Fake.Tools.Octo.commonOptions
+            }
+            let actual = 
+                (releaseOptions, None) 
+                |> Fake.Tools.Octo.Command.CreateRelease  
+                |> Fake.Tools.Octo.commandLine
+            Expect.hasLength actual expectedCommand.Length ""
+            Expect.sequenceEqual actual expectedCommand ""
+
+
+        testCase "Create Release With Common" <| fun _ ->
+            let expectedCommand = [
+                "create-release"
+                "--package=Package-1"
+                "--package=Package-2"
+                "--project=Project-1"
+                "--version=Version-1"
+                "--packageversion=PackageVersion-1"
                 "--packagesfolder=PackageFolder-1"
                 "--releasenotes=ReleaseNotes-1"
                 "--releasenotesfile=ReleaseNotesFile-1"
@@ -248,7 +275,7 @@ let defaultTests =
                         }
                 }
             let setReleaseParams = (fun (ro:Fake.Tools.Octo.CreateReleaseOptions) ->
-                { ro with Project = "MyProject"; Version = "1234567890.12.34"; Packages=["MyPackage:1234567890.12.34"]; Common = setCommon ro.Common })
+                { ro with Project = "MyProject"; Version = "1234567890.12.34"; Packages=["MyPackage:1234567890.12.34"; "Package2:1.2.3"]; Common = setCommon ro.Common })
             let setDeployParams = (fun (dOpt: Fake.Tools.Octo.DeployReleaseOptions) ->
                 { dOpt with Project = "MyProject"; Version = "1234567890.12.34"; DeployTo = "MyEnvironment"; Common = setCommon dOpt.Common; Progress=true } |> Some)
             let command = (Fake.Tools.Octo.CreateRelease ((setReleaseParams Fake.Tools.Octo.releaseOptions), (setDeployParams Fake.Tools.Octo.deployOptions)))
@@ -256,5 +283,5 @@ let defaultTests =
 
             let args = (List.append (Fake.Tools.Octo.commandLine command) (Fake.Tools.Octo.serverCommandLine releaseOptions.Common.Server)) |> Fake.Core.Arguments.OfArgs
             let command = args.ToWindowsCommandLine
-            Expect.equal command "create-release --project=MyProject --version=1234567890.12.34 --package=MyPackage:1234567890.12.34 --project=MyProject --deployto=MyEnvironment --version=1234567890.12.34 --progress --server=https://myoctopus-server.com --apikey=octoApiKey" "The output should be runnable on windows."
+            Expect.equal command "create-release --package=MyPackage:1234567890.12.34 --package=Package2:1.2.3 --project=MyProject --version=1234567890.12.34 --project=MyProject --deployto=MyEnvironment --version=1234567890.12.34 --progress --server=https://myoctopus-server.com --apikey=octoApiKey" "The output should be runnable on windows."
     ]

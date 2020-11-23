@@ -190,10 +190,8 @@ let private optionalObjParam p o =
     | None -> ""
 
 let private stringListParam p os =
-    let sb = Text.StringBuilder()
-    for o in os do
-        sb.Append (sprintf "--%s=%s " p (o.ToString())) |> ignore
-    sb.ToString().Trim()
+    let stringParam o = sprintf "--%s=%s" p (o.ToString())  
+    os |> List.map stringParam
 
 let private flag p b = if b then sprintf "--%s" p else ""
     
@@ -201,13 +199,13 @@ let private releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "version" (String.liftString opts.Version))
       (optionalStringParam "packageversion" (String.liftString opts.PackageVersion))
-      (stringListParam "package" opts.Packages)
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
       (optionalStringParam "releasenotes" (String.liftString opts.ReleaseNotes))
       (optionalStringParam "releasenotesfile" (String.liftString opts.ReleaseNotesFile))
       (flag "ignoreExisting" opts.IgnoreExisting)
       (optionalStringParam "channel" opts.Channel)
       (flag "ignorechannelrules" opts.IgnoreChannelRules) ]
+    |> List.append (stringListParam "package" opts.Packages)
     |> List.filter String.isNotNullOrEmpty
     
 let private deployCommandLine (opts:DeployReleaseOptions) = 
@@ -237,8 +235,8 @@ let internal serverCommandLine (opts:ServerOptions) =
     |> List.filter String.isNotNullOrEmpty
 
 let private pushCommandLine (opts : PushOptions) =
-    [ stringListParam "package" opts.Packages
-      flag "replace-existing" opts.ReplaceExisting ]
+    [ flag "replace-existing" opts.ReplaceExisting ]
+    |> List.append (stringListParam "package" opts.Packages)
     |> List.filter String.isNotNullOrEmpty
 
 /// Maps a command to string input for the octopus tools cli.
