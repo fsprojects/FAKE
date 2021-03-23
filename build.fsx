@@ -31,7 +31,7 @@ nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
-nuget Suave
+nuget Suave 2.5.6
 nuget Newtonsoft.Json
 nuget Octokit //"
 #endif
