@@ -121,3 +121,4 @@ let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuil
 /// Add Coverlet parameters to the dotnet test command.
 let withDotNetTestOptions (param: CoverletParams -> CoverletParams) (options: DotNet.TestOptions) =
     { options with MSBuildParams = withMSBuildArguments param options.MSBuildParams }
+
