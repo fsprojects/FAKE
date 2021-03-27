@@ -110,7 +110,6 @@
     <Compile Include="MSBuild\LoggerSpecs.cs" />
     <Compile Include="NAVFiles\NAVModifySpecs.cs" />
     <Compile Include="NAVFiles\NAVVersionTagsSpecs.cs" />
-    <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
     <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
     <Compile Include="PackageMgt\NugetSpecs.cs" />
