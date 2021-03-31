@@ -2,6 +2,8 @@
 Thumbs.db
 .DS_Store
 #Ignore files build by Visual Studio
+.fsdocs/
+output/
 docs/
 docsBuild/
 report/

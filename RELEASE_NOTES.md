@@ -1,5 +1,14 @@
 # Release Notes
 
+## 5.20.4 - 2021-03-31
+
+* ENHANCEMENT: Allow users of nunit3 set environment variables in the runner, thanks @robertpi - https://github.com/fsharp/FAKE/pull/2543
+* BUGFIX: Fix reportgenerator docs and compilation,thanks @matthid - https://github.com/fsharp/FAKE/issues/2535
+* BUGFIX: Fix Travis build, thanks @gdziadkiewicz - https://github.com/fsharp/FAKE/pull/2549
+* BUGIFX: Update Paket.Core to (better) support net5.0, thanks @pchinery - https://github.com/fsharp/FAKE/pull/2556
+* BUGFIX: fix build by using Suave version to 2.5.6 in build script which is compatible with netstandard 2.0, thanks @yazeedobaid https://github.com/fsharp/FAKE/pull/2574
+* ENHANCEMENT: Change NuGet feed APIs to use V3 of NuGet feed APIs, thanks @yazeedobaid https://github.com/fsharp/FAKE/pull/2574
+
 ## 5.20.3 - 2020-08-05
 
 * BUGFIX: Fix unintentional unit return, thanks @objectx - https://github.com/fsharp/FAKE/pull/2534

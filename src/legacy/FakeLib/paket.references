@@ -5,7 +5,7 @@ Mono.Web.Xdt
 FParsec
 Mono.Cecil
 Octokit
-Nuget.Core
+NuGet.Core
 NuGet.Protocol
 Newtonsoft.Json
 System.Net.Http

@@ -81,10 +81,10 @@ let tests =
         let result =
             if Paket.Utils.isWindows then
                 // #2314
-                fakeRunAndCheck "HELLO_world.fsx" "HELLO_world.fsx" "core-no-dependencies-hello-world"
+                fakeRunAndCheck Ctx.Default "HELLO_world.fsx" "HELLO_world.fsx" "core-no-dependencies-hello-world"
                 |> ignProc
                 directFake "--silent run hello_world.fsx" "core-no-dependencies-hello-world"
-            else fakeRunAndCheck "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
+            else fakeRunAndCheck Ctx.Default "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
 
@@ -93,8 +93,8 @@ let tests =
 
     testCase "simple failed to compile" <| fun _ ->
         let result =
-            expectFailure "Expected an compilation error and a nonzero exit code!" (fun _ ->
-                fakeRunAndCheck "fail-to-compile.fsx" "fail-to-compile.fsx" "core-simple-failed-to-compile" |> ignProc)
+            expectFailure "Expected an compilation error and a nonzero exit code!" (fun ctx ->
+                fakeRunAndCheck ctx "fail-to-compile.fsx" "fail-to-compile.fsx" "core-simple-failed-to-compile" |> ignProc)
 
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
@@ -105,8 +105,8 @@ let tests =
 
     testCase "simple runtime error" <| fun _ ->
         let result =
-            expectFailure "Expected an runtime error and a nonzero exit code!" (fun _ ->
-                fakeRunAndCheck "runtime-error.fsx" "runtime-error.fsx" "core-simple-runtime-error" |> ignProc)
+            expectFailure "Expected an runtime error and a nonzero exit code!" (fun ctx ->
+                fakeRunAndCheck ctx "runtime-error.fsx" "runtime-error.fsx" "core-simple-runtime-error" |> ignProc)
 
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
@@ -115,20 +115,20 @@ let tests =
         checkIntellisense "runtime-error.fsx" "core-simple-runtime-error"
 
     testCase "reference fake runtime" <| fun _ ->
-        handleAndFormat <| fun () ->
-            fakeRunAndCheck "reference_fake-runtime.fsx" "reference_fake-runtime.fsx" "core-reference-fake-runtime" |> ignProc
+        handleAndFormat <| fun ctx ->
+            fakeRunAndCheck ctx "reference_fake-runtime.fsx" "reference_fake-runtime.fsx" "core-reference-fake-runtime" |> ignProc
 
     testCase "context exists" <| fun _ ->
-        handleAndFormat <| fun () ->
-            fakeRunAndCheck "context.exists.fsx" "context.exists.fsx" "core-context-exists" |> ignProc
+        handleAndFormat <| fun ctx ->
+            fakeRunAndCheck ctx "context.exists.fsx" "context.exists.fsx" "core-context-exists" |> ignProc
 
     testCase "use external paket.dependencies" <| fun _ ->
-        handleAndFormat <| fun () ->
-            fakeRunAndCheck "use_external_dependencies.fsx" "use_external_dependencies.fsx" "core-use-external-paket-dependencies" |> ignProc
+        handleAndFormat <| fun ctx ->
+            fakeRunAndCheck ctx "use_external_dependencies.fsx" "use_external_dependencies.fsx" "core-use-external-paket-dependencies" |> ignProc
 
     testCase "reference fake core targets" <| fun _ ->
         let result =
-            handleAndFormat <| fun () -> fakeRunAndCheck "reference_fake-targets.fsx" "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
+            handleAndFormat <| fun ctx -> fakeRunAndCheck ctx "reference_fake-targets.fsx" "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
 
@@ -152,7 +152,7 @@ let tests =
             let scriptFile = Path.Combine(tmpPath, "reference_fake-targets.fsx")
             let otherScriptFile = Path.Combine(tmpPath, "otherscript.fsx")
             let otherFileFile = Path.Combine(tmpPath, "otherfile.fs")
-            handleAndFormat <| fun () ->
+            handleAndFormat <| fun ctx ->
                 directFake (sprintf "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
             let json = File.ReadAllText tempFile
             let obj = JObject.Parse json
@@ -198,17 +198,17 @@ let tests =
 
 
     testCase "issue #2025" <| fun _ ->
-        handleAndFormat <| fun () ->
-            fakeRunAndCheckInPath "build.fsx" "build.fsx" "i002025" "script" |> ignProc
+        handleAndFormat <| fun ctx ->
+            fakeRunAndCheckInPath ctx "build.fsx" "build.fsx" "i002025" "script" |> ignProc
 
     testCase "issue #2007 - native libs work" <| fun _ ->
         // should "just" work
-        handleAndFormat <| fun () ->
-            fakeRunAndCheck "build.fsx" "build.fsx" "i002007-native-libs" |> ignProc
+        handleAndFormat <| fun ctx ->
+            fakeRunAndCheck ctx "build.fsx" "build.fsx" "i002007-native-libs" |> ignProc
 
         // Should tell FAKE error story
         let result =     
-            expectFailure "Expected missing entrypoint error" <| fun () ->
+            expectFailure "Expected missing entrypoint error" <| fun ctx ->
                 directFake (sprintf "run build.fsx -t FailWithMissingEntry") "i002007-native-libs" |> ignProc
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
@@ -216,7 +216,7 @@ let tests =
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'Fake_ShouldNotExistExtryPoint' and 'EntryPointNotFoundException:', but was: '%s', Out: '%s'" stdErr stdOut)
         
         let result =     
-            expectFailure "Expected missing entrypoint error" <| fun () ->
+            expectFailure "Expected missing entrypoint error" <| fun ctx  ->
                 directFake (sprintf "run build.fsx -t FailWithUnknown") "i002007-native-libs" |> ignProc
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)

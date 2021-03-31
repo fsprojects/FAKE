@@ -643,6 +643,19 @@ let getNuspecProperties (nuspec : string) =
       PackageHashAlgorithm = String.Empty
     }
 
+type NugetPackageInfo =
+    { Id : string
+      Version : string
+      Description : string
+      Summary : string
+      IsLatestVersion : bool
+      Authors : string
+      Owners : string
+      Tags : string
+      ProjectUrl : string
+      LicenseUrl : string
+      Title : string }
+
 /// Returns the NuGet meta data from the given package file name.
 /// ## Parameters
 ///
@@ -654,15 +667,12 @@ let getNuspecProperties (nuspec : string) =
 //    |> getNuspecProperties
 
 /// Default NuGet feed
-[<Obsolete "This V1 NuGet feed url most likely doesn't work. Please consider using v3 nuget feed via `NuGet.galleryV3`.">]
-let galleryV1 = "http://go.microsoft.com/fwlink/?LinkID=206669"
-let galleryV2 = "https://www.nuget.org/api/v2/"
 let galleryV3 = "https://api.nuget.org/v3/index.json"
 
 // TODO: Note that this is stolen from paket code. We might want to move that into a shared FAKE library..., see https://github.com/fsprojects/Paket/blob/06ef22ba79896cd9f2a2e2eefccde08b09ab7656/src/Paket.Core/Utils.fs
 #if NETSTANDARD
 open System.Net.Http
-open System.Collections.Generic
+open Newtonsoft.Json.Linq
 type WebClient = HttpClient
 type HttpClient with
     member x.DownloadFileTaskAsync (uri : Uri, filePath : string) =
@@ -729,6 +739,7 @@ let internal addHeader (client:HttpClient) (headerKey:string) (headerVal:string)
     client.DefaultRequestHeaders.Add(headerKey, headerVal)
 #else
 
+open Newtonsoft.Json.Linq
 open System.Net
 type WebClient with
     member x.UploadFileAsMultipart (url : Uri) filename =
@@ -766,58 +777,57 @@ let private webClient = new WebClient()
 
 /// [omit]
 let discoverRepoUrl =
-    lazy (let resp = webClient.DownloadString(galleryV1)
-          let doc = Xml.createDoc resp
-          doc.["service"].GetAttribute("xml:base"))
+    lazy (let resp = webClient.DownloadString(galleryV3)
+          let json = JObject.Parse resp
+          let nugetSearchResource = 
+            (json.Item("resources") :?> JArray) 
+            |> Seq.find(fun resource -> resource.Item("@type").ToString() = "SearchQueryService")
+            :?> JObject
+          nugetSearchResource.Item("@id").ToString())
 
 /// [omit]
 let getRepoUrl() = discoverRepoUrl.Force()
 
 /// [omit]
-let extractFeedPackageFromXml (entry : Xml.XmlNode) =
-    let properties = entry.["m:properties"]
-    let property name =
-        let p = properties.["d:" + name]
-        if p = null || p.IsEmpty then "" else p.InnerText
-    let boolProperty name = (property name).ToLower() = "true"
-    let author = entry.["author"].InnerText
-    let dateTimeProperty name = DateTime.Parse(property name)
-    { Id = entry.["title"].InnerText
-      Version = property "Version"
-      Description = property "Description"
-      IsLatestVersion = boolProperty "IsLatestVersion"
-      Authors = author
-      Owners = author
-      Language = property "Language"
-      Tags = property "Tags"
-      ReleaseNotes = property "ReleaseNotes"
-      ProjectUrl = property "ProjectUrl"
-      LicenseUrl = property "LicenseUrl"
-      RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
-      PackageHash = property "PackageHash"
-      PackageHashAlgorithm = property "PackageHashAlgorithm"
-      Created = dateTimeProperty "Created"
-      Published = dateTimeProperty "Published"
-      Url = entry.["content"].GetAttribute("src") }
+let extractFeedPackageFromJson (data : JObject) isLatestVersion =
+    { Id = data.["id"].ToString()
+      Version = data.["version"].ToString()
+      Description = data.["description"].ToString()
+      Summary = data.["summary"].ToString()
+      IsLatestVersion = isLatestVersion
+      Authors = String.Join(",", data.["authors"] :?> JArray)
+      Owners = String.Join(",", data.["authors"] :?> JArray)
+      Tags = String.Join(",", data.["tags"] :?> JArray)
+      ProjectUrl = data.["projectUrl"].ToString()
+      LicenseUrl = data.["licenseUrl"].ToString()
+      Title = data.["title"].ToString()
+    }
 
-/// [omit]
-let getPackage (repoUrl:string) packageName version =
-    let url : string = repoUrl.TrimEnd('/') + "/Packages(Id='" + packageName + "',Version='" + version + "')"
+let getPackage (repoUrl:string) (packageName:string) (version:string) =
+    let url : string = repoUrl.TrimEnd('/') + "?q=title:" + packageName + "&take=1"
     let resp = webClient.DownloadString(url)
-    let doc = Xml.createDoc resp
-    extractFeedPackageFromXml doc.["entry"]
+    let json = JObject.Parse resp
+    let data = (json.["data"] :?> JArray).[0] :?> JObject
+    let packageVersions = (data.["versions"] :?> JArray).ToObject<List<JObject>>()
+    let versionExists = 
+        packageVersions 
+        |> List.exists(fun listedVersion -> listedVersion.["version"].ToString() = version)
 
-/// [omit]
-let getFeedPackagesFromUrl (url : string) =
-    let resp = webClient.DownloadString(url)
-    let doc = Xml.createDoc resp
-    [ for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry ]
+    if not versionExists then
+        failwithf "Requested %s for package %s is not registered on NuGet" version packageName
+    
+    let isLatest = (data.["version"].ToString() = version)
+    // set the requested version instead of latest.
+    data.["version"] <- JValue version
+    extractFeedPackageFromJson data isLatest
 
-/// [omit]
+
 let getLatestPackage (repoUrl:string) packageName =
-    repoUrl.TrimEnd('/') + "/Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
-    |> getFeedPackagesFromUrl
-    |> Seq.head
+    let url : string = repoUrl.TrimEnd('/') + "?q=title:" + packageName + "&take=1"
+    let resp = webClient.DownloadString(url)
+    let json = JObject.Parse resp
+    let data = (json.["data"] :?> JArray).[0] :?> JObject
+    extractFeedPackageFromJson data true
 
 /// [omit]
 let downloadPackage targetDir (package : NuSpecPackage) =

@@ -109,18 +109,35 @@ let directFakeInPath command workingDir target =
         raise <| FakeExecutionFailed(result)
     result
 
+type Ctx = 
+    { FakeFlags: string}
+    static member Default = { FakeFlags = "--silent" }
+    static member Verbose = { FakeFlags = "--verbose" }
+
 let handleAndFormat f =
     try
-        f()
+        f Ctx.Default
     with FakeExecutionFailed(result) ->
+        // Try to improve error output
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
-        Expect.isTrue (sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
+        try
+            ignore(f Ctx.Verbose)
+            // Well somehow it worked this time, lets fail with the old message...
+            Expect.isTrue (sprintf "fake.exe (silent mode) failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
+        with FakeExecutionFailed(verboseResult) ->
+            let verboseStdOut = String.Join("\n", verboseResult.Messages).Trim()
+            let verboseStdErr = String.Join("\n", verboseResult.Errors)
+            Expect.isTrue
+                (sprintf "fake.exe (verbose mode) failed with (silentCode %d\nSilentOut: %s\nSilentError: %s)\ncode %d\nOut: %s\nError: %s" 
+                    verboseResult.ExitCode verboseStdOut verboseStdErr result.ExitCode stdOut stdErr) false
+            reraise()
+
         reraise() // for return value
 
 let expectFailure msg f =
     try
-        f()
+        f Ctx.Default
         Expect.isTrue msg false
         failwithf "%s" msg
     with FakeExecutionFailed(result) ->
@@ -141,11 +158,11 @@ let fake command scenario =
 //let fakeFlags = "--verbose"
 let fakeFlags = "--silent"
 
-let fakeRunInPath runArgs scenario path =
-    fakeInPath (sprintf "%s run %s" fakeFlags runArgs) scenario path
+let fakeRunInPath (ctx:Ctx) runArgs scenario path =
+    fakeInPath (sprintf "%s run %s" ctx.FakeFlags runArgs) scenario path
  
-let fakeRun runArgs scenario =
-    fakeRunInPath runArgs scenario (scenarioTempPath scenario)
+let fakeRun ctx runArgs scenario =
+    fakeRunInPath ctx runArgs scenario (scenarioTempPath scenario)
 
 let checkIntellisenseInPath scriptName path =
     let cachePath = path </> ".fake" </> scriptName
@@ -166,10 +183,10 @@ let checkIntellisense scriptName scenario =
     let scenarioPath = scenarioTempPath scenario
     checkIntellisenseInPath scriptName scenarioPath
 
-let fakeRunAndCheckInPath scriptName runArgs scenario path =
-    let result = fakeRunInPath runArgs scenario path
+let fakeRunAndCheckInPath ctx scriptName runArgs scenario path =
+    let result = fakeRunInPath ctx runArgs scenario path
     checkIntellisenseInPath scriptName (resolvePath scenario path)
     result
 
-let fakeRunAndCheck scriptName runArgs scenario =
-    fakeRunAndCheckInPath scriptName runArgs scenario (scenarioTempPath scenario)
+let fakeRunAndCheck ctx scriptName runArgs scenario =
+    fakeRunAndCheckInPath ctx scriptName runArgs scenario (scenarioTempPath scenario)
