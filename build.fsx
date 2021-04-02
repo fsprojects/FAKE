@@ -304,6 +304,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
+      "Fake.Testing.Fixie", "Running fixie unit tests"
       "Fake.Tools.Git", "Running git commands"
       "Fake.Tools.GitVersion", "GitVersion helper"
       "Fake.Tools.Octo", "Octopus Deploy octo.exe tool helper"
