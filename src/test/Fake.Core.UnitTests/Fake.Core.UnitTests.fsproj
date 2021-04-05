@@ -38,6 +38,7 @@
     <ProjectReference Include="..\..\app\Fake.Tools.SignTool\Fake.Tools.SignTool.fsproj" />
     <ProjectReference Include="..\..\app\Fake.BuildServer.GitLab\Fake.BuildServer.GitLab.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Sql.SqlPackage\Fake.Sql.SqlPackage.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.BuildServer.Bitbucket\Fake.BuildServer.Bitbucket.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="runtimeconfig.template.json" />
@@ -74,6 +75,7 @@
     <Compile Include="Fake.Runtime.fs" />
     <Compile Include="Fake.Tools.Octo.fs" />
     <Compile Include="Fake.Sql.SqlPackage.fs" />
+    <Compile Include="Fake.BuildServer.Bitbucket.fs" />
     <Compile Include="Main.fs" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.fs" CopyToOutputDirectory="PreserveNewest" />
