@@ -250,6 +250,7 @@ let dotnetAssemblyInfos =
       "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
       "Fake.BuildServer.TeamFoundation", "Integration into TeamFoundation buildserver"
       "Fake.BuildServer.Travis", "Integration into Travis buildserver"
+      "Fake.BuildServer.Bitbucket", "Integration into Bitbucket buildserver"
       "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.DependencyManager.Paket", "Paket Dependency Manager"

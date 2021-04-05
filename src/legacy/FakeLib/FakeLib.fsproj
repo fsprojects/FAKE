@@ -416,6 +416,9 @@
     <Compile Include="..\..\app\Fake.BuildServer.Travis\Travis.fs">
       <Link>Fake.BuildServer.Travis/Travis.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.Bitbucket\BitbucketPipelines.fs">
+      <Link>Fake.BuildServer.Bitbucket\BitbucketPipelines.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Core.Vault\Vault.fs">
       <Link>Fake.Core.Vault/Vault.fs</Link>
     </Compile>
