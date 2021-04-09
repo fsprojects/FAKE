@@ -296,6 +296,7 @@ let dotnetAssemblyInfos =
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.JavaScript.Npm", "Running npm commands"
       "Fake.JavaScript.Yarn", "Running Yarn commands"
+      "Fake.JavaScript.TypeScript", "Running TypeScript compiler"
       "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
