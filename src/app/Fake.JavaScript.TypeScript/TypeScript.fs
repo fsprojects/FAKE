@@ -152,16 +152,16 @@ module TypeScript =
                 Diagnostics.ProcessStartInfo(FileName = parameters.ToolPath, Arguments = arguments)
                 |> CreateProcess.ofStartInfo
                 |> CreateProcess.redirectOutput
+                |> CreateProcess.withTimeout parameters.TimeOut
                 |> Proc.run)
-            |> Seq.toList
-        
-        let errors = 
-            callResults 
-            |> Seq.collect(fun x -> [x.Result.Error])
 
-        let hasErrors = errors |> Seq.isEmpty |> not 
-        Seq.collect (fun x -> [x.Result.Output]) callResults |> Seq.iter Trace.trace
+        let hasErrors =
+            callResults
+            |> Seq.fold (fun acc result -> 
+                match result.ExitCode = 0 with
+                | true -> Trace.trace result.Result.Output
+                | false -> Trace.traceError result.Result.Output
+                if result.ExitCode = 0 then acc else acc + 1) 0
         
-        if hasErrors then 
-            Seq.iter Trace.traceError errors
+        if hasErrors > 0 then 
             failwith "TypeScript compiler encountered errors!"
