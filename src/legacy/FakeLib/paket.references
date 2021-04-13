@@ -12,6 +12,7 @@ System.Net.Http
 HashLib
 FSharp.Control.Reactive
 System.Reactive.Compatibility
+System.Reactive
 FSharp.Compiler.Service
   exclude FSharp.Compiler.Service.MSBuild.*.dll
   exclude FSharp.Compiler.Service.MSBuild.v12.dll
