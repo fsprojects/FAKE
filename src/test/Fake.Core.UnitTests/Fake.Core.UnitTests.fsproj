@@ -39,8 +39,10 @@
     <ProjectReference Include="..\..\app\Fake.BuildServer.GitLab\Fake.BuildServer.GitLab.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Sql.SqlPackage\Fake.Sql.SqlPackage.fsproj" />
     <ProjectReference Include="..\..\app\Fake.BuildServer.Bitbucket\Fake.BuildServer.Bitbucket.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.JavaScript.TypeScript\Fake.JavaScript.TypeScript.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fake.JavaScript.TypeScript.fs" />
     <Content Include="runtimeconfig.template.json" />
     <None Include="paket.references" />
     <Compile Include="Fake.ContextHelper.fs" />
