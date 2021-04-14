@@ -9,6 +9,7 @@ open System
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
+open Fake.Core
 
 [<Tests>]
 let toolsTests = 
@@ -23,11 +24,11 @@ let toolsTests =
         let filepath = folder </> "sometool"
         File.create filepath |> ignore
 
-        Tools.tryFindToolFolderInSubPath "sometool"
+        ProcessUtils.tryFindLocalTool "TOOL" "sometool" ["."]
         |> Flip.Expect.equal "Expected tools folder to be found" (Some folder)
 
       testCase "Test cannot find tool folder in sub path" <| fun _ ->
-        Tools.tryFindToolFolderInSubPath "SomeMissingTool"
+        ProcessUtils.tryFindLocalTool "TOOL" "SomeMissingTool" ["."]
         |> Flip.Expect.isNone "Expected tools folder not to be found"
 
       testCase "Test find tool folder in sub path" <| fun _ ->
@@ -37,11 +38,13 @@ let toolsTests =
         let filepath = folder </> "sometool"
         File.create filepath |> ignore
 
-        Tools.findToolFolderInSubPath "sometool" "defaultToolsPath"
+        ProcessUtils.tryFindLocalTool "TOOL" "sometool" ["defaultToolsPath"]
+        |> Option.get
         |> Flip.Expect.equal "Expected tools folder to be found" folder
 
       testCase "Test cannot find tool folder in sub path returns default" <| fun _ ->
-        Tools.findToolFolderInSubPath "SomeMissingTool" "defaultpath"
+        ProcessUtils.tryFindLocalTool "TOOL" "SomeMissingTool" ["defaultpath"]
+        |> Option.get
         |> Flip.Expect.equal "Expected default path to be returned" "defaultpath"
     ]
     

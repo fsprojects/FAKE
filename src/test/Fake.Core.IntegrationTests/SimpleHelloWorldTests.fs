@@ -11,7 +11,7 @@ open Newtonsoft.Json.Linq
 open Fake.Core
 
 let fail s = Expect.isTrue s false
-let ignProc = ignore<Fake.Core.ProcessResult>
+let ignProc = ignore<Fake.Core.ProcessResult<ProcessOutput>>
 
 
 
@@ -85,8 +85,8 @@ let tests =
                 |> ignProc
                 directFake "--silent run hello_world.fsx" "core-no-dependencies-hello-world"
             else fakeRunAndCheck Ctx.Default "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
-        let stdOut = String.Join("\n", result.Messages)
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output)
+        let stdErr = String.Join("\n", result.Result.Error)
 
         stdOut.Trim() |> Expect.equal "Hello FAKE exected" "Hello FAKE"
         stdErr.Trim() |> Expect.equal "empty exected" ""
@@ -96,8 +96,8 @@ let tests =
             expectFailure "Expected an compilation error and a nonzero exit code!" (fun ctx ->
                 fakeRunAndCheck ctx "fail-to-compile.fsx" "fail-to-compile.fsx" "core-simple-failed-to-compile" |> ignProc)
 
-        let stdOut = String.Join("\n", result.Messages)
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output)
+        let stdErr = String.Join("\n", result.Result.Error)
         stdErr.Contains("klajsdhgfasjkhd")
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'klajsdhgfasjkhd', but was: '%s', Out: '%s'" stdErr stdOut)
 
@@ -108,8 +108,8 @@ let tests =
             expectFailure "Expected an runtime error and a nonzero exit code!" (fun ctx ->
                 fakeRunAndCheck ctx "runtime-error.fsx" "runtime-error.fsx" "core-simple-runtime-error" |> ignProc)
 
-        let stdOut = String.Join("\n", result.Messages)
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output)
+        let stdErr = String.Join("\n", result.Result.Error)
         stdErr.Contains("runtime error")
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'runtime error', but was: '%s', Out: '%s'" stdErr stdOut)
         checkIntellisense "runtime-error.fsx" "core-simple-runtime-error"
@@ -129,8 +129,8 @@ let tests =
     testCase "reference fake core targets" <| fun _ ->
         let result =
             handleAndFormat <| fun ctx -> fakeRunAndCheck ctx "reference_fake-targets.fsx" "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
-        let stdOut = String.Join("\n", result.Messages).Trim()
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output).Trim()
+        let stdErr = String.Join("\n", result.Result.Error)
 
         let expected = "Arguments: [\"--test\"]"
         stdOut.Contains expected
@@ -210,16 +210,16 @@ let tests =
         let result =     
             expectFailure "Expected missing entrypoint error" <| fun ctx ->
                 directFake (sprintf "run build.fsx -t FailWithMissingEntry") "i002007-native-libs" |> ignProc
-        let stdOut = String.Join("\n", result.Messages).Trim()
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output).Trim()
+        let stdErr = String.Join("\n", result.Result.Error)
         (stdErr.Contains "Fake_ShouldNotExistExtryPoint" && stdErr.Contains "EntryPointNotFoundException:")
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'Fake_ShouldNotExistExtryPoint' and 'EntryPointNotFoundException:', but was: '%s', Out: '%s'" stdErr stdOut)
         
         let result =     
             expectFailure "Expected missing entrypoint error" <| fun ctx  ->
                 directFake (sprintf "run build.fsx -t FailWithUnknown") "i002007-native-libs" |> ignProc
-        let stdOut = String.Join("\n", result.Messages).Trim()
-        let stdErr = String.Join("\n", result.Errors)
+        let stdOut = String.Join("\n", result.Result.Output).Trim()
+        let stdErr = String.Join("\n", result.Result.Error)
         (stdErr.Contains "unknown_dependency.dll" && stdErr.Contains "DllNotFoundException:")
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'unknown_dependency.dll' and 'DllNotFoundException:', but was: '%s', Out: '%s'" stdErr stdOut)
         // TODO: enable instead of the above
