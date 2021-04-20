@@ -314,6 +314,9 @@
     <Compile Include="..\..\app\Fake.JavaScript.Yarn\Yarn.fs">
       <Link>Fake.JavaScript.Yarn/Yarn.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.JavaScript.TypeScript\TypeScript.fs">
+      <Link>Fake.JavaScript.TypeScript/TypeScript.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>
     </Compile>
