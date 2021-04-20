@@ -90,7 +90,7 @@ let tests =
     let prefixPath =
         if Environment.isWindows then ""
         else
-            match ProcessUtils.tryFindFileOnPath "sh" with
+            match Process.tryFindFileOnPath "sh" with
             | Some shPath ->
                 System.IO.Path.GetDirectoryName shPath + string System.IO.Path.PathSeparator
             | None -> failwithf "sh is required for msbuild"

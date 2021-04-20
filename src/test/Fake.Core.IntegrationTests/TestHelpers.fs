@@ -58,12 +58,12 @@ let createTestDirInCurrent () =
 let getTestFile testFile =
     Path.Combine(testDirLocation, "testdata", testFile)
 
-exception FakeExecutionFailed of ProcessResult<ProcessOutput>
+exception FakeExecutionFailed of ProcessResult
   with
     override x.ToString() =
         let result = x.Data0
-        let stdErr = String.Join(Environment.NewLine,result.Result.Error)
-        let stdOut = String.Join(Environment.NewLine,result.Result.Output)
+        let stdErr = String.Join(Environment.NewLine,result.Errors)
+        let stdOut = String.Join(Environment.NewLine,result.Messages)
         sprintf "FAKE Process exited with %d:\n%s\nStdout: \n%s" result.ExitCode stdErr stdOut
 
 let fakeRootPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../")
@@ -98,14 +98,13 @@ let prepare scenario =
 
 let directFakeInPath command workingDir target =
     let result =
-        CreateProcess.fromRawCommandLine fakeToolPath command
-        |> CreateProcess.setEnvironmentVariable "target" target
-        |> CreateProcess.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true" 
-        |> CreateProcess.withTimeout (TimeSpan.FromMinutes 15.)
-        |> CreateProcess.withWorkingDirectory workingDir
-        |> CreateProcess.redirectOutput
-        |> Proc.run
-        
+        Process.execWithResult (fun (info:ProcStartInfo) ->
+          { info with
+                FileName = fakeToolPath
+                WorkingDirectory = workingDir
+                Arguments = command }
+          |> Process.setEnvironmentVariable "target" target
+          |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true") (System.TimeSpan.FromMinutes 15.)
     if result.ExitCode <> 0 then
         raise <| FakeExecutionFailed(result)
     result
@@ -120,15 +119,15 @@ let handleAndFormat f =
         f Ctx.Default
     with FakeExecutionFailed(result) ->
         // Try to improve error output
-        let stdOut = String.Join("\n", result.Result.Output).Trim()
-        let stdErr = String.Join("\n", result.Result.Error)
+        let stdOut = String.Join("\n", result.Messages).Trim()
+        let stdErr = String.Join("\n", result.Errors)
         try
             ignore(f Ctx.Verbose)
             // Well somehow it worked this time, lets fail with the old message...
             Expect.isTrue (sprintf "fake.exe (silent mode) failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
         with FakeExecutionFailed(verboseResult) ->
-            let verboseStdOut = String.Join("\n", verboseResult.Result.Output).Trim()
-            let verboseStdErr = String.Join("\n", verboseResult.Result.Error)
+            let verboseStdOut = String.Join("\n", verboseResult.Messages).Trim()
+            let verboseStdErr = String.Join("\n", verboseResult.Errors)
             Expect.isTrue
                 (sprintf "fake.exe (verbose mode) failed with (silentCode %d\nSilentOut: %s\nSilentError: %s)\ncode %d\nOut: %s\nError: %s" 
                     verboseResult.ExitCode verboseStdOut verboseStdErr result.ExitCode stdOut stdErr) false
