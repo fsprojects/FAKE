@@ -16,7 +16,7 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 
 ## Install the project
 
-See detailed instructions on [how to install](https://fake.build/fake-gettingstarted.html#Install-FAKE) this project.
+See detailed instructions on [how to install](https://fake.build/fake-gettingstarted.html#Install-FAKE) the project.
 
 ## Build the project
 
