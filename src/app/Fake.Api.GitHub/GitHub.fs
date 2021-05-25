@@ -6,6 +6,7 @@ open System
 open System.Net
 open System.Net.Http
 open System.IO
+open System.Threading
 
 /// Contains tasks to interact with [GitHub](https://github.com/) releases
 ///
@@ -212,7 +213,7 @@ module GitHub =
             let archiveContents = File.OpenRead(fi.FullName)
             let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable timeout)
             
-            let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload)
+            let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload, CancellationToken.None)
             printfn "Uploaded %s" asset.Name
             return release'
         }
