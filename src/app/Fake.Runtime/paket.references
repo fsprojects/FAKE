@@ -1,11 +1,9 @@
-
 group netcorerunner
 
 Paket.Core
 Mono.Cecil
 FSharp.Core
 
-Microsoft.DotNet.PlatformAbstractions
 System.Runtime.Loader
 NETStandard.Library
 

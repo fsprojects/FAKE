@@ -156,7 +156,7 @@ module internal CompilerServiceExtensions =
             Log.critf "Could not find a FSharp.Core.dll in %s" paths
             failwithf "Could not find a FSharp.Core.dll in %s" paths
       let hasAssembly asm l =
-        l |> Seq.exists (fun a -> Path.GetFileNameWithoutExtension a =? asm)
+        l |> Seq.exists (fun (a:string) -> Path.GetFileNameWithoutExtension a =? asm)
       let sysLibBlackList =
         [ "FSharp.Core"
           "System.EnterpriseServices.Thunk" // See #4
@@ -324,7 +324,7 @@ module internal CompilerServiceExtensions =
       static member LoadFiles (dllFiles, ?libDirs, ?otherFlags, ?manualResolve) =
         let resolveDirs = defaultArg manualResolve true
         let libDirs = defaultArg libDirs Seq.empty
-        let dllFiles = dllFiles |> Seq.toList
+        let dllFiles = dllFiles |> Seq.toList<string>
         let findReferences libDir =
           Directory.EnumerateFiles(libDir, "*.dll")
           |> Seq.map Path.GetFullPath
@@ -836,7 +836,7 @@ module internal Shell =
       addedPrinters <- Choice2Of2 (typeof<'T>, unbox >> printer) :: addedPrinters
 
 module internal ArgParser =
-  let (|StartsWith|_|) start (s:string) =
+  let (|StartsWith|_|) (start:string) (s:string) =
     if s.StartsWith (start) then
       StartsWith(s.Substring(start.Length))
       |> Some

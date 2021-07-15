@@ -1,0 +1,41 @@
+name: FAKE Build and Test
+
+on:
+    push:
+        branches: [ release/next ]
+    pull_request:
+        branches: [ release/next ]
+
+jobs:
+    build:
+
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macOS-latest]
+        steps:
+            - uses: actions/checkout@v2
+            - name: Setup .NETCORE 3.1
+              uses: actions/setup-dotnet@v1
+              with:
+                  dotnet-version: '3.1.201'
+            - name: Setup .NET 6
+              uses: actions/setup-dotnet@v1
+              with:
+                  dotnet-version: '6.0.100-preview.3.21202.5'
+            - uses: actions/cache@v2
+              with:
+                  path: ~/.nuget/packages
+                  key: ${{ matrix.os }}-nuget-${{ hashFiles('**/paket.lock') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nuget
+            - name: Restore dotnet tools
+              run: dotnet tool restore
+            - name: remove current fake runner tool
+              run: dotnet tool uninstall fake-cli
+            - name: Build fake runner
+              run: dotnet pack --version-suffix 1 src/app/fake-cli/fake-cli.fsproj
+            - name: add fake runner as a tool
+              run: dotnet tool install fake-cli --add-source "./src/app/fake-cli/bin/Debug" --version 1.0.0-1
+            - name: Build
+              run: dotnet fake build --parallel 3

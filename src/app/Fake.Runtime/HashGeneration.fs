@@ -18,7 +18,7 @@ let getAllScriptContents (pathsAndContents : seq<Script>) =
 
 let getAllScripts (ignoreWhitespace:bool) defines (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scriptPath : Script list =
     let rec getAllScriptsRec (tokens:Fake.Runtime.FSharpParser.TokenizedScript) workDir (scriptName:string) parentIncludes : Script list =
-        let tryResolvePath currentIncludes currentDir relativeOrAbsolute isDir =
+        let tryResolvePath currentIncludes currentDir (relativeOrAbsolute:string) isDir =
             let possiblePaths =
               if Path.IsPathRooted relativeOrAbsolute then [ relativeOrAbsolute ]
               else

@@ -120,7 +120,7 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
       |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
       |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
       |> fun p -> if containsFramework || containsRestriction then p 
-                  else "framework: netstandard2.0" + "\n" + p
+                  else "framework: netstandard2.0,net6.0" + "\n" + p
 
     { Header = PaketInline
       Section = fixDefaults paketCode }

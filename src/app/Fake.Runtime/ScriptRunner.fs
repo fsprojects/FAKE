@@ -112,7 +112,7 @@ let private handleCoreCaching (context:FakeContext) (session:IFsiSession) fsiErr
 
 
 /// public, because it is used by test code
-let nameParser scriptFileName =
+let nameParser (scriptFileName:string) =
     let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
     let startString = "<StartupCode$FSI_"
     let endString =

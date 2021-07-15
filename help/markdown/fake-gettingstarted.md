@@ -467,6 +467,10 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 
 ![alt text](pics/gettingstarted/alltestsgreen.png "All tests green")
 
+## Runtime Assemblies in FAKE Runner
+FAKE runner uses **.NETSTANDARD 2.0** runtime assemblies when compiling and running a script. To switch and use **.NET 6** runtime
+assemblies you need to define a `global.json` file and use .NET 6 as the SDK version.
+
 ## What's next?
 
 * Add more modules specific to your application and discover the Fake-APIs
