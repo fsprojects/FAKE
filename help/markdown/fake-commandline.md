@@ -33,7 +33,7 @@ Fake Build Options [build_opts]:
 -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
 ```
-Please refer to the [Fake.Core.CommandLineParsing](core-commandlineparsing.html) documentation for a explanation of the synax.
+Please refer to the [Fake.Core.CommandLineParsing](core-commandlineparsing.html) documentation for an explanation of the synax.
 
 For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future. In general you should use the `run` subcommand in scripting when you use parameters, because it is safer in regards to adding options without breaking. Use `build` to have a more dense workflow in the command line
 
@@ -63,7 +63,7 @@ Prints FAKE version information.
 
 ### `--help`
 
-Prints help information. In contract to the other options you can use --help everywhere.
+Prints help information. In contrast to the other options you can use --help everywhere.
 For example `fake run --help` to get help about the `run` subcommand.
 
 ## Basic examples
@@ -78,13 +78,13 @@ As `fake build` is a shortcut you could use:
 
 ### `<script.fsx>` or `--script <script.fsx>`
 
-Required. The path to your `.fsx` build file. Note that for `fake run` the first "unknown" argument as parsed as the script name and all other parameters are interpreted as arguments for the script.
+Required. The path to your `.fsx` build file. Note that for `fake run` the first "unknown" argument is parsed as the script name and all other parameters are interpreted as arguments for the script.
 
 To support specially named files like `--fsiargs` you could use `fake build --script --fsiargs`
 
 ### `--fsiargs <fsiargs>`
 
-Pass an single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
+Pass a single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
 
 This way you can use for example `#if MYFLAG` compiler directives in your script and use `--fsiargs --define:MYFLAG`
 
