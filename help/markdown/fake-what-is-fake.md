@@ -29,7 +29,7 @@ FAKE addresses the problem in the following ways:
 - It builds on top of a fully featured statically typed and productive language (F#) with several IDE options.
 - It lowers the entry point by working on top of script files. No project file or dependencies besides the fake runner.
 - Remove dependencies from the CI/CD system while providing full integration. Make features available locally.
-  With FAKE you can choose and switch between multiple system easily while having almost native integrations.
+  With FAKE you can choose and switch between multiple systems easily while having almost native integrations.
 - Provide modules for the most commonly used tasks.
 - Make it easy to start external processes through various APIs.
 - Add all your automation scripts to your repository.
