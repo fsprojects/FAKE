@@ -87,7 +87,7 @@ This is basically it. You can now execute fake commands.
 
 ## One note on Intellisense
 
-This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the `<script>.fsx.lock` file and re-run fake to update all files).
+This section is to clarify when and how the intellisense updates when you add new modules (short form: Delete the `<script>.fsx.lock` file and re-run fake to update all files).
 
 <div class="alert alert-info">
     <h5>INFO</h5>
