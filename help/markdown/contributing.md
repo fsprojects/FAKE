@@ -175,7 +175,7 @@ e.g: Using dotnet cli
 
 * Add documentation for your feature
 
-* If you add new markdown documentation, make sure to link if from an existing site. Ideally, add it to the [menu](https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml)
+* If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the [menu](https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml)
 
 * If you write API documentation but no extra markdown, please consider adding it to the menu as well.
 
@@ -205,7 +205,7 @@ e.g: Using dotnet cli
 
 ## Considerations Regarding FAKE 4
 
-* Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
+* Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as a new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
 
 * Fake 4 still allows hotfixes. Please send the PR against the [hotfix_fake4 branch](https://github.com/fsharp/FAKE/tree/hotfix_fake4).
 

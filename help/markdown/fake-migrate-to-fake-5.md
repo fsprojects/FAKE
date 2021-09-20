@@ -45,7 +45,7 @@ Some warnings indicate how we want the new FAKE version to be used.
 The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
 as the old API was growing several years now and we never could do breaking changes.
 
-In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
+In this new world you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via `[<AutoOpen>]`), which is considered bad style now.
 In the new world we would open the `Fake.IO.FileSystem` namespace to indicate that we are using the file-system.
 At the same time we would write `File.Read argument`, which is only a bit longer but now the IDE can help you a lot better and the code looks a lot more ideomatic and clean.
@@ -53,7 +53,7 @@ At the same time we would write `File.Read argument`, which is only a bit longer
 The "open Fake" and AutoOpen modules are completely obsolete. 
 We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
 This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the obsolete warning (let us know) or that 
-stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).
+stuff you are using was not migrated yet (let us know or send a PR, see [Contributing to FAKE](/contributing.html)).
 
 ### Add FAKE dependencies
 
@@ -61,13 +61,13 @@ All your dependencies no longer are bundled with the FAKE nuget package (or the 
 
 * You can extend the build with your own packages easily
 * You only pay what you use
-* You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).
+* You can use the FAKE libraries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).
 
 The drawback however is that you now need to know where stuff lives and add those packages to your build.
 
  Already a paket user?
 
-For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
+For now it's quite simple: The namespace or module name is used as the package name, just search for the package and then
 add it to the dependencies file to a new group (for example `netcorebuild`).
 
  Not a paket user?
@@ -81,7 +81,7 @@ nuget MyPackage1
 nuget MyPackage2"
 ```
 
-to your build script. Now delete `<script>.fsx.lock` and run `fake run <script>.fsx` now you can use intellisense to start using the modules.
+Now delete `<script>.fsx.lock` and run `fake run <script>.fsx` now you can use intellisense to start using the modules.
 
 > If you want to read more about the possible syntax you can use here, please consult https://fsprojects.github.io/Paket/dependencies-file.html and https://fsprojects.github.io/Paket/nuget-dependencies.html.
 
