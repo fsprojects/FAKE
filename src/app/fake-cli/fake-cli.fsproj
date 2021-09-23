@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <ToolCommandName>fake</ToolCommandName>
         <TargetFramework>netcoreapp2.1</TargetFramework>
+        <RollForward>LatestMajor</RollForward>
         <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
         <!-- Debian packaging -->
         <Prefix>/opt/fake</Prefix>
