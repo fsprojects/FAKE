@@ -28,6 +28,8 @@ type ReportType =
     | Html
     | HtmlChart
     | HtmlInline
+    | HtmlInline_AzurePipelines
+    | HtmlInline_AzurePipelines_Dark
     | HtmlSummary
     | MHtml
     | PngChart
@@ -40,6 +42,11 @@ type ReportType =
     | CsvSummary
     | Cobertura
     | TeamCitySummary
+    | Clover
+    | JsonSummary
+    | lcov
+    | MarkdownSummary
+    | SonarQube
 
 type LogVerbosity =
     | Verbose = 0
