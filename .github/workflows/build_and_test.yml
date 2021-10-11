@@ -1,0 +1,33 @@
+name: FAKE Build and Test
+
+on:
+  push:
+    branches: [ release/next ]
+  pull_request:
+    branches: [ release/next ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        dotnet: [3.1.x, 5.0.x, 6.0.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+    - name: Restore dotnet tools
+      run: dotnet tool restore
+    - name: remove current fake runner tool
+      run: dotnet tool uninstall fake-cli
+    - name: Build fake runner
+      run: dotnet pack --version-suffix 1 src/app/fake-cli/fake-cli.fsproj
+    - name: add fake runner as a tool
+      run: dotnet tool install fake-cli --add-source "/src/app/fake-cli/bin/Debug" --version 1.0.0-1
+    - name: Build
+      run: dotnet fake build --parallel 3
