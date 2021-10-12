@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
         dotnet: [3.1.201]
 
     steps:
@@ -21,6 +21,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ matrix.dotnet }}
+    - uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ matrix.os }}-nuget-${{ hashFiles('**/paket.lock') }}
+        restore-keys: |
+          ${{ matrix.os }}-nuget
     - name: Restore dotnet tools
       run: dotnet tool restore
     - name: remove current fake runner tool
@@ -28,6 +34,6 @@ jobs:
     - name: Build fake runner
       run: dotnet pack --version-suffix 1 src/app/fake-cli/fake-cli.fsproj
     - name: add fake runner as a tool
-      run: dotnet tool install fake-cli --add-source "$GITHUB_WORKSPACE/src/app/fake-cli/bin/Debug" --version 1.0.0-1
+      run: dotnet tool install fake-cli --add-source "./src/app/fake-cli/bin/Debug" --version 1.0.0-1
     - name: Build
       run: dotnet fake build --parallel 3
