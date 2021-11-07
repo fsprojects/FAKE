@@ -59,6 +59,7 @@ type RuntimeOptions =
 type RedirectConfig =
   { Out : TextWriter
     Err : TextWriter }
+
 type FakeConfig =
   { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string

@@ -19,13 +19,13 @@ module DotNet =
     open System
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
-    let internal defaultUserInstallDir =
+    let defaultUserInstallDir =
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet))
-    let internal defaultSystemInstallDir =
+    let defaultSystemInstallDir =
         if Environment.isUnix
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
@@ -78,7 +78,7 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - the path to check else will probe system PATH
-    let private findPossibleDotnetCliPaths dotnetCliDir = seq {
+    let findPossibleDotnetCliPaths dotnetCliDir = seq {
         let fileName = if Environment.isUnix then "dotnet" else "dotnet.exe"
         yield!
             ProcessUtils.findFilesOnPath "dotnet"

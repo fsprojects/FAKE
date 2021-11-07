@@ -131,6 +131,11 @@ let tests =
             handleAndFormat <| fun ctx -> fakeRunAndCheck ctx "reference_fake-targets.fsx" "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
+        printfn "*****************************************************************"
+        printfn "%s" stdOut
+        printfn "*****************************************************************"
+        printfn "%s" stdErr
+        printfn "*****************************************************************"
 
         let expected = "Arguments: [\"--test\"]"
         stdOut.Contains expected
