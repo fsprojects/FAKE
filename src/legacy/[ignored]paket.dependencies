@@ -1,6 +1,83 @@
-version 5.5
-source https://api.nuget.org/v3/index.json
+version 5.251.0
 content: none
+//source C:\Users\matth\.nuget\localsource
+source https://api.nuget.org/v3/index.json
+
+nuget FSharp.Core ~> 4.1 redirects: force
+nuget Knockout
+nuget NuGet.CommandLine
+nuget Paket.Core // prerelease
+nuget FSharp.Compiler.Tools
+nuget RavenDB.Server
+nuget serilog.sinks.nlog
+nuget Argu ~> 5.5.0 // support net461
+nuget FsCheck
+nuget FsCheck.Xunit
+nuget Unquote
+nuget NUnit
+nuget NUnit.Console
+nuget Nancy.Authentication.Stateless
+nuget Nancy.Hosting.Self
+nuget Nancy.Serialization.JsonNet
+nuget Nancy.Authentication.Forms
+nuget Nancy.Hosting.Aspnet
+nuget Nancy.Viewengines.Razor
+nuget SSH.NET
+// Because of net45 support
+nuget Microsoft.Web.Administration
+nuget Mono.Web.Xdt
+nuget Mono.Cecil prerelease
+nuget NuGet.Core
+nuget NuGet.Protocol < 5.7
+nuget NuGet.Packaging < 5.7
+nuget NuGet.Common < 5.7
+nuget NuGet.Configuration < 5.7
+nuget NuGet.Frameworks < 5.7
+nuget NuGet.Versioning < 5.7
+nuget FParsec
+nuget bootstrap
+nuget Knockout.Mapping
+nuget log4net
+nuget System.Web.Razor.Unofficial
+nuget toastr
+nuget RavenDB.Client < 4.1
+nuget Machine.Specifications.Should
+nuget Machine.Specifications
+nuget Machine.Specifications.Runner.Console
+nuget Nancy.Testing
+nuget xunit.runner.console
+nuget xunit
+nuget Newtonsoft.Json redirects:force
+nuget Microsoft.AspNet.Razor 2.0.30506
+nuget Microsoft.AspNet.WebPages 2.0.30506
+nuget FluentMigrator
+nuget FluentMigrator.Abstractions
+nuget FluentMigrator.Extensions.SqlAnywhere
+nuget FluentMigrator.Extensions.SqlServer
+nuget FluentMigrator.Runner 
+nuget FluentMigrator.Runner.Core
+nuget FluentMigrator.Runner.Db2
+nuget FluentMigrator.Runner.Firebird
+nuget FluentMigrator.Runner.Hana
+nuget FluentMigrator.Runner.Jet
+nuget FluentMigrator.Runner.MySql
+nuget FluentMigrator.Runner.Oracle
+nuget FluentMigrator.Runner.Postgres
+nuget FluentMigrator.Runner.Redshift
+nuget FluentMigrator.Runner.SqlAnywhere
+nuget FluentMigrator.Runner.SQLite
+nuget FluentMigrator.Runner.SqlServer
+nuget FluentMigrator.Runner.SqlServerCe
+nuget HashLib
+nuget FSharp.Compiler.Service < 37 content: none 
+nuget Octokit
+nuget System.Net.Http
+nuget Microsoft.DotNet.PlatformAbstractions
+nuget FSharp.Control.Reactive
+nuget System.Reactive.Compatibility
+// From FSharp.Compiler.Service, but manually managed because of rename, use 4.4.0 because of some msbuild weirdness in legacy...
+// no matter what we specify here it seems to always copy 4.4.0 into the output directory. Probably some clash with some implicit dependency somewhere
+nuget System.ValueTuple copy_local: true, redirects:force 4.4.0
 
 group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
@@ -10,12 +87,19 @@ group DocsLegacyV5
     source https://api.nuget.org/v3/index.json
     nuget FAKE ~> 5.0
 
-group Build
+group TestAdapter
     source https://api.nuget.org/v3/index.json
-    content: none
+    nuget Expecto.VisualStudio.TestAdapter version_in_path: true
 
-    nuget FSharp.Core
+group Build
+    content: none
+    source https://api.nuget.org/v3/index.json
+    //source https://ci.appveyor.com/nuget/fake
+    //source https://ci.appveyor.com/nuget/fsharp-formatting
+
+    nuget FSharp.Core ~> 4.1
     nuget NuGet.CommandLine
+    nuget FAKE prerelease
     nuget FSharp.Formatting ~> 4.1
     nuget FSharp.Formatting.CommandTool ~> 4.1
     nuget SourceLink.Fake
@@ -25,17 +109,16 @@ group Build
 
 // [ FAKE GROUP ]
 group NetcoreBuild
+    framework: netstandard2.0
     source https://api.nuget.org/v3/index.json
+    //source C:\Users\matth\.nuget\localsource
     // FAKE_MYGET_FEED (don't edit this line)
-    framework: netstandard2.0, net6.0
     storage: none
 
-    nuget FSharp.Control.Reactive
-    nuget System.Reactive
     nuget FSharp.Core
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core
+    nuget Paket.Core // prerelease
     nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
     nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
@@ -65,17 +148,18 @@ group NetcoreBuild
 // New group because of FSharp.Core 4.5 upgrade, see https://github.com/fsharp/FAKE/pull/2011
 group netcorerunner
     source https://api.nuget.org/v3/index.json
-    framework: net472, netstandard2.0, netcoreapp2.1, net6.0
+    //source C:\Users\matth\.nuget\localsource
     storage: none
-
+    framework: net472, netstandard2.0, netcoreapp2.1
     nuget FSharp.Core
-    nuget Paket.Core
+
+    nuget Paket.Core // prerelease
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
-    nuget NETStandard.Library
+    nuget NETStandard.Library  ~> 2.0
     nuget Packaging.Targets
-    nuget FSharp.Compiler.Service
-    nuget System.Runtime.Loader
+    nuget FSharp.Compiler.Service content: none
+    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     // Testing
     nuget Expecto ~> 8
@@ -89,19 +173,20 @@ group netcorerunner
 
 group netcore
     source https://api.nuget.org/v3/index.json
-    framework: net472, netstandard2.0, netcoreapp2.1, net6.0
+    //source C:\Users\matth\.nuget\localsource
     storage: none
+    framework: net472, netstandard2.0, netcoreapp2.1
 
     nuget DotNet.Xdt
-    nuget FSharp.Core
-    nuget FSharp.Compiler.Service
-    nuget System.Reactive
+    nuget FSharp.Compiler.Service content: none
+
+    nuget FSharp.Core ~> 4.0
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core
-    nuget NuGet.Protocol
-    nuget NuGet.Packaging
+    nuget Paket.Core // prerelease
+    nuget NuGet.Protocol < 5.7
+    nuget NuGet.Packaging < 5.7
     nuget Mono.Cecil prerelease
     nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive

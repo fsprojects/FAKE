@@ -3,6 +3,7 @@ module Fake.Runtime.CompileRunner
 
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
+open Fake.Runtime.SdkAssemblyResolver
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
@@ -23,7 +24,7 @@ let private handleCoreCaching (context:FakeContext) (compiledAssembly:string) (e
      Warnings = errors }
 
 /// public, because it is used by test code
-let nameParser cachedAssemblyFileName scriptFileName =
+let nameParser cachedAssemblyFileName (scriptFileName:string) =
     let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
     let inline fixNamespace (n:string) =
         n.Replace(".", "-")
@@ -122,12 +123,17 @@ let compile (context:FakeContext) outDll =
 
     let co = context.Config.CompileOptions
 
+    let targetProfile = 
+        if SdkAssemblyResolver().IsResolvedSdkVersionSameAsLTSVersion()
+        then "--targetprofile:netcore"
+        else "--targetprofile:netstandard"
+
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
         { co.FsiOptions with
             FullPaths = true
-            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: fcsDependencyManagerOptions @ "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+            ScriptArgs = "--simpleresolution" :: targetProfile :: "--nowin32manifest" :: fcsDependencyManagerOptions @ "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s:string list) =

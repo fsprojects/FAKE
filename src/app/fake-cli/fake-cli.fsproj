@@ -3,12 +3,13 @@
         <PackAsTool>true</PackAsTool>
         <OutputType>Exe</OutputType>
         <ToolCommandName>fake</ToolCommandName>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
         <!-- Debian packaging -->
         <Prefix>/opt/fake</Prefix>
         <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/debian-postinst.sh'))</PostInstallScript>
         <NoWarn>FS3186</NoWarn>
+      <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
     </PropertyGroup>
 
     <ItemGroup>

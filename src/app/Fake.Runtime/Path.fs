@@ -6,7 +6,7 @@ open System.IO
 
 let internal isCaseInSensitive = Paket.Utils.isWindows
 
-let internal normalizeFileName fileName =
+let internal normalizeFileName (fileName:string) =
     if isCaseInSensitive then
         // fixes https://github.com/fsharp/FAKE/issues/2314
         let dir = Path.GetDirectoryName fileName

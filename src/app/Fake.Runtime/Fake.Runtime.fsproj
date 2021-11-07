@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
     <NoWarn>FS3186</NoWarn>
@@ -24,6 +24,7 @@
     <Compile Include="String.fs" />
     <Compile Include="Trace.fs" />
     <Compile Include="FSharpParser.fs" />
+    <Compile Include="SdkAssemblyResolver.fs" />
     <Compile Include="Runners.fs" />
     <Compile Include="CompileRunner.fs" />
     <Compile Include="ScriptRunner.fs" />
@@ -36,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
+    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />

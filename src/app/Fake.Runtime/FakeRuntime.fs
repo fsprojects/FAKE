@@ -2,9 +2,15 @@
 
 open System
 open System.IO
+open System.Runtime.InteropServices
 open Fake.Runtime
+open Fake.Core
+open Fake.DotNet
+open Fake.IO.FileSystemOperators
 open Fake.Runtime.Runners
 open Fake.Runtime.Trace
+open Fake.Runtime.SdkAssemblyResolver
+
 open Paket
 open System
 
@@ -39,60 +45,27 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
   let script = config.ScriptFilePath
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
-#if DOTNETCORE
-  //let framework = Paket.FrameworkIdentifier.DotNetCoreApp (Paket.DotNetCoreAppVersion.V2_0)
-  let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V2_0)
-#else
-  let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
-#endif
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketApi.DependenciesFile
-  let parent s = Path.GetDirectoryName s
+  let parent (s:string) = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
   let dependencyCacheHashFile = Path.Combine(cacheDir, "dependencies.cached")
   let dependencyCacheFile = Path.Combine(cacheDir, "dependencies.txt")
 
 #if DOTNETCORE
-  let getCurrentSDKReferenceFiles() =
-    // We need use "real" reference assemblies as using the currently running runtime assemlies doesn't work:
-    // see https://github.com/fsharp/FAKE/pull/1695
-
-    // Therefore we download the reference assemblies (the NETStandard.Library package)
-    // and add them in addition to what we have resolved, 
-    // we use the sources in the paket.dependencies to give the user a chance to overwrite.
-
-    // Note: This package/version needs to updated together with our "framework" variable below and needs to 
-    // be compatible with the runtime we are currently running on.
-    let rootDir = Directory.GetCurrentDirectory()
-    let packageName = Domain.PackageName("NETStandard.Library")
-    let version = SemVer.Parse("2.0.3")
-    let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
-    let extractedFolder =
-      if File.Exists existingpkg then
-        // Shortcut in order to prevent requests to nuget sources if we have it downloaded already
-        Path.GetDirectoryName existingpkg
-      else
-        let sources = paketDependenciesFile.Value.Groups.[groupName].Sources
-        let versions =
-          Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
-          |> Async.RunSynchronously
-          |> dict
-        let source =
-          match versions.TryGetValue(version) with
-          | true, v when v.Length > 0 -> v |> Seq.head
-          | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
-        
-        let _, extractedFolder =
-          Paket.NuGet.DownloadAndExtractPackage
-            (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
-             source, [], Paket.Constants.MainDependencyGroup,
-             packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
-          |> Async.RunSynchronously
-        extractedFolder
-    let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
-    Directory.GetFiles(sdkDir, "*.dll")
-    |> Seq.toList
+  let sdkAssemblyResolver = SdkAssemblyResolver()
+  let framework = sdkAssemblyResolver.SdkVersion
+  let rid = Paket.Rid.Of(RuntimeInformation.RuntimeIdentifier)
+  let ridNotVersionSpecific =
+    let osShortName =
+        if RuntimeInformation.IsOSPlatform OSPlatform.Linux then "linux"
+        else if RuntimeInformation.IsOSPlatform OSPlatform.Windows then "win"
+        else "osx"
+    Paket.Rid.Of(sprintf "%s-%s" osShortName (RuntimeInformation.OSArchitecture.ToString().ToLower()))
+#else
+  let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
+  let ridString = Paket.Rid.Of("win")
+  let ridNotVersionSpecific = Paket.Rid.Of("win")
 #endif
-
 
   let writeIntellisenseFile cacheDir =
     let intellisenseFile = Path.Combine (cacheDir, Runners.loadScriptName)
@@ -146,14 +119,6 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
     let (cache:DependencyCache) = cache.Value
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
 
-    let rid =
-#if DOTNETCORE
-        let ridString = Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
-#else
-        let ridString = "win"
-#endif
-        Paket.Rid.Of(ridString)
-
     // get runtime graph
     let graph =
       async {
@@ -205,6 +170,15 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
           installModel.GetRuntimeLibraries graph rid targetProfile
           |> Seq.map (fun fi -> DependencyFile.Library { File = fi.Library.Path })
           |> Seq.toList
+        // please see: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
+        // some native libraries, such as Sqlite.Interop are distributed without version specific.
+        // THe runtime identifier on windows 10 machine will be win10-x64 however, Sqlite.Interop
+        // will have an RID of win-x64
+        let runtimeLibrariesNotVersionSpecific =
+          installModel.GetRuntimeLibraries graph ridNotVersionSpecific targetProfile
+          |> Seq.map (fun fi -> DependencyFile.Library { File = fi.Library.Path })
+          |> Seq.toList
+
         let result =
           Seq.append runtimeAssemblies refAssemblies
           |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
@@ -212,6 +186,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
           |> Seq.choose (filterValidAssembly logLevel)
           |> Seq.map DependencyFile.Assembly
           |> Seq.append runtimeLibraries
+          |> Seq.append runtimeLibrariesNotVersionSpecific
           |> Seq.toList
         return result })
     |> Async.Parallel
@@ -219,7 +194,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let work = asy |> Async.StartAsTask
 #if DOTNETCORE
         let sdkRefs =
-            (getCurrentSDKReferenceFiles()
+            (sdkAssemblyResolver.ResolveSdkReferenceAssemblies(groupName, paketDependenciesFile)
                  |> Seq.map (fun file -> true, true, FileInfo file)
                  |> Seq.choose (filterValidAssembly logLevel))
                  |> Seq.map DependencyFile.Assembly
@@ -282,7 +257,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         Cache = cache.Value
         ScriptType = Paket.LoadingScripts.ScriptGeneration.ScriptType.FSharp
         Groups = [groupName]
-        DefaultFramework = false, (Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_7_1))
+        DefaultFramework = false, framework
       }
       |> Async.StartAsTask
 
@@ -305,7 +280,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
             DependencyFile.Library { File = loc }
         | Assembly isRef ->
             let ver = splits.[1]
-            let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
+            let loc = Path.readPathFromCache config.ScriptFilePath (splits.[2].Replace("%20"," "))
             let fullName = splits.[3]
             if not (File.Exists loc) then
                 failwithf "Cache is invalid as '%s' doesn't exist" fullName
@@ -541,7 +516,7 @@ let prepareFakeScript (config:FakeConfig) : PrepareInfo =
         let defaultPaketCode = """
         source https://api.nuget.org/v3/index.json
         storage: none
-        framework: netstandard2.0
+        framework: netstandard2.0,net6.0
         nuget FSharp.Core
                 """
         if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
@@ -583,7 +558,6 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
         { Out = out; Err = err }
       )
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
-
   { Runners.FakeConfig.VerboseLevel = logLevel
     Runners.FakeConfig.ScriptFilePath = Path.GetFullPath scriptPath
     Runners.FakeConfig.ScriptTokens = tokenized
