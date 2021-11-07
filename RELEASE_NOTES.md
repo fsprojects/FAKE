@@ -1,7 +1,20 @@
 # Release Notes
 
-## 5.20.5-alpha - tbd
-* tbd
+## 5.20.5-alpha - 2021-11-07
+* BUGFIX: add access token option to sqlpackage, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2581
+* NEW: Porting Fixie Module to FAKE 5, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2582
+* NEW: Porting Bitbucket module to FAKE 5, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2583
+* BUGFIX: Fix dotnet path on wsl, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/issues/2573
+* BUGFIX: Get by packageid and an api to search by title, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/issues/2575
+* NEW: Porting TypeScript module to FAKE 5, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2586
+* ENHANCEMENT: Changing coverlet output format to receive a list of formats, thanks @lucasteles - https://github.com/fsprojects/FAKE/pull/2562
+* ENHANCEMENT: Install Instruction, thanks @ShalokShalom - https://github.com/fsprojects/FAKE/pull/2578
+* ENHANCEMENT: GitVersion with dotnet tool, thanks @mcliment - https://github.com/fsprojects/FAKE/pull/2598
+* ENHANCEMENT: [Doc] Fix links inside one of the getting started's info box, thanks @boechat107 - https://github.com/fsprojects/FAKE/pull/2599
+* ENHANCEMENT: Fix some typos in fake-commandline.md, thanks @dawedawe - https://github.com/fsprojects/FAKE/pull/2602
+* ENHANCEMENT: Fix minor things in the documentation, thanks @dawedawe - https://github.com/fsprojects/FAKE/pull/2603
+* ENHANCEMENT: Add missing report types to ReportType, thanks @mcliment - https://github.com/fsprojects/FAKE/pull/2606
+* ENHANCEMENT: Support .net6 runtime assemblies, new Build system, and Legacy Fake Codebase Separation, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2609
 
 ## 5.20.4 - 2021-03-31
 
