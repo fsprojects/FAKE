@@ -44,7 +44,7 @@ type ReportType =
     | TeamCitySummary
     | Clover
     | JsonSummary
-    | lcov
+    | Lcov
     | MarkdownSummary
     | SonarQube
 
