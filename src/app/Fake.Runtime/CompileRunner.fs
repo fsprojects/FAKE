@@ -3,7 +3,7 @@ module Fake.Runtime.CompileRunner
 
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
-open Fake.Runtime.RuntimeReferenceAssemblies
+open Fake.Runtime.SdkAssemblyResolver
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
@@ -124,7 +124,7 @@ let compile (context:FakeContext) outDll =
     let co = context.Config.CompileOptions
 
     let targetProfile = 
-        if RuntimeReferenceAssemblies().IsResolvedSdkVersionSameAsPinnedVersion()
+        if SdkAssemblyResolver().IsResolvedSdkVersionSameAsLTSVersion()
         then "--targetprofile:netcore"
         else "--targetprofile:netstandard"
 

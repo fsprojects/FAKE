@@ -1,4 +1,4 @@
-module Fake.Runtime.RuntimeReferenceAssemblies
+module Fake.Runtime.SdkAssemblyResolver
 
 open System.IO
 open System.Runtime.InteropServices
@@ -8,23 +8,23 @@ open Fake.DotNet
 open Fake.Runtime
 open Paket
 
-/// here we will pin Fake runner execution framework to .NET 6 as in `PinnedFrameworkRuntimeVersion`
-/// We will also try to resolve the current SDK that runner is executing, if it is the same as pinned
+/// here we will pin Fake runner execution framework to .NET 6 as in `SdkVersion`
+/// We will also try to resolve the current SDK that the runner is executing, if it is the same as pinned
 /// one then we will use runtime assemblies from that SDK version on its installation on disk. Otherwise,
 /// we will default to NetStandard2.0 assemblies. We will download them since they are packaged in a NuGet
 /// package extract them a and reference them.
-type RuntimeReferenceAssemblies() =
+type SdkAssemblyResolver() =
 #if DOTNETCORE
 
-    member this.PinnedFrameworkRuntimeVersion =
+    member this.SdkVersion =
         Paket.FrameworkIdentifier.DotNetFramework Paket.FrameworkVersion.V6
 
-    member this.IsResolvedSdkVersionSameAsPinnedVersion() =
+    member this.IsResolvedSdkVersionSameAsLTSVersion() =
         match DotNet.tryGetSDKVersionFromGlobalJson () with
-        | Some version -> version.StartsWith "6" // this need to be kept in sync with PinnedFrameworkRuntimeVersion number
+        | Some version -> version.StartsWith "6" // this need to be kept in sync with SdkVersion number
         | None -> false
 
-    member this.GetPinnedFrameworkRuntimeAssemblies() =
+    member this.SdkReferenceAssemblies() =
         let fileName =
             match Environment.isUnix with
             | true -> "dotnet"
@@ -33,7 +33,7 @@ type RuntimeReferenceAssemblies() =
         let userInstallDir = DotNet.defaultUserInstallDir
         let systemInstallDir = DotNet.defaultSystemInstallDir
 
-        let dotnet6RuntimeAssembliesPath =
+        let dotnet6ReferenceAssembliesPath =
             match File.Exists(userInstallDir </> fileName) with
             | true -> userInstallDir
             | false -> systemInstallDir
@@ -42,7 +42,7 @@ type RuntimeReferenceAssemblies() =
             RuntimeInformation.FrameworkDescription.Replace(".NET ", "")
 
         Directory.GetFiles(
-            dotnet6RuntimeAssembliesPath
+            dotnet6ReferenceAssembliesPath
             </> "packs"
             </> "Microsoft.NETCore.App.Ref"
             </> dotnet6RuntimeVersion
@@ -52,7 +52,7 @@ type RuntimeReferenceAssemblies() =
         )
         |> Seq.toList
 
-    member this.GetNetStandard20RuntimeAssemblies
+    member this.NetStandard20ReferenceAssemblies
         (
             nuGetPackage: string,
             version: string,
@@ -131,20 +131,20 @@ type RuntimeReferenceAssemblies() =
 
         Directory.GetFiles(sdkDir, "*.dll") |> Seq.toList
 
-    member this.GetSDKReferenceFiles(groupName: Domain.GroupName, paketDependenciesFile: Lazy<Paket.DependenciesFile>) =
+    member this.ResolveSdkReferenceAssemblies(groupName: Domain.GroupName, paketDependenciesFile: Lazy<Paket.DependenciesFile>) =
         // here we will match for .NET 6 sdk from a global.json file. If found we will use
         // .NET 6 runtime assemblies. Otherwise we will default to .Netstandard 2.0.3
-        match this.IsResolvedSdkVersionSameAsPinnedVersion() with
+        match this.IsResolvedSdkVersionSameAsLTSVersion() with
         | true ->
             Trace.traceVerbose
             <| (sprintf "%s" "Using .Net 6 assemblies")
 
-            this.GetPinnedFrameworkRuntimeAssemblies()
+            this.SdkReferenceAssemblies()
         | false ->
             Trace.traceVerbose
             <| (sprintf "%s" "Using .Netstandard assemblies")
 
-            this.GetNetStandard20RuntimeAssemblies(
+            this.NetStandard20ReferenceAssemblies(
                 "NETStandard.Library",
                 "2.0.0",
                 Path.Combine("build", "netstandard2.0", "ref"),

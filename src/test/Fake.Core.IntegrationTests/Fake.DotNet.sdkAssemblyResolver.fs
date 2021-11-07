@@ -1,4 +1,4 @@
-﻿module Fake.DotNet.RuntimeReferenceAssembliesIntegrationTests
+﻿module Fake.DotNet.sdkAssemblyResolverTests
 
 open System.Text.RegularExpressions
 open Fake.IO
@@ -11,8 +11,10 @@ open Fake.Core.IntegrationTests.TestHelpers
 
 [<Tests>]
 let tests =
-    testList "Fake.DotNet.RuntimeReferenceAssembliesIntegrationTests" [
-          testCase "Runner run script with NETStandard2.0 SDK assemblies" <| fun _ ->
+    testList
+        "Fake.DotNet.sdkAssemblyResolverTests"
+        [ testCase "Runner run script with NETStandard2.0 SDK assemblies"
+          <| fun _ ->
               let result =
                   handleAndFormat
                   <| fun _ ->
@@ -34,7 +36,8 @@ let tests =
               (sprintf "stdout should contain '%s', but was: '%s'" expectedNetStandardPathPortion stdOut)
               |> Expect.isTrue (stdOut.Contains expectedNetStandardPathPortion)
 
-          testCase "Runner run script with .Net6 SDK assemblies" <| fun _ ->
+          testCase "Runner run script with .Net6 SDK assemblies"
+          <| fun _ ->
               let result =
                   handleAndFormat
                   <| fun _ ->
@@ -48,8 +51,11 @@ let tests =
                   String.Join("\n", result.Messages).Trim()
 
               // the * is for runtime version
-              let expectedNet6PathPortion = "[\s\S]*[\/|\\\\]packs[\/|\\\\]Microsoft[\/.|\\\\.]NETCore[\/.|\\\\.]App[\/.|\\\\.]Ref[\/|\\\\][\s\S]*[\/|\\\\]ref[\/|\\\\]net6[\/.|\\\\.]0[\/|\\\\]*"
+              let expectedNet6PathPortion =
+                  "[\s\S]*[\/|\\\\]packs[\/|\\\\]Microsoft[\/.|\\\\.]NETCore[\/.|\\\\.]App[\/.|\\\\.]Ref[\/|\\\\][\s\S]*[\/|\\\\]ref[\/|\\\\]net6[\/.|\\\\.]0[\/|\\\\]*"
 
-              (sprintf "stdout should contain path like '%s', but was: '%s'" "packs/Microsoft.NETCore.App.Ref/*/ref/net6.0" stdOut)
-              |> Expect.isTrue (Regex.IsMatch (stdOut, expectedNet6PathPortion))
-    ]
+              (sprintf
+                  "stdout should contain path like '%s', but was: '%s'"
+                  "packs/Microsoft.NETCore.App.Ref/*/ref/net6.0"
+                  stdOut)
+              |> Expect.isTrue (Regex.IsMatch(stdOut, expectedNet6PathPortion)) ]

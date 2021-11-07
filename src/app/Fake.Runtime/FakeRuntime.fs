@@ -9,7 +9,7 @@ open Fake.DotNet
 open Fake.IO.FileSystemOperators
 open Fake.Runtime.Runners
 open Fake.Runtime.Trace
-open Fake.Runtime.RuntimeReferenceAssemblies
+open Fake.Runtime.SdkAssemblyResolver
 
 open Paket
 open System
@@ -52,8 +52,8 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
   let dependencyCacheFile = Path.Combine(cacheDir, "dependencies.txt")
 
 #if DOTNETCORE
-  let runtimeReferenceAssemblies = RuntimeReferenceAssemblies()
-  let framework = runtimeReferenceAssemblies.PinnedFrameworkRuntimeVersion
+  let sdkAssemblyResolver = SdkAssemblyResolver()
+  let framework = sdkAssemblyResolver.SdkVersion
   let rid = Paket.Rid.Of(RuntimeInformation.RuntimeIdentifier)
   let ridNotVersionSpecific =
     let osShortName =
@@ -194,7 +194,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let work = asy |> Async.StartAsTask
 #if DOTNETCORE
         let sdkRefs =
-            (runtimeReferenceAssemblies.GetSDKReferenceFiles(groupName, paketDependenciesFile)
+            (sdkAssemblyResolver.ResolveSdkReferenceAssemblies(groupName, paketDependenciesFile)
                  |> Seq.map (fun file -> true, true, FileInfo file)
                  |> Seq.choose (filterValidAssembly logLevel))
                  |> Seq.map DependencyFile.Assembly
