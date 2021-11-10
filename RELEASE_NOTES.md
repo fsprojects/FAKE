@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.21.0-alpha001 - 2021-11-10
+## 5.21.0-alpha002 - 2021-11-10
 * BUGFIX: add access token option to sqlpackage, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2581
 * NEW: Porting Fixie Module to FAKE 5, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2582
 * NEW: Porting Bitbucket module to FAKE 5, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2583
