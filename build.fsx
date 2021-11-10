@@ -1099,7 +1099,6 @@ Target.create "ReleaseDocs" (fun _ ->
 
     Git.Repository.fullclean "gh-pages"
     Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
-    Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     File.writeString false "./gh-pages/CNAME" docsDomain
     Git.Staging.stageAll "gh-pages"
     if not BuildServer.isLocalBuild then
