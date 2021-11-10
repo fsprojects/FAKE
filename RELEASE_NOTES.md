@@ -15,6 +15,7 @@
 * ENHANCEMENT: Fix minor things in the documentation, thanks @dawedawe - https://github.com/fsprojects/FAKE/pull/2603
 * ENHANCEMENT: Add missing report types to ReportType, thanks @mcliment - https://github.com/fsprojects/FAKE/pull/2606
 * ENHANCEMENT: Support .net6 runtime assemblies, new Build system, and Legacy Fake Codebase Separation, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2609
+* BUGFIX: Update Octokit to 0.50 and fix upload assets, thanks @enovales - https://github.com/fsprojects/FAKE/issues/2601
 
 ## 5.20.4 - 2021-03-31
 
