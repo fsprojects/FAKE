@@ -4,7 +4,7 @@ name: FAKE Release
 
 on:
     push:
-        branches: [ release/next ]
+        branches: [ master ]
 
 jobs:
     release:
