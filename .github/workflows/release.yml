@@ -1,14 +1,15 @@
-name: FAKE Prepare Release
+name: FAKE Release
 
-# this workflow will build the project, run tests for final check, and prepare artifacts for a release. The intention is to run it on push on master 
+# this workflow will build the project, run tests for final check, generate artifacts for a release, and release
 
 on:
     push:
         branches: [ release/next ]
 
 jobs:
-    build:
+    release:
         runs-on: windows-latest
+        environment: Production
         steps:
             - uses: actions/checkout@v2
             - name: Setup .NETCORE 3.1
@@ -40,3 +41,17 @@ jobs:
               with:
                   name: fake-artifacts
                   path: release/artifacts
+            - name: Release
+              env:
+                  ARTIFACTS_DIRECTORY: "${{github.workspace}}/release/artifacts"
+                  CHOCO_SOURCE: "disabled"
+                  FAKE_DETAILED_ERRORS: true
+                  GIT_DIRECTORY: ${{github.workspace}}
+                  CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+                  DOCS_DOMAIN: ${{ secrets.DOCS_DOMAIN }}
+                  NUGET_KEY: ${{ secrets.NUGET_KEY }}
+                  NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
+                  RELEASE_USER_GITHUB: ${{ secrets.RELEASE_USER_GITHUB }}
+                  REPOSITORY_NAME_GITHUB: ${{ secrets.REPOSITORY_NAME_GITHUB }}
+                  TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+              run: ${{github.workspace}}/release/dotnetcore/Fake.netcore/win7-x64/fake.exe build -t FastRelease

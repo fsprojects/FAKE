@@ -109,20 +109,20 @@ let releaseSecret replacement name =
     secrets <- secret :: secrets
     secret
 
-let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+let github_release_user = getVarOrDefault "RELEASE_USER_GITHUB" "fsprojects"
 
 // The name of the project on GitHub
-let gitName = getVarOrDefault "github_repository_name" "FAKE"
-let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
-let artifactsDir = getVarOrDefault "artifactsdirectory" ""
-let docsDomain = getVarOrDefault "docs_domain" "fake.build"
+let gitName = getVarOrDefault "REPOSITORY_NAME_GITHUB" "FAKE"
+let nugetsource = getVarOrDefault "NUGET_SOURCE" "https://www.nuget.org/api/v2/package"
+let chocosource = getVarOrDefault "CHOCO_SOURCE" "https://push.chocolatey.org/"
+let artifactsDir = getVarOrDefault "ARTIFACTS_DIRECTORY" ""
+let docsDomain = getVarOrDefault "DOCS_DOMAIN" "fake.build"
 let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
-let apikey = releaseSecret "<nugetkey>" "nugetkey"
+let apikey = releaseSecret "<nugetkey>" "NUGET_KEY"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
-let githubtoken = releaseSecret "<githubtoken>" "github_token"
+let githubtoken = releaseSecret "<githubtoken>" "TOKEN_GITHUB"
 
 do Environment.setEnvironVar "COREHOST_TRACE" "0"
 
@@ -136,14 +136,14 @@ BuildServer.install [
 ]
 
 let version =
+    let semVer = SemVer.parse release.NugetVersion
     let segToString = function
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
     let source, buildMeta =
         match BuildServer.buildServer with
         | BuildServer.GitHubActions ->
-            [ yield PreReleaseSegment.AlphaNumeric GitHubActions.Environment.RunId
-            ], sprintf "github.%s" GitHubActions.Environment.Sha
+            [ yield PreReleaseSegment.AlphaNumeric ""  ], ""
         | BuildServer.GitLabCI ->
             // Workaround for now
             // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
@@ -203,7 +203,7 @@ let version =
                 |> Seq.append [ 0I ]
                 |> Seq.max
             let d = System.DateTime.Now
-            [ PreReleaseSegment.AlphaNumeric "local"; PreReleaseSegment.Numeric (currentVer + 1I) ], d.ToString("yyyy-MM-dd-HH-mm")
+            [ PreReleaseSegment.AlphaNumeric ("local-" + (currentVer + 1I).ToString()) ], d.ToString("yyyy-MM-dd-HH-mm")
 
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =
@@ -570,7 +570,7 @@ Target.create "StartBootstrapBuild" (fun _ ->
     let token = githubtoken.Value
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
-    let gitDirectory = getVarOrDefault "git_directory" "."
+    let gitDirectory = getVarOrDefault "GIT_DIRECTORY" "."
     let remoteUrl =
         if not BuildServer.isLocalBuild then
             Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
@@ -1114,7 +1114,7 @@ Target.create "FastRelease" (fun _ ->
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 
-    let gitDirectory = getVarOrDefault "git_directory" ""
+    let gitDirectory = getVarOrDefault "GIT_DIRECTORY" ""
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
@@ -1268,7 +1268,7 @@ Target.create "FullDotNetCore" ignore
 Target.description "publish fake 5 runner for various platforms"
 Target.create "DotNetPublish" ignore
 
-Target.description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
+Target.description "Run the tests - if artifacts are available via 'ARTIFACTS_DIRECTORY' those are used."
 Target.create "RunTests" ignore
 
 Target.description "Generate the docs (potentially from artifacts) and publish as artifact."
