@@ -44,7 +44,7 @@ jobs:
             - name: Release
               env:
                   ARTIFACTS_DIRECTORY: "${{github.workspace}}/release/artifacts"
-                  CHOCO_SOURCE: "disabled"
+                  CHOCO_SOURCE: ${{ secrets.CHOCO_SOURCE }}
                   FAKE_DETAILED_ERRORS: true
                   GIT_DIRECTORY: ${{github.workspace}}
                   CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
