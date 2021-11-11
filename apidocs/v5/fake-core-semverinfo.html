@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -323,15 +327,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1853', 1853)" onmouseover="showTip(event, '1853', 1853)">
+          <code onmouseout="hideTip(event, '1880', 1880)" onmouseover="showTip(event, '1880', 1880)">
             Build
           </code>
-          <div class="tip" id="1853">
+          <div class="tip" id="1880">
             <strong>Signature:</strong> bigint<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L162-162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The optional build no.</p>
@@ -341,15 +345,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1854', 1854)" onmouseover="showTip(event, '1854', 1854)">
+          <code onmouseout="hideTip(event, '1881', 1881)" onmouseover="showTip(event, '1881', 1881)">
             BuildMetaData
           </code>
-          <div class="tip" id="1854">
+          <div class="tip" id="1881">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L163-163" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -357,15 +361,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1855', 1855)" onmouseover="showTip(event, '1855', 1855)">
+          <code onmouseout="hideTip(event, '1882', 1882)" onmouseover="showTip(event, '1882', 1882)">
             Major
           </code>
-          <div class="tip" id="1855">
+          <div class="tip" id="1882">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L154-154" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L154-154" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>MAJOR version when you make incompatible API changes.</p>
@@ -375,15 +379,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
+          <code onmouseout="hideTip(event, '1883', 1883)" onmouseover="showTip(event, '1883', 1883)">
             Minor
           </code>
-          <div class="tip" id="1856">
+          <div class="tip" id="1883">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L156-156" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L156-156" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>MINOR version when you add functionality in a backwards-compatible manner.</p>
@@ -393,15 +397,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1857', 1857)" onmouseover="showTip(event, '1857', 1857)">
+          <code onmouseout="hideTip(event, '1884', 1884)" onmouseover="showTip(event, '1884', 1884)">
             Original
           </code>
-          <div class="tip" id="1857">
+          <div class="tip" id="1884">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L165-165" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L165-165" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -409,15 +413,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1858', 1858)" onmouseover="showTip(event, '1858', 1858)">
+          <code onmouseout="hideTip(event, '1885', 1885)" onmouseover="showTip(event, '1885', 1885)">
             Patch
           </code>
-          <div class="tip" id="1858">
+          <div class="tip" id="1885">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L158-158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>PATCH version when you make backwards-compatible bug fixes.</p>
@@ -427,15 +431,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1859', 1859)" onmouseover="showTip(event, '1859', 1859)">
+          <code onmouseout="hideTip(event, '1886', 1886)" onmouseover="showTip(event, '1886', 1886)">
             PreRelease
           </code>
-          <div class="tip" id="1859">
+          <div class="tip" id="1886">
             <strong>Signature:</strong> PreRelease option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L160-160" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L160-160" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The optional PreRelease version</p>
@@ -453,15 +457,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1860', 1860)" onmouseover="showTip(event, '1860', 1860)">
+          <code onmouseout="hideTip(event, '1887', 1887)" onmouseover="showTip(event, '1887', 1887)">
             x.AsString
           </code>
-          <div class="tip" id="1860">
+          <div class="tip" id="1887">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L188-188" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L188-188" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -469,15 +473,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1861', 1861)" onmouseover="showTip(event, '1861', 1861)">
+          <code onmouseout="hideTip(event, '1888', 1888)" onmouseover="showTip(event, '1888', 1888)">
             x.CompareTo(y)
           </code>
-          <div class="tip" id="1861">
+          <div class="tip" id="1888">
             <strong>Signature:</strong> y:SemVerInfo -&gt; int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L201-201" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L201-201" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -485,15 +489,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1862', 1862)" onmouseover="showTip(event, '1862', 1862)">
+          <code onmouseout="hideTip(event, '1889', 1889)" onmouseover="showTip(event, '1889', 1889)">
             x.Equals(y)
           </code>
-          <div class="tip" id="1862">
+          <div class="tip" id="1889">
             <strong>Signature:</strong> y:SemVerInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L191-191" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L191-191" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -501,15 +505,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1863', 1863)" onmouseover="showTip(event, '1863', 1863)">
+          <code onmouseout="hideTip(event, '1890', 1890)" onmouseover="showTip(event, '1890', 1890)">
             x.Normalize()
           </code>
-          <div class="tip" id="1863">
+          <div class="tip" id="1890">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L167-167" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L167-167" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -517,15 +521,15 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1864', 1864)" onmouseover="showTip(event, '1864', 1864)">
+          <code onmouseout="hideTip(event, '1891', 1891)" onmouseover="showTip(event, '1891', 1891)">
             x.NormalizeToShorter()
           </code>
-          <div class="tip" id="1864">
+          <div class="tip" id="1891">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L178-178" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L178-178" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -571,7 +575,7 @@ Note: For overwriting the <a href="fake-core-prerelease.html" title="PreRelease"
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

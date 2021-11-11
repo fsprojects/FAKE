@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,198 +332,165 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2972', 2972)" onmouseover="showTip(event, '2972', 2972)">
+          <code onmouseout="hideTip(event, '2937', 2937)" onmouseover="showTip(event, '2937', 2937)">
             AllOrganizations
           </code>
-          <div class="tip" id="2972">
+          <div class="tip" id="2937">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Export all solutions for all organizations that the current user has access to. Be sure to pass discovery service url for URL parameter</p>
+                    <p>Export all solutions for all organizations that the current user has access to. Be sure to pass discovery service url for URL parameter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2973', 2973)" onmouseover="showTip(event, '2973', 2973)">
+          <code onmouseout="hideTip(event, '2938', 2938)" onmouseover="showTip(event, '2938', 2938)">
             AllSolutions
           </code>
-          <div class="tip" id="2973">
+          <div class="tip" id="2938">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Export all solutions for given organization</p>
+                    <p>Export all solutions for given organization</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2974', 2974)" onmouseover="showTip(event, '2974', 2974)">
+          <code onmouseout="hideTip(event, '2939', 2939)" onmouseover="showTip(event, '2939', 2939)">
             FileName
           </code>
-          <div class="tip" id="2974">
+          <div class="tip" id="2939">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set for specifying output file name when exporting solution or input solution name when importing</p>
+                    <p>Set for specifying output file name when exporting solution or input solution name when importing</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2975', 2975)" onmouseover="showTip(event, '2975', 2975)">
+          <code onmouseout="hideTip(event, '2940', 2940)" onmouseover="showTip(event, '2940', 2940)">
             Managed
           </code>
-          <div class="tip" id="2975">
+          <div class="tip" id="2940">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify, whether solution should be exported as managed or unmanaged</p>
+                    <p>Specify, whether solution should be exported as managed or unmanaged</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2976', 2976)" onmouseover="showTip(event, '2976', 2976)">
+          <code onmouseout="hideTip(event, '2941', 2941)" onmouseover="showTip(event, '2941', 2941)">
             Password
           </code>
-          <div class="tip" id="2976">
+          <div class="tip" id="2941">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Password of user that should be used to connect to the CRM Organization. Leave blank to use default credentials</p>
+                    <p>Password of user that should be used to connect to the CRM Organization. Leave blank to use default credentials</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2977', 2977)" onmouseover="showTip(event, '2977', 2977)">
+          <code onmouseout="hideTip(event, '2942', 2942)" onmouseover="showTip(event, '2942', 2942)">
             Solution
           </code>
-          <div class="tip" id="2977">
+          <div class="tip" id="2942">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set for specifying unique name of solution when exporting single solution</p>
+                    <p>Set for specifying unique name of solution when exporting single solution</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2978', 2978)" onmouseover="showTip(event, '2978', 2978)">
+          <code onmouseout="hideTip(event, '2943', 2943)" onmouseover="showTip(event, '2943', 2943)">
             TimeOut
           </code>
-          <div class="tip" id="2978">
+          <div class="tip" id="2943">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>TimeOut for each function. Set to a higher value, i.e. 60 minutes if using AllOrganizations</p>
+                    <p>TimeOut for each function. Set to a higher value, i.e. 60 minutes if using AllOrganizations</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2979', 2979)" onmouseover="showTip(event, '2979', 2979)">
+          <code onmouseout="hideTip(event, '2944', 2944)" onmouseover="showTip(event, '2944', 2944)">
             ToolDirectory
           </code>
-          <div class="tip" id="2979">
+          <div class="tip" id="2944">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tool Directory where Solution Exchanger is stored</p>
+                    <p>Tool Directory where Solution Exchanger is stored</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2980', 2980)" onmouseover="showTip(event, '2980', 2980)">
+          <code onmouseout="hideTip(event, '2945', 2945)" onmouseover="showTip(event, '2945', 2945)">
             Url
           </code>
-          <div class="tip" id="2980">
+          <div class="tip" id="2945">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Url of CRM Organization / Discovery Service URL if using AllOrganizations</p>
+                    <p>Url of CRM Organization / Discovery Service URL if using AllOrganizations</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2981', 2981)" onmouseover="showTip(event, '2981', 2981)">
+          <code onmouseout="hideTip(event, '2946', 2946)" onmouseover="showTip(event, '2946', 2946)">
             User
           </code>
-          <div class="tip" id="2981">
+          <div class="tip" id="2946">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Username of user that should be used to connect to the CRM Organization. Leave blank to use default credentials</p>
+                    <p>Username of user that should be used to connect to the CRM Organization. Leave blank to use default credentials</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2982', 2982)" onmouseover="showTip(event, '2982', 2982)">
+          <code onmouseout="hideTip(event, '2947', 2947)" onmouseover="showTip(event, '2947', 2947)">
             WorkingDirectory
           </code>
-          <div class="tip" id="2982">
+          <div class="tip" id="2947">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsCRMHelper.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Working Directory for actions, can be used to influence storage locations of files</p>
+                    <p>Working Directory for actions, can be used to influence storage locations of files</p>
 
 
         </td>
@@ -563,7 +534,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

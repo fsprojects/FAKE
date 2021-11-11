@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>SignCertificate - FAKE - F# Make</title>
+	<title>TypeScript - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,105 +301,143 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-tools-signtool-signcertificate.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.JavaScript.TypeScript" >Fake.JavaScript.TypeScript</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="SignCertificate" class="anchor" href="#SignCertificate">SignCertificate</a></h1>
+<h1><a name="TypeScript" class="anchor" href="#TypeScript">TypeScript</a></h1>
+
 <div class="xmldoc">
-<p>Specifies what type of certificate to use.</p>
+<p>Helpers to run the typeScript compiler.</p>
+
+        <h2><a name="Sample" class="anchor" href="#Sample">Sample</a></h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="s">&quot;src/**/*.ts&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">TypeScriptCompiler</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">TimeOut</span> <span class="o">=</span> <span class="id">TimeSpan</span><span class="pn">.</span><span class="id">MaxValue</span> <span class="pn">}</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
 
 </div>
-  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
-  <table class="table table-bordered member-list">
+
+<!-- Render nested types and modules, if there are any -->
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
+  <div>
+      <table class="table table-bordered type-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Type</td><td>Description</td></tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6789', 6789)" onmouseover="showTip(event, '6789', 6789)">
-            File(CertificateFromFile)
-          </code>
-          <div class="tip" id="6789">
-            <strong>Signature:</strong> CertificateFromFile<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L95-95" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use a certificate stored in a file.</p>
+        <tr>
+          <td class="type-name">
+            <a href="fake-javascript-typescript-ecmascript.html">ECMAScript</a>
+          </td>
+          <td class="xmldoc">
+            <p>Generated ECMAScript version</p>
 
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6790', 6790)" onmouseover="showTip(event, '6790', 6790)">
-            Store(CertificateFromStore)
-          </code>
-          <div class="tip" id="6790">
-            <strong>Signature:</strong> CertificateFromStore<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use a certificate stored in a certificate store.</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-javascript-typescript-modulegeneration.html">ModuleGeneration</a>
+          </td>
+          <td class="xmldoc">
+            <p>Generated JavaScript module type</p>
 
 
-        </td>
-      </tr>
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-javascript-typescript-typescriptparams.html">TypeScriptParams</a>
+          </td>
+          <td class="xmldoc">
+            <p>TypeScript task parameter type</p>
+
+
+          </td>
+        </tr>
     </tbody>
   </table>
-  <h2><a name="Static members" class="anchor" href="#Static members">Static members</a></h2>
+
+  </div>
+
+  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6791', 6791)" onmouseover="showTip(event, '6791', 6791)">
-            SignCertificate.FromFile(...)
+          <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
+            TypeScript.compile setParams files
           </code>
-          <div class="tip" id="6791">
-            <strong>Signature:</strong> (path:string * setOptions:(CertificateFromFile -&gt; CertificateFromFile)) -&gt; SignCertificate<br />
+          <div class="tip" id="1074">
+            <strong>Signature:</strong> setParams:(TypeScriptParams -&gt; TypeScriptParams) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L144-144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Use a certificate stored in a file with options</p>
+          <p>Run <code>tsc --declaration src/app/index.ts</code></p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the TypeScript compiler flags.</li>
+<li><code>files</code> - The type script files to compile.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="o">!!</span> <span class="s">&quot;src/**/*.ts&quot;</span>
+        <span class="o">|&gt;</span> <span class="id">TypeScript</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">TimeOut</span> <span class="o">=</span> <span class="id">TimeSpan</span><span class="pn">.</span><span class="id">MaxValue</span> <span class="pn">}</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6792', 6792)" onmouseover="showTip(event, '6792', 6792)">
-            SignCertificate.FromStore(setOptions)
+          <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
+            TypeScript.extractVersionNumber(di)
           </code>
-          <div class="tip" id="6792">
-            <strong>Signature:</strong> (setOptions:(CertificateFromStore -&gt; CertificateFromStore)) -&gt; SignCertificate<br />
+          <div class="tip" id="1075">
+            <strong>Signature:</strong> di:DirectoryInfo -&gt; float<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L104-104" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Use a certificate stored in a certificate store with options.</p>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
+            TypeScript.TypeScriptDefaultParams
+          </code>
+          <div class="tip" id="1076">
+            <strong>Signature:</strong> TypeScriptParams<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L72-72" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Default parameters for the TypeScript task</p>
 
 
         </td>
@@ -411,6 +453,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -439,7 +482,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

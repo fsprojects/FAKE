@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.allExist)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if all given files exist.</p>
+                    <p>Checks if all given files exist.</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.checkExists)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Raises an exception if the file doesn't exist on disk.</p>
+                    <p>Raises an exception if the file doesn't exist on disk.</p>
 
 
         </td>
@@ -392,10 +390,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the current directory.</p>
+                    <p>Gets the current directory.</p>
 
 
         </td>
@@ -418,10 +413,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.exists)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the directory exists on disk.</p>
+                    <p>Checks if the directory exists on disk.</p>
 
 
         </td>
@@ -444,10 +436,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.ofPath)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a DirectoryInfo for the given path.</p>
+                    <p>Creates a DirectoryInfo for the given path.</p>
 
 
         </td>
@@ -470,10 +459,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Path.getDirectory)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the directory part of a filename.</p>
+                    <p>Gets the directory part of a filename.</p>
 
 
         </td>
@@ -496,10 +482,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.ensure)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given directory exists. If not then this functions creates the directory.</p>
+                    <p>Checks if the given directory exists. If not then this functions creates the directory.</p>
 
 
         </td>
@@ -522,10 +505,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.ensure)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
+                    <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
 
 
         </td>
@@ -548,10 +528,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.exists)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the file exists on disk.</p>
+                    <p>Checks if the file exists on disk.</p>
 
 
         </td>
@@ -574,10 +551,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.ofPath)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a FileInfo for the given path.</p>
+                    <p>Creates a FileInfo for the given path.</p>
 
 
         </td>
@@ -600,10 +574,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.getFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all files in the directory.</p>
+                    <p>Gets all files in the directory.</p>
 
 
         </td>
@@ -626,10 +597,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.getMatchingFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finds all the files in the directory matching the search pattern.</p>
+                    <p>Finds all the files in the directory matching the search pattern.</p>
 
 
         </td>
@@ -652,10 +620,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.getMatchingFilesRecursive)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finds all the files in the directory and in all subdirectories matching the search pattern.</p>
+                    <p>Finds all the files in the directory and in all subdirectories matching the search pattern.</p>
 
 
         </td>
@@ -678,10 +643,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystemInfo.ofPath)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a FileInfo or a DirectoryInfo for the given path</p>
+                    <p>Creates a FileInfo or a DirectoryInfo for the given path</p>
 
 
         </td>
@@ -704,10 +666,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.findFirstMatchingFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the first file in the directory matching the search pattern or throws an error if nothing was found.</p>
+                    <p>Gets the first file in the directory matching the search pattern or throws an error if nothing was found.</p>
 
 
         </td>
@@ -722,10 +681,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the full location of the current assembly.</p>
+                    <p>Get the full location of the current assembly.</p>
 
 
         </td>
@@ -748,10 +704,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Path.getFullName)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a filename to it's full file system name.</p>
+                    <p>Converts a filename to it's full file system name.</p>
 
 
         </td>
@@ -766,10 +719,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path is a directory.</p>
+                    <p>Detects whether the given path is a directory.</p>
 
 
         </td>
@@ -784,10 +734,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path is a file.</p>
+                    <p>Detects whether the given path is a file.</p>
 
 
         </td>
@@ -810,10 +757,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.containsFile. NB: reverse parameters)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the file is in a subfolder of the dir.</p>
+                    <p>Checks if the file is in a subfolder of the dir.</p>
 
 
         </td>
@@ -836,10 +780,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.isSubfolderOf)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
+                    <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
 
 
         </td>
@@ -854,10 +795,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path does not contains invalid characters.</p>
+                    <p>Detects whether the given path does not contains invalid characters.</p>
 
 
         </td>
@@ -872,10 +810,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Normalizes a filename.</p>
+                    <p>Normalizes a filename.</p>
 
 
         </td>
@@ -898,10 +833,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.getSubDirectories)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all subdirectories of a given directory.</p>
+                    <p>Gets all subdirectories of a given directory.</p>
 
 
         </td>
@@ -924,10 +856,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.tryFindFirstMatchingFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileSystemHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the first file in the directory matching the search pattern as an option value.</p>
+                    <p>Gets the first file in the directory matching the search pattern as an option value.</p>
 
 
         </td>
@@ -971,7 +900,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

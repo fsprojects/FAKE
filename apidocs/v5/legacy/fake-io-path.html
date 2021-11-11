@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,18 +330,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2046', 2046)" onmouseover="showTip(event, '2046', 2046)">
+          <code onmouseout="hideTip(event, '2024', 2024)" onmouseover="showTip(event, '2024', 2024)">
             Path.changeExtension extension fileName
           </code>
-          <div class="tip" id="2046">
+          <div class="tip" id="2024">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Change the extension of the file.</p>
+                    <p>Change the extension of the file.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The new extension containing the leading '.'.</li>
@@ -349,90 +350,75 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2047', 2047)" onmouseover="showTip(event, '2047', 2047)">
+          <code onmouseout="hideTip(event, '2025', 2025)" onmouseover="showTip(event, '2025', 2025)">
             Path.combine path1 path2
           </code>
-          <div class="tip" id="2047">
+          <div class="tip" id="2025">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine</p>
+                    <p>Combines two path strings using Path.Combine</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2048', 2048)" onmouseover="showTip(event, '2048', 2048)">
+          <code onmouseout="hideTip(event, '2026', 2026)" onmouseover="showTip(event, '2026', 2026)">
             Path.combineTrimEnd path1 path2
           </code>
-          <div class="tip" id="2048">
+          <div class="tip" id="2026">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine. Trims leading slashes of path2. This makes <code>combineTrimEnd "/test" "/sub"</code> return <code>/test/sub</code></p>
+                    <p>Combines two path strings using Path.Combine. Trims leading slashes of path2. This makes <code>combineTrimEnd "/test" "/sub"</code> return <code>/test/sub</code></p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2049', 2049)" onmouseover="showTip(event, '2049', 2049)">
+          <code onmouseout="hideTip(event, '2027', 2027)" onmouseover="showTip(event, '2027', 2027)">
             Path.convertWindowsToCurrentPath(...)
           </code>
-          <div class="tip" id="2049">
+          <div class="tip" id="2027">
             <strong>Signature:</strong> windowsPath:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Convert the given windows path to a path in the current system</p>
+                    <p>Convert the given windows path to a path in the current system</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2050', 2050)" onmouseover="showTip(event, '2050', 2050)">
+          <code onmouseout="hideTip(event, '2028', 2028)" onmouseover="showTip(event, '2028', 2028)">
             Path.directorySeparator
           </code>
-          <div class="tip" id="2050">
+          <div class="tip" id="2028">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The directory separator string. On most systems / or \</p>
+                    <p>The directory separator string. On most systems / or \</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2051', 2051)" onmouseover="showTip(event, '2051', 2051)">
+          <code onmouseout="hideTip(event, '2029', 2029)" onmouseover="showTip(event, '2029', 2029)">
             Path.getDirectory(path)
           </code>
-          <div class="tip" id="2051">
+          <div class="tip" id="2029">
             <strong>Signature:</strong> path:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the directory of the specified path</p>
+                    <p>Get the directory of the specified path</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the directory is retrieved.</li>
@@ -443,34 +429,28 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2052', 2052)" onmouseover="showTip(event, '2052', 2052)">
+          <code onmouseout="hideTip(event, '2030', 2030)" onmouseover="showTip(event, '2030', 2030)">
             Path.getFullName(p)
           </code>
-          <div class="tip" id="2052">
+          <div class="tip" id="2030">
             <strong>Signature:</strong> p:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2053', 2053)" onmouseover="showTip(event, '2053', 2053)">
+          <code onmouseout="hideTip(event, '2031', 2031)" onmouseover="showTip(event, '2031', 2031)">
             Path.hasExtension extension fileName
           </code>
-          <div class="tip" id="2053">
+          <div class="tip" id="2031">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tests whether the file has specified extensions (containing the leading '.')</p>
+                    <p>Tests whether the file has specified extensions (containing the leading '.')</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The extension to fine containing the leading '.'.</li>
@@ -482,124 +462,103 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2054', 2054)" onmouseover="showTip(event, '2054', 2054)">
+          <code onmouseout="hideTip(event, '2032', 2032)" onmouseover="showTip(event, '2032', 2032)">
             Path.isDirectory(path)
           </code>
-          <div class="tip" id="2054">
+          <div class="tip" id="2032">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path is a directory.</p>
+                    <p>Detects whether the given path is a directory.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2055', 2055)" onmouseover="showTip(event, '2055', 2055)">
+          <code onmouseout="hideTip(event, '2033', 2033)" onmouseover="showTip(event, '2033', 2033)">
             Path.isFile(path)
           </code>
-          <div class="tip" id="2055">
+          <div class="tip" id="2033">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path is a file.</p>
+                    <p>Detects whether the given path is a file.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2056', 2056)" onmouseover="showTip(event, '2056', 2056)">
+          <code onmouseout="hideTip(event, '2034', 2034)" onmouseover="showTip(event, '2034', 2034)">
             Path.isValidPath(path)
           </code>
-          <div class="tip" id="2056">
+          <div class="tip" id="2034">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detects whether the given path does not contains invalid characters.</p>
+                    <p>Detects whether the given path does not contains invalid characters.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2057', 2057)" onmouseover="showTip(event, '2057', 2057)">
+          <code onmouseout="hideTip(event, '2035', 2035)" onmouseover="showTip(event, '2035', 2035)">
             Path.normalizeFileName(fileName)
           </code>
-          <div class="tip" id="2057">
+          <div class="tip" id="2035">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Normalizes a filename.</p>
+                    <p>Normalizes a filename.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2058', 2058)" onmouseover="showTip(event, '2058', 2058)">
+          <code onmouseout="hideTip(event, '2036', 2036)" onmouseover="showTip(event, '2036', 2036)">
             Path.shortenCurrentDirectory(path)
           </code>
-          <div class="tip" id="2058">
+          <div class="tip" id="2036">
             <strong>Signature:</strong> path:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces any occurence of the currentDirectory with .</p>
+                    <p>Replaces any occurence of the currentDirectory with .</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2059', 2059)" onmouseover="showTip(event, '2059', 2059)">
+          <code onmouseout="hideTip(event, '2037', 2037)" onmouseover="showTip(event, '2037', 2037)">
             Path.toRelativeFrom
           </code>
-          <div class="tip" id="2059">
+          <div class="tip" id="2037">
             <strong>Signature:</strong> string -&gt; string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2060', 2060)" onmouseover="showTip(event, '2060', 2060)">
+          <code onmouseout="hideTip(event, '2038', 2038)" onmouseover="showTip(event, '2038', 2038)">
             Path.toRelativeFromCurrent(path)
           </code>
-          <div class="tip" id="2060">
+          <div class="tip" id="2038">
             <strong>Signature:</strong> path:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Path.fs#L123-123" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -641,7 +600,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

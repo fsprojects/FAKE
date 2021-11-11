@@ -105,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -194,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -214,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -465,7 +469,7 @@ dotnet pack
 <li><p>Read the <a href="http://fsharp.org/specs/component-design-guidelines/">F# component design guidelines</a>.</p></li>
 <li><p>Read the <a href="#API-Design-Guidelines">API Design Guidelines</a> below.</p></li>
 <li>Add documentation for your feature</li>
-<li><p>If you add new markdown documentation, make sure to link if from an existing site. Ideally, add it to the <a href="https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml">menu</a></p></li>
+<li><p>If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the <a href="https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml">menu</a></p></li>
 <li>If you write API documentation but no extra markdown, please consider adding it to the menu as well.</li>
 </ul>
 <h3><a name="API-Design-Guidelines" class="anchor" href="#API-Design-Guidelines">API Design Guidelines</a></h3>
@@ -504,7 +508,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 </ul>
 <h2><a name="Considerations-Regarding-FAKE-4" class="anchor" href="#Considerations-Regarding-FAKE-4">Considerations Regarding FAKE 4</a></h2>
 <ul>
-<li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
+<li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as a new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
 <li>
 <p>Fake 4 still allows hotfixes. Please send the PR against the <a href="https://github.com/fsharp/FAKE/tree/hotfix_fake4">hotfix_fake4 branch</a>.</p>
 <p>It would be helpful if a second PR against <code>release/next</code> is sent that merges the hotfix into <code>release/next</code> and adds the hotfix to the FAKE 5 code as well.</p>
@@ -583,7 +587,7 @@ This staging environment is based on VSTS and MyGet.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

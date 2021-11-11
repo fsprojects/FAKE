@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -434,10 +438,7 @@ References from VB6 projects only care about Major.Minor versions</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L343-343" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>All-In-one build and manifest function for VB6 <strong>applications</strong> referencing .net <strong>libraries</strong></p>
+                    <p>All-In-one build and manifest function for VB6 <strong>applications</strong> referencing .net <strong>libraries</strong></p>
 <h2>Paramteters</h2>
 <ul>
 <li><code>getConfig</code>- function to alter default VB6 build parameters</li>
@@ -476,10 +477,7 @@ References from VB6 projects only care about Major.Minor versions</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L214-214" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns application details for provided <code>.vbp</code> files.</p>
+                    <p>Returns application details for provided <code>.vbp</code> files.</p>
 <h2>Information returned</h2>
 <ul>
 <li>Name of created binary file</li>
@@ -510,10 +508,7 @@ References from VB6 projects only care about Major.Minor versions</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L286-286" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines which of the provided assemblies are referenced by the
+                    <p>Determines which of the provided assemblies are referenced by the
 provided VB6 projects, and registers them so the VB6 ide can
 find them.</p>
 <h2>Paramteters</h2>
@@ -544,10 +539,7 @@ find them.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L309-309" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determins which of the provided assemblies are referenced by the
+                    <p>Determins which of the provided assemblies are referenced by the
 provided VB6 projects, and <strong>un-registers</strong> them</p>
 <h2>Paramteters</h2>
 <ul>
@@ -577,10 +569,7 @@ provided VB6 projects, and <strong>un-registers</strong> them</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L378-378" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Fixes dependency versions in VB6 project files</p>
+                    <p>Fixes dependency versions in VB6 project files</p>
 <h2>Paramteters</h2>
 <ul>
 <li><code>getConfig</code>- function to alter default VB6 build parameters</li>
@@ -617,10 +606,7 @@ this difference automatically.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Vb6helper.fs#L126-126" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Executes a VB6 command line make on all provided VB6 projects</p>
+                    <p>Executes a VB6 command line make on all provided VB6 projects</p>
 <p>Builds will be executed in paralell</p>
 <h2>Parameters</h2>
 <ul>
@@ -670,7 +656,7 @@ this difference automatically.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

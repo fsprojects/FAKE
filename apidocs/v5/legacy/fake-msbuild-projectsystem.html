@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -371,10 +375,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2208', 2208)" onmouseover="showTip(event, '2208', 2208)">
+          <code onmouseout="hideTip(event, '2185', 2185)" onmouseover="showTip(event, '2185', 2185)">
             CompareProjectsTo(...)
           </code>
-          <div class="tip" id="2208">
+          <div class="tip" id="2185">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -387,10 +391,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L277-277" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given project files against the template project and fails if any files are missing.
+                    <p>Compares the given project files against the template project and fails if any files are missing.
 For F# projects it is also reporting unordered files.</p>
 
 
@@ -398,10 +399,10 @@ For F# projects it is also reporting unordered files.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2209', 2209)" onmouseover="showTip(event, '2209', 2209)">
+          <code onmouseout="hideTip(event, '2186', 2186)" onmouseover="showTip(event, '2186', 2186)">
             findMissingContentFiles(...)
           </code>
-          <div class="tip" id="2209">
+          <div class="tip" id="2186">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -414,10 +415,7 @@ For F# projects it is also reporting unordered files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L182-182" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given project files against the template project and returns which files are missing.
+                    <p>Compares the given project files against the template project and returns which files are missing.
 For F# projects it is also reporting unordered files.</p>
 
 
@@ -425,10 +423,10 @@ For F# projects it is also reporting unordered files.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2210', 2210)" onmouseover="showTip(event, '2210', 2210)">
+          <code onmouseout="hideTip(event, '2187', 2187)" onmouseover="showTip(event, '2187', 2187)">
             findMissingFiles(...)
           </code>
-          <div class="tip" id="2210">
+          <div class="tip" id="2187">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -441,10 +439,7 @@ For F# projects it is also reporting unordered files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given project files against the template project and returns which files are missing.
+                    <p>Compares the given project files against the template project and returns which files are missing.
 For F# projects it is also reporting unordered files.</p>
 
 
@@ -452,10 +447,10 @@ For F# projects it is also reporting unordered files.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2211', 2211)" onmouseover="showTip(event, '2211', 2211)">
+          <code onmouseout="hideTip(event, '2188', 2188)" onmouseover="showTip(event, '2188', 2188)">
             FixMissingContentFiles(...)
           </code>
-          <div class="tip" id="2211">
+          <div class="tip" id="2188">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -468,20 +463,17 @@ For F# projects it is also reporting unordered files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L227-227" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
+                    <p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2212', 2212)" onmouseover="showTip(event, '2212', 2212)">
+          <code onmouseout="hideTip(event, '2189', 2189)" onmouseover="showTip(event, '2189', 2189)">
             FixMissingFiles templateProject projects
           </code>
-          <div class="tip" id="2212">
+          <div class="tip" id="2189">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -494,20 +486,17 @@ For F# projects it is also reporting unordered files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L213-213" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
+                    <p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2213', 2213)" onmouseover="showTip(event, '2213', 2213)">
+          <code onmouseout="hideTip(event, '2190', 2190)" onmouseover="showTip(event, '2190', 2190)">
             FixProjectContentFiles(...)
           </code>
-          <div class="tip" id="2213">
+          <div class="tip" id="2190">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -520,10 +509,7 @@ For F# projects it is also reporting unordered files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L270-270" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given projects to the template project and adds all missing content files to the projects if needed.
+                    <p>Compares the given projects to the template project and adds all missing content files to the projects if needed.
 It also removes duplicate files from the project files.</p>
 
 
@@ -531,10 +517,10 @@ It also removes duplicate files from the project files.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2214', 2214)" onmouseover="showTip(event, '2214', 2214)">
+          <code onmouseout="hideTip(event, '2191', 2191)" onmouseover="showTip(event, '2191', 2191)">
             FixProjectFiles templateProject projects
           </code>
-          <div class="tip" id="2214">
+          <div class="tip" id="2191">
             <strong>Signature:</strong> templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -547,10 +533,7 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L262-262" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given projects to the template project and adds all missing files to the projects if needed.
+                    <p>Compares the given projects to the template project and adds all missing files to the projects if needed.
 It also removes duplicate files from the project files.</p>
 
 
@@ -558,10 +541,10 @@ It also removes duplicate files from the project files.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2215', 2215)" onmouseover="showTip(event, '2215', 2215)">
+          <code onmouseout="hideTip(event, '2192', 2192)" onmouseover="showTip(event, '2192', 2192)">
             removeCompileNodesWithMissingFiles(...)
           </code>
-          <div class="tip" id="2215">
+          <div class="tip" id="2192">
             <strong>Signature:</strong> includeExistsF:(string -&gt; bool) -&gt; project:ProjectFile -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -574,18 +557,15 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L295-295" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2216', 2216)" onmouseover="showTip(event, '2216', 2216)">
+          <code onmouseout="hideTip(event, '2193', 2193)" onmouseover="showTip(event, '2193', 2193)">
             RemoveCompileNodesWithMissingFiles(...)
           </code>
-          <div class="tip" id="2216">
+          <div class="tip" id="2193">
             <strong>Signature:</strong> project:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -598,20 +578,17 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L320-320" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes projects Compile nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.</p>
+                    <p>Removes projects Compile nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2217', 2217)" onmouseover="showTip(event, '2217', 2217)">
+          <code onmouseout="hideTip(event, '2194', 2194)" onmouseover="showTip(event, '2194', 2194)">
             removeContentNodesWithMissingFiles(...)
           </code>
-          <div class="tip" id="2217">
+          <div class="tip" id="2194">
             <strong>Signature:</strong> includeExistsF:(string -&gt; bool) -&gt; project:ProjectFile -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -624,18 +601,15 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L307-307" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2218', 2218)" onmouseover="showTip(event, '2218', 2218)">
+          <code onmouseout="hideTip(event, '2195', 2195)" onmouseover="showTip(event, '2195', 2195)">
             RemoveContentNodesWithMissingFiles(...)
           </code>
-          <div class="tip" id="2218">
+          <div class="tip" id="2195">
             <strong>Signature:</strong> project:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -648,20 +622,17 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L326-326" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes projects Content nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.</p>
+                    <p>Removes projects Content nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2219', 2219)" onmouseover="showTip(event, '2219', 2219)">
+          <code onmouseout="hideTip(event, '2196', 2196)" onmouseover="showTip(event, '2196', 2196)">
             RemoveDuplicateContentFiles(projects)
           </code>
-          <div class="tip" id="2219">
+          <div class="tip" id="2196">
             <strong>Signature:</strong> projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -674,20 +645,17 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L251-251" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>It removes duplicate content files from the project files.</p>
+                    <p>It removes duplicate content files from the project files.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2220', 2220)" onmouseover="showTip(event, '2220', 2220)">
+          <code onmouseout="hideTip(event, '2197', 2197)" onmouseover="showTip(event, '2197', 2197)">
             RemoveDuplicateFiles(projects)
           </code>
-          <div class="tip" id="2220">
+          <div class="tip" id="2197">
             <strong>Signature:</strong> projects:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -700,10 +668,7 @@ It also removes duplicate files from the project files.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L241-241" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>It removes duplicate files from the project files.</p>
+                    <p>It removes duplicate files from the project files.</p>
 
 
         </td>
@@ -747,7 +712,7 @@ It also removes duplicate files from the project files.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

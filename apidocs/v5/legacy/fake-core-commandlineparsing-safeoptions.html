@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,18 +324,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5021', 5021)" onmouseover="showTip(event, '5021', 5021)">
+          <code onmouseout="hideTip(event, '4976', 4976)" onmouseover="showTip(event, '4976', 4976)">
             new(list)
           </code>
-          <div class="tip" id="5021">
+          <div class="tip" id="4976">
             <strong>Signature:</strong> (list:SafeOption list) -&gt; SafeOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -344,98 +345,80 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5022', 5022)" onmouseover="showTip(event, '5022', 5022)">
+          <code onmouseout="hideTip(event, '4977', 4977)" onmouseover="showTip(event, '4977', 4977)">
             x.AddRange(opts)
           </code>
-          <div class="tip" id="5022">
+          <div class="tip" id="4977">
             <strong>Signature:</strong> (opts:SafeOption list) -&gt; SafeOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5023', 5023)" onmouseover="showTip(event, '5023', 5023)">
+          <code onmouseout="hideTip(event, '4978', 4978)" onmouseover="showTip(event, '4978', 4978)">
             x.Find(l&#39;)
           </code>
-          <div class="tip" id="5023">
+          <div class="tip" id="4978">
             <strong>Signature:</strong> l&#39;:string -&gt; SafeOption option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5024', 5024)" onmouseover="showTip(event, '5024', 5024)">
+          <code onmouseout="hideTip(event, '4979', 4979)" onmouseover="showTip(event, '4979', 4979)">
             x.Find(s&#39;)
           </code>
-          <div class="tip" id="5024">
+          <div class="tip" id="4979">
             <strong>Signature:</strong> s&#39;:char -&gt; SafeOption option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5025', 5025)" onmouseover="showTip(event, '5025', 5025)">
+          <code onmouseout="hideTip(event, '4980', 4980)" onmouseover="showTip(event, '4980', 4980)">
             x.FindAndRemove(s&#39;)
           </code>
-          <div class="tip" id="5025">
+          <div class="tip" id="4980">
             <strong>Signature:</strong> s&#39;:char -&gt; (SafeOptions * SafeOption) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5026', 5026)" onmouseover="showTip(event, '5026', 5026)">
+          <code onmouseout="hideTip(event, '4981', 4981)" onmouseover="showTip(event, '4981', 4981)">
             x.FindLast(l&#39;)
           </code>
-          <div class="tip" id="5026">
+          <div class="tip" id="4981">
             <strong>Signature:</strong> l&#39;:string -&gt; SafeOption option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5027', 5027)" onmouseover="showTip(event, '5027', 5027)">
+          <code onmouseout="hideTip(event, '4982', 4982)" onmouseover="showTip(event, '4982', 4982)">
             x.Last
           </code>
-          <div class="tip" id="5027">
+          <div class="tip" id="4982">
             <strong>Signature:</strong> SafeOption<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Options.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -477,7 +460,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

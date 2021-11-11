@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2273', 2273)" onmouseover="showTip(event, '2273', 2273)">
+          <code onmouseout="hideTip(event, '2300', 2300)" onmouseover="showTip(event, '2300', 2300)">
             Blame
           </code>
-          <div class="tip" id="2273">
+          <div class="tip" id="2300">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1558-1558" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1559-1559" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as Sequence.xml that captures the order of tests execution before the crash.  (--blame)</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2274', 2274)" onmouseover="showTip(event, '2274', 2274)">
+          <code onmouseout="hideTip(event, '2301', 2301)" onmouseover="showTip(event, '2301', 2301)">
             Collect
           </code>
-          <div class="tip" id="2274">
+          <div class="tip" id="2301">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1552-1552" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1553-1553" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Enables data collector for the test run. More info here : <a href="https://aka.ms/vstest-collect">https://aka.ms/vstest-collect</a> (--collect)</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2275', 2275)" onmouseover="showTip(event, '2275', 2275)">
+          <code onmouseout="hideTip(event, '2302', 2302)" onmouseover="showTip(event, '2302', 2302)">
             Common
           </code>
-          <div class="tip" id="2275">
+          <div class="tip" id="2302">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1521-1521" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1522-1522" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Common tool options</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2276', 2276)" onmouseover="showTip(event, '2276', 2276)">
+          <code onmouseout="hideTip(event, '2303', 2303)" onmouseover="showTip(event, '2303', 2303)">
             Configuration
           </code>
-          <div class="tip" id="2276">
+          <div class="tip" id="2303">
             <strong>Signature:</strong> BuildConfiguration<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1538-1538" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1539-1539" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Configuration to use for building the project.  Default for most projects is  "Debug". (--configuration)</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2277', 2277)" onmouseover="showTip(event, '2277', 2277)">
+          <code onmouseout="hideTip(event, '2304', 2304)" onmouseover="showTip(event, '2304', 2304)">
             Diag
           </code>
-          <div class="tip" id="2277">
+          <div class="tip" id="2304">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1544-1544" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1545-1545" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Enable verbose logs for test platform. Logs are written to the provided file. (--diag)</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2278', 2278)" onmouseover="showTip(event, '2278', 2278)">
+          <code onmouseout="hideTip(event, '2305', 2305)" onmouseover="showTip(event, '2305', 2305)">
             Filter
           </code>
-          <div class="tip" id="2278">
+          <div class="tip" id="2305">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1532-1532" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1533-1533" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run tests that match the given expression. (--filter)
@@ -432,15 +436,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2279', 2279)" onmouseover="showTip(event, '2279', 2279)">
+          <code onmouseout="hideTip(event, '2306', 2306)" onmouseover="showTip(event, '2306', 2306)">
             Framework
           </code>
-          <div class="tip" id="2279">
+          <div class="tip" id="2306">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1540-1540" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1541-1541" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Target framework to publish for. The target framework has to be specified in the project file. (--framework)</p>
@@ -450,15 +454,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2280', 2280)" onmouseover="showTip(event, '2280', 2280)">
+          <code onmouseout="hideTip(event, '2307', 2307)" onmouseover="showTip(event, '2307', 2307)">
             ListTests
           </code>
-          <div class="tip" id="2280">
+          <div class="tip" id="2307">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1525-1525" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1526-1526" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Lists discovered tests (--list-tests)</p>
@@ -468,15 +472,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2281', 2281)" onmouseover="showTip(event, '2281', 2281)">
+          <code onmouseout="hideTip(event, '2308', 2308)" onmouseover="showTip(event, '2308', 2308)">
             Logger
           </code>
-          <div class="tip" id="2281">
+          <div class="tip" id="2308">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1536-1536" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1537-1537" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify a logger for test results. (--logger)</p>
@@ -486,15 +490,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2282', 2282)" onmouseover="showTip(event, '2282', 2282)">
+          <code onmouseout="hideTip(event, '2309', 2309)" onmouseover="showTip(event, '2309', 2309)">
             MSBuildParams
           </code>
-          <div class="tip" id="2282">
+          <div class="tip" id="2309">
             <strong>Signature:</strong> CliArguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1560-1560" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1561-1561" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Other msbuild specific parameters</p>
@@ -504,15 +508,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2283', 2283)" onmouseover="showTip(event, '2283', 2283)">
+          <code onmouseout="hideTip(event, '2310', 2310)" onmouseover="showTip(event, '2310', 2310)">
             NoBuild
           </code>
-          <div class="tip" id="2283">
+          <div class="tip" id="2310">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1548-1548" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1549-1549" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Do not build project before testing. (--no-build)</p>
@@ -522,15 +526,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2284', 2284)" onmouseover="showTip(event, '2284', 2284)">
+          <code onmouseout="hideTip(event, '2311', 2311)" onmouseover="showTip(event, '2311', 2311)">
             NoLogo
           </code>
-          <div class="tip" id="2284">
+          <div class="tip" id="2311">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1546-1546" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1547-1547" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't show copyright messages. (--nologo)</p>
@@ -540,15 +544,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2285', 2285)" onmouseover="showTip(event, '2285', 2285)">
+          <code onmouseout="hideTip(event, '2312', 2312)" onmouseover="showTip(event, '2312', 2312)">
             NoRestore
           </code>
-          <div class="tip" id="2285">
+          <div class="tip" id="2312">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1554-1554" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1555-1555" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Does not do an implicit restore when executing the command. (--no-restore)</p>
@@ -558,15 +562,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2286', 2286)" onmouseover="showTip(event, '2286', 2286)">
+          <code onmouseout="hideTip(event, '2313', 2313)" onmouseover="showTip(event, '2313', 2313)">
             Output
           </code>
-          <div class="tip" id="2286">
+          <div class="tip" id="2313">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1542-1542" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1543-1543" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Directory in which to find the binaries to be run (--output)</p>
@@ -576,15 +580,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2287', 2287)" onmouseover="showTip(event, '2287', 2287)">
+          <code onmouseout="hideTip(event, '2314', 2314)" onmouseover="showTip(event, '2314', 2314)">
             ResultsDirectory
           </code>
-          <div class="tip" id="2287">
+          <div class="tip" id="2314">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1550-1550" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1551-1551" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The directory where the test results are going to be placed. The specified directory will be created if it does not exist. (--results-directory)</p>
@@ -594,15 +598,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2288', 2288)" onmouseover="showTip(event, '2288', 2288)">
+          <code onmouseout="hideTip(event, '2315', 2315)" onmouseover="showTip(event, '2315', 2315)">
             RunSettingsArguments
           </code>
-          <div class="tip" id="2288">
+          <div class="tip" id="2315">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1556-1556" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1557-1557" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.</p>
@@ -612,15 +616,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2289', 2289)" onmouseover="showTip(event, '2289', 2289)">
+          <code onmouseout="hideTip(event, '2316', 2316)" onmouseover="showTip(event, '2316', 2316)">
             Settings
           </code>
-          <div class="tip" id="2289">
+          <div class="tip" id="2316">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1523-1523" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1524-1524" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Settings to use when running tests (--settings)</p>
@@ -630,15 +634,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2290', 2290)" onmouseover="showTip(event, '2290', 2290)">
+          <code onmouseout="hideTip(event, '2317', 2317)" onmouseover="showTip(event, '2317', 2317)">
             TestAdapterPath
           </code>
-          <div class="tip" id="2290">
+          <div class="tip" id="2317">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1534-1534" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1535-1535" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use custom adapters from the given path in the test run. (--test-adapter-path)</p>
@@ -656,15 +660,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2291', 2291)" onmouseover="showTip(event, '2291', 2291)">
+          <code onmouseout="hideTip(event, '2318', 2318)" onmouseover="showTip(event, '2318', 2318)">
             x.Environment
           </code>
-          <div class="tip" id="2291">
+          <div class="tip" id="2318">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1587-1587" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1588-1588" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the current environment</p>
@@ -674,15 +678,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2292', 2292)" onmouseover="showTip(event, '2292', 2292)">
+          <code onmouseout="hideTip(event, '2319', 2319)" onmouseover="showTip(event, '2319', 2319)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="2292">
+          <div class="tip" id="2319">
             <strong>Signature:</strong> (f:(Options -&gt; Options)) -&gt; TestOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1596-1596" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1597-1597" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Changes the "Common" properties according to the given function</p>
@@ -692,15 +696,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2293', 2293)" onmouseover="showTip(event, '2293', 2293)">
+          <code onmouseout="hideTip(event, '2320', 2320)" onmouseover="showTip(event, '2320', 2320)">
             x.WithEnvironment(map)
           </code>
-          <div class="tip" id="2293">
+          <div class="tip" id="2320">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; TestOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1589-1589" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1590-1590" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the current environment variables.</p>
@@ -710,15 +714,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2294', 2294)" onmouseover="showTip(event, '2294', 2294)">
+          <code onmouseout="hideTip(event, '2321', 2321)" onmouseover="showTip(event, '2321', 2321)">
             x.WithRedirectOutput(shouldRedirect)
           </code>
-          <div class="tip" id="2294">
+          <div class="tip" id="2321">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; TestOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1592-1592" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1593-1593" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets a value indicating whether the output for the given process is redirected.</p>
@@ -736,15 +740,15 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2295', 2295)" onmouseover="showTip(event, '2295', 2295)">
+          <code onmouseout="hideTip(event, '2322', 2322)" onmouseover="showTip(event, '2322', 2322)">
             TestOptions.Create()
           </code>
-          <div class="tip" id="2295">
+          <div class="tip" id="2322">
             <strong>Signature:</strong> unit -&gt; TestOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1564-1564" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1565-1565" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parameter default values.</p>
@@ -754,10 +758,10 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2296', 2296)" onmouseover="showTip(event, '2296', 2296)">
+          <code onmouseout="hideTip(event, '2323', 2323)" onmouseover="showTip(event, '2323', 2323)">
             TestOptions.Default
           </code>
-          <div class="tip" id="2296">
+          <div class="tip" id="2323">
             <strong>Signature:</strong> TestOptions<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -770,7 +774,7 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
                 <h5>OBSOLETE</h5>
                 <p>Use TestOptions.Create instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1585-1585" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1586-1586" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -816,7 +820,7 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

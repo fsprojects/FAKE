@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -321,15 +325,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '851', 851)" onmouseover="showTip(event, '851', 851)">
+          <code onmouseout="hideTip(event, '855', 855)" onmouseover="showTip(event, '855', 855)">
             Directory.create
           </code>
-          <div class="tip" id="851">
+          <div class="tip" id="855">
             <strong>Signature:</strong> string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L13-13" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L13-13" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a directory if it does not exist.</p>
@@ -339,15 +343,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '852', 852)" onmouseover="showTip(event, '852', 852)">
+          <code onmouseout="hideTip(event, '856', 856)" onmouseover="showTip(event, '856', 856)">
             Directory.delete(path)
           </code>
-          <div class="tip" id="852">
+          <div class="tip" id="856">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes a directory if it exists (including all contained elements).</p>
@@ -357,15 +361,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '853', 853)" onmouseover="showTip(event, '853', 853)">
+          <code onmouseout="hideTip(event, '857', 857)" onmouseover="showTip(event, '857', 857)">
             Directory.ensure(dir)
           </code>
-          <div class="tip" id="853">
+          <div class="tip" id="857">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L9-9" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L9-9" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Checks if the given directory exists. If not then this functions creates the directory.</p>
@@ -375,15 +379,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '854', 854)" onmouseover="showTip(event, '854', 854)">
+          <code onmouseout="hideTip(event, '858', 858)" onmouseover="showTip(event, '858', 858)">
             Directory.findFirstMatchingFile(...)
           </code>
-          <div class="tip" id="854">
+          <div class="tip" id="858">
             <strong>Signature:</strong> pattern:string -&gt; dir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L25-25" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L25-25" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the first file in the directory matching the search pattern or throws an error if nothing was found.</p>
@@ -393,15 +397,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '855', 855)" onmouseover="showTip(event, '855', 855)">
+          <code onmouseout="hideTip(event, '859', 859)" onmouseover="showTip(event, '859', 859)">
             Directory.tryFindFirstMatchingFile(...)
           </code>
-          <div class="tip" id="855">
+          <div class="tip" id="859">
             <strong>Signature:</strong> pattern:string -&gt; dir:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L16-16" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Directory.fs#L16-16" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the first file in the directory matching the search pattern as an option value.</p>
@@ -449,7 +453,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

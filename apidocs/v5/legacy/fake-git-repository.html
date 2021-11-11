@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -333,10 +337,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1954', 1954)" onmouseover="showTip(event, '1954', 1954)">
+          <code onmouseout="hideTip(event, '1933', 1933)" onmouseover="showTip(event, '1933', 1933)">
             clone workingDir repoUrl toPath
           </code>
-          <div class="tip" id="1954">
+          <div class="tip" id="1933">
             <strong>Signature:</strong> workingDir:string -&gt; repoUrl:string -&gt; toPath:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -349,10 +353,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Repository instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Repository.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Clones a git repository.</p>
+                    <p>Clones a git repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The working directory.</li>
@@ -365,10 +366,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1955', 1955)" onmouseover="showTip(event, '1955', 1955)">
+          <code onmouseout="hideTip(event, '1934', 1934)" onmouseover="showTip(event, '1934', 1934)">
             cloneSingleBranch(...)
           </code>
-          <div class="tip" id="1955">
+          <div class="tip" id="1934">
             <strong>Signature:</strong> workingDir:string -&gt; repoUrl:string -&gt; branchName:string -&gt; toPath:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -381,10 +382,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Repository instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Repository.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Clones a single branch of a git repository.</p>
+                    <p>Clones a single branch of a git repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The working directory.</li>
@@ -398,10 +396,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1956', 1956)" onmouseover="showTip(event, '1956', 1956)">
+          <code onmouseout="hideTip(event, '1935', 1935)" onmouseover="showTip(event, '1935', 1935)">
             fullclean(repositoryDir)
           </code>
-          <div class="tip" id="1956">
+          <div class="tip" id="1935">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -414,10 +412,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Repository instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Repository.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans a directory by removing all files and sub-directories.</p>
+                    <p>Cleans a directory by removing all files and sub-directories.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The path of the directory to clean.</li>
@@ -428,10 +423,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1957', 1957)" onmouseover="showTip(event, '1957', 1957)">
+          <code onmouseout="hideTip(event, '1936', 1936)" onmouseover="showTip(event, '1936', 1936)">
             init repositoryDir bare shared
           </code>
-          <div class="tip" id="1957">
+          <div class="tip" id="1936">
             <strong>Signature:</strong> repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -444,10 +439,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Repository instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Repository.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Inits a git repository.</p>
+                    <p>Inits a git repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The path of the target directory.</li>
@@ -497,7 +489,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

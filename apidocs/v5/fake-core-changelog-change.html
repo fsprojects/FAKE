@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -317,15 +321,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1632', 1632)" onmouseover="showTip(event, '1632', 1632)">
+          <code onmouseout="hideTip(event, '1659', 1659)" onmouseover="showTip(event, '1659', 1659)">
             Added(ChangeText)
           </code>
-          <div class="tip" id="1632">
+          <div class="tip" id="1659">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>for new features</p>
@@ -335,15 +339,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1633', 1633)" onmouseover="showTip(event, '1633', 1633)">
+          <code onmouseout="hideTip(event, '1660', 1660)" onmouseover="showTip(event, '1660', 1660)">
             Changed(ChangeText)
           </code>
-          <div class="tip" id="1633">
+          <div class="tip" id="1660">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>for changes in existing functionality</p>
@@ -353,15 +357,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1634', 1634)" onmouseover="showTip(event, '1634', 1634)">
+          <code onmouseout="hideTip(event, '1661', 1661)" onmouseover="showTip(event, '1661', 1661)">
             Custom(string,ChangeText)
           </code>
-          <div class="tip" id="1634">
+          <div class="tip" id="1661">
             <strong>Signature:</strong> string * ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L84-84" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L84-84" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Custom entry (Header, Description)</p>
@@ -371,15 +375,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1635', 1635)" onmouseover="showTip(event, '1635', 1635)">
+          <code onmouseout="hideTip(event, '1662', 1662)" onmouseover="showTip(event, '1662', 1662)">
             Deprecated(ChangeText)
           </code>
-          <div class="tip" id="1635">
+          <div class="tip" id="1662">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L76-76" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L76-76" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>for once-stable features removed in upcoming releases</p>
@@ -389,15 +393,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1636', 1636)" onmouseover="showTip(event, '1636', 1636)">
+          <code onmouseout="hideTip(event, '1663', 1663)" onmouseover="showTip(event, '1663', 1663)">
             Fixed(ChangeText)
           </code>
-          <div class="tip" id="1636">
+          <div class="tip" id="1663">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L80-80" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L80-80" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>for any bug fixes</p>
@@ -407,15 +411,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1637', 1637)" onmouseover="showTip(event, '1637', 1637)">
+          <code onmouseout="hideTip(event, '1664', 1664)" onmouseover="showTip(event, '1664', 1664)">
             Removed(ChangeText)
           </code>
-          <div class="tip" id="1637">
+          <div class="tip" id="1664">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L78-78" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L78-78" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>for deprecated features removed in this release</p>
@@ -425,15 +429,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1638', 1638)" onmouseover="showTip(event, '1638', 1638)">
+          <code onmouseout="hideTip(event, '1665', 1665)" onmouseover="showTip(event, '1665', 1665)">
             Security(ChangeText)
           </code>
-          <div class="tip" id="1638">
+          <div class="tip" id="1665">
             <strong>Signature:</strong> ChangeText<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L82-82" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L82-82" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>to invite users to upgrade in case of vulnerabilities</p>
@@ -451,15 +455,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1639', 1639)" onmouseover="showTip(event, '1639', 1639)">
+          <code onmouseout="hideTip(event, '1666', 1666)" onmouseover="showTip(event, '1666', 1666)">
             Change.New(header, line)
           </code>
-          <div class="tip" id="1639">
+          <div class="tip" id="1666">
             <strong>Signature:</strong> (header:string * line:string) -&gt; Change<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L96-96" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L96-96" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -505,7 +509,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

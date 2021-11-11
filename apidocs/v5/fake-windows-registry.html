@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -415,15 +419,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
+          <code onmouseout="hideTip(event, '1292', 1292)" onmouseover="showTip(event, '1292', 1292)">
             Registry.createRegistrySubKey(...)
           </code>
-          <div class="tip" id="1277">
+          <div class="tip" id="1292">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L147-147" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L147-147" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a registry subKey</p>
@@ -433,15 +437,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
+          <code onmouseout="hideTip(event, '1293', 1293)" onmouseover="showTip(event, '1293', 1293)">
             Registry.deleteRegistrySubKey(...)
           </code>
-          <div class="tip" id="1278">
+          <div class="tip" id="1293">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes a registry subKey</p>
@@ -451,15 +455,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
+          <code onmouseout="hideTip(event, '1294', 1294)" onmouseover="showTip(event, '1294', 1294)">
             Registry.deleteRegistryValue(...)
           </code>
-          <div class="tip" id="1279">
+          <div class="tip" id="1294">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L129-129" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deletes the registry value from its key</p>
@@ -469,15 +473,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
+          <code onmouseout="hideTip(event, '1295', 1295)" onmouseover="showTip(event, '1295', 1295)">
             Registry.getRegistryKey(...)
           </code>
-          <div class="tip" id="1280">
+          <div class="tip" id="1295">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L95-95" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L95-95" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets a registry key and falls back to 32 bit if the 64bit key is not there</p>
@@ -487,15 +491,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
+          <code onmouseout="hideTip(event, '1296', 1296)" onmouseover="showTip(event, '1296', 1296)">
             Registry.getRegistryKey64(...)
           </code>
-          <div class="tip" id="1281">
+          <div class="tip" id="1296">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets a 64-bit registry key</p>
@@ -505,15 +509,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
+          <code onmouseout="hideTip(event, '1297', 1297)" onmouseover="showTip(event, '1297', 1297)">
             Registry.getRegistrySubKeyNames(...)
           </code>
-          <div class="tip" id="1282">
+          <div class="tip" id="1297">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L157-157" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L157-157" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns all the subKey names of a registry key</p>
@@ -523,15 +527,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1283', 1283)" onmouseover="showTip(event, '1283', 1283)">
+          <code onmouseout="hideTip(event, '1298', 1298)" onmouseover="showTip(event, '1298', 1298)">
             Registry.getRegistryValue(...)
           </code>
-          <div class="tip" id="1283">
+          <div class="tip" id="1298">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L104-104" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L104-104" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets a registry value as string</p>
@@ -541,15 +545,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1284', 1284)" onmouseover="showTip(event, '1284', 1284)">
+          <code onmouseout="hideTip(event, '1299', 1299)" onmouseover="showTip(event, '1299', 1299)">
             Registry.getRegistryValue64(...)
           </code>
-          <div class="tip" id="1284">
+          <div class="tip" id="1299">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L114-114" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L114-114" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets a registry value as string</p>
@@ -559,15 +563,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1285', 1285)" onmouseover="showTip(event, '1285', 1285)">
+          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
             Registry.getRegistryValueNames(...)
           </code>
-          <div class="tip" id="1285">
+          <div class="tip" id="1300">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L134-134" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L134-134" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns all the value names of a registry key</p>
@@ -577,15 +581,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
+          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
             Registry.setRegistryValue(...)
           </code>
-          <div class="tip" id="1286">
+          <div class="tip" id="1301">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; value:&#39;T -&gt; unit<br />
                           <strong>Type parameters:</strong> 'T                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L124-124" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L124-124" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets a registry value</p>
@@ -595,15 +599,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1287', 1287)" onmouseover="showTip(event, '1287', 1287)">
+          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
             Registry.valueExistsForKey(...)
           </code>
-          <div class="tip" id="1287">
+          <div class="tip" id="1302">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L139-139" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Registry/Registry.fs#L139-139" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns whether or not a registry value name exists for a key</p>
@@ -651,7 +655,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

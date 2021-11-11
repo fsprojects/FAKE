@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -365,10 +369,10 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.ReleaseNotes //&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">release</span> <span class="o">=</span>
+    <span class="id">ReadFile</span> <span class="s">&quot;RELEASE_NOTES.md&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">ReleaseNotesHelper</span><span class="pn">.</span><span class="id">parseReleaseNotes</span>
 
-<span class="k">let</span> <span class="id">release</span> <span class="o">=</span> <span class="id">ReleaseNotes</span><span class="pn">.</span><span class="id">load</span> <span class="s">&quot;RELEASE_NOTES.md&quot;</span>
 
 <span class="id">Target</span> <span class="s">&quot;AssemblyInfo&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">CreateFSharpAssemblyInfo</span> <span class="s">&quot;src/Common/AssemblyInfo.fs&quot;</span>
@@ -415,18 +419,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1429', 1429)" onmouseover="showTip(event, '1429', 1429)">
+          <code onmouseout="hideTip(event, '1413', 1413)" onmouseover="showTip(event, '1413', 1413)">
             ReleaseNotes.load(fileName)
           </code>
-          <div class="tip" id="1429">
+          <div class="tip" id="1413">
             <strong>Signature:</strong> fileName:string -&gt; ReleaseNotes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L174-174" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a Release Notes text file and returns the lastest release notes.</p>
+                    <p>Parses a Release Notes text file and returns the lastest release notes.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - Release notes text file name</li>
@@ -437,18 +438,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1430', 1430)" onmouseover="showTip(event, '1430', 1430)">
+          <code onmouseout="hideTip(event, '1414', 1414)" onmouseover="showTip(event, '1414', 1414)">
             ReleaseNotes.parse(data)
           </code>
-          <div class="tip" id="1430">
+          <div class="tip" id="1414">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L162-162" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a Release Notes text and returns the lastest release notes.</p>
+                    <p>Parses a Release Notes text and returns the lastest release notes.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>data</code> - Release notes text</li>
@@ -459,18 +457,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1431', 1431)" onmouseover="showTip(event, '1431', 1431)">
+          <code onmouseout="hideTip(event, '1415', 1415)" onmouseover="showTip(event, '1415', 1415)">
             ReleaseNotes.parseAll(data)
           </code>
-          <div class="tip" id="1431">
+          <div class="tip" id="1415">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; ReleaseNotes list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L140-140" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a Release Notes text and returns all release notes.</p>
+                    <p>Parses a Release Notes text and returns all release notes.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>data</code> - Release notes text</li>
@@ -518,7 +513,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

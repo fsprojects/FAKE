@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,252 +332,210 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6580', 6580)" onmouseover="showTip(event, '6580', 6580)">
+          <code onmouseout="hideTip(event, '6482', 6482)" onmouseover="showTip(event, '6482', 6482)">
             CustomArgs
           </code>
-          <div class="tip" id="6580">
+          <div class="tip" id="6482">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Custom arguments to use in the case the helper not yet supports them</p>
+                    <p>Custom arguments to use in the case the helper not yet supports them</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6581', 6581)" onmouseover="showTip(event, '6581', 6581)">
+          <code onmouseout="hideTip(event, '6483', 6483)" onmouseover="showTip(event, '6483', 6483)">
             Debug
           </code>
-          <div class="tip" id="6581">
+          <div class="tip" id="6483">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L16-16" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Extra verbose output for your tests.</p>
+                    <p>Extra verbose output for your tests.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6582', 6582)" onmouseover="showTip(event, '6582', 6582)">
+          <code onmouseout="hideTip(event, '6484', 6484)" onmouseover="showTip(event, '6484', 6484)">
             FailOnFocusedTests
           </code>
-          <div class="tip" id="6582">
+          <div class="tip" id="6484">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Fails the build if focused tests exist. Default is true</p>
+                    <p>Fails the build if focused tests exist. Default is true</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6583', 6583)" onmouseover="showTip(event, '6583', 6583)">
+          <code onmouseout="hideTip(event, '6485', 6485)" onmouseover="showTip(event, '6485', 6485)">
             Filter
           </code>
-          <div class="tip" id="6583">
+          <div class="tip" id="6485">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Filter a specific hierarchy to run.</p>
+                    <p>Filter a specific hierarchy to run.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6584', 6584)" onmouseover="showTip(event, '6584', 6584)">
+          <code onmouseout="hideTip(event, '6486', 6486)" onmouseover="showTip(event, '6486', 6486)">
             FilterTestCase
           </code>
-          <div class="tip" id="6584">
+          <div class="tip" id="6486">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Filter a specific test case to run.</p>
+                    <p>Filter a specific test case to run.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6585', 6585)" onmouseover="showTip(event, '6585', 6585)">
+          <code onmouseout="hideTip(event, '6487', 6487)" onmouseover="showTip(event, '6487', 6487)">
             FilterTestList
           </code>
-          <div class="tip" id="6585">
+          <div class="tip" id="6487">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Filter a specific test list to run.</p>
+                    <p>Filter a specific test list to run.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6586', 6586)" onmouseover="showTip(event, '6586', 6586)">
+          <code onmouseout="hideTip(event, '6488', 6488)" onmouseover="showTip(event, '6488', 6488)">
             ListTests
           </code>
-          <div class="tip" id="6586">
+          <div class="tip" id="6488">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Doesn't run tests, print out list of tests instead.</p>
+                    <p>Doesn't run tests, print out list of tests instead.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6587', 6587)" onmouseover="showTip(event, '6587', 6587)">
+          <code onmouseout="hideTip(event, '6489', 6489)" onmouseover="showTip(event, '6489', 6489)">
             Parallel
           </code>
-          <div class="tip" id="6587">
+          <div class="tip" id="6489">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run all tests in parallel. Default is true.</p>
+                    <p>Run all tests in parallel. Default is true.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6588', 6588)" onmouseover="showTip(event, '6588', 6588)">
+          <code onmouseout="hideTip(event, '6490', 6490)" onmouseover="showTip(event, '6490', 6490)">
             ParallelWorkers
           </code>
-          <div class="tip" id="6588">
+          <div class="tip" id="6490">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Number of parallel workers (defaults to the number of logical processors).</p>
+                    <p>Number of parallel workers (defaults to the number of logical processors).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6589', 6589)" onmouseover="showTip(event, '6589', 6589)">
+          <code onmouseout="hideTip(event, '6491', 6491)" onmouseover="showTip(event, '6491', 6491)">
             PrintVersion
           </code>
-          <div class="tip" id="6589">
+          <div class="tip" id="6491">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Prints the version on startup. Default is true</p>
+                    <p>Prints the version on startup. Default is true</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6590', 6590)" onmouseover="showTip(event, '6590', 6590)">
+          <code onmouseout="hideTip(event, '6492', 6492)" onmouseover="showTip(event, '6492', 6492)">
             Run
           </code>
-          <div class="tip" id="6590">
+          <div class="tip" id="6492">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run only provided tests.</p>
+                    <p>Run only provided tests.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6591', 6591)" onmouseover="showTip(event, '6591', 6591)">
+          <code onmouseout="hideTip(event, '6493', 6493)" onmouseover="showTip(event, '6493', 6493)">
             Summary
           </code>
-          <div class="tip" id="6591">
+          <div class="tip" id="6493">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Prints out summary after all tests are finished.</p>
+                    <p>Prints out summary after all tests are finished.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6592', 6592)" onmouseover="showTip(event, '6592', 6592)">
+          <code onmouseout="hideTip(event, '6494', 6494)" onmouseover="showTip(event, '6494', 6494)">
             SummaryLocation
           </code>
-          <div class="tip" id="6592">
+          <div class="tip" id="6494">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Prints out summary after all tests are finished including their source code location.</p>
+                    <p>Prints out summary after all tests are finished including their source code location.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6593', 6593)" onmouseover="showTip(event, '6593', 6593)">
+          <code onmouseout="hideTip(event, '6495', 6495)" onmouseover="showTip(event, '6495', 6495)">
             WorkingDirectory
           </code>
-          <div class="tip" id="6593">
+          <div class="tip" id="6495">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Working directory</p>
+                    <p>Working directory</p>
 
 
         </td>
@@ -588,10 +550,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6594', 6594)" onmouseover="showTip(event, '6594', 6594)">
+          <code onmouseout="hideTip(event, '6496', 6496)" onmouseover="showTip(event, '6496', 6496)">
             ExpectoParams.DefaultParams
           </code>
-          <div class="tip" id="6594">
+          <div class="tip" id="6496">
             <strong>Signature:</strong> ExpectoParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -604,10 +566,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/Expecto/Expecto.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -649,7 +608,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

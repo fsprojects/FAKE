@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,72 +326,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5234', 5234)" onmouseover="showTip(event, '5234', 5234)">
+          <code onmouseout="hideTip(event, '5188', 5188)" onmouseover="showTip(event, '5188', 5188)">
             Coherent
           </code>
-          <div class="tip" id="5234">
+          <div class="tip" id="5188">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L184-184" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Latest coherent build on the channel; uses the latest stable package combination (used with Branch name -Channel options).</p>
+                    <p>Latest coherent build on the channel; uses the latest stable package combination (used with Branch name -Channel options).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5235', 5235)" onmouseover="showTip(event, '5235', 5235)">
+          <code onmouseout="hideTip(event, '5189', 5189)" onmouseover="showTip(event, '5189', 5189)">
             GlobalJson
           </code>
-          <div class="tip" id="5235">
+          <div class="tip" id="5189">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L188-188" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Take version from global.json and fail if it is not found.</p>
+                    <p>Take version from global.json and fail if it is not found.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5236', 5236)" onmouseover="showTip(event, '5236', 5236)">
+          <code onmouseout="hideTip(event, '5190', 5190)" onmouseover="showTip(event, '5190', 5190)">
             Latest
           </code>
-          <div class="tip" id="5236">
+          <div class="tip" id="5190">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L182-182" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Latest build on the channel (used with the -Channel option).</p>
+                    <p>Latest build on the channel (used with the -Channel option).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5237', 5237)" onmouseover="showTip(event, '5237', 5237)">
+          <code onmouseout="hideTip(event, '5191', 5191)" onmouseover="showTip(event, '5191', 5191)">
             Version(string)
           </code>
-          <div class="tip" id="5237">
+          <div class="tip" id="5191">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Three-part version in X.Y.Z format representing a specific build version; supersedes the -Channel option. For example: 2.0.0-preview2-006120.</p>
+                    <p>Three-part version in X.Y.Z format representing a specific build version; supersedes the -Channel option. For example: 2.0.0-preview2-006120.</p>
 
 
         </td>
@@ -431,7 +423,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

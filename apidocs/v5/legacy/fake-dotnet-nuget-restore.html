@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -313,7 +317,7 @@
 
 <div class="xmldoc">
 <p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
-There is also a tutorial about <a href="/dotnet-nuget.html">nuget package restore</a> available.</p>
+There is also a tutorial about <a href="../nuget.html">nuget package restore</a> available.</p>
 
 </div>
 
@@ -368,36 +372,30 @@ There is also a tutorial about <a href="/dotnet-nuget.html">nuget package restor
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1845', 1845)" onmouseover="showTip(event, '1845', 1845)">
+          <code onmouseout="hideTip(event, '1824', 1824)" onmouseover="showTip(event, '1824', 1824)">
             findNuget(defaultPath)
           </code>
-          <div class="tip" id="1845">
+          <div class="tip" id="1824">
             <strong>Signature:</strong> defaultPath:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.</p>
+                    <p>Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1846', 1846)" onmouseover="showTip(event, '1846', 1846)">
+          <code onmouseout="hideTip(event, '1825', 1825)" onmouseover="showTip(event, '1825', 1825)">
             RestoreMSSolutionPackages(...)
           </code>
-          <div class="tip" id="1846">
+          <div class="tip" id="1825">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; solutionFile:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores the packages in the given solution file file from NuGet.</p>
+                    <p>Restores the packages in the given solution file file from NuGet.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
@@ -430,18 +428,15 @@ There is also a tutorial about <a href="/dotnet-nuget.html">nuget package restor
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1847', 1847)" onmouseover="showTip(event, '1847', 1847)">
+          <code onmouseout="hideTip(event, '1826', 1826)" onmouseover="showTip(event, '1826', 1826)">
             RestorePackage setParams packageFile
           </code>
-          <div class="tip" id="1847">
+          <div class="tip" id="1826">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; packageFile:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L173-173" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores the packages in the given packages.config file from NuGet.</p>
+                    <p>Restores the packages in the given packages.config file from NuGet.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
@@ -474,72 +469,60 @@ There is also a tutorial about <a href="/dotnet-nuget.html">nuget package restor
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1848', 1848)" onmouseover="showTip(event, '1848', 1848)">
+          <code onmouseout="hideTip(event, '1827', 1827)" onmouseover="showTip(event, '1827', 1827)">
             RestorePackageDefaults
           </code>
-          <div class="tip" id="1848">
+          <div class="tip" id="1827">
             <strong>Signature:</strong> RestorePackageParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>RestorePackage defaults parameters</p>
+                    <p>RestorePackage defaults parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1849', 1849)" onmouseover="showTip(event, '1849', 1849)">
+          <code onmouseout="hideTip(event, '1828', 1828)" onmouseover="showTip(event, '1828', 1828)">
             RestorePackageId setParams packageId
           </code>
-          <div class="tip" id="1849">
+          <div class="tip" id="1828">
             <strong>Signature:</strong> setParams:(RestoreSinglePackageParams -&gt; RestoreSinglePackageParams) -&gt; packageId:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores the given package from NuGet</p>
+                    <p>Restores the given package from NuGet</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1850', 1850)" onmouseover="showTip(event, '1850', 1850)">
+          <code onmouseout="hideTip(event, '1829', 1829)" onmouseover="showTip(event, '1829', 1829)">
             RestorePackages()
           </code>
-          <div class="tip" id="1850">
+          <div class="tip" id="1829">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L191-191" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.</p>
+                    <p>Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1851', 1851)" onmouseover="showTip(event, '1851', 1851)">
+          <code onmouseout="hideTip(event, '1830', 1830)" onmouseover="showTip(event, '1830', 1830)">
             RestoreSinglePackageDefaults
           </code>
-          <div class="tip" id="1851">
+          <div class="tip" id="1830">
             <strong>Signature:</strong> RestoreSinglePackageParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Restore.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>RestoreSinglePackageParams defaults parameters</p>
+                    <p>RestoreSinglePackageParams defaults parameters</p>
 
 
         </td>
@@ -583,7 +566,7 @@ There is also a tutorial about <a href="/dotnet-nuget.html">nuget package restor
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

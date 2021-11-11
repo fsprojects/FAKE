@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
+          <code onmouseout="hideTip(event, '2090', 2090)" onmouseover="showTip(event, '2090', 2090)">
             ArchiveFile
           </code>
-          <div class="tip" id="2063">
+          <div class="tip" id="2090">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L583-583" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L583-583" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify the output xref archive.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
+          <code onmouseout="hideTip(event, '2091', 2091)" onmouseover="showTip(event, '2091', 2091)">
             Common
           </code>
-          <div class="tip" id="2064">
+          <div class="tip" id="2091">
             <strong>Signature:</strong> CommonParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L581-581" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L581-581" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify common docFx options</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
+          <code onmouseout="hideTip(event, '2092', 2092)" onmouseover="showTip(event, '2092', 2092)">
             Uri
           </code>
-          <div class="tip" id="2065">
+          <div class="tip" id="2092">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L586-586" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L586-586" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify the url of xrefmap.</p>
@@ -381,15 +385,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
+          <code onmouseout="hideTip(event, '2093', 2093)" onmouseover="showTip(event, '2093', 2093)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="2066">
+          <div class="tip" id="2093">
             <strong>Signature:</strong> (f:(CommonParams -&gt; CommonParams)) -&gt; DownloadParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L596-596" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L596-596" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Changes the "Common" parameters according to the given function</p>
@@ -407,15 +411,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
+          <code onmouseout="hideTip(event, '2094', 2094)" onmouseover="showTip(event, '2094', 2094)">
             DownloadParams.Create()
           </code>
-          <div class="tip" id="2067">
+          <div class="tip" id="2094">
             <strong>Signature:</strong> unit -&gt; DownloadParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L589-589" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L589-589" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Download default parameters</p>
@@ -463,7 +467,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

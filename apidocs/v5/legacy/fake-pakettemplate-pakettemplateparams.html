@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,18 +332,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3668', 3668)" onmouseover="showTip(event, '3668', 3668)">
+          <code onmouseout="hideTip(event, '3633', 3633)" onmouseover="showTip(event, '3633', 3633)">
             Authors
           </code>
-          <div class="tip" id="3668">
+          <div class="tip" id="3633">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>a list of authors for the nuget package.
+                    <p>a list of authors for the nuget package.
 If omitted, <code>paket</code>will use reflection to obtain the value of the <code>AssemblyCompanyAttribute</code>.</p>
 
 
@@ -347,54 +348,45 @@ If omitted, <code>paket</code>will use reflection to obtain the value of the <co
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3669', 3669)" onmouseover="showTip(event, '3669', 3669)">
+          <code onmouseout="hideTip(event, '3634', 3634)" onmouseover="showTip(event, '3634', 3634)">
             Copyright
           </code>
-          <div class="tip" id="3669">
+          <div class="tip" id="3634">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>the copyright information</p>
+                    <p>the copyright information</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3670', 3670)" onmouseover="showTip(event, '3670', 3670)">
+          <code onmouseout="hideTip(event, '3635', 3635)" onmouseover="showTip(event, '3635', 3635)">
             Dependencies
           </code>
-          <div class="tip" id="3670">
+          <div class="tip" id="3635">
             <strong>Signature:</strong> PaketDependency list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L95-95" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of dependencies to other packages</p>
+                    <p>A list of dependencies to other packages</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3671', 3671)" onmouseover="showTip(event, '3671', 3671)">
+          <code onmouseout="hideTip(event, '3636', 3636)" onmouseover="showTip(event, '3636', 3636)">
             Description
           </code>
-          <div class="tip" id="3671">
+          <div class="tip" id="3636">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The package description
+                    <p>The package description
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyDescriptionAttribute</code>.</p>
 
 
@@ -402,72 +394,60 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3672', 3672)" onmouseover="showTip(event, '3672', 3672)">
+          <code onmouseout="hideTip(event, '3637', 3637)" onmouseover="showTip(event, '3637', 3637)">
             DevelopmentDependency
           </code>
-          <div class="tip" id="3672">
+          <div class="tip" id="3637">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> that this is a development dependency</p>
+                    <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> that this is a development dependency</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3673', 3673)" onmouseover="showTip(event, '3673', 3673)">
+          <code onmouseout="hideTip(event, '3638', 3638)" onmouseover="showTip(event, '3638', 3638)">
             ExcludedDependencies
           </code>
-          <div class="tip" id="3673">
+          <div class="tip" id="3638">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of excluded dependencies</p>
+                    <p>A list of excluded dependencies</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3674', 3674)" onmouseover="showTip(event, '3674', 3674)">
+          <code onmouseout="hideTip(event, '3639', 3639)" onmouseover="showTip(event, '3639', 3639)">
             Files
           </code>
-          <div class="tip" id="3674">
+          <div class="tip" id="3639">
             <strong>Signature:</strong> PaketFileInfo list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The included or excluded files (use this if the <code>TemplateType</code> is <code>File</code>)</p>
+                    <p>The included or excluded files (use this if the <code>TemplateType</code> is <code>File</code>)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3675', 3675)" onmouseover="showTip(event, '3675', 3675)">
+          <code onmouseout="hideTip(event, '3640', 3640)" onmouseover="showTip(event, '3640', 3640)">
             FrameworkAssemblies
           </code>
-          <div class="tip" id="3675">
+          <div class="tip" id="3640">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of referenced framework assemblies
+                    <p>A list of referenced framework assemblies
 if omitted all used Framework assemblies will be used by <code>paket</code></p>
 
 
@@ -475,36 +455,30 @@ if omitted all used Framework assemblies will be used by <code>paket</code></p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3676', 3676)" onmouseover="showTip(event, '3676', 3676)">
+          <code onmouseout="hideTip(event, '3641', 3641)" onmouseover="showTip(event, '3641', 3641)">
             IconUrl
           </code>
-          <div class="tip" id="3676">
+          <div class="tip" id="3641">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>URL to an icon</p>
+                    <p>URL to an icon</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3677', 3677)" onmouseover="showTip(event, '3677', 3677)">
+          <code onmouseout="hideTip(event, '3642', 3642)" onmouseover="showTip(event, '3642', 3642)">
             Id
           </code>
-          <div class="tip" id="3677">
+          <div class="tip" id="3642">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The NuGet Package ID
+                    <p>The NuGet Package ID
 If omitted, <code>paket</code> will use reflection to determine the assembly name.</p>
 
 
@@ -512,18 +486,15 @@ If omitted, <code>paket</code> will use reflection to determine the assembly nam
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3678', 3678)" onmouseover="showTip(event, '3678', 3678)">
+          <code onmouseout="hideTip(event, '3643', 3643)" onmouseover="showTip(event, '3643', 3643)">
             IncludePDBs
           </code>
-          <div class="tip" id="3678">
+          <div class="tip" id="3643">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>With the <code>IncludePDBs</code> switch you can tell <code>paket</code> to pack pdbs into the package.
+                    <p>With the <code>IncludePDBs</code> switch you can tell <code>paket</code> to pack pdbs into the package.
 this only works for paket.template files of type 'Project'.</p>
 
 
@@ -531,126 +502,105 @@ this only works for paket.template files of type 'Project'.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3679', 3679)" onmouseover="showTip(event, '3679', 3679)">
+          <code onmouseout="hideTip(event, '3644', 3644)" onmouseover="showTip(event, '3644', 3644)">
             Language
           </code>
-          <div class="tip" id="3679">
+          <div class="tip" id="3644">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The package language</p>
+                    <p>The package language</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3680', 3680)" onmouseover="showTip(event, '3680', 3680)">
+          <code onmouseout="hideTip(event, '3645', 3645)" onmouseover="showTip(event, '3645', 3645)">
             LicenseUrl
           </code>
-          <div class="tip" id="3680">
+          <div class="tip" id="3645">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>URL to the license of the package</p>
+                    <p>URL to the license of the package</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3681', 3681)" onmouseover="showTip(event, '3681', 3681)">
+          <code onmouseout="hideTip(event, '3646', 3646)" onmouseover="showTip(event, '3646', 3646)">
             Owners
           </code>
-          <div class="tip" id="3681">
+          <div class="tip" id="3646">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of package owners</p>
+                    <p>A list of package owners</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3682', 3682)" onmouseover="showTip(event, '3682', 3682)">
+          <code onmouseout="hideTip(event, '3647', 3647)" onmouseover="showTip(event, '3647', 3647)">
             ProjectUrl
           </code>
-          <div class="tip" id="3682">
+          <div class="tip" id="3647">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>URL to the where the project of the package is hosted</p>
+                    <p>URL to the where the project of the package is hosted</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3683', 3683)" onmouseover="showTip(event, '3683', 3683)">
+          <code onmouseout="hideTip(event, '3648', 3648)" onmouseover="showTip(event, '3648', 3648)">
             References
           </code>
-          <div class="tip" id="3683">
+          <div class="tip" id="3648">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of references</p>
+                    <p>A list of references</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3684', 3684)" onmouseover="showTip(event, '3684', 3684)">
+          <code onmouseout="hideTip(event, '3649', 3649)" onmouseover="showTip(event, '3649', 3649)">
             ReleaseNotes
           </code>
-          <div class="tip" id="3684">
+          <div class="tip" id="3649">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>the release notes (line by line)</p>
+                    <p>the release notes (line by line)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3685', 3685)" onmouseover="showTip(event, '3685', 3685)">
+          <code onmouseout="hideTip(event, '3650', 3650)" onmouseover="showTip(event, '3650', 3650)">
             RequireLicenseAcceptance
           </code>
-          <div class="tip" id="3685">
+          <div class="tip" id="3650">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L100-100" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> to prompt the user for
+                    <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> to prompt the user for
 the acceptance of the provided license</p>
 
 
@@ -658,54 +608,45 @@ the acceptance of the provided license</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3686', 3686)" onmouseover="showTip(event, '3686', 3686)">
+          <code onmouseout="hideTip(event, '3651', 3651)" onmouseover="showTip(event, '3651', 3651)">
             Summary
           </code>
-          <div class="tip" id="3686">
+          <div class="tip" id="3651">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>a short summary (line by line)</p>
+                    <p>a short summary (line by line)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3687', 3687)" onmouseover="showTip(event, '3687', 3687)">
+          <code onmouseout="hideTip(event, '3652', 3652)" onmouseover="showTip(event, '3652', 3652)">
             Tags
           </code>
-          <div class="tip" id="3687">
+          <div class="tip" id="3652">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L86-86" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>a list of tags</p>
+                    <p>a list of tags</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3688', 3688)" onmouseover="showTip(event, '3688', 3688)">
+          <code onmouseout="hideTip(event, '3653', 3653)" onmouseover="showTip(event, '3653', 3653)">
             TemplateFilePath
           </code>
-          <div class="tip" id="3688">
+          <div class="tip" id="3653">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The file path to the <code>paket.template</code> file
+                    <p>The file path to the <code>paket.template</code> file
 if omitted, a <code>paket.template</code> file will be created in the current directory</p>
 
 
@@ -713,36 +654,30 @@ if omitted, a <code>paket.template</code> file will be created in the current di
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3689', 3689)" onmouseover="showTip(event, '3689', 3689)">
+          <code onmouseout="hideTip(event, '3654', 3654)" onmouseover="showTip(event, '3654', 3654)">
             TemplateType
           </code>
-          <div class="tip" id="3689">
+          <div class="tip" id="3654">
             <strong>Signature:</strong> PaketTemplateType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The type of the template (<code>File</code> or <code>Project</code>)</p>
+                    <p>The type of the template (<code>File</code> or <code>Project</code>)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3690', 3690)" onmouseover="showTip(event, '3690', 3690)">
+          <code onmouseout="hideTip(event, '3655', 3655)" onmouseover="showTip(event, '3655', 3655)">
             Title
           </code>
-          <div class="tip" id="3690">
+          <div class="tip" id="3655">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The title of the package
+                    <p>The title of the package
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyTitleAttribute</code>.</p>
 
 
@@ -750,18 +685,15 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3691', 3691)" onmouseover="showTip(event, '3691', 3691)">
+          <code onmouseout="hideTip(event, '3656', 3656)" onmouseover="showTip(event, '3656', 3656)">
             Version
           </code>
-          <div class="tip" id="3691">
+          <div class="tip" id="3656">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PaketTemplateHelper.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The package version.
+                    <p>The package version.
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyInformationalVersionAttribute</code> or if that is missing the <code>AssemblyVersionAttribute</code>.</p>
 
 
@@ -806,7 +738,7 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

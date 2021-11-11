@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -371,18 +375,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1877', 1877)" onmouseover="showTip(event, '1877', 1877)">
+          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
             getVersion(setParams)
           </code>
-          <div class="tip" id="1877">
+          <div class="tip" id="1856">
             <strong>Signature:</strong> setParams:(OpenCoverParams -&gt; OpenCoverParams) option -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L162-162" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show version OpenCover</p>
+                    <p>Show version OpenCover</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default OpenCover parameters.</li>
@@ -403,36 +404,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1878', 1878)" onmouseover="showTip(event, '1878', 1878)">
+          <code onmouseout="hideTip(event, '1857', 1857)" onmouseover="showTip(event, '1857', 1857)">
             OpenCoverDefaults
           </code>
-          <div class="tip" id="1878">
+          <div class="tip" id="1857">
             <strong>Signature:</strong> OpenCoverParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>OpenCover default parameters</p>
+                    <p>OpenCover default parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1879', 1879)" onmouseover="showTip(event, '1879', 1879)">
+          <code onmouseout="hideTip(event, '1858', 1858)" onmouseover="showTip(event, '1858', 1858)">
             run setParams targetArgs
           </code>
-          <div class="tip" id="1879">
+          <div class="tip" id="1858">
             <strong>Signature:</strong> setParams:(OpenCoverParams -&gt; OpenCoverParams) -&gt; targetArgs:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs OpenCover on a group of assemblies.</p>
+                    <p>Runs OpenCover on a group of assemblies.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default OpenCover parameters.</li>
@@ -490,7 +485,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

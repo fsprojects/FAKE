@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -332,10 +336,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1930', 1930)" onmouseover="showTip(event, '1930', 1930)">
+          <code onmouseout="hideTip(event, '1909', 1909)" onmouseover="showTip(event, '1909', 1909)">
             describe(repositoryDir)
           </code>
-          <div class="tip" id="1930">
+          <div class="tip" id="1909">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -348,20 +352,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the last git tag by calling git describe</p>
+                    <p>Gets the last git tag by calling git describe</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1931', 1931)" onmouseover="showTip(event, '1931', 1931)">
+          <code onmouseout="hideTip(event, '1910', 1910)" onmouseover="showTip(event, '1910', 1910)">
             getBranchName(repositoryDir)
           </code>
-          <div class="tip" id="1931">
+          <div class="tip" id="1910">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -374,20 +375,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the git branch name</p>
+                    <p>Gets the git branch name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1932', 1932)" onmouseover="showTip(event, '1932', 1932)">
+          <code onmouseout="hideTip(event, '1911', 1911)" onmouseover="showTip(event, '1911', 1911)">
             getCurrentHash()
           </code>
-          <div class="tip" id="1932">
+          <div class="tip" id="1911">
             <strong>Signature:</strong> unit -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -400,20 +398,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the current hash of the current repository</p>
+                    <p>Gets the current hash of the current repository</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1933', 1933)" onmouseover="showTip(event, '1933', 1933)">
+          <code onmouseout="hideTip(event, '1912', 1912)" onmouseover="showTip(event, '1912', 1912)">
             getCurrentSHA1(repositoryDir)
           </code>
-          <div class="tip" id="1933">
+          <div class="tip" id="1912">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -426,20 +421,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the SHA1 of the current HEAD</p>
+                    <p>Returns the SHA1 of the current HEAD</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1934', 1934)" onmouseover="showTip(event, '1934', 1934)">
+          <code onmouseout="hideTip(event, '1913', 1913)" onmouseover="showTip(event, '1913', 1913)">
             getLastTag()
           </code>
-          <div class="tip" id="1934">
+          <div class="tip" id="1913">
             <strong>Signature:</strong> unit -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -452,20 +444,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L110-110" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the last git tag of the current repository by calling git describe</p>
+                    <p>Gets the last git tag of the current repository by calling git describe</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1935', 1935)" onmouseover="showTip(event, '1935', 1935)">
+          <code onmouseout="hideTip(event, '1914', 1914)" onmouseover="showTip(event, '1914', 1914)">
             getVersion(repositoryDir)
           </code>
-          <div class="tip" id="1935">
+          <div class="tip" id="1914">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -478,20 +467,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the git version</p>
+                    <p>Gets the git version</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1936', 1936)" onmouseover="showTip(event, '1936', 1936)">
+          <code onmouseout="hideTip(event, '1915', 1915)" onmouseover="showTip(event, '1915', 1915)">
             isAheadOf repositoryDir rev1 rev2
           </code>
-          <div class="tip" id="1936">
+          <div class="tip" id="1915">
             <strong>Signature:</strong> repositoryDir:string -&gt; rev1:string -&gt; rev2:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -504,20 +490,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns true if rev1 is ahead of rev2</p>
+                    <p>Returns true if rev1 is ahead of rev2</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1937', 1937)" onmouseover="showTip(event, '1937', 1937)">
+          <code onmouseout="hideTip(event, '1916', 1916)" onmouseover="showTip(event, '1916', 1916)">
             isCleanWorkingCopy(repositoryDir)
           </code>
-          <div class="tip" id="1937">
+          <div class="tip" id="1916">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -530,20 +513,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the working copy is clean</p>
+                    <p>Checks if the working copy is clean</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1938', 1938)" onmouseover="showTip(event, '1938', 1938)">
+          <code onmouseout="hideTip(event, '1917', 1917)" onmouseover="showTip(event, '1917', 1917)">
             isGitVersionHigherOrEqual(...)
           </code>
-          <div class="tip" id="1938">
+          <div class="tip" id="1917">
             <strong>Signature:</strong> referenceVersion:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -556,18 +536,15 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1939', 1939)" onmouseover="showTip(event, '1939', 1939)">
+          <code onmouseout="hideTip(event, '1918', 1918)" onmouseover="showTip(event, '1918', 1918)">
             isVersionHigherOrEqual(...)
           </code>
-          <div class="tip" id="1939">
+          <div class="tip" id="1918">
             <strong>Signature:</strong> currentVersion:string -&gt; referenceVersion:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -580,18 +557,15 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1940', 1940)" onmouseover="showTip(event, '1940', 1940)">
+          <code onmouseout="hideTip(event, '1919', 1919)" onmouseover="showTip(event, '1919', 1919)">
             shortlog(repositoryDir)
           </code>
-          <div class="tip" id="1940">
+          <div class="tip" id="1919">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -604,20 +578,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the git log in one line</p>
+                    <p>Gets the git log in one line</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1941', 1941)" onmouseover="showTip(event, '1941', 1941)">
+          <code onmouseout="hideTip(event, '1920', 1920)" onmouseover="showTip(event, '1920', 1920)">
             showName repositoryDir sha1
           </code>
-          <div class="tip" id="1941">
+          <div class="tip" id="1920">
             <strong>Signature:</strong> repositoryDir:string -&gt; sha1:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -630,20 +601,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns a friendly name from a SHA1</p>
+                    <p>Returns a friendly name from a SHA1</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1942', 1942)" onmouseover="showTip(event, '1942', 1942)">
+          <code onmouseout="hideTip(event, '1921', 1921)" onmouseover="showTip(event, '1921', 1921)">
             showStatus(repositoryDir)
           </code>
-          <div class="tip" id="1942">
+          <div class="tip" id="1921">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -656,20 +624,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Shows the git status</p>
+                    <p>Shows the git status</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1943', 1943)" onmouseover="showTip(event, '1943', 1943)">
+          <code onmouseout="hideTip(event, '1922', 1922)" onmouseover="showTip(event, '1922', 1922)">
             versionRegex
           </code>
-          <div class="tip" id="1943">
+          <div class="tip" id="1922">
             <strong>Signature:</strong> Regex<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -682,10 +647,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Information instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Information.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -727,7 +689,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

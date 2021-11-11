@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2258', 2258)" onmouseover="showTip(event, '2258', 2258)">
+          <code onmouseout="hideTip(event, '2285', 2285)" onmouseover="showTip(event, '2285', 2285)">
             Common
           </code>
-          <div class="tip" id="2258">
+          <div class="tip" id="2285">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1137-1137" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1138-1138" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Common tool options</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2259', 2259)" onmouseover="showTip(event, '2259', 2259)">
+          <code onmouseout="hideTip(event, '2286', 2286)" onmouseover="showTip(event, '2286', 2286)">
             ConfigFile
           </code>
-          <div class="tip" id="2259">
+          <div class="tip" id="2286">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1145-1145" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1146-1146" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to the nuget configuration file (nuget.config).</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2260', 2260)" onmouseover="showTip(event, '2260', 2260)">
+          <code onmouseout="hideTip(event, '2287', 2287)" onmouseover="showTip(event, '2287', 2287)">
             DisableParallel
           </code>
-          <div class="tip" id="2260">
+          <div class="tip" id="2287">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1151-1151" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1152-1152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Disables restoring multiple projects in parallel (--disable-parallel)</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2261', 2261)" onmouseover="showTip(event, '2261', 2261)">
+          <code onmouseout="hideTip(event, '2288', 2288)" onmouseover="showTip(event, '2288', 2288)">
             IgnoreFailedSources
           </code>
-          <div class="tip" id="2261">
+          <div class="tip" id="2288">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1149-1149" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1150-1150" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Only warning failed sources if there are packages meeting version requirement (--ignore-failed-sources)</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2262', 2262)" onmouseover="showTip(event, '2262', 2262)">
+          <code onmouseout="hideTip(event, '2289', 2289)" onmouseover="showTip(event, '2289', 2289)">
             MSBuildParams
           </code>
-          <div class="tip" id="2262">
+          <div class="tip" id="2289">
             <strong>Signature:</strong> CliArguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1153-1153" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1154-1154" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Other msbuild specific parameters</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2263', 2263)" onmouseover="showTip(event, '2263', 2263)">
+          <code onmouseout="hideTip(event, '2290', 2290)" onmouseover="showTip(event, '2290', 2290)">
             NoCache
           </code>
-          <div class="tip" id="2263">
+          <div class="tip" id="2290">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1147-1147" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1148-1148" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>No cache flag (--no-cache)</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2264', 2264)" onmouseover="showTip(event, '2264', 2264)">
+          <code onmouseout="hideTip(event, '2291', 2291)" onmouseover="showTip(event, '2291', 2291)">
             Packages
           </code>
-          <div class="tip" id="2264">
+          <div class="tip" id="2291">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1143-1143" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1144-1144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Directory to install packages in (--packages).</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2265', 2265)" onmouseover="showTip(event, '2265', 2265)">
+          <code onmouseout="hideTip(event, '2292', 2292)" onmouseover="showTip(event, '2292', 2292)">
             Runtime
           </code>
-          <div class="tip" id="2265">
+          <div class="tip" id="2292">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1139-1139" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1140-1140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The runtime to restore for (seems added in RC4). Maybe a bug, but works.</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2266', 2266)" onmouseover="showTip(event, '2266', 2266)">
+          <code onmouseout="hideTip(event, '2293', 2293)" onmouseover="showTip(event, '2293', 2293)">
             Sources
           </code>
-          <div class="tip" id="2266">
+          <div class="tip" id="2293">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1141-1141" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1142-1142" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nuget feeds to search updates in. Use default if empty.</p>
@@ -489,15 +493,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2267', 2267)" onmouseover="showTip(event, '2267', 2267)">
+          <code onmouseout="hideTip(event, '2294', 2294)" onmouseover="showTip(event, '2294', 2294)">
             x.Environment
           </code>
-          <div class="tip" id="2267">
+          <div class="tip" id="2294">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1172-1172" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1173-1173" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the current environment</p>
@@ -507,15 +511,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2268', 2268)" onmouseover="showTip(event, '2268', 2268)">
+          <code onmouseout="hideTip(event, '2295', 2295)" onmouseover="showTip(event, '2295', 2295)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="2268">
+          <div class="tip" id="2295">
             <strong>Signature:</strong> (f:(Options -&gt; Options)) -&gt; RestoreOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1182-1182" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1183-1183" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Changes the "Common" properties according to the given function</p>
@@ -525,15 +529,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2269', 2269)" onmouseover="showTip(event, '2269', 2269)">
+          <code onmouseout="hideTip(event, '2296', 2296)" onmouseover="showTip(event, '2296', 2296)">
             x.WithEnvironment(map)
           </code>
-          <div class="tip" id="2269">
+          <div class="tip" id="2296">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; RestoreOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1174-1174" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1175-1175" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the current environment variables.</p>
@@ -543,15 +547,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2270', 2270)" onmouseover="showTip(event, '2270', 2270)">
+          <code onmouseout="hideTip(event, '2297', 2297)" onmouseover="showTip(event, '2297', 2297)">
             x.WithRedirectOutput(shouldRedirect)
           </code>
-          <div class="tip" id="2270">
+          <div class="tip" id="2297">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; RestoreOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1178-1178" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1179-1179" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets a value indicating whether the output for the given process is redirected.</p>
@@ -569,15 +573,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2271', 2271)" onmouseover="showTip(event, '2271', 2271)">
+          <code onmouseout="hideTip(event, '2298', 2298)" onmouseover="showTip(event, '2298', 2298)">
             RestoreOptions.Create()
           </code>
-          <div class="tip" id="2271">
+          <div class="tip" id="2298">
             <strong>Signature:</strong> unit -&gt; RestoreOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1157-1157" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1158-1158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parameter default values.</p>
@@ -587,10 +591,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2272', 2272)" onmouseover="showTip(event, '2272', 2272)">
+          <code onmouseout="hideTip(event, '2299', 2299)" onmouseover="showTip(event, '2299', 2299)">
             RestoreOptions.Default
           </code>
-          <div class="tip" id="2272">
+          <div class="tip" id="2299">
             <strong>Signature:</strong> Options<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -603,7 +607,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Options.Create instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1169-1169" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1170-1170" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -649,7 +653,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

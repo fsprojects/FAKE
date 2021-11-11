@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,216 +326,180 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5151', 5151)" onmouseover="showTip(event, '5151', 5151)">
+          <code onmouseout="hideTip(event, '5106', 5106)" onmouseover="showTip(event, '5106', 5106)">
             Common
           </code>
-          <div class="tip" id="5151">
+          <div class="tip" id="5106">
             <strong>Signature:</strong> CommonParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L680-680" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify common docFx options</p>
+                    <p>Specify common docFx options</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5152', 5152)" onmouseover="showTip(event, '5152', 5152)">
+          <code onmouseout="hideTip(event, '5107', 5107)" onmouseover="showTip(event, '5107', 5107)">
             ConfigFile
           </code>
-          <div class="tip" id="5152">
+          <div class="tip" id="5107">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L698-698" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the config file path.</p>
+                    <p>Specify the config file path.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5153', 5153)" onmouseover="showTip(event, '5153', 5153)">
+          <code onmouseout="hideTip(event, '5108', 5108)" onmouseover="showTip(event, '5108', 5108)">
             DisableGitFeatures
           </code>
-          <div class="tip" id="5153">
+          <div class="tip" id="5108">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L710-710" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
+                    <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5154', 5154)" onmouseover="showTip(event, '5154', 5154)">
+          <code onmouseout="hideTip(event, '5109', 5109)" onmouseover="showTip(event, '5109', 5109)">
             FilterConfigFile
           </code>
-          <div class="tip" id="5154">
+          <div class="tip" id="5109">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L701-701" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the filter config file.</p>
+                    <p>Specify the filter config file.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5155', 5155)" onmouseover="showTip(event, '5155', 5155)">
+          <code onmouseout="hideTip(event, '5110', 5110)" onmouseover="showTip(event, '5110', 5110)">
             ForceRebuild
           </code>
-          <div class="tip" id="5155">
+          <div class="tip" id="5110">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L683-683" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Force re-generate all the metadata.</p>
+                    <p>Force re-generate all the metadata.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5156', 5156)" onmouseover="showTip(event, '5156', 5156)">
+          <code onmouseout="hideTip(event, '5111', 5111)" onmouseover="showTip(event, '5111', 5111)">
             GlobalNamespaceId
           </code>
-          <div class="tip" id="5156">
+          <div class="tip" id="5111">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L704-704" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the name to use for the global namespace.</p>
+                    <p>Specify the name to use for the global namespace.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5157', 5157)" onmouseover="showTip(event, '5157', 5157)">
+          <code onmouseout="hideTip(event, '5112', 5112)" onmouseover="showTip(event, '5112', 5112)">
             LogParams
           </code>
-          <div class="tip" id="5157">
+          <div class="tip" id="5112">
             <strong>Signature:</strong> LogParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L713-713" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify Logging parameter</p>
+                    <p>Specify Logging parameter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5158', 5158)" onmouseover="showTip(event, '5158', 5158)">
+          <code onmouseout="hideTip(event, '5113', 5113)" onmouseover="showTip(event, '5113', 5113)">
             MSBuildProperties
           </code>
-          <div class="tip" id="5158">
+          <div class="tip" id="5113">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L707-707" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>--property <n1>=<v1>;<n2>=<v2> An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:<n1>=<v1>;<n2>=<v2> command line argument.</p>
+                    <p>--property <n1>=<v1>;<n2>=<v2> An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:<n1>=<v1>;<n2>=<v2> command line argument.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5159', 5159)" onmouseover="showTip(event, '5159', 5159)">
+          <code onmouseout="hideTip(event, '5114', 5114)" onmouseover="showTip(event, '5114', 5114)">
             OutputFolder
           </code>
-          <div class="tip" id="5159">
+          <div class="tip" id="5114">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L689-689" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the output base directory.</p>
+                    <p>Specify the output base directory.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5160', 5160)" onmouseover="showTip(event, '5160', 5160)">
+          <code onmouseout="hideTip(event, '5115', 5115)" onmouseover="showTip(event, '5115', 5115)">
             PreserveRawInlineComments
           </code>
-          <div class="tip" id="5160">
+          <div class="tip" id="5115">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L692-692" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
+                    <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5161', 5161)" onmouseover="showTip(event, '5161', 5161)">
+          <code onmouseout="hideTip(event, '5116', 5116)" onmouseover="showTip(event, '5116', 5116)">
             Projects
           </code>
-          <div class="tip" id="5161">
+          <div class="tip" id="5116">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L695-695" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify project files.</p>
+                    <p>Specify project files.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5162', 5162)" onmouseover="showTip(event, '5162', 5162)">
+          <code onmouseout="hideTip(event, '5117', 5117)" onmouseover="showTip(event, '5117', 5117)">
             ShouldSkipMarkup
           </code>
-          <div class="tip" id="5162">
+          <div class="tip" id="5117">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L686-686" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Skip to markup the triple slash comments.</p>
+                    <p>Skip to markup the triple slash comments.</p>
 
 
         </td>
@@ -546,36 +514,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5163', 5163)" onmouseover="showTip(event, '5163', 5163)">
+          <code onmouseout="hideTip(event, '5118', 5118)" onmouseover="showTip(event, '5118', 5118)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="5163">
+          <div class="tip" id="5118">
             <strong>Signature:</strong> (f:(CommonParams -&gt; CommonParams)) -&gt; MetadataParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L737-737" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes the "Common" parameters according to the given function</p>
+                    <p>Changes the "Common" parameters according to the given function</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5164', 5164)" onmouseover="showTip(event, '5164', 5164)">
+          <code onmouseout="hideTip(event, '5119', 5119)" onmouseover="showTip(event, '5119', 5119)">
             x.WithLogParams(f)
           </code>
-          <div class="tip" id="5164">
+          <div class="tip" id="5119">
             <strong>Signature:</strong> (f:(LogParams -&gt; LogParams)) -&gt; MetadataParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L733-733" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes the "LogParams" according to the given function</p>
+                    <p>Changes the "LogParams" according to the given function</p>
 
 
         </td>
@@ -590,18 +552,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5165', 5165)" onmouseover="showTip(event, '5165', 5165)">
+          <code onmouseout="hideTip(event, '5120', 5120)" onmouseover="showTip(event, '5120', 5120)">
             MetadataParams.Create()
           </code>
-          <div class="tip" id="5165">
+          <div class="tip" id="5120">
             <strong>Signature:</strong> unit -&gt; MetadataParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L717-717" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Metadata default parameters</p>
+                    <p>Metadata default parameters</p>
 
 
         </td>
@@ -645,7 +604,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

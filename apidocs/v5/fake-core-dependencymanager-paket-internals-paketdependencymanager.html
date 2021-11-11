@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2003', 2003)" onmouseover="showTip(event, '2003', 2003)">
+          <code onmouseout="hideTip(event, '2030', 2030)" onmouseover="showTip(event, '2030', 2030)">
             new(outputDir)
           </code>
-          <div class="tip" id="2003">
+          <div class="tip" id="2030">
             <strong>Signature:</strong> (outputDir:string option) -&gt; PaketDependencyManager<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L42-42" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -343,15 +347,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2004', 2004)" onmouseover="showTip(event, '2004', 2004)">
+          <code onmouseout="hideTip(event, '2031', 2031)" onmouseover="showTip(event, '2031', 2031)">
             x.Key
           </code>
-          <div class="tip" id="2004">
+          <div class="tip" id="2031">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L48-48" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L48-48" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Key that identifies the types of dependencies that this DependencyManager operates on</p>
@@ -361,15 +365,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2005', 2005)" onmouseover="showTip(event, '2005', 2005)">
+          <code onmouseout="hideTip(event, '2032', 2032)" onmouseover="showTip(event, '2032', 2032)">
             x.Name
           </code>
-          <div class="tip" id="2005">
+          <div class="tip" id="2032">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L45-45" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Name of the dependency manager</p>
@@ -379,15 +383,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2006', 2006)" onmouseover="showTip(event, '2006', 2006)">
+          <code onmouseout="hideTip(event, '2033', 2033)" onmouseover="showTip(event, '2033', 2033)">
             x.ResolveDependencies(...)
           </code>
-          <div class="tip" id="2006">
+          <div class="tip" id="2033">
             <strong>Signature:</strong> (scriptExt:ScriptExtension * includeLines:HashRLines * tfm:TFM) -&gt; obj<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L51-51" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Resolve the dependencies, for the given set of arguments, go find the .dll references, scripts and additional include values.</p>
@@ -435,7 +439,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

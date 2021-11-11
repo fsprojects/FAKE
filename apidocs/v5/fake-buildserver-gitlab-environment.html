@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1485', 1485)" onmouseover="showTip(event, '1485', 1485)">
+          <code onmouseout="hideTip(event, '1512', 1512)" onmouseover="showTip(event, '1512', 1512)">
             Environment.CommitBeforeSha
           </code>
-          <div class="tip" id="1485">
+          <div class="tip" id="1512">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L59-59" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The previous latest commit present on a branch before a push request.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1486', 1486)" onmouseover="showTip(event, '1486', 1486)">
+          <code onmouseout="hideTip(event, '1513', 1513)" onmouseover="showTip(event, '1513', 1513)">
             Environment.CommitDescription
           </code>
-          <div class="tip" id="1486">
+          <div class="tip" id="1513">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The description of the commit: the message without first line, if the title is shorter than 100 characters; full message in other case.</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1487', 1487)" onmouseover="showTip(event, '1487', 1487)">
+          <code onmouseout="hideTip(event, '1514', 1514)" onmouseover="showTip(event, '1514', 1514)">
             Environment.CommitMessage
           </code>
-          <div class="tip" id="1487">
+          <div class="tip" id="1514">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L63-63" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L63-63" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The full commit message.</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1488', 1488)" onmouseover="showTip(event, '1488', 1488)">
+          <code onmouseout="hideTip(event, '1515', 1515)" onmouseover="showTip(event, '1515', 1515)">
             Environment.CommitRefName
           </code>
-          <div class="tip" id="1488">
+          <div class="tip" id="1515">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L51-51" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The branch or tag name for which project is built</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1489', 1489)" onmouseover="showTip(event, '1489', 1489)">
+          <code onmouseout="hideTip(event, '1516', 1516)" onmouseover="showTip(event, '1516', 1516)">
             Environment.CommitRefSlug
           </code>
-          <div class="tip" id="1489">
+          <div class="tip" id="1516">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L55-55" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>$CI<em>COMMIT</em>REF_NAME lowercased, shortened to 63 bytes, and with everything except 0-9 and a-z replaced with -.
@@ -411,15 +415,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1490', 1490)" onmouseover="showTip(event, '1490', 1490)">
+          <code onmouseout="hideTip(event, '1517', 1517)" onmouseover="showTip(event, '1517', 1517)">
             Environment.CommitSha
           </code>
-          <div class="tip" id="1490">
+          <div class="tip" id="1517">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L57-57" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The commit revision for which project is built</p>
@@ -429,15 +433,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1491', 1491)" onmouseover="showTip(event, '1491', 1491)">
+          <code onmouseout="hideTip(event, '1518', 1518)" onmouseover="showTip(event, '1518', 1518)">
             Environment.CommitTag
           </code>
-          <div class="tip" id="1491">
+          <div class="tip" id="1518">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The commit tag name. Present only when building tags.</p>
@@ -447,15 +451,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1492', 1492)" onmouseover="showTip(event, '1492', 1492)">
+          <code onmouseout="hideTip(event, '1519', 1519)" onmouseover="showTip(event, '1519', 1519)">
             Environment.CommitTitle
           </code>
-          <div class="tip" id="1492">
+          <div class="tip" id="1519">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L65-65" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L65-65" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The title of the commit - the full first line of the message</p>
@@ -465,15 +469,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1493', 1493)" onmouseover="showTip(event, '1493', 1493)">
+          <code onmouseout="hideTip(event, '1520', 1520)" onmouseover="showTip(event, '1520', 1520)">
             Environment.ConfigPath
           </code>
-          <div class="tip" id="1493">
+          <div class="tip" id="1520">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path to CI config file. Defaults to .gitlab-ci.yml</p>
@@ -483,15 +487,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1494', 1494)" onmouseover="showTip(event, '1494', 1494)">
+          <code onmouseout="hideTip(event, '1521', 1521)" onmouseover="showTip(event, '1521', 1521)">
             Environment.DebugTrace
           </code>
-          <div class="tip" id="1494">
+          <div class="tip" id="1521">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L71-71" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Whether debug tracing is enabled</p>
@@ -501,15 +505,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1495', 1495)" onmouseover="showTip(event, '1495', 1495)">
+          <code onmouseout="hideTip(event, '1522', 1522)" onmouseover="showTip(event, '1522', 1522)">
             Environment.DeployPassword
           </code>
-          <div class="tip" id="1495">
+          <div class="tip" id="1522">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L75-75" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Authentication password of the GitLab Deploy Token, only present if the Project has one related.</p>
@@ -519,15 +523,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1496', 1496)" onmouseover="showTip(event, '1496', 1496)">
+          <code onmouseout="hideTip(event, '1523', 1523)" onmouseover="showTip(event, '1523', 1523)">
             Environment.DeployUser
           </code>
-          <div class="tip" id="1496">
+          <div class="tip" id="1523">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Authentication username of the GitLab Deploy Token, only present if the Project has one related.</p>
@@ -537,15 +541,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1497', 1497)" onmouseover="showTip(event, '1497', 1497)">
+          <code onmouseout="hideTip(event, '1524', 1524)" onmouseover="showTip(event, '1524', 1524)">
             Environment.DisposableEnvironment
           </code>
-          <div class="tip" id="1497">
+          <div class="tip" id="1524">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L77-77" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L77-77" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Marks that the job is executed in a disposable environment (something that is created only for this job and disposed of/destroyed after the execution - all executors except shell and ssh). If the environment is disposable, it is set to true, otherwise it is not defined at all.</p>
@@ -555,15 +559,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1498', 1498)" onmouseover="showTip(event, '1498', 1498)">
+          <code onmouseout="hideTip(event, '1525', 1525)" onmouseover="showTip(event, '1525', 1525)">
             Environment.EnvironmentName
           </code>
-          <div class="tip" id="1498">
+          <div class="tip" id="1525">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the environment for this job</p>
@@ -573,15 +577,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1499', 1499)" onmouseover="showTip(event, '1499', 1499)">
+          <code onmouseout="hideTip(event, '1526', 1526)" onmouseover="showTip(event, '1526', 1526)">
             Environment.EnvironmentSlug
           </code>
-          <div class="tip" id="1499">
+          <div class="tip" id="1526">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L81-81" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L81-81" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A simplified version of the environment name, suitable for inclusion in DNS, URLs, Kubernetes labels, etc.</p>
@@ -591,15 +595,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1500', 1500)" onmouseover="showTip(event, '1500', 1500)">
+          <code onmouseout="hideTip(event, '1527', 1527)" onmouseover="showTip(event, '1527', 1527)">
             Environment.EnvironmentUrl
           </code>
-          <div class="tip" id="1500">
+          <div class="tip" id="1527">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L83-83" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L83-83" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The URL of the environment for this job</p>
@@ -609,15 +613,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1501', 1501)" onmouseover="showTip(event, '1501', 1501)">
+          <code onmouseout="hideTip(event, '1528', 1528)" onmouseover="showTip(event, '1528', 1528)">
             Environment.GetSourcesAttempts
           </code>
-          <div class="tip" id="1501">
+          <div class="tip" id="1528">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L155-155" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L155-155" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Number of attempts to fetch sources running a job</p>
@@ -627,15 +631,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1502', 1502)" onmouseover="showTip(event, '1502', 1502)">
+          <code onmouseout="hideTip(event, '1529', 1529)" onmouseover="showTip(event, '1529', 1529)">
             Environment.GitlabCI
           </code>
-          <div class="tip" id="1502">
+          <div class="tip" id="1529">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L157-157" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L157-157" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Mark that job is executed in GitLab CI environment</p>
@@ -645,15 +649,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1503', 1503)" onmouseover="showTip(event, '1503', 1503)">
+          <code onmouseout="hideTip(event, '1530', 1530)" onmouseover="showTip(event, '1530', 1530)">
             Environment.GitlabFeatures
           </code>
-          <div class="tip" id="1503">
+          <div class="tip" id="1530">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L167-167" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L167-167" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The comma separated list of licensed features available for your instance and plan</p>
@@ -663,15 +667,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1504', 1504)" onmouseover="showTip(event, '1504', 1504)">
+          <code onmouseout="hideTip(event, '1531', 1531)" onmouseover="showTip(event, '1531', 1531)">
             Environment.GitlabUserEmail
           </code>
-          <div class="tip" id="1504">
+          <div class="tip" id="1531">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L159-159" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The email of the user who started the job</p>
@@ -681,15 +685,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1505', 1505)" onmouseover="showTip(event, '1505', 1505)">
+          <code onmouseout="hideTip(event, '1532', 1532)" onmouseover="showTip(event, '1532', 1532)">
             Environment.GitlabUserId
           </code>
-          <div class="tip" id="1505">
+          <div class="tip" id="1532">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L161-161" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The id of the user who started the job</p>
@@ -699,15 +703,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1506', 1506)" onmouseover="showTip(event, '1506', 1506)">
+          <code onmouseout="hideTip(event, '1533', 1533)" onmouseover="showTip(event, '1533', 1533)">
             Environment.GitlabUserLogin
           </code>
-          <div class="tip" id="1506">
+          <div class="tip" id="1533">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L163-163" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The login username of the user who started the job</p>
@@ -717,15 +721,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1507', 1507)" onmouseover="showTip(event, '1507', 1507)">
+          <code onmouseout="hideTip(event, '1534', 1534)" onmouseover="showTip(event, '1534', 1534)">
             Environment.GitlabUserName
           </code>
-          <div class="tip" id="1507">
+          <div class="tip" id="1534">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L165-165" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L165-165" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The real name of the user who started the job</p>
@@ -735,15 +739,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1508', 1508)" onmouseover="showTip(event, '1508', 1508)">
+          <code onmouseout="hideTip(event, '1535', 1535)" onmouseover="showTip(event, '1535', 1535)">
             Environment.JobId
           </code>
-          <div class="tip" id="1508">
+          <div class="tip" id="1535">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L85-85" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L85-85" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique id of the current job that GitLab CI uses internally</p>
@@ -753,15 +757,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1509', 1509)" onmouseover="showTip(event, '1509', 1509)">
+          <code onmouseout="hideTip(event, '1536', 1536)" onmouseover="showTip(event, '1536', 1536)">
             Environment.JobManual
           </code>
-          <div class="tip" id="1509">
+          <div class="tip" id="1536">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L87-87" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L87-87" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The flag to indicate that job was manually started</p>
@@ -771,15 +775,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1510', 1510)" onmouseover="showTip(event, '1510', 1510)">
+          <code onmouseout="hideTip(event, '1537', 1537)" onmouseover="showTip(event, '1537', 1537)">
             Environment.JobName
           </code>
-          <div class="tip" id="1510">
+          <div class="tip" id="1537">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L89-89" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L89-89" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the job as defined in .gitlab-ci.yml</p>
@@ -789,15 +793,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1511', 1511)" onmouseover="showTip(event, '1511', 1511)">
+          <code onmouseout="hideTip(event, '1538', 1538)" onmouseover="showTip(event, '1538', 1538)">
             Environment.JobStage
           </code>
-          <div class="tip" id="1511">
+          <div class="tip" id="1538">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the stage as defined in .gitlab-ci.yml</p>
@@ -807,15 +811,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1512', 1512)" onmouseover="showTip(event, '1512', 1512)">
+          <code onmouseout="hideTip(event, '1539', 1539)" onmouseover="showTip(event, '1539', 1539)">
             Environment.JobToken
           </code>
-          <div class="tip" id="1512">
+          <div class="tip" id="1539">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L93-93" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L93-93" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Token used for authenticating with GitLab Container Registry, downloading dependent repositories, authenticate with multi-project pipelines when triggers are involved, and for downloading job artifacts</p>
@@ -825,15 +829,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1513', 1513)" onmouseover="showTip(event, '1513', 1513)">
+          <code onmouseout="hideTip(event, '1540', 1540)" onmouseover="showTip(event, '1540', 1540)">
             Environment.JobUrl
           </code>
-          <div class="tip" id="1513">
+          <div class="tip" id="1540">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L95-95" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L95-95" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Job details URL</p>
@@ -843,15 +847,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1514', 1514)" onmouseover="showTip(event, '1514', 1514)">
+          <code onmouseout="hideTip(event, '1541', 1541)" onmouseover="showTip(event, '1541', 1541)">
             Environment.PipelineId
           </code>
-          <div class="tip" id="1514">
+          <div class="tip" id="1541">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L111-111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique id of the current pipeline that GitLab CI uses internally</p>
@@ -861,15 +865,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1515', 1515)" onmouseover="showTip(event, '1515', 1515)">
+          <code onmouseout="hideTip(event, '1542', 1542)" onmouseover="showTip(event, '1542', 1542)">
             Environment.PipelineIID
           </code>
-          <div class="tip" id="1515">
+          <div class="tip" id="1542">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L113-113" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L113-113" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique id of the current pipeline scoped to project</p>
@@ -879,15 +883,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1516', 1516)" onmouseover="showTip(event, '1516', 1516)">
+          <code onmouseout="hideTip(event, '1543', 1543)" onmouseover="showTip(event, '1543', 1543)">
             Environment.PipelineSource
           </code>
-          <div class="tip" id="1516">
+          <div class="tip" id="1543">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L117-117" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L117-117" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Indicates how the pipeline was triggered. Possible options are: push, web, trigger, schedule, api, and pipeline. For pipelines created before GitLab 9.5, this will show as unknown</p>
@@ -897,15 +901,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1517', 1517)" onmouseover="showTip(event, '1517', 1517)">
+          <code onmouseout="hideTip(event, '1544', 1544)" onmouseover="showTip(event, '1544', 1544)">
             Environment.PipelineTriggered
           </code>
-          <div class="tip" id="1517">
+          <div class="tip" id="1544">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L115-115" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L115-115" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The flag to indicate that job was triggered</p>
@@ -915,15 +919,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1518', 1518)" onmouseover="showTip(event, '1518', 1518)">
+          <code onmouseout="hideTip(event, '1545', 1545)" onmouseover="showTip(event, '1545', 1545)">
             Environment.PipelineUrl
           </code>
-          <div class="tip" id="1518">
+          <div class="tip" id="1545">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L131-131" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L131-131" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Pipeline details URL</p>
@@ -933,15 +937,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1519', 1519)" onmouseover="showTip(event, '1519', 1519)">
+          <code onmouseout="hideTip(event, '1546', 1546)" onmouseover="showTip(event, '1546', 1546)">
             Environment.ProjectDir
           </code>
-          <div class="tip" id="1519">
+          <div class="tip" id="1546">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L119-119" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L119-119" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The full path where the repository is cloned and where the job is run</p>
@@ -951,15 +955,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1520', 1520)" onmouseover="showTip(event, '1520', 1520)">
+          <code onmouseout="hideTip(event, '1547', 1547)" onmouseover="showTip(event, '1547', 1547)">
             Environment.ProjectId
           </code>
-          <div class="tip" id="1520">
+          <div class="tip" id="1547">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L121-121" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L121-121" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique id of the current project that GitLab CI uses internally</p>
@@ -969,15 +973,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1521', 1521)" onmouseover="showTip(event, '1521', 1521)">
+          <code onmouseout="hideTip(event, '1548', 1548)" onmouseover="showTip(event, '1548', 1548)">
             Environment.ProjectName
           </code>
-          <div class="tip" id="1521">
+          <div class="tip" id="1548">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L123-123" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L123-123" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The project name that is currently being built (actually it is project folder name)</p>
@@ -987,15 +991,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1522', 1522)" onmouseover="showTip(event, '1522', 1522)">
+          <code onmouseout="hideTip(event, '1549', 1549)" onmouseover="showTip(event, '1549', 1549)">
             Environment.ProjectNamespace
           </code>
-          <div class="tip" id="1522">
+          <div class="tip" id="1549">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L125-125" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L125-125" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The project namespace (username or groupname) that is currently being built</p>
@@ -1005,15 +1009,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1523', 1523)" onmouseover="showTip(event, '1523', 1523)">
+          <code onmouseout="hideTip(event, '1550', 1550)" onmouseover="showTip(event, '1550', 1550)">
             Environment.ProjectPath
           </code>
-          <div class="tip" id="1523">
+          <div class="tip" id="1550">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L127-127" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L127-127" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The namespace with project name</p>
@@ -1023,15 +1027,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1524', 1524)" onmouseover="showTip(event, '1524', 1524)">
+          <code onmouseout="hideTip(event, '1551', 1551)" onmouseover="showTip(event, '1551', 1551)">
             Environment.ProjectPathSlug
           </code>
-          <div class="tip" id="1524">
+          <div class="tip" id="1551">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L129-129" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>$CI<em>PROJECT</em>PATH lowercased and with everything except 0-9 and a-z replaced with -. Use in URLs and domain names.</p>
@@ -1041,15 +1045,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1525', 1525)" onmouseover="showTip(event, '1525', 1525)">
+          <code onmouseout="hideTip(event, '1552', 1552)" onmouseover="showTip(event, '1552', 1552)">
             Environment.ProjectUrl
           </code>
-          <div class="tip" id="1525">
+          <div class="tip" id="1552">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L133-133" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L133-133" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The HTTP address to access project</p>
@@ -1059,15 +1063,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1526', 1526)" onmouseover="showTip(event, '1526', 1526)">
+          <code onmouseout="hideTip(event, '1553', 1553)" onmouseover="showTip(event, '1553', 1553)">
             Environment.ProjectVisibility
           </code>
-          <div class="tip" id="1526">
+          <div class="tip" id="1553">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L135-135" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L135-135" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The project visibility (internal, private, public)</p>
@@ -1077,15 +1081,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1527', 1527)" onmouseover="showTip(event, '1527', 1527)">
+          <code onmouseout="hideTip(event, '1554', 1554)" onmouseover="showTip(event, '1554', 1554)">
             Environment.Registry
           </code>
-          <div class="tip" id="1527">
+          <div class="tip" id="1554">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L137-137" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L137-137" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If the Container Registry is enabled it returns the address of GitLab's Container Registry</p>
@@ -1095,15 +1099,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1528', 1528)" onmouseover="showTip(event, '1528', 1528)">
+          <code onmouseout="hideTip(event, '1555', 1555)" onmouseover="showTip(event, '1555', 1555)">
             Environment.RegistryImage
           </code>
-          <div class="tip" id="1528">
+          <div class="tip" id="1555">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L139-139" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L139-139" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If the Container Registry is enabled for the project it returns the address of the registry tied to the specific project</p>
@@ -1113,15 +1117,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1529', 1529)" onmouseover="showTip(event, '1529', 1529)">
+          <code onmouseout="hideTip(event, '1556', 1556)" onmouseover="showTip(event, '1556', 1556)">
             Environment.RegistryPassword
           </code>
-          <div class="tip" id="1529">
+          <div class="tip" id="1556">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L141-141" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The password to use to push containers to the GitLab Container Registry</p>
@@ -1131,15 +1135,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1530', 1530)" onmouseover="showTip(event, '1530', 1530)">
+          <code onmouseout="hideTip(event, '1557', 1557)" onmouseover="showTip(event, '1557', 1557)">
             Environment.RegistryUser
           </code>
-          <div class="tip" id="1530">
+          <div class="tip" id="1557">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L143-143" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The username to use to push containers to the GitLab Container Registry</p>
@@ -1149,15 +1153,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1531', 1531)" onmouseover="showTip(event, '1531', 1531)">
+          <code onmouseout="hideTip(event, '1558', 1558)" onmouseover="showTip(event, '1558', 1558)">
             Environment.RepositoryUrl
           </code>
-          <div class="tip" id="1531">
+          <div class="tip" id="1558">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L97-97" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The URL to clone the Git repository</p>
@@ -1167,15 +1171,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1532', 1532)" onmouseover="showTip(event, '1532', 1532)">
+          <code onmouseout="hideTip(event, '1559', 1559)" onmouseover="showTip(event, '1559', 1559)">
             Environment.RestoreCacheAttempts
           </code>
-          <div class="tip" id="1532">
+          <div class="tip" id="1559">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L169-169" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L169-169" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Number of attempts to restore the cache running a job</p>
@@ -1185,15 +1189,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1533', 1533)" onmouseover="showTip(event, '1533', 1533)">
+          <code onmouseout="hideTip(event, '1560', 1560)" onmouseover="showTip(event, '1560', 1560)">
             Environment.RunnerDescription
           </code>
-          <div class="tip" id="1533">
+          <div class="tip" id="1560">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L99-99" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L99-99" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The description of the runner as saved in GitLab</p>
@@ -1203,15 +1207,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1534', 1534)" onmouseover="showTip(event, '1534', 1534)">
+          <code onmouseout="hideTip(event, '1561', 1561)" onmouseover="showTip(event, '1561', 1561)">
             Environment.RunnerExecutableArch
           </code>
-          <div class="tip" id="1534">
+          <div class="tip" id="1561">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L109-109" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L109-109" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The OS/architecture of the GitLab Runner executable (note that this is not necessarily the same as the environment of the executor)</p>
@@ -1221,15 +1225,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1535', 1535)" onmouseover="showTip(event, '1535', 1535)">
+          <code onmouseout="hideTip(event, '1562', 1562)" onmouseover="showTip(event, '1562', 1562)">
             Environment.RunnerId
           </code>
-          <div class="tip" id="1535">
+          <div class="tip" id="1562">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L101-101" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L101-101" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique id of runner being used</p>
@@ -1239,15 +1243,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1536', 1536)" onmouseover="showTip(event, '1536', 1536)">
+          <code onmouseout="hideTip(event, '1563', 1563)" onmouseover="showTip(event, '1563', 1563)">
             Environment.RunnerRevision
           </code>
-          <div class="tip" id="1536">
+          <div class="tip" id="1563">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L107-107" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L107-107" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitLab Runner revision that is executing the current job</p>
@@ -1257,15 +1261,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1537', 1537)" onmouseover="showTip(event, '1537', 1537)">
+          <code onmouseout="hideTip(event, '1564', 1564)" onmouseover="showTip(event, '1564', 1564)">
             Environment.RunnerTags
           </code>
-          <div class="tip" id="1537">
+          <div class="tip" id="1564">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L103-103" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L103-103" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The defined runner tags</p>
@@ -1275,15 +1279,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1538', 1538)" onmouseover="showTip(event, '1538', 1538)">
+          <code onmouseout="hideTip(event, '1565', 1565)" onmouseover="showTip(event, '1565', 1565)">
             Environment.RunnerVersion
           </code>
-          <div class="tip" id="1538">
+          <div class="tip" id="1565">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L105-105" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitLab Runner version that is executing the current job</p>
@@ -1293,15 +1297,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1539', 1539)" onmouseover="showTip(event, '1539', 1539)">
+          <code onmouseout="hideTip(event, '1566', 1566)" onmouseover="showTip(event, '1566', 1566)">
             Environment.Server
           </code>
-          <div class="tip" id="1539">
+          <div class="tip" id="1566">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L145-145" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L145-145" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Mark that job is executed in CI environment</p>
@@ -1311,15 +1315,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1540', 1540)" onmouseover="showTip(event, '1540', 1540)">
+          <code onmouseout="hideTip(event, '1567', 1567)" onmouseover="showTip(event, '1567', 1567)">
             Environment.ServerName
           </code>
-          <div class="tip" id="1540">
+          <div class="tip" id="1567">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L147-147" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L147-147" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of CI server that is used to coordinate jobs</p>
@@ -1329,15 +1333,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1541', 1541)" onmouseover="showTip(event, '1541', 1541)">
+          <code onmouseout="hideTip(event, '1568', 1568)" onmouseover="showTip(event, '1568', 1568)">
             Environment.ServerRevision
           </code>
-          <div class="tip" id="1541">
+          <div class="tip" id="1568">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L149-149" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L149-149" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitLab revision that is used to schedule jobs</p>
@@ -1347,15 +1351,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1542', 1542)" onmouseover="showTip(event, '1542', 1542)">
+          <code onmouseout="hideTip(event, '1569', 1569)" onmouseover="showTip(event, '1569', 1569)">
             Environment.ServerVersion
           </code>
-          <div class="tip" id="1542">
+          <div class="tip" id="1569">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L151-151" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L151-151" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitLab version that is used to schedule jobs</p>
@@ -1365,15 +1369,15 @@ Use in URLs, host names and domain names.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1543', 1543)" onmouseover="showTip(event, '1543', 1543)">
+          <code onmouseout="hideTip(event, '1570', 1570)" onmouseover="showTip(event, '1570', 1570)">
             Environment.SharedEnvironment
           </code>
-          <div class="tip" id="1543">
+          <div class="tip" id="1570">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitLab/GitLab.fs#L153-153" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Marks that the job is executed in a shared environment (something that is persisted across CI invocations like shell or ssh executor). If the environment is shared, it is set to true, otherwise it is not defined at all.</p>
@@ -1421,7 +1425,7 @@ Use in URLs, host names and domain names.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

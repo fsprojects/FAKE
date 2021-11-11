@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,284 +326,236 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6354', 6354)" onmouseover="showTip(event, '6354', 6354)">
+          <code onmouseout="hideTip(event, '6258', 6258)" onmouseover="showTip(event, '6258', 6258)">
             Account
           </code>
-          <div class="tip" id="6354">
+          <div class="tip" id="6258">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L319-319" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.</p>
+                    <p>Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6355', 6355)" onmouseover="showTip(event, '6355', 6355)">
+          <code onmouseout="hideTip(event, '6259', 6259)" onmouseover="showTip(event, '6259', 6259)">
             Arguments
           </code>
-          <div class="tip" id="6355">
+          <div class="tip" id="6259">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L321-321" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Contains any command line arguments or properties required to run the service.</p>
+                    <p>Contains any command line arguments or properties required to run the service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6356', 6356)" onmouseover="showTip(event, '6356', 6356)">
+          <code onmouseout="hideTip(event, '6260', 6260)" onmouseover="showTip(event, '6260', 6260)">
             Description
           </code>
-          <div class="tip" id="6356">
+          <div class="tip" id="6260">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L323-323" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the description of the service.</p>
+                    <p>Sets the description of the service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6357', 6357)" onmouseover="showTip(event, '6357', 6357)">
+          <code onmouseout="hideTip(event, '6261', 6261)" onmouseover="showTip(event, '6261', 6261)">
             DisplayName
           </code>
-          <div class="tip" id="6357">
+          <div class="tip" id="6261">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L325-325" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This column is the localizable string that user interface programs use to identify the service.</p>
+                    <p>This column is the localizable string that user interface programs use to identify the service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6358', 6358)" onmouseover="showTip(event, '6358', 6358)">
+          <code onmouseout="hideTip(event, '6262', 6262)" onmouseover="showTip(event, '6262', 6262)">
             EraseDescription
           </code>
-          <div class="tip" id="6358">
+          <div class="tip" id="6262">
             <strong>Signature:</strong> YesOrNo option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L327-327" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.</p>
+                    <p>Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6359', 6359)" onmouseover="showTip(event, '6359', 6359)">
+          <code onmouseout="hideTip(event, '6263', 6263)" onmouseover="showTip(event, '6263', 6263)">
             ErrorControl
           </code>
-          <div class="tip" id="6359">
+          <div class="tip" id="6263">
             <strong>Signature:</strong> ErrorControl<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L329-329" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6360', 6360)" onmouseover="showTip(event, '6360', 6360)">
+          <code onmouseout="hideTip(event, '6264', 6264)" onmouseover="showTip(event, '6264', 6264)">
             Id
           </code>
-          <div class="tip" id="6360">
+          <div class="tip" id="6264">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L331-331" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unique identifier for this service configuration. This value will default to the Name attribute if not specified.</p>
+                    <p>Unique identifier for this service configuration. This value will default to the Name attribute if not specified.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6361', 6361)" onmouseover="showTip(event, '6361', 6361)">
+          <code onmouseout="hideTip(event, '6265', 6265)" onmouseover="showTip(event, '6265', 6265)">
             Interactive
           </code>
-          <div class="tip" id="6361">
+          <div class="tip" id="6265">
             <strong>Signature:</strong> YesOrNo option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L333-333" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Whether or not the service interacts with the desktop.</p>
+                    <p>Whether or not the service interacts with the desktop.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6362', 6362)" onmouseover="showTip(event, '6362', 6362)">
+          <code onmouseout="hideTip(event, '6266', 6266)" onmouseover="showTip(event, '6266', 6266)">
             LoadOrderGroup
           </code>
-          <div class="tip" id="6362">
+          <div class="tip" id="6266">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L335-335" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The load ordering group that this service should be a part of.</p>
+                    <p>The load ordering group that this service should be a part of.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6363', 6363)" onmouseover="showTip(event, '6363', 6363)">
+          <code onmouseout="hideTip(event, '6267', 6267)" onmouseover="showTip(event, '6267', 6267)">
             Name
           </code>
-          <div class="tip" id="6363">
+          <div class="tip" id="6267">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L337-337" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6364', 6364)" onmouseover="showTip(event, '6364', 6364)">
+          <code onmouseout="hideTip(event, '6268', 6268)" onmouseover="showTip(event, '6268', 6268)">
             Password
           </code>
-          <div class="tip" id="6364">
+          <div class="tip" id="6268">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L339-339" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The password for the account. Valid only when the account has a password.</p>
+                    <p>The password for the account. Valid only when the account has a password.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6365', 6365)" onmouseover="showTip(event, '6365', 6365)">
+          <code onmouseout="hideTip(event, '6269', 6269)" onmouseover="showTip(event, '6269', 6269)">
             ServiceConfig
           </code>
-          <div class="tip" id="6365">
+          <div class="tip" id="6269">
             <strong>Signature:</strong> seq&lt;ServiceConfig&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L349-349" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Service configuration information for failure actions.</p>
+                    <p>Service configuration information for failure actions.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6366', 6366)" onmouseover="showTip(event, '6366', 6366)">
+          <code onmouseout="hideTip(event, '6270', 6270)" onmouseover="showTip(event, '6270', 6270)">
             ServiceDependencies
           </code>
-          <div class="tip" id="6366">
+          <div class="tip" id="6270">
             <strong>Signature:</strong> seq&lt;ServiceDependency&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L347-347" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Services or groups of services that must start before the parent service.</p>
+                    <p>Services or groups of services that must start before the parent service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6367', 6367)" onmouseover="showTip(event, '6367', 6367)">
+          <code onmouseout="hideTip(event, '6271', 6271)" onmouseover="showTip(event, '6271', 6271)">
             Start
           </code>
-          <div class="tip" id="6367">
+          <div class="tip" id="6271">
             <strong>Signature:</strong> ServiceInstallStart<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L341-341" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6368', 6368)" onmouseover="showTip(event, '6368', 6368)">
+          <code onmouseout="hideTip(event, '6272', 6272)" onmouseover="showTip(event, '6272', 6272)">
             Type
           </code>
-          <div class="tip" id="6368">
+          <div class="tip" id="6272">
             <strong>Signature:</strong> ServiceInstallType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L343-343" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6369', 6369)" onmouseover="showTip(event, '6369', 6369)">
+          <code onmouseout="hideTip(event, '6273', 6273)" onmouseover="showTip(event, '6273', 6273)">
             Vital
           </code>
-          <div class="tip" id="6369">
+          <div class="tip" id="6273">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L345-345" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The overall install should fail if this service fails to install. (Default: Yes)</p>
+                    <p>The overall install should fail if this service fails to install. (Default: Yes)</p>
 
 
         </td>
@@ -614,18 +570,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6370', 6370)" onmouseover="showTip(event, '6370', 6370)">
+          <code onmouseout="hideTip(event, '6274', 6274)" onmouseover="showTip(event, '6274', 6274)">
             x.createAttributeList()
           </code>
-          <div class="tip" id="6370">
+          <div class="tip" id="6274">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L351-351" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -667,7 +620,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

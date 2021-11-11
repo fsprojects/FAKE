@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -387,10 +391,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
+                    <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
 
 
         </td>
@@ -413,10 +414,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine</p>
+                    <p>Combines two path strings using Path.Combine</p>
 
 
         </td>
@@ -439,10 +437,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L115-115" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the application settings variable with the given name</p>
+                    <p>Retrieves the application settings variable with the given name</p>
 
 
         </td>
@@ -465,10 +460,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Clears the environment variable with the given name for the current process.</p>
+                    <p>Clears the environment variable with the given name for the current process.</p>
 
 
         </td>
@@ -491,10 +483,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L25-25" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
+                    <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
 
 
         </td>
@@ -517,10 +506,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Combines two path strings using Path.Combine</p>
+                    <p>Combines two path strings using Path.Combine</p>
 
 
         </td>
@@ -543,10 +529,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L276-276" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Convert the given windows path to a path in the current system</p>
+                    <p>Convert the given windows path to a path in the current system</p>
 
 
         </td>
@@ -569,10 +552,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L272-272" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The directory separator string. On most systems / or \</p>
+                    <p>The directory separator string. On most systems / or \</p>
 
 
         </td>
@@ -595,10 +575,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L268-268" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path to the personal documents</p>
+                    <p>The path to the personal documents</p>
 
 
         </td>
@@ -621,10 +598,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L282-282" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
+                    <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
 
 
         </td>
@@ -647,10 +621,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name</p>
+                    <p>Retrieves the environment variable with the given name</p>
 
 
         </td>
@@ -673,10 +644,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
 
 
         </td>
@@ -699,10 +667,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or fails if not found</p>
+                    <p>Retrieves the environment variable with the given name or fails if not found</p>
 
 
         </td>
@@ -725,10 +690,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable or None if no value was set</p>
+                    <p>Retrieves the environment variable or None if no value was set</p>
 
 
         </td>
@@ -751,10 +713,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves all environment variables from the given target</p>
+                    <p>Retrieves all environment variables from the given target</p>
 
 
         </td>
@@ -777,10 +736,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
 
 
         </td>
@@ -803,10 +759,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L123-123" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
 
 
         </td>
@@ -829,10 +782,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L326-326" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves information about the hard drives</p>
+                    <p>Retrieves information about the hard drives</p>
 
 
         </td>
@@ -855,10 +805,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns false if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns false if no value was set</p>
 
 
         </td>
@@ -881,10 +828,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default value if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default value if no value was set</p>
 
 
         </td>
@@ -907,10 +851,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L289-289" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns a sequence with all installed .NET framework versions</p>
+                    <p>Returns a sequence with all installed .NET framework versions</p>
 
 
         </td>
@@ -933,10 +874,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L338-338" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
+                    <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
 
 
         </td>
@@ -959,10 +897,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L252-252" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Helper function to help find framework or sdk tools from the
+                    <p>Helper function to help find framework or sdk tools from the
 newest toolkit available</p>
 
 
@@ -986,10 +921,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L262-262" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the local directory for the given target platform</p>
+                    <p>Gets the local directory for the given target platform</p>
 
 
         </td>
@@ -1012,10 +944,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the build parameter with the given name was set</p>
+                    <p>Returns if the build parameter with the given name was set</p>
 
 
         </td>
@@ -1038,10 +967,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L180-180" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a Linux system</p>
+                    <p>Determines if the current system is a Linux system</p>
 
 
         </td>
@@ -1064,10 +990,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L168-168" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a MacOs system</p>
+                    <p>Determines if the current system is a MacOs system</p>
 
 
         </td>
@@ -1090,10 +1013,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L185-185" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a mono system
+                    <p>Determines if the current system is a mono system
 Todo: Detect mono on windows</p>
 
 
@@ -1117,10 +1037,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is an Unix system</p>
+                    <p>Determines if the current system is an Unix system</p>
 
 
         </td>
@@ -1143,10 +1060,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L160-160" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a Windows system</p>
+                    <p>Determines if the current system is a Windows system</p>
 
 
         </td>
@@ -1169,10 +1083,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L219-219" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Arguments on the Mono executable</p>
+                    <p>Arguments on the Mono executable</p>
 
 
         </td>
@@ -1195,10 +1106,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1219,10 +1127,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L190-190" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>required sometimes to workaround mono crashes
+                    <p>required sometimes to workaround mono crashes
 <a href="http://stackoverflow.com/a/8414517/1269722">http://stackoverflow.com/a/8414517/1269722</a></p>
 
 
@@ -1246,10 +1151,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L243-243" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Base path for getting tools from Microsoft SDKs</p>
+                    <p>Base path for getting tools from Microsoft SDKs</p>
 
 
         </td>
@@ -1272,10 +1174,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1296,10 +1195,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L223-223" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Modifies the ProcessStartInfo according to the platform semantics</p>
+                    <p>Modifies the ProcessStartInfo according to the platform semantics</p>
 
 
         </td>
@@ -1322,10 +1218,7 @@ Todo: Detect mono on windows</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path of the "Program Files" folder - might be x64 on x64 machine
+                    <p>The path of the "Program Files" folder - might be x64 on x64 machine
 It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable
 PROCESSOR_ARCHITEW6432 can be null</p>
 
@@ -1350,10 +1243,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L152-152" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path of Program Files (x86)</p>
+                    <p>The path of Program Files (x86)</p>
 
 
         </td>
@@ -1376,10 +1266,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L247-247" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Base path for getting tools from Windows SDKs</p>
+                    <p>Base path for getting tools from Windows SDKs</p>
 
 
         </td>
@@ -1402,10 +1289,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the build parameter with the given name for the current process.</p>
+                    <p>Sets the build parameter with the given name for the current process.</p>
 
 
         </td>
@@ -1428,10 +1312,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name</p>
+                    <p>Sets the environment variable with the given name</p>
 
 
         </td>
@@ -1454,10 +1335,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name for the current machine.</p>
+                    <p>Sets the environment variable with the given name for the current machine.</p>
 
 
         </td>
@@ -1480,10 +1358,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name for the current process.</p>
+                    <p>Sets the environment variable with the given name for the current process.</p>
 
 
         </td>
@@ -1506,10 +1381,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name for the current user.</p>
+                    <p>Sets the environment variable with the given name for the current user.</p>
 
 
         </td>
@@ -1532,10 +1404,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L108-108" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the entries of an environment variable and removes the empty ones.</p>
+                    <p>Splits the entries of an environment variable and removes the empty ones.</p>
 
 
         </td>
@@ -1558,10 +1427,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The system root environment variable. Typically "C:\Windows"</p>
+                    <p>The system root environment variable. Typically "C:\Windows"</p>
 
 
         </td>
@@ -1584,10 +1450,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path of the current target platform</p>
+                    <p>The path of the current target platform</p>
 
 
         </td>
@@ -1631,7 +1494,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

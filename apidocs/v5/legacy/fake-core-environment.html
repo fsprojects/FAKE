@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -374,154 +378,130 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
             Environment.clearEnvironVar(name)
           </code>
-          <div class="tip" id="1286">
+          <div class="tip" id="1276">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Clears the environment variable with the given name for the current process.</p>
+                    <p>Clears the environment variable with the given name for the current process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1287', 1287)" onmouseover="showTip(event, '1287', 1287)">
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             Environment.environVar(name)
           </code>
-          <div class="tip" id="1287">
+          <div class="tip" id="1277">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name</p>
+                    <p>Retrieves the environment variable with the given name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1288', 1288)" onmouseover="showTip(event, '1288', 1288)">
+          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
             Environment.environVarAsBool(varName)
           </code>
-          <div class="tip" id="1288">
+          <div class="tip" id="1278">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1289', 1289)" onmouseover="showTip(event, '1289', 1289)">
+          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
             Environment.environVarAsBoolOrDefault(...)
           </code>
-          <div class="tip" id="1289">
+          <div class="tip" id="1279">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1290', 1290)" onmouseover="showTip(event, '1290', 1290)">
+          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
             Environment.environVarOrDefault(...)
           </code>
-          <div class="tip" id="1290">
+          <div class="tip" id="1280">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1291', 1291)" onmouseover="showTip(event, '1291', 1291)">
+          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
             Environment.environVarOrFail(name)
           </code>
-          <div class="tip" id="1291">
+          <div class="tip" id="1281">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or fails if not found</p>
+                    <p>Retrieves the environment variable with the given name or fails if not found</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1292', 1292)" onmouseover="showTip(event, '1292', 1292)">
+          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
             Environment.environVarOrNone(name)
           </code>
-          <div class="tip" id="1292">
+          <div class="tip" id="1282">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L104-104" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable or None</p>
+                    <p>Retrieves the environment variable or None</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1293', 1293)" onmouseover="showTip(event, '1293', 1293)">
+          <code onmouseout="hideTip(event, '1283', 1283)" onmouseover="showTip(event, '1283', 1283)">
             Environment.environVars()
           </code>
-          <div class="tip" id="1293">
+          <div class="tip" id="1283">
             <strong>Signature:</strong> unit -&gt; (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves all environment variables from the given target</p>
+                    <p>Retrieves all environment variables from the given target</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1294', 1294)" onmouseover="showTip(event, '1294', 1294)">
+          <code onmouseout="hideTip(event, '1284', 1284)" onmouseover="showTip(event, '1284', 1284)">
             Environment.environVarsWithMode(mode)
           </code>
-          <div class="tip" id="1294">
+          <div class="tip" id="1284">
             <strong>Signature:</strong> mode:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -534,18 +514,15 @@
                 <h5>OBSOLETE</h5>
                 <p>Will be removed in dotnetcore. Use environVars instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1295', 1295)" onmouseover="showTip(event, '1295', 1295)">
+          <code onmouseout="hideTip(event, '1285', 1285)" onmouseover="showTip(event, '1285', 1285)">
             Environment.getBuildParam(name)
           </code>
-          <div class="tip" id="1295">
+          <div class="tip" id="1285">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -558,20 +535,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use &#39;environVarOrDefault name String.Empty&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1296', 1296)" onmouseover="showTip(event, '1296', 1296)">
+          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
             Environment.getBuildParamOrDefault(...)
           </code>
-          <div class="tip" id="1296">
+          <div class="tip" id="1286">
             <strong>Signature:</strong> name:string -&gt; defaultParam:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -584,38 +558,32 @@
                 <h5>OBSOLETE</h5>
                 <p>Use environVarOrDefault instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1297', 1297)" onmouseover="showTip(event, '1297', 1297)">
+          <code onmouseout="hideTip(event, '1287', 1287)" onmouseover="showTip(event, '1287', 1287)">
             Environment.getDefaultEncoding()
           </code>
-          <div class="tip" id="1297">
+          <div class="tip" id="1287">
             <strong>Signature:</strong> unit -&gt; Encoding<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L292-292" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
+                    <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1298', 1298)" onmouseover="showTip(event, '1298', 1298)">
+          <code onmouseout="hideTip(event, '1288', 1288)" onmouseover="showTip(event, '1288', 1288)">
             Environment.getDrivesInfo()
           </code>
-          <div class="tip" id="1298">
+          <div class="tip" id="1288">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -628,20 +596,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Will no longer be available in dotnetcore, target package is currently unknown</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L368-368" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves information about the hard drives</p>
+                    <p>Retrieves information about the hard drives</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1299', 1299)" onmouseover="showTip(event, '1299', 1299)">
+          <code onmouseout="hideTip(event, '1289', 1289)" onmouseover="showTip(event, '1289', 1289)">
             Environment.getInstalledDotNetFrameworks(...)
           </code>
-          <div class="tip" id="1299">
+          <div class="tip" id="1289">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -654,20 +619,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Will no longer be available in dotnetcore, target package is currently unknown</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L331-331" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns a sequence with all installed .NET framework versions</p>
+                    <p>Returns a sequence with all installed .NET framework versions</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
+          <code onmouseout="hideTip(event, '1290', 1290)" onmouseover="showTip(event, '1290', 1290)">
             Environment.getMachineEnvironment()
           </code>
-          <div class="tip" id="1300">
+          <div class="tip" id="1290">
             <strong>Signature:</strong> unit -&gt; MachineDetails<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -680,28 +642,22 @@
                 <h5>OBSOLETE</h5>
                 <p>Will no longer be available in dotnetcore, target package is currently unknown</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L380-380" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
+                    <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
+          <code onmouseout="hideTip(event, '1291', 1291)" onmouseover="showTip(event, '1291', 1291)">
             Environment.getNewestTool(...)
           </code>
-          <div class="tip" id="1301">
-            <strong>Signature:</strong> possibleToolPaths:seq&lt;&#39;?18879&gt; -&gt; &#39;?18879<br />
-                          <strong>Type parameters:</strong> '?18879                      </div>
+          <div class="tip" id="1291">
+            <strong>Signature:</strong> possibleToolPaths:seq&lt;&#39;?18479&gt; -&gt; &#39;?18479<br />
+                          <strong>Type parameters:</strong> '?18479                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L278-278" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Helper function to help find framework or sdk tools from the
+                    <p>Helper function to help find framework or sdk tools from the
 newest toolkit available</p>
 
 
@@ -709,46 +665,25 @@ newest toolkit available</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
-            Environment.getNuGetPackagesCacheFolder(...)
-          </code>
-          <div class="tip" id="1302">
-            <strong>Signature:</strong> unit -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L324-324" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the path to the user-specific nuget packages folder</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1303', 1303)" onmouseover="showTip(event, '1303', 1303)">
+          <code onmouseout="hideTip(event, '1292', 1292)" onmouseover="showTip(event, '1292', 1292)">
             Environment.getTargetPlatformDir(...)
           </code>
-          <div class="tip" id="1303">
+          <div class="tip" id="1292">
             <strong>Signature:</strong> platformVersion:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L287-287" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the local directory for the given target platform</p>
+                    <p>Gets the local directory for the given target platform</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1304', 1304)" onmouseover="showTip(event, '1304', 1304)">
+          <code onmouseout="hideTip(event, '1293', 1293)" onmouseover="showTip(event, '1293', 1293)">
             Environment.hasBuildParam(name)
           </code>
-          <div class="tip" id="1304">
+          <div class="tip" id="1293">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -761,38 +696,32 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use hasEnvironVar instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L120-120" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the build parameter with the given name was set</p>
+                    <p>Returns if the build parameter with the given name was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1305', 1305)" onmouseover="showTip(event, '1305', 1305)">
+          <code onmouseout="hideTip(event, '1294', 1294)" onmouseover="showTip(event, '1294', 1294)">
             Environment.hasEnvironVar(name)
           </code>
-          <div class="tip" id="1305">
+          <div class="tip" id="1294">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the build parameter with the given name was set</p>
+                    <p>Returns if the build parameter with the given name was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1306', 1306)" onmouseover="showTip(event, '1306', 1306)">
+          <code onmouseout="hideTip(event, '1295', 1295)" onmouseover="showTip(event, '1295', 1295)">
             Environment.isDotnetCore
           </code>
-          <div class="tip" id="1306">
+          <div class="tip" id="1295">
             <strong>Signature:</strong> bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -805,78 +734,63 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use isDotNetCore instead (different casing of &#39;N&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1307', 1307)" onmouseover="showTip(event, '1307', 1307)">
+          <code onmouseout="hideTip(event, '1296', 1296)" onmouseover="showTip(event, '1296', 1296)">
             Environment.isDotNetCore
           </code>
-          <div class="tip" id="1307">
+          <div class="tip" id="1296">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L203-203" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1308', 1308)" onmouseover="showTip(event, '1308', 1308)">
+          <code onmouseout="hideTip(event, '1297', 1297)" onmouseover="showTip(event, '1297', 1297)">
             Environment.isLinux
           </code>
-          <div class="tip" id="1308">
+          <div class="tip" id="1297">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L175-175" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a Linux system</p>
+                    <p>Determines if the current system is a Linux system</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1309', 1309)" onmouseover="showTip(event, '1309', 1309)">
+          <code onmouseout="hideTip(event, '1298', 1298)" onmouseover="showTip(event, '1298', 1298)">
             Environment.isMacOS
           </code>
-          <div class="tip" id="1309">
+          <div class="tip" id="1298">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a MacOs system</p>
+                    <p>Determines if the current system is a MacOs system</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1310', 1310)" onmouseover="showTip(event, '1310', 1310)">
+          <code onmouseout="hideTip(event, '1299', 1299)" onmouseover="showTip(event, '1299', 1299)">
             Environment.isMono
           </code>
-          <div class="tip" id="1310">
+          <div class="tip" id="1299">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L196-196" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
+                    <p>Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
 Todo: Detect mono on windows</p>
 
 
@@ -884,18 +798,15 @@ Todo: Detect mono on windows</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1311', 1311)" onmouseover="showTip(event, '1311', 1311)">
+          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
             Environment.isUnix
           </code>
-          <div class="tip" id="1311">
+          <div class="tip" id="1300">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is an Unix system.
+                    <p>Determines if the current system is an Unix system.
 See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform">http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform</a></p>
 
 
@@ -903,52 +814,43 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1312', 1312)" onmouseover="showTip(event, '1312', 1312)">
+          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
             Environment.isWindows
           </code>
-          <div class="tip" id="1312">
+          <div class="tip" id="1301">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L184-184" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if the current system is a Windows system</p>
+                    <p>Determines if the current system is a Windows system</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1313', 1313)" onmouseover="showTip(event, '1313', 1313)">
+          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
             Environment.monoPath
           </code>
-          <div class="tip" id="1313">
+          <div class="tip" id="1302">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L255-255" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1314', 1314)" onmouseover="showTip(event, '1314', 1314)">
+          <code onmouseout="hideTip(event, '1303', 1303)" onmouseover="showTip(event, '1303', 1303)">
             Environment.monoVersion
           </code>
-          <div class="tip" id="1314">
+          <div class="tip" id="1303">
             <strong>Signature:</strong> (string * Version option) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L237-237" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>required sometimes to workaround mono crashes
+                    <p>required sometimes to workaround mono crashes
 <a href="http://stackoverflow.com/a/8414517/1269722
 Note:">http://stackoverflow.com/a/8414517/1269722
 Note:</a> Only given when we are running on mono,
@@ -962,54 +864,45 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1315', 1315)" onmouseover="showTip(event, '1315', 1315)">
+          <code onmouseout="hideTip(event, '1304', 1304)" onmouseover="showTip(event, '1304', 1304)">
             Environment.pathDirectories
           </code>
-          <div class="tip" id="1315">
+          <div class="tip" id="1304">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L250-250" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the list of valid directories included in the PATH environment variable.</p>
+                    <p>Gets the list of valid directories included in the PATH environment variable.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1316', 1316)" onmouseover="showTip(event, '1316', 1316)">
+          <code onmouseout="hideTip(event, '1305', 1305)" onmouseover="showTip(event, '1305', 1305)">
             Environment.ProgramFiles
           </code>
-          <div class="tip" id="1316">
+          <div class="tip" id="1305">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L133-133" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
+                    <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1317', 1317)" onmouseover="showTip(event, '1317', 1317)">
+          <code onmouseout="hideTip(event, '1306', 1306)" onmouseover="showTip(event, '1306', 1306)">
             Environment.ProgramFilesX86
           </code>
-          <div class="tip" id="1317">
+          <div class="tip" id="1306">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L138-138" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path of Program Files (x86)
+                    <p>The path of Program Files (x86)
 It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable
 PROCESSOR_ARCHITEW6432 can be null</p>
 
@@ -1018,28 +911,25 @@ PROCESSOR_ARCHITEW6432 can be null</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1318', 1318)" onmouseover="showTip(event, '1318', 1318)">
+          <code onmouseout="hideTip(event, '1307', 1307)" onmouseover="showTip(event, '1307', 1307)">
             Environment.sdkBasePath
           </code>
-          <div class="tip" id="1318">
+          <div class="tip" id="1307">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L274-274" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Base path for getting tools from windows SDKs</p>
+                    <p>Base path for getting tools from windows SDKs</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1319', 1319)" onmouseover="showTip(event, '1319', 1319)">
+          <code onmouseout="hideTip(event, '1308', 1308)" onmouseover="showTip(event, '1308', 1308)">
             Environment.setBuildParam name value
           </code>
-          <div class="tip" id="1319">
+          <div class="tip" id="1308">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1052,64 +942,52 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use setEnvironVar instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the build parameter with the given name for the current process.</p>
+                    <p>Sets the build parameter with the given name for the current process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1320', 1320)" onmouseover="showTip(event, '1320', 1320)">
+          <code onmouseout="hideTip(event, '1309', 1309)" onmouseover="showTip(event, '1309', 1309)">
             Environment.setEnvironVar name value
           </code>
-          <div class="tip" id="1320">
+          <div class="tip" id="1309">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name</p>
+                    <p>Sets the environment variable with the given name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1321', 1321)" onmouseover="showTip(event, '1321', 1321)">
+          <code onmouseout="hideTip(event, '1310', 1310)" onmouseover="showTip(event, '1310', 1310)">
             Environment.splitEnvironVar(name)
           </code>
-          <div class="tip" id="1321">
+          <div class="tip" id="1310">
             <strong>Signature:</strong> name:string -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L110-110" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the entries of an environment variable and removes the empty ones.</p>
+                    <p>Splits the entries of an environment variable and removes the empty ones.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1322', 1322)" onmouseover="showTip(event, '1322', 1322)">
+          <code onmouseout="hideTip(event, '1311', 1311)" onmouseover="showTip(event, '1311', 1311)">
             Environment.SystemRoot
           </code>
-          <div class="tip" id="1322">
+          <div class="tip" id="1311">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The system root environment variable. Typically "C:\Windows"</p>
+                    <p>The system root environment variable. Typically "C:\Windows"</p>
 
 
         </td>
@@ -1153,7 +1031,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

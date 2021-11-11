@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,142 +330,118 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1523', 1523)" onmouseover="showTip(event, '1523', 1523)">
+          <code onmouseout="hideTip(event, '1507', 1507)" onmouseover="showTip(event, '1507', 1507)">
             ( ? ) f s
           </code>
-          <div class="tip" id="1523">
-            <strong>Signature:</strong> f:(&#39;?17656 -&gt; &#39;?17657) -&gt; s:&#39;?17656 -&gt; &#39;?17657<br />
-                          <strong>Type parameters:</strong> '?17656, '?17657                      </div>
+          <div class="tip" id="1507">
+            <strong>Signature:</strong> f:(&#39;?17283 -&gt; &#39;?17284) -&gt; s:&#39;?17283 -&gt; &#39;?17284<br />
+                          <strong>Type parameters:</strong> '?17283, '?17284                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L8-8" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to use Tokens instead of strings</p>
+                    <p>Allows to use Tokens instead of strings</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1524', 1524)" onmouseover="showTip(event, '1524', 1524)">
+          <code onmouseout="hideTip(event, '1508', 1508)" onmouseover="showTip(event, '1508', 1508)">
             ( ?&lt;- ) f str action
           </code>
-          <div class="tip" id="1524">
-            <strong>Signature:</strong> f:(&#39;?17659 -&gt; &#39;?17660 -&gt; &#39;?17661) -&gt; str:&#39;?17659 -&gt; action:&#39;?17660 -&gt; &#39;?17661<br />
-                          <strong>Type parameters:</strong> '?17659, '?17660, '?17661                      </div>
+          <div class="tip" id="1508">
+            <strong>Signature:</strong> f:(&#39;?17286 -&gt; &#39;?17287 -&gt; &#39;?17288) -&gt; str:&#39;?17286 -&gt; action:&#39;?17287 -&gt; &#39;?17288<br />
+                          <strong>Type parameters:</strong> '?17286, '?17287, '?17288                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L11-11" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to use Tokens instead of strings for TargetNames</p>
+                    <p>Allows to use Tokens instead of strings for TargetNames</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1525', 1525)" onmouseover="showTip(event, '1525', 1525)">
+          <code onmouseout="hideTip(event, '1509', 1509)" onmouseover="showTip(event, '1509', 1509)">
             ( ?=&gt; ) x y
           </code>
-          <div class="tip" id="1525">
+          <div class="tip" id="1509">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
+                    <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1526', 1526)" onmouseover="showTip(event, '1526', 1526)">
+          <code onmouseout="hideTip(event, '1510', 1510)" onmouseover="showTip(event, '1510', 1510)">
             ( &lt;=? ) y x
           </code>
-          <div class="tip" id="1526">
+          <div class="tip" id="1510">
             <strong>Signature:</strong> y:string -&gt; x:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
+                    <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1527', 1527)" onmouseover="showTip(event, '1527', 1527)">
+          <code onmouseout="hideTip(event, '1511', 1511)" onmouseover="showTip(event, '1511', 1511)">
             ( &lt;== ) x y
           </code>
-          <div class="tip" id="1527">
+          <div class="tip" id="1511">
             <strong>Signature:</strong> x:string -&gt; y:string list -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1528', 1528)" onmouseover="showTip(event, '1528', 1528)">
+          <code onmouseout="hideTip(event, '1512', 1512)" onmouseover="showTip(event, '1512', 1512)">
             ( &lt;=&gt; ) x y
           </code>
-          <div class="tip" id="1528">
+          <div class="tip" id="1512">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
+                    <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1529', 1529)" onmouseover="showTip(event, '1529', 1529)">
+          <code onmouseout="hideTip(event, '1513', 1513)" onmouseover="showTip(event, '1513', 1513)">
             ( =?&gt; ) x (y, condition)
           </code>
-          <div class="tip" id="1529">
+          <div class="tip" id="1513">
             <strong>Signature:</strong> x:string -&gt; (y:string * condition:bool) -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
+                    <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1530', 1530)" onmouseover="showTip(event, '1530', 1530)">
+          <code onmouseout="hideTip(event, '1514', 1514)" onmouseover="showTip(event, '1514', 1514)">
             ( ==&gt; ) x y
           </code>
-          <div class="tip" id="1530">
+          <div class="tip" id="1514">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a dependency - y is dependent on x</p>
+                    <p>Defines a dependency - y is dependent on x</p>
 
 
         </td>
@@ -505,7 +485,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

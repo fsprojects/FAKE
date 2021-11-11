@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,7 +323,7 @@
 
 <div class="xmldoc">
 <p>Contains tasks to generate AssemblyInfo files for C# and F#.
-There is also a tutorial about the <a href="/assemblyinfo.html">AssemblyInfo tasks</a> available.</p>
+There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo tasks</a> available.</p>
 
 </div>
 
@@ -388,10 +392,7 @@ There is also a tutorial about the <a href="/assemblyinfo.html">AssemblyInfo tas
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCli&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L359-359" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes.</p>
+                    <p>Creates a C++/CLI AssemblyInfo file with the given attributes.</p>
 
 
         </td>
@@ -414,10 +415,7 @@ There is also a tutorial about the <a href="/assemblyinfo.html">AssemblyInfo tas
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCliWithConfig&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L323-323" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
 Does not generate an AssemblyVersionInformation class.</p>
 
 
@@ -441,10 +439,7 @@ Does not generate an AssemblyVersionInformation class.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharp&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L342-342" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes.
+                    <p>Creates a C# AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -468,10 +463,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharpWithConfig&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L217-217" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a C# AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -495,10 +487,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharp&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L348-348" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes.
+                    <p>Creates a F# AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -522,10 +511,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharpWithConfig&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L265-265" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a F# AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -549,10 +535,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasic&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L354-354" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes.
+                    <p>Creates a VB AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -576,10 +559,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasicWithConfig&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L296-296" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -603,10 +583,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttribute&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L400-400" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a single attribute from an AssemblyInfo file.</p>
+                    <p>Read a single attribute from an AssemblyInfo file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
@@ -634,10 +611,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributes&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L372-372" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
+                    <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>assemblyInfoFile</code> - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.</li>
@@ -664,10 +638,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributeValue&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L408-408" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
+                    <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
@@ -695,10 +666,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.updateAttributes&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L437-437" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
+                    <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>assemblyInfoFile</code> - The file to update. Language C#, F#, VB or C++ is determined from the extension.</li>
@@ -734,10 +702,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L12-12" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -779,7 +744,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

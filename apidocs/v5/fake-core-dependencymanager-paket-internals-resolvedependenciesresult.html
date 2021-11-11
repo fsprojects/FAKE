@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2007', 2007)" onmouseover="showTip(event, '2007', 2007)">
+          <code onmouseout="hideTip(event, '2034', 2034)" onmouseover="showTip(event, '2034', 2034)">
             new(...)
           </code>
-          <div class="tip" id="2007">
+          <div class="tip" id="2034">
             <strong>Signature:</strong> (success:bool * stdOut:string array * stdError:string array * resolutions:seq&lt;string&gt; * sourceFiles:seq&lt;string&gt; * roots:seq&lt;string&gt;) -&gt; ResolveDependenciesResult<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L16-16" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L16-16" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -343,15 +347,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2008', 2008)" onmouseover="showTip(event, '2008', 2008)">
+          <code onmouseout="hideTip(event, '2035', 2035)" onmouseover="showTip(event, '2035', 2035)">
             x.Resolutions
           </code>
-          <div class="tip" id="2008">
+          <div class="tip" id="2035">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L28-28" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L28-28" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The resolution paths (will be treated as #r options)</p>
@@ -361,15 +365,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2009', 2009)" onmouseover="showTip(event, '2009', 2009)">
+          <code onmouseout="hideTip(event, '2036', 2036)" onmouseover="showTip(event, '2036', 2036)">
             x.Roots
           </code>
-          <div class="tip" id="2009">
+          <div class="tip" id="2036">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L34-34" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L34-34" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The roots to package directories (will be treated like #I options)</p>
@@ -379,15 +383,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2010', 2010)" onmouseover="showTip(event, '2010', 2010)">
+          <code onmouseout="hideTip(event, '2037', 2037)" onmouseover="showTip(event, '2037', 2037)">
             x.SourceFiles
           </code>
-          <div class="tip" id="2010">
+          <div class="tip" id="2037">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The source code file paths (will be treated as #load options)</p>
@@ -397,15 +401,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2011', 2011)" onmouseover="showTip(event, '2011', 2011)">
+          <code onmouseout="hideTip(event, '2038', 2038)" onmouseover="showTip(event, '2038', 2038)">
             x.StdError
           </code>
-          <div class="tip" id="2011">
+          <div class="tip" id="2038">
             <strong>Signature:</strong> string array<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L25-25" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L25-25" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The resolution error log (<em> process stderror </em>)</p>
@@ -415,15 +419,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2012', 2012)" onmouseover="showTip(event, '2012', 2012)">
+          <code onmouseout="hideTip(event, '2039', 2039)" onmouseover="showTip(event, '2039', 2039)">
             x.StdOut
           </code>
-          <div class="tip" id="2012">
+          <div class="tip" id="2039">
             <strong>Signature:</strong> string array<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L22-22" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L22-22" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The resolution output log</p>
@@ -433,15 +437,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2013', 2013)" onmouseover="showTip(event, '2013', 2013)">
+          <code onmouseout="hideTip(event, '2040', 2040)" onmouseover="showTip(event, '2040', 2040)">
             x.Success
           </code>
-          <div class="tip" id="2013">
+          <div class="tip" id="2040">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L19-19" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.DependencyManager.Paket/PaketDependencyManager.fs#L19-19" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Succeded?</p>
@@ -489,7 +493,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

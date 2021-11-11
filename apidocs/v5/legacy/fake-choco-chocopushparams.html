@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,36 +332,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2861', 2861)" onmouseover="showTip(event, '2861', 2861)">
+          <code onmouseout="hideTip(event, '2826', 2826)" onmouseover="showTip(event, '2826', 2826)">
             AdditionalArgs
           </code>
-          <div class="tip" id="2861">
+          <div class="tip" id="2826">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L220-220" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A character string containing additional arguments to give to choco.</p>
+                    <p>A character string containing additional arguments to give to choco.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2862', 2862)" onmouseover="showTip(event, '2862', 2862)">
+          <code onmouseout="hideTip(event, '2827', 2827)" onmouseover="showTip(event, '2827', 2827)">
             ApiKey
           </code>
-          <div class="tip" id="2862">
+          <div class="tip" id="2827">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L214-214" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The api key for the source. If not specified (and not local file source), does a lookup.
+                    <p>The api key for the source. If not specified (and not local file source), does a lookup.
 If not specified and one is not found for an https source, push will fail.
 Equivalent to the <code>--apikey &lt;apikey&gt;</code> option.</p>
 
@@ -366,18 +364,15 @@ Equivalent to the <code>--apikey &lt;apikey&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2863', 2863)" onmouseover="showTip(event, '2863', 2863)">
+          <code onmouseout="hideTip(event, '2828', 2828)" onmouseover="showTip(event, '2828', 2828)">
             NonInteractive
           </code>
-          <div class="tip" id="2863">
+          <div class="tip" id="2828">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L223-223" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Do not prompt for user input or confirmations. Default <code>true</code>.
+                    <p>Do not prompt for user input or confirmations. Default <code>true</code>.
 Equivalent to the <code>-y</code> option.</p>
 
 
@@ -385,18 +380,15 @@ Equivalent to the <code>-y</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2864', 2864)" onmouseover="showTip(event, '2864', 2864)">
+          <code onmouseout="hideTip(event, '2829', 2829)" onmouseover="showTip(event, '2829', 2829)">
             Source
           </code>
-          <div class="tip" id="2864">
+          <div class="tip" id="2829">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L210-210" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The source we are pushing the package to. Default: "<a href="https://chocolatey.org/"
+                    <p>The source we are pushing the package to. Default: "<a href="https://chocolatey.org/"
 Equivalent">https://chocolatey.org/"
 Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
 
@@ -405,36 +397,30 @@ Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2865', 2865)" onmouseover="showTip(event, '2865', 2865)">
+          <code onmouseout="hideTip(event, '2830', 2830)" onmouseover="showTip(event, '2830', 2830)">
             Timeout
           </code>
-          <div class="tip" id="2865">
+          <div class="tip" id="2830">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L216-216" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The choco execution timeout.</p>
+                    <p>The choco execution timeout.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2866', 2866)" onmouseover="showTip(event, '2866', 2866)">
+          <code onmouseout="hideTip(event, '2831', 2831)" onmouseover="showTip(event, '2831', 2831)">
             ToolPath
           </code>
-          <div class="tip" id="2866">
+          <div class="tip" id="2831">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L218-218" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The location of the choco executable. Automatically found if null or empty.</p>
+                    <p>The location of the choco executable. Automatically found if null or empty.</p>
 
 
         </td>
@@ -478,7 +464,7 @@ Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

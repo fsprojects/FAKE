@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,15 +324,15 @@ See the <a href="https://help.github.com/en/actions/configuring-and-managing-wor
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
+          <code onmouseout="hideTip(event, '1496', 1496)" onmouseover="showTip(event, '1496', 1496)">
             Environment.Action
           </code>
-          <div class="tip" id="1469">
+          <div class="tip" id="1496">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The unique identifier (id) of the action.</p>
@@ -338,15 +342,15 @@ See the <a href="https://help.github.com/en/actions/configuring-and-managing-wor
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
+          <code onmouseout="hideTip(event, '1497', 1497)" onmouseover="showTip(event, '1497', 1497)">
             Environment.Actions
           </code>
-          <div class="tip" id="1470">
+          <div class="tip" id="1497">
             <strong>Signature:</strong> bool -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L36-36" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Always set to true when GitHub Actions is running the workflow.
@@ -357,15 +361,15 @@ You can use this variable to differentiate when tests are being run locally or b
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
+          <code onmouseout="hideTip(event, '1498', 1498)" onmouseover="showTip(event, '1498', 1498)">
             Environment.Actor
           </code>
-          <div class="tip" id="1471">
+          <div class="tip" id="1498">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the person or app that initiated the workflow. For example, octocat.</p>
@@ -375,15 +379,15 @@ You can use this variable to differentiate when tests are being run locally or b
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
+          <code onmouseout="hideTip(event, '1499', 1499)" onmouseover="showTip(event, '1499', 1499)">
             Environment.BaseRef
           </code>
-          <div class="tip" id="1472">
+          <div class="tip" id="1499">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Only set for forked repositories. The branch of the base repository.</p>
@@ -393,15 +397,15 @@ You can use this variable to differentiate when tests are being run locally or b
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
+          <code onmouseout="hideTip(event, '1500', 1500)" onmouseover="showTip(event, '1500', 1500)">
             Environment.CI
           </code>
-          <div class="tip" id="1473">
+          <div class="tip" id="1500">
             <strong>Signature:</strong> bool -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L19-19" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L19-19" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Always set to true, if present.</p>
@@ -411,15 +415,15 @@ You can use this variable to differentiate when tests are being run locally or b
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
+          <code onmouseout="hideTip(event, '1501', 1501)" onmouseover="showTip(event, '1501', 1501)">
             Environment.EventName
           </code>
-          <div class="tip" id="1474">
+          <div class="tip" id="1501">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L42-42" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the webhook event that triggered the workflow.</p>
@@ -429,15 +433,15 @@ You can use this variable to differentiate when tests are being run locally or b
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
+          <code onmouseout="hideTip(event, '1502', 1502)" onmouseover="showTip(event, '1502', 1502)">
             Environment.EventPath
           </code>
-          <div class="tip" id="1475">
+          <div class="tip" id="1502">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L45-45" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path of the file with the complete webhook event payload.
@@ -448,15 +452,15 @@ For example, /github/workflow/event.json.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1476', 1476)" onmouseover="showTip(event, '1476', 1476)">
+          <code onmouseout="hideTip(event, '1503', 1503)" onmouseover="showTip(event, '1503', 1503)">
             Environment.HeadRef
           </code>
-          <div class="tip" id="1476">
+          <div class="tip" id="1503">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L59-59" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Only set for forked repositories. The branch of the head repository.</p>
@@ -466,15 +470,15 @@ For example, /github/workflow/event.json.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1477', 1477)" onmouseover="showTip(event, '1477', 1477)">
+          <code onmouseout="hideTip(event, '1504', 1504)" onmouseover="showTip(event, '1504', 1504)">
             Environment.Home
           </code>
-          <div class="tip" id="1477">
+          <div class="tip" id="1504">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L22-22" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L22-22" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path to the GitHub home directory used to store user data.
@@ -485,15 +489,15 @@ For example, /github/home.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1478', 1478)" onmouseover="showTip(event, '1478', 1478)">
+          <code onmouseout="hideTip(event, '1505', 1505)" onmouseover="showTip(event, '1505', 1505)">
             Environment.Ref
           </code>
-          <div class="tip" id="1478">
+          <div class="tip" id="1505">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L57-57" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The branch or tag ref that triggered the workflow.
@@ -505,15 +509,15 @@ If neither a branch or tag is available for the event type, the variable will no
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1479', 1479)" onmouseover="showTip(event, '1479', 1479)">
+          <code onmouseout="hideTip(event, '1506', 1506)" onmouseover="showTip(event, '1506', 1506)">
             Environment.Repository
           </code>
-          <div class="tip" id="1479">
+          <div class="tip" id="1506">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L40-40" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The owner and repository name. For example, octocat/Hello-World.</p>
@@ -523,15 +527,15 @@ If neither a branch or tag is available for the event type, the variable will no
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1480', 1480)" onmouseover="showTip(event, '1480', 1480)">
+          <code onmouseout="hideTip(event, '1507', 1507)" onmouseover="showTip(event, '1507', 1507)">
             Environment.RunId
           </code>
-          <div class="tip" id="1480">
+          <div class="tip" id="1507">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L27-27" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A unique number for each run within a repository.
@@ -542,15 +546,15 @@ This number does not change if you re-run the workflow run.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1481', 1481)" onmouseover="showTip(event, '1481', 1481)">
+          <code onmouseout="hideTip(event, '1508', 1508)" onmouseover="showTip(event, '1508', 1508)">
             Environment.RunNumber
           </code>
-          <div class="tip" id="1481">
+          <div class="tip" id="1508">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A unique number for each run of a particular workflow in a repository.
@@ -562,15 +566,15 @@ This number does not change if you re-run the workflow run.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1482', 1482)" onmouseover="showTip(event, '1482', 1482)">
+          <code onmouseout="hideTip(event, '1509', 1509)" onmouseover="showTip(event, '1509', 1509)">
             Environment.Sha
           </code>
-          <div class="tip" id="1482">
+          <div class="tip" id="1509">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L53-53" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L53-53" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The commit SHA that triggered the workflow.
@@ -581,15 +585,15 @@ For example, ffac537e6cbbf934b08745a378932722df287a53.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1483', 1483)" onmouseover="showTip(event, '1483', 1483)">
+          <code onmouseout="hideTip(event, '1510', 1510)" onmouseover="showTip(event, '1510', 1510)">
             Environment.Workflow
           </code>
-          <div class="tip" id="1483">
+          <div class="tip" id="1510">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L24-24" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the workflow.</p>
@@ -599,15 +603,15 @@ For example, ffac537e6cbbf934b08745a378932722df287a53.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1484', 1484)" onmouseover="showTip(event, '1484', 1484)">
+          <code onmouseout="hideTip(event, '1511', 1511)" onmouseover="showTip(event, '1511', 1511)">
             Environment.Workspace
           </code>
-          <div class="tip" id="1484">
+          <div class="tip" id="1511">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L50-50" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.GitHubActions/GitHubActions.fs#L50-50" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The GitHub workspace directory path.
@@ -658,7 +662,7 @@ For example, /home/runner/work/my-repo-name/my-repo-name.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

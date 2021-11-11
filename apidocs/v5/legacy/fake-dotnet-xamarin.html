@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -417,34 +421,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1816', 1816)" onmouseover="showTip(event, '1816', 1816)">
+          <code onmouseout="hideTip(event, '1795', 1795)" onmouseover="showTip(event, '1795', 1795)">
             AllAndroidAbiTargets
           </code>
-          <div class="tip" id="1816">
+          <div class="tip" id="1795">
             <strong>Signature:</strong> AndroidPackageAbiParam<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L115-115" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1817', 1817)" onmouseover="showTip(event, '1817', 1817)">
+          <code onmouseout="hideTip(event, '1796', 1796)" onmouseover="showTip(event, '1796', 1796)">
             AndroidBuildPackages(setParams)
           </code>
-          <div class="tip" id="1817">
+          <div class="tip" id="1796">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L223-223" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
+                    <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -455,18 +453,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1818', 1818)" onmouseover="showTip(event, '1818', 1818)">
+          <code onmouseout="hideTip(event, '1797', 1797)" onmouseover="showTip(event, '1797', 1797)">
             AndroidPackage(setParams)
           </code>
-          <div class="tip" id="1818">
+          <div class="tip" id="1797">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L362-362" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
+                    <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -477,36 +472,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1819', 1819)" onmouseover="showTip(event, '1819', 1819)">
+          <code onmouseout="hideTip(event, '1798', 1798)" onmouseover="showTip(event, '1798', 1798)">
             AndroidPackageDefaults
           </code>
-          <div class="tip" id="1819">
+          <div class="tip" id="1798">
             <strong>Signature:</strong> AndroidPackageParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L201-201" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default Android packaging parameters</p>
+                    <p>The default Android packaging parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1820', 1820)" onmouseover="showTip(event, '1820', 1820)">
+          <code onmouseout="hideTip(event, '1799', 1799)" onmouseover="showTip(event, '1799', 1799)">
             AndroidSignAndAlign setParams apkFile
           </code>
-          <div class="tip" id="1820">
+          <div class="tip" id="1799">
             <strong>Signature:</strong> setParams:(AndroidSignAndAlignParams -&gt; AndroidSignAndAlignParams) -&gt; apkFile:FileInfo -&gt; FileInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L398-398" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
+                    <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -518,36 +507,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1821', 1821)" onmouseover="showTip(event, '1821', 1821)">
+          <code onmouseout="hideTip(event, '1800', 1800)" onmouseover="showTip(event, '1800', 1800)">
             AndroidSignAndAlignDefaults
           </code>
-          <div class="tip" id="1821">
+          <div class="tip" id="1800">
             <strong>Signature:</strong> AndroidSignAndAlignParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L384-384" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default Android signing and aligning parameters</p>
+                    <p>The default Android signing and aligning parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1822', 1822)" onmouseover="showTip(event, '1822', 1822)">
+          <code onmouseout="hideTip(event, '1801', 1801)" onmouseover="showTip(event, '1801', 1801)">
             AndroidSignAndAlignPackages(...)
           </code>
-          <div class="tip" id="1822">
+          <div class="tip" id="1801">
             <strong>Signature:</strong> setParams:(AndroidSignAndAlignParams -&gt; AndroidSignAndAlignParams) -&gt; apkFiles:seq&lt;FileInfo&gt; -&gt; seq&lt;FileInfo&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L430-430" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
+                    <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -559,18 +542,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1823', 1823)" onmouseover="showTip(event, '1823', 1823)">
+          <code onmouseout="hideTip(event, '1802', 1802)" onmouseover="showTip(event, '1802', 1802)">
             iOSArchive(setParams)
           </code>
-          <div class="tip" id="1823">
+          <div class="tip" id="1802">
             <strong>Signature:</strong> setParams:(iOSArchiveParams -&gt; iOSArchiveParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L457-457" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Archive a project using Xamarin's iOS archive tools</p>
+                    <p>Archive a project using Xamarin's iOS archive tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default archive parameters</li>
@@ -581,36 +561,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1824', 1824)" onmouseover="showTip(event, '1824', 1824)">
+          <code onmouseout="hideTip(event, '1803', 1803)" onmouseover="showTip(event, '1803', 1803)">
             iOSArchiveDefaults
           </code>
-          <div class="tip" id="1824">
+          <div class="tip" id="1803">
             <strong>Signature:</strong> iOSArchiveParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L447-447" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default iOS archive parameters</p>
+                    <p>The default iOS archive parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1825', 1825)" onmouseover="showTip(event, '1825', 1825)">
+          <code onmouseout="hideTip(event, '1804', 1804)" onmouseover="showTip(event, '1804', 1804)">
             iOSBuild(setParams)
           </code>
-          <div class="tip" id="1825">
+          <div class="tip" id="1804">
             <strong>Signature:</strong> setParams:(iOSBuildParams -&gt; iOSBuildParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds a project or solution using Xamarin's iOS build tools</p>
+                    <p>Builds a project or solution using Xamarin's iOS build tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -621,36 +595,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1826', 1826)" onmouseover="showTip(event, '1826', 1826)">
+          <code onmouseout="hideTip(event, '1805', 1805)" onmouseover="showTip(event, '1805', 1805)">
             iOSBuildDefaults
           </code>
-          <div class="tip" id="1826">
+          <div class="tip" id="1805">
             <strong>Signature:</strong> iOSBuildParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default iOS build parameters</p>
+                    <p>The default iOS build parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1827', 1827)" onmouseover="showTip(event, '1827', 1827)">
+          <code onmouseout="hideTip(event, '1806', 1806)" onmouseover="showTip(event, '1806', 1806)">
             RestoreComponents setParams projectFile
           </code>
-          <div class="tip" id="1827">
+          <div class="tip" id="1806">
             <strong>Signature:</strong> setParams:(XamarinComponentRestoreParams -&gt; XamarinComponentRestoreParams) -&gt; projectFile:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
+                    <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default package restore parameters</li>
@@ -661,18 +629,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1828', 1828)" onmouseover="showTip(event, '1828', 1828)">
+          <code onmouseout="hideTip(event, '1807', 1807)" onmouseover="showTip(event, '1807', 1807)">
             XamarinComponentRestoreDefaults
           </code>
-          <div class="tip" id="1828">
+          <div class="tip" id="1807">
             <strong>Signature:</strong> XamarinComponentRestoreParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default package restore parameters</p>
+                    <p>The default package restore parameters</p>
 
 
         </td>
@@ -716,7 +681,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

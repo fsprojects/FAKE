@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,362 +332,299 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3261', 3261)" onmouseover="showTip(event, '3261', 3261)">
+          <code onmouseout="hideTip(event, '3226', 3226)" onmouseover="showTip(event, '3226', 3226)">
             AllowDuplicateTypes
           </code>
-          <div class="tip" id="3261">
+          <div class="tip" id="3226">
             <strong>Signature:</strong> AllowDuplicateTypes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Duplicate types policy</p>
+                    <p>Duplicate types policy</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3262', 3262)" onmouseover="showTip(event, '3262', 3262)">
+          <code onmouseout="hideTip(event, '3227', 3227)" onmouseover="showTip(event, '3227', 3227)">
             AllowMultipleAssemblyLevelAttributes
           </code>
-          <div class="tip" id="3262">
+          <div class="tip" id="3227">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Assembly-level attributes names that have the same type are copied over into the target directory</p>
+                    <p>Assembly-level attributes names that have the same type are copied over into the target directory</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3263', 3263)" onmouseover="showTip(event, '3263', 3263)">
+          <code onmouseout="hideTip(event, '3228', 3228)" onmouseover="showTip(event, '3228', 3228)">
             AllowWildcards
           </code>
-          <div class="tip" id="3263">
+          <div class="tip" id="3228">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Wild cards in file names are expanded and all matching files will be used as input.</p>
+                    <p>Wild cards in file names are expanded and all matching files will be used as input.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3264', 3264)" onmouseover="showTip(event, '3264', 3264)">
+          <code onmouseout="hideTip(event, '3229', 3229)" onmouseover="showTip(event, '3229', 3229)">
             AllowZeroPeKind
           </code>
-          <div class="tip" id="3264">
+          <div class="tip" id="3229">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3265', 3265)" onmouseover="showTip(event, '3265', 3265)">
+          <code onmouseout="hideTip(event, '3230', 3230)" onmouseover="showTip(event, '3230', 3230)">
             AttributeFile
           </code>
-          <div class="tip" id="3265">
+          <div class="tip" id="3230">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to an assembly that will be used to get all of the assembly-level attributes</p>
+                    <p>Path to an assembly that will be used to get all of the assembly-level attributes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3266', 3266)" onmouseover="showTip(event, '3266', 3266)">
+          <code onmouseout="hideTip(event, '3231', 3231)" onmouseover="showTip(event, '3231', 3231)">
             Closed
           </code>
-          <div class="tip" id="3266">
+          <div class="tip" id="3231">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True -&gt; transitive closure of the input assemblies is computed and added to the list of input assemblies.</p>
+                    <p>True -&gt; transitive closure of the input assemblies is computed and added to the list of input assemblies.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3267', 3267)" onmouseover="showTip(event, '3267', 3267)">
+          <code onmouseout="hideTip(event, '3232', 3232)" onmouseover="showTip(event, '3232', 3232)">
             CopyAttributes
           </code>
-          <div class="tip" id="3267">
+          <div class="tip" id="3232">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3268', 3268)" onmouseover="showTip(event, '3268', 3268)">
+          <code onmouseout="hideTip(event, '3233', 3233)" onmouseover="showTip(event, '3233', 3233)">
             DebugInfo
           </code>
-          <div class="tip" id="3268">
+          <div class="tip" id="3233">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True (default) -&gt; creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.</p>
+                    <p>True (default) -&gt; creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3269', 3269)" onmouseover="showTip(event, '3269', 3269)">
+          <code onmouseout="hideTip(event, '3234', 3234)" onmouseover="showTip(event, '3234', 3234)">
             FileAlignment
           </code>
-          <div class="tip" id="3269">
+          <div class="tip" id="3234">
             <strong>Signature:</strong> int option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3270', 3270)" onmouseover="showTip(event, '3270', 3270)">
+          <code onmouseout="hideTip(event, '3235', 3235)" onmouseover="showTip(event, '3235', 3235)">
             Internalize
           </code>
-          <div class="tip" id="3270">
+          <div class="tip" id="3235">
             <strong>Signature:</strong> InternalizeTypes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3271', 3271)" onmouseover="showTip(event, '3271', 3271)">
+          <code onmouseout="hideTip(event, '3236', 3236)" onmouseover="showTip(event, '3236', 3236)">
             KeyFile
           </code>
-          <div class="tip" id="3271">
+          <div class="tip" id="3236">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3272', 3272)" onmouseover="showTip(event, '3272', 3272)">
+          <code onmouseout="hideTip(event, '3237', 3237)" onmouseover="showTip(event, '3237', 3237)">
             Libraries
           </code>
-          <div class="tip" id="3272">
+          <div class="tip" id="3237">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Assemblies to merge with the primary assembly</p>
+                    <p>Assemblies to merge with the primary assembly</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3273', 3273)" onmouseover="showTip(event, '3273', 3273)">
+          <code onmouseout="hideTip(event, '3238', 3238)" onmouseover="showTip(event, '3238', 3238)">
             LogFile
           </code>
-          <div class="tip" id="3273">
+          <div class="tip" id="3238">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3274', 3274)" onmouseover="showTip(event, '3274', 3274)">
+          <code onmouseout="hideTip(event, '3239', 3239)" onmouseover="showTip(event, '3239', 3239)">
             SearchDirectories
           </code>
-          <div class="tip" id="3274">
+          <div class="tip" id="3239">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Directories to be used to search for input assemblies</p>
+                    <p>Directories to be used to search for input assemblies</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3275', 3275)" onmouseover="showTip(event, '3275', 3275)">
+          <code onmouseout="hideTip(event, '3240', 3240)" onmouseover="showTip(event, '3240', 3240)">
             TargetKind
           </code>
-          <div class="tip" id="3275">
+          <div class="tip" id="3240">
             <strong>Signature:</strong> TargetKind<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3276', 3276)" onmouseover="showTip(event, '3276', 3276)">
+          <code onmouseout="hideTip(event, '3241', 3241)" onmouseover="showTip(event, '3241', 3241)">
             TargetPlatform
           </code>
-          <div class="tip" id="3276">
+          <div class="tip" id="3241">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>v1 or v1.1 or v2 or v4 or version,platform</p>
+                    <p>v1 or v1.1 or v2 or v4 or version,platform</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3277', 3277)" onmouseover="showTip(event, '3277', 3277)">
+          <code onmouseout="hideTip(event, '3242', 3242)" onmouseover="showTip(event, '3242', 3242)">
             TimeOut
           </code>
-          <div class="tip" id="3277">
+          <div class="tip" id="3242">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3278', 3278)" onmouseover="showTip(event, '3278', 3278)">
+          <code onmouseout="hideTip(event, '3243', 3243)" onmouseover="showTip(event, '3243', 3243)">
             ToolPath
           </code>
-          <div class="tip" id="3278">
+          <div class="tip" id="3243">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to ILMerge.exe</p>
+                    <p>Path to ILMerge.exe</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3279', 3279)" onmouseover="showTip(event, '3279', 3279)">
+          <code onmouseout="hideTip(event, '3244', 3244)" onmouseover="showTip(event, '3244', 3244)">
             UnionMerge
           </code>
-          <div class="tip" id="3279">
+          <div class="tip" id="3244">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True -&gt; types with the same name are all merged into a single type in the target assembly.</p>
+                    <p>True -&gt; types with the same name are all merged into a single type in the target assembly.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3280', 3280)" onmouseover="showTip(event, '3280', 3280)">
+          <code onmouseout="hideTip(event, '3245', 3245)" onmouseover="showTip(event, '3245', 3245)">
             Version
           </code>
-          <div class="tip" id="3280">
+          <div class="tip" id="3245">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Version to use for the merged assembly</p>
+                    <p>Version to use for the merged assembly</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3281', 3281)" onmouseover="showTip(event, '3281', 3281)">
+          <code onmouseout="hideTip(event, '3246', 3246)" onmouseover="showTip(event, '3246', 3246)">
             XmlDocs
           </code>
-          <div class="tip" id="3281">
+          <div class="tip" id="3246">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ILMergeHelper.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True -&gt; XML documentation files are merged to produce an XML documentation file for the target assembly.</p>
+                    <p>True -&gt; XML documentation files are merged to produce an XML documentation file for the target assembly.</p>
 
 
         </td>
@@ -727,7 +668,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

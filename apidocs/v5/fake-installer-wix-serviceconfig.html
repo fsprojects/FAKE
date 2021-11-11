@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3422', 3422)" onmouseover="showTip(event, '3422', 3422)">
+          <code onmouseout="hideTip(event, '3449', 3449)" onmouseover="showTip(event, '3449', 3449)">
             FirstFailureActionType
           </code>
-          <div class="tip" id="3422">
+          <div class="tip" id="3449">
             <strong>Signature:</strong> ServiceFailureActionType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L231-231" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L231-231" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -336,15 +340,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3423', 3423)" onmouseover="showTip(event, '3423', 3423)">
+          <code onmouseout="hideTip(event, '3450', 3450)" onmouseover="showTip(event, '3450', 3450)">
             ProgramCommandLine
           </code>
-          <div class="tip" id="3423">
+          <div class="tip" id="3450">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L233-233" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L233-233" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If any of the three *ActionType attributes is "runCommand", this specifies the command to run when doing so. This value is formatted.</p>
@@ -354,15 +358,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3424', 3424)" onmouseover="showTip(event, '3424', 3424)">
+          <code onmouseout="hideTip(event, '3451', 3451)" onmouseover="showTip(event, '3451', 3451)">
             RebootMessage
           </code>
-          <div class="tip" id="3424">
+          <div class="tip" id="3451">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L235-235" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L235-235" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If any of the three *ActionType attributes is "reboot", this specifies the message to broadcast to server users before doing so.</p>
@@ -372,15 +376,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3425', 3425)" onmouseover="showTip(event, '3425', 3425)">
+          <code onmouseout="hideTip(event, '3452', 3452)" onmouseover="showTip(event, '3452', 3452)">
             ResetPeriodInDays
           </code>
-          <div class="tip" id="3425">
+          <div class="tip" id="3452">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L237-237" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L237-237" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Number of days after which to reset the failure count to zero if there are no failures.</p>
@@ -390,15 +394,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3426', 3426)" onmouseover="showTip(event, '3426', 3426)">
+          <code onmouseout="hideTip(event, '3453', 3453)" onmouseover="showTip(event, '3453', 3453)">
             RestartServiceDelayInSeconds
           </code>
-          <div class="tip" id="3426">
+          <div class="tip" id="3453">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L239-239" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L239-239" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If any of the three *ActionType attributes is "restart", this specifies the number of seconds to wait before doing so.</p>
@@ -408,15 +412,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3427', 3427)" onmouseover="showTip(event, '3427', 3427)">
+          <code onmouseout="hideTip(event, '3454', 3454)" onmouseover="showTip(event, '3454', 3454)">
             SecondFailureActionType
           </code>
-          <div class="tip" id="3427">
+          <div class="tip" id="3454">
             <strong>Signature:</strong> ServiceFailureActionType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L241-241" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L241-241" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -425,15 +429,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3428', 3428)" onmouseover="showTip(event, '3428', 3428)">
+          <code onmouseout="hideTip(event, '3455', 3455)" onmouseover="showTip(event, '3455', 3455)">
             ServiceName
           </code>
-          <div class="tip" id="3428">
+          <div class="tip" id="3455">
             <strong>Signature:</strong> String<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L243-243" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L243-243" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Required if not under a ServiceInstall element.</p>
@@ -443,15 +447,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3429', 3429)" onmouseover="showTip(event, '3429', 3429)">
+          <code onmouseout="hideTip(event, '3456', 3456)" onmouseover="showTip(event, '3456', 3456)">
             ThirdFailureActionType
           </code>
-          <div class="tip" id="3429">
+          <div class="tip" id="3456">
             <strong>Signature:</strong> ServiceFailureActionType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L245-245" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L245-245" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -468,15 +472,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3430', 3430)" onmouseover="showTip(event, '3430', 3430)">
+          <code onmouseout="hideTip(event, '3457', 3457)" onmouseover="showTip(event, '3457', 3457)">
             x.createAttributeList()
           </code>
-          <div class="tip" id="3430">
+          <div class="tip" id="3457">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L247-247" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L247-247" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -522,7 +526,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

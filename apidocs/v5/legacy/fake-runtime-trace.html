@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -383,198 +387,165 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2291', 2291)" onmouseover="showTip(event, '2291', 2291)">
+          <code onmouseout="hideTip(event, '2266', 2266)" onmouseover="showTip(event, '2266', 2266)">
             colorMap(traceData)
           </code>
-          <div class="tip" id="2291">
+          <div class="tip" id="2266">
             <strong>Signature:</strong> traceData:TraceData -&gt; ConsoleColor<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A default color map which maps TracePriorities to ConsoleColors</p>
+                    <p>A default color map which maps TracePriorities to ConsoleColors</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2292', 2292)" onmouseover="showTip(event, '2292', 2292)">
+          <code onmouseout="hideTip(event, '2267', 2267)" onmouseover="showTip(event, '2267', 2267)">
             defaultConsoleTraceListener
           </code>
-          <div class="tip" id="2292">
+          <div class="tip" id="2267">
             <strong>Signature:</strong> ITraceListener<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L92-92" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default TraceListener for Console.</p>
+                    <p>The default TraceListener for Console.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2293', 2293)" onmouseover="showTip(event, '2293', 2293)">
+          <code onmouseout="hideTip(event, '2268', 2268)" onmouseover="showTip(event, '2268', 2268)">
             fakePath
           </code>
-          <div class="tip" id="2293">
+          <div class="tip" id="2268">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the path of the current FAKE instance</p>
+                    <p>Gets the path of the current FAKE instance</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2294', 2294)" onmouseover="showTip(event, '2294', 2294)">
+          <code onmouseout="hideTip(event, '2269', 2269)" onmouseover="showTip(event, '2269', 2269)">
             listeners
           </code>
-          <div class="tip" id="2294">
+          <div class="tip" id="2269">
             <strong>Signature:</strong> List&lt;ITraceListener&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A List with all registered listeners</p>
+                    <p>A List with all registered listeners</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2295', 2295)" onmouseover="showTip(event, '2295', 2295)">
+          <code onmouseout="hideTip(event, '2270', 2270)" onmouseover="showTip(event, '2270', 2270)">
             log(message)
           </code>
-          <div class="tip" id="2295">
+          <div class="tip" id="2270">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the specified string</p>
+                    <p>Logs the specified string</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2296', 2296)" onmouseover="showTip(event, '2296', 2296)">
+          <code onmouseout="hideTip(event, '2271', 2271)" onmouseover="showTip(event, '2271', 2271)">
             postMessage(x)
           </code>
-          <div class="tip" id="2296">
+          <div class="tip" id="2271">
             <strong>Signature:</strong> x:TraceData -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to post messages to all trace listeners</p>
+                    <p>Allows to post messages to all trace listeners</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2297', 2297)" onmouseover="showTip(event, '2297', 2297)">
+          <code onmouseout="hideTip(event, '2272', 2272)" onmouseover="showTip(event, '2272', 2272)">
             trace(message)
           </code>
-          <div class="tip" id="2297">
+          <div class="tip" id="2272">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to the command line (in green)</p>
+                    <p>Writes a trace to the command line (in green)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2298', 2298)" onmouseover="showTip(event, '2298', 2298)">
+          <code onmouseout="hideTip(event, '2273', 2273)" onmouseover="showTip(event, '2273', 2273)">
             traceError(error)
           </code>
-          <div class="tip" id="2298">
+          <div class="tip" id="2273">
             <strong>Signature:</strong> error:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L131-131" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces an error (in red)</p>
+                    <p>Traces an error (in red)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2299', 2299)" onmouseover="showTip(event, '2299', 2299)">
+          <code onmouseout="hideTip(event, '2274', 2274)" onmouseover="showTip(event, '2274', 2274)">
             tracef(fmt)
           </code>
-          <div class="tip" id="2299">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?20614,unit&gt; -&gt; &#39;?20614<br />
-                          <strong>Type parameters:</strong> '?20614                      </div>
+          <div class="tip" id="2274">
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?20478,unit&gt; -&gt; &#39;?20478<br />
+                          <strong>Type parameters:</strong> '?20478                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a message to the command line (in green) and without a line break</p>
+                    <p>Writes a message to the command line (in green) and without a line break</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2300', 2300)" onmouseover="showTip(event, '2300', 2300)">
+          <code onmouseout="hideTip(event, '2275', 2275)" onmouseover="showTip(event, '2275', 2275)">
             traceFAKE(fmt)
           </code>
-          <div class="tip" id="2300">
+          <div class="tip" id="2275">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to the command line (in yellow)</p>
+                    <p>Writes a trace to the command line (in yellow)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2301', 2301)" onmouseover="showTip(event, '2301', 2301)">
+          <code onmouseout="hideTip(event, '2276', 2276)" onmouseover="showTip(event, '2276', 2276)">
             tracefn(fmt)
           </code>
-          <div class="tip" id="2301">
+          <div class="tip" id="2276">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Trace.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a message to the command line (in green)</p>
+                    <p>Writes a message to the command line (in green)</p>
 
 
         </td>
@@ -618,7 +589,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

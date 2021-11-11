@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -357,10 +361,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1921', 1921)" onmouseover="showTip(event, '1921', 1921)">
+          <code onmouseout="hideTip(event, '1900', 1900)" onmouseover="showTip(event, '1900', 1900)">
             cleanWorkingCopy(repositoryDir)
           </code>
-          <div class="tip" id="1921">
+          <div class="tip" id="1900">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -373,20 +377,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L91-91" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans the working copy by doing a git reset --hard and a clean -f.</p>
+                    <p>Cleans the working copy by doing a git reset --hard and a clean -f.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1922', 1922)" onmouseover="showTip(event, '1922', 1922)">
+          <code onmouseout="hideTip(event, '1901', 1901)" onmouseover="showTip(event, '1901', 1901)">
             getAllFiles(repositoryDir)
           </code>
-          <div class="tip" id="1922">
+          <div class="tip" id="1901">
             <strong>Signature:</strong> repositoryDir:string -&gt; seq&lt;FileStatus * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -399,20 +400,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all changed files in the current revision</p>
+                    <p>Gets all changed files in the current revision</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1923', 1923)" onmouseover="showTip(event, '1923', 1923)">
+          <code onmouseout="hideTip(event, '1902', 1902)" onmouseover="showTip(event, '1902', 1902)">
             getChangedFiles(...)
           </code>
-          <div class="tip" id="1923">
+          <div class="tip" id="1902">
             <strong>Signature:</strong> repositoryDir:string -&gt; revision1:string -&gt; revision2:string -&gt; seq&lt;FileStatus * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -425,20 +423,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the changed files between the given revisions</p>
+                    <p>Gets the changed files between the given revisions</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1924', 1924)" onmouseover="showTip(event, '1924', 1924)">
+          <code onmouseout="hideTip(event, '1903', 1903)" onmouseover="showTip(event, '1903', 1903)">
             getChangedFilesInWorkingCopy(...)
           </code>
-          <div class="tip" id="1924">
+          <div class="tip" id="1903">
             <strong>Signature:</strong> repositoryDir:string -&gt; revision:string -&gt; seq&lt;FileStatus * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -451,20 +446,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the changed files since the given revision incl. changes in the working copy</p>
+                    <p>Gets the changed files since the given revision incl. changes in the working copy</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1925', 1925)" onmouseover="showTip(event, '1925', 1925)">
+          <code onmouseout="hideTip(event, '1904', 1904)" onmouseover="showTip(event, '1904', 1904)">
             getConflictedFiles(repositoryDir)
           </code>
-          <div class="tip" id="1925">
+          <div class="tip" id="1904">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -477,20 +469,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all conflicted files</p>
+                    <p>Gets all conflicted files</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1926', 1926)" onmouseover="showTip(event, '1926', 1926)">
+          <code onmouseout="hideTip(event, '1905', 1905)" onmouseover="showTip(event, '1905', 1905)">
             getRebaseDir(repositoryDir)
           </code>
-          <div class="tip" id="1926">
+          <div class="tip" id="1905">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -503,20 +492,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the current rebase directory for the given repository.</p>
+                    <p>Returns the current rebase directory for the given repository.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1927', 1927)" onmouseover="showTip(event, '1927', 1927)">
+          <code onmouseout="hideTip(event, '1906', 1906)" onmouseover="showTip(event, '1906', 1906)">
             isInTheMiddleOfConflictedMerge(...)
           </code>
-          <div class="tip" id="1927">
+          <div class="tip" id="1906">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -529,20 +515,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns true if the working copy is in a conflicted merge otherwise false</p>
+                    <p>Returns true if the working copy is in a conflicted merge otherwise false</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1928', 1928)" onmouseover="showTip(event, '1928', 1928)">
+          <code onmouseout="hideTip(event, '1907', 1907)" onmouseover="showTip(event, '1907', 1907)">
             isInTheMiddleOfPatch(repositoryDir)
           </code>
-          <div class="tip" id="1928">
+          <div class="tip" id="1907">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -555,20 +538,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L85-85" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns true if the given repository is in the middle of a patch process.</p>
+                    <p>Returns true if the given repository is in the middle of a patch process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1929', 1929)" onmouseover="showTip(event, '1929', 1929)">
+          <code onmouseout="hideTip(event, '1908', 1908)" onmouseover="showTip(event, '1908', 1908)">
             isInTheMiddleOfRebase(repositoryDir)
           </code>
-          <div class="tip" id="1929">
+          <div class="tip" id="1908">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -581,10 +561,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.FileStatus instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/FileStatus.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns true if the given repository is in the middle of a rebase process.</p>
+                    <p>Returns true if the given repository is in the middle of a rebase process.</p>
 
 
         </td>
@@ -628,7 +605,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

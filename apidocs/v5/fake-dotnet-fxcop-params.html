@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2479', 2479)" onmouseover="showTip(event, '2479', 2479)">
+          <code onmouseout="hideTip(event, '2506', 2506)" onmouseover="showTip(event, '2506', 2506)">
             ApplyOutXsl
           </code>
-          <div class="tip" id="2479">
+          <div class="tip" id="2506">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L40-40" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Apply the XSL style sheet to the output.  Default false.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2480', 2480)" onmouseover="showTip(event, '2480', 2480)">
+          <code onmouseout="hideTip(event, '2507', 2507)" onmouseover="showTip(event, '2507', 2507)">
             ConsoleXslFileName
           </code>
-          <div class="tip" id="2480">
+          <div class="tip" id="2507">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L60-60" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L60-60" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Apply specified XSL to console output.  Default empty.</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2481', 2481)" onmouseover="showTip(event, '2481', 2481)">
+          <code onmouseout="hideTip(event, '2508', 2508)" onmouseover="showTip(event, '2508', 2508)">
             CustomDictionary
           </code>
-          <div class="tip" id="2481">
+          <div class="tip" id="2508">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Custom dictionary used by spelling rules.  Default empty.</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2482', 2482)" onmouseover="showTip(event, '2482', 2482)">
+          <code onmouseout="hideTip(event, '2509', 2509)" onmouseover="showTip(event, '2509', 2509)">
             CustomRuleset
           </code>
-          <div class="tip" id="2482">
+          <div class="tip" id="2509">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L56-56" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L56-56" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Rule set to be used for the analysis. It can be a file path to the rule set
@@ -395,15 +399,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2483', 2483)" onmouseover="showTip(event, '2483', 2483)">
+          <code onmouseout="hideTip(event, '2510', 2510)" onmouseover="showTip(event, '2510', 2510)">
             DependencyDirectories
           </code>
-          <div class="tip" id="2483">
+          <div class="tip" id="2510">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L44-44" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L44-44" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Locations to search for assembly dependencies.  Default empty.</p>
@@ -413,15 +417,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2484', 2484)" onmouseover="showTip(event, '2484', 2484)">
+          <code onmouseout="hideTip(event, '2511', 2511)" onmouseover="showTip(event, '2511', 2511)">
             DirectOutputToConsole
           </code>
-          <div class="tip" id="2484">
+          <div class="tip" id="2511">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L42-42" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output messages to console, including file and line number information.  Default true.</p>
@@ -431,15 +435,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2485', 2485)" onmouseover="showTip(event, '2485', 2485)">
+          <code onmouseout="hideTip(event, '2512', 2512)" onmouseover="showTip(event, '2512', 2512)">
             FailOnError
           </code>
-          <div class="tip" id="2485">
+          <div class="tip" id="2512">
             <strong>Signature:</strong> ErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L83-83" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L83-83" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The error level that will cause a build failure.  Default ontFailBuild.</p>
@@ -449,15 +453,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2486', 2486)" onmouseover="showTip(event, '2486', 2486)">
+          <code onmouseout="hideTip(event, '2513', 2513)" onmouseover="showTip(event, '2513', 2513)">
             ForceOutput
           </code>
-          <div class="tip" id="2486">
+          <div class="tip" id="2513">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L89-89" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L89-89" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Write output XML and project files even in the case where no violations
@@ -468,15 +472,15 @@ occurred.  Default false.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2487', 2487)" onmouseover="showTip(event, '2487', 2487)">
+          <code onmouseout="hideTip(event, '2514', 2514)" onmouseover="showTip(event, '2514', 2514)">
             IgnoreGeneratedCode
           </code>
-          <div class="tip" id="2487">
+          <div class="tip" id="2514">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L58-58" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Suppress analysis results against generated code.  Default false.</p>
@@ -486,15 +490,15 @@ occurred.  Default false.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2488', 2488)" onmouseover="showTip(event, '2488', 2488)">
+          <code onmouseout="hideTip(event, '2515', 2515)" onmouseover="showTip(event, '2515', 2515)">
             ImportFiles
           </code>
-          <div class="tip" id="2488">
+          <div class="tip" id="2515">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L46-46" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L46-46" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Import XML report(s) or FxCop project file(s).  Default empty.</p>
@@ -504,15 +508,15 @@ occurred.  Default false.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2489', 2489)" onmouseover="showTip(event, '2489', 2489)">
+          <code onmouseout="hideTip(event, '2516', 2516)" onmouseover="showTip(event, '2516', 2516)">
             IncludeSummaryReport
           </code>
-          <div class="tip" id="2489">
+          <div class="tip" id="2516">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L71-71" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Display summary after analysis.  Default true.</p>
@@ -522,15 +526,15 @@ occurred.  Default false.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2490', 2490)" onmouseover="showTip(event, '2490', 2490)">
+          <code onmouseout="hideTip(event, '2517', 2517)" onmouseover="showTip(event, '2517', 2517)">
             OutputXslFileName
           </code>
-          <div class="tip" id="2490">
+          <div class="tip" id="2517">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L65-65" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L65-65" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Reference the specified XSL in the XML report file or "none" to generate an XML report with no XSL style sheet.
@@ -541,15 +545,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2491', 2491)" onmouseover="showTip(event, '2491', 2491)">
+          <code onmouseout="hideTip(event, '2518', 2518)" onmouseover="showTip(event, '2518', 2518)">
             PlatformDirectory
           </code>
-          <div class="tip" id="2491">
+          <div class="tip" id="2518">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Location of platform assemblies.  Default empty.</p>
@@ -559,15 +563,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2492', 2492)" onmouseover="showTip(event, '2492', 2492)">
+          <code onmouseout="hideTip(event, '2519', 2519)" onmouseover="showTip(event, '2519', 2519)">
             ProjectFile
           </code>
-          <div class="tip" id="2492">
+          <div class="tip" id="2519">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Project file to load.  Default empty.</p>
@@ -577,15 +581,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2493', 2493)" onmouseover="showTip(event, '2493', 2493)">
+          <code onmouseout="hideTip(event, '2520', 2520)" onmouseover="showTip(event, '2520', 2520)">
             ReportFileName
           </code>
-          <div class="tip" id="2493">
+          <div class="tip" id="2520">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L62-62" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>FxCop project or XML report output file.  Default "FXCopResults.html" in the current working directory</p>
@@ -595,15 +599,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2494', 2494)" onmouseover="showTip(event, '2494', 2494)">
+          <code onmouseout="hideTip(event, '2521', 2521)" onmouseover="showTip(event, '2521', 2521)">
             RuleLibraries
           </code>
-          <div class="tip" id="2494">
+          <div class="tip" id="2521">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L48-48" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L48-48" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Directory containing rule assemblies or path to rule assembly. Enables all rules.  Default empty.</p>
@@ -613,15 +617,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2495', 2495)" onmouseover="showTip(event, '2495', 2495)">
+          <code onmouseout="hideTip(event, '2522', 2522)" onmouseover="showTip(event, '2522', 2522)">
             Rules
           </code>
-          <div class="tip" id="2495">
+          <div class="tip" id="2522">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L50-50" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L50-50" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Namespace and CheckId strings that identify a Rule. '+' enables the rule; '-' disables the rule.  Default empty.</p>
@@ -631,15 +635,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2496', 2496)" onmouseover="showTip(event, '2496', 2496)">
+          <code onmouseout="hideTip(event, '2523', 2523)" onmouseover="showTip(event, '2523', 2523)">
             SaveResultsInProjectFile
           </code>
-          <div class="tip" id="2496">
+          <div class="tip" id="2523">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L77-77" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L77-77" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Update the project file if there are any changes.  Default false.</p>
@@ -649,15 +653,15 @@ Default empty.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2497', 2497)" onmouseover="showTip(event, '2497', 2497)">
+          <code onmouseout="hideTip(event, '2524', 2524)" onmouseover="showTip(event, '2524', 2524)">
             ToolPath
           </code>
-          <div class="tip" id="2497">
+          <div class="tip" id="2524">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L86-86" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L86-86" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to the FxCop executable.  Default = %VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe
@@ -668,15 +672,15 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2498', 2498)" onmouseover="showTip(event, '2498', 2498)">
+          <code onmouseout="hideTip(event, '2525', 2525)" onmouseover="showTip(event, '2525', 2525)">
             Types
           </code>
-          <div class="tip" id="2498">
+          <div class="tip" id="2525">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L75-75" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Analyze only these types and members.  Default empty</p>
@@ -686,15 +690,15 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2499', 2499)" onmouseover="showTip(event, '2499', 2499)">
+          <code onmouseout="hideTip(event, '2526', 2526)" onmouseover="showTip(event, '2526', 2526)">
             UseGAC
           </code>
-          <div class="tip" id="2499">
+          <div class="tip" id="2526">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Search Global Assembly Cache for missing references.  Default false.</p>
@@ -704,15 +708,15 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2500', 2500)" onmouseover="showTip(event, '2500', 2500)">
+          <code onmouseout="hideTip(event, '2527', 2527)" onmouseover="showTip(event, '2527', 2527)">
             Verbose
           </code>
-          <div class="tip" id="2500">
+          <div class="tip" id="2527">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L81-81" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L81-81" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Give verbose output during analysis.  Default true.</p>
@@ -722,15 +726,15 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2501', 2501)" onmouseover="showTip(event, '2501', 2501)">
+          <code onmouseout="hideTip(event, '2528', 2528)" onmouseover="showTip(event, '2528', 2528)">
             WorkingDirectory
           </code>
-          <div class="tip" id="2501">
+          <div class="tip" id="2528">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Working directory for relative file paths.  Default is the current working directory</p>
@@ -748,15 +752,15 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2502', 2502)" onmouseover="showTip(event, '2502', 2502)">
+          <code onmouseout="hideTip(event, '2529', 2529)" onmouseover="showTip(event, '2529', 2529)">
             Params.Create()
           </code>
-          <div class="tip" id="2502">
+          <div class="tip" id="2529">
             <strong>Signature:</strong> unit -&gt; Params<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.FxCop/FxCop.fs#L105-105" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>FxCop Default parameters, values as above</p>
@@ -804,7 +808,7 @@ where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from t
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

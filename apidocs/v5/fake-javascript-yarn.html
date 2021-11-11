@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -380,15 +384,15 @@ implemented</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1070', 1070)" onmouseover="showTip(event, '1070', 1070)">
+          <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
             Yarn.defaultYarnParams
           </code>
-          <div class="tip" id="1070">
+          <div class="tip" id="1077">
             <strong>Signature:</strong> YarnParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L55-55" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Yarn default parameters</p>
@@ -398,15 +402,15 @@ implemented</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1071', 1071)" onmouseover="showTip(event, '1071', 1071)">
+          <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
             Yarn.exec command setParams
           </code>
-          <div class="tip" id="1071">
+          <div class="tip" id="1078">
             <strong>Signature:</strong> command:string -&gt; setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L185-185" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L185-185" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn &lt;command&gt;</code></p>
@@ -427,15 +431,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1072', 1072)" onmouseover="showTip(event, '1072', 1072)">
+          <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
             Yarn.install(setParams)
           </code>
-          <div class="tip" id="1072">
+          <div class="tip" id="1079">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L97-97" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install</code></p>
@@ -456,15 +460,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1073', 1073)" onmouseover="showTip(event, '1073', 1073)">
+          <code onmouseout="hideTip(event, '1080', 1080)" onmouseover="showTip(event, '1080', 1080)">
             Yarn.installFlat(setParams)
           </code>
-          <div class="tip" id="1073">
+          <div class="tip" id="1080">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L130-130" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --flat</code></p>
@@ -485,15 +489,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
+          <code onmouseout="hideTip(event, '1081', 1081)" onmouseover="showTip(event, '1081', 1081)">
             Yarn.installForced(setParams)
           </code>
-          <div class="tip" id="1074">
+          <div class="tip" id="1081">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L119-119" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L119-119" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --force</code></p>
@@ -514,15 +518,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
+          <code onmouseout="hideTip(event, '1082', 1082)" onmouseover="showTip(event, '1082', 1082)">
             Yarn.installFrozenLockFile(setParams)
           </code>
-          <div class="tip" id="1075">
+          <div class="tip" id="1082">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L174-174" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L174-174" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --frozen-lockfile</code></p>
@@ -543,15 +547,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
+          <code onmouseout="hideTip(event, '1083', 1083)" onmouseover="showTip(event, '1083', 1083)">
             Yarn.installHar(setParams)
           </code>
-          <div class="tip" id="1076">
+          <div class="tip" id="1083">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L141-141" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --har</code></p>
@@ -572,15 +576,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
+          <code onmouseout="hideTip(event, '1084', 1084)" onmouseover="showTip(event, '1084', 1084)">
             Yarn.installNoLock(setParams)
           </code>
-          <div class="tip" id="1077">
+          <div class="tip" id="1084">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --no-lockfile</code></p>
@@ -601,15 +605,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
+          <code onmouseout="hideTip(event, '1085', 1085)" onmouseover="showTip(event, '1085', 1085)">
             Yarn.installProduction(setParams)
           </code>
-          <div class="tip" id="1078">
+          <div class="tip" id="1085">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L109-109" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L109-109" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --production</code></p>
@@ -630,15 +634,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
+          <code onmouseout="hideTip(event, '1086', 1086)" onmouseover="showTip(event, '1086', 1086)">
             Yarn.installPureLock(setParams)
           </code>
-          <div class="tip" id="1079">
+          <div class="tip" id="1086">
             <strong>Signature:</strong> setParams:(YarnParams -&gt; YarnParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L163-163" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.Yarn/Yarn.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Run <code>yarn install --pure-lockfile</code></p>
@@ -697,7 +701,7 @@ WorkingDirectory = "./src/FAKESimple.Web/"
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

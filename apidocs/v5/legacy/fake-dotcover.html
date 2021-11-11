@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -409,10 +413,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -433,10 +434,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -457,10 +455,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -481,10 +476,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -505,10 +497,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
+                    <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover default parameters.</li>
@@ -535,10 +524,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The dotCover default parameters</p>
+                    <p>The dotCover default parameters</p>
 
 
         </td>
@@ -561,10 +547,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L167-167" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
+                    <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 snapshot, enabling you to merge test coverage from multiple test running frameworks</p>
 <h2>Parameters</h2>
 <ul>
@@ -605,10 +588,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -629,10 +609,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L333-333" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
+                    <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -677,10 +654,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L304-304" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
+                    <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -721,10 +695,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L202-202" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+                    <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -769,10 +740,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L231-231" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+                    <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -817,10 +785,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L183-183" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
+                    <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -860,10 +825,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -884,10 +846,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L258-258" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
+                    <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -928,10 +887,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotCover.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -973,7 +929,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

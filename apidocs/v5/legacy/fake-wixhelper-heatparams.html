@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,232 +330,193 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4103', 4103)" onmouseover="showTip(event, '4103', 4103)">
+          <code onmouseout="hideTip(event, '4068', 4068)" onmouseover="showTip(event, '4068', 4068)">
             AdditionalHeatArgs
           </code>
-          <div class="tip" id="4103">
+          <div class="tip" id="4068">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2048-2048" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4104', 4104)" onmouseover="showTip(event, '4104', 4104)">
+          <code onmouseout="hideTip(event, '4069', 4069)" onmouseover="showTip(event, '4069', 4069)">
             AutoGenerateGuid
           </code>
-          <div class="tip" id="4104">
+          <div class="tip" id="4069">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2029-2029" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)</p>
+                    <p>Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4105', 4105)" onmouseover="showTip(event, '4105', 4105)">
+          <code onmouseout="hideTip(event, '4070', 4070)" onmouseover="showTip(event, '4070', 4070)">
             ComponentGroupName
           </code>
-          <div class="tip" id="4105">
+          <div class="tip" id="4070">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2045-2045" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Component group name, cannot contain spaces. (Parameter: -cg)</p>
+                    <p>Component group name, cannot contain spaces. (Parameter: -cg)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4106', 4106)" onmouseover="showTip(event, '4106', 4106)">
+          <code onmouseout="hideTip(event, '4071', 4071)" onmouseover="showTip(event, '4071', 4071)">
             DirectoryReference
           </code>
-          <div class="tip" id="4106">
+          <div class="tip" id="4071">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2043-2043" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Directory reference to root directories, cannot contains spaces. (Parameter: -dr)</p>
+                    <p>Directory reference to root directories, cannot contains spaces. (Parameter: -dr)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4107', 4107)" onmouseover="showTip(event, '4107', 4107)">
+          <code onmouseout="hideTip(event, '4072', 4072)" onmouseover="showTip(event, '4072', 4072)">
             GenerateGuidNow
           </code>
-          <div class="tip" id="4107">
+          <div class="tip" id="4072">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2031-2031" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)</p>
+                    <p>Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4108', 4108)" onmouseover="showTip(event, '4108', 4108)">
+          <code onmouseout="hideTip(event, '4073', 4073)" onmouseover="showTip(event, '4073', 4073)">
             SupressComElements
           </code>
-          <div class="tip" id="4108">
+          <div class="tip" id="4073">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2033-2033" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress COM elements. (Parameter: -scom)</p>
+                    <p>Suppress COM elements. (Parameter: -scom)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4109', 4109)" onmouseover="showTip(event, '4109', 4109)">
+          <code onmouseout="hideTip(event, '4074', 4074)" onmouseover="showTip(event, '4074', 4074)">
             SupressDirectoryFragments
           </code>
-          <div class="tip" id="4109">
+          <div class="tip" id="4074">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2035-2035" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress generation of fragments for directories and components. (Parameter: -sfrag)</p>
+                    <p>Suppress generation of fragments for directories and components. (Parameter: -sfrag)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4110', 4110)" onmouseover="showTip(event, '4110', 4110)">
+          <code onmouseout="hideTip(event, '4075', 4075)" onmouseover="showTip(event, '4075', 4075)">
             SupressRegistry
           </code>
-          <div class="tip" id="4110">
+          <div class="tip" id="4075">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2039-2039" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress registry harvesting. (Parameter: -sreg)</p>
+                    <p>Suppress registry harvesting. (Parameter: -sreg)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4111', 4111)" onmouseover="showTip(event, '4111', 4111)">
+          <code onmouseout="hideTip(event, '4076', 4076)" onmouseover="showTip(event, '4076', 4076)">
             SupressRootDirectory
           </code>
-          <div class="tip" id="4111">
+          <div class="tip" id="4076">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2037-2037" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress harvesting the root directory as an element. (Parameter: -srd)</p>
+                    <p>Suppress harvesting the root directory as an element. (Parameter: -srd)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4112', 4112)" onmouseover="showTip(event, '4112', 4112)">
+          <code onmouseout="hideTip(event, '4077', 4077)" onmouseover="showTip(event, '4077', 4077)">
             SupressUniqueIds
           </code>
-          <div class="tip" id="4112">
+          <div class="tip" id="4077">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2041-2041" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress unique identifiers for files, components, &amp; directories.(Parameter: -suid)</p>
+                    <p>Suppress unique identifiers for files, components, &amp; directories.(Parameter: -suid)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4113', 4113)" onmouseover="showTip(event, '4113', 4113)">
+          <code onmouseout="hideTip(event, '4078', 4078)" onmouseover="showTip(event, '4078', 4078)">
             TimeOut
           </code>
-          <div class="tip" id="4113">
+          <div class="tip" id="4078">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2027-2027" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Timeout for the call to Heat</p>
+                    <p>Timeout for the call to Heat</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4114', 4114)" onmouseover="showTip(event, '4114', 4114)">
+          <code onmouseout="hideTip(event, '4079', 4079)" onmouseover="showTip(event, '4079', 4079)">
             ToolDirectory
           </code>
-          <div class="tip" id="4114">
+          <div class="tip" id="4079">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2025-2025" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Directory that contains the Heat tool</p>
+                    <p>Directory that contains the Heat tool</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4115', 4115)" onmouseover="showTip(event, '4115', 4115)">
+          <code onmouseout="hideTip(event, '4080', 4080)" onmouseover="showTip(event, '4080', 4080)">
             VariableName
           </code>
-          <div class="tip" id="4115">
+          <div class="tip" id="4080">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2047-2047" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)</p>
+                    <p>Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)</p>
 
 
         </td>
@@ -595,7 +560,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

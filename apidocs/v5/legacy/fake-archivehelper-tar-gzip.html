@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L454-454" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Constructs a function that will create a tar.gz archive from a set of files.</p>
+                    <p>Constructs a function that will create a tar.gz archive from a set of files.</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L475-475" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a tar.gz archive with the given files.</p>
+                    <p>Creates a tar.gz archive with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
@@ -408,10 +406,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L503-503" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a tar.gz archive containing all the files in a directory.</p>
+                    <p>Creates a tar.gz archive containing all the files in a directory.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
@@ -441,10 +436,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L511-511" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a tar.gz archive containing all the files in a directory.</p>
+                    <p>Creates a tar.gz archive containing all the files in a directory.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>baseDir</code> - The base directory to be compressed. This directory will be the root of the resulting archive.</li>
@@ -472,10 +464,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L484-484" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a tar.gz archive with the given archive file specifications.</p>
+                    <p>Creates a tar.gz archive with the given archive file specifications.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
@@ -504,10 +493,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L437-437" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Wraps an output stream with a tar.gz compressor.</p>
+                    <p>Wraps an output stream with a tar.gz compressor.</p>
 
 
         </td>
@@ -530,10 +516,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L493-493" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a tar.gz archive with the given files with default parameters.</p>
+                    <p>Creates a tar.gz archive with the given files with default parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>baseDir</code> - The relative directory of the files to be compressed. Use this parameter to influence directory structure within the archive.</li>
@@ -562,10 +545,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L448-448" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a <code>TarOutputStream</code> wrapping a file using the given parameters.</p>
+                    <p>Creates a <code>TarOutputStream</code> wrapping a file using the given parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>gzipParams</code> - The gzip compression parameters.</li>
@@ -593,10 +573,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L462-462" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Extracts a tar.gz archive to a given directory.</p>
+                    <p>Extracts a tar.gz archive to a given directory.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>extractDir</code> - The directory into which the archived files will be extracted.</li>
@@ -624,10 +601,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use Fake.IO.Zip instead and extend it via Pull Request if required</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ArchiveHelper.fs#L441-441" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Wraps an input stream with a tar.gz decompressor.</p>
+                    <p>Wraps an input stream with a tar.gz decompressor.</p>
 
 
         </td>
@@ -671,7 +645,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

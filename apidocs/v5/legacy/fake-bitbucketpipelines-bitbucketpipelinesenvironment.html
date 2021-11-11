@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,10 +332,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2717', 2717)" onmouseover="showTip(event, '2717', 2717)">
+          <code onmouseout="hideTip(event, '2682', 2682)" onmouseover="showTip(event, '2682', 2682)">
             BitbucketPipelinesEnvironment.Branch
           </code>
-          <div class="tip" id="2717">
+          <div class="tip" id="2682">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -344,20 +348,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The branch on which the build was kicked off. This value is only available on branches.</p>
+                    <p>The branch on which the build was kicked off. This value is only available on branches.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2718', 2718)" onmouseover="showTip(event, '2718', 2718)">
+          <code onmouseout="hideTip(event, '2683', 2683)" onmouseover="showTip(event, '2683', 2683)">
             BitbucketPipelinesEnvironment.CI
           </code>
-          <div class="tip" id="2718">
+          <div class="tip" id="2683">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -370,20 +371,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value is true. Gets set whenever a pipeline runs.</p>
+                    <p>Default value is true. Gets set whenever a pipeline runs.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2719', 2719)" onmouseover="showTip(event, '2719', 2719)">
+          <code onmouseout="hideTip(event, '2684', 2684)" onmouseover="showTip(event, '2684', 2684)">
             BitbucketPipelinesEnvironment.CloneDir
           </code>
-          <div class="tip" id="2719">
+          <div class="tip" id="2684">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -396,20 +394,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The absolute path of the directory that the repository is cloned into within the Docker container.</p>
+                    <p>The absolute path of the directory that the repository is cloned into within the Docker container.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2720', 2720)" onmouseover="showTip(event, '2720', 2720)">
+          <code onmouseout="hideTip(event, '2685', 2685)" onmouseover="showTip(event, '2685', 2685)">
             BitbucketPipelinesEnvironment.Commit
           </code>
-          <div class="tip" id="2720">
+          <div class="tip" id="2685">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -422,20 +417,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L11-11" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The commit hash of a commit that kicked off the build</p>
+                    <p>The commit hash of a commit that kicked off the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2721', 2721)" onmouseover="showTip(event, '2721', 2721)">
+          <code onmouseout="hideTip(event, '2686', 2686)" onmouseover="showTip(event, '2686', 2686)">
             BitbucketPipelinesEnvironment.RepoOwner
           </code>
-          <div class="tip" id="2721">
+          <div class="tip" id="2686">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -448,20 +440,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the account in which the repository lives</p>
+                    <p>The name of the account in which the repository lives</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2722', 2722)" onmouseover="showTip(event, '2722', 2722)">
+          <code onmouseout="hideTip(event, '2687', 2687)" onmouseover="showTip(event, '2687', 2687)">
             BitbucketPipelinesEnvironment.RepoSlug
           </code>
-          <div class="tip" id="2722">
+          <div class="tip" id="2687">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -474,20 +463,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The URL-friendly version of a repository name.</p>
+                    <p>The URL-friendly version of a repository name.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2723', 2723)" onmouseover="showTip(event, '2723', 2723)">
+          <code onmouseout="hideTip(event, '2688', 2688)" onmouseover="showTip(event, '2688', 2688)">
             BitbucketPipelinesEnvironment.Tag
           </code>
-          <div class="tip" id="2723">
+          <div class="tip" id="2688">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -500,10 +486,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/BitbucketPipelines.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The tag of a commit that kicked off the build. This value is only available on tags.</p>
+                    <p>The tag of a commit that kicked off the build. This value is only available on tags.</p>
 
 
         </td>
@@ -547,7 +530,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

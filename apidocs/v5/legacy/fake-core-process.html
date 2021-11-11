@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -391,18 +395,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1368', 1368)" onmouseover="showTip(event, '1368', 1368)">
+          <code onmouseout="hideTip(event, '1357', 1357)" onmouseover="showTip(event, '1357', 1357)">
             Process.AlwaysSetProcessEncoding
           </code>
-          <div class="tip" id="1368">
+          <div class="tip" id="1357">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L378-378" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
+                    <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
 If set to false (default) only mono processes will be changed.</p>
 
 
@@ -410,10 +411,10 @@ If set to false (default) only mono processes will be changed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1369', 1369)" onmouseover="showTip(event, '1369', 1369)">
+          <code onmouseout="hideTip(event, '1358', 1358)" onmouseover="showTip(event, '1358', 1358)">
             Process.appSettings key fallbackValue
           </code>
-          <div class="tip" id="1369">
+          <div class="tip" id="1358">
             <strong>Signature:</strong> key:string -&gt; fallbackValue:string -&gt; string []<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -426,18 +427,15 @@ If set to false (default) only mono processes will be changed.</p>
                 <h5>OBSOLETE</h5>
                 <p>This is no longer supported on dotnetcore.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L784-784" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1370', 1370)" onmouseover="showTip(event, '1370', 1370)">
+          <code onmouseout="hideTip(event, '1359', 1359)" onmouseover="showTip(event, '1359', 1359)">
             Process.asyncShellExec(args)
           </code>
-          <div class="tip" id="1370">
+          <div class="tip" id="1359">
             <strong>Signature:</strong> args:ExecParams -&gt; Async&lt;int&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -450,10 +448,7 @@ If set to false (default) only mono processes will be changed.</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L827-827" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute an external program asynchronously and return the exit code,
+                    <p>Execute an external program asynchronously and return the exit code,
 logging output and error messages to FAKE output. You can compose the result
 with Async.Parallel to run multiple external programs at once, but be
 sure that none of them depend on the output of another.</p>
@@ -463,42 +458,36 @@ sure that none of them depend on the output of another.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1371', 1371)" onmouseover="showTip(event, '1371', 1371)">
+          <code onmouseout="hideTip(event, '1360', 1360)" onmouseover="showTip(event, '1360', 1360)">
             Process.createEnvironmentMap()
           </code>
-          <div class="tip" id="1371">
+          <div class="tip" id="1360">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L502-502" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1372', 1372)" onmouseover="showTip(event, '1372', 1372)">
+          <code onmouseout="hideTip(event, '1361', 1361)" onmouseover="showTip(event, '1361', 1361)">
             Process.defaultEnvVar
           </code>
-          <div class="tip" id="1372">
+          <div class="tip" id="1361">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L500-500" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1373', 1373)" onmouseover="showTip(event, '1373', 1373)">
+          <code onmouseout="hideTip(event, '1362', 1362)" onmouseover="showTip(event, '1362', 1362)">
             Process.directExec(...)
           </code>
-          <div class="tip" id="1373">
+          <div class="tip" id="1362">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -511,60 +500,48 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L689-689" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
+                    <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1374', 1374)" onmouseover="showTip(event, '1374', 1374)">
+          <code onmouseout="hideTip(event, '1363', 1363)" onmouseover="showTip(event, '1363', 1363)">
             Process.disableRedirectOutput(startInfo)
           </code>
-          <div class="tip" id="1374">
+          <div class="tip" id="1363">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L511-511" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1375', 1375)" onmouseover="showTip(event, '1375', 1375)">
+          <code onmouseout="hideTip(event, '1364', 1364)" onmouseover="showTip(event, '1364', 1364)">
             Process.disableShellExecute(startInfo)
           </code>
-          <div class="tip" id="1375">
+          <div class="tip" id="1364">
             <strong>Signature:</strong> startInfo:ProcStartInfo -&gt; ProcStartInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L519-519" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1376', 1376)" onmouseover="showTip(event, '1376', 1376)">
+          <code onmouseout="hideTip(event, '1365', 1365)" onmouseover="showTip(event, '1365', 1365)">
             Process.ensureProcessesHaveStopped(...)
           </code>
-          <div class="tip" id="1376">
+          <div class="tip" id="1365">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L912-912" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
+                    <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the processes in question.</li>
@@ -576,10 +553,10 @@ sure that none of them depend on the output of another.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1377', 1377)" onmouseover="showTip(event, '1377', 1377)">
+          <code onmouseout="hideTip(event, '1366', 1366)" onmouseover="showTip(event, '1366', 1366)">
             Process.execElevated cmd args timeOut
           </code>
-          <div class="tip" id="1377">
+          <div class="tip" id="1366">
             <strong>Signature:</strong> cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -592,10 +569,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>This is currently not possible in dotnetcore</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L676-676" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process in an elevated context and returns the exit code.</p>
+                    <p>Runs the given process in an elevated context and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>cmd</code> - The command which should be run in elavated context.</li>
@@ -608,10 +582,10 @@ sure that none of them depend on the output of another.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1378', 1378)" onmouseover="showTip(event, '1378', 1378)">
+          <code onmouseout="hideTip(event, '1367', 1367)" onmouseover="showTip(event, '1367', 1367)">
             Process.execRaw(...)
           </code>
-          <div class="tip" id="1378">
+          <div class="tip" id="1367">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -624,10 +598,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L601-601" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -642,10 +613,10 @@ sure that none of them depend on the output of another.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1379', 1379)" onmouseover="showTip(event, '1379', 1379)">
+          <code onmouseout="hideTip(event, '1368', 1368)" onmouseover="showTip(event, '1368', 1368)">
             Process.execSimple(...)
           </code>
-          <div class="tip" id="1379">
+          <div class="tip" id="1368">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; int<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -658,10 +629,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L653-653" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</p></li>
@@ -681,10 +649,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1380', 1380)" onmouseover="showTip(event, '1380', 1380)">
+          <code onmouseout="hideTip(event, '1369', 1369)" onmouseover="showTip(event, '1369', 1369)">
             Process.execWithResult(...)
           </code>
-          <div class="tip" id="1380">
+          <div class="tip" id="1369">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -697,10 +665,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L627-627" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the process result.</p>
+                    <p>Runs the given process and returns the process result.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -712,10 +677,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1381', 1381)" onmouseover="showTip(event, '1381', 1381)">
+          <code onmouseout="hideTip(event, '1370', 1370)" onmouseover="showTip(event, '1370', 1370)">
             Process.findFile dirs file
           </code>
-          <div class="tip" id="1381">
+          <div class="tip" id="1370">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; file:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -728,18 +693,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.findFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L773-773" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1382', 1382)" onmouseover="showTip(event, '1382', 1382)">
+          <code onmouseout="hideTip(event, '1371', 1371)" onmouseover="showTip(event, '1371', 1371)">
             Process.findFiles dirs file
           </code>
-          <div class="tip" id="1382">
+          <div class="tip" id="1371">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; file:string -&gt; seq&lt;string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -752,18 +714,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.findFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L767-767" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1383', 1383)" onmouseover="showTip(event, '1383', 1383)">
+          <code onmouseout="hideTip(event, '1372', 1372)" onmouseover="showTip(event, '1372', 1372)">
             Process.findFilesOnPath(file)
           </code>
-          <div class="tip" id="1383">
+          <div class="tip" id="1372">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -776,18 +735,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.findFilesOnPath instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L776-776" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1384', 1384)" onmouseover="showTip(event, '1384', 1384)">
+          <code onmouseout="hideTip(event, '1373', 1373)" onmouseover="showTip(event, '1373', 1373)">
             Process.findPath(...)
           </code>
-          <div class="tip" id="1384">
+          <div class="tip" id="1373">
             <strong>Signature:</strong> settingsName:string -&gt; fallbackValue:string -&gt; tool:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -800,18 +756,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.findPath instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L809-809" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1385', 1385)" onmouseover="showTip(event, '1385', 1385)">
+          <code onmouseout="hideTip(event, '1374', 1374)" onmouseover="showTip(event, '1374', 1374)">
             Process.fireAndForget(...)
           </code>
-          <div class="tip" id="1385">
+          <div class="tip" id="1374">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -824,72 +777,60 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L681-681" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the given process and returns immediatly.</p>
+                    <p>Starts the given process and returns immediatly.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1386', 1386)" onmouseover="showTip(event, '1386', 1386)">
+          <code onmouseout="hideTip(event, '1375', 1375)" onmouseover="showTip(event, '1375', 1375)">
             Process.getAllByName(name)
           </code>
-          <div class="tip" id="1386">
+          <div class="tip" id="1375">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L873-873" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns all processes with the given name</p>
+                    <p>Returns all processes with the given name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1387', 1387)" onmouseover="showTip(event, '1387', 1387)">
+          <code onmouseout="hideTip(event, '1376', 1376)" onmouseover="showTip(event, '1376', 1376)">
             Process.getEnvironmentVariable(...)
           </code>
-          <div class="tip" id="1387">
+          <div class="tip" id="1376">
             <strong>Signature:</strong> envKey:string -&gt; startInfo:^a -&gt; string option<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L538-538" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1388', 1388)" onmouseover="showTip(event, '1388', 1388)">
+          <code onmouseout="hideTip(event, '1377', 1377)" onmouseover="showTip(event, '1377', 1377)">
             Process.getFileName(p)
           </code>
-          <div class="tip" id="1388">
+          <div class="tip" id="1377">
             <strong>Signature:</strong> p:Process -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L864-864" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieve the file-path of the running executable of the given process.</p>
+                    <p>Retrieve the file-path of the running executable of the given process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1389', 1389)" onmouseover="showTip(event, '1389', 1389)">
+          <code onmouseout="hideTip(event, '1378', 1378)" onmouseover="showTip(event, '1378', 1378)">
             Process.getProc(config)
           </code>
-          <div class="tip" id="1389">
+          <div class="tip" id="1378">
             <strong>Signature:</strong> config:(ProcStartInfo -&gt; ProcStartInfo) -&gt; Process<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -902,18 +843,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L585-585" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1390', 1390)" onmouseover="showTip(event, '1390', 1390)">
+          <code onmouseout="hideTip(event, '1379', 1379)" onmouseover="showTip(event, '1379', 1379)">
             Process.getProcessesByName(name)
           </code>
-          <div class="tip" id="1390">
+          <div class="tip" id="1379">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -926,142 +864,118 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.getAllByName instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L885-885" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1391', 1391)" onmouseover="showTip(event, '1391', 1391)">
+          <code onmouseout="hideTip(event, '1380', 1380)" onmouseover="showTip(event, '1380', 1380)">
             Process.getRedirectOutputToTrace()
           </code>
-          <div class="tip" id="1391">
+          <div class="tip" id="1380">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L357-357" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1392', 1392)" onmouseover="showTip(event, '1392', 1392)">
+          <code onmouseout="hideTip(event, '1381', 1381)" onmouseover="showTip(event, '1381', 1381)">
             Process.kill(proc)
           </code>
-          <div class="tip" id="1392">
+          <div class="tip" id="1381">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L265-265" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the given process</p>
+                    <p>Kills the given process</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1393', 1393)" onmouseover="showTip(event, '1393', 1393)">
+          <code onmouseout="hideTip(event, '1382', 1382)" onmouseover="showTip(event, '1382', 1382)">
             Process.killAllByName(name)
           </code>
-          <div class="tip" id="1393">
+          <div class="tip" id="1382">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L888-888" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes with the given name</p>
+                    <p>Kills all processes with the given name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1394', 1394)" onmouseover="showTip(event, '1394', 1394)">
+          <code onmouseout="hideTip(event, '1383', 1383)" onmouseover="showTip(event, '1383', 1383)">
             Process.killAllCreatedProcesses()
           </code>
-          <div class="tip" id="1394">
+          <div class="tip" id="1383">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L902-902" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
+                    <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1395', 1395)" onmouseover="showTip(event, '1395', 1395)">
+          <code onmouseout="hideTip(event, '1384', 1384)" onmouseover="showTip(event, '1384', 1384)">
             Process.killById(id)
           </code>
-          <div class="tip" id="1395">
+          <div class="tip" id="1384">
             <strong>Signature:</strong> id:int -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L859-859" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes with the given id</p>
+                    <p>Kills all processes with the given id</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1396', 1396)" onmouseover="showTip(event, '1396', 1396)">
+          <code onmouseout="hideTip(event, '1385', 1385)" onmouseover="showTip(event, '1385', 1385)">
             Process.killFSI()
           </code>
-          <div class="tip" id="1396">
+          <div class="tip" id="1385">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L896-896" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the F# Interactive (FSI) process.</p>
+                    <p>Kills the F# Interactive (FSI) process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1397', 1397)" onmouseover="showTip(event, '1397', 1397)">
+          <code onmouseout="hideTip(event, '1386', 1386)" onmouseover="showTip(event, '1386', 1386)">
             Process.killMSBuild()
           </code>
-          <div class="tip" id="1397">
+          <div class="tip" id="1386">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L899-899" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the MSBuild process.</p>
+                    <p>Kills the MSBuild process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1398', 1398)" onmouseover="showTip(event, '1398', 1398)">
+          <code onmouseout="hideTip(event, '1387', 1387)" onmouseover="showTip(event, '1387', 1387)">
             Process.killProcess(name)
           </code>
-          <div class="tip" id="1398">
+          <div class="tip" id="1387">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1074,18 +988,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.killAllByName instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L893-893" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1399', 1399)" onmouseover="showTip(event, '1399', 1399)">
+          <code onmouseout="hideTip(event, '1388', 1388)" onmouseover="showTip(event, '1388', 1388)">
             Process.killProcessById(id)
           </code>
-          <div class="tip" id="1399">
+          <div class="tip" id="1388">
             <strong>Signature:</strong> id:int -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1098,144 +1009,117 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.killById instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L861-861" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1400', 1400)" onmouseover="showTip(event, '1400', 1400)">
+          <code onmouseout="hideTip(event, '1389', 1389)" onmouseover="showTip(event, '1389', 1389)">
             Process.monoVersion
           </code>
-          <div class="tip" id="1400">
+          <div class="tip" id="1389">
             <strong>Signature:</strong> (string * Version option) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L924-924" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1401', 1401)" onmouseover="showTip(event, '1401', 1401)">
+          <code onmouseout="hideTip(event, '1390', 1390)" onmouseover="showTip(event, '1390', 1390)">
             Process.ProcessEncoding
           </code>
-          <div class="tip" id="1401">
+          <div class="tip" id="1390">
             <strong>Signature:</strong> Encoding<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L382-382" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.</p>
+                    <p>If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1402', 1402)" onmouseover="showTip(event, '1402', 1402)">
+          <code onmouseout="hideTip(event, '1391', 1391)" onmouseover="showTip(event, '1391', 1391)">
             Process.redirectOutput(startInfo)
           </code>
-          <div class="tip" id="1402">
+          <div class="tip" id="1391">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L510-510" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1403', 1403)" onmouseover="showTip(event, '1403', 1403)">
+          <code onmouseout="hideTip(event, '1392', 1392)" onmouseover="showTip(event, '1392', 1392)">
             Process.removeEnvironmentVariable(...)
           </code>
-          <div class="tip" id="1403">
+          <div class="tip" id="1392">
             <strong>Signature:</strong> envKey:string -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L552-552" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unsets the given environment variable for the started process</p>
+                    <p>Unsets the given environment variable for the started process</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1404', 1404)" onmouseover="showTip(event, '1404', 1404)">
+          <code onmouseout="hideTip(event, '1393', 1393)" onmouseover="showTip(event, '1393', 1393)">
             Process.setCurrentEnvironmentVariables(...)
           </code>
-          <div class="tip" id="1404">
+          <div class="tip" id="1393">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L573-573" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets all current environment variables to their current values</p>
+                    <p>Sets all current environment variables to their current values</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1405', 1405)" onmouseover="showTip(event, '1405', 1405)">
+          <code onmouseout="hideTip(event, '1394', 1394)" onmouseover="showTip(event, '1394', 1394)">
             Process.setEnableProcessTracing
           </code>
-          <div class="tip" id="1405">
+          <div class="tip" id="1394">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L368-368" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1406', 1406)" onmouseover="showTip(event, '1406', 1406)">
+          <code onmouseout="hideTip(event, '1395', 1395)" onmouseover="showTip(event, '1395', 1395)">
             Process.setEnvironment map startInfo
           </code>
-          <div class="tip" id="1406">
+          <div class="tip" id="1395">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L513-513" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1407', 1407)" onmouseover="showTip(event, '1407', 1407)">
+          <code onmouseout="hideTip(event, '1396', 1396)" onmouseover="showTip(event, '1396', 1396)">
             Process.setEnvironmentVariable(...)
           </code>
-          <div class="tip" id="1407">
+          <div class="tip" id="1396">
             <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L524-524" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the given environment variable for the given startInfo.
+                    <p>Sets the given environment variable for the given startInfo.
 Existing values will be overriden.</p>
 
 
@@ -1243,108 +1127,90 @@ Existing values will be overriden.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1408', 1408)" onmouseover="showTip(event, '1408', 1408)">
+          <code onmouseout="hideTip(event, '1397', 1397)" onmouseover="showTip(event, '1397', 1397)">
             Process.setEnvironmentVariables(...)
           </code>
-          <div class="tip" id="1408">
+          <div class="tip" id="1397">
             <strong>Signature:</strong> vars:seq&lt;string * string&gt; -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L567-567" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the given environment variables.</p>
+                    <p>Sets the given environment variables.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1409', 1409)" onmouseover="showTip(event, '1409', 1409)">
+          <code onmouseout="hideTip(event, '1398', 1398)" onmouseover="showTip(event, '1398', 1398)">
             Process.setKillCreatedProcesses(enable)
           </code>
-          <div class="tip" id="1409">
+          <div class="tip" id="1398">
             <strong>Signature:</strong> enable:bool -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L329-329" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1410', 1410)" onmouseover="showTip(event, '1410', 1410)">
+          <code onmouseout="hideTip(event, '1399', 1399)" onmouseover="showTip(event, '1399', 1399)">
             Process.setRedirectOutput(...)
           </code>
-          <div class="tip" id="1410">
+          <div class="tip" id="1399">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L505-505" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1411', 1411)" onmouseover="showTip(event, '1411', 1411)">
+          <code onmouseout="hideTip(event, '1400', 1400)" onmouseover="showTip(event, '1400', 1400)">
             Process.setRedirectOutputToTrace
           </code>
-          <div class="tip" id="1411">
+          <div class="tip" id="1400">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L355-355" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1412', 1412)" onmouseover="showTip(event, '1412', 1412)">
+          <code onmouseout="hideTip(event, '1401', 1401)" onmouseover="showTip(event, '1401', 1401)">
             Process.shouldEnableProcessTracing()
           </code>
-          <div class="tip" id="1412">
+          <div class="tip" id="1401">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L370-370" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1413', 1413)" onmouseover="showTip(event, '1413', 1413)">
+          <code onmouseout="hideTip(event, '1402', 1402)" onmouseover="showTip(event, '1402', 1402)">
             Process.shouldKillCreatedProcesses()
           </code>
-          <div class="tip" id="1413">
+          <div class="tip" id="1402">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L332-332" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1414', 1414)" onmouseover="showTip(event, '1414', 1414)">
+          <code onmouseout="hideTip(event, '1403', 1403)" onmouseover="showTip(event, '1403', 1403)">
             Process.start(configProcessStartInfoF)
           </code>
-          <div class="tip" id="1414">
+          <div class="tip" id="1403">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1357,20 +1223,17 @@ Existing values will be overriden.</p>
                 <h5>OBSOLETE</h5>
                 <p>use the CreateProcess APIs instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L697-697" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the given process and forgets about it.</p>
+                    <p>Starts the given process and forgets about it.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1415', 1415)" onmouseover="showTip(event, '1415', 1415)">
+          <code onmouseout="hideTip(event, '1404', 1404)" onmouseover="showTip(event, '1404', 1404)">
             Process.tryFindFile dirs file
           </code>
-          <div class="tip" id="1415">
+          <div class="tip" id="1404">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; file:string -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1383,18 +1246,15 @@ Existing values will be overriden.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.tryFindFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L770-770" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1416', 1416)" onmouseover="showTip(event, '1416', 1416)">
+          <code onmouseout="hideTip(event, '1405', 1405)" onmouseover="showTip(event, '1405', 1405)">
             Process.tryFindFileOnPath(file)
           </code>
-          <div class="tip" id="1416">
+          <div class="tip" id="1405">
             <strong>Signature:</strong> file:string -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1407,18 +1267,15 @@ Existing values will be overriden.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.tryFindFileOnPath instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L780-780" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1417', 1417)" onmouseover="showTip(event, '1417', 1417)">
+          <code onmouseout="hideTip(event, '1406', 1406)" onmouseover="showTip(event, '1406', 1406)">
             Process.tryFindPath(...)
           </code>
-          <div class="tip" id="1417">
+          <div class="tip" id="1406">
             <strong>Signature:</strong> settingsName:string -&gt; fallbackValue:string -&gt; tool:string -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1431,18 +1288,15 @@ Existing values will be overriden.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.tryFindPath instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L802-802" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1418', 1418)" onmouseover="showTip(event, '1418', 1418)">
+          <code onmouseout="hideTip(event, '1407', 1407)" onmouseover="showTip(event, '1407', 1407)">
             Process.tryFindTool envVar tool
           </code>
-          <div class="tip" id="1418">
+          <div class="tip" id="1407">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1455,26 +1309,20 @@ Existing values will be overriden.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use ProcessUtils.tryFindTool instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L799-799" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1419', 1419)" onmouseover="showTip(event, '1419', 1419)">
+          <code onmouseout="hideTip(event, '1408', 1408)" onmouseover="showTip(event, '1408', 1408)">
             Process.withFramework(proc)
           </code>
-          <div class="tip" id="1419">
+          <div class="tip" id="1408">
             <strong>Signature:</strong> proc:ProcStartInfo -&gt; ProcStartInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L949-949" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ensures the executable is run with the full framework. On non-windows platforms that means running the tool by invoking 'mono'.</p>
+                    <p>Ensures the executable is run with the full framework. On non-windows platforms that means running the tool by invoking 'mono'.</p>
 
 
         </td>
@@ -1518,7 +1366,7 @@ Existing values will be overriden.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

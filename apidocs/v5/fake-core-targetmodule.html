@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -367,7 +371,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L938-938" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L938-938" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Activates the build failure target.</p>
@@ -385,7 +389,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L953-953" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L953-953" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Activates the final target.</p>
@@ -403,7 +407,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L442-442" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L442-442" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a Target.</p>
@@ -421,7 +425,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L933-933" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L933-933" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a target in case of build failure (not activated).</p>
@@ -439,7 +443,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L948-948" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L948-948" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a final target (not activated).</p>
@@ -457,7 +461,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L943-943" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L943-943" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Deactivates the build failure target.</p>
@@ -475,7 +479,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L958-958" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L958-958" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>deactivates the final target.</p>
@@ -501,7 +505,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use ignore instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L336-336" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L336-336" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Do nothing - Can be used to define empty targets.</p>
@@ -519,7 +523,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L282-282" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L282-282" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -535,7 +539,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1162-1162" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1162-1162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>allows to retrieve the arguments passed into the current execution,
@@ -561,7 +565,7 @@ you shouldn't execute any side effects when <code>None</code> is returned
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1151-1151" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1151-1151" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>allows to initialize the environment before defining targets
@@ -583,7 +587,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L461-461" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L461-461" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>List all targets available.</p>
@@ -601,7 +605,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L557-557" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L557-557" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Writes a dependency graph.</p>
@@ -619,7 +623,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L988-988" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L988-988" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If <code>TargetContext option</code> is Some and has error, raise it as a BuildFailedException</p>
@@ -637,7 +641,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L151-151" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L151-151" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -653,7 +657,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L145-145" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L145-145" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -669,7 +673,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1168-1168" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1168-1168" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs a target and its dependencies</p>
@@ -695,7 +699,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Target.WithContext.run instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L997-997" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L997-997" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs a target and its dependencies and returns a <a href="fake-core-targetcontext.html" title="TargetContext"><code>TargetContext</code></a></p>
@@ -713,7 +717,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1172-1172" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1172-1172" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the command given on the command line or the given target when no target is given</p>
@@ -731,7 +735,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1176-1176" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1176-1176" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the command given on the command line or the given target when no target is given</p>
@@ -749,7 +753,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1180-1180" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L1180-1180" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the target given by the target parameter or lists the available targets</p>
@@ -767,7 +771,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L315-315" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L315-315" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
@@ -785,7 +789,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L321-321" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L321-321" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
@@ -803,7 +807,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L151-151" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L151-151" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -819,7 +823,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L145-145" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L145-145" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -835,7 +839,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L139-139" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L139-139" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -851,7 +855,7 @@ Alternatively,</a> you can use Target.getArguments() instead</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L975-975" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L975-975" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Updates build status based on <a href="fake-core-targetmodule-optionaltargetcontext.html" title="OptionalTargetContext"><code>OptionalTargetContext</code></a>
@@ -900,7 +904,7 @@ Will not update status if <a href="fake-core-targetmodule-optionaltargetcontext.
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

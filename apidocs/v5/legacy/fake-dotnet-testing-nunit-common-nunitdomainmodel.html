@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,72 +326,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6112', 6112)" onmouseover="showTip(event, '6112', 6112)">
+          <code onmouseout="hideTip(event, '6016', 6016)" onmouseover="showTip(event, '6016', 6016)">
             DefaultDomainModel
           </code>
-          <div class="tip" id="6112">
+          <div class="tip" id="6016">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.</p>
+                    <p>The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6113', 6113)" onmouseover="showTip(event, '6113', 6113)">
+          <code onmouseout="hideTip(event, '6017', 6017)" onmouseover="showTip(event, '6017', 6017)">
             MultipleDomainModel
           </code>
-          <div class="tip" id="6113">
+          <div class="tip" id="6017">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A separate test domain is created for each assembly</p>
+                    <p>A separate test domain is created for each assembly</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6114', 6114)" onmouseover="showTip(event, '6114', 6114)">
+          <code onmouseout="hideTip(event, '6018', 6018)" onmouseover="showTip(event, '6018', 6018)">
             NoDomainModel
           </code>
-          <div class="tip" id="6114">
+          <div class="tip" id="6018">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.</p>
+                    <p>No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6115', 6115)" onmouseover="showTip(event, '6115', 6115)">
+          <code onmouseout="hideTip(event, '6019', 6019)" onmouseover="showTip(event, '6019', 6019)">
             SingleDomainModel
           </code>
-          <div class="tip" id="6115">
+          <div class="tip" id="6019">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A test domain is created - this is how NUnit worked prior to version 2.4</p>
+                    <p>A test domain is created - this is how NUnit worked prior to version 2.4</p>
 
 
         </td>
@@ -402,18 +394,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6116', 6116)" onmouseover="showTip(event, '6116', 6116)">
+          <code onmouseout="hideTip(event, '6020', 6020)" onmouseover="showTip(event, '6020', 6020)">
             x.ParamString
           </code>
-          <div class="tip" id="6116">
+          <div class="tip" id="6020">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -455,7 +444,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

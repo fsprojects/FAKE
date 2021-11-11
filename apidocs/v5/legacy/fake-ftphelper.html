@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -374,10 +378,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a matching folder in FTP folder, if not already present.</p>
+                    <p>Creates a matching folder in FTP folder, if not already present.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>destPath</code> - The full name of folder which needs to be created, including all its parent folders</li>
@@ -407,10 +408,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L161-161" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a single file from remote FTP folder.</p>
+                    <p>Deletes a single file from remote FTP folder.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>destPath</code> - The full path to the file which needs to be deleted, including all its parent folders</li>
@@ -440,10 +438,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L191-191" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a single folder from remote FTP folder.</p>
+                    <p>Deletes a single folder from remote FTP folder.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>destPath</code> - The full path to the folder which needs to be deleted, including all its parent folders</li>
@@ -473,10 +468,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the contents/listing of files and folders in a given FTP server folder</p>
+                    <p>Gets the contents/listing of files and folders in a given FTP server folder</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>dirPath</code> - The full name of folder whose content need to be listed</li>
@@ -506,10 +498,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets a connection to the FTP server</p>
+                    <p>Gets a connection to the FTP server</p>
 
 
         </td>
@@ -532,10 +521,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Given a folder path, will check if that folder is present at a given root directory of a FTP server.</p>
+                    <p>Given a folder path, will check if that folder is present at a given root directory of a FTP server.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>destPath</code> - The full name of folder which needs to be checked for existance, including all its parent folders</li>
@@ -565,10 +551,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks to see if the <code>ftp content</code> string containts the string <code>Given_Folder_Name</code></p>
+                    <p>Checks to see if the <code>ftp content</code> string containts the string <code>Given_Folder_Name</code></p>
 
 
         </td>
@@ -591,10 +574,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads a single file from local directory into remote FTP folder.</p>
+                    <p>Uploads a single file from local directory into remote FTP folder.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>destPath</code> - The full local file path that needs to be uploaded</li>
@@ -625,10 +605,7 @@ Does not support FTPS and SFTP.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FtpHelper.fs#L139-139" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads a given local folder to a given root dir on a FTP server.</p>
+                    <p>Uploads a given local folder to a given root dir on a FTP server.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>srcPath</code> - The local server path from which files need to be uploaded</li>
@@ -680,7 +657,7 @@ Does not support FTPS and SFTP.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

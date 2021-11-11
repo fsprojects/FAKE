@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -360,68 +364,56 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
+          <code onmouseout="hideTip(event, '1423', 1423)" onmouseover="showTip(event, '1423', 1423)">
             String.charsAndDigits
           </code>
-          <div class="tip" id="1439">
+          <div class="tip" id="1423">
             <strong>Signature:</strong> char list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L77-77" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns all standard chars and digits.</p>
+                    <p>Returns all standard chars and digits.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1440', 1440)" onmouseover="showTip(event, '1440', 1440)">
+          <code onmouseout="hideTip(event, '1424', 1424)" onmouseover="showTip(event, '1424', 1424)">
             String.Colon
           </code>
-          <div class="tip" id="1440">
+          <div class="tip" id="1424">
             <strong>Signature:</strong> char<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1441', 1441)" onmouseover="showTip(event, '1441', 1441)">
+          <code onmouseout="hideTip(event, '1425', 1425)" onmouseover="showTip(event, '1425', 1425)">
             String.convertFileToWindowsLineBreak(...)
           </code>
-          <div class="tip" id="1441">
+          <div class="tip" id="1425">
             <strong>Signature:</strong> encoding:Encoding -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1442', 1442)" onmouseover="showTip(event, '1442', 1442)">
+          <code onmouseout="hideTip(event, '1426', 1426)" onmouseover="showTip(event, '1426', 1426)">
             String.convertFileToWindowsLineBreaksWithEncoding(...)
           </code>
-          <div class="tip" id="1442">
+          <div class="tip" id="1426">
             <strong>Signature:</strong> encoding:Encoding -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L151-151" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a file line by line and replaces all line breaks to windows line breaks
+                    <p>Reads a file line by line and replaces all line breaks to windows line breaks
 - uses a temp file to store the contents in order to prevent OutOfMemory exceptions</p>
 
 
@@ -429,90 +421,75 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1443', 1443)" onmouseover="showTip(event, '1443', 1443)">
+          <code onmouseout="hideTip(event, '1427', 1427)" onmouseover="showTip(event, '1427', 1427)">
             String.convertTextToWindowsLineBreaks(...)
           </code>
-          <div class="tip" id="1443">
+          <div class="tip" id="1427">
             <strong>Signature:</strong> text:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L143-143" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts all line breaks in a text to windows line breaks</p>
+                    <p>Converts all line breaks in a text to windows line breaks</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1444', 1444)" onmouseover="showTip(event, '1444', 1444)">
+          <code onmouseout="hideTip(event, '1428', 1428)" onmouseover="showTip(event, '1428', 1428)">
             String.decodeBase64Utf8String(text)
           </code>
-          <div class="tip" id="1444">
+          <div class="tip" id="1428">
             <strong>Signature:</strong> text:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L177-177" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Decodes a Base64-encoded UTF-8-encoded string</p>
+                    <p>Decodes a Base64-encoded UTF-8-encoded string</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1445', 1445)" onmouseover="showTip(event, '1445', 1445)">
+          <code onmouseout="hideTip(event, '1429', 1429)" onmouseover="showTip(event, '1429', 1429)">
             String.encapsulateApostrophe(text)
           </code>
-          <div class="tip" id="1445">
+          <div class="tip" id="1429">
             <strong>Signature:</strong> text:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L174-174" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Encapsulates the Apostrophe</p>
+                    <p>Encapsulates the Apostrophe</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1446', 1446)" onmouseover="showTip(event, '1446', 1446)">
+          <code onmouseout="hideTip(event, '1430', 1430)" onmouseover="showTip(event, '1430', 1430)">
             String.endsWith suffix text
           </code>
-          <div class="tip" id="1446">
+          <div class="tip" id="1430">
             <strong>Signature:</strong> suffix:string -&gt; text:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given text ends with the given suffix</p>
+                    <p>Checks whether the given text ends with the given suffix</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1447', 1447)" onmouseover="showTip(event, '1447', 1447)">
+          <code onmouseout="hideTip(event, '1431', 1431)" onmouseover="showTip(event, '1431', 1431)">
             String.endsWithSlash
           </code>
-          <div class="tip" id="1447">
+          <div class="tip" id="1431">
             <strong>Signature:</strong> string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines whether the last character of the given <see cref="string" />
+                    <p>Determines whether the last character of the given <see cref="string" />
 matches Path.DirectorySeparatorChar.</p>
 
 
@@ -520,18 +497,255 @@ matches Path.DirectorySeparatorChar.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1448', 1448)" onmouseover="showTip(event, '1448', 1448)">
+          <code onmouseout="hideTip(event, '1432', 1432)" onmouseover="showTip(event, '1432', 1432)">
             String.isLetterOrDigit(c)
           </code>
-          <div class="tip" id="1448">
+          <div class="tip" id="1432">
             <strong>Signature:</strong> c:char -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given char is a standard char or digit.</p>
+                    <p>Checks whether the given char is a standard char or digit.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1433', 1433)" onmouseover="showTip(event, '1433', 1433)">
+            String.isNotNullOrEmpty(value)
+          </code>
+          <div class="tip" id="1433">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Returns if the string is not null or empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1434', 1434)" onmouseover="showTip(event, '1434', 1434)">
+            String.isNullOrEmpty(value)
+          </code>
+          <div class="tip" id="1434">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Returns if the string is null or empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1435', 1435)" onmouseover="showTip(event, '1435', 1435)">
+            String.isNullOrWhiteSpace(value)
+          </code>
+          <div class="tip" id="1435">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Returns if the string is null or empty or completely whitespace</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1436', 1436)" onmouseover="showTip(event, '1436', 1436)">
+            String.isUmlaut(c)
+          </code>
+          <div class="tip" id="1436">
+            <strong>Signature:</strong> c:char -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Checks whether the given char is a german umlaut.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
+            String.liftString(x)
+          </code>
+          <div class="tip" id="1437">
+            <strong>Signature:</strong> x:string -&gt; string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Lifts a string to an option</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
+            String.LinuxLineBreaks
+          </code>
+          <div class="tip" id="1438">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Represents Linux line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
+            String.MacLineBreaks
+          </code>
+          <div class="tip" id="1439">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Represents Mac line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1440', 1440)" onmouseover="showTip(event, '1440', 1440)">
+            String.NormalizeVersion(version)
+          </code>
+          <div class="tip" id="1440">
+            <strong>Signature:</strong> version:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Removes all trailing .0 from a version string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1441', 1441)" onmouseover="showTip(event, '1441', 1441)">
+            String.removeLineBreaks(text)
+          </code>
+          <div class="tip" id="1441">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Removes linebreaks from the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1442', 1442)" onmouseover="showTip(event, '1442', 1442)">
+            String.replace pattern replacement text
+          </code>
+          <div class="tip" id="1442">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Replaces the given pattern in the given text with the replacement</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1443', 1443)" onmouseover="showTip(event, '1443', 1443)">
+            String.replaceFirst(...)
+          </code>
+          <div class="tip" id="1443">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Replaces the first occurrence of the pattern with the given replacement.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1444', 1444)" onmouseover="showTip(event, '1444', 1444)">
+            String.separated delimiter items
+          </code>
+          <div class="tip" id="1444">
+            <strong>Signature:</strong> delimiter:string -&gt; items:seq&lt;string&gt; -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Converts a sequence of strings to a string with delimiters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1445', 1445)" onmouseover="showTip(event, '1445', 1445)">
+            String.split delimiter text
+          </code>
+          <div class="tip" id="1445">
+            <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Splits the given string at the given char delimiter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1446', 1446)" onmouseover="showTip(event, '1446', 1446)">
+            String.splitStr delimiterStr text
+          </code>
+          <div class="tip" id="1446">
+            <strong>Signature:</strong> delimiterStr:string -&gt; text:string -&gt; string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Splits the given string at the given string delimiter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1447', 1447)" onmouseover="showTip(event, '1447', 1447)">
+            String.startsWith prefix text
+          </code>
+          <div class="tip" id="1447">
+            <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Checks whether the given text starts with the given prefix</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '1448', 1448)" onmouseover="showTip(event, '1448', 1448)">
+            String.toLines(text)
+          </code>
+          <div class="tip" id="1448">
+            <strong>Signature:</strong> text:seq&lt;string&gt; -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Converts a sequence of strings into a string separated with line ends</p>
 
 
         </td>
@@ -539,17 +753,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1449', 1449)" onmouseover="showTip(event, '1449', 1449)">
-            String.isNotNullOrEmpty(value)
+            String.toLower(s)
           </code>
           <div class="tip" id="1449">
-            <strong>Signature:</strong> value:string -&gt; bool<br />
+            <strong>Signature:</strong> s:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is not null or empty</p>
+                    <p>Converts all characters in a string to lower case.</p>
 
 
         </td>
@@ -557,17 +768,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1450', 1450)" onmouseover="showTip(event, '1450', 1450)">
-            String.isNullOrEmpty(value)
+            String.trim(x)
           </code>
           <div class="tip" id="1450">
-            <strong>Signature:</strong> value:string -&gt; bool<br />
+            <strong>Signature:</strong> x:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is null or empty</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -575,17 +783,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
-            String.isNullOrWhiteSpace(value)
+            String.trimChars chars x
           </code>
           <div class="tip" id="1451">
-            <strong>Signature:</strong> value:string -&gt; bool<br />
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is null or empty or completely whitespace</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -593,17 +798,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
-            String.isUmlaut(c)
+            String.trimEndChars chars x
           </code>
           <div class="tip" id="1452">
-            <strong>Signature:</strong> c:char -&gt; bool<br />
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given char is a german umlaut.</p>
+                    <p>Trims the end of the given string</p>
 
 
         </td>
@@ -611,17 +813,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
-            String.liftString(x)
+            String.trimSeparator(s)
           </code>
           <div class="tip" id="1453">
-            <strong>Signature:</strong> x:string -&gt; string option<br />
+            <strong>Signature:</strong> s:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Lifts a string to an option</p>
+                    <p>Trims the given string with the DirectorySeparatorChar</p>
 
 
         </td>
@@ -629,17 +828,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
-            String.LinuxLineBreaks
+            String.trimSlash(s)
           </code>
           <div class="tip" id="1454">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> s:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L134-134" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Linux line breaks</p>
+                    <p>Removes the slashes from the end of the given string</p>
 
 
         </td>
@@ -647,17 +843,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
-            String.MacLineBreaks
+            String.trimSpecialChars(text)
           </code>
           <div class="tip" id="1455">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> text:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L140-140" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Mac line breaks</p>
+                    <p>Trims all special characters from a string.</p>
 
 
         </td>
@@ -665,17 +858,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
-            String.NormalizeVersion(version)
+            String.trimStartChars chars x
           </code>
           <div class="tip" id="1456">
-            <strong>Signature:</strong> version:string -&gt; string<br />
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes all trailing .0 from a version string</p>
+                    <p>Trims the start of the given string</p>
 
 
         </td>
@@ -683,305 +873,14 @@ matches Path.DirectorySeparatorChar.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
-            String.removeLineBreaks(text)
-          </code>
-          <div class="tip" id="1457">
-            <strong>Signature:</strong> text:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L168-168" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes linebreaks from the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
-            String.replace pattern replacement text
-          </code>
-          <div class="tip" id="1458">
-            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the given pattern in the given text with the replacement</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
-            String.replaceFirst(...)
-          </code>
-          <div class="tip" id="1459">
-            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the first occurrence of the pattern with the given replacement.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
-            String.separated delimiter items
-          </code>
-          <div class="tip" id="1460">
-            <strong>Signature:</strong> delimiter:string -&gt; items:seq&lt;string&gt; -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a sequence of strings to a string with delimiters</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
-            String.split delimiter text
-          </code>
-          <div class="tip" id="1461">
-            <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L33-33" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the given string at the given char delimiter</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
-            String.splitStr delimiterStr text
-          </code>
-          <div class="tip" id="1462">
-            <strong>Signature:</strong> delimiterStr:string -&gt; text:string -&gt; string list<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the given string at the given string delimiter</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
-            String.startsWith prefix text
-          </code>
-          <div class="tip" id="1463">
-            <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given text starts with the given prefix</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
-            String.toLines(text)
-          </code>
-          <div class="tip" id="1464">
-            <strong>Signature:</strong> text:seq&lt;string&gt; -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a sequence of strings into a string separated with line ends</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
-            String.toLower(s)
-          </code>
-          <div class="tip" id="1465">
-            <strong>Signature:</strong> s:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts all characters in a string to lower case.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
-            String.trim(x)
-          </code>
-          <div class="tip" id="1466">
-            <strong>Signature:</strong> x:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1467', 1467)" onmouseover="showTip(event, '1467', 1467)">
-            String.trimChars chars x
-          </code>
-          <div class="tip" id="1467">
-            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L98-98" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1468', 1468)" onmouseover="showTip(event, '1468', 1468)">
-            String.trimEndChars chars x
-          </code>
-          <div class="tip" id="1468">
-            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L108-108" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the end of the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
-            String.trimSeparator(s)
-          </code>
-          <div class="tip" id="1469">
-            <strong>Signature:</strong> s:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L83-83" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string with the DirectorySeparatorChar</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
-            String.trimSlash(s)
-          </code>
-          <div class="tip" id="1470">
-            <strong>Signature:</strong> s:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes the slashes from the end of the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
-            String.trimSpecialChars(text)
-          </code>
-          <div class="tip" id="1471">
-            <strong>Signature:</strong> text:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L86-86" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims all special characters from a string.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
-            String.trimStartChars chars x
-          </code>
-          <div class="tip" id="1472">
-            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the start of the given string</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
             String.WindowsLineBreaks
           </code>
-          <div class="tip" id="1473">
+          <div class="tip" id="1457">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/String.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Windows line breaks</p>
+                    <p>Represents Windows line breaks</p>
 
 
         </td>
@@ -1025,7 +924,7 @@ matches Path.DirectorySeparatorChar.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -406,10 +410,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - open Fake.Core.TargetOperators)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L205-205" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Backwards dependencies operator - x is dependent on ys.</p>
+                    <p>Backwards dependencies operator - x is dependent on ys.</p>
 
 
         </td>
@@ -432,10 +433,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailure)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L757-757" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Activates the BuildFailureTarget.</p>
+                    <p>Activates the BuildFailureTarget.</p>
 
 
         </td>
@@ -458,10 +456,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinal)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L769-769" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Activates the FinalTarget.</p>
+                    <p>Activates the FinalTarget.</p>
 
 
         </td>
@@ -484,10 +479,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L349-349" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -508,10 +500,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateBuildFailure)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L751-751" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Registers a BuildFailureTarget (not activated).</p>
+                    <p>Registers a BuildFailureTarget (not activated).</p>
 
 
         </td>
@@ -534,10 +523,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
+                    <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
 
 
         </td>
@@ -560,10 +546,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - package: Fake.Core.Target - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -584,10 +567,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -608,10 +588,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the DependencyString for the given target.</p>
+                    <p>Returns the DependencyString for the given target.</p>
 
 
         </td>
@@ -634,10 +611,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.determineBuildOrder)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L583-583" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines a parallel build order for the given set of targets</p>
+                    <p>Determines a parallel build order for the given set of targets</p>
 
 
         </td>
@@ -660,10 +634,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L573-573" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -684,10 +655,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.DoNothing)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
+                    <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
 
 
         </td>
@@ -710,10 +678,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The executed targets.</p>
+                    <p>The executed targets.</p>
 
 
         </td>
@@ -736,10 +701,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateFinal)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L763-763" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Registers a final target (not activated).</p>
+                    <p>Registers a final target (not activated).</p>
 
 
         </td>
@@ -762,10 +724,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Final Targets - stores final targets and if they are activated.</p>
+                    <p>Final Targets - stores final targets and if they are activated.</p>
 
 
         </td>
@@ -788,10 +747,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns a list with all target names.</p>
+                    <p>Returns a list with all target names.</p>
 
 
         </td>
@@ -814,10 +770,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L319-319" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get Errors - Returns the errors that occured during execution</p>
+                    <p>Get Errors - Returns the errors that occured during execution</p>
 
 
         </td>
@@ -840,10 +793,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Get)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L98-98" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets a target with the given name from the target dictionary.</p>
+                    <p>Gets a target with the given name from the target dictionary.</p>
 
 
         </td>
@@ -866,10 +816,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L564-564" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List all available targets.</p>
+                    <p>List all available targets.</p>
 
 
         </td>
@@ -892,10 +839,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDependencyGraph)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L443-443" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a dependency graph.</p>
+                    <p>Writes a dependency graph.</p>
 
 
         </td>
@@ -918,10 +862,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph to be created)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L481-481" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a dependency graph of all targets in the DOT format.</p>
+                    <p>Writes a dependency graph of all targets in the DOT format.</p>
 
 
         </td>
@@ -944,10 +885,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder to be created)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L466-466" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -968,10 +906,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L392-392" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Prints all targets.</p>
+                    <p>Prints all targets.</p>
 
 
         </td>
@@ -994,10 +929,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L712-712" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a target and its dependencies.</p>
+                    <p>Runs a target and its dependencies.</p>
 
 
         </td>
@@ -1020,10 +952,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L676-676" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a single target without its dependencies</p>
+                    <p>Runs a single target without its dependencies</p>
 
 
         </td>
@@ -1046,10 +975,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L700-700" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1070,10 +996,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L692-692" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given array of targets in parallel using count tasks</p>
+                    <p>Runs the given array of targets in parallel using count tasks</p>
 
 
         </td>
@@ -1096,10 +1019,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L118-118" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the soft  DependencyString for the given target.</p>
+                    <p>Returns the soft  DependencyString for the given target.</p>
 
 
         </td>
@@ -1122,10 +1042,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Create)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L307-307" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a Target.</p>
+                    <p>Creates a Target.</p>
 
 
         </td>
@@ -1148,10 +1065,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L303-303" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a TargetTemplate.</p>
+                    <p>Creates a TargetTemplate.</p>
 
 
         </td>
@@ -1174,10 +1088,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L299-299" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1198,10 +1109,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L289-289" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a TargetTemplate with dependencies.</p>
+                    <p>Creates a TargetTemplate with dependencies.</p>
 <h2>Sample</h2>
 <p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -1301,10 +1209,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L501-501" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a summary of errors reported during build.</p>
+                    <p>Writes a summary of errors reported during build.</p>
 
 
         </td>
@@ -1327,10 +1232,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.WriteTaskTimeSummary)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L510-510" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a build time report.</p>
+                    <p>Writes a build time report.</p>
 
 
         </td>
@@ -1374,7 +1276,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

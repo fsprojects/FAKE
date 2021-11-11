@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -321,15 +325,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '856', 856)" onmouseover="showTip(event, '856', 856)">
+          <code onmouseout="hideTip(event, '860', 860)" onmouseover="showTip(event, '860', 860)">
             DirectoryInfo.containsFile fileInfo dir
           </code>
-          <div class="tip" id="856">
+          <div class="tip" id="860">
             <strong>Signature:</strong> fileInfo:FileInfo -&gt; dir:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L35-35" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L35-35" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Checks if the file is in a subfolder of the dir.</p>
@@ -339,15 +343,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '857', 857)" onmouseover="showTip(event, '857', 857)">
+          <code onmouseout="hideTip(event, '861', 861)" onmouseover="showTip(event, '861', 861)">
             DirectoryInfo.copyRecursiveTo(...)
           </code>
-          <div class="tip" id="857">
+          <div class="tip" id="861">
             <strong>Signature:</strong> overwrite:bool -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L88-88" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L88-88" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copies the file structure recursively.</p>
@@ -357,15 +361,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '858', 858)" onmouseover="showTip(event, '858', 858)">
+          <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
             DirectoryInfo.copyRecursiveToWithFilter(...)
           </code>
-          <div class="tip" id="858">
+          <div class="tip" id="862">
             <strong>Signature:</strong> overwrite:bool -&gt; filter:(DirectoryInfo -&gt; FileInfo -&gt; bool) -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copies the file structure recursively, filtering files.</p>
@@ -375,15 +379,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '859', 859)" onmouseover="showTip(event, '859', 859)">
+          <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
             DirectoryInfo.ensure(dir)
           </code>
-          <div class="tip" id="859">
+          <div class="tip" id="863">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L41-41" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L41-41" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
@@ -393,15 +397,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '860', 860)" onmouseover="showTip(event, '860', 860)">
+          <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
             DirectoryInfo.exists(dir)
           </code>
-          <div class="tip" id="860">
+          <div class="tip" id="864">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Checks if the directory exists on disk.</p>
@@ -411,15 +415,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '861', 861)" onmouseover="showTip(event, '861', 861)">
+          <code onmouseout="hideTip(event, '865', 865)" onmouseover="showTip(event, '865', 865)">
             DirectoryInfo.getFiles(dir)
           </code>
-          <div class="tip" id="861">
+          <div class="tip" id="865">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L15-15" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L15-15" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets all files in the directory.</p>
@@ -429,15 +433,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
+          <code onmouseout="hideTip(event, '866', 866)" onmouseover="showTip(event, '866', 866)">
             DirectoryInfo.getMatchingFiles(...)
           </code>
-          <div class="tip" id="862">
+          <div class="tip" id="866">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L18-18" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L18-18" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Finds all the files in the directory matching the search pattern.</p>
@@ -447,15 +451,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
+          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
             DirectoryInfo.getMatchingFilesRecursive(...)
           </code>
-          <div class="tip" id="863">
+          <div class="tip" id="867">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L24-24" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Finds all the files in the directory and in all subdirectories matching the search pattern.</p>
@@ -465,15 +469,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
+          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
             DirectoryInfo.getSubDirectories(dir)
           </code>
-          <div class="tip" id="864">
+          <div class="tip" id="868">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; DirectoryInfo []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L12-12" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L12-12" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets all subdirectories of a given directory.</p>
@@ -483,15 +487,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '865', 865)" onmouseover="showTip(event, '865', 865)">
+          <code onmouseout="hideTip(event, '869', 869)" onmouseover="showTip(event, '869', 869)">
             DirectoryInfo.isSubfolderOf dir2 dir1
           </code>
-          <div class="tip" id="865">
+          <div class="tip" id="869">
             <strong>Signature:</strong> dir2:DirectoryInfo -&gt; dir1:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L29-29" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L29-29" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
@@ -501,15 +505,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '866', 866)" onmouseover="showTip(event, '866', 866)">
+          <code onmouseout="hideTip(event, '870', 870)" onmouseover="showTip(event, '870', 870)">
             DirectoryInfo.ofPath(path)
           </code>
-          <div class="tip" id="866">
+          <div class="tip" id="870">
             <strong>Signature:</strong> path:string -&gt; DirectoryInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L9-9" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L9-9" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Creates a DirectoryInfo for the given path.</p>
@@ -519,15 +523,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
+          <code onmouseout="hideTip(event, '871', 871)" onmouseover="showTip(event, '871', 871)">
             DirectoryInfo.setReadOnly readOnly dir
           </code>
-          <div class="tip" id="867">
+          <div class="tip" id="871">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L56-56" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L56-56" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the directory readonly</p>
@@ -537,15 +541,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
+          <code onmouseout="hideTip(event, '872', 872)" onmouseover="showTip(event, '872', 872)">
             DirectoryInfo.setReadOnlyRecursive(...)
           </code>
-          <div class="tip" id="868">
+          <div class="tip" id="872">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L63-63" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/DirectoryInfo.fs#L63-63" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets all files in the directory readonly recursively.</p>
@@ -593,7 +597,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

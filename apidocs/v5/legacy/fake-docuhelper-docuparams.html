@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,72 +332,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2897', 2897)" onmouseover="showTip(event, '2897', 2897)">
+          <code onmouseout="hideTip(event, '2862', 2862)" onmouseover="showTip(event, '2862', 2862)">
             OutputPath
           </code>
-          <div class="tip" id="2897">
+          <div class="tip" id="2862">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DocuHelper.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output path of the generated docs. The default is "./output/".</p>
+                    <p>The output path of the generated docs. The default is "./output/".</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2898', 2898)" onmouseover="showTip(event, '2898', 2898)">
+          <code onmouseout="hideTip(event, '2863', 2863)" onmouseover="showTip(event, '2863', 2863)">
             TemplatesPath
           </code>
-          <div class="tip" id="2898">
+          <div class="tip" id="2863">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DocuHelper.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The HTML templates for the generated docs.</p>
+                    <p>The HTML templates for the generated docs.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2899', 2899)" onmouseover="showTip(event, '2899', 2899)">
+          <code onmouseout="hideTip(event, '2864', 2864)" onmouseover="showTip(event, '2864', 2864)">
             TimeOut
           </code>
-          <div class="tip" id="2899">
+          <div class="tip" id="2864">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DocuHelper.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to specify a timeout for docu. The default is 5 minutes.</p>
+                    <p>Allows to specify a timeout for docu. The default is 5 minutes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2900', 2900)" onmouseover="showTip(event, '2900', 2900)">
+          <code onmouseout="hideTip(event, '2865', 2865)" onmouseover="showTip(event, '2865', 2865)">
             ToolPath
           </code>
-          <div class="tip" id="2900">
+          <div class="tip" id="2865">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DocuHelper.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The tool path - FAKE tries to find docu.exe automatically in any sub folder.</p>
+                    <p>The tool path - FAKE tries to find docu.exe automatically in any sub folder.</p>
 
 
         </td>
@@ -437,7 +429,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

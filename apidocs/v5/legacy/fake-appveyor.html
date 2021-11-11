@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -429,10 +433,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (use &#39;Fake.BuildServer.AppVeyor&#39;).</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L297-297" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor artifact push default parameters</p>
+                    <p>AppVeyor artifact push default parameters</p>
 
 
         </td>
@@ -455,10 +456,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;use dis = Trace.traceTag (KnownTags.Test name)&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finishes the test case.</p>
+                    <p>Finishes the test case.</p>
 
 
         </td>
@@ -481,10 +479,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;use dis = Trace.traceTag (KnownTags.TestSuite name)&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L203-203" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finishes the test suite.</p>
+                    <p>Finishes the test suite.</p>
 
 
         </td>
@@ -507,10 +502,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;Trace.testStatus testName (TestStatus.Ignore(message))&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L222-222" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ignores the test case.</p>
+                    <p>Ignores the test case.</p>
 
 
         </td>
@@ -533,10 +525,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (install &#39;Fake.BuildServer.AppVeyor&#39;) and use &#39;Trace.publish ImportData.BuildArtifact file&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L313-313" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Push an artifact</p>
+                    <p>Push an artifact</p>
 
 
         </td>
@@ -559,10 +548,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (install &#39;Fake.BuildServer.AppVeyor&#39;) and use &#39;Trace.publish ImportData.BuildArtifact file&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L327-327" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Push multiple artifacts</p>
+                    <p>Push multiple artifacts</p>
 
 
         </td>
@@ -585,10 +571,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.setVariable instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L272-272" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set environment variable</p>
+                    <p>Set environment variable</p>
 
 
         </td>
@@ -611,10 +594,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;use dis = Trace.traceTag (KnownTags.Test name)&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the test case.</p>
+                    <p>Starts the test case.</p>
 
 
         </td>
@@ -637,10 +617,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;use dis = Trace.traceTag (KnownTags.TestSuite name)&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L207-207" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the test suite.</p>
+                    <p>Starts the test suite.</p>
 
 
         </td>
@@ -663,10 +640,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, install the build-server and use &#39;Trace.testStatus testName (TestStatus.Failed(message, details, None))&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L216-216" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a failed test.</p>
+                    <p>Reports a failed test.</p>
 
 
         </td>
@@ -689,10 +663,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please remove this call, success is implicit.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L226-226" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a succeeded test.</p>
+                    <p>Reports a succeeded test.</p>
 
 
         </td>
@@ -715,10 +686,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.updateBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L365-365" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Update build details</p>
+                    <p>Update build details</p>
 
 
         </td>
@@ -741,10 +709,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (install &#39;Fake.BuildServer.AppVeyor&#39;) and use &#39;Trace.setBuildNumber version&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L389-389" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Update build version. This must be unique for the current project.</p>
+                    <p>Update build version. This must be unique for the current project.</p>
 
 
         </td>
@@ -767,10 +732,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (install &#39;Fake.BuildServer.AppVeyor&#39;) and use &#39;Trace.publish (ImportData.&lt;type&gt;) file&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L249-249" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads a test result file to make them visible in Test tab of the build console.</p>
+                    <p>Uploads a test result file to make them visible in Test tab of the build console.</p>
 
 
         </td>
@@ -793,10 +755,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This should no longer be required (install &#39;Fake.BuildServer.AppVeyor&#39;) and use &#39;Trace.publish (ImportData.&lt;type&gt;) file&#39;.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L262-262" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.</p>
+                    <p>Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.</p>
 
 
         </td>
@@ -840,7 +799,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

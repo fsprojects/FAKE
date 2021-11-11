@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,54 +332,45 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3615', 3615)" onmouseover="showTip(event, '3615', 3615)">
+          <code onmouseout="hideTip(event, '3580', 3580)" onmouseover="showTip(event, '3580', 3580)">
             ExePath
           </code>
-          <div class="tip" id="3615">
+          <div class="tip" id="3580">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Path to the OpenCover console application</p>
+                    <p>(Required) Path to the OpenCover console application</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3616', 3616)" onmouseover="showTip(event, '3616', 3616)">
+          <code onmouseout="hideTip(event, '3581', 3581)" onmouseover="showTip(event, '3581', 3581)">
             Filter
           </code>
-          <div class="tip" id="3616">
+          <div class="tip" id="3581">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results.</p>
+                    <p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3617', 3617)" onmouseover="showTip(event, '3617', 3617)">
+          <code onmouseout="hideTip(event, '3582', 3582)" onmouseover="showTip(event, '3582', 3582)">
             MergeByHash
           </code>
-          <div class="tip" id="3617">
+          <div class="tip" id="3582">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This option is used to merge the coverage results for an assembly regardless of where it was loaded
+                    <p>This option is used to merge the coverage results for an assembly regardless of where it was loaded
 assuming the assembly has the same file-hash in each location.</p>
 
 
@@ -383,36 +378,30 @@ assuming the assembly has the same file-hash in each location.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3618', 3618)" onmouseover="showTip(event, '3618', 3618)">
+          <code onmouseout="hideTip(event, '3583', 3583)" onmouseover="showTip(event, '3583', 3583)">
             OptionalArguments
           </code>
-          <div class="tip" id="3618">
+          <div class="tip" id="3583">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This options is used to add additional optional arguments, could be somthing like "-returntargetcode "</p>
+                    <p>This options is used to add additional optional arguments, could be somthing like "-returntargetcode "</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3619', 3619)" onmouseover="showTip(event, '3619', 3619)">
+          <code onmouseout="hideTip(event, '3584', 3584)" onmouseover="showTip(event, '3584', 3584)">
             Output
           </code>
-          <div class="tip" id="3619">
+          <div class="tip" id="3584">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L25-25" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The location and name of the output xml file.
+                    <p>The location and name of the output xml file.
 If no value is supplied then the current directory
 will be used and the output filename will be results.xml.</p>
 
@@ -421,72 +410,60 @@ will be used and the output filename will be results.xml.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3620', 3620)" onmouseover="showTip(event, '3620', 3620)">
+          <code onmouseout="hideTip(event, '3585', 3585)" onmouseover="showTip(event, '3585', 3585)">
             Register
           </code>
-          <div class="tip" id="3620">
+          <div class="tip" id="3585">
             <strong>Signature:</strong> RegisterType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this to register and de-register the code coverage profiler.</p>
+                    <p>Use this to register and de-register the code coverage profiler.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3621', 3621)" onmouseover="showTip(event, '3621', 3621)">
+          <code onmouseout="hideTip(event, '3586', 3586)" onmouseover="showTip(event, '3586', 3586)">
             TestRunnerExePath
           </code>
-          <div class="tip" id="3621">
+          <div class="tip" id="3586">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Path to the NUnit/XUnit console runner</p>
+                    <p>(Required) Path to the NUnit/XUnit console runner</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3622', 3622)" onmouseover="showTip(event, '3622', 3622)">
+          <code onmouseout="hideTip(event, '3587', 3587)" onmouseover="showTip(event, '3587', 3587)">
             TimeOut
           </code>
-          <div class="tip" id="3622">
+          <div class="tip" id="3587">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The timeout for the OpenCover process.</p>
+                    <p>The timeout for the OpenCover process.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3623', 3623)" onmouseover="showTip(event, '3623', 3623)">
+          <code onmouseout="hideTip(event, '3588', 3588)" onmouseover="showTip(event, '3588', 3588)">
             WorkingDir
           </code>
-          <div class="tip" id="3623">
+          <div class="tip" id="3588">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OpenCoverHelper.fs#L33-33" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The directory where the OpenCover process will be started.</p>
+                    <p>The directory where the OpenCover process will be started.</p>
 
 
         </td>
@@ -530,7 +507,7 @@ will be used and the output filename will be results.xml.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

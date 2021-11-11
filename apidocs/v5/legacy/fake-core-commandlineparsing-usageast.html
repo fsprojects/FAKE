@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,234 +324,195 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5040', 5040)" onmouseover="showTip(event, '5040', 5040)">
+          <code onmouseout="hideTip(event, '4995', 4995)" onmouseover="showTip(event, '4995', 4995)">
             Ano(title,o&#39;)
           </code>
-          <div class="tip" id="5040">
+          <div class="tip" id="4995">
             <strong>Signature:</strong> string * SafeOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Matches an option annotation [options]</p>
+                    <p>Matches an option annotation [options]</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5041', 5041)" onmouseover="showTip(event, '5041', 5041)">
+          <code onmouseout="hideTip(event, '4996', 4996)" onmouseover="showTip(event, '4996', 4996)">
             Arg(name&#39;)
           </code>
-          <div class="tip" id="5041">
+          <div class="tip" id="4996">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Named/Positional argument</p>
+                    <p>Named/Positional argument</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5042', 5042)" onmouseover="showTip(event, '5042', 5042)">
+          <code onmouseout="hideTip(event, '4997', 4997)" onmouseover="showTip(event, '4997', 4997)">
             Cmd(cmd&#39;)
           </code>
-          <div class="tip" id="5042">
+          <div class="tip" id="4997">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Fixed command, like "push" in "git push"</p>
+                    <p>Fixed command, like "push" in "git push"</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5043', 5043)" onmouseover="showTip(event, '5043', 5043)">
+          <code onmouseout="hideTip(event, '4998', 4998)" onmouseover="showTip(event, '4998', 4998)">
             Ell(ast&#39;)
           </code>
-          <div class="tip" id="5043">
+          <div class="tip" id="4998">
             <strong>Signature:</strong> UsageAst<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Marks that the given item can be given multiple times</p>
+                    <p>Marks that the given item can be given multiple times</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5044', 5044)" onmouseover="showTip(event, '5044', 5044)">
+          <code onmouseout="hideTip(event, '4999', 4999)" onmouseover="showTip(event, '4999', 4999)">
             Eps
           </code>
-          <div class="tip" id="5044">
+          <div class="tip" id="4999">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>matches nothing?</p>
+                    <p>matches nothing?</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5045', 5045)" onmouseover="showTip(event, '5045', 5045)">
+          <code onmouseout="hideTip(event, '5000', 5000)" onmouseover="showTip(event, '5000', 5000)">
             Lop(o&#39;)
           </code>
-          <div class="tip" id="5045">
+          <div class="tip" id="5000">
             <strong>Signature:</strong> SafeOption<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>long option</p>
+                    <p>long option</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5046', 5046)" onmouseover="showTip(event, '5046', 5046)">
+          <code onmouseout="hideTip(event, '5001', 5001)" onmouseover="showTip(event, '5001', 5001)">
             Req(ast&#39;)
           </code>
-          <div class="tip" id="5046">
+          <div class="tip" id="5001">
             <strong>Signature:</strong> UsageAst<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Requires the given item</p>
+                    <p>Requires the given item</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5047', 5047)" onmouseover="showTip(event, '5047', 5047)">
+          <code onmouseout="hideTip(event, '5002', 5002)" onmouseover="showTip(event, '5002', 5002)">
             Sdh
           </code>
-          <div class="tip" id="5047">
+          <div class="tip" id="5002">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>matches the stdin [-]</p>
+                    <p>matches the stdin [-]</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5048', 5048)" onmouseover="showTip(event, '5048', 5048)">
+          <code onmouseout="hideTip(event, '5003', 5003)" onmouseover="showTip(event, '5003', 5003)">
             Seq(asts&#39;)
           </code>
-          <div class="tip" id="5048">
+          <div class="tip" id="5003">
             <strong>Signature:</strong> UsageAst list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sequence of items, if the items are only options then order is ignored.</p>
+                    <p>Sequence of items, if the items are only options then order is ignored.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5049', 5049)" onmouseover="showTip(event, '5049', 5049)">
+          <code onmouseout="hideTip(event, '5004', 5004)" onmouseover="showTip(event, '5004', 5004)">
             Sop(o&#39;)
           </code>
-          <div class="tip" id="5049">
+          <div class="tip" id="5004">
             <strong>Signature:</strong> SafeOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Short options</p>
+                    <p>Short options</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5050', 5050)" onmouseover="showTip(event, '5050', 5050)">
+          <code onmouseout="hideTip(event, '5005', 5005)" onmouseover="showTip(event, '5005', 5005)">
             Sqb(ast&#39;)
           </code>
-          <div class="tip" id="5050">
+          <div class="tip" id="5005">
             <strong>Signature:</strong> UsageAst<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Marks the given item as optional</p>
+                    <p>Marks the given item as optional</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5051', 5051)" onmouseover="showTip(event, '5051', 5051)">
+          <code onmouseout="hideTip(event, '5006', 5006)" onmouseover="showTip(event, '5006', 5006)">
             Xor(l&#39;,r&#39;)
           </code>
-          <div class="tip" id="5051">
+          <div class="tip" id="5006">
             <strong>Signature:</strong> UsageAst * UsageAst<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Either the one or the other</p>
+                    <p>Either the one or the other</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5052', 5052)" onmouseover="showTip(event, '5052', 5052)">
+          <code onmouseout="hideTip(event, '5007', 5007)" onmouseover="showTip(event, '5007', 5007)">
             XorEmpty
           </code>
-          <div class="tip" id="5052">
+          <div class="tip" id="5007">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -560,34 +525,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5053', 5053)" onmouseover="showTip(event, '5053', 5053)">
+          <code onmouseout="hideTip(event, '5008', 5008)" onmouseover="showTip(event, '5008', 5008)">
             x.ContainsOnlyOptions
           </code>
-          <div class="tip" id="5053">
+          <div class="tip" id="5008">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5054', 5054)" onmouseover="showTip(event, '5054', 5054)">
+          <code onmouseout="hideTip(event, '5009', 5009)" onmouseover="showTip(event, '5009', 5009)">
             x.InstanceOfSop
           </code>
-          <div class="tip" id="5054">
+          <div class="tip" id="5009">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Ast.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -629,7 +588,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

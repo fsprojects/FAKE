@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -463,10 +467,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -487,10 +488,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L233-233" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
+                    <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -517,10 +515,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L373-373" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
+                    <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -539,10 +534,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L210-210" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default Android packaging parameters</p>
+                    <p>The default Android packaging parameters</p>
 
 
         </td>
@@ -565,10 +557,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L411-411" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
+                    <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -588,10 +577,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L396-396" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default Android signing and aligning parameters</p>
+                    <p>The default Android signing and aligning parameters</p>
 
 
         </td>
@@ -614,10 +600,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L444-444" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
+                    <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -645,10 +628,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L473-473" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Archive a project using Xamarin's iOS archive tools</p>
+                    <p>Archive a project using Xamarin's iOS archive tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default archive parameters</li>
@@ -667,10 +647,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L462-462" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default iOS archive parameters</p>
+                    <p>The default iOS archive parameters</p>
 
 
         </td>
@@ -693,10 +670,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds a project or solution using Xamarin's iOS build tools</p>
+                    <p>Builds a project or solution using Xamarin's iOS build tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -723,10 +697,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default iOS build parameters</p>
+                    <p>The default iOS build parameters</p>
 
 
         </td>
@@ -749,10 +720,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
+                    <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default package restore parameters</li>
@@ -779,10 +747,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.Xamarin</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XamarinHelper.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default package restore parameters</p>
+                    <p>The default package restore parameters</p>
 
 
         </td>
@@ -826,7 +791,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

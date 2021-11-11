@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -324,36 +328,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2028', 2028)" onmouseover="showTip(event, '2028', 2028)">
+          <code onmouseout="hideTip(event, '2006', 2006)" onmouseover="showTip(event, '2006', 2006)">
             FileInfo.contentIsEqualTo first second
           </code>
-          <div class="tip" id="2028">
+          <div class="tip" id="2006">
             <strong>Signature:</strong> first:FileInfo -&gt; second:FileInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileInfo.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the two files are byte-to-byte equal.</p>
+                    <p>Checks if the two files are byte-to-byte equal.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2029', 2029)" onmouseover="showTip(event, '2029', 2029)">
+          <code onmouseout="hideTip(event, '2007', 2007)" onmouseover="showTip(event, '2007', 2007)">
             FileInfo.ofPath(path)
           </code>
-          <div class="tip" id="2029">
+          <div class="tip" id="2007">
             <strong>Signature:</strong> path:string -&gt; FileInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileInfo.fs#L8-8" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a FileInfo for the given path.</p>
+                    <p>Creates a FileInfo for the given path.</p>
 
 
         </td>
@@ -368,36 +366,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2030', 2030)" onmouseover="showTip(event, '2030', 2030)">
+          <code onmouseout="hideTip(event, '2008', 2008)" onmouseover="showTip(event, '2008', 2008)">
             FileInfo.( |FullName| )(f)
           </code>
-          <div class="tip" id="2030">
+          <div class="tip" id="2008">
             <strong>Signature:</strong> f:FileInfo -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileInfo.fs#L11-11" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active Pattern for determining file name.</p>
+                    <p>Active Pattern for determining file name.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2031', 2031)" onmouseover="showTip(event, '2031', 2031)">
+          <code onmouseout="hideTip(event, '2009', 2009)" onmouseover="showTip(event, '2009', 2009)">
             FileInfo.( |NameSections| )(f)
           </code>
-          <div class="tip" id="2031">
+          <div class="tip" id="2009">
             <strong>Signature:</strong> f:FileInfo -&gt; string * string * string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileInfo.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active Pattern for determining FileInfoNameSections.</p>
+                    <p>Active Pattern for determining FileInfoNameSections.</p>
 
 
         </td>
@@ -441,7 +433,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

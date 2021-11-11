@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,90 +326,75 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6371', 6371)" onmouseover="showTip(event, '6371', 6371)">
+          <code onmouseout="hideTip(event, '6275', 6275)" onmouseover="showTip(event, '6275', 6275)">
             Auto
           </code>
-          <div class="tip" id="6371">
+          <div class="tip" id="6275">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L180-180" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The service will start during startup of the system.</p>
+                    <p>The service will start during startup of the system.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6372', 6372)" onmouseover="showTip(event, '6372', 6372)">
+          <code onmouseout="hideTip(event, '6276', 6276)" onmouseover="showTip(event, '6276', 6276)">
             Boot
           </code>
-          <div class="tip" id="6372">
+          <div class="tip" id="6276">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The service is a device driver that will be started by the operating system boot loader. This value is not currently supported by the Windows Installer.</p>
+                    <p>The service is a device driver that will be started by the operating system boot loader. This value is not currently supported by the Windows Installer.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6373', 6373)" onmouseover="showTip(event, '6373', 6373)">
+          <code onmouseout="hideTip(event, '6277', 6277)" onmouseover="showTip(event, '6277', 6277)">
             Demand
           </code>
-          <div class="tip" id="6373">
+          <div class="tip" id="6277">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L182-182" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The service will start when the service control manager calls the StartService function.</p>
+                    <p>The service will start when the service control manager calls the StartService function.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6374', 6374)" onmouseover="showTip(event, '6374', 6374)">
+          <code onmouseout="hideTip(event, '6278', 6278)" onmouseover="showTip(event, '6278', 6278)">
             Disabled
           </code>
-          <div class="tip" id="6374">
+          <div class="tip" id="6278">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L184-184" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The service can no longer be started.</p>
+                    <p>The service can no longer be started.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6375', 6375)" onmouseover="showTip(event, '6375', 6375)">
+          <code onmouseout="hideTip(event, '6279', 6279)" onmouseover="showTip(event, '6279', 6279)">
             System
           </code>
-          <div class="tip" id="6375">
+          <div class="tip" id="6279">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L188-188" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The service is a device driver that will be started by the IoInitSystem function. This value is not currently supported by the Windows Installer.</p>
+                    <p>The service is a device driver that will be started by the IoInitSystem function. This value is not currently supported by the Windows Installer.</p>
 
 
         </td>
@@ -449,7 +438,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

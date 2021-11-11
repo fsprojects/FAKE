@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,72 +326,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5146', 5146)" onmouseover="showTip(event, '5146', 5146)">
+          <code onmouseout="hideTip(event, '5101', 5101)" onmouseover="showTip(event, '5101', 5101)">
             CorrelationId
           </code>
-          <div class="tip" id="5146">
+          <div class="tip" id="5101">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L162-162" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the correlation id used for logging.</p>
+                    <p>Specify the correlation id used for logging.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5147', 5147)" onmouseover="showTip(event, '5147', 5147)">
+          <code onmouseout="hideTip(event, '5102', 5102)" onmouseover="showTip(event, '5102', 5102)">
             LogFilePath
           </code>
-          <div class="tip" id="5147">
+          <div class="tip" id="5102">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the file name to save processing log.</p>
+                    <p>Specify the file name to save processing log.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5148', 5148)" onmouseover="showTip(event, '5148', 5148)">
+          <code onmouseout="hideTip(event, '5103', 5103)" onmouseover="showTip(event, '5103', 5103)">
             LogLevel
           </code>
-          <div class="tip" id="5148">
+          <div class="tip" id="5103">
             <strong>Signature:</strong> LogLevel option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
+                    <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5149', 5149)" onmouseover="showTip(event, '5149', 5149)">
+          <code onmouseout="hideTip(event, '5104', 5104)" onmouseover="showTip(event, '5104', 5104)">
             RepoRoot
           </code>
-          <div class="tip" id="5149">
+          <div class="tip" id="5104">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L159-159" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the GIT repository root folder.</p>
+                    <p>Specify the GIT repository root folder.</p>
 
 
         </td>
@@ -402,18 +394,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5150', 5150)" onmouseover="showTip(event, '5150', 5150)">
+          <code onmouseout="hideTip(event, '5105', 5105)" onmouseover="showTip(event, '5105', 5105)">
             LogParams.Create()
           </code>
-          <div class="tip" id="5150">
+          <div class="tip" id="5105">
             <strong>Signature:</strong> unit -&gt; LogParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L165-165" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Log default parameters</p>
+                    <p>Log default parameters</p>
 
 
         </td>
@@ -457,7 +446,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

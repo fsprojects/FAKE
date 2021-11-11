@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,7 +323,7 @@
 
 <div class="xmldoc">
 <p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages.
-There is also a tutorial about <a href="/create-nuget-package.html">nuget package creating</a> available.</p>
+There is also a tutorial about <a href="../create-nuget-package.html">nuget package creating</a> available.</p>
 
 </div>
 
@@ -460,10 +464,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L538-538" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default NuGet feed</p>
+                    <p>Default NuGet feed</p>
 
 
         </td>
@@ -486,10 +487,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L624-624" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the dependencies from specified packages.config file</p>
+                    <p>Returns the dependencies from specified packages.config file</p>
 
 
         </td>
@@ -512,10 +510,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L531-531" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the NuGet meta data from the given package file name.</p>
+                    <p>Returns the NuGet meta data from the given package file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>packageFileName</code> - The .nuspec package file name.</li>
@@ -542,10 +537,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L483-483" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses nuspec metadata from a nuspec file.</p>
+                    <p>Parses nuspec metadata from a nuspec file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>nuspec</code> - The .nuspec file content.</li>
@@ -572,10 +564,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the version no. for a given package in the deployments folder</p>
+                    <p>Gets the version no. for a given package in the deployments folder</p>
 
 
         </td>
@@ -598,10 +587,7 @@ There is also a tutorial about <a href="/create-nuget-package.html">nuget packag
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L434-434" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new NuGet package, and optionally publishes it.
+                    <p>Creates a new NuGet package, and optionally publishes it.
 Template parameter substitution is performed when passing a .nuspec</p>
 <h2>Parameters</h2>
 <ul>
@@ -630,10 +616,7 @@ Template parameter substitution is performed when passing a .nuspec</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>NuGet default parameters</p>
+                    <p>NuGet default parameters</p>
 
 
         </td>
@@ -656,10 +639,7 @@ Template parameter substitution is performed when passing a .nuspec</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L397-397" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new NuGet package based on the given .nuspec or project file.
+                    <p>Creates a new NuGet package based on the given .nuspec or project file.
 Template parameter substitution is performed when passing a .nuspec</p>
 <h2>Parameters</h2>
 <ul>
@@ -688,10 +668,7 @@ Template parameter substitution is performed when passing a .nuspec</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L379-379" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new NuGet package based on the given .nuspec or project file.
+                    <p>Creates a new NuGet package based on the given .nuspec or project file.
 The .nuspec / projectfile is passed as-is (no templating is performed)</p>
 <h2>Parameters</h2>
 <ul>
@@ -720,10 +697,7 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L417-417" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Publishes a NuGet package to the nuget server.</p>
+                    <p>Publishes a NuGet package to the nuget server.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
@@ -750,10 +724,7 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.NuGet.NuGet instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/NuGet/NugetHelper.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a string which tells NuGet that you require exactly this package version.</p>
+                    <p>Creates a string which tells NuGet that you require exactly this package version.</p>
 
 
         </td>
@@ -797,7 +768,7 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

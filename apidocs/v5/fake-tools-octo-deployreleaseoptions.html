@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3725', 3725)" onmouseover="showTip(event, '3725', 3725)">
+          <code onmouseout="hideTip(event, '3814', 3814)" onmouseover="showTip(event, '3814', 3814)">
             Channel
           </code>
-          <div class="tip" id="3725">
+          <div class="tip" id="3814">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L108-108" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L108-108" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Channel to use for the new release</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3726', 3726)" onmouseover="showTip(event, '3726', 3726)">
+          <code onmouseout="hideTip(event, '3815', 3815)" onmouseover="showTip(event, '3815', 3815)">
             Common
           </code>
-          <div class="tip" id="3726">
+          <div class="tip" id="3815">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L111-111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Common parameters</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3727', 3727)" onmouseover="showTip(event, '3727', 3727)">
+          <code onmouseout="hideTip(event, '3816', 3816)" onmouseover="showTip(event, '3816', 3816)">
             DeploymentCheckSleepCycle
           </code>
-          <div class="tip" id="3727">
+          <div class="tip" id="3816">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L100-100" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies how much time should elapse between deployment status
@@ -374,15 +378,15 @@ checks (default: 10 seconds)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3728', 3728)" onmouseover="showTip(event, '3728', 3728)">
+          <code onmouseout="hideTip(event, '3817', 3817)" onmouseover="showTip(event, '3817', 3817)">
             DeploymentTimeout
           </code>
-          <div class="tip" id="3728">
+          <div class="tip" id="3817">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L96-96" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L96-96" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies maximum time that deployment can take
@@ -393,15 +397,15 @@ checks (default: 10 seconds)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3729', 3729)" onmouseover="showTip(event, '3729', 3729)">
+          <code onmouseout="hideTip(event, '3818', 3818)" onmouseover="showTip(event, '3818', 3818)">
             DeployTo
           </code>
-          <div class="tip" id="3729">
+          <div class="tip" id="3818">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Environment to deploy to</p>
@@ -411,15 +415,15 @@ checks (default: 10 seconds)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3730', 3730)" onmouseover="showTip(event, '3730', 3730)">
+          <code onmouseout="hideTip(event, '3819', 3819)" onmouseover="showTip(event, '3819', 3819)">
             Force
           </code>
-          <div class="tip" id="3730">
+          <div class="tip" id="3819">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L82-82" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L82-82" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If a project is configured to skip packages with already-installed
@@ -430,15 +434,15 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3731', 3731)" onmouseover="showTip(event, '3731', 3731)">
+          <code onmouseout="hideTip(event, '3820', 3820)" onmouseover="showTip(event, '3820', 3820)">
             NoRawLog
           </code>
-          <div class="tip" id="3731">
+          <div class="tip" id="3820">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L88-88" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L88-88" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Don't print the raw log of failed tasks</p>
@@ -448,15 +452,15 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3732', 3732)" onmouseover="showTip(event, '3732', 3732)">
+          <code onmouseout="hideTip(event, '3821', 3821)" onmouseover="showTip(event, '3821', 3821)">
             Progress
           </code>
-          <div class="tip" id="3732">
+          <div class="tip" id="3821">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L92-92" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L92-92" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Show progress of the deployment.
@@ -467,15 +471,15 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3733', 3733)" onmouseover="showTip(event, '3733', 3733)">
+          <code onmouseout="hideTip(event, '3822', 3822)" onmouseover="showTip(event, '3822', 3822)">
             Project
           </code>
-          <div class="tip" id="3733">
+          <div class="tip" id="3822">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L71-71" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Name of the project</p>
@@ -485,15 +489,15 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3734', 3734)" onmouseover="showTip(event, '3734', 3734)">
+          <code onmouseout="hideTip(event, '3823', 3823)" onmouseover="showTip(event, '3823', 3823)">
             SpecificMachines
           </code>
-          <div class="tip" id="3734">
+          <div class="tip" id="3823">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L105-105" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A comma-separated list of machine names to target in the
@@ -505,15 +509,15 @@ the environment will be considered.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3735', 3735)" onmouseover="showTip(event, '3735', 3735)">
+          <code onmouseout="hideTip(event, '3824', 3824)" onmouseover="showTip(event, '3824', 3824)">
             Version
           </code>
-          <div class="tip" id="3735">
+          <div class="tip" id="3824">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L78-78" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L78-78" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Version number of the release to deploy; Specify "latest" for
@@ -524,15 +528,15 @@ the latest release</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3736', 3736)" onmouseover="showTip(event, '3736', 3736)">
+          <code onmouseout="hideTip(event, '3825', 3825)" onmouseover="showTip(event, '3825', 3825)">
             WaitForDeployment
           </code>
-          <div class="tip" id="3736">
+          <div class="tip" id="3825">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L85-85" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L85-85" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Whether to wait synchronously for deployment to finish</p>
@@ -580,7 +584,7 @@ the latest release</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

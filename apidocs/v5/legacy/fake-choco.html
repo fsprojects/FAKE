@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -425,10 +429,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L256-256" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco install.</p>
+                    <p>The default option set given to choco install.</p>
 
 
         </td>
@@ -451,10 +452,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L275-275" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco pack.</p>
+                    <p>The default option set given to choco pack.</p>
 
 
         </td>
@@ -477,10 +475,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L321-321" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco push.</p>
+                    <p>The default option set given to choco push.</p>
 
 
         </td>
@@ -503,10 +498,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L713-713" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">install</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">install</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoInstallParams</code></p></li>
@@ -540,10 +532,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L701-701" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True if choco is available (only on windows)</p>
+                    <p>True if choco is available (only on windows)</p>
 <h2>Sample usage</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -573,10 +562,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L746-746" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified</p>
 <h2>Parameters</h2>
 <ul>
 <li>
@@ -609,10 +595,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L775-775" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPackParams</code></p></li>
@@ -646,10 +629,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Windows.Choco instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L816-816" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPush">push</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPush">push</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPushParams</code></p></li>
@@ -704,7 +684,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

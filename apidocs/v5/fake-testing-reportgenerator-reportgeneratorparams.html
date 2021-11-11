@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3647', 3647)" onmouseover="showTip(event, '3647', 3647)">
+          <code onmouseout="hideTip(event, '3727', 3727)" onmouseover="showTip(event, '3727', 3727)">
             ClassFilters
           </code>
-          <div class="tip" id="3647">
+          <div class="tip" id="3727">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L86-86" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional list of classes that should be included or excluded
@@ -340,15 +344,15 @@ filters. Wildcards are allowed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3648', 3648)" onmouseover="showTip(event, '3648', 3648)">
+          <code onmouseout="hideTip(event, '3728', 3728)" onmouseover="showTip(event, '3728', 3728)">
             ExePath
           </code>
-          <div class="tip" id="3648">
+          <div class="tip" id="3728">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L62-62" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) Path to the ReportGenerator exe file.</p>
@@ -358,15 +362,15 @@ filters. Wildcards are allowed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3649', 3649)" onmouseover="showTip(event, '3649', 3649)">
+          <code onmouseout="hideTip(event, '3729', 3729)" onmouseover="showTip(event, '3729', 3729)">
             FileFilters
           </code>
-          <div class="tip" id="3649">
+          <div class="tip" id="3729">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L81-81" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional list of files that should be included or excluded
@@ -379,15 +383,15 @@ filters. Wildcards are allowed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3650', 3650)" onmouseover="showTip(event, '3650', 3650)">
+          <code onmouseout="hideTip(event, '3730', 3730)" onmouseover="showTip(event, '3730', 3730)">
             Filters
           </code>
-          <div class="tip" id="3650">
+          <div class="tip" id="3730">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L76-76" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional list of assemblies that should be included or excluded
@@ -400,15 +404,15 @@ filters. Wildcards are allowed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3651', 3651)" onmouseover="showTip(event, '3651', 3651)">
+          <code onmouseout="hideTip(event, '3731', 3731)" onmouseover="showTip(event, '3731', 3731)">
             HistoryDir
           </code>
-          <div class="tip" id="3651">
+          <div class="tip" id="3731">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional directory for storing persistent coverage information.
@@ -419,15 +423,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3652', 3652)" onmouseover="showTip(event, '3652', 3652)">
+          <code onmouseout="hideTip(event, '3732', 3732)" onmouseover="showTip(event, '3732', 3732)">
             LogVerbosity
           </code>
-          <div class="tip" id="3652">
+          <div class="tip" id="3732">
             <strong>Signature:</strong> LogVerbosity<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L83-83" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L90-90" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The verbosity level of the log messages.</p>
@@ -437,15 +441,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3653', 3653)" onmouseover="showTip(event, '3653', 3653)">
+          <code onmouseout="hideTip(event, '3733', 3733)" onmouseover="showTip(event, '3733', 3733)">
             ReportTypes
           </code>
-          <div class="tip" id="3653">
+          <div class="tip" id="3733">
             <strong>Signature:</strong> ReportType list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The output formats and scope.</p>
@@ -455,15 +459,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3654', 3654)" onmouseover="showTip(event, '3654', 3654)">
+          <code onmouseout="hideTip(event, '3734', 3734)" onmouseover="showTip(event, '3734', 3734)">
             SourceDirs
           </code>
-          <div class="tip" id="3654">
+          <div class="tip" id="3734">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L68-68" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional directories which contain the corresponding source code.</p>
@@ -473,15 +477,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3655', 3655)" onmouseover="showTip(event, '3655', 3655)">
+          <code onmouseout="hideTip(event, '3735', 3735)" onmouseover="showTip(event, '3735', 3735)">
             Tag
           </code>
-          <div class="tip" id="3655">
+          <div class="tip" id="3735">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L81-81" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L88-88" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Optional tag or build version</p>
@@ -491,15 +495,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3656', 3656)" onmouseover="showTip(event, '3656', 3656)">
+          <code onmouseout="hideTip(event, '3736', 3736)" onmouseover="showTip(event, '3736', 3736)">
             TargetDir
           </code>
-          <div class="tip" id="3656">
+          <div class="tip" id="3736">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) The directory where the generated report should be saved.</p>
@@ -509,15 +513,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3657', 3657)" onmouseover="showTip(event, '3657', 3657)">
+          <code onmouseout="hideTip(event, '3737', 3737)" onmouseover="showTip(event, '3737', 3737)">
             TimeOut
           </code>
-          <div class="tip" id="3657">
+          <div class="tip" id="3737">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L87-87" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L94-94" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The timeout for the ReportGenerator process.</p>
@@ -527,15 +531,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3658', 3658)" onmouseover="showTip(event, '3658', 3658)">
+          <code onmouseout="hideTip(event, '3738', 3738)" onmouseover="showTip(event, '3738', 3738)">
             ToolType
           </code>
-          <div class="tip" id="3658">
+          <div class="tip" id="3738">
             <strong>Signature:</strong> ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L53-53" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L60-60" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Tool type</p>
@@ -545,15 +549,15 @@ Can be used in future reports to show coverage evolution.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3659', 3659)" onmouseover="showTip(event, '3659', 3659)">
+          <code onmouseout="hideTip(event, '3739', 3739)" onmouseover="showTip(event, '3739', 3739)">
             WorkingDir
           </code>
-          <div class="tip" id="3659">
+          <div class="tip" id="3739">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L85-85" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Testing.ReportGenerator/ReportGenerator.fs#L92-92" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The directory where the ReportGenerator process will be started.</p>
@@ -601,7 +605,7 @@ Can be used in future reports to show coverage evolution.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

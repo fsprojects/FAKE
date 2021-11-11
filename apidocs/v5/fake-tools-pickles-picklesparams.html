@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3756', 3756)" onmouseover="showTip(event, '3756', 3756)">
+          <code onmouseout="hideTip(event, '3845', 3845)" onmouseover="showTip(event, '3845', 3845)">
             EnableComments
           </code>
-          <div class="tip" id="3756">
+          <div class="tip" id="3845">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L115-115" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L115-115" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>As of version 2.6, Pickles includes Gherkin #-style comments. As of version 2.7, this inclusion is configurable.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3757', 3757)" onmouseover="showTip(event, '3757', 3757)">
+          <code onmouseout="hideTip(event, '3846', 3846)" onmouseover="showTip(event, '3846', 3846)">
             ErrorLevel
           </code>
-          <div class="tip" id="3757">
+          <div class="tip" id="3846">
             <strong>Signature:</strong> ErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L111-111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Option which allows to specify if failure of pickles should break the build.</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3758', 3758)" onmouseover="showTip(event, '3758', 3758)">
+          <code onmouseout="hideTip(event, '3847', 3847)" onmouseover="showTip(event, '3847', 3847)">
             ExcludeTags
           </code>
-          <div class="tip" id="3758">
+          <div class="tip" id="3847">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L117-117" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L117-117" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>exclude scenarios that match this tags</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3759', 3759)" onmouseover="showTip(event, '3759', 3759)">
+          <code onmouseout="hideTip(event, '3848', 3848)" onmouseover="showTip(event, '3848', 3848)">
             FeatureDirectory
           </code>
-          <div class="tip" id="3759">
+          <div class="tip" id="3848">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L93-93" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L93-93" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The directory to start scanning recursively for features</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3760', 3760)" onmouseover="showTip(event, '3760', 3760)">
+          <code onmouseout="hideTip(event, '3849', 3849)" onmouseover="showTip(event, '3849', 3849)">
             FeatureFileLanguage
           </code>
-          <div class="tip" id="3760">
+          <div class="tip" id="3849">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L95-95" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L95-95" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The language of the feature files</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3761', 3761)" onmouseover="showTip(event, '3761', 3761)">
+          <code onmouseout="hideTip(event, '3850', 3850)" onmouseover="showTip(event, '3850', 3850)">
             HideTags
           </code>
-          <div class="tip" id="3761">
+          <div class="tip" id="3850">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L119-119" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L119-119" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Technical tags that shouldn't be displayed</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3762', 3762)" onmouseover="showTip(event, '3762', 3762)">
+          <code onmouseout="hideTip(event, '3851', 3851)" onmouseover="showTip(event, '3851', 3851)">
             IncludeExperimentalFeatures
           </code>
-          <div class="tip" id="3762">
+          <div class="tip" id="3851">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L113-113" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L113-113" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Option which allows to enable some experimental features</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3763', 3763)" onmouseover="showTip(event, '3763', 3763)">
+          <code onmouseout="hideTip(event, '3852', 3852)" onmouseover="showTip(event, '3852', 3852)">
             LinkedTestResultFiles
           </code>
-          <div class="tip" id="3763">
+          <div class="tip" id="3852">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L103-103" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L103-103" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>the paths to the linked test results files</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3764', 3764)" onmouseover="showTip(event, '3764', 3764)">
+          <code onmouseout="hideTip(event, '3853', 3853)" onmouseover="showTip(event, '3853', 3853)">
             OutputDirectory
           </code>
-          <div class="tip" id="3764">
+          <div class="tip" id="3853">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L97-97" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The directory where output files will be placed</p>
@@ -481,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3765', 3765)" onmouseover="showTip(event, '3765', 3765)">
+          <code onmouseout="hideTip(event, '3854', 3854)" onmouseover="showTip(event, '3854', 3854)">
             OutputFileFormat
           </code>
-          <div class="tip" id="3765">
+          <div class="tip" id="3854">
             <strong>Signature:</strong> DocumentationFormat<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L99-99" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L99-99" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The format of the output documentation</p>
@@ -499,15 +503,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3766', 3766)" onmouseover="showTip(event, '3766', 3766)">
+          <code onmouseout="hideTip(event, '3855', 3855)" onmouseover="showTip(event, '3855', 3855)">
             SystemUnderTestName
           </code>
-          <div class="tip" id="3766">
+          <div class="tip" id="3855">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L105-105" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The name of the system under test</p>
@@ -517,15 +521,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3767', 3767)" onmouseover="showTip(event, '3767', 3767)">
+          <code onmouseout="hideTip(event, '3856', 3856)" onmouseover="showTip(event, '3856', 3856)">
             SystemUnderTestVersion
           </code>
-          <div class="tip" id="3767">
+          <div class="tip" id="3856">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L107-107" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L107-107" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The version of the system under test</p>
@@ -535,15 +539,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3768', 3768)" onmouseover="showTip(event, '3768', 3768)">
+          <code onmouseout="hideTip(event, '3857', 3857)" onmouseover="showTip(event, '3857', 3857)">
             TestResultsFormat
           </code>
-          <div class="tip" id="3768">
+          <div class="tip" id="3857">
             <strong>Signature:</strong> TestResultsFormat<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L101-101" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L101-101" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>the format of the linked test results</p>
@@ -553,15 +557,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3769', 3769)" onmouseover="showTip(event, '3769', 3769)">
+          <code onmouseout="hideTip(event, '3858', 3858)" onmouseover="showTip(event, '3858', 3858)">
             TimeOut
           </code>
-          <div class="tip" id="3769">
+          <div class="tip" id="3858">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L109-109" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L109-109" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Maximum time to allow xUnit to run before being killed.</p>
@@ -571,15 +575,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3770', 3770)" onmouseover="showTip(event, '3770', 3770)">
+          <code onmouseout="hideTip(event, '3859', 3859)" onmouseover="showTip(event, '3859', 3859)">
             ToolPath
           </code>
-          <div class="tip" id="3770">
+          <div class="tip" id="3859">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L89-89" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L89-89" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path to the Pickles console tool: 'pickles.exe'</p>
@@ -589,15 +593,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3771', 3771)" onmouseover="showTip(event, '3771', 3771)">
+          <code onmouseout="hideTip(event, '3860', 3860)" onmouseover="showTip(event, '3860', 3860)">
             WorkingDir
           </code>
-          <div class="tip" id="3771">
+          <div class="tip" id="3860">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Pickles/Pickles.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The working directory</p>
@@ -645,7 +649,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

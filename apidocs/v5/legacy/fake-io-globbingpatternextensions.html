@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -324,88 +328,73 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2041', 2041)" onmouseover="showTip(event, '2041', 2041)">
+          <code onmouseout="hideTip(event, '2019', 2019)" onmouseover="showTip(event, '2019', 2019)">
             x.And(pattern)
           </code>
-          <div class="tip" id="2041">
+          <div class="tip" id="2019">
             <strong>Signature:</strong> pattern:string -&gt; IGlobbingPattern<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Adds the given pattern to the file includes</p>
+                    <p>Adds the given pattern to the file includes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2042', 2042)" onmouseover="showTip(event, '2042', 2042)">
+          <code onmouseout="hideTip(event, '2020', 2020)" onmouseover="showTip(event, '2020', 2020)">
             x.ButNot(pattern)
           </code>
-          <div class="tip" id="2042">
+          <div class="tip" id="2020">
             <strong>Signature:</strong> pattern:string -&gt; IGlobbingPattern<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ignores files with the given pattern</p>
+                    <p>Ignores files with the given pattern</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2043', 2043)" onmouseover="showTip(event, '2043', 2043)">
+          <code onmouseout="hideTip(event, '2021', 2021)" onmouseover="showTip(event, '2021', 2021)">
             x.IsMatch(path)
           </code>
-          <div class="tip" id="2043">
+          <div class="tip" id="2021">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if a particular file is matched</p>
+                    <p>Checks if a particular file is matched</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2044', 2044)" onmouseover="showTip(event, '2044', 2044)">
+          <code onmouseout="hideTip(event, '2022', 2022)" onmouseover="showTip(event, '2022', 2022)">
             x.Resolve()
           </code>
-          <div class="tip" id="2044">
+          <div class="tip" id="2022">
             <strong>Signature:</strong> unit -&gt; IGlobbingPattern<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2045', 2045)" onmouseover="showTip(event, '2045', 2045)">
+          <code onmouseout="hideTip(event, '2023', 2023)" onmouseover="showTip(event, '2023', 2023)">
             x.SetBaseDirectory(dir)
           </code>
-          <div class="tip" id="2045">
+          <div class="tip" id="2023">
             <strong>Signature:</strong> dir:string -&gt; IGlobbingPattern<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets a directory as BaseDirectory.</p>
+                    <p>Sets a directory as BaseDirectory.</p>
 
 
         </td>
@@ -449,7 +438,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

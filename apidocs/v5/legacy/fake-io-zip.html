@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,18 +330,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2135', 2135)" onmouseover="showTip(event, '2135', 2135)">
+          <code onmouseout="hideTip(event, '2113', 2113)" onmouseover="showTip(event, '2113', 2113)">
             Zip.createZip(...)
           </code>
-          <div class="tip" id="2135">
+          <div class="tip" id="2113">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files</p>
+                    <p>Creates a zip file with the given files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
@@ -353,18 +354,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2136', 2136)" onmouseover="showTip(event, '2136', 2136)">
+          <code onmouseout="hideTip(event, '2114', 2114)" onmouseover="showTip(event, '2114', 2114)">
             Zip.createZipOfIncludes(...)
           </code>
-          <div class="tip" id="2136">
+          <div class="tip" id="2114">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L327-327" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -378,18 +376,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2137', 2137)" onmouseover="showTip(event, '2137', 2137)">
+          <code onmouseout="hideTip(event, '2115', 2115)" onmouseover="showTip(event, '2115', 2115)">
             Zip.createZipSpec(...)
           </code>
-          <div class="tip" id="2137">
+          <div class="tip" id="2115">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files and specs.</p>
+                    <p>Creates a zip file with the given files and specs.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The fileName of the resulting zip file.</li>
@@ -403,36 +398,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2138', 2138)" onmouseover="showTip(event, '2138', 2138)">
+          <code onmouseout="hideTip(event, '2116', 2116)" onmouseover="showTip(event, '2116', 2116)">
             Zip.DefaultZipLevel
           </code>
-          <div class="tip" id="2138">
+          <div class="tip" id="2116">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default zip level</p>
+                    <p>The default zip level</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2139', 2139)" onmouseover="showTip(event, '2139', 2139)">
+          <code onmouseout="hideTip(event, '2117', 2117)" onmouseover="showTip(event, '2117', 2117)">
             Zip.filesAsSpecs workingDir files
           </code>
-          <div class="tip" id="2139">
+          <div class="tip" id="2117">
             <strong>Signature:</strong> workingDir:string -&gt; files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L254-254" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This helper helps with creating complex zip file with multiple include patterns.
+                    <p>This helper helps with creating complex zip file with multiple include patterns.
 This method will convert a given glob pattern with the given workingDir to a sequence of zip specifications.</p>
 <h2>Parameters</h2>
 <ul>
@@ -482,18 +471,15 @@ This method will convert a given glob pattern with the given workingDir to a seq
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2140', 2140)" onmouseover="showTip(event, '2140', 2140)">
+          <code onmouseout="hideTip(event, '2118', 2118)" onmouseover="showTip(event, '2118', 2118)">
             Zip.filesAsSpecsFlatten(files)
           </code>
-          <div class="tip" id="2140">
+          <div class="tip" id="2118">
             <strong>Signature:</strong> files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L281-281" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This helper helps with creating complex zip file with multiple include patterns.</p>
+                    <p>This helper helps with creating complex zip file with multiple include patterns.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
@@ -542,18 +528,15 @@ This method will convert a given glob pattern with the given workingDir to a seq
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2141', 2141)" onmouseover="showTip(event, '2141', 2141)">
+          <code onmouseout="hideTip(event, '2119', 2119)" onmouseover="showTip(event, '2119', 2119)">
             Zip.moveToFolder path items
           </code>
-          <div class="tip" id="2141">
+          <div class="tip" id="2119">
             <strong>Signature:</strong> path:string -&gt; items:seq&lt;string * string&gt; -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L309-309" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This helper helps with creating complex zip file with multiple include patterns.
+                    <p>This helper helps with creating complex zip file with multiple include patterns.
 This function will move a given list of zip specifications to the given folder (while keeping original folder structure intact).</p>
 <h2>Parameters</h2>
 <ul>
@@ -603,18 +586,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2142', 2142)" onmouseover="showTip(event, '2142', 2142)">
+          <code onmouseout="hideTip(event, '2120', 2120)" onmouseover="showTip(event, '2120', 2120)">
             Zip.unzip target fileName
           </code>
-          <div class="tip" id="2142">
+          <div class="tip" id="2120">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a file with the given file name.</p>
+                    <p>Unzips a file with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -626,18 +606,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2143', 2143)" onmouseover="showTip(event, '2143', 2143)">
+          <code onmouseout="hideTip(event, '2121', 2121)" onmouseover="showTip(event, '2121', 2121)">
             Zip.unzipFirstMatchingFileInMemory(...)
           </code>
-          <div class="tip" id="2143">
+          <div class="tip" id="2121">
             <strong>Signature:</strong> predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L189-189" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a single file from the archive with the given file name.</p>
+                    <p>Unzips a single file from the archive with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>predicate</code> - The predicate for the searched file in the archive.</li>
@@ -649,18 +626,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2144', 2144)" onmouseover="showTip(event, '2144', 2144)">
+          <code onmouseout="hideTip(event, '2122', 2122)" onmouseover="showTip(event, '2122', 2122)">
             Zip.unzipSingleFileInMemory(...)
           </code>
-          <div class="tip" id="2144">
+          <div class="tip" id="2122">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L167-167" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a single file from the archive with the given file name.</p>
+                    <p>Unzips a single file from the archive with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileToUnzip</code> - The file inside the archive.</li>
@@ -672,18 +646,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2145', 2145)" onmouseover="showTip(event, '2145', 2145)">
+          <code onmouseout="hideTip(event, '2123', 2123)" onmouseover="showTip(event, '2123', 2123)">
             Zip.zip workingDir fileName files
           </code>
-          <div class="tip" id="2145">
+          <div class="tip" id="2123">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
@@ -696,18 +667,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2146', 2146)" onmouseover="showTip(event, '2146', 2146)">
+          <code onmouseout="hideTip(event, '2124', 2124)" onmouseover="showTip(event, '2124', 2124)">
             Zip.zipFile fileName targetFileName
           </code>
-          <div class="tip" id="2146">
+          <div class="tip" id="2124">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given file.</p>
+                    <p>Creates a zip file with the given file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -719,18 +687,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2147', 2147)" onmouseover="showTip(event, '2147', 2147)">
+          <code onmouseout="hideTip(event, '2125', 2125)" onmouseover="showTip(event, '2125', 2125)">
             Zip.zipOfIncludes fileName files
           </code>
-          <div class="tip" id="2147">
+          <div class="tip" id="2125">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L375-375" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -779,18 +744,15 @@ This function will move a given list of zip specifications to the given folder (
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2148', 2148)" onmouseover="showTip(event, '2148', 2148)">
+          <code onmouseout="hideTip(event, '2126', 2126)" onmouseover="showTip(event, '2126', 2126)">
             Zip.zipSpec fileName items
           </code>
-          <div class="tip" id="2148">
+          <div class="tip" id="2126">
             <strong>Signature:</strong> fileName:string -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files and specs.</p>
+                    <p>Creates a zip file with the given files and specs.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The fileName of the resulting zip file.</li>
@@ -839,7 +801,7 @@ This function will move a given list of zip specifications to the given folder (
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

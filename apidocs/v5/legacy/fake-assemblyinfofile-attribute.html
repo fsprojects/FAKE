@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,34 +332,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2657', 2657)" onmouseover="showTip(event, '2657', 2657)">
+          <code onmouseout="hideTip(event, '2622', 2622)" onmouseover="showTip(event, '2622', 2622)">
             new(...)
           </code>
-          <div class="tip" id="2657">
+          <div class="tip" id="2622">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropType:string) -&gt; Attribute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2658', 2658)" onmouseover="showTip(event, '2658', 2658)">
+          <code onmouseout="hideTip(event, '2623', 2623)" onmouseover="showTip(event, '2623', 2623)">
             new(...)
           </code>
-          <div class="tip" id="2658">
+          <div class="tip" id="2623">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropName:string * staticPropType:string * staticPropValue:string) -&gt; Attribute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -368,98 +366,80 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2659', 2659)" onmouseover="showTip(event, '2659', 2659)">
+          <code onmouseout="hideTip(event, '2624', 2624)" onmouseover="showTip(event, '2624', 2624)">
             x.Name
           </code>
-          <div class="tip" id="2659">
+          <div class="tip" id="2624">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L77-77" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2660', 2660)" onmouseover="showTip(event, '2660', 2660)">
+          <code onmouseout="hideTip(event, '2625', 2625)" onmouseover="showTip(event, '2625', 2625)">
             x.Namespace
           </code>
-          <div class="tip" id="2660">
+          <div class="tip" id="2625">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2661', 2661)" onmouseover="showTip(event, '2661', 2661)">
+          <code onmouseout="hideTip(event, '2626', 2626)" onmouseover="showTip(event, '2626', 2626)">
             x.StaticPropertyName
           </code>
-          <div class="tip" id="2661">
+          <div class="tip" id="2626">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2662', 2662)" onmouseover="showTip(event, '2662', 2662)">
+          <code onmouseout="hideTip(event, '2627', 2627)" onmouseover="showTip(event, '2627', 2627)">
             x.StaticPropertyType
           </code>
-          <div class="tip" id="2662">
+          <div class="tip" id="2627">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2663', 2663)" onmouseover="showTip(event, '2663', 2663)">
+          <code onmouseout="hideTip(event, '2628', 2628)" onmouseover="showTip(event, '2628', 2628)">
             x.StaticPropertyValue
           </code>
-          <div class="tip" id="2663">
+          <div class="tip" id="2628">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2664', 2664)" onmouseover="showTip(event, '2664', 2664)">
+          <code onmouseout="hideTip(event, '2629', 2629)" onmouseover="showTip(event, '2629', 2629)">
             x.Value
           </code>
-          <div class="tip" id="2664">
+          <div class="tip" id="2629">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -472,28 +452,25 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2665', 2665)" onmouseover="showTip(event, '2665', 2665)">
+          <code onmouseout="hideTip(event, '2630', 2630)" onmouseover="showTip(event, '2630', 2630)">
             Attribute.BoolAttribute(...)
           </code>
-          <div class="tip" id="2665">
+          <div class="tip" id="2630">
             <strong>Signature:</strong> (name:string * value:bool * inNamespace:string) -&gt; Attribute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a simple attribute with boolean values. Used as base for other attributes</p>
+                    <p>Creates a simple attribute with boolean values. Used as base for other attributes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2666', 2666)" onmouseover="showTip(event, '2666', 2666)">
+          <code onmouseout="hideTip(event, '2631', 2631)" onmouseover="showTip(event, '2631', 2631)">
             Attribute.CLSCompliant(value)
           </code>
-          <div class="tip" id="2666">
+          <div class="tip" id="2631">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -506,20 +483,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.CLSCompliant&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L165-165" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which specifies if the assembly is CLS compliant</p>
+                    <p>Creates an attribute which specifies if the assembly is CLS compliant</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2667', 2667)" onmouseover="showTip(event, '2667', 2667)">
+          <code onmouseout="hideTip(event, '2632', 2632)" onmouseover="showTip(event, '2632', 2632)">
             Attribute.Company(value)
           </code>
-          <div class="tip" id="2667">
+          <div class="tip" id="2632">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -532,20 +506,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Company&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the company information</p>
+                    <p>Creates an attribute which holds the company information</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2668', 2668)" onmouseover="showTip(event, '2668', 2668)">
+          <code onmouseout="hideTip(event, '2633', 2633)" onmouseover="showTip(event, '2633', 2633)">
             Attribute.ComVisible(value)
           </code>
-          <div class="tip" id="2668">
+          <div class="tip" id="2633">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -558,20 +529,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.ComVisible&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L160-160" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which specifies if the assembly is visible via COM</p>
+                    <p>Creates an attribute which specifies if the assembly is visible via COM</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2669', 2669)" onmouseover="showTip(event, '2669', 2669)">
+          <code onmouseout="hideTip(event, '2634', 2634)" onmouseover="showTip(event, '2634', 2634)">
             Attribute.Configuration(value)
           </code>
-          <div class="tip" id="2669">
+          <div class="tip" id="2634">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -584,20 +552,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Configuration&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L120-120" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly configuration</p>
+                    <p>Creates an attribute which holds the assembly configuration</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2670', 2670)" onmouseover="showTip(event, '2670', 2670)">
+          <code onmouseout="hideTip(event, '2635', 2635)" onmouseover="showTip(event, '2635', 2635)">
             Attribute.Copyright(value)
           </code>
-          <div class="tip" id="2670">
+          <div class="tip" id="2635">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -610,20 +575,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Copyright&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the copyright information</p>
+                    <p>Creates an attribute which holds the copyright information</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2671', 2671)" onmouseover="showTip(event, '2671', 2671)">
+          <code onmouseout="hideTip(event, '2636', 2636)" onmouseover="showTip(event, '2636', 2636)">
             Attribute.Culture(value)
           </code>
-          <div class="tip" id="2671">
+          <div class="tip" id="2636">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -636,20 +598,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Culture&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly culture information</p>
+                    <p>Creates an attribute which holds the assembly culture information</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2672', 2672)" onmouseover="showTip(event, '2672', 2672)">
+          <code onmouseout="hideTip(event, '2637', 2637)" onmouseover="showTip(event, '2637', 2637)">
             Attribute.DelaySign(value)
           </code>
-          <div class="tip" id="2672">
+          <div class="tip" id="2637">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -662,20 +621,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.DelaySign&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L169-169" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which specifies if the assembly uses delayed signing</p>
+                    <p>Creates an attribute which specifies if the assembly uses delayed signing</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2673', 2673)" onmouseover="showTip(event, '2673', 2673)">
+          <code onmouseout="hideTip(event, '2638', 2638)" onmouseover="showTip(event, '2638', 2638)">
             Attribute.Description(value)
           </code>
-          <div class="tip" id="2673">
+          <div class="tip" id="2638">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -688,20 +644,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Description&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L112-112" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the product description</p>
+                    <p>Creates an attribute which holds the product description</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2674', 2674)" onmouseover="showTip(event, '2674', 2674)">
+          <code onmouseout="hideTip(event, '2639', 2639)" onmouseover="showTip(event, '2639', 2639)">
             Attribute.FileVersion(value)
           </code>
-          <div class="tip" id="2674">
+          <div class="tip" id="2639">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -714,20 +667,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.FileVersion&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L146-146" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly file version</p>
+                    <p>Creates an attribute which holds the assembly file version</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2675', 2675)" onmouseover="showTip(event, '2675', 2675)">
+          <code onmouseout="hideTip(event, '2640', 2640)" onmouseover="showTip(event, '2640', 2640)">
             Attribute.Guid(value)
           </code>
-          <div class="tip" id="2675">
+          <div class="tip" id="2640">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -740,20 +690,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Guid&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the Guid</p>
+                    <p>Creates an attribute which holds the Guid</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2676', 2676)" onmouseover="showTip(event, '2676', 2676)">
+          <code onmouseout="hideTip(event, '2641', 2641)" onmouseover="showTip(event, '2641', 2641)">
             Attribute.InformationalVersion(value)
           </code>
-          <div class="tip" id="2676">
+          <div class="tip" id="2641">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -766,20 +713,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.InformationalVersion&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L151-151" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds an assembly information version</p>
+                    <p>Creates an attribute which holds an assembly information version</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2677', 2677)" onmouseover="showTip(event, '2677', 2677)">
+          <code onmouseout="hideTip(event, '2642', 2642)" onmouseover="showTip(event, '2642', 2642)">
             Attribute.InternalsVisibleTo(value)
           </code>
-          <div class="tip" id="2677">
+          <div class="tip" id="2642">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -792,20 +736,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.InternalsVisibleTo&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L141-141" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the "InternalVisibleTo" data</p>
+                    <p>Creates an attribute which holds the "InternalVisibleTo" data</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2678', 2678)" onmouseover="showTip(event, '2678', 2678)">
+          <code onmouseout="hideTip(event, '2643', 2643)" onmouseover="showTip(event, '2643', 2643)">
             Attribute.KeyFile(value)
           </code>
-          <div class="tip" id="2678">
+          <div class="tip" id="2643">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -818,20 +759,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.KeyFile&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L133-133" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly key file</p>
+                    <p>Creates an attribute which holds the assembly key file</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2679', 2679)" onmouseover="showTip(event, '2679', 2679)">
+          <code onmouseout="hideTip(event, '2644', 2644)" onmouseover="showTip(event, '2644', 2644)">
             Attribute.KeyName(value)
           </code>
-          <div class="tip" id="2679">
+          <div class="tip" id="2644">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -844,20 +782,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.KeyName&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly key name</p>
+                    <p>Creates an attribute which holds the assembly key name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2680', 2680)" onmouseover="showTip(event, '2680', 2680)">
+          <code onmouseout="hideTip(event, '2645', 2645)" onmouseover="showTip(event, '2645', 2645)">
             Attribute.Metadata(name, value)
           </code>
-          <div class="tip" id="2680">
+          <div class="tip" id="2645">
             <strong>Signature:</strong> (name:string * value:string) -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -870,20 +805,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Metadata&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L174-174" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Create an attribute which specifies metadata about the assembly</p>
+                    <p>Create an attribute which specifies metadata about the assembly</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2681', 2681)" onmouseover="showTip(event, '2681', 2681)">
+          <code onmouseout="hideTip(event, '2646', 2646)" onmouseover="showTip(event, '2646', 2646)">
             Attribute.Product(value)
           </code>
-          <div class="tip" id="2681">
+          <div class="tip" id="2646">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -896,56 +828,47 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Product&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the product name</p>
+                    <p>Creates an attribute which holds the product name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2682', 2682)" onmouseover="showTip(event, '2682', 2682)">
+          <code onmouseout="hideTip(event, '2647', 2647)" onmouseover="showTip(event, '2647', 2647)">
             Attribute.StringAttribute(...)
           </code>
-          <div class="tip" id="2682">
+          <div class="tip" id="2647">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string option * staticValue:string option) -&gt; Attribute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a simple attribute with string values. Used as base for other attributes</p>
+                    <p>Creates a simple attribute with string values. Used as base for other attributes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2683', 2683)" onmouseover="showTip(event, '2683', 2683)">
+          <code onmouseout="hideTip(event, '2648', 2648)" onmouseover="showTip(event, '2648', 2648)">
             Attribute.Title(value)
           </code>
-          <div class="tip" id="2683">
+          <div class="tip" id="2648">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L108-108" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the product title</p>
+                    <p>Creates an attribute which holds the product title</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2684', 2684)" onmouseover="showTip(event, '2684', 2684)">
+          <code onmouseout="hideTip(event, '2649', 2649)" onmouseover="showTip(event, '2649', 2649)">
             Attribute.Trademark(value)
           </code>
-          <div class="tip" id="2684">
+          <div class="tip" id="2649">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -958,20 +881,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Trademark&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the trademark</p>
+                    <p>Creates an attribute which holds the trademark</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2685', 2685)" onmouseover="showTip(event, '2685', 2685)">
+          <code onmouseout="hideTip(event, '2650', 2650)" onmouseover="showTip(event, '2650', 2650)">
             Attribute.Version(value)
           </code>
-          <div class="tip" id="2685">
+          <div class="tip" id="2650">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -984,10 +904,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.Version&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an attribute which holds the assembly version</p>
+                    <p>Creates an attribute which holds the assembly version</p>
 
 
         </td>
@@ -1031,7 +948,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

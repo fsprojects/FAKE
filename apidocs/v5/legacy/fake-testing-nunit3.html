@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -436,10 +440,10 @@ You can pass any value using Other.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2327', 2327)" onmouseover="showTip(event, '2327', 2327)">
+          <code onmouseout="hideTip(event, '2302', 2302)" onmouseover="showTip(event, '2302', 2302)">
             buildNUnit3Args parameters assemblies
           </code>
-          <div class="tip" id="2327">
+          <div class="tip" id="2302">
             <strong>Signature:</strong> parameters:NUnit3Params -&gt; assemblies:seq&lt;string&gt; -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -452,18 +456,15 @@ You can pass any value using Other.</p>
                 <h5>OBSOLETE</h5>
                 <p>use Fake.DotNet.Testing.NUnit instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L284-284" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2328', 2328)" onmouseover="showTip(event, '2328', 2328)">
+          <code onmouseout="hideTip(event, '2303', 2303)" onmouseover="showTip(event, '2303', 2303)">
             NUnit3 setParams assemblies
           </code>
-          <div class="tip" id="2328">
+          <div class="tip" id="2303">
             <strong>Signature:</strong> setParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -476,18 +477,15 @@ You can pass any value using Other.</p>
                 <h5>OBSOLETE</h5>
                 <p>use Fake.DotNet.Testing.NUnit instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L320-320" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2329', 2329)" onmouseover="showTip(event, '2329', 2329)">
+          <code onmouseout="hideTip(event, '2304', 2304)" onmouseover="showTip(event, '2304', 2304)">
             NUnit3Defaults
           </code>
-          <div class="tip" id="2329">
+          <div class="tip" id="2304">
             <strong>Signature:</strong> NUnit3Params<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -500,10 +498,7 @@ You can pass any value using Other.</p>
                 <h5>OBSOLETE</h5>
                 <p>use Fake.DotNet.Testing.NUnit instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L245-245" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The <a href="fake-testing-nunit3-nunit3params.html">NUnit3Params</a> default parameters.</p>
+                    <p>The <a href="fake-testing-nunit3-nunit3params.html">NUnit3Params</a> default parameters.</p>
 <ul>
 <li><code>ToolPath</code> - The <code>nunit-console.exe</code> path if it exists in <code>tools/Nunit/</code>.</li>
 <li><code>Testlist</code> - <code>""</code></li>
@@ -576,7 +571,7 @@ You can pass any value using Other.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

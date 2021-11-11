@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3384', 3384)" onmouseover="showTip(event, '3384', 3384)">
+          <code onmouseout="hideTip(event, '3411', 3411)" onmouseover="showTip(event, '3411', 3411)">
             Action
           </code>
-          <div class="tip" id="3384">
+          <div class="tip" id="3411">
             <strong>Signature:</strong> RegistryValueAction<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L466-466" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L466-466" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The action that will be taken for this registry value</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3385', 3385)" onmouseover="showTip(event, '3385', 3385)">
+          <code onmouseout="hideTip(event, '3412', 3412)" onmouseover="showTip(event, '3412', 3412)">
             Id
           </code>
-          <div class="tip" id="3385">
+          <div class="tip" id="3412">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L460-460" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L460-460" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Id of this value</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3386', 3386)" onmouseover="showTip(event, '3386', 3386)">
+          <code onmouseout="hideTip(event, '3413', 3413)" onmouseover="showTip(event, '3413', 3413)">
             Key
           </code>
-          <div class="tip" id="3386">
+          <div class="tip" id="3413">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L471-471" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L471-471" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The localizable key for the registry value
@@ -374,15 +378,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3387', 3387)" onmouseover="showTip(event, '3387', 3387)">
+          <code onmouseout="hideTip(event, '3414', 3414)" onmouseover="showTip(event, '3414', 3414)">
             KeyPath
           </code>
-          <div class="tip" id="3387">
+          <div class="tip" id="3414">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L473-473" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L473-473" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set this attribute to 'yes' to make this registry key the KeyPath of the parent component</p>
@@ -392,15 +396,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3388', 3388)" onmouseover="showTip(event, '3388', 3388)">
+          <code onmouseout="hideTip(event, '3415', 3415)" onmouseover="showTip(event, '3415', 3415)">
             Name
           </code>
-          <div class="tip" id="3388">
+          <div class="tip" id="3415">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L462-462" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L462-462" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The localizable registry value name. If this attribute is not provided the default value for the registry key will be set instead</p>
@@ -410,15 +414,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3389', 3389)" onmouseover="showTip(event, '3389', 3389)">
+          <code onmouseout="hideTip(event, '3416', 3416)" onmouseover="showTip(event, '3416', 3416)">
             Root
           </code>
-          <div class="tip" id="3389">
+          <div class="tip" id="3416">
             <strong>Signature:</strong> Option&lt;RegistryRootType&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L475-475" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L475-475" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The predefined root key for the registry value.</p>
@@ -428,15 +432,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3390', 3390)" onmouseover="showTip(event, '3390', 3390)">
+          <code onmouseout="hideTip(event, '3417', 3417)" onmouseover="showTip(event, '3417', 3417)">
             Type
           </code>
-          <div class="tip" id="3390">
+          <div class="tip" id="3417">
             <strong>Signature:</strong> RegistryValueType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L468-468" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L468-468" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The type of the desired registry key</p>
@@ -446,15 +450,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3391', 3391)" onmouseover="showTip(event, '3391', 3391)">
+          <code onmouseout="hideTip(event, '3418', 3418)" onmouseover="showTip(event, '3418', 3418)">
             Value
           </code>
-          <div class="tip" id="3391">
+          <div class="tip" id="3418">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L464-464" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L464-464" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The localizable registry value.</p>
@@ -472,15 +476,15 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3392', 3392)" onmouseover="showTip(event, '3392', 3392)">
+          <code onmouseout="hideTip(event, '3419', 3419)" onmouseover="showTip(event, '3419', 3419)">
             x.createAttributeList()
           </code>
-          <div class="tip" id="3392">
+          <div class="tip" id="3419">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L477-477" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L477-477" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -526,7 +530,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2915', 2915)" onmouseover="showTip(event, '2915', 2915)">
+          <code onmouseout="hideTip(event, '2942', 2942)" onmouseover="showTip(event, '2942', 2942)">
             ConfigFile
           </code>
-          <div class="tip" id="2915">
+          <div class="tip" id="2942">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L45-45" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>NuGet configuration file. Default <code>None</code>.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2916', 2916)" onmouseover="showTip(event, '2916', 2916)">
+          <code onmouseout="hideTip(event, '2943', 2943)" onmouseover="showTip(event, '2943', 2943)">
             Ids
           </code>
-          <div class="tip" id="2916">
+          <div class="tip" id="2943">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Packages to update. Update all if empty.</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2917', 2917)" onmouseover="showTip(event, '2917', 2917)">
+          <code onmouseout="hideTip(event, '2944', 2944)" onmouseover="showTip(event, '2944', 2944)">
             NonInteractive
           </code>
-          <div class="tip" id="2917">
+          <div class="tip" id="2944">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L43-43" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Do not prompt for user input or confirmations. Default <code>true</code>.</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2918', 2918)" onmouseover="showTip(event, '2918', 2918)">
+          <code onmouseout="hideTip(event, '2945', 2945)" onmouseover="showTip(event, '2945', 2945)">
             Prerelease
           </code>
-          <div class="tip" id="2918">
+          <div class="tip" id="2945">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L41-41" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L41-41" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Allows updating to prerelease versions. Default <code>false</code>.</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2919', 2919)" onmouseover="showTip(event, '2919', 2919)">
+          <code onmouseout="hideTip(event, '2946', 2946)" onmouseover="showTip(event, '2946', 2946)">
             RepositoryPath
           </code>
-          <div class="tip" id="2919">
+          <div class="tip" id="2946">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L35-35" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L35-35" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Folder to store packages in. Default <code>./packages</code>.</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2920', 2920)" onmouseover="showTip(event, '2920', 2920)">
+          <code onmouseout="hideTip(event, '2947', 2947)" onmouseover="showTip(event, '2947', 2947)">
             Retries
           </code>
-          <div class="tip" id="2920">
+          <div class="tip" id="2947">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L27-27" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Number of retries if update fails.</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2921', 2921)" onmouseover="showTip(event, '2921', 2921)">
+          <code onmouseout="hideTip(event, '2948', 2948)" onmouseover="showTip(event, '2948', 2948)">
             Safe
           </code>
-          <div class="tip" id="2921">
+          <div class="tip" id="2948">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L37-37" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L37-37" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for updates with the highest version available within the same major and minor version as the installed package. Default <code>false</code>.</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2922', 2922)" onmouseover="showTip(event, '2922', 2922)">
+          <code onmouseout="hideTip(event, '2949', 2949)" onmouseover="showTip(event, '2949', 2949)">
             Sources
           </code>
-          <div class="tip" id="2922">
+          <div class="tip" id="2949">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L29-29" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L29-29" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nuget feeds to search updates in. Use default if empty.</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2923', 2923)" onmouseover="showTip(event, '2923', 2923)">
+          <code onmouseout="hideTip(event, '2950', 2950)" onmouseover="showTip(event, '2950', 2950)">
             TimeOut
           </code>
-          <div class="tip" id="2923">
+          <div class="tip" id="2950">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L25-25" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L25-25" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout for the update.</p>
@@ -481,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2924', 2924)" onmouseover="showTip(event, '2924', 2924)">
+          <code onmouseout="hideTip(event, '2951', 2951)" onmouseover="showTip(event, '2951', 2951)">
             ToolPath
           </code>
-          <div class="tip" id="2924">
+          <div class="tip" id="2951">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L23-23" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L23-23" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to the nuget.exe.</p>
@@ -499,15 +503,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2925', 2925)" onmouseover="showTip(event, '2925', 2925)">
+          <code onmouseout="hideTip(event, '2952', 2952)" onmouseover="showTip(event, '2952', 2952)">
             Verbose
           </code>
-          <div class="tip" id="2925">
+          <div class="tip" id="2952">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L39-39" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L39-39" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Show verbose output while updating. Default <code>false</code>.</p>
@@ -517,15 +521,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2926', 2926)" onmouseover="showTip(event, '2926', 2926)">
+          <code onmouseout="hideTip(event, '2953', 2953)" onmouseover="showTip(event, '2953', 2953)">
             Version
           </code>
-          <div class="tip" id="2926">
+          <div class="tip" id="2953">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.NuGet/Update.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Version to update to. Default <code>None</code>. Used to upgrade/downgrade to a explicit version of a package.</p>
@@ -573,7 +577,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

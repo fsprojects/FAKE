@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,140 +332,116 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3890', 3890)" onmouseover="showTip(event, '3890', 3890)">
+          <code onmouseout="hideTip(event, '3855', 3855)" onmouseover="showTip(event, '3855', 3855)">
             Attachments
           </code>
-          <div class="tip" id="3890">
+          <div class="tip" id="3855">
             <strong>Signature:</strong> SlackNotificationAttachmentParams []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3891', 3891)" onmouseover="showTip(event, '3891', 3891)">
+          <code onmouseout="hideTip(event, '3856', 3856)" onmouseover="showTip(event, '3856', 3856)">
             Channel
           </code>
-          <div class="tip" id="3891">
+          <div class="tip" id="3856">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Channel to which the message will be posted. Default value: Specified in your Slack Webhook configuration.</p>
+                    <p>Channel to which the message will be posted. Default value: Specified in your Slack Webhook configuration.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3892', 3892)" onmouseover="showTip(event, '3892', 3892)">
+          <code onmouseout="hideTip(event, '3857', 3857)" onmouseover="showTip(event, '3857', 3857)">
             From
           </code>
-          <div class="tip" id="3892">
+          <div class="tip" id="3857">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Name the message will appear to be sent from. Default value: Specified in your Slack Webhook configuration.</p>
+                    <p>Name the message will appear to be sent from. Default value: Specified in your Slack Webhook configuration.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3893', 3893)" onmouseover="showTip(event, '3893', 3893)">
+          <code onmouseout="hideTip(event, '3858', 3858)" onmouseover="showTip(event, '3858', 3858)">
             Icon_Emoji
           </code>
-          <div class="tip" id="3893">
+          <div class="tip" id="3858">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The emoji to be displayed with the message. Default value: Specified in your slack Webhook configuration.</p>
+                    <p>The emoji to be displayed with the message. Default value: Specified in your slack Webhook configuration.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3894', 3894)" onmouseover="showTip(event, '3894', 3894)">
+          <code onmouseout="hideTip(event, '3859', 3859)" onmouseover="showTip(event, '3859', 3859)">
             Icon_URL
           </code>
-          <div class="tip" id="3894">
+          <div class="tip" id="3859">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The icon to be displayed with the message. Default value: Specified in your slack Webhook configuration.</p>
+                    <p>The icon to be displayed with the message. Default value: Specified in your slack Webhook configuration.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3895', 3895)" onmouseover="showTip(event, '3895', 3895)">
+          <code onmouseout="hideTip(event, '3860', 3860)" onmouseover="showTip(event, '3860', 3860)">
             Link_Names
           </code>
-          <div class="tip" id="3895">
+          <div class="tip" id="3860">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3896', 3896)" onmouseover="showTip(event, '3896', 3896)">
+          <code onmouseout="hideTip(event, '3861', 3861)" onmouseover="showTip(event, '3861', 3861)">
             Text
           </code>
-          <div class="tip" id="3896">
+          <div class="tip" id="3861">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) The message body</p>
+                    <p>(Required) The message body</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3897', 3897)" onmouseover="showTip(event, '3897', 3897)">
+          <code onmouseout="hideTip(event, '3862', 3862)" onmouseover="showTip(event, '3862', 3862)">
             Unfurl_Links
           </code>
-          <div class="tip" id="3897">
+          <div class="tip" id="3862">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SlackNotificationHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Whether to force inline unfurling of attached links. Default value: false.</p>
+                    <p>Whether to force inline unfurling of attached links. Default value: false.</p>
 
 
         </td>
@@ -505,7 +485,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

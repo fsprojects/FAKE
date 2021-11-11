@@ -105,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -194,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -214,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -353,24 +357,24 @@ See the <a href="#Add-FAKE-dependencies">Add FAKE dependencies</a> section below
 Some warnings indicate how we want the new FAKE version to be used.</p>
 <p>The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
 as the old API was growing several years now and we never could do breaking changes.</p>
-<p>In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
+<p>In this new world you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via <code>[&lt;AutoOpen&gt;]</code>), which is considered bad style now.
 In the new world we would open the <code>Fake.IO.FileSystem</code> namespace to indicate that we are using the file-system.
 At the same time we would write <code>File.Read argument</code>, which is only a bit longer but now the IDE can help you a lot better and the code looks a lot more ideomatic and clean.</p>
 <p>The "open Fake" and AutoOpen modules are completely obsolete.
 We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
 This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the obsolete warning (let us know) or that
-stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).</p>
+stuff you are using was not migrated yet (let us know or send a PR, see <a href="/contributing.html">Contributing to FAKE</a>).</p>
 <h3><a name="Add-FAKE-dependencies" class="anchor" href="#Add-FAKE-dependencies">Add FAKE dependencies</a></h3>
 <p>All your dependencies no longer are bundled with the FAKE nuget package (or the FAKE distribution for that matter). This has some advantages:</p>
 <ul>
 <li>You can extend the build with your own packages easily</li>
 <li>You only pay what you use</li>
-<li>You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).</li>
+<li>You can use the FAKE libraries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).</li>
 </ul>
 <p>The drawback however is that you now need to know where stuff lives and add those packages to your build.</p>
 <p>Already a paket user?</p>
-<p>For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
+<p>For now it's quite simple: The namespace or module name is used as the package name, just search for the package and then
 add it to the dependencies file to a new group (for example <code>netcorebuild</code>).</p>
 <p>Not a paket user?</p>
 <p>No problem! For most use-cases it is enough to find the NuGet package of the module (most times they have the same name for easier discovery) and add it to your script:</p>
@@ -386,7 +390,7 @@ add it to the dependencies file to a new group (for example <code>netcorebuild</
 </code></pre></td>
 </tr>
 </table>
-<p>to your build script. Now delete <code>&lt;script&gt;.fsx.lock</code> and run <code>fake run &lt;script&gt;.fsx</code> now you can use intellisense to start using the modules.</p>
+<p>Now delete <code>&lt;script&gt;.fsx.lock</code> and run <code>fake run &lt;script&gt;.fsx</code> now you can use intellisense to start using the modules.</p>
 <blockquote>
 <p>If you want to read more about the possible syntax you can use here, please consult <a href="https://fsprojects.github.io/Paket/dependencies-file.html">https://fsprojects.github.io/Paket/dependencies-file.html</a> and <a href="https://fsprojects.github.io/Paket/nuget-dependencies.html.">https://fsprojects.github.io/Paket/nuget-dependencies.html.</a></p>
 </blockquote>
@@ -442,7 +446,7 @@ For a full reference use <code>--help</code> or the <a href="fake-commandline.ht
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

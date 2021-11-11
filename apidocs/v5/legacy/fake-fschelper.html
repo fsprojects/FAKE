@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,7 +323,7 @@
 
 <div class="xmldoc">
 <p>Contains tasks to compiles F# source file with the <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
-There is also a tutorial about the <a href="/fsc.html">F# compiler tasks</a> available.</p>
+There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> available.</p>
 
 </div>
 
@@ -517,10 +521,7 @@ e.g. <code>resource.dat,rezName,public</code></p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the function CompileWithResult in the Fake.DotNet.Fsc module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L510-510" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles the given F# source files with the specified parameters.</p>
+                    <p>Compiles the given F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -569,10 +570,7 @@ e.g. <code>resource.dat,rezName,public</code></p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Fsc module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L535-535" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles one or more F# source files with the specified parameters.</p>
+                    <p>Compiles one or more F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -619,10 +617,7 @@ e.g. <code>resource.dat,rezName,public</code></p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Fsc module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L462-462" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles the given source file with the given options. If no options
+                    <p>Compiles the given source file with the given options. If no options
 given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
 
@@ -647,10 +642,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use FscHelper.compile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L106-106" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles the given F# source files with the specified parameters.</p>
+                    <p>Compiles the given F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -695,10 +687,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use FscHelper.Compile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles one or more F# source files with the specified parameters.</p>
+                    <p>Compiles one or more F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -741,10 +730,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use FscHelper.compileFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compiles the given source file with the given options. If no options
+                    <p>Compiles the given source file with the given options. If no options
 given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
 
@@ -769,10 +755,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.DotNet.Fsc module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FscHelper.fs#L239-239" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -814,7 +797,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -105,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -194,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -214,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -400,10 +404,10 @@ see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</
 <pre><code class="lang-bash">fake --help</code></pre>
 <p>This is basically it. You can now execute fake commands.</p>
 <h2><a name="One-note-on-Intellisense" class="anchor" href="#One-note-on-Intellisense">One note on Intellisense</a></h2>
-<p>This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files).</p>
+<p>This section is to clarify when and how the intellisense updates when you add new modules (short form: Delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files).</p>
 <div class="alert alert-info">
     <h5>INFO</h5>
-    <p>We recommend [Visual Studio Code](https://code.visualstudio.com/) with the [Ionide extension](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) for best FAKE tooling support, including proper debugging.</p>
+    <p>We recommend <a href="https://code.visualstudio.com/" rel="nofollow">Visual Studio Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp" rel="nofollow">Ionide extension</a> for best FAKE tooling support, including proper debugging.</p>
 </div>
 <ul>
 <li>
@@ -958,6 +962,9 @@ Now edit the script so it looks like this:</p>
 <p>Our new <em>Test</em> target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the <a href="apidocs/v5/fake-dotnet-testing-nunit3.html">NUnit3 task documentation</a> if you need to specify the tool path explicitly.</p>
 <p>The mysterious part <strong>(fun p -&gt; ...)</strong> simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.</p>
 <p><img src="pics/gettingstarted/alltestsgreen.png" alt="alt text" title="All tests green" /></p>
+<h2><a name="Runtime-Assemblies-in-FAKE-Runner" class="anchor" href="#Runtime-Assemblies-in-FAKE-Runner">Runtime Assemblies in FAKE Runner</a></h2>
+<p>FAKE runner uses <strong>.NETSTANDARD 2.0</strong> runtime assemblies when compiling and running a script. To switch and use <strong>.NET 6</strong> runtime
+assemblies you need to define a <code>global.json</code> file and use .NET 6 as the SDK version.</p>
 <h2><a name="What-s-next" class="anchor" href="#What-s-next">What's next?</a></h2>
 <ul>
 <li>Add more modules specific to your application and discover the Fake-APIs</li>
@@ -1010,7 +1017,7 @@ Now edit the script so it looks like this:</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

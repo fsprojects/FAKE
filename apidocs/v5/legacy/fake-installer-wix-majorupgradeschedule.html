@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,18 +326,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6269', 6269)" onmouseover="showTip(event, '6269', 6269)">
+          <code onmouseout="hideTip(event, '6173', 6173)" onmouseover="showTip(event, '6173', 6173)">
             AfterInstallExecute
           </code>
-          <div class="tip" id="6269">
+          <div class="tip" id="6173">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1250-1250" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Schedules RemoveExistingProducts between the InstallExecute and InstallFinalize standard actions. This scheduling installs the upgrade product "on top of" the installed product then lets
+                    <p>Schedules RemoveExistingProducts between the InstallExecute and InstallFinalize standard actions. This scheduling installs the upgrade product "on top of" the installed product then lets
 RemoveExistingProducts uninstall any components that don't also exist in the upgrade product. Note that this scheduling requires strict adherence to the component rules because it relies
 on component reference counts to be accurate during installation of the upgrade product and removal of the installed product. For more information, see Bob Arnson's blog post
 "Paying for Upgrades" for details. If installation of the upgrade product fails, Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it.</p>
@@ -343,18 +344,15 @@ on component reference counts to be accurate during installation of the upgrade 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6270', 6270)" onmouseover="showTip(event, '6270', 6270)">
+          <code onmouseout="hideTip(event, '6174', 6174)" onmouseover="showTip(event, '6174', 6174)">
             AfterInstallExecuteAgain
           </code>
-          <div class="tip" id="6270">
+          <div class="tip" id="6174">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1253-1253" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Schedules RemoveExistingProducts between the InstallExecuteAgain and InstallFinalize standard actions.
+                    <p>Schedules RemoveExistingProducts between the InstallExecuteAgain and InstallFinalize standard actions.
 This is identical to the afterInstallExecute scheduling but after the InstallExecuteAgain standard action instead of InstallExecute.</p>
 
 
@@ -362,18 +360,15 @@ This is identical to the afterInstallExecute scheduling but after the InstallExe
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6271', 6271)" onmouseover="showTip(event, '6271', 6271)">
+          <code onmouseout="hideTip(event, '6175', 6175)" onmouseover="showTip(event, '6175', 6175)">
             AfterInstallFinalize
           </code>
-          <div class="tip" id="6271">
+          <div class="tip" id="6175">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1257-1257" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Schedules RemoveExistingProducts after the InstallFinalize standard action. This is similar to the afterInstallExecute and afterInstallExecuteAgain schedulings but takes place outside
+                    <p>Schedules RemoveExistingProducts after the InstallFinalize standard action. This is similar to the afterInstallExecute and afterInstallExecuteAgain schedulings but takes place outside
 the installation transaction so if installation of the upgrade product fails, Windows Installer does not roll back the removal of the installed product,
 so the machine will have both versions installed.</p>
 
@@ -382,18 +377,15 @@ so the machine will have both versions installed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6272', 6272)" onmouseover="showTip(event, '6272', 6272)">
+          <code onmouseout="hideTip(event, '6176', 6176)" onmouseover="showTip(event, '6176', 6176)">
             AfterInstallInitialize
           </code>
-          <div class="tip" id="6272">
+          <div class="tip" id="6176">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1245-1245" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the afterInstallValidate scheduling, but if the installation of the upgrade product fails,
+                    <p>Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the afterInstallValidate scheduling, but if the installation of the upgrade product fails,
 Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it.</p>
 
 
@@ -401,18 +393,15 @@ Windows Installer also rolls back the removal of the installed product -- in oth
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6273', 6273)" onmouseover="showTip(event, '6273', 6273)">
+          <code onmouseout="hideTip(event, '6177', 6177)" onmouseover="showTip(event, '6177', 6177)">
             AfterInstallValidate
           </code>
-          <div class="tip" id="6273">
+          <div class="tip" id="6177">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1242-1242" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product.
+                    <p>(Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product.
 It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails,
 the machine will have neither version installed.</p>
 
@@ -458,7 +447,7 @@ the machine will have neither version installed.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

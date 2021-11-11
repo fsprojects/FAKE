@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -424,15 +428,15 @@ You can pass any value using Other.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '829', 829)" onmouseover="showTip(event, '829', 829)">
+          <code onmouseout="hideTip(event, '833', 833)" onmouseover="showTip(event, '833', 833)">
             buildArgs parameters assemblies
           </code>
-          <div class="tip" id="829">
+          <div class="tip" id="833">
             <strong>Signature:</strong> parameters:NUnit3Params -&gt; assemblies:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L295-295" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L295-295" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Builds the command line arguments from the given parameter record and the given assemblies.</p>
@@ -442,15 +446,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '830', 830)" onmouseover="showTip(event, '830', 830)">
+          <code onmouseout="hideTip(event, '834', 834)" onmouseover="showTip(event, '834', 834)">
             NUnit3Defaults
           </code>
-          <div class="tip" id="830">
+          <div class="tip" id="834">
             <strong>Signature:</strong> NUnit3Params<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L256-256" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L256-256" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The <a href="fake-testing-nunit3-nunit3params.html">NUnit3Params</a> default parameters.</p>
@@ -490,15 +494,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '831', 831)" onmouseover="showTip(event, '831', 831)">
+          <code onmouseout="hideTip(event, '835', 835)" onmouseover="showTip(event, '835', 835)">
             run setParams assemblies
           </code>
-          <div class="tip" id="831">
+          <div class="tip" id="835">
             <strong>Signature:</strong> setParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L369-369" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L369-369" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -544,7 +548,7 @@ You can pass any value using Other.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

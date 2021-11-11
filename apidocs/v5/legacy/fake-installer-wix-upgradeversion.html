@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,108 +326,90 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6383', 6383)" onmouseover="showTip(event, '6383', 6383)">
+          <code onmouseout="hideTip(event, '6287', 6287)" onmouseover="showTip(event, '6287', 6287)">
             IncludeMaximum
           </code>
-          <div class="tip" id="6383">
+          <div class="tip" id="6287">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1221-1221" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set to "yes" to make the range of versions detected include the value specified in Maximum.</p>
+                    <p>Set to "yes" to make the range of versions detected include the value specified in Maximum.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6384', 6384)" onmouseover="showTip(event, '6384', 6384)">
+          <code onmouseout="hideTip(event, '6288', 6288)" onmouseover="showTip(event, '6288', 6288)">
             IncludeMinimum
           </code>
-          <div class="tip" id="6384">
+          <div class="tip" id="6288">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1219-1219" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set to "no" to make the range of versions detected exclude the value specified in Minimum. This attribute is "yes" by default.</p>
+                    <p>Set to "no" to make the range of versions detected exclude the value specified in Minimum. This attribute is "yes" by default.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6385', 6385)" onmouseover="showTip(event, '6385', 6385)">
+          <code onmouseout="hideTip(event, '6289', 6289)" onmouseover="showTip(event, '6289', 6289)">
             Maximum
           </code>
-          <div class="tip" id="6385">
+          <div class="tip" id="6289">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1211-1211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the upper boundary of the range of product versions detected by FindRelatedProducts.</p>
+                    <p>Specifies the upper boundary of the range of product versions detected by FindRelatedProducts.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6386', 6386)" onmouseover="showTip(event, '6386', 6386)">
+          <code onmouseout="hideTip(event, '6290', 6290)" onmouseover="showTip(event, '6290', 6290)">
             Minimum
           </code>
-          <div class="tip" id="6386">
+          <div class="tip" id="6290">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1209-1209" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the lower bound on the range of product versions to be detected by FindRelatedProducts.</p>
+                    <p>Specifies the lower bound on the range of product versions to be detected by FindRelatedProducts.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6387', 6387)" onmouseover="showTip(event, '6387', 6387)">
+          <code onmouseout="hideTip(event, '6291', 6291)" onmouseover="showTip(event, '6291', 6291)">
             OnlyDetect
           </code>
-          <div class="tip" id="6387">
+          <div class="tip" id="6291">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1207-1207" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set to "yes" to detect products and applications but do not uninstall.</p>
+                    <p>Set to "yes" to detect products and applications but do not uninstall.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6388', 6388)" onmouseover="showTip(event, '6388', 6388)">
+          <code onmouseout="hideTip(event, '6292', 6292)" onmouseover="showTip(event, '6292', 6292)">
             Property
           </code>
-          <div class="tip" id="6388">
+          <div class="tip" id="6292">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1217-1217" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>When the FindRelatedProducts action detects a related product installed on the system, it appends the product code to the property specified in this field.
+                    <p>When the FindRelatedProducts action detects a related product installed on the system, it appends the product code to the property specified in this field.
 Windows Installer documentation for the Upgrade table states that the property specified in this field must be a public property and must be added to the
 SecureCustomProperties property. WiX automatically appends the property specified in this field to the SecureCustomProperties property when creating an MSI.
 Each UpgradeVersion must have a unique Property value. After the FindRelatedProducts action is run, the value of this property is a list of product codes,
@@ -471,7 +457,7 @@ separated by semicolons (;), detected on the system.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

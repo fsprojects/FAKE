@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3909', 3909)" onmouseover="showTip(event, '3909', 3909)">
+          <code onmouseout="hideTip(event, '3998', 3998)" onmouseover="showTip(event, '3998', 3998)">
             File(CertificateFromFile)
           </code>
-          <div class="tip" id="3909">
+          <div class="tip" id="3998">
             <strong>Signature:</strong> CertificateFromFile<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L95-95" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L95-95" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use a certificate stored in a file.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3910', 3910)" onmouseover="showTip(event, '3910', 3910)">
+          <code onmouseout="hideTip(event, '3999', 3999)" onmouseover="showTip(event, '3999', 3999)">
             Store(CertificateFromStore)
           </code>
-          <div class="tip" id="3910">
+          <div class="tip" id="3999">
             <strong>Signature:</strong> CertificateFromStore<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L97-97" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use a certificate stored in a certificate store.</p>
@@ -363,15 +367,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3911', 3911)" onmouseover="showTip(event, '3911', 3911)">
+          <code onmouseout="hideTip(event, '4000', 4000)" onmouseover="showTip(event, '4000', 4000)">
             SignCertificate.FromFile(...)
           </code>
-          <div class="tip" id="3911">
+          <div class="tip" id="4000">
             <strong>Signature:</strong> (path:string * setOptions:(CertificateFromFile -&gt; CertificateFromFile)) -&gt; SignCertificate<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L100-100" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use a certificate stored in a file with options</p>
@@ -381,15 +385,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3912', 3912)" onmouseover="showTip(event, '3912', 3912)">
+          <code onmouseout="hideTip(event, '4001', 4001)" onmouseover="showTip(event, '4001', 4001)">
             SignCertificate.FromStore(setOptions)
           </code>
-          <div class="tip" id="3912">
+          <div class="tip" id="4001">
             <strong>Signature:</strong> (setOptions:(CertificateFromStore -&gt; CertificateFromStore)) -&gt; SignCertificate<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L104-104" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L104-104" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use a certificate stored in a certificate store with options.</p>
@@ -437,7 +441,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

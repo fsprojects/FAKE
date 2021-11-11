@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L316-316" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given text starts with the given prefix</p>
+                    <p>Checks whether the given text starts with the given prefix</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L432-432" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines if a text matches a given regex pattern.</p>
+                    <p>Determines if a text matches a given regex pattern.</p>
 
 
         </td>
@@ -400,10 +398,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L428-428" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Find a regex pattern in a text and replaces it with the given replacement.</p>
+                    <p>Find a regex pattern in a text and replaces it with the given replacement.</p>
 
 
         </td>
@@ -426,10 +421,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text to a StringBuilder.</p>
+                    <p>Appends a text to a StringBuilder.</p>
 
 
         </td>
@@ -452,10 +444,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L148-148" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all notnull fileNames.</p>
+                    <p>Appends all notnull fileNames.</p>
 
 
         </td>
@@ -478,10 +467,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the predicate is false.</p>
+                    <p>Appends a text if the predicate is false.</p>
 
 
         </td>
@@ -504,10 +490,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L118-118" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -530,10 +513,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L144-144" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -556,10 +536,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends string of function value if option has some value</p>
+                    <p>Appends string of function value if option has some value</p>
 
 
         </td>
@@ -582,10 +559,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the predicate is true.</p>
+                    <p>Appends a text if the predicate is true.</p>
 
 
         </td>
@@ -608,10 +582,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -632,10 +603,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a quoted text if the value is not null.</p>
+                    <p>Appends a quoted text if the value is not null.</p>
 
 
         </td>
@@ -646,8 +614,8 @@
             appendStringIfValueIsNotNull(value)
           </code>
           <div class="tip" id="707">
-            <strong>Signature:</strong> value:&#39;?13479 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                          <strong>Type parameters:</strong> '?13479                            <span>
+            <strong>Signature:</strong> value:&#39;?13487 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> '?13487                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;FAKE0001 use Fake.Core.String instead&quot;)&gt;]<br />
                 </span>
@@ -658,10 +626,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L136-136" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -684,10 +649,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L140-140" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -710,10 +672,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.append` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L300-300" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all lines to a file line by line</p>
+                    <p>Appends all lines to a file line by line</p>
 
 
         </td>
@@ -736,10 +695,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L83-83" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text to a StringBuilder without surrounding quotes.</p>
+                    <p>Appends a text to a StringBuilder without surrounding quotes.</p>
 
 
         </td>
@@ -762,10 +718,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text without quoting if the value is not null.</p>
+                    <p>Appends a text without quoting if the value is not null.</p>
 
 
         </td>
@@ -788,10 +741,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L188-188" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns all standard chars and digits.</p>
+                    <p>Returns all standard chars and digits.</p>
 
 
         </td>
@@ -814,10 +764,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L292-292" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -838,10 +785,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L349-349" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a file line by line and replaces all line breaks to windows line breaks
+                    <p>Reads a file line by line and replaces all line breaks to windows line breaks
 - uses a temp file to store the contents in order to prevent OutOfMemory exceptions</p>
 
 
@@ -865,10 +809,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L340-340" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts all line breaks in a text to windows line breaks</p>
+                    <p>Converts all line breaks in a text to windows line breaks</p>
 
 
         </td>
@@ -891,10 +832,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L436-436" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Decodes a Base64-encoded UTF-8-encoded string</p>
+                    <p>Decodes a Base64-encoded UTF-8-encoded string</p>
 
 
         </td>
@@ -917,10 +855,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L371-371" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Encapsulates the Apostrophe</p>
+                    <p>Encapsulates the Apostrophe</p>
 
 
         </td>
@@ -943,10 +878,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given text ends with the given suffix</p>
+                    <p>Checks whether the given text ends with the given suffix</p>
 
 
         </td>
@@ -969,10 +901,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines whether the last character of the given <see cref="string" />
+                    <p>Determines whether the last character of the given <see cref="string" />
 matches Path.DirectorySeparatorChar.</p>
 
 
@@ -996,10 +925,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Applies action on builder for each element of list.</p>
+                    <p>Applies action on builder for each element of list.</p>
 
 
         </td>
@@ -1022,10 +948,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L192-192" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given char is a standard char or digit.</p>
+                    <p>Checks whether the given char is a standard char or digit.</p>
 
 
         </td>
@@ -1048,10 +971,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is not null or empty</p>
+                    <p>Returns if the string is not null or empty</p>
 
 
         </td>
@@ -1074,10 +994,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is null or empty</p>
+                    <p>Returns if the string is null or empty</p>
 
 
         </td>
@@ -1100,10 +1017,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the string is null or empty or completely whitespace</p>
+                    <p>Returns if the string is null or empty or completely whitespace</p>
 
 
         </td>
@@ -1126,10 +1040,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L180-180" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given char is a german umlaut.</p>
+                    <p>Checks whether the given char is a german umlaut.</p>
 
 
         </td>
@@ -1152,10 +1063,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L232-232" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Lifts a string to an option</p>
+                    <p>Lifts a string to an option</p>
 
 
         </td>
@@ -1178,10 +1086,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L328-328" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Linux line breaks</p>
+                    <p>Represents Linux line breaks</p>
 
 
         </td>
@@ -1204,10 +1109,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L336-336" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Mac line breaks</p>
+                    <p>Represents Mac line breaks</p>
 
 
         </td>
@@ -1230,10 +1132,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L260-260" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes all trailing .0 from a version string</p>
+                    <p>Removes all trailing .0 from a version string</p>
 
 
         </td>
@@ -1256,10 +1155,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L384-384" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Produces relative path when possible to go from baseLocation to targetLocation.</p>
+                    <p>Produces relative path when possible to go from baseLocation to targetLocation.</p>
 
 
         </td>
@@ -1282,10 +1178,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.read`/`File.readWithEncoding` instead (encoding parameter added, default to UTF8)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a file line by line</p>
+                    <p>Reads a file line by line</p>
 
 
         </td>
@@ -1308,10 +1201,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.readAsBytes` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L308-308" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a file as one array of bytes</p>
+                    <p>Reads a file as one array of bytes</p>
 
 
         </td>
@@ -1334,10 +1224,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.readAsString`/`File.readAsStringWithEncoding` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L304-304" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a file as one text</p>
+                    <p>Reads a file as one text</p>
 
 
         </td>
@@ -1360,10 +1247,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.readLine`/`File.readLineWithEncoding` instead (encoding parameter added, default to UTF8)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L247-247" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
+                    <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
 
 
         </td>
@@ -1386,10 +1270,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L364-364" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes linebreaks from the given string</p>
+                    <p>Removes linebreaks from the given string</p>
 
 
         </td>
@@ -1412,10 +1293,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the given pattern in the given text with the replacement</p>
+                    <p>Replaces the given pattern in the given text with the replacement</p>
 
 
         </td>
@@ -1438,10 +1316,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.replaceContent` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L284-284" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the file with the given string</p>
+                    <p>Replaces the file with the given string</p>
 
 
         </td>
@@ -1464,10 +1339,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the first occurrence of the pattern with the given replacement.</p>
+                    <p>Replaces the first occurrence of the pattern with the given replacement.</p>
 
 
         </td>
@@ -1490,10 +1362,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.applyReplace` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L320-320" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the text in the given file</p>
+                    <p>Replaces the text in the given file</p>
 
 
         </td>
@@ -1516,10 +1385,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a sequence of strings to a string with delimiters</p>
+                    <p>Converts a sequence of strings to a string with delimiters</p>
 
 
         </td>
@@ -1542,10 +1408,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L312-312" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces any occurence of the currentDirectory with .</p>
+                    <p>Replaces any occurence of the currentDirectory with .</p>
 
 
         </td>
@@ -1568,10 +1431,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the given string at the given char delimiter</p>
+                    <p>Splits the given string at the given char delimiter</p>
 
 
         </td>
@@ -1594,10 +1454,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1618,10 +1475,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the given string at the given string delimiter</p>
+                    <p>Splits the given string at the given string delimiter</p>
 
 
         </td>
@@ -1644,10 +1498,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given text starts with the given prefix</p>
+                    <p>Checks whether the given text starts with the given prefix</p>
 
 
         </td>
@@ -1670,10 +1521,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a sequence of strings into a string separated with line ends</p>
+                    <p>Converts a sequence of strings into a string separated with line ends</p>
 
 
         </td>
@@ -1696,10 +1544,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L184-184" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts all characters in a string to lower case.</p>
+                    <p>Converts all characters in a string to lower case.</p>
 
 
         </td>
@@ -1722,10 +1567,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L418-418" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the absolute path to a relative path.</p>
+                    <p>Replaces the absolute path to a relative path.</p>
 
 
         </td>
@@ -1748,10 +1590,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L161-161" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the text from the StringBuilder</p>
+                    <p>Returns the text from the StringBuilder</p>
 
 
         </td>
@@ -1774,10 +1613,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L208-208" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -1800,10 +1636,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L214-214" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -1826,10 +1659,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L226-226" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the end of the given string</p>
+                    <p>Trims the end of the given string</p>
 
 
         </td>
@@ -1852,10 +1682,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L196-196" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the given string with the DirectorySeparatorChar</p>
+                    <p>Trims the given string with the DirectorySeparatorChar</p>
 
 
         </td>
@@ -1878,10 +1705,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes the slashes from the end of the given string</p>
+                    <p>Removes the slashes from the end of the given string</p>
 
 
         </td>
@@ -1904,10 +1728,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims all special characters from a string.</p>
+                    <p>Trims all special characters from a string.</p>
 
 
         </td>
@@ -1930,10 +1751,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L220-220" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Trims the start of the given string</p>
+                    <p>Trims the start of the given string</p>
 
 
         </td>
@@ -1956,10 +1774,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use Fake.Core.String instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L332-332" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Represents Windows line breaks</p>
+                    <p>Represents Windows line breaks</p>
 
 
         </td>
@@ -1982,10 +1797,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.writeBytes` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L273-273" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a byte array to a file</p>
+                    <p>Writes a byte array to a file</p>
 
 
         </td>
@@ -2008,10 +1820,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.writeNew` instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L296-296" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a file line by line</p>
+                    <p>Writes a file line by line</p>
 
 
         </td>
@@ -2034,10 +1843,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.writeString`/`File.writeStringWithEncoding` instead (encoding parameter added, default to UTF8)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L277-277" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a string to a file</p>
+                    <p>Writes a string to a file</p>
 
 
         </td>
@@ -2060,10 +1866,7 @@ matches Path.DirectorySeparatorChar.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 use `open Fake.IO` and `File.write`/`File.writeWithEncoding` instead (encoding parameter added, default to UTF8)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/StringHelper.fs#L253-253" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a file line by line</p>
+                    <p>Writes a file line by line</p>
 
 
         </td>
@@ -2107,7 +1910,7 @@ matches Path.DirectorySeparatorChar.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

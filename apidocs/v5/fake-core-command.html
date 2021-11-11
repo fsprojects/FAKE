@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1697', 1697)" onmouseover="showTip(event, '1697', 1697)">
+          <code onmouseout="hideTip(event, '1724', 1724)" onmouseover="showTip(event, '1724', 1724)">
             RawCommand(executable,arguments)
           </code>
-          <div class="tip" id="1697">
+          <div class="tip" id="1724">
             <strong>Signature:</strong> FilePath * Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L55-55" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Windows: <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb776391(v=vs.85).aspx
@@ -340,15 +344,15 @@ Linux(netcore): See <a href="https://github.com/fsharp/FAKE/pull/1281/commits/28
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1698', 1698)" onmouseover="showTip(event, '1698', 1698)">
+          <code onmouseout="hideTip(event, '1725', 1725)" onmouseover="showTip(event, '1725', 1725)">
             ShellCommand(string)
           </code>
-          <div class="tip" id="1698">
+          <div class="tip" id="1725">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L51-51" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -364,15 +368,15 @@ Linux(netcore): See <a href="https://github.com/fsharp/FAKE/pull/1281/commits/28
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1699', 1699)" onmouseover="showTip(event, '1699', 1699)">
+          <code onmouseout="hideTip(event, '1726', 1726)" onmouseover="showTip(event, '1726', 1726)">
             x.Arguments
           </code>
-          <div class="tip" id="1699">
+          <div class="tip" id="1726">
             <strong>Signature:</strong> Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L62-62" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -380,15 +384,15 @@ Linux(netcore): See <a href="https://github.com/fsharp/FAKE/pull/1281/commits/28
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1700', 1700)" onmouseover="showTip(event, '1700', 1700)">
+          <code onmouseout="hideTip(event, '1727', 1727)" onmouseover="showTip(event, '1727', 1727)">
             x.CommandLine
           </code>
-          <div class="tip" id="1700">
+          <div class="tip" id="1727">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L57-57" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -396,15 +400,15 @@ Linux(netcore): See <a href="https://github.com/fsharp/FAKE/pull/1281/commits/28
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1701', 1701)" onmouseover="showTip(event, '1701', 1701)">
+          <code onmouseout="hideTip(event, '1728', 1728)" onmouseover="showTip(event, '1728', 1728)">
             x.Executable
           </code>
-          <div class="tip" id="1701">
+          <div class="tip" id="1728">
             <strong>Signature:</strong> FilePath<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -450,7 +454,7 @@ Linux(netcore): See <a href="https://github.com/fsharp/FAKE/pull/1281/commits/28
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

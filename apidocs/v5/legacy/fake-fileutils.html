@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.cd`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.chdir`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
@@ -400,10 +398,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.cp`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "cp" in a shell. Copies a single file.
+                    <p>Like "cp" in a shell. Copies a single file.
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -428,10 +423,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.cp_r`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
+                    <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
 
 
         </td>
@@ -454,10 +446,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0003 Please open an issue if you used this API</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The stack of directories operated on by pushd and popd</p>
+                    <p>The stack of directories operated on by pushd and popd</p>
 
 
         </td>
@@ -480,10 +469,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.mkdir`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a directory if it doesn't exist.</p>
+                    <p>Creates a directory if it doesn't exist.</p>
 
 
         </td>
@@ -506,10 +492,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.mv`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "mv" in a shell. Moves/renames a file
+                    <p>Like "mv" in a shell. Moves/renames a file
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -534,10 +517,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.popd`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restore the previous directory stored in the stack</p>
+                    <p>Restore the previous directory stored in the stack</p>
 
 
         </td>
@@ -560,10 +540,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.pushd`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Store the current directory in the directory stack before changing to a new one</p>
+                    <p>Store the current directory in the directory stack before changing to a new one</p>
 
 
         </td>
@@ -586,10 +563,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.pwd`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets working directory</p>
+                    <p>Gets working directory</p>
 
 
         </td>
@@ -612,10 +586,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.rm`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L10-10" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a file if it exists</p>
+                    <p>Deletes a file if it exists</p>
 
 
         </td>
@@ -638,10 +609,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use `open Fake.IO` and `Shell.rm_rf`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileUtils.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
+                    <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
 
 
         </td>
@@ -685,7 +653,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

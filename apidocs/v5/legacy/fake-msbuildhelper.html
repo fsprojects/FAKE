@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -467,10 +471,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L482-482" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a MSBuild project</p>
+                    <p>Runs a MSBuild project</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - A function that overwrites the default MsBuildParams</li>
@@ -535,10 +536,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L631-631" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given web project file with debug configuration and copies it to the given outputPath.</p>
+                    <p>Builds the given web project file with debug configuration and copies it to the given outputPath.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -566,10 +564,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L601-601" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given web project file in the specified configuration and copies it to the given outputPath.</p>
+                    <p>Builds the given web project file in the specified configuration and copies it to the given outputPath.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -598,10 +593,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L646-646" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given web project files with debug configuration and copies them to the given websiteDir.</p>
+                    <p>Builds the given web project files with debug configuration and copies them to the given websiteDir.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -629,10 +621,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L639-639" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given web project files in specified configuration and copies them to the given outputPath.</p>
+                    <p>Builds the given web project files in specified configuration and copies them to the given outputPath.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -661,10 +650,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -685,10 +671,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -709,10 +692,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Versions of Mono prior to this one have faulty implementations of MSBuild
+                    <p>Versions of Mono prior to this one have faulty implementations of MSBuild
 NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is true...</p>
 
 
@@ -736,10 +716,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.Run instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L559-559" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files or solution files and collects the output files.</p>
+                    <p>Builds the given project files or solution files and collects the output files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - If it is null or empty then the project settings are used.</li>
@@ -769,10 +746,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.RunDebug instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L567-567" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files or solution files and collects the output files.</p>
+                    <p>Builds the given project files or solution files and collects the output files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - If it is null or empty then the project settings are used.</li>
@@ -801,10 +775,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L274-274" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a default for MSBuild task parameters</p>
+                    <p>Defines a default for MSBuild task parameters</p>
 
 
         </td>
@@ -827,10 +798,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tries to detect the right version of MSBuild.
+                    <p>Tries to detect the right version of MSBuild.
 - On all OS's, we check a <a href="fake-dotnet-msbuild.html" title="MSBuild"><code>MSBuild</code></a> environment variable which is either
 <em> a direct path to a file to use, or
 </em> a directory that contains a file called
@@ -867,10 +835,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L449-449" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines the loggers to use for MSBuild task</p>
+                    <p>Defines the loggers to use for MSBuild task</p>
 
 
         </td>
@@ -893,10 +858,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.RunRelease instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L575-575" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files or solution files and collects the output files.</p>
+                    <p>Builds the given project files or solution files and collects the output files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - If it is null or empty then the project settings are used.</li>
@@ -925,10 +887,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.RunReleaseExt instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L591-591" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files or solution files in release mode and collects the output files.</p>
+                    <p>Builds the given project files or solution files in release mode and collects the output files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - If it is null or empty then the project settings are used.</li>
@@ -958,10 +917,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.RunWithDefaults instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L582-582" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files or solution files in release mode to the default outputs.</p>
+                    <p>Builds the given project files or solution files in release mode to the default outputs.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
@@ -989,10 +945,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild.RunWithProjectProperties instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L521-521" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the given project files and collects the output files.</p>
+                    <p>Builds the given project files and collects the output files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - If it is null or empty then the project settings are used.</li>
@@ -1022,10 +975,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1046,10 +996,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.DotNet.MSBuild instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuildHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -1091,7 +1038,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1421', 1421)" onmouseover="showTip(event, '1421', 1421)">
+          <code onmouseout="hideTip(event, '1436', 1436)" onmouseover="showTip(event, '1436', 1436)">
             Environment.AccountName
           </code>
-          <div class="tip" id="1421">
+          <div class="tip" id="1436">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L114-114" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L114-114" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>AppVeyor Account Name</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1422', 1422)" onmouseover="showTip(event, '1422', 1422)">
+          <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
             Environment.ApiUrl
           </code>
-          <div class="tip" id="1422">
+          <div class="tip" id="1437">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L111-111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>AppVeyor Build Agent API URL</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1423', 1423)" onmouseover="showTip(event, '1423', 1423)">
+          <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
             Environment.ArtifactUploadTimeout
           </code>
-          <div class="tip" id="1423">
+          <div class="tip" id="1438">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L225-225" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L225-225" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Artifact upload timeout in seconds. Default is 600 (10 minutes)</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1424', 1424)" onmouseover="showTip(event, '1424', 1424)">
+          <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
             Environment.BuildFolder
           </code>
-          <div class="tip" id="1424">
+          <div class="tip" id="1439">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L126-126" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L126-126" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to clone directory</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1425', 1425)" onmouseover="showTip(event, '1425', 1425)">
+          <code onmouseout="hideTip(event, '1440', 1440)" onmouseover="showTip(event, '1440', 1440)">
             Environment.BuildId
           </code>
-          <div class="tip" id="1425">
+          <div class="tip" id="1440">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L129-129" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>AppVeyor unique build ID</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1426', 1426)" onmouseover="showTip(event, '1426', 1426)">
+          <code onmouseout="hideTip(event, '1441', 1441)" onmouseover="showTip(event, '1441', 1441)">
             Environment.BuildNumber
           </code>
-          <div class="tip" id="1426">
+          <div class="tip" id="1441">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L132-132" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L132-132" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build number</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1427', 1427)" onmouseover="showTip(event, '1427', 1427)">
+          <code onmouseout="hideTip(event, '1442', 1442)" onmouseover="showTip(event, '1442', 1442)">
             Environment.BuildVersion
           </code>
-          <div class="tip" id="1427">
+          <div class="tip" id="1442">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L135-135" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L135-135" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build version</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1428', 1428)" onmouseover="showTip(event, '1428', 1428)">
+          <code onmouseout="hideTip(event, '1443', 1443)" onmouseover="showTip(event, '1443', 1443)">
             Environment.BuildWorkerImage
           </code>
-          <div class="tip" id="1428">
+          <div class="tip" id="1443">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L222-222" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L222-222" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Current build worker image the build is running on, e.g. Visual Studio 2015</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1429', 1429)" onmouseover="showTip(event, '1429', 1429)">
+          <code onmouseout="hideTip(event, '1444', 1444)" onmouseover="showTip(event, '1444', 1444)">
             Environment.CacheEntryUploadDownloadTimeout(...)
           </code>
-          <div class="tip" id="1429">
+          <div class="tip" id="1444">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L234-234" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L234-234" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)</p>
@@ -481,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1430', 1430)" onmouseover="showTip(event, '1430', 1430)">
+          <code onmouseout="hideTip(event, '1445', 1445)" onmouseover="showTip(event, '1445', 1445)">
             Environment.CacheSkipRestore
           </code>
-          <div class="tip" id="1430">
+          <div class="tip" id="1445">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L216-216" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L216-216" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>set to true to disable cache restore</p>
@@ -499,15 +503,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1431', 1431)" onmouseover="showTip(event, '1431', 1431)">
+          <code onmouseout="hideTip(event, '1446', 1446)" onmouseover="showTip(event, '1446', 1446)">
             Environment.CacheSkipSave
           </code>
-          <div class="tip" id="1431">
+          <div class="tip" id="1446">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L219-219" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L219-219" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>set to true to disable cache update</p>
@@ -517,15 +521,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1432', 1432)" onmouseover="showTip(event, '1432', 1432)">
+          <code onmouseout="hideTip(event, '1447', 1447)" onmouseover="showTip(event, '1447', 1447)">
             Environment.Configuration
           </code>
-          <div class="tip" id="1432">
+          <div class="tip" id="1447">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L207-207" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L207-207" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).</p>
@@ -535,15 +539,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1433', 1433)" onmouseover="showTip(event, '1433', 1433)">
+          <code onmouseout="hideTip(event, '1448', 1448)" onmouseover="showTip(event, '1448', 1448)">
             Environment.FileDownloadTimeout
           </code>
-          <div class="tip" id="1433">
+          <div class="tip" id="1448">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L228-228" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L228-228" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)</p>
@@ -553,15 +557,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1434', 1434)" onmouseover="showTip(event, '1434', 1434)">
+          <code onmouseout="hideTip(event, '1449', 1449)" onmouseover="showTip(event, '1449', 1449)">
             Environment.IsForcedBuild
           </code>
-          <div class="tip" id="1434">
+          <div class="tip" id="1449">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L190-190" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L190-190" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If the build has been started by the "New Build" button or from the same API</p>
@@ -571,15 +575,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1435', 1435)" onmouseover="showTip(event, '1435', 1435)">
+          <code onmouseout="hideTip(event, '1450', 1450)" onmouseover="showTip(event, '1450', 1450)">
             Environment.IsReBuild
           </code>
-          <div class="tip" id="1435">
+          <div class="tip" id="1450">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L193-193" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L193-193" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If the build has been started by the "Re-Build commit/PR" button or from the same API</p>
@@ -589,15 +593,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1436', 1436)" onmouseover="showTip(event, '1436', 1436)">
+          <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
             Environment.IsScheduledBuild
           </code>
-          <div class="tip" id="1436">
+          <div class="tip" id="1451">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L187-187" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L187-187" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>If the build runs by scheduler;</p>
@@ -607,15 +611,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
+          <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
             Environment.JobId
           </code>
-          <div class="tip" id="1437">
+          <div class="tip" id="1452">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L150-150" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L150-150" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>AppVeyor unique job ID</p>
@@ -625,15 +629,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
+          <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
             Environment.JobName
           </code>
-          <div class="tip" id="1438">
+          <div class="tip" id="1453">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L210-210" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L210-210" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The job name</p>
@@ -643,15 +647,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
+          <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
             Environment.JobNumber
           </code>
-          <div class="tip" id="1439">
+          <div class="tip" id="1454">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L213-213" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L213-213" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Job Number</p>
@@ -661,15 +665,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1440', 1440)" onmouseover="showTip(event, '1440', 1440)">
+          <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
             Environment.Platform
           </code>
-          <div class="tip" id="1440">
+          <div class="tip" id="1455">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L204-204" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L204-204" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).</p>
@@ -679,15 +683,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1441', 1441)" onmouseover="showTip(event, '1441', 1441)">
+          <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
             Environment.ProjectId
           </code>
-          <div class="tip" id="1441">
+          <div class="tip" id="1456">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L117-117" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L117-117" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>AppVeyor unique project ID</p>
@@ -697,15 +701,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1442', 1442)" onmouseover="showTip(event, '1442', 1442)">
+          <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
             Environment.ProjectName
           </code>
-          <div class="tip" id="1442">
+          <div class="tip" id="1457">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L120-120" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L120-120" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Project name</p>
@@ -715,15 +719,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1443', 1443)" onmouseover="showTip(event, '1443', 1443)">
+          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
             Environment.ProjectSlug
           </code>
-          <div class="tip" id="1443">
+          <div class="tip" id="1458">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L123-123" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L123-123" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Project slug (as seen in project details URL)</p>
@@ -733,15 +737,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1444', 1444)" onmouseover="showTip(event, '1444', 1444)">
+          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
             Environment.PullRequestNumber
           </code>
-          <div class="tip" id="1444">
+          <div class="tip" id="1459">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L138-138" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L138-138" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitHub Pull Request number</p>
@@ -751,15 +755,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1445', 1445)" onmouseover="showTip(event, '1445', 1445)">
+          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
             Environment.PullRequestRepoBranch
           </code>
-          <div class="tip" id="1445">
+          <div class="tip" id="1460">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L147-147" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L147-147" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitHub Pull Request branch</p>
@@ -769,15 +773,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1446', 1446)" onmouseover="showTip(event, '1446', 1446)">
+          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
             Environment.PullRequestRepoName
           </code>
-          <div class="tip" id="1446">
+          <div class="tip" id="1461">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L144-144" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L144-144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitHub Pull Request Repo name</p>
@@ -787,15 +791,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1447', 1447)" onmouseover="showTip(event, '1447', 1447)">
+          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
             Environment.PullRequestTitle
           </code>
-          <div class="tip" id="1447">
+          <div class="tip" id="1462">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L141-141" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitHub Pull Request title</p>
@@ -805,15 +809,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1448', 1448)" onmouseover="showTip(event, '1448', 1448)">
+          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
             Environment.RepoBranch
           </code>
-          <div class="tip" id="1448">
+          <div class="tip" id="1463">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L162-162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build branch</p>
@@ -823,15 +827,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1449', 1449)" onmouseover="showTip(event, '1449', 1449)">
+          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
             Environment.RepoCommit
           </code>
-          <div class="tip" id="1449">
+          <div class="tip" id="1464">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L165-165" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L165-165" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Commit ID (SHA)</p>
@@ -841,15 +845,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1450', 1450)" onmouseover="showTip(event, '1450', 1450)">
+          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
             Environment.RepoCommitAuthor
           </code>
-          <div class="tip" id="1450">
+          <div class="tip" id="1465">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L168-168" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L168-168" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Commit author's name</p>
@@ -859,15 +863,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
+          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
             Environment.RepoCommitAuthorEmail
           </code>
-          <div class="tip" id="1451">
+          <div class="tip" id="1466">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L171-171" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L171-171" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Commit author's email address</p>
@@ -877,15 +881,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
+          <code onmouseout="hideTip(event, '1467', 1467)" onmouseover="showTip(event, '1467', 1467)">
             Environment.RepoCommitMessage
           </code>
-          <div class="tip" id="1452">
+          <div class="tip" id="1467">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L177-177" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L177-177" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Commit message</p>
@@ -895,15 +899,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
+          <code onmouseout="hideTip(event, '1468', 1468)" onmouseover="showTip(event, '1468', 1468)">
             Environment.RepoCommitMessageExtended
           </code>
-          <div class="tip" id="1453">
+          <div class="tip" id="1468">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L180-180" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L180-180" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The rest of the commit message after line break (if exists)</p>
@@ -913,15 +917,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
+          <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
             Environment.RepoCommitTimestamp
           </code>
-          <div class="tip" id="1454">
+          <div class="tip" id="1469">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L174-174" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L174-174" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Commit date/time</p>
@@ -931,15 +935,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
+          <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
             Environment.RepoName
           </code>
-          <div class="tip" id="1455">
+          <div class="tip" id="1470">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L159-159" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Repository name in format owner-name/repo-name</p>
@@ -949,15 +953,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
+          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
             Environment.RepoProvider
           </code>
-          <div class="tip" id="1456">
+          <div class="tip" id="1471">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L153-153" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>GitHub, BitBucket or Kiln</p>
@@ -967,15 +971,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
+          <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
             Environment.RepoScm
           </code>
-          <div class="tip" id="1457">
+          <div class="tip" id="1472">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L156-156" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L156-156" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>git or mercurial</p>
@@ -985,15 +989,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
+          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
             Environment.RepositoryShallowCloneTimeout(...)
           </code>
-          <div class="tip" id="1458">
+          <div class="tip" id="1473">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L231-231" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L231-231" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)</p>
@@ -1003,15 +1007,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
+          <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
             Environment.RepoTag
           </code>
-          <div class="tip" id="1459">
+          <div class="tip" id="1474">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L196-196" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L196-196" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>true if build has started by pushed tag; otherwise false</p>
@@ -1021,15 +1025,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
+          <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
             Environment.RepoTagName
           </code>
-          <div class="tip" id="1460">
+          <div class="tip" id="1475">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L201-201" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.AppVeyor/AppVeyor.fs#L201-201" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>contains tag name for builds started by tag</p>
@@ -1077,7 +1081,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,15 +324,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1326', 1326)" onmouseover="showTip(event, '1326', 1326)">
+          <code onmouseout="hideTip(event, '1341', 1341)" onmouseover="showTip(event, '1341', 1341)">
             ApiToken
           </code>
-          <div class="tip" id="1326">
+          <div class="tip" id="1341">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L134-134" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L134-134" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) API token</p>
@@ -338,15 +342,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1327', 1327)" onmouseover="showTip(event, '1327', 1327)">
+          <code onmouseout="hideTip(event, '1342', 1342)" onmouseover="showTip(event, '1342', 1342)">
             AppId
           </code>
-          <div class="tip" id="1327">
+          <div class="tip" id="1342">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L182-182" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L182-182" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set to your App Id (required for UWP apps targeting windows phone)</p>
@@ -356,15 +360,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1328', 1328)" onmouseover="showTip(event, '1328', 1328)">
+          <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
             BuildServerUrl
           </code>
-          <div class="tip" id="1328">
+          <div class="tip" id="1343">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L167-167" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L167-167" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set to the URL of the build job on your build server</p>
@@ -374,15 +378,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1329', 1329)" onmouseover="showTip(event, '1329', 1329)">
+          <code onmouseout="hideTip(event, '1344', 1344)" onmouseover="showTip(event, '1344', 1344)">
             CommitSHA
           </code>
-          <div class="tip" id="1329">
+          <div class="tip" id="1344">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L164-164" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L164-164" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set to the git commit sha for this build</p>
@@ -392,15 +396,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1330', 1330)" onmouseover="showTip(event, '1330', 1330)">
+          <code onmouseout="hideTip(event, '1345', 1345)" onmouseover="showTip(event, '1345', 1345)">
             DownloadStatus
           </code>
-          <div class="tip" id="1330">
+          <div class="tip" id="1345">
             <strong>Signature:</strong> DownloadStatusOption<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L173-173" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Release download status (can only be set with full-access tokens)</p>
@@ -410,15 +414,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1331', 1331)" onmouseover="showTip(event, '1331', 1331)">
+          <code onmouseout="hideTip(event, '1346', 1346)" onmouseover="showTip(event, '1346', 1346)">
             Dsym
           </code>
-          <div class="tip" id="1331">
+          <div class="tip" id="1346">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L140-140" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L140-140" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>file data for dsym (IOS: *.dysm.zip or Android: mapping.txt)</p>
@@ -428,15 +432,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1332', 1332)" onmouseover="showTip(event, '1332', 1332)">
+          <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
             File
           </code>
-          <div class="tip" id="1332">
+          <div class="tip" id="1347">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L137-137" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L137-137" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) file data for the build (.ipa or .apk)</p>
@@ -446,15 +450,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1333', 1333)" onmouseover="showTip(event, '1333', 1333)">
+          <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
             Mandatory
           </code>
-          <div class="tip" id="1333">
+          <div class="tip" id="1348">
             <strong>Signature:</strong> MandatoryOption<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L158-158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set version as mandatory</p>
@@ -464,15 +468,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1334', 1334)" onmouseover="showTip(event, '1334', 1334)">
+          <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
             Notes
           </code>
-          <div class="tip" id="1334">
+          <div class="tip" id="1349">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L143-143" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Release notes for the build</p>
@@ -482,15 +486,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1335', 1335)" onmouseover="showTip(event, '1335', 1335)">
+          <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
             NotesType
           </code>
-          <div class="tip" id="1335">
+          <div class="tip" id="1350">
             <strong>Signature:</strong> NoteType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L146-146" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L146-146" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Release notes type for the build</p>
@@ -500,15 +504,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1336', 1336)" onmouseover="showTip(event, '1336', 1336)">
+          <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
             Notify
           </code>
-          <div class="tip" id="1336">
+          <div class="tip" id="1351">
             <strong>Signature:</strong> NotifyOption<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L155-155" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L155-155" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the notify option</p>
@@ -518,15 +522,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1337', 1337)" onmouseover="showTip(event, '1337', 1337)">
+          <code onmouseout="hideTip(event, '1352', 1352)" onmouseover="showTip(event, '1352', 1352)">
             OwnerId
           </code>
-          <div class="tip" id="1337">
+          <div class="tip" id="1352">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the owner of the app</p>
@@ -536,15 +540,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1338', 1338)" onmouseover="showTip(event, '1338', 1338)">
+          <code onmouseout="hideTip(event, '1353', 1353)" onmouseover="showTip(event, '1353', 1353)">
             Private
           </code>
-          <div class="tip" id="1338">
+          <div class="tip" id="1353">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L161-161" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set to true to enable the private download page (default is false)</p>
@@ -554,15 +558,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1339', 1339)" onmouseover="showTip(event, '1339', 1339)">
+          <code onmouseout="hideTip(event, '1354', 1354)" onmouseover="showTip(event, '1354', 1354)">
             ReleaseType
           </code>
-          <div class="tip" id="1339">
+          <div class="tip" id="1354">
             <strong>Signature:</strong> ReleaseType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L149-149" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L149-149" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the release type of the app</p>
@@ -572,15 +576,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1340', 1340)" onmouseover="showTip(event, '1340', 1340)">
+          <code onmouseout="hideTip(event, '1355', 1355)" onmouseover="showTip(event, '1355', 1355)">
             RepositoryUrl
           </code>
-          <div class="tip" id="1340">
+          <div class="tip" id="1355">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L170-170" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L170-170" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set to your source repository</p>
@@ -590,15 +594,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1341', 1341)" onmouseover="showTip(event, '1341', 1341)">
+          <code onmouseout="hideTip(event, '1356', 1356)" onmouseover="showTip(event, '1356', 1356)">
             Teams
           </code>
-          <div class="tip" id="1341">
+          <div class="tip" id="1356">
             <strong>Signature:</strong> string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L176-176" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L176-176" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Restrict download to specific teams</p>
@@ -608,15 +612,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1342', 1342)" onmouseover="showTip(event, '1342', 1342)">
+          <code onmouseout="hideTip(event, '1357', 1357)" onmouseover="showTip(event, '1357', 1357)">
             UploadTimeout
           </code>
-          <div class="tip" id="1342">
+          <div class="tip" id="1357">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L179-179" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L179-179" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set maximum upload delay</p>
@@ -626,15 +630,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
+          <code onmouseout="hideTip(event, '1358', 1358)" onmouseover="showTip(event, '1358', 1358)">
             VersionId
           </code>
-          <div class="tip" id="1343">
+          <div class="tip" id="1358">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L185-185" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L185-185" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>When uploading a build, specify to which version (hockeyapp version id)</p>
@@ -682,7 +686,7 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

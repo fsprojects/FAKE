@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2669', 2669)" onmouseover="showTip(event, '2669', 2669)">
+          <code onmouseout="hideTip(event, '2696', 2696)" onmouseover="showTip(event, '2696', 2696)">
             BinaryLoggers
           </code>
-          <div class="tip" id="2669">
+          <div class="tip" id="2696">
             <strong>Signature:</strong> string list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -335,15 +339,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2670', 2670)" onmouseover="showTip(event, '2670', 2670)">
+          <code onmouseout="hideTip(event, '2697', 2697)" onmouseover="showTip(event, '2697', 2697)">
             BuildIpa
           </code>
-          <div class="tip" id="2670">
+          <div class="tip" id="2697">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L62-62" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Indicates if an IPA file should be generated</p>
@@ -353,15 +357,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2671', 2671)" onmouseover="showTip(event, '2671', 2671)">
+          <code onmouseout="hideTip(event, '2698', 2698)" onmouseover="showTip(event, '2698', 2698)">
             Configuration
           </code>
-          <div class="tip" id="2671">
+          <div class="tip" id="2698">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L56-56" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L56-56" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build configuration, defaults to 'Debug'</p>
@@ -371,15 +375,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2672', 2672)" onmouseover="showTip(event, '2672', 2672)">
+          <code onmouseout="hideTip(event, '2699', 2699)" onmouseover="showTip(event, '2699', 2699)">
             DistributedLoggers
           </code>
-          <div class="tip" id="2672">
+          <div class="tip" id="2699">
             <strong>Signature:</strong> (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -387,15 +391,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2673', 2673)" onmouseover="showTip(event, '2673', 2673)">
+          <code onmouseout="hideTip(event, '2700', 2700)" onmouseover="showTip(event, '2700', 2700)">
             FileLoggers
           </code>
-          <div class="tip" id="2673">
+          <div class="tip" id="2700">
             <strong>Signature:</strong> MSBuildFileLoggerConfig list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -403,15 +407,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2674', 2674)" onmouseover="showTip(event, '2674', 2674)">
+          <code onmouseout="hideTip(event, '2701', 2701)" onmouseover="showTip(event, '2701', 2701)">
             MaxCpuCount
           </code>
-          <div class="tip" id="2674">
+          <div class="tip" id="2701">
             <strong>Signature:</strong> int option option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L65-65" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L65-65" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -419,15 +423,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2675', 2675)" onmouseover="showTip(event, '2675', 2675)">
+          <code onmouseout="hideTip(event, '2702', 2702)" onmouseover="showTip(event, '2702', 2702)">
             NoConsoleLogger
           </code>
-          <div class="tip" id="2675">
+          <div class="tip" id="2702">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L71-71" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -435,15 +439,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2676', 2676)" onmouseover="showTip(event, '2676', 2676)">
+          <code onmouseout="hideTip(event, '2703', 2703)" onmouseover="showTip(event, '2703', 2703)">
             NodeReuse
           </code>
-          <div class="tip" id="2676">
+          <div class="tip" id="2703">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -451,15 +455,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2677', 2677)" onmouseover="showTip(event, '2677', 2677)">
+          <code onmouseout="hideTip(event, '2704', 2704)" onmouseover="showTip(event, '2704', 2704)">
             NoLogo
           </code>
-          <div class="tip" id="2677">
+          <div class="tip" id="2704">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -467,15 +471,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2678', 2678)" onmouseover="showTip(event, '2678', 2678)">
+          <code onmouseout="hideTip(event, '2705', 2705)" onmouseover="showTip(event, '2705', 2705)">
             OutputPath
           </code>
-          <div class="tip" id="2678">
+          <div class="tip" id="2705">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L60-60" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L60-60" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output path for build, defaults to project settings</p>
@@ -485,15 +489,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2679', 2679)" onmouseover="showTip(event, '2679', 2679)">
+          <code onmouseout="hideTip(event, '2706', 2706)" onmouseover="showTip(event, '2706', 2706)">
             Platform
           </code>
-          <div class="tip" id="2679">
+          <div class="tip" id="2706">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L58-58" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build platform, defaults to 'iPhoneSimulator'</p>
@@ -503,15 +507,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2680', 2680)" onmouseover="showTip(event, '2680', 2680)">
+          <code onmouseout="hideTip(event, '2707', 2707)" onmouseover="showTip(event, '2707', 2707)">
             ProjectPath
           </code>
-          <div class="tip" id="2680">
+          <div class="tip" id="2707">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L52-52" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L52-52" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) Path to solution or project file</p>
@@ -521,15 +525,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2681', 2681)" onmouseover="showTip(event, '2681', 2681)">
+          <code onmouseout="hideTip(event, '2708', 2708)" onmouseover="showTip(event, '2708', 2708)">
             Properties
           </code>
-          <div class="tip" id="2681">
+          <div class="tip" id="2708">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Additional MSBuild properties, defaults to empty list</p>
@@ -539,15 +543,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2682', 2682)" onmouseover="showTip(event, '2682', 2682)">
+          <code onmouseout="hideTip(event, '2709', 2709)" onmouseover="showTip(event, '2709', 2709)">
             RestorePackagesFlag
           </code>
-          <div class="tip" id="2682">
+          <div class="tip" id="2709">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L68-68" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L68-68" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -555,15 +559,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2683', 2683)" onmouseover="showTip(event, '2683', 2683)">
+          <code onmouseout="hideTip(event, '2710', 2710)" onmouseover="showTip(event, '2710', 2710)">
             Target
           </code>
-          <div class="tip" id="2683">
+          <div class="tip" id="2710">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L54-54" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L54-54" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build target, defaults to Build</p>
@@ -573,15 +577,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2684', 2684)" onmouseover="showTip(event, '2684', 2684)">
+          <code onmouseout="hideTip(event, '2711', 2711)" onmouseover="showTip(event, '2711', 2711)">
             ToolsVersion
           </code>
-          <div class="tip" id="2684">
+          <div class="tip" id="2711">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -589,15 +593,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2685', 2685)" onmouseover="showTip(event, '2685', 2685)">
+          <code onmouseout="hideTip(event, '2712', 2712)" onmouseover="showTip(event, '2712', 2712)">
             Verbosity
           </code>
-          <div class="tip" id="2685">
+          <div class="tip" id="2712">
             <strong>Signature:</strong> MSBuildVerbosity option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L70-70" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L70-70" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -643,7 +647,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

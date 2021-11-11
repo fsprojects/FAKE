@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -381,36 +385,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2190', 2190)" onmouseover="showTip(event, '2190', 2190)">
+          <code onmouseout="hideTip(event, '2168', 2168)" onmouseover="showTip(event, '2168', 2168)">
             Npm.defaultNpmParams
           </code>
-          <div class="tip" id="2190">
+          <div class="tip" id="2168">
             <strong>Signature:</strong> NpmParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Npm default parameters</p>
+                    <p>Npm default parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2191', 2191)" onmouseover="showTip(event, '2191', 2191)">
+          <code onmouseout="hideTip(event, '2169', 2169)" onmouseover="showTip(event, '2169', 2169)">
             Npm.exec command setParams
           </code>
-          <div class="tip" id="2191">
+          <div class="tip" id="2169">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L187-187" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm &lt;command&gt;</code>. Used to run any command.</p>
+                    <p>Run <code>npm &lt;command&gt;</code>. Used to run any command.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
@@ -429,18 +427,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2192', 2192)" onmouseover="showTip(event, '2192', 2192)">
+          <code onmouseout="hideTip(event, '2170', 2170)" onmouseover="showTip(event, '2170', 2170)">
             Npm.install(setParams)
           </code>
-          <div class="tip" id="2192">
+          <div class="tip" id="2170">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L123-123" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm install</code></p>
+                    <p>Run <code>npm install</code></p>
 <h2>Parameters</h2>
 <ul>
 <li>
@@ -458,18 +453,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2193', 2193)" onmouseover="showTip(event, '2193', 2193)">
+          <code onmouseout="hideTip(event, '2171', 2171)" onmouseover="showTip(event, '2171', 2171)">
             Npm.installForced(setParams)
           </code>
-          <div class="tip" id="2193">
+          <div class="tip" id="2171">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm install --force</code></p>
+                    <p>Run <code>npm install --force</code></p>
 <h2>Parameters</h2>
 <ul>
 <li>
@@ -487,18 +479,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2194', 2194)" onmouseover="showTip(event, '2194', 2194)">
+          <code onmouseout="hideTip(event, '2172', 2172)" onmouseover="showTip(event, '2172', 2172)">
             Npm.run command setParams
           </code>
-          <div class="tip" id="2194">
+          <div class="tip" id="2172">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L136-136" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm run &lt;command&gt;</code></p>
+                    <p>Run <code>npm run &lt;command&gt;</code></p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
@@ -517,18 +506,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2195', 2195)" onmouseover="showTip(event, '2195', 2195)">
+          <code onmouseout="hideTip(event, '2173', 2173)" onmouseover="showTip(event, '2173', 2173)">
             Npm.runSilent command setParams
           </code>
-          <div class="tip" id="2195">
+          <div class="tip" id="2173">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm run --silent &lt;command&gt;</code>. Suppresses npm error output. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+                    <p>Run <code>npm run --silent &lt;command&gt;</code>. Suppresses npm error output. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
@@ -547,18 +533,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2196', 2196)" onmouseover="showTip(event, '2196', 2196)">
+          <code onmouseout="hideTip(event, '2174', 2174)" onmouseover="showTip(event, '2174', 2174)">
             Npm.runTest command setParams
           </code>
-          <div class="tip" id="2196">
+          <div class="tip" id="2174">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L162-162" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm run --silent &lt;command&gt;</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+                    <p>Run <code>npm run --silent &lt;command&gt;</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
@@ -577,18 +560,15 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2197', 2197)" onmouseover="showTip(event, '2197', 2197)">
+          <code onmouseout="hideTip(event, '2175', 2175)" onmouseover="showTip(event, '2175', 2175)">
             Npm.test(setParams)
           </code>
-          <div class="tip" id="2197">
+          <div class="tip" id="2175">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L174-174" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run <code>npm test --silent</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+                    <p>Run <code>npm test --silent</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
 <h2>Parameters</h2>
 <ul>
 <li>
@@ -643,7 +623,7 @@ WorkingDirectory = "./src/FAKESimple.Web/"
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

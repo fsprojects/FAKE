@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,18 +326,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5361', 5361)" onmouseover="showTip(event, '5361', 5361)">
+          <code onmouseout="hideTip(event, '5308', 5308)" onmouseover="showTip(event, '5308', 5308)">
             Common
           </code>
-          <div class="tip" id="5361">
+          <div class="tip" id="5308">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L876-876" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Common tool options</p>
+                    <p>Common tool options</p>
 
 
         </td>
@@ -348,72 +349,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5362', 5362)" onmouseover="showTip(event, '5362', 5362)">
+          <code onmouseout="hideTip(event, '5309', 5309)" onmouseover="showTip(event, '5309', 5309)">
             x.Environment
           </code>
-          <div class="tip" id="5362">
+          <div class="tip" id="5309">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L883-883" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the current environment</p>
+                    <p>Gets the current environment</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5363', 5363)" onmouseover="showTip(event, '5363', 5363)">
+          <code onmouseout="hideTip(event, '5310', 5310)" onmouseover="showTip(event, '5310', 5310)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="5363">
+          <div class="tip" id="5310">
             <strong>Signature:</strong> (f:(Options -&gt; Options)) -&gt; VersionOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L886-886" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes the "Common" properties according to the given function</p>
+                    <p>Changes the "Common" properties according to the given function</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5364', 5364)" onmouseover="showTip(event, '5364', 5364)">
+          <code onmouseout="hideTip(event, '5311', 5311)" onmouseover="showTip(event, '5311', 5311)">
             x.WithEnvironment(map)
           </code>
-          <div class="tip" id="5364">
+          <div class="tip" id="5311">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; VersionOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L889-889" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the current environment variables.</p>
+                    <p>Sets the current environment variables.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5365', 5365)" onmouseover="showTip(event, '5365', 5365)">
+          <code onmouseout="hideTip(event, '5312', 5312)" onmouseover="showTip(event, '5312', 5312)">
             x.WithRedirectOutput(shouldRedirect)
           </code>
-          <div class="tip" id="5365">
+          <div class="tip" id="5312">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; VersionOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L892-892" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets a value indicating whether the output for the given process is redirected.</p>
+                    <p>Sets a value indicating whether the output for the given process is redirected.</p>
 
 
         </td>
@@ -428,18 +417,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5366', 5366)" onmouseover="showTip(event, '5366', 5366)">
+          <code onmouseout="hideTip(event, '5313', 5313)" onmouseover="showTip(event, '5313', 5313)">
             VersionOptions.Create()
           </code>
-          <div class="tip" id="5366">
+          <div class="tip" id="5313">
             <strong>Signature:</strong> unit -&gt; VersionOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L879-879" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parameter default values.</p>
+                    <p>Parameter default values.</p>
 
 
         </td>
@@ -483,7 +469,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

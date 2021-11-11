@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns whether a remote service with the given name exists.</p>
+                    <p>Returns whether a remote service with the given name exists.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -379,10 +380,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns whether a local service with the given name exists.</p>
+                    <p>Returns whether a local service with the given name exists.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -409,10 +407,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the remote service with the given name has been started or fails after given timeout</p>
+                    <p>Waits until the remote service with the given name has been started or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -441,10 +436,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L146-146" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the remote service with the given name has been stopped or fails after given timeout</p>
+                    <p>Waits until the remote service with the given name has been stopped or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -473,10 +465,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the local service with the given name has been started or fails after given timeout</p>
+                    <p>Waits until the local service with the given name has been started or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -504,10 +493,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L167-167" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the local service with the given name has been stopped or fails after given timeout</p>
+                    <p>Waits until the local service with the given name has been stopped or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -535,10 +521,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts all remote services with given name.</p>
+                    <p>Starts all remote services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -566,10 +549,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts all local services with given name.</p>
+                    <p>Starts all local services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
@@ -596,10 +576,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L106-106" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops all services with given name.</p>
+                    <p>Stops all services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -627,10 +604,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ServiceControllerHelper.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops all local services with given name.</p>
+                    <p>Stops all local services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
@@ -678,7 +652,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -383,72 +387,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2447', 2447)" onmouseover="showTip(event, '2447', 2447)">
+          <code onmouseout="hideTip(event, '2412', 2412)" onmouseover="showTip(event, '2412', 2412)">
             ChocoInstallDefaults
           </code>
-          <div class="tip" id="2447">
+          <div class="tip" id="2412">
             <strong>Signature:</strong> ChocoInstallParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L252-252" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco install.</p>
+                    <p>The default option set given to choco install.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2448', 2448)" onmouseover="showTip(event, '2448', 2448)">
+          <code onmouseout="hideTip(event, '2413', 2413)" onmouseover="showTip(event, '2413', 2413)">
             ChocoPackDefaults
           </code>
-          <div class="tip" id="2448">
+          <div class="tip" id="2413">
             <strong>Signature:</strong> ChocoPackParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L270-270" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco pack.</p>
+                    <p>The default option set given to choco pack.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2449', 2449)" onmouseover="showTip(event, '2449', 2449)">
+          <code onmouseout="hideTip(event, '2414', 2414)" onmouseover="showTip(event, '2414', 2414)">
             ChocoPushDefaults
           </code>
-          <div class="tip" id="2449">
+          <div class="tip" id="2414">
             <strong>Signature:</strong> ChocoPushParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L315-315" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default option set given to choco push.</p>
+                    <p>The default option set given to choco push.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2450', 2450)" onmouseover="showTip(event, '2450', 2450)">
+          <code onmouseout="hideTip(event, '2415', 2415)" onmouseover="showTip(event, '2415', 2415)">
             exec args timeout
           </code>
-          <div class="tip" id="2450">
+          <div class="tip" id="2415">
             <strong>Signature:</strong> args:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L860-860" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call custom choco command</p>
+                    <p>Call custom choco command</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>args</code> - string that will be appendedn to choco.exe call</p></li>
@@ -489,18 +481,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2451', 2451)" onmouseover="showTip(event, '2451', 2451)">
+          <code onmouseout="hideTip(event, '2416', 2416)" onmouseover="showTip(event, '2416', 2416)">
             install setParams packages
           </code>
-          <div class="tip" id="2451">
+          <div class="tip" id="2416">
             <strong>Signature:</strong> setParams:(ChocoInstallParams -&gt; ChocoInstallParams) -&gt; packages:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L718-718" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">install</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">install</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoInstallParams</code></p></li>
@@ -518,18 +507,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2452', 2452)" onmouseover="showTip(event, '2452', 2452)">
+          <code onmouseout="hideTip(event, '2417', 2417)" onmouseover="showTip(event, '2417', 2417)">
             IsAvailable
           </code>
-          <div class="tip" id="2452">
+          <div class="tip" id="2417">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L707-707" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>True if choco is available (only on windows)</p>
+                    <p>True if choco is available (only on windows)</p>
 <h2>Sample usage</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -543,18 +529,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2453', 2453)" onmouseover="showTip(event, '2453', 2453)">
+          <code onmouseout="hideTip(event, '2418', 2418)" onmouseover="showTip(event, '2418', 2418)">
             pack(setParams)
           </code>
-          <div class="tip" id="2453">
+          <div class="tip" id="2418">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L750-750" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified</p>
 <h2>Parameters</h2>
 <ul>
 <li>
@@ -571,18 +554,15 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2454', 2454)" onmouseover="showTip(event, '2454', 2454)">
+          <code onmouseout="hideTip(event, '2419', 2419)" onmouseover="showTip(event, '2419', 2419)">
             packFromTemplate setParams nuspecPath
           </code>
-          <div class="tip" id="2454">
+          <div class="tip" id="2419">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; nuspecPath:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L778-778" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPackParams</code></p></li>
@@ -600,18 +580,15 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2455', 2455)" onmouseover="showTip(event, '2455', 2455)">
+          <code onmouseout="hideTip(event, '2420', 2420)" onmouseover="showTip(event, '2420', 2420)">
             push setParams nupkgPath
           </code>
-          <div class="tip" id="2455">
+          <div class="tip" id="2420">
             <strong>Signature:</strong> setParams:(ChocoPushParams -&gt; ChocoPushParams) -&gt; nupkgPath:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L819-819" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPush">push</a> a package</p>
+                    <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPush">push</a> a package</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPushParams</code></p></li>
@@ -666,7 +643,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

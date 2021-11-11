@@ -105,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -194,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -214,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -330,6 +334,41 @@
 </code></pre></td>
 </tr>
 </table>
+<p>The following sample shows how to deploy a database project to Azure using an access token:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Sql</span>
+
+<span class="c">/// the database for local development + compile</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;DeployLocalDb&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">let</span> <span class="id">dacPacPath</span> <span class="o">=</span> <span class="s">&quot;path/to/dbProject.dacpac&quot;</span>
+    <span class="k">let</span> <span class="id">accessToken</span> <span class="o">=</span> <span class="s">&quot;your-access-token&quot;</span>
+    <span class="k">let</span> <span class="id">connectionString</span> <span class="o">=</span> <span class="s">&quot;Data Source=your-server-name.database.windows.net; Initial Catalog=your-database-name;&quot;</span> 
+    <span class="id">SqlPackage</span><span class="pn">.</span><span class="id">deployDb</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span> 
+        <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span> 
+                <span class="id">Destination</span> <span class="o">=</span> <span class="id">connectionString</span>
+                <span class="id">AccessToken</span> <span class="o">=</span> <span class="id">accessToken</span>
+                <span class="id">Source</span> <span class="o">=</span> <span class="id">dacPacPath</span> 
+        <span class="pn">}</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">ignore</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
 <h2><a name="Deployment-Options" class="anchor" href="#Deployment-Options">Deployment Options</a></h2>
 <p>You can optionally specify the type of command to use (again, refer to the documentation above for more detail): -</p>
 <ul>
@@ -343,6 +382,7 @@
 <ul>
 <li>SqlPackageToolPath - path to sqlpackage.exe</li>
 <li>Action - deployment option (/a)</li>
+<li>AccessToken - An Access token to use in authentication instead of username and password</li>
 <li>Source - specifies a source file to be used as the source of action instead of a database (/SourceFile)</li>
 <li>Destination - specifies a valid SQL Server/Azure connection string to the target database (/TargetConnectionString)</li>
 <li>Timeout - specifies the command timeout in seconds when executing queries against SQL Server (/p:CommandTimeout)</li>
@@ -393,7 +433,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

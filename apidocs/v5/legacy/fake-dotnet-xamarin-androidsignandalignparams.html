@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,126 +324,105 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5627', 5627)" onmouseover="showTip(event, '5627', 5627)">
+          <code onmouseout="hideTip(event, '5568', 5568)" onmouseover="showTip(event, '5568', 5568)">
             JarsignerPath
           </code>
-          <div class="tip" id="5627">
+          <div class="tip" id="5568">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L378-378" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to jarsigner tool, defaults to assuming it is in your path</p>
+                    <p>Path to jarsigner tool, defaults to assuming it is in your path</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5628', 5628)" onmouseover="showTip(event, '5628', 5628)">
+          <code onmouseout="hideTip(event, '5569', 5569)" onmouseover="showTip(event, '5569', 5569)">
             KeystoreAlias
           </code>
-          <div class="tip" id="5628">
+          <div class="tip" id="5569">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L372-372" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Alias for keystore</p>
+                    <p>(Required) Alias for keystore</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5629', 5629)" onmouseover="showTip(event, '5629', 5629)">
+          <code onmouseout="hideTip(event, '5570', 5570)" onmouseover="showTip(event, '5570', 5570)">
             KeystorePassword
           </code>
-          <div class="tip" id="5629">
+          <div class="tip" id="5570">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L370-370" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Password for keystore</p>
+                    <p>(Required) Password for keystore</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5630', 5630)" onmouseover="showTip(event, '5630', 5630)">
+          <code onmouseout="hideTip(event, '5571', 5571)" onmouseover="showTip(event, '5571', 5571)">
             KeystorePath
           </code>
-          <div class="tip" id="5630">
+          <div class="tip" id="5571">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L368-368" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Path to keystore used to sign the app</p>
+                    <p>(Required) Path to keystore used to sign the app</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5631', 5631)" onmouseover="showTip(event, '5631', 5631)">
+          <code onmouseout="hideTip(event, '5572', 5572)" onmouseover="showTip(event, '5572', 5572)">
             MessageDigestAlgorithm
           </code>
-          <div class="tip" id="5631">
+          <div class="tip" id="5572">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L376-376" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file.</p>
+                    <p>Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5632', 5632)" onmouseover="showTip(event, '5632', 5632)">
+          <code onmouseout="hideTip(event, '5573', 5573)" onmouseover="showTip(event, '5573', 5573)">
             SignatureAlgorithm
           </code>
-          <div class="tip" id="5632">
+          <div class="tip" id="5573">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L374-374" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the name of the signature algorithm to use to sign the JAR file.</p>
+                    <p>Specifies the name of the signature algorithm to use to sign the JAR file.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5633', 5633)" onmouseover="showTip(event, '5633', 5633)">
+          <code onmouseout="hideTip(event, '5574', 5574)" onmouseover="showTip(event, '5574', 5574)">
             ZipalignPath
           </code>
-          <div class="tip" id="5633">
+          <div class="tip" id="5574">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Xamarin/Xamarin.fs#L380-380" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to zipalign tool, defaults to assuming it is in your path</p>
+                    <p>Path to zipalign tool, defaults to assuming it is in your path</p>
 
 
         </td>
@@ -483,7 +466,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

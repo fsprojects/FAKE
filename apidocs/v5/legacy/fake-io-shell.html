@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -343,18 +347,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2061', 2061)" onmouseover="showTip(event, '2061', 2061)">
+          <code onmouseout="hideTip(event, '2039', 2039)" onmouseover="showTip(event, '2039', 2039)">
             Shell.appendTextFiles newFileName files
           </code>
-          <div class="tip" id="2061">
+          <div class="tip" id="2039">
             <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L227-227" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -366,10 +367,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2062', 2062)" onmouseover="showTip(event, '2062', 2062)">
+          <code onmouseout="hideTip(event, '2040', 2040)" onmouseover="showTip(event, '2040', 2040)">
             Shell.AppendTextFiles newFileName files
           </code>
-          <div class="tip" id="2062">
+          <div class="tip" id="2040">
             <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -382,10 +383,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use appendTextFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L513-513" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -397,18 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
+          <code onmouseout="hideTip(event, '2041', 2041)" onmouseover="showTip(event, '2041', 2041)">
             Shell.appendTextFilesWithEncoding(...)
           </code>
-          <div class="tip" id="2063">
+          <div class="tip" id="2041">
             <strong>Signature:</strong> encoding:Encoding -&gt; newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L213-213" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -420,10 +415,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
+          <code onmouseout="hideTip(event, '2042', 2042)" onmouseover="showTip(event, '2042', 2042)">
             Shell.AppendTextFilesWithEncoding(...)
           </code>
-          <div class="tip" id="2064">
+          <div class="tip" id="2042">
             <strong>Signature:</strong> encoding:Encoding -&gt; newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -436,10 +431,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use appendTextFilesWithEncoding instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L504-504" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -451,64 +443,55 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
+          <code onmouseout="hideTip(event, '2043', 2043)" onmouseover="showTip(event, '2043', 2043)">
             Shell.cd(path)
           </code>
-          <div class="tip" id="2065">
+          <div class="tip" id="2043">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L642-642" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
+          <code onmouseout="hideTip(event, '2044', 2044)" onmouseover="showTip(event, '2044', 2044)">
             Shell.chdir(path)
           </code>
-          <div class="tip" id="2066">
+          <div class="tip" id="2044">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L639-639" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
+          <code onmouseout="hideTip(event, '2045', 2045)" onmouseover="showTip(event, '2045', 2045)">
             Shell.cleanDir(path)
           </code>
-          <div class="tip" id="2067">
+          <div class="tip" id="2045">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L181-181" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans a directory by removing all files and sub-directories.</p>
+                    <p>Cleans a directory by removing all files and sub-directories.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2068', 2068)" onmouseover="showTip(event, '2068', 2068)">
+          <code onmouseout="hideTip(event, '2046', 2046)" onmouseover="showTip(event, '2046', 2046)">
             Shell.CleanDir(path)
           </code>
-          <div class="tip" id="2068">
+          <div class="tip" id="2046">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -521,38 +504,32 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use cleanDir instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L484-484" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans a directory by removing all files and sub-directories.</p>
+                    <p>Cleans a directory by removing all files and sub-directories.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2069', 2069)" onmouseover="showTip(event, '2069', 2069)">
+          <code onmouseout="hideTip(event, '2047', 2047)" onmouseover="showTip(event, '2047', 2047)">
             Shell.cleanDirs(dirs)
           </code>
-          <div class="tip" id="2069">
+          <div class="tip" id="2047">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans multiple directories</p>
+                    <p>Cleans multiple directories</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2070', 2070)" onmouseover="showTip(event, '2070', 2070)">
+          <code onmouseout="hideTip(event, '2048', 2048)" onmouseover="showTip(event, '2048', 2048)">
             Shell.CleanDirs(dirs)
           </code>
-          <div class="tip" id="2070">
+          <div class="tip" id="2048">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -565,28 +542,22 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use cleanDirs instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L488-488" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans multiple directories</p>
+                    <p>Cleans multiple directories</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2071', 2071)" onmouseover="showTip(event, '2071', 2071)">
+          <code onmouseout="hideTip(event, '2049', 2049)" onmouseover="showTip(event, '2049', 2049)">
             Shell.compareFiles(...)
           </code>
-          <div class="tip" id="2071">
+          <div class="tip" id="2049">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L231-231" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given files for changes.
+                    <p>Compares the given files for changes.
 If delete is set to true then equal files will be removed.</p>
 
 
@@ -594,10 +565,10 @@ If delete is set to true then equal files will be removed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2072', 2072)" onmouseover="showTip(event, '2072', 2072)">
+          <code onmouseout="hideTip(event, '2050', 2050)" onmouseover="showTip(event, '2050', 2050)">
             Shell.CompareFiles(...)
           </code>
-          <div class="tip" id="2072">
+          <div class="tip" id="2050">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -610,10 +581,7 @@ If delete is set to true then equal files will be removed.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use compareFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L519-519" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given files for changes.
+                    <p>Compares the given files for changes.
 If delete is set to true then equal files will be removed.</p>
 
 
@@ -621,18 +589,15 @@ If delete is set to true then equal files will be removed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2073', 2073)" onmouseover="showTip(event, '2073', 2073)">
+          <code onmouseout="hideTip(event, '2051', 2051)" onmouseover="showTip(event, '2051', 2051)">
             Shell.copy target files
           </code>
-          <div class="tip" id="2073">
+          <div class="tip" id="2051">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target.</p>
+                    <p>Copies the files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -644,10 +609,10 @@ If delete is set to true then equal files will be removed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2074', 2074)" onmouseover="showTip(event, '2074', 2074)">
+          <code onmouseout="hideTip(event, '2052', 2052)" onmouseover="showTip(event, '2052', 2052)">
             Shell.Copy target files
           </code>
-          <div class="tip" id="2074">
+          <div class="tip" id="2052">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -660,10 +625,7 @@ If delete is set to true then equal files will be removed.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copy instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L425-425" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target.</p>
+                    <p>Copies the files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -675,18 +637,15 @@ If delete is set to true then equal files will be removed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2075', 2075)" onmouseover="showTip(event, '2075', 2075)">
+          <code onmouseout="hideTip(event, '2053', 2053)" onmouseover="showTip(event, '2053', 2053)">
             Shell.copyCached target cacheDir files
           </code>
-          <div class="tip" id="2075">
+          <div class="tip" id="2053">
             <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files from a cache folder.
+                    <p>Copies the files from a cache folder.
 If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
 <h2>Parameters</h2>
 <ul>
@@ -700,10 +659,10 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2076', 2076)" onmouseover="showTip(event, '2076', 2076)">
+          <code onmouseout="hideTip(event, '2054', 2054)" onmouseover="showTip(event, '2054', 2054)">
             Shell.CopyCached target cacheDir files
           </code>
-          <div class="tip" id="2076">
+          <div class="tip" id="2054">
             <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -716,10 +675,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Please use copyCached instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L443-443" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files from a cache folder.
+                    <p>Copies the files from a cache folder.
 If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
 <h2>Parameters</h2>
 <ul>
@@ -733,18 +689,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2077', 2077)" onmouseover="showTip(event, '2077', 2077)">
+          <code onmouseout="hideTip(event, '2055', 2055)" onmouseover="showTip(event, '2055', 2055)">
             Shell.copyDir target source filterFile
           </code>
-          <div class="tip" id="2077">
+          <div class="tip" id="2055">
             <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+                    <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -757,10 +710,10 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2078', 2078)" onmouseover="showTip(event, '2078', 2078)">
+          <code onmouseout="hideTip(event, '2056', 2056)" onmouseover="showTip(event, '2056', 2056)">
             Shell.CopyDir target source filterFile
           </code>
-          <div class="tip" id="2078">
+          <div class="tip" id="2056">
             <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -773,10 +726,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Please use copyDir instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L479-479" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+                    <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -789,18 +739,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2079', 2079)" onmouseover="showTip(event, '2079', 2079)">
+          <code onmouseout="hideTip(event, '2057', 2057)" onmouseover="showTip(event, '2057', 2057)">
             Shell.copyFile target fileName
           </code>
-          <div class="tip" id="2079">
+          <div class="tip" id="2057">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target and overwrites the existing file.</p>
+                    <p>Copies a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory or file.</li>
@@ -812,10 +759,10 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2080', 2080)" onmouseover="showTip(event, '2080', 2080)">
+          <code onmouseout="hideTip(event, '2058', 2058)" onmouseover="showTip(event, '2058', 2058)">
             Shell.CopyFile target fileName
           </code>
-          <div class="tip" id="2080">
+          <div class="tip" id="2058">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -828,10 +775,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Please use copyFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L398-398" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target and overwrites the existing file.</p>
+                    <p>Copies a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory or file.</li>
@@ -843,18 +787,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2081', 2081)" onmouseover="showTip(event, '2081', 2081)">
+          <code onmouseout="hideTip(event, '2059', 2059)" onmouseover="showTip(event, '2059', 2059)">
             Shell.copyFileIntoSubFolder(...)
           </code>
-          <div class="tip" id="2081">
+          <div class="tip" id="2059">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to a relative subfolder of the target.</p>
+                    <p>Copies a single file to a relative subfolder of the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory</li>
@@ -866,10 +807,10 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2082', 2082)" onmouseover="showTip(event, '2082', 2082)">
+          <code onmouseout="hideTip(event, '2060', 2060)" onmouseover="showTip(event, '2060', 2060)">
             Shell.CopyFileIntoSubFolder(...)
           </code>
-          <div class="tip" id="2082">
+          <div class="tip" id="2060">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -882,10 +823,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Please use copyFileIntoSubFolder instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L406-406" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to a relative subfolder of the target.</p>
+                    <p>Copies a single file to a relative subfolder of the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory</li>
@@ -897,18 +835,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2083', 2083)" onmouseover="showTip(event, '2083', 2083)">
+          <code onmouseout="hideTip(event, '2061', 2061)" onmouseover="showTip(event, '2061', 2061)">
             Shell.copyFiles target files
           </code>
-          <div class="tip" id="2083">
+          <div class="tip" id="2061">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target - Alias for Copy</p>
+                    <p>Copies the files to the target - Alias for Copy</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -920,10 +855,10 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2084', 2084)" onmouseover="showTip(event, '2084', 2084)">
+          <code onmouseout="hideTip(event, '2062', 2062)" onmouseover="showTip(event, '2062', 2062)">
             Shell.CopyFiles target files
           </code>
-          <div class="tip" id="2084">
+          <div class="tip" id="2062">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -936,10 +871,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Please use copyFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L469-469" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target - Alias for Copy</p>
+                    <p>Copies the files to the target - Alias for Copy</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -951,18 +883,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2085', 2085)" onmouseover="showTip(event, '2085', 2085)">
+          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
             Shell.copyFilesWithSubFolder(...)
           </code>
-          <div class="tip" id="2085">
+          <div class="tip" id="2063">
             <strong>Signature:</strong> targetDir:string -&gt; files:IGlobbingPattern -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L145-145" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the given glob-matches into another directory by leaving relative paths in place based on the globbing base-directory</p>
+                    <p>Copies the given glob-matches into another directory by leaving relative paths in place based on the globbing base-directory</p>
 <h2>Sample</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -980,18 +909,15 @@ If the files are not cached or the original files have a different write time th
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2086', 2086)" onmouseover="showTip(event, '2086', 2086)">
+          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
             Shell.copyFileWithSubfolder(...)
           </code>
-          <div class="tip" id="2086">
+          <div class="tip" id="2064">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target folder preserving the folder structure
+                    <p>Copies a single file to the target folder preserving the folder structure
 starting from the specified base folder.</p>
 <h2>Parameters</h2>
 <ul>
@@ -1005,10 +931,10 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2087', 2087)" onmouseover="showTip(event, '2087', 2087)">
+          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
             Shell.CopyFileWithSubfolder(...)
           </code>
-          <div class="tip" id="2087">
+          <div class="tip" id="2065">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1021,10 +947,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copyFileWithSubfolder instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L416-416" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target folder preserving the folder structure
+                    <p>Copies a single file to the target folder preserving the folder structure
 starting from the specified base folder.</p>
 <h2>Parameters</h2>
 <ul>
@@ -1038,28 +961,25 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2088', 2088)" onmouseover="showTip(event, '2088', 2088)">
+          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
             Shell.copyRecursive(...)
           </code>
-          <div class="tip" id="2088">
+          <div class="tip" id="2066">
             <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; overWrite:bool -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L293-293" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2089', 2089)" onmouseover="showTip(event, '2089', 2089)">
+          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
             Shell.CopyRecursive(...)
           </code>
-          <div class="tip" id="2089">
+          <div class="tip" id="2067">
             <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; overWrite:bool -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1072,28 +992,22 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copyRecursive instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L553-553" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2090', 2090)" onmouseover="showTip(event, '2090', 2090)">
+          <code onmouseout="hideTip(event, '2068', 2068)" onmouseover="showTip(event, '2068', 2068)">
             Shell.copyRecursive2(...)
           </code>
-          <div class="tip" id="2090">
+          <div class="tip" id="2068">
             <strong>Signature:</strong> method:CopyRecursiveMethod -&gt; dir:string -&gt; outputDir:string -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L312-312" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>method</code> - the method to decide which files get copied</li>
@@ -1106,10 +1020,10 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2091', 2091)" onmouseover="showTip(event, '2091', 2091)">
+          <code onmouseout="hideTip(event, '2069', 2069)" onmouseover="showTip(event, '2069', 2069)">
             Shell.CopyRecursive2(...)
           </code>
-          <div class="tip" id="2091">
+          <div class="tip" id="2069">
             <strong>Signature:</strong> method:CopyRecursiveMethod -&gt; dir:string -&gt; outputDir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1122,10 +1036,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copyRecursive2 instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L564-564" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>method</code> - the method to decide which files get copied</li>
@@ -1138,26 +1049,23 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2092', 2092)" onmouseover="showTip(event, '2092', 2092)">
+          <code onmouseout="hideTip(event, '2070', 2070)" onmouseover="showTip(event, '2070', 2070)">
             Shell.copyRecursiveTo(...)
           </code>
-          <div class="tip" id="2092">
+          <div class="tip" id="2070">
             <strong>Signature:</strong> overWrite:bool -&gt; outputDir:string -&gt; dir:string -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L294-294" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2093', 2093)" onmouseover="showTip(event, '2093', 2093)">
+          <code onmouseout="hideTip(event, '2071', 2071)" onmouseover="showTip(event, '2071', 2071)">
             Shell.CopyRecursiveTo(...)
           </code>
-          <div class="tip" id="2093">
+          <div class="tip" id="2071">
             <strong>Signature:</strong> overWrite:bool -&gt; outputDir:string -&gt; dir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1170,26 +1078,20 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copyRecursiveTo instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L555-555" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2094', 2094)" onmouseover="showTip(event, '2094', 2094)">
+          <code onmouseout="hideTip(event, '2072', 2072)" onmouseover="showTip(event, '2072', 2072)">
             Shell.copyTo target files
           </code>
-          <div class="tip" id="2094">
+          <div class="tip" id="2072">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the given files to the target.</p>
+                    <p>Copies the given files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1201,10 +1103,10 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2095', 2095)" onmouseover="showTip(event, '2095', 2095)">
+          <code onmouseout="hideTip(event, '2073', 2073)" onmouseover="showTip(event, '2073', 2073)">
             Shell.CopyTo target files
           </code>
-          <div class="tip" id="2095">
+          <div class="tip" id="2073">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1217,10 +1119,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use copyTo instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L433-433" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the given files to the target.</p>
+                    <p>Copies the given files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1232,18 +1131,15 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2096', 2096)" onmouseover="showTip(event, '2096', 2096)">
+          <code onmouseout="hideTip(event, '2074', 2074)" onmouseover="showTip(event, '2074', 2074)">
             Shell.cp src dest
           </code>
-          <div class="tip" id="2096">
+          <div class="tip" id="2074">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L636-636" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "cp" in a shell. Copies a single file.
+                    <p>Like "cp" in a shell. Copies a single file.
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -1252,46 +1148,40 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2097', 2097)" onmouseover="showTip(event, '2097', 2097)">
+          <code onmouseout="hideTip(event, '2075', 2075)" onmouseover="showTip(event, '2075', 2075)">
             Shell.cp_r src dest
           </code>
-          <div class="tip" id="2097">
+          <div class="tip" id="2075">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L629-629" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
+                    <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2098', 2098)" onmouseover="showTip(event, '2098', 2098)">
+          <code onmouseout="hideTip(event, '2076', 2076)" onmouseover="showTip(event, '2076', 2076)">
             Shell.deleteDir(dir)
           </code>
-          <div class="tip" id="2098">
+          <div class="tip" id="2076">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L203-203" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compat</p>
+                    <p>Compat</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2099', 2099)" onmouseover="showTip(event, '2099', 2099)">
+          <code onmouseout="hideTip(event, '2077', 2077)" onmouseover="showTip(event, '2077', 2077)">
             Shell.DeleteDir(dir)
           </code>
-          <div class="tip" id="2099">
+          <div class="tip" id="2077">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1304,38 +1194,32 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use deleteDir instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L492-492" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compat</p>
+                    <p>Compat</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2100', 2100)" onmouseover="showTip(event, '2100', 2100)">
+          <code onmouseout="hideTip(event, '2078', 2078)" onmouseover="showTip(event, '2078', 2078)">
             Shell.deleteDirs(dirs)
           </code>
-          <div class="tip" id="2100">
+          <div class="tip" id="2078">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L206-206" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes multiple directories</p>
+                    <p>Deletes multiple directories</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2101', 2101)" onmouseover="showTip(event, '2101', 2101)">
+          <code onmouseout="hideTip(event, '2079', 2079)" onmouseover="showTip(event, '2079', 2079)">
             Shell.DeleteDirs(dirs)
           </code>
-          <div class="tip" id="2101">
+          <div class="tip" id="2079">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1348,28 +1232,22 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use deleteDirs instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L496-496" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes multiple directories</p>
+                    <p>Deletes multiple directories</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2102', 2102)" onmouseover="showTip(event, '2102', 2102)">
+          <code onmouseout="hideTip(event, '2080', 2080)" onmouseover="showTip(event, '2080', 2080)">
             Shell.generatePatch(...)
           </code>
-          <div class="tip" id="2102">
+          <div class="tip" id="2080">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L272-272" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release.</li>
@@ -1382,10 +1260,10 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2103', 2103)" onmouseover="showTip(event, '2103', 2103)">
+          <code onmouseout="hideTip(event, '2081', 2081)" onmouseover="showTip(event, '2081', 2081)">
             Shell.GeneratePatch(...)
           </code>
-          <div class="tip" id="2103">
+          <div class="tip" id="2081">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1398,10 +1276,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use generatePatch instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L540-540" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release.</li>
@@ -1414,18 +1289,15 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2104', 2104)" onmouseover="showTip(event, '2104', 2104)">
+          <code onmouseout="hideTip(event, '2082', 2082)" onmouseover="showTip(event, '2082', 2082)">
             Shell.generatePatchWithFindOldFileFunction(...)
           </code>
-          <div class="tip" id="2104">
+          <div class="tip" id="2082">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L254-254" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release</li>
@@ -1439,10 +1311,10 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2105', 2105)" onmouseover="showTip(event, '2105', 2105)">
+          <code onmouseout="hideTip(event, '2083', 2083)" onmouseover="showTip(event, '2083', 2083)">
             Shell.GeneratePatchWithFindOldFileFunction(...)
           </code>
-          <div class="tip" id="2105">
+          <div class="tip" id="2083">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1455,10 +1327,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use generatePatchWithFindOldFileFunction instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L530-530" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release</li>
@@ -1472,36 +1341,30 @@ starting from the specified base folder.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2106', 2106)" onmouseover="showTip(event, '2106', 2106)">
+          <code onmouseout="hideTip(event, '2084', 2084)" onmouseover="showTip(event, '2084', 2084)">
             Shell.mkdir(path)
           </code>
-          <div class="tip" id="2106">
+          <div class="tip" id="2084">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L622-622" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a directory if it doesn't exist.</p>
+                    <p>Creates a directory if it doesn't exist.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2107', 2107)" onmouseover="showTip(event, '2107', 2107)">
+          <code onmouseout="hideTip(event, '2085', 2085)" onmouseover="showTip(event, '2085', 2085)">
             Shell.moveFile target fileName
           </code>
-          <div class="tip" id="2107">
+          <div class="tip" id="2085">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L332-332" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Moves a single file to the target and overwrites the existing file.
+                    <p>Moves a single file to the target and overwrites the existing file.
 If <code>fileName</code> is a directory the functions does nothing.</p>
 <h2>Parameters</h2>
 <ul>
@@ -1514,10 +1377,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2108', 2108)" onmouseover="showTip(event, '2108', 2108)">
+          <code onmouseout="hideTip(event, '2086', 2086)" onmouseover="showTip(event, '2086', 2086)">
             Shell.MoveFile target fileName
           </code>
-          <div class="tip" id="2108">
+          <div class="tip" id="2086">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1530,10 +1393,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use moveFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L573-573" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Moves a single file to the target and overwrites the existing file.</p>
+                    <p>Moves a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1545,18 +1405,15 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2109', 2109)" onmouseover="showTip(event, '2109', 2109)">
+          <code onmouseout="hideTip(event, '2087', 2087)" onmouseover="showTip(event, '2087', 2087)">
             Shell.mv src dest
           </code>
-          <div class="tip" id="2109">
+          <div class="tip" id="2087">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L662-662" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "mv" in a shell. Moves/renames a file
+                    <p>Like "mv" in a shell. Moves/renames a file
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -1565,72 +1422,60 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2110', 2110)" onmouseover="showTip(event, '2110', 2110)">
+          <code onmouseout="hideTip(event, '2088', 2088)" onmouseover="showTip(event, '2088', 2088)">
             Shell.popd()
           </code>
-          <div class="tip" id="2110">
+          <div class="tip" id="2088">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L656-656" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restore the previous directory stored in the stack</p>
+                    <p>Restore the previous directory stored in the stack</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2111', 2111)" onmouseover="showTip(event, '2111', 2111)">
+          <code onmouseout="hideTip(event, '2089', 2089)" onmouseover="showTip(event, '2089', 2089)">
             Shell.pushd(path)
           </code>
-          <div class="tip" id="2111">
+          <div class="tip" id="2089">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L651-651" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Store the current directory in the directory stack before changing to a new one</p>
+                    <p>Store the current directory in the directory stack before changing to a new one</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2112', 2112)" onmouseover="showTip(event, '2112', 2112)">
+          <code onmouseout="hideTip(event, '2090', 2090)" onmouseover="showTip(event, '2090', 2090)">
             Shell.pwd()
           </code>
-          <div class="tip" id="2112">
+          <div class="tip" id="2090">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L645-645" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets working directory</p>
+                    <p>Gets working directory</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2113', 2113)" onmouseover="showTip(event, '2113', 2113)">
+          <code onmouseout="hideTip(event, '2091', 2091)" onmouseover="showTip(event, '2091', 2091)">
             Shell.regexReplaceInFilesWithEncoding(...)
           </code>
-          <div class="tip" id="2113">
+          <div class="tip" id="2091">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L389-389" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1644,10 +1489,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2114', 2114)" onmouseover="showTip(event, '2114', 2114)">
+          <code onmouseout="hideTip(event, '2092', 2092)" onmouseover="showTip(event, '2092', 2092)">
             Shell.RegexReplaceInFilesWithEncoding(...)
           </code>
-          <div class="tip" id="2114">
+          <div class="tip" id="2092">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1660,10 +1505,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use regexReplaceInFilesWithEncoding instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L609-609" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1677,18 +1519,15 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2115', 2115)" onmouseover="showTip(event, '2115', 2115)">
+          <code onmouseout="hideTip(event, '2093', 2093)" onmouseover="showTip(event, '2093', 2093)">
             Shell.regexReplaceInFileWithEncoding(...)
           </code>
-          <div class="tip" id="2115">
+          <div class="tip" id="2093">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L377-377" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1702,10 +1541,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2116', 2116)" onmouseover="showTip(event, '2116', 2116)">
+          <code onmouseout="hideTip(event, '2094', 2094)" onmouseover="showTip(event, '2094', 2094)">
             Shell.RegexReplaceInFileWithEncoding(...)
           </code>
-          <div class="tip" id="2116">
+          <div class="tip" id="2094">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1718,10 +1557,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use regexReplaceInFileWithEncoding instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L598-598" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1735,18 +1571,15 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2117', 2117)" onmouseover="showTip(event, '2117', 2117)">
+          <code onmouseout="hideTip(event, '2095', 2095)" onmouseover="showTip(event, '2095', 2095)">
             Shell.rename target fileName
           </code>
-          <div class="tip" id="2117">
+          <div class="tip" id="2095">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L110-110" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Renames the file or directory to the target name.</p>
+                    <p>Renames the file or directory to the target name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target file or directory name.</li>
@@ -1758,10 +1591,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2118', 2118)" onmouseover="showTip(event, '2118', 2118)">
+          <code onmouseout="hideTip(event, '2096', 2096)" onmouseover="showTip(event, '2096', 2096)">
             Shell.Rename target fileName
           </code>
-          <div class="tip" id="2118">
+          <div class="tip" id="2096">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1774,10 +1607,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use rename instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L452-452" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Renames the file or directory to the target name.</p>
+                    <p>Renames the file or directory to the target name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target file or directory name.</li>
@@ -1789,18 +1619,15 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2119', 2119)" onmouseover="showTip(event, '2119', 2119)">
+          <code onmouseout="hideTip(event, '2097', 2097)" onmouseover="showTip(event, '2097', 2097)">
             Shell.replaceInFiles replacements files
           </code>
-          <div class="tip" id="2119">
+          <div class="tip" id="2097">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L368-368" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+                    <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
@@ -1812,10 +1639,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2120', 2120)" onmouseover="showTip(event, '2120', 2120)">
+          <code onmouseout="hideTip(event, '2098', 2098)" onmouseover="showTip(event, '2098', 2098)">
             Shell.ReplaceInFiles replacements files
           </code>
-          <div class="tip" id="2120">
+          <div class="tip" id="2098">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1828,10 +1655,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use replaceInFiles instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L587-587" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+                    <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
@@ -1843,54 +1667,45 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2121', 2121)" onmouseover="showTip(event, '2121', 2121)">
+          <code onmouseout="hideTip(event, '2099', 2099)" onmouseover="showTip(event, '2099', 2099)">
             Shell.rm(fileName)
           </code>
-          <div class="tip" id="2121">
+          <div class="tip" id="2099">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L614-614" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a file if it exists</p>
+                    <p>Deletes a file if it exists</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2122', 2122)" onmouseover="showTip(event, '2122', 2122)">
+          <code onmouseout="hideTip(event, '2100', 2100)" onmouseover="showTip(event, '2100', 2100)">
             Shell.rm_rf(f)
           </code>
-          <div class="tip" id="2122">
+          <div class="tip" id="2100">
             <strong>Signature:</strong> f:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L617-617" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
+                    <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2123', 2123)" onmouseover="showTip(event, '2123', 2123)">
+          <code onmouseout="hideTip(event, '2101', 2101)" onmouseover="showTip(event, '2101', 2101)">
             Shell.silentCopy target files
           </code>
-          <div class="tip" id="2123">
+          <div class="tip" id="2101">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a list of files to the specified directory without any output.</p>
+                    <p>Copies a list of files to the specified directory without any output.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1902,10 +1717,10 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2124', 2124)" onmouseover="showTip(event, '2124', 2124)">
+          <code onmouseout="hideTip(event, '2102', 2102)" onmouseover="showTip(event, '2102', 2102)">
             Shell.SilentCopy target files
           </code>
-          <div class="tip" id="2124">
+          <div class="tip" id="2102">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1918,10 +1733,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use silentCopy instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L460-460" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a list of files to the specified directory without any output.</p>
+                    <p>Copies a list of files to the specified directory without any output.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1933,28 +1745,25 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2125', 2125)" onmouseover="showTip(event, '2125', 2125)">
+          <code onmouseout="hideTip(event, '2103', 2103)" onmouseover="showTip(event, '2103', 2103)">
             Shell.testDir(path)
           </code>
-          <div class="tip" id="2125">
+          <div class="tip" id="2103">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L276-276" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the directory exists</p>
+                    <p>Checks if the directory exists</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2126', 2126)" onmouseover="showTip(event, '2126', 2126)">
+          <code onmouseout="hideTip(event, '2104', 2104)" onmouseover="showTip(event, '2104', 2104)">
             Shell.TestDir(path)
           </code>
-          <div class="tip" id="2126">
+          <div class="tip" id="2104">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -1967,38 +1776,32 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use testDir instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L545-545" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the directory exists</p>
+                    <p>Checks if the directory exists</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2127', 2127)" onmouseover="showTip(event, '2127', 2127)">
+          <code onmouseout="hideTip(event, '2105', 2105)" onmouseover="showTip(event, '2105', 2105)">
             Shell.testFile(path)
           </code>
-          <div class="tip" id="2127">
+          <div class="tip" id="2105">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L284-284" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the file exists</p>
+                    <p>Checks if the file exists</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2128', 2128)" onmouseover="showTip(event, '2128', 2128)">
+          <code onmouseout="hideTip(event, '2106', 2106)" onmouseover="showTip(event, '2106', 2106)">
             Shell.TestFile(path)
           </code>
-          <div class="tip" id="2128">
+          <div class="tip" id="2106">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -2011,40 +1814,34 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use testFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L549-549" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the file exists</p>
+                    <p>Checks if the file exists</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2129', 2129)" onmouseover="showTip(event, '2129', 2129)">
+          <code onmouseout="hideTip(event, '2107', 2107)" onmouseover="showTip(event, '2107', 2107)">
             Shell.writeConfigFile(...)
           </code>
-          <div class="tip" id="2129">
-            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?19986 * &#39;?19987&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19986, '?19987                      </div>
+          <div class="tip" id="2107">
+            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?19861 * &#39;?19862&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19861, '?19862                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L354-354" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a config file with the parameters as "key;value" lines</p>
+                    <p>Creates a config file with the parameters as "key;value" lines</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2130', 2130)" onmouseover="showTip(event, '2130', 2130)">
+          <code onmouseout="hideTip(event, '2108', 2108)" onmouseover="showTip(event, '2108', 2108)">
             Shell.WriteConfigFile(...)
           </code>
-          <div class="tip" id="2130">
-            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?20017 * &#39;?20018&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?20017, '?20018                            <span>
+          <div class="tip" id="2108">
+            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?19892 * &#39;?19893&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19892, '?19893                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Please use writeConfigFile instead&quot;)&gt;]<br />
                 </span>
@@ -2055,10 +1852,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use writeConfigFile instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L578-578" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a config file with the parameters as "key;value" lines</p>
+                    <p>Creates a config file with the parameters as "key;value" lines</p>
 
 
         </td>
@@ -2102,7 +1896,7 @@ If <code>fileName</code> is a directory the functions does nothing.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

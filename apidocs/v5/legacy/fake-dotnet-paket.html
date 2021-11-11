@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -367,36 +371,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1803', 1803)" onmouseover="showTip(event, '1803', 1803)">
+          <code onmouseout="hideTip(event, '1785', 1785)" onmouseover="showTip(event, '1785', 1785)">
             Paket.getDependenciesForReferencesFile(...)
           </code>
-          <div class="tip" id="1803">
+          <div class="tip" id="1785">
             <strong>Signature:</strong> referencesFile:string -&gt; (string * string) []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the dependencies from specified paket.references file</p>
+                    <p>Returns the dependencies from specified paket.references file</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1804', 1804)" onmouseover="showTip(event, '1804', 1804)">
+          <code onmouseout="hideTip(event, '1786', 1786)" onmouseover="showTip(event, '1786', 1786)">
             Paket.pack(setParams)
           </code>
-          <div class="tip" id="1804">
+          <div class="tip" id="1786">
             <strong>Signature:</strong> setParams:(PaketPackParams -&gt; PaketPackParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L161-161" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.</p>
+                    <p>Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
@@ -407,72 +405,60 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1805', 1805)" onmouseover="showTip(event, '1805', 1805)">
+          <code onmouseout="hideTip(event, '1787', 1787)" onmouseover="showTip(event, '1787', 1787)">
             Paket.PaketPackDefaults()
           </code>
-          <div class="tip" id="1805">
+          <div class="tip" id="1787">
             <strong>Signature:</strong> unit -&gt; PaketPackParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Paket pack default parameters</p>
+                    <p>Paket pack default parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1806', 1806)" onmouseover="showTip(event, '1806', 1806)">
+          <code onmouseout="hideTip(event, '1788', 1788)" onmouseover="showTip(event, '1788', 1788)">
             Paket.PaketPushDefaults()
           </code>
-          <div class="tip" id="1806">
+          <div class="tip" id="1788">
             <strong>Signature:</strong> unit -&gt; PaketPushParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Paket push default parameters</p>
+                    <p>Paket push default parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1807', 1807)" onmouseover="showTip(event, '1807', 1807)">
+          <code onmouseout="hideTip(event, '1789', 1789)" onmouseover="showTip(event, '1789', 1789)">
             Paket.PaketRestoreDefaults()
           </code>
-          <div class="tip" id="1807">
+          <div class="tip" id="1789">
             <strong>Signature:</strong> unit -&gt; PaketRestoreParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Paket restore default parameters</p>
+                    <p>Paket restore default parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1808', 1808)" onmouseover="showTip(event, '1808', 1808)">
+          <code onmouseout="hideTip(event, '1790', 1790)" onmouseover="showTip(event, '1790', 1790)">
             Paket.push(setParams)
           </code>
-          <div class="tip" id="1808">
+          <div class="tip" id="1790">
             <strong>Signature:</strong> setParams:(PaketPushParams -&gt; PaketPushParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L231-231" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pushes all NuGet packages in the working dir to the server by using Paket push.</p>
+                    <p>Pushes all NuGet packages in the working dir to the server by using Paket push.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
@@ -483,18 +469,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1809', 1809)" onmouseover="showTip(event, '1809', 1809)">
+          <code onmouseout="hideTip(event, '1791', 1791)" onmouseover="showTip(event, '1791', 1791)">
             Paket.pushFiles setParams files
           </code>
-          <div class="tip" id="1809">
+          <div class="tip" id="1791">
             <strong>Signature:</strong> setParams:(PaketPushParams -&gt; PaketPushParams) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L178-178" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pushes the given NuGet packages to the server by using Paket push.</p>
+                    <p>Pushes the given NuGet packages to the server by using Paket push.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
@@ -506,18 +489,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1810', 1810)" onmouseover="showTip(event, '1810', 1810)">
+          <code onmouseout="hideTip(event, '1792', 1792)" onmouseover="showTip(event, '1792', 1792)">
             Paket.restore(setParams)
           </code>
-          <div class="tip" id="1810">
+          <div class="tip" id="1792">
             <strong>Signature:</strong> setParams:(PaketRestoreParams -&gt; PaketRestoreParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/Paket.fs#L277-277" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket</p>
+                    <p>Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
@@ -565,7 +545,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

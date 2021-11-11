@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,162 +326,135 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5977', 5977)" onmouseover="showTip(event, '5977', 5977)">
+          <code onmouseout="hideTip(event, '5885', 5885)" onmouseover="showTip(event, '5885', 5885)">
             ErrorLevel
           </code>
-          <div class="tip" id="5977">
+          <div class="tip" id="5885">
             <strong>Signature:</strong> TestRunnerErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>An error level setting to specify whether a failed test should break the build</p>
+                    <p>An error level setting to specify whether a failed test should break the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5978', 5978)" onmouseover="showTip(event, '5978', 5978)">
+          <code onmouseout="hideTip(event, '5886', 5886)" onmouseover="showTip(event, '5886', 5886)">
             ExcludeTags
           </code>
-          <div class="tip" id="5978">
+          <div class="tip" id="5886">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L25-25" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tests with theses tags are ignored by MSpec</p>
+                    <p>Tests with theses tags are ignored by MSpec</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5979', 5979)" onmouseover="showTip(event, '5979', 5979)">
+          <code onmouseout="hideTip(event, '5887', 5887)" onmouseover="showTip(event, '5887', 5887)">
             HtmlOutputDir
           </code>
-          <div class="tip" id="5979">
+          <div class="tip" id="5887">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output directory for html reports (optional).</p>
+                    <p>Output directory for html reports (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5980', 5980)" onmouseover="showTip(event, '5980', 5980)">
+          <code onmouseout="hideTip(event, '5888', 5888)" onmouseover="showTip(event, '5888', 5888)">
             IncludeTags
           </code>
-          <div class="tip" id="5980">
+          <div class="tip" id="5888">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tests with theses tags are included by MSpec</p>
+                    <p>Tests with theses tags are included by MSpec</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5981', 5981)" onmouseover="showTip(event, '5981', 5981)">
+          <code onmouseout="hideTip(event, '5889', 5889)" onmouseover="showTip(event, '5889', 5889)">
             Silent
           </code>
-          <div class="tip" id="5981">
+          <div class="tip" id="5889">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Can be used to run MSpec in silent mode.</p>
+                    <p>Can be used to run MSpec in silent mode.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5982', 5982)" onmouseover="showTip(event, '5982', 5982)">
+          <code onmouseout="hideTip(event, '5890', 5890)" onmouseover="showTip(event, '5890', 5890)">
             TimeOut
           </code>
-          <div class="tip" id="5982">
+          <div class="tip" id="5890">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A timeout for the test runner</p>
+                    <p>A timeout for the test runner</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5983', 5983)" onmouseover="showTip(event, '5983', 5983)">
+          <code onmouseout="hideTip(event, '5891', 5891)" onmouseover="showTip(event, '5891', 5891)">
             ToolPath
           </code>
-          <div class="tip" id="5983">
+          <div class="tip" id="5891">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path to the mspec console runner. Use <code>mspec-clr4.exe</code> if you are on .NET 4.0 or above.</p>
+                    <p>The path to the mspec console runner. Use <code>mspec-clr4.exe</code> if you are on .NET 4.0 or above.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5984', 5984)" onmouseover="showTip(event, '5984', 5984)">
+          <code onmouseout="hideTip(event, '5892', 5892)" onmouseover="showTip(event, '5892', 5892)">
             WorkingDir
           </code>
-          <div class="tip" id="5984">
+          <div class="tip" id="5892">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Working directory (optional)</p>
+                    <p>Working directory (optional)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5985', 5985)" onmouseover="showTip(event, '5985', 5985)">
+          <code onmouseout="hideTip(event, '5893', 5893)" onmouseover="showTip(event, '5893', 5893)">
             XmlOutputPath
           </code>
-          <div class="tip" id="5985">
+          <div class="tip" id="5893">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.MSpec/MSpec.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output file path for xml reports (optional).</p>
+                    <p>Output file path for xml reports (optional).</p>
 
 
         </td>
@@ -521,7 +498,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

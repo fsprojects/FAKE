@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,54 +332,45 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4634', 4634)" onmouseover="showTip(event, '4634', 4634)">
+          <code onmouseout="hideTip(event, '4599', 4599)" onmouseover="showTip(event, '4599', 4599)">
             AdditionalArgs
           </code>
-          <div class="tip" id="4634">
+          <div class="tip" id="4599">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A character string containing additional arguments to give to CMake.</p>
+                    <p>A character string containing additional arguments to give to CMake.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4635', 4635)" onmouseover="showTip(event, '4635', 4635)">
+          <code onmouseout="hideTip(event, '4600', 4600)" onmouseover="showTip(event, '4600', 4600)">
             BinaryDirectory
           </code>
-          <div class="tip" id="4635">
+          <div class="tip" id="4600">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The binary build directory where CMake will generate the files.</p>
+                    <p>The binary build directory where CMake will generate the files.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4636', 4636)" onmouseover="showTip(event, '4636', 4636)">
+          <code onmouseout="hideTip(event, '4601', 4601)" onmouseover="showTip(event, '4601', 4601)">
             Config
           </code>
-          <div class="tip" id="4636">
+          <div class="tip" id="4601">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L85-85" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The build configuration to use (e.g. <a href="fake-api-github-release.html" title="Release"><code>Release</code></a>).
+                    <p>The build configuration to use (e.g. <a href="fake-api-github-release.html" title="Release"><code>Release</code></a>).
 Equivalent to the <code>--config &lt;cfg&gt;</code> option.
 Not supported by every generator.</p>
 
@@ -384,18 +379,15 @@ Not supported by every generator.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4637', 4637)" onmouseover="showTip(event, '4637', 4637)">
+          <code onmouseout="hideTip(event, '4602', 4602)" onmouseover="showTip(event, '4602', 4602)">
             Target
           </code>
-          <div class="tip" id="4637">
+          <div class="tip" id="4602">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The CMake target to build instead of the default one.
+                    <p>The CMake target to build instead of the default one.
 Equivalent to the <code>--target &lt;target&gt;</code> option.</p>
 
 
@@ -403,36 +395,30 @@ Equivalent to the <code>--target &lt;target&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4638', 4638)" onmouseover="showTip(event, '4638', 4638)">
+          <code onmouseout="hideTip(event, '4603', 4603)" onmouseover="showTip(event, '4603', 4603)">
             Timeout
           </code>
-          <div class="tip" id="4638">
+          <div class="tip" id="4603">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The CMake execution timeout.</p>
+                    <p>The CMake execution timeout.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4639', 4639)" onmouseover="showTip(event, '4639', 4639)">
+          <code onmouseout="hideTip(event, '4604', 4604)" onmouseover="showTip(event, '4604', 4604)">
             ToolPath
           </code>
-          <div class="tip" id="4639">
+          <div class="tip" id="4604">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The location of the CMake executable. Automatically found if null or empty.</p>
+                    <p>The location of the CMake executable. Automatically found if null or empty.</p>
 
 
         </td>
@@ -476,7 +462,7 @@ Equivalent to the <code>--target &lt;target&gt;</code> option.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

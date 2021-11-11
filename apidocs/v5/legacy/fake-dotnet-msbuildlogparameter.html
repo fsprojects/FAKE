@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -323,18 +327,15 @@ See <a href="https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-comma
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5683', 5683)" onmouseover="showTip(event, '5683', 5683)">
+          <code onmouseout="hideTip(event, '5615', 5615)" onmouseover="showTip(event, '5615', 5615)">
             Append
           </code>
-          <div class="tip" id="5683">
+          <div class="tip" id="5615">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines whether the build log is appended to the log file or overwrites it. When you set the switch, the build log is appended to the log file. When the switch is not present, the contents of an existing log file are overwritten.
+                    <p>Determines whether the build log is appended to the log file or overwrites it. When you set the switch, the build log is appended to the log file. When the switch is not present, the contents of an existing log file are overwritten.
 If you include the append switch, no matter whether it is set to true or false, the log is appended. If you do not include the append switch, the log is overwritten.</p>
 
 
@@ -342,270 +343,225 @@ If you include the append switch, no matter whether it is set to true or false, 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5684', 5684)" onmouseover="showTip(event, '5684', 5684)">
+          <code onmouseout="hideTip(event, '5616', 5616)" onmouseover="showTip(event, '5616', 5616)">
             DisableConsoleColor
           </code>
-          <div class="tip" id="5684">
+          <div class="tip" id="5616">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use the default console colors for all logging messages.</p>
+                    <p>Use the default console colors for all logging messages.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5685', 5685)" onmouseover="showTip(event, '5685', 5685)">
+          <code onmouseout="hideTip(event, '5617', 5617)" onmouseover="showTip(event, '5617', 5617)">
             DisableMPLogging
           </code>
-          <div class="tip" id="5685">
+          <div class="tip" id="5617">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Disable the multiprocessor logging style of output when running in non-multiprocessor mode.</p>
+                    <p>Disable the multiprocessor logging style of output when running in non-multiprocessor mode.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5686', 5686)" onmouseover="showTip(event, '5686', 5686)">
+          <code onmouseout="hideTip(event, '5618', 5618)" onmouseover="showTip(event, '5618', 5618)">
             EnableMPLogging
           </code>
-          <div class="tip" id="5686">
+          <div class="tip" id="5618">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enable the multiprocessor logging style even when running in non-multiprocessor mode. This logging style is on by default.</p>
+                    <p>Enable the multiprocessor logging style even when running in non-multiprocessor mode. This logging style is on by default.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5687', 5687)" onmouseover="showTip(event, '5687', 5687)">
+          <code onmouseout="hideTip(event, '5619', 5619)" onmouseover="showTip(event, '5619', 5619)">
             ErrorsOnly
           </code>
-          <div class="tip" id="5687">
+          <div class="tip" id="5619">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show only errors.</p>
+                    <p>Show only errors.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5688', 5688)" onmouseover="showTip(event, '5688', 5688)">
+          <code onmouseout="hideTip(event, '5620', 5620)" onmouseover="showTip(event, '5620', 5620)">
             ForceConsoleColor
           </code>
-          <div class="tip" id="5688">
+          <div class="tip" id="5620">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Undocumented switch to force ansi colors.</p>
+                    <p>Undocumented switch to force ansi colors.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5689', 5689)" onmouseover="showTip(event, '5689', 5689)">
+          <code onmouseout="hideTip(event, '5621', 5621)" onmouseover="showTip(event, '5621', 5621)">
             ForceNoAlign
           </code>
-          <div class="tip" id="5689">
+          <div class="tip" id="5621">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Don't align the text to the size of the console buffer.</p>
+                    <p>Don't align the text to the size of the console buffer.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5690', 5690)" onmouseover="showTip(event, '5690', 5690)">
+          <code onmouseout="hideTip(event, '5622', 5622)" onmouseover="showTip(event, '5622', 5622)">
             LogParameter(string)
           </code>
-          <div class="tip" id="5690">
+          <div class="tip" id="5622">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L73-73" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Other currently not supported parameter.</p>
+                    <p>Other currently not supported parameter.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5691', 5691)" onmouseover="showTip(event, '5691', 5691)">
+          <code onmouseout="hideTip(event, '5623', 5623)" onmouseover="showTip(event, '5623', 5623)">
             NoItemAndPropertyList
           </code>
-          <div class="tip" id="5691">
+          <div class="tip" id="5623">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Don't show the list of items and properties that would appear at the start of each project build if the verbosity level is set to <code>diagnostic</code>.</p>
+                    <p>Don't show the list of items and properties that would appear at the start of each project build if the verbosity level is set to <code>diagnostic</code>.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5692', 5692)" onmouseover="showTip(event, '5692', 5692)">
+          <code onmouseout="hideTip(event, '5624', 5624)" onmouseover="showTip(event, '5624', 5624)">
             NoSummary
           </code>
-          <div class="tip" id="5692">
+          <div class="tip" id="5624">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Don't show the error and warning summary at the end.</p>
+                    <p>Don't show the error and warning summary at the end.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5693', 5693)" onmouseover="showTip(event, '5693', 5693)">
+          <code onmouseout="hideTip(event, '5625', 5625)" onmouseover="showTip(event, '5625', 5625)">
             PerformanceSummary
           </code>
-          <div class="tip" id="5693">
+          <div class="tip" id="5625">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show the time that’s spent in tasks, targets, and projects.</p>
+                    <p>Show the time that’s spent in tasks, targets, and projects.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5694', 5694)" onmouseover="showTip(event, '5694', 5694)">
+          <code onmouseout="hideTip(event, '5626', 5626)" onmouseover="showTip(event, '5626', 5626)">
             ShowCommandLine
           </code>
-          <div class="tip" id="5694">
+          <div class="tip" id="5626">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show <code>TaskCommandLineEvent</code> messages.</p>
+                    <p>Show <code>TaskCommandLineEvent</code> messages.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5695', 5695)" onmouseover="showTip(event, '5695', 5695)">
+          <code onmouseout="hideTip(event, '5627', 5627)" onmouseover="showTip(event, '5627', 5627)">
             ShowEventId
           </code>
-          <div class="tip" id="5695">
+          <div class="tip" id="5627">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show the event ID for each started event, finished event, and message.</p>
+                    <p>Show the event ID for each started event, finished event, and message.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5696', 5696)" onmouseover="showTip(event, '5696', 5696)">
+          <code onmouseout="hideTip(event, '5628', 5628)" onmouseover="showTip(event, '5628', 5628)">
             ShowTimestamp
           </code>
-          <div class="tip" id="5696">
+          <div class="tip" id="5628">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show the timestamp as a prefix to any message.</p>
+                    <p>Show the timestamp as a prefix to any message.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5697', 5697)" onmouseover="showTip(event, '5697', 5697)">
+          <code onmouseout="hideTip(event, '5629', 5629)" onmouseover="showTip(event, '5629', 5629)">
             Summary
           </code>
-          <div class="tip" id="5697">
+          <div class="tip" id="5629">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show the error and warning summary at the end.</p>
+                    <p>Show the error and warning summary at the end.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5698', 5698)" onmouseover="showTip(event, '5698', 5698)">
+          <code onmouseout="hideTip(event, '5630', 5630)" onmouseover="showTip(event, '5630', 5630)">
             WarningsOnly
           </code>
-          <div class="tip" id="5698">
+          <div class="tip" id="5630">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show only warnings.</p>
+                    <p>Show only warnings.</p>
 
 
         </td>
@@ -649,7 +605,7 @@ If you include the append switch, no matter whether it is set to true or false, 
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

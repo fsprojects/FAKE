@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -343,18 +347,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1714', 1714)" onmouseover="showTip(event, '1714', 1714)">
+          <code onmouseout="hideTip(event, '1696', 1696)" onmouseover="showTip(event, '1696', 1696)">
             AssemblyInfoFile.create(...)
           </code>
-          <div class="tip" id="1714">
+          <div class="tip" id="1696">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig option -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L363-363" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates an AssemblyInfo file based in the correct langugage based on the file name with the given attributes and configuration.
+                    <p>Creates an AssemblyInfo file based in the correct langugage based on the file name with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -362,36 +363,30 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1715', 1715)" onmouseover="showTip(event, '1715', 1715)">
+          <code onmouseout="hideTip(event, '1697', 1697)" onmouseover="showTip(event, '1697', 1697)">
             AssemblyInfoFile.createCppCli(...)
           </code>
-          <div class="tip" id="1715">
+          <div class="tip" id="1697">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L346-346" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes.</p>
+                    <p>Creates a C++/CLI AssemblyInfo file with the given attributes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1716', 1716)" onmouseover="showTip(event, '1716', 1716)">
+          <code onmouseout="hideTip(event, '1698', 1698)" onmouseover="showTip(event, '1698', 1698)">
             AssemblyInfoFile.createCppCliWithConfig(...)
           </code>
-          <div class="tip" id="1716">
+          <div class="tip" id="1698">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L314-314" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
 Does not generate an AssemblyVersionInformation class.</p>
 
 
@@ -399,18 +394,15 @@ Does not generate an AssemblyVersionInformation class.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1717', 1717)" onmouseover="showTip(event, '1717', 1717)">
+          <code onmouseout="hideTip(event, '1699', 1699)" onmouseover="showTip(event, '1699', 1699)">
             AssemblyInfoFile.createCSharp(...)
           </code>
-          <div class="tip" id="1717">
+          <div class="tip" id="1699">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L332-332" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes.
+                    <p>Creates a C# AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -418,18 +410,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1718', 1718)" onmouseover="showTip(event, '1718', 1718)">
+          <code onmouseout="hideTip(event, '1700', 1700)" onmouseover="showTip(event, '1700', 1700)">
             AssemblyInfoFile.createCSharpWithConfig(...)
           </code>
-          <div class="tip" id="1718">
+          <div class="tip" id="1700">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L215-215" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a C# AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -437,18 +426,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1719', 1719)" onmouseover="showTip(event, '1719', 1719)">
+          <code onmouseout="hideTip(event, '1701', 1701)" onmouseover="showTip(event, '1701', 1701)">
             AssemblyInfoFile.createFSharp(...)
           </code>
-          <div class="tip" id="1719">
+          <div class="tip" id="1701">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L337-337" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes.
+                    <p>Creates a F# AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -456,18 +442,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1720', 1720)" onmouseover="showTip(event, '1720', 1720)">
+          <code onmouseout="hideTip(event, '1702', 1702)" onmouseover="showTip(event, '1702', 1702)">
             AssemblyInfoFile.createFSharpWithConfig(...)
           </code>
-          <div class="tip" id="1720">
+          <div class="tip" id="1702">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L259-259" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a F# AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -475,18 +458,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1721', 1721)" onmouseover="showTip(event, '1721', 1721)">
+          <code onmouseout="hideTip(event, '1703', 1703)" onmouseover="showTip(event, '1703', 1703)">
             AssemblyInfoFile.createVisualBasic(...)
           </code>
-          <div class="tip" id="1721">
+          <div class="tip" id="1703">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L342-342" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes.
+                    <p>Creates a VB AssemblyInfo file with the given attributes.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -494,18 +474,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1722', 1722)" onmouseover="showTip(event, '1722', 1722)">
+          <code onmouseout="hideTip(event, '1704', 1704)" onmouseover="showTip(event, '1704', 1704)">
             AssemblyInfoFile.createVisualBasicWithConfig(...)
           </code>
-          <div class="tip" id="1722">
+          <div class="tip" id="1704">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L288-288" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
+                    <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 
 
@@ -513,18 +490,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1723', 1723)" onmouseover="showTip(event, '1723', 1723)">
+          <code onmouseout="hideTip(event, '1705', 1705)" onmouseover="showTip(event, '1705', 1705)">
             AssemblyInfoFile.getAttribute(...)
           </code>
-          <div class="tip" id="1723">
+          <div class="tip" id="1705">
             <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; Attribute option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L423-423" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a single attribute from an AssemblyInfo file.</p>
+                    <p>Read a single attribute from an AssemblyInfo file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
@@ -536,18 +510,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1724', 1724)" onmouseover="showTip(event, '1724', 1724)">
+          <code onmouseout="hideTip(event, '1706', 1706)" onmouseover="showTip(event, '1706', 1706)">
             AssemblyInfoFile.getAttributes(...)
           </code>
-          <div class="tip" id="1724">
+          <div class="tip" id="1706">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; seq&lt;Attribute&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L378-378" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
+                    <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>assemblyInfoFile</code> - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.</li>
@@ -558,18 +529,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1725', 1725)" onmouseover="showTip(event, '1725', 1725)">
+          <code onmouseout="hideTip(event, '1707', 1707)" onmouseover="showTip(event, '1707', 1707)">
             AssemblyInfoFile.getAttributeValue(...)
           </code>
-          <div class="tip" id="1725">
+          <div class="tip" id="1707">
             <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L430-430" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
+                    <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
@@ -581,18 +549,15 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1726', 1726)" onmouseover="showTip(event, '1726', 1726)">
+          <code onmouseout="hideTip(event, '1708', 1708)" onmouseover="showTip(event, '1708', 1708)">
             AssemblyInfoFile.updateAttributes(...)
           </code>
-          <div class="tip" id="1726">
+          <div class="tip" id="1708">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L458-458" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
+                    <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>assemblyInfoFile</code> - The file to update. Language C#, F#, VB or C++ is determined from the extension.</li>
@@ -641,7 +606,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

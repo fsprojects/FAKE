@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -351,268 +355,223 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1477', 1477)" onmouseover="showTip(event, '1477', 1477)">
+          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
             StringBuilder.append text builder
           </code>
-          <div class="tip" id="1477">
+          <div class="tip" id="1461">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text to a StringBuilder.</p>
+                    <p>Appends a text to a StringBuilder.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1478', 1478)" onmouseover="showTip(event, '1478', 1478)">
+          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
             StringBuilder.appendFileNamesIfNotNull(...)
           </code>
-          <div class="tip" id="1478">
+          <div class="tip" id="1462">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all notnull fileNames.</p>
+                    <p>Appends all notnull fileNames.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1479', 1479)" onmouseover="showTip(event, '1479', 1479)">
+          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
             StringBuilder.appendIfFalse(p)
           </code>
-          <div class="tip" id="1479">
+          <div class="tip" id="1463">
             <strong>Signature:</strong> p:bool -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the predicate is false.</p>
+                    <p>Appends a text if the predicate is false.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1480', 1480)" onmouseover="showTip(event, '1480', 1480)">
+          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
             StringBuilder.appendIfNotNull value s
           </code>
-          <div class="tip" id="1480">
+          <div class="tip" id="1464">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1481', 1481)" onmouseover="showTip(event, '1481', 1481)">
+          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
             StringBuilder.appendIfNotNullOrEmpty(...)
           </code>
-          <div class="tip" id="1481">
+          <div class="tip" id="1465">
             <strong>Signature:</strong> value:string -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1482', 1482)" onmouseover="showTip(event, '1482', 1482)">
+          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
             StringBuilder.appendIfSome o f builder
           </code>
-          <div class="tip" id="1482">
+          <div class="tip" id="1466">
             <strong>Signature:</strong> o:&#39;a option -&gt; f:(&#39;a -&gt; string) -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends string of function value if option has some value</p>
+                    <p>Appends string of function value if option has some value</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1483', 1483)" onmouseover="showTip(event, '1483', 1483)">
+          <code onmouseout="hideTip(event, '1467', 1467)" onmouseover="showTip(event, '1467', 1467)">
             StringBuilder.appendIfTrue p s builder
           </code>
-          <div class="tip" id="1483">
+          <div class="tip" id="1467">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the predicate is true.</p>
+                    <p>Appends a text if the predicate is true.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1484', 1484)" onmouseover="showTip(event, '1484', 1484)">
+          <code onmouseout="hideTip(event, '1468', 1468)" onmouseover="showTip(event, '1468', 1468)">
             StringBuilder.appendIfTrueWithoutQuotes(...)
           </code>
-          <div class="tip" id="1484">
+          <div class="tip" id="1468">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1485', 1485)" onmouseover="showTip(event, '1485', 1485)">
+          <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
             StringBuilder.appendQuotedIfNotNull(...)
           </code>
-          <div class="tip" id="1485">
+          <div class="tip" id="1469">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a quoted text if the value is not null.</p>
+                    <p>Appends a quoted text if the value is not null.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1486', 1486)" onmouseover="showTip(event, '1486', 1486)">
+          <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
             StringBuilder.appendStringIfValueIsNotNull(...)
           </code>
-          <div class="tip" id="1486">
-            <strong>Signature:</strong> value:&#39;?18765 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                          <strong>Type parameters:</strong> '?18765                      </div>
+          <div class="tip" id="1470">
+            <strong>Signature:</strong> value:&#39;?18367 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> '?18367                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1487', 1487)" onmouseover="showTip(event, '1487', 1487)">
+          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
             StringBuilder.appendStringIfValueIsNotNullOrEmpty(...)
           </code>
-          <div class="tip" id="1487">
+          <div class="tip" id="1471">
             <strong>Signature:</strong> value:string -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1488', 1488)" onmouseover="showTip(event, '1488', 1488)">
+          <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
             StringBuilder.appendWithoutQuotes(...)
           </code>
-          <div class="tip" id="1488">
+          <div class="tip" id="1472">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text to a StringBuilder without surrounding quotes.</p>
+                    <p>Appends a text to a StringBuilder without surrounding quotes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1489', 1489)" onmouseover="showTip(event, '1489', 1489)">
+          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
             StringBuilder.appendWithoutQuotesIfNotNull(...)
           </code>
-          <div class="tip" id="1489">
+          <div class="tip" id="1473">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends a text without quoting if the value is not null.</p>
+                    <p>Appends a text without quoting if the value is not null.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1490', 1490)" onmouseover="showTip(event, '1490', 1490)">
+          <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
             StringBuilder.forEach(...)
           </code>
-          <div class="tip" id="1490">
+          <div class="tip" id="1474">
             <strong>Signature:</strong> items:&#39;a list -&gt; action:(&#39;a -&gt; &#39;b -&gt; StringBuilder -&gt; &#39;c) -&gt; text:&#39;b -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                           <strong>Type parameters:</strong> 'a, 'b, 'c                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Applies action on builder for each element of list.</p>
+                    <p>Applies action on builder for each element of list.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1491', 1491)" onmouseover="showTip(event, '1491', 1491)">
+          <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
             StringBuilder.toText(builder)
           </code>
-          <div class="tip" id="1491">
+          <div class="tip" id="1475">
             <strong>Signature:</strong> builder:StringBuilder -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the text from the StringBuilder</p>
+                    <p>Returns the text from the StringBuilder</p>
 
 
         </td>
@@ -656,7 +615,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

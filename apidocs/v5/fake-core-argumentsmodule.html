@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -331,7 +335,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L173-173" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append all arguments after the current arguments</p>
@@ -349,7 +353,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L220-220" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L220-220" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument to a command line if a condition is true.</p>
@@ -367,7 +371,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L225-225" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L225-225" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument prefixed by another if the value is not null or empty</p>
@@ -385,7 +389,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L214-214" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L214-214" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument prefixed by another if the value is Some.</p>
@@ -403,7 +407,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L179-179" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L179-179" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Appends the given raw argument to the command line, you can not use other methods for this to work
@@ -423,7 +427,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L188-188" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L188-188" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Appends the given raw argument to the command line, you can not use other methods for this to work
@@ -444,7 +448,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L196-196" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L196-196" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument prefixed by another if the value is Some.
@@ -464,7 +468,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L210-210" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L210-210" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument prefixed by another if the value is Some.
@@ -484,7 +488,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L203-203" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append an argument prefixed by another if the value is Some.
@@ -504,7 +508,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L238-238" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L238-238" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a arguments instance from a list.</p>
@@ -522,7 +526,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L234-234" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L234-234" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Convert the arguments instance to a string array</p>
@@ -540,7 +544,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L164-164" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L164-164" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Escape the given argument list according to a unix shell (bash)</p>
@@ -558,7 +562,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L230-230" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L230-230" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Convert the arguments instance to a string list</p>
@@ -576,7 +580,7 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L167-167" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L167-167" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a new command line string which can be used in a ProcessStartInfo object.
@@ -595,7 +599,7 @@ If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L162-162" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This is the reverse of <a href="https://msdn.microsoft.com/en-us/library/17w5ykft.aspx">https://msdn.microsoft.com/en-us/library/17w5ykft.aspx</a></p>
@@ -613,7 +617,7 @@ If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L170-170" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L170-170" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Append the given arguments before all current arguments</p>
@@ -661,7 +665,7 @@ If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

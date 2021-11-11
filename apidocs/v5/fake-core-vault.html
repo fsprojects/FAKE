@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -383,7 +387,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L111-111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L111-111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)</p>
@@ -401,7 +405,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>decrypt a given base64 encoded string and return the utf-8 string of the result</p>
@@ -419,7 +423,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L125-125" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L125-125" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>An empty vault without any variables</p>
@@ -437,7 +441,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>encrypt the given utf-8 string and return the base64 encoded result</p>
@@ -455,7 +459,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L103-103" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L103-103" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a vault from the given encrypted variables</p>
@@ -473,7 +477,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L133-133" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L133-133" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a vault from an environment variable.</p>
@@ -491,7 +495,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L143-143" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a vault from an environment variable or return None</p>
@@ -509,7 +513,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L150-150" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L150-150" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
@@ -527,7 +531,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L154-154" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L154-154" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
@@ -545,7 +549,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L128-128" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L128-128" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Read in a vault from a given json string, make sure to delete the source of the json after using this API</p>
@@ -563,7 +567,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L170-170" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L170-170" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>similar to tryGet but throws an exception if the variable with the given name is not available in the vault</p>
@@ -581,7 +585,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L164-164" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L164-164" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>try to retrieve the variable with the given name from the vault (decrypts the variable if needed)</p>
@@ -629,7 +633,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

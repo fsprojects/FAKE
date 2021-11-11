@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,72 +332,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2517', 2517)" onmouseover="showTip(event, '2517', 2517)">
+          <code onmouseout="hideTip(event, '2482', 2482)" onmouseover="showTip(event, '2482', 2482)">
             Execute(connection)
           </code>
-          <div class="tip" id="2517">
+          <div class="tip" id="2482">
             <strong>Signature:</strong> DatabaseConnection<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute migrations on the target database</p>
+                    <p>Execute migrations on the target database</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2518', 2518)" onmouseover="showTip(event, '2518', 2518)">
+          <code onmouseout="hideTip(event, '2483', 2483)" onmouseover="showTip(event, '2483', 2483)">
             ExecuteAndScript(...)
           </code>
-          <div class="tip" id="2518">
+          <div class="tip" id="2483">
             <strong>Signature:</strong> DatabaseConnection * string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute migrations on the target database and script SQL to the output file</p>
+                    <p>Execute migrations on the target database and script SQL to the output file</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2519', 2519)" onmouseover="showTip(event, '2519', 2519)">
+          <code onmouseout="hideTip(event, '2484', 2484)" onmouseover="showTip(event, '2484', 2484)">
             Preview(connection)
           </code>
-          <div class="tip" id="2519">
+          <div class="tip" id="2484">
             <strong>Signature:</strong> DatabaseConnection<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute migrations in preview-only mode</p>
+                    <p>Execute migrations in preview-only mode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2520', 2520)" onmouseover="showTip(event, '2520', 2520)">
+          <code onmouseout="hideTip(event, '2485', 2485)" onmouseover="showTip(event, '2485', 2485)">
             Script(...)
           </code>
-          <div class="tip" id="2520">
+          <div class="tip" id="2485">
             <strong>Signature:</strong> int64 * string * DatabaseProvider<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Create migration script</p>
+                    <p>Create migration script</p>
 
 
         </td>
@@ -437,7 +429,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

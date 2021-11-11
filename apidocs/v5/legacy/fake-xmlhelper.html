@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the DocumentElement of the XmlDocument</p>
+                    <p>Gets the DocumentElement of the XmlDocument</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L91-91" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the attribute with the given name from the given XmlNode</p>
+                    <p>Gets the attribute with the given name from the given XmlNode</p>
 
 
         </td>
@@ -400,10 +398,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets a sequence of all child nodes for the given XmlNode</p>
+                    <p>Gets a sequence of all child nodes for the given XmlNode</p>
 
 
         </td>
@@ -426,10 +421,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L104-104" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the first sub node with the given name from the given XmlNode</p>
+                    <p>Gets the first sub node with the given name from the given XmlNode</p>
 
 
         </td>
@@ -452,10 +444,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a XmlNode</p>
+                    <p>Parses a XmlNode</p>
 
 
         </td>
@@ -478,10 +467,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L117-117" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a XML subnode</p>
+                    <p>Parses a XML subnode</p>
 
 
         </td>
@@ -492,8 +478,8 @@
             XmlAttribute name value writer
           </code>
           <div class="tip" id="1027">
-            <strong>Signature:</strong> name:string -&gt; value:&#39;?13412 -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                          <strong>Type parameters:</strong> '?13412                            <span>
+            <strong>Signature:</strong> name:string -&gt; value:&#39;?13420 -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
+                          <strong>Type parameters:</strong> '?13420                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
                 </span>
@@ -504,10 +490,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML attribute to current element of the given XmlTextWriter</p>
+                    <p>Writes an XML attribute to current element of the given XmlTextWriter</p>
 
 
         </td>
@@ -530,10 +513,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an CData element to the given XmlTextWriter</p>
+                    <p>Writes an CData element to the given XmlTextWriter</p>
 
 
         </td>
@@ -556,10 +536,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML comment to the given XmlTextWriter</p>
+                    <p>Writes an XML comment to the given XmlTextWriter</p>
 
 
         </td>
@@ -582,10 +559,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Loads the given text into a XmlDocument</p>
+                    <p>Loads the given text into a XmlDocument</p>
 
 
         </td>
@@ -608,10 +582,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML end element to the given XmlTextWriter</p>
+                    <p>Writes an XML end element to the given XmlTextWriter</p>
 
 
         </td>
@@ -634,10 +605,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L161-161" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML file at the location specified by a XPath expression.</p>
+                    <p>Replaces text in a XML file at the location specified by a XPath expression.</p>
 
 
         </td>
@@ -660,10 +628,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L168-168" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.</p>
+                    <p>Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.</p>
 
 
         </td>
@@ -686,10 +651,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L204-204" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
@@ -712,10 +674,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L197-197" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
@@ -738,10 +697,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a value from a XML document using a XPath</p>
+                    <p>Reads a value from a XML document using a XPath</p>
 
 
         </td>
@@ -764,10 +720,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a value from a XML document using a XPath
+                    <p>Reads a value from a XML document using a XPath
 Returns if the value is an int and the value</p>
 
 
@@ -791,10 +744,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML start element to the given XmlTextWriter</p>
+                    <p>Writes an XML start element to the given XmlTextWriter</p>
 
 
         </td>
@@ -817,10 +767,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L243-243" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Transforms a XML file using a XSL stylesheet file.</p>
+                    <p>Transforms a XML file using a XSL stylesheet file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>stylesheetUri</code> - The Uri for the XSL stylesheet file.</li>
@@ -848,10 +795,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a XmlWriter which writes to the given file name</p>
+                    <p>Creates a XmlWriter which writes to the given file name</p>
 
 
         </td>
@@ -874,10 +818,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L134-134" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in the XML document specified by a XPath expression.</p>
+                    <p>Replaces text in the XML document specified by a XPath expression.</p>
 
 
         </td>
@@ -900,10 +841,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L143-143" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the inner text of an xml node in the XML document specified by a XPath expression.</p>
+                    <p>Replaces the inner text of an xml node in the XML document specified by a XPath expression.</p>
 
 
         </td>
@@ -914,8 +852,8 @@ Returns if the value is an int and the value</p>
             XPathReplaceInnerTextNS(...)
           </code>
           <div class="tip" id="1043">
-            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?13435 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                          <strong>Type parameters:</strong> '?13435                            <span>
+            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?13443 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                          <strong>Type parameters:</strong> '?13443                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
                 </span>
@@ -926,10 +864,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
@@ -940,8 +875,8 @@ Returns if the value is an int and the value</p>
             XPathReplaceNS(...)
           </code>
           <div class="tip" id="1044">
-            <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; namespaces:&#39;?13433 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                          <strong>Type parameters:</strong> '?13433                            <span>
+            <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; namespaces:&#39;?13441 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                          <strong>Type parameters:</strong> '?13441                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
                 </span>
@@ -952,10 +887,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L175-175" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
@@ -978,10 +910,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L152-152" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Selects a xml node value via XPath from the given document</p>
+                    <p>Selects a xml node value via XPath from the given document</p>
 
 
         </td>
@@ -1004,10 +933,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L224-224" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Transforms a XmlDocument using a XslCompiledTransform.</p>
+                    <p>Transforms a XmlDocument using a XslCompiledTransform.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>xsl</code> - The XslCompiledTransform which should be applied.</li>
@@ -1035,10 +961,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Loads the given text into a XslCompiledTransform.</p>
+                    <p>Loads the given text into a XslCompiledTransform.</p>
 
 
         </td>
@@ -1082,7 +1005,7 @@ Returns if the value is an int and the value</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,106 +332,88 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3869', 3869)" onmouseover="showTip(event, '3869', 3869)">
+          <code onmouseout="hideTip(event, '3834', 3834)" onmouseover="showTip(event, '3834', 3834)">
             Build
           </code>
-          <div class="tip" id="3869">
+          <div class="tip" id="3834">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The optional build no.</p>
+                    <p>The optional build no.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3870', 3870)" onmouseover="showTip(event, '3870', 3870)">
+          <code onmouseout="hideTip(event, '3835', 3835)" onmouseover="showTip(event, '3835', 3835)">
             BuildIdentifiers
           </code>
-          <div class="tip" id="3870">
+          <div class="tip" id="3835">
             <strong>Signature:</strong> Ident list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3871', 3871)" onmouseover="showTip(event, '3871', 3871)">
+          <code onmouseout="hideTip(event, '3836', 3836)" onmouseover="showTip(event, '3836', 3836)">
             Major
           </code>
-          <div class="tip" id="3871">
+          <div class="tip" id="3836">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>MAJOR version when you make incompatible API changes.</p>
+                    <p>MAJOR version when you make incompatible API changes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3872', 3872)" onmouseover="showTip(event, '3872', 3872)">
+          <code onmouseout="hideTip(event, '3837', 3837)" onmouseover="showTip(event, '3837', 3837)">
             Minor
           </code>
-          <div class="tip" id="3872">
+          <div class="tip" id="3837">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>MINOR version when you add functionality in a backwards-compatible manner.</p>
+                    <p>MINOR version when you add functionality in a backwards-compatible manner.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3873', 3873)" onmouseover="showTip(event, '3873', 3873)">
+          <code onmouseout="hideTip(event, '3838', 3838)" onmouseover="showTip(event, '3838', 3838)">
             Patch
           </code>
-          <div class="tip" id="3873">
+          <div class="tip" id="3838">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L92-92" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>PATCH version when you make backwards-compatible bug fixes.</p>
+                    <p>PATCH version when you make backwards-compatible bug fixes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3874', 3874)" onmouseover="showTip(event, '3874', 3874)">
+          <code onmouseout="hideTip(event, '3839', 3839)" onmouseover="showTip(event, '3839', 3839)">
             PreRelease
           </code>
-          <div class="tip" id="3874">
+          <div class="tip" id="3839">
             <strong>Signature:</strong> PreRelease option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/SemVerHelper.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The optional PreRelease version</p>
+                    <p>The optional PreRelease version</p>
 
 
         </td>
@@ -471,7 +457,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

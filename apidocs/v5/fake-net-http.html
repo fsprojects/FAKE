@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -354,15 +358,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1080', 1080)" onmouseover="showTip(event, '1080', 1080)">
+          <code onmouseout="hideTip(event, '1087', 1087)" onmouseover="showTip(event, '1087', 1087)">
             downloadFile localFilePath uri
           </code>
-          <div class="tip" id="1080">
+          <div class="tip" id="1087">
             <strong>Signature:</strong> localFilePath:string -&gt; uri:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L123-123" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L123-123" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Download file by the given file path and Uri
@@ -382,15 +386,15 @@ string -&gt; string -&gt; string</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1081', 1081)" onmouseover="showTip(event, '1081', 1081)">
+          <code onmouseout="hideTip(event, '1088', 1088)" onmouseover="showTip(event, '1088', 1088)">
             downloadFiles(input)
           </code>
-          <div class="tip" id="1081">
+          <div class="tip" id="1088">
             <strong>Signature:</strong> input:DownloadParameters list -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L135-135" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L135-135" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Download list of Uri's in parallel
@@ -409,15 +413,15 @@ DownloadParameters -&gt; string list</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1082', 1082)" onmouseover="showTip(event, '1082', 1082)">
+          <code onmouseout="hideTip(event, '1089', 1089)" onmouseover="showTip(event, '1089', 1089)">
             get userName password url
           </code>
-          <div class="tip" id="1082">
+          <div class="tip" id="1089">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L190-190" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L190-190" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP GET command and retrives the information.
@@ -434,15 +438,15 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1083', 1083)" onmouseover="showTip(event, '1083', 1083)">
+          <code onmouseout="hideTip(event, '1090', 1090)" onmouseover="showTip(event, '1090', 1090)">
             getWithHeaders(...)
           </code>
-          <div class="tip" id="1083">
+          <div class="tip" id="1090">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; Map&lt;string,string list&gt; * string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L279-279" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L279-279" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like 'get' but allow to set headers and returns the response headers.</p>
@@ -452,15 +456,15 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1084', 1084)" onmouseover="showTip(event, '1084', 1084)">
+          <code onmouseout="hideTip(event, '1091', 1091)" onmouseover="showTip(event, '1091', 1091)">
             post url userName password data
           </code>
-          <div class="tip" id="1084">
+          <div class="tip" id="1091">
             <strong>Signature:</strong> url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L258-258" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L258-258" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP POST command and retrives the information.
@@ -478,15 +482,15 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1085', 1085)" onmouseover="showTip(event, '1085', 1085)">
+          <code onmouseout="hideTip(event, '1092', 1092)" onmouseover="showTip(event, '1092', 1092)">
             postCommand(...)
           </code>
-          <div class="tip" id="1085">
+          <div class="tip" id="1092">
             <strong>Signature:</strong> headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L244-244" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L244-244" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes an HTTP POST command and retrives the information.<br />
@@ -506,15 +510,15 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1086', 1086)" onmouseover="showTip(event, '1086', 1086)">
+          <code onmouseout="hideTip(event, '1093', 1093)" onmouseover="showTip(event, '1093', 1093)">
             upload url file
           </code>
-          <div class="tip" id="1086">
+          <div class="tip" id="1093">
             <strong>Signature:</strong> url:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L276-276" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Net.Http/Http.fs#L276-276" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Upload the given file to the given endpoint</p>
@@ -562,7 +566,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

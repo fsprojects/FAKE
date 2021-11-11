@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -324,110 +328,47 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1420', 1420)" onmouseover="showTip(event, '1420', 1420)">
-            ProcessUtils.findFile dirs tool
+          <code onmouseout="hideTip(event, '1409', 1409)" onmouseover="showTip(event, '1409', 1409)">
+            ProcessUtils.findFiles dirs file
           </code>
-          <div class="tip" id="1420">
-            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; string<br />
+          <div class="tip" id="1409">
+            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the given directories for the given file, failing if not found. Considers PATHEXT on Windows.</p>
+                    <p>Searches the given directories for all occurrences of the given file name, on windows PATHEXT is considered (and preferred when searching)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1421', 1421)" onmouseover="showTip(event, '1421', 1421)">
-            ProcessUtils.findFiles dirs tool
+          <code onmouseout="hideTip(event, '1410', 1410)" onmouseover="showTip(event, '1410', 1410)">
+            ProcessUtils.findFilesOnPath(file)
           </code>
-          <div class="tip" id="1421">
-            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; seq&lt;string&gt;<br />
+          <div class="tip" id="1410">
+            <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the given directories for all occurrences of the given file name, on windows PATHEXT is considered (and preferred when searching)</p>
+                    <p>Searches in PATH for the given file and returnes the result ordered by precendence</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1422', 1422)" onmouseover="showTip(event, '1422', 1422)">
-            ProcessUtils.findFilesOnPath(tool)
+          <code onmouseout="hideTip(event, '1411', 1411)" onmouseover="showTip(event, '1411', 1411)">
+            ProcessUtils.tryFindFileOnPath(file)
           </code>
-          <div class="tip" id="1422">
-            <strong>Signature:</strong> tool:string -&gt; seq&lt;string&gt;<br />
+          <div class="tip" id="1411">
+            <strong>Signature:</strong> file:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the current directory and in PATH for the given file and returnes the result ordered by precendence. Considers PATHEXT on Windows.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1423', 1423)" onmouseover="showTip(event, '1423', 1423)">
-            ProcessUtils.findLocalTool(...)
-          </code>
-          <div class="tip" id="1423">
-            <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; recursiveDirs:seq&lt;string&gt; -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Like tryFindLocalTool but returns the <code>tool</code> string if nothing is found (will probably error later, but this function is OK to be used for fake default values.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1424', 1424)" onmouseover="showTip(event, '1424', 1424)">
-            ProcessUtils.tryFindFile dirs tool
-          </code>
-          <div class="tip" id="1424">
-            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; tool:string -&gt; string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the given directories for all occurrences of the given file name. Considers PATHEXT on Windows.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1425', 1425)" onmouseover="showTip(event, '1425', 1425)">
-            ProcessUtils.tryFindFileOnPath(tool)
-          </code>
-          <div class="tip" id="1425">
-            <strong>Signature:</strong> tool:string -&gt; string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the current directory and the directories within the PATH
+                    <p>Searches the current directory and the directories within the PATH
 environment variable for the given file. If successful returns the full
-path to the file. Considers PATHEXT on Windows.</p>
+path to the file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>file</code> - The file to locate</li>
@@ -438,55 +379,15 @@ path to the file. Considers PATHEXT on Windows.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1426', 1426)" onmouseover="showTip(event, '1426', 1426)">
-            ProcessUtils.tryFindLocalTool(...)
-          </code>
-          <div class="tip" id="1426">
-            <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; recursiveDirs:seq&lt;string&gt; -&gt; string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L136-136" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Find a local tool in the given envar the given directories, the current directory or PATH (in this order)
-Recommended usage <code>tryFindLocalTool "TOOL" "tool" [ "." ]</code></p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1427', 1427)" onmouseover="showTip(event, '1427', 1427)">
-            ProcessUtils.tryFindPath(...)
-          </code>
-          <div class="tip" id="1427">
-            <strong>Signature:</strong> additionalDirs:seq&lt;string&gt; -&gt; tool:string -&gt; string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tries to find the tool via given directories. If no path has the right tool we are trying the current directory and the PATH system variable. Considers PATHEXT on Windows.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1428', 1428)" onmouseover="showTip(event, '1428', 1428)">
+          <code onmouseout="hideTip(event, '1412', 1412)" onmouseover="showTip(event, '1412', 1412)">
             ProcessUtils.tryFindTool envVar tool
           </code>
-          <div class="tip" id="1428">
+          <div class="tip" id="1412">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/ProcessUtils.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.  Considers PATHEXT on Windows.</p>
+                    <p>Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.</p>
 
 
         </td>
@@ -530,7 +431,7 @@ Recommended usage <code>tryFindLocalTool "TOOL" "tool" [ "." ]</code></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -323,15 +327,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1221', 1221)" onmouseover="showTip(event, '1221', 1221)">
+          <code onmouseout="hideTip(event, '1236', 1236)" onmouseover="showTip(event, '1236', 1236)">
             describe(repositoryDir)
           </code>
-          <div class="tip" id="1221">
+          <div class="tip" id="1236">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the last git tag by calling git describe</p>
@@ -341,15 +345,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1222', 1222)" onmouseover="showTip(event, '1222', 1222)">
+          <code onmouseout="hideTip(event, '1237', 1237)" onmouseover="showTip(event, '1237', 1237)">
             getBranchName(repositoryDir)
           </code>
-          <div class="tip" id="1222">
+          <div class="tip" id="1237">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the git branch name</p>
@@ -359,15 +363,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1223', 1223)" onmouseover="showTip(event, '1223', 1223)">
+          <code onmouseout="hideTip(event, '1238', 1238)" onmouseover="showTip(event, '1238', 1238)">
             getCurrentHash()
           </code>
-          <div class="tip" id="1223">
+          <div class="tip" id="1238">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L94-94" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the current hash of the current repository</p>
@@ -377,15 +381,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1224', 1224)" onmouseover="showTip(event, '1224', 1224)">
+          <code onmouseout="hideTip(event, '1239', 1239)" onmouseover="showTip(event, '1239', 1239)">
             getCurrentSHA1(repositoryDir)
           </code>
-          <div class="tip" id="1224">
+          <div class="tip" id="1239">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L52-52" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L52-52" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns the SHA1 of the current HEAD</p>
@@ -395,15 +399,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1225', 1225)" onmouseover="showTip(event, '1225', 1225)">
+          <code onmouseout="hideTip(event, '1240', 1240)" onmouseover="showTip(event, '1240', 1240)">
             getLastTag()
           </code>
-          <div class="tip" id="1225">
+          <div class="tip" id="1240">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L91-91" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the last git tag of the current repository by calling git describe</p>
@@ -413,15 +417,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1226', 1226)" onmouseover="showTip(event, '1226', 1226)">
+          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
             getVersion(repositoryDir)
           </code>
-          <div class="tip" id="1226">
+          <div class="tip" id="1241">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L15-15" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L15-15" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the git version</p>
@@ -431,15 +435,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1227', 1227)" onmouseover="showTip(event, '1227', 1227)">
+          <code onmouseout="hideTip(event, '1242', 1242)" onmouseover="showTip(event, '1242', 1242)">
             isAheadOf repositoryDir rev1 rev2
           </code>
-          <div class="tip" id="1227">
+          <div class="tip" id="1242">
             <strong>Signature:</strong> repositoryDir:string -&gt; rev1:string -&gt; rev2:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns true if rev1 is ahead of rev2</p>
@@ -449,15 +453,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1228', 1228)" onmouseover="showTip(event, '1228', 1228)">
+          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
             isCleanWorkingCopy(repositoryDir)
           </code>
-          <div class="tip" id="1228">
+          <div class="tip" id="1243">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Checks if the working copy is clean</p>
@@ -467,15 +471,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1229', 1229)" onmouseover="showTip(event, '1229', 1229)">
+          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
             isGitVersionHigherOrEqual(...)
           </code>
-          <div class="tip" id="1229">
+          <div class="tip" id="1244">
             <strong>Signature:</strong> referenceVersion:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L27-27" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -483,15 +487,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1230', 1230)" onmouseover="showTip(event, '1230', 1230)">
+          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
             shortlog(repositoryDir)
           </code>
-          <div class="tip" id="1230">
+          <div class="tip" id="1245">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L85-85" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L85-85" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the git log in one line</p>
@@ -501,15 +505,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1231', 1231)" onmouseover="showTip(event, '1231', 1231)">
+          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
             showName repositoryDir sha1
           </code>
-          <div class="tip" id="1231">
+          <div class="tip" id="1246">
             <strong>Signature:</strong> repositoryDir:string -&gt; sha1:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns a friendly name from a SHA1</p>
@@ -519,15 +523,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1232', 1232)" onmouseover="showTip(event, '1232', 1232)">
+          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
             showStatus(repositoryDir)
           </code>
-          <div class="tip" id="1232">
+          <div class="tip" id="1247">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/Information.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Shows the git status</p>
@@ -575,7 +579,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

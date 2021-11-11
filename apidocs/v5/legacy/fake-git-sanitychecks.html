@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -332,10 +336,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1967', 1967)" onmouseover="showTip(event, '1967', 1967)">
+          <code onmouseout="hideTip(event, '1946', 1946)" onmouseover="showTip(event, '1946', 1946)">
             checkIfBranchExists repositoryDir branch
           </code>
-          <div class="tip" id="1967">
+          <div class="tip" id="1946">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -348,20 +352,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.SanityChecks instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/SanityChecks.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given branch exists.</p>
+                    <p>Checks if the given branch exists.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1968', 1968)" onmouseover="showTip(event, '1968', 1968)">
+          <code onmouseout="hideTip(event, '1947', 1947)" onmouseover="showTip(event, '1947', 1947)">
             checkIfBranchIsAbsent(...)
           </code>
-          <div class="tip" id="1968">
+          <div class="tip" id="1947">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -374,20 +375,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.SanityChecks instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/SanityChecks.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given branch is absent.</p>
+                    <p>Checks if the given branch is absent.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1969', 1969)" onmouseover="showTip(event, '1969', 1969)">
+          <code onmouseout="hideTip(event, '1948', 1948)" onmouseover="showTip(event, '1948', 1948)">
             checkIsLocalBranch repositoryDir branch
           </code>
-          <div class="tip" id="1969">
+          <div class="tip" id="1948">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -400,20 +398,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.SanityChecks instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/SanityChecks.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given branch is a local branch.</p>
+                    <p>Checks if the given branch is a local branch.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1970', 1970)" onmouseover="showTip(event, '1970', 1970)">
+          <code onmouseout="hideTip(event, '1949', 1949)" onmouseover="showTip(event, '1949', 1949)">
             checkIsRemoteBranch repositoryDir branch
           </code>
-          <div class="tip" id="1970">
+          <div class="tip" id="1949">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -426,20 +421,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.SanityChecks instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/SanityChecks.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given branch is a remote branch.</p>
+                    <p>Checks if the given branch is a remote branch.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1971', 1971)" onmouseover="showTip(event, '1971', 1971)">
+          <code onmouseout="hideTip(event, '1950', 1950)" onmouseover="showTip(event, '1950', 1950)">
             checkRevisionExists(...)
           </code>
-          <div class="tip" id="1971">
+          <div class="tip" id="1950">
             <strong>Signature:</strong> repositoryDir:string -&gt; revision1:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -452,10 +444,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.SanityChecks instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/SanityChecks.fs#L11-11" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the given branch exists.</p>
+                    <p>Checks if the given branch exists.</p>
 
 
         </td>
@@ -499,7 +488,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

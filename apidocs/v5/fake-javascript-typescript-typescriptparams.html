@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>SignTool - FAKE - F# Make</title>
+	<title>TypeScriptParams - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,204 +301,202 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-tools-signtool.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.JavaScript.TypeScript" >Fake.JavaScript.TypeScript</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="SignTool" class="anchor" href="#SignTool">SignTool</a></h1>
-
+<h1><a name="TypeScriptParams" class="anchor" href="#TypeScriptParams">TypeScriptParams</a></h1>
 <div class="xmldoc">
-<p>The <a href="https://docs.microsoft.com/en-gb/windows/win32/seccrypto/signtool">SignTool</a> tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.</p>
-<p><a href="/fake-tools-signtool.html">Documentation &amp; samples</a></p>
+<p>TypeScript task parameter type</p>
 
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-certificatefromfile.html">CertificateFromFile</a>
-          </td>
-          <td class="xmldoc">
-            <p>Specifies parameters to use when using a certificate from a file.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-certificatefromstore.html">CertificateFromStore</a>
-          </td>
-          <td class="xmldoc">
-            <p>Specifies parameters to use when using a certificate from a certificate store.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-digestalgorithm.html">DigestAlgorithm</a>
-          </td>
-          <td class="xmldoc">
-            <p>Digest algorithm</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-signcertificate.html">SignCertificate</a>
-          </td>
-          <td class="xmldoc">
-            <p>Specifies what type of certificate to use.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-signoptions.html">SignOptions</a>
-          </td>
-          <td class="xmldoc">
-            <p>Sign command options</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-timestampoption.html">TimeStampOption</a>
-          </td>
-          <td class="xmldoc">
-            <p>Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-timestampoptions.html">TimeStampOptions</a>
-          </td>
-          <td class="xmldoc">
-            <p>Timestamp command options</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-verbosity.html">Verbosity</a>
-          </td>
-          <td class="xmldoc">
-            <p>Verbosity</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-tools-signtool-verifyoptions.html">VerifyOptions</a>
-          </td>
-          <td class="xmldoc">
-            <p>Verify command options</p>
-
-
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
+  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2352', 2352)" onmouseover="showTip(event, '2352', 2352)">
-            SignTool.sign(...)
+          <code onmouseout="hideTip(event, '3541', 3541)" onmouseover="showTip(event, '3541', 3541)">
+            ECMAScript
           </code>
-          <div class="tip" id="2352">
-            <strong>Signature:</strong> certificate:SignCertificate -&gt; setOptions:(SignOptions -&gt; SignOptions) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="3541">
+            <strong>Signature:</strong> ECMAScript<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L412-412" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L44-44" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Signs files according to the options specified.</p>
+          <p>Specifies which ECMAScript version the TypeScript compiler should generate. Default is ES3.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2353', 2353)" onmouseover="showTip(event, '2353', 2353)">
-            SignTool.signWithTimeStamp(...)
+          <code onmouseout="hideTip(event, '3542', 3542)" onmouseover="showTip(event, '3542', 3542)">
+            EmitDeclaration
           </code>
-          <div class="tip" id="2353">
-            <strong>Signature:</strong> certificate:SignCertificate -&gt; setSignOptions:(SignOptions -&gt; SignOptions) -&gt; serverUrl:string -&gt; setTimeStampOptions:(TimeStampOption -&gt; TimeStampOption) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="3542">
+            <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L417-417" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L48-48" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Signs and time stamps files according to the options specified.</p>
+          <p>Specifies if the TypeScript compiler should generate declaration. Default is false.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2354', 2354)" onmouseover="showTip(event, '2354', 2354)">
-            SignTool.timeStamp(...)
+          <code onmouseout="hideTip(event, '3543', 3543)" onmouseover="showTip(event, '3543', 3543)">
+            EmitSourceMaps
           </code>
-          <div class="tip" id="2354">
-            <strong>Signature:</strong> serverUrl:string -&gt; setOptions:(TimeStampOptions -&gt; TimeStampOptions) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="3543">
+            <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L423-423" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L52-52" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Time stamps files according to the options specified. The files being time stamped must have previously been signed.</p>
+          <p>Specifies if the TypeScript compiler should emit source maps. Default is false.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2355', 2355)" onmouseover="showTip(event, '2355', 2355)">
-            SignTool.verify setOptions files
+          <code onmouseout="hideTip(event, '3544', 3544)" onmouseover="showTip(event, '3544', 3544)">
+            ModuleGeneration
           </code>
-          <div class="tip" id="2355">
-            <strong>Signature:</strong> setOptions:(VerifyOptions -&gt; VerifyOptions) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="3544">
+            <strong>Signature:</strong> ModuleGeneration<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L429-429" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L50-50" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Verifies files according to the options specified.
-The SignTool verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.</p>
+          <p>Specifies which JavaScript module type the TypeScript compiler should generate. Default is CommonJs.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3545', 3545)" onmouseover="showTip(event, '3545', 3545)">
+            NoLib
+          </code>
+          <div class="tip" id="3545">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L54-54" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies if the TypeScript compiler should not use libs. Default is false.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3546', 3546)" onmouseover="showTip(event, '3546', 3546)">
+            OutputPath
+          </code>
+          <div class="tip" id="3546">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L60-60" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies the TypeScript compiler output path.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3547', 3547)" onmouseover="showTip(event, '3547', 3547)">
+            OutputSingleFile
+          </code>
+          <div class="tip" id="3547">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L46-46" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies if the TypeScript compiler should generate a single output file and its filename.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3548', 3548)" onmouseover="showTip(event, '3548', 3548)">
+            RemoveComments
+          </code>
+          <div class="tip" id="3548">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L56-56" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies if the TypeScript compiler should remove comments. Default is false.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3549', 3549)" onmouseover="showTip(event, '3549', 3549)">
+            TimeOut
+          </code>
+          <div class="tip" id="3549">
+            <strong>Signature:</strong> TimeSpan<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L62-62" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies the timeout for the TypeScript compiler.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3550', 3550)" onmouseover="showTip(event, '3550', 3550)">
+            ToolPath
+          </code>
+          <div class="tip" id="3550">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L58-58" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Specifies the TypeScript compiler path.</p>
 
 
         </td>
@@ -510,6 +512,7 @@ The SignTool verify command determines whether the signing certificate was issue
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -538,7 +541,7 @@ The SignTool verify command determines whether the signing certificate was issue
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

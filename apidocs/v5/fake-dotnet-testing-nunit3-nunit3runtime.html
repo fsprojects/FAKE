@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -321,15 +325,15 @@ You can pass any value using Other.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3047', 3047)" onmouseover="showTip(event, '3047', 3047)">
+          <code onmouseout="hideTip(event, '3074', 3074)" onmouseover="showTip(event, '3074', 3074)">
             Default
           </code>
-          <div class="tip" id="3047">
+          <div class="tip" id="3074">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L58-58" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Uses the runtime under which the assembly was built.</p>
@@ -339,15 +343,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3048', 3048)" onmouseover="showTip(event, '3048', 3048)">
+          <code onmouseout="hideTip(event, '3075', 3075)" onmouseover="showTip(event, '3075', 3075)">
             Mono
           </code>
-          <div class="tip" id="3048">
+          <div class="tip" id="3075">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>NUnit should use Mono framework but can select its version</p>
@@ -357,15 +361,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3049', 3049)" onmouseover="showTip(event, '3049', 3049)">
+          <code onmouseout="hideTip(event, '3076', 3076)" onmouseover="showTip(event, '3076', 3076)">
             Mono20
           </code>
-          <div class="tip" id="3049">
+          <div class="tip" id="3076">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -373,15 +377,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3050', 3050)" onmouseover="showTip(event, '3050', 3050)">
+          <code onmouseout="hideTip(event, '3077', 3077)" onmouseover="showTip(event, '3077', 3077)">
             Mono30
           </code>
-          <div class="tip" id="3050">
+          <div class="tip" id="3077">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -389,15 +393,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3051', 3051)" onmouseover="showTip(event, '3051', 3051)">
+          <code onmouseout="hideTip(event, '3078', 3078)" onmouseover="showTip(event, '3078', 3078)">
             Mono35
           </code>
-          <div class="tip" id="3051">
+          <div class="tip" id="3078">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L75-75" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -405,15 +409,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3052', 3052)" onmouseover="showTip(event, '3052', 3052)">
+          <code onmouseout="hideTip(event, '3079', 3079)" onmouseover="showTip(event, '3079', 3079)">
             Mono40
           </code>
-          <div class="tip" id="3052">
+          <div class="tip" id="3079">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L76-76" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L76-76" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -421,15 +425,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3053', 3053)" onmouseover="showTip(event, '3053', 3053)">
+          <code onmouseout="hideTip(event, '3080', 3080)" onmouseover="showTip(event, '3080', 3080)">
             Net
           </code>
-          <div class="tip" id="3053">
+          <div class="tip" id="3080">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L65-65" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L65-65" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>NUnit should use .NET framework but can select its version</p>
@@ -439,15 +443,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3054', 3054)" onmouseover="showTip(event, '3054', 3054)">
+          <code onmouseout="hideTip(event, '3081', 3081)" onmouseover="showTip(event, '3081', 3081)">
             Net20
           </code>
-          <div class="tip" id="3054">
+          <div class="tip" id="3081">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -455,15 +459,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3055', 3055)" onmouseover="showTip(event, '3055', 3055)">
+          <code onmouseout="hideTip(event, '3082', 3082)" onmouseover="showTip(event, '3082', 3082)">
             Net30
           </code>
-          <div class="tip" id="3055">
+          <div class="tip" id="3082">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -471,15 +475,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3056', 3056)" onmouseover="showTip(event, '3056', 3056)">
+          <code onmouseout="hideTip(event, '3083', 3083)" onmouseover="showTip(event, '3083', 3083)">
             Net35
           </code>
-          <div class="tip" id="3056">
+          <div class="tip" id="3083">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L68-68" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L68-68" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -487,15 +491,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3057', 3057)" onmouseover="showTip(event, '3057', 3057)">
+          <code onmouseout="hideTip(event, '3084', 3084)" onmouseover="showTip(event, '3084', 3084)">
             Net40
           </code>
-          <div class="tip" id="3057">
+          <div class="tip" id="3084">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -503,15 +507,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3058', 3058)" onmouseover="showTip(event, '3058', 3058)">
+          <code onmouseout="hideTip(event, '3085', 3085)" onmouseover="showTip(event, '3085', 3085)">
             Net45
           </code>
-          <div class="tip" id="3058">
+          <div class="tip" id="3085">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L70-70" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L70-70" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -519,15 +523,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3059', 3059)" onmouseover="showTip(event, '3059', 3059)">
+          <code onmouseout="hideTip(event, '3086', 3086)" onmouseover="showTip(event, '3086', 3086)">
             Other(string)
           </code>
-          <div class="tip" id="3059">
+          <div class="tip" id="3086">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L78-78" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L78-78" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>NUnit should use runtime specified by this value</p>
@@ -537,15 +541,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3060', 3060)" onmouseover="showTip(event, '3060', 3060)">
+          <code onmouseout="hideTip(event, '3087', 3087)" onmouseover="showTip(event, '3087', 3087)">
             V20
           </code>
-          <div class="tip" id="3060">
+          <div class="tip" id="3087">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L59-59" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -553,15 +557,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3061', 3061)" onmouseover="showTip(event, '3061', 3061)">
+          <code onmouseout="hideTip(event, '3088', 3088)" onmouseover="showTip(event, '3088', 3088)">
             V30
           </code>
-          <div class="tip" id="3061">
+          <div class="tip" id="3088">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L60-60" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L60-60" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -569,15 +573,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3062', 3062)" onmouseover="showTip(event, '3062', 3062)">
+          <code onmouseout="hideTip(event, '3089', 3089)" onmouseover="showTip(event, '3089', 3089)">
             V35
           </code>
-          <div class="tip" id="3062">
+          <div class="tip" id="3089">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -585,15 +589,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3063', 3063)" onmouseover="showTip(event, '3063', 3063)">
+          <code onmouseout="hideTip(event, '3090', 3090)" onmouseover="showTip(event, '3090', 3090)">
             V40
           </code>
-          <div class="tip" id="3063">
+          <div class="tip" id="3090">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L62-62" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -601,15 +605,15 @@ You can pass any value using Other.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3064', 3064)" onmouseover="showTip(event, '3064', 3064)">
+          <code onmouseout="hideTip(event, '3091', 3091)" onmouseover="showTip(event, '3091', 3091)">
             V45
           </code>
-          <div class="tip" id="3064">
+          <div class="tip" id="3091">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L63-63" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L63-63" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -625,15 +629,15 @@ You can pass any value using Other.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3065', 3065)" onmouseover="showTip(event, '3065', 3065)">
+          <code onmouseout="hideTip(event, '3092', 3092)" onmouseover="showTip(event, '3092', 3092)">
             x.ParamString
           </code>
-          <div class="tip" id="3065">
+          <div class="tip" id="3092">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/NUnit3.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -679,7 +683,7 @@ You can pass any value using Other.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

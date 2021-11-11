@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -317,15 +321,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1548', 1548)" onmouseover="showTip(event, '1548', 1548)">
+          <code onmouseout="hideTip(event, '1575', 1575)" onmouseover="showTip(event, '1575', 1575)">
             Environment.Branch
           </code>
-          <div class="tip" id="1548">
+          <div class="tip" id="1575">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L302-302" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L302-302" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Get the branch of the main VCS root</p>
@@ -335,15 +339,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1549', 1549)" onmouseover="showTip(event, '1549', 1549)">
+          <code onmouseout="hideTip(event, '1576', 1576)" onmouseover="showTip(event, '1576', 1576)">
             Environment.BranchDisplayName
           </code>
-          <div class="tip" id="1549">
+          <div class="tip" id="1576">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L308-308" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L308-308" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Get the display name of the branch of the main VCS root as shown in TeamCity</p>
@@ -354,15 +358,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1550', 1550)" onmouseover="showTip(event, '1550', 1550)">
+          <code onmouseout="hideTip(event, '1577', 1577)" onmouseover="showTip(event, '1577', 1577)">
             Environment.BuildConfigurationName
           </code>
-          <div class="tip" id="1550">
+          <div class="tip" id="1577">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L290-290" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L290-290" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
@@ -372,15 +376,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1551', 1551)" onmouseover="showTip(event, '1551', 1551)">
+          <code onmouseout="hideTip(event, '1578', 1578)" onmouseover="showTip(event, '1578', 1578)">
             Environment.BuildIsPersonal
           </code>
-          <div class="tip" id="1551">
+          <div class="tip" id="1578">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L293-293" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L293-293" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Is set to true if the build is a personal one.</p>
@@ -390,15 +394,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1552', 1552)" onmouseover="showTip(event, '1552', 1552)">
+          <code onmouseout="hideTip(event, '1579', 1579)" onmouseover="showTip(event, '1579', 1579)">
             Environment.BuildNumber
           </code>
-          <div class="tip" id="1552">
+          <div class="tip" id="1579">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L299-299" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L299-299" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
@@ -408,15 +412,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1553', 1553)" onmouseover="showTip(event, '1553', 1553)">
+          <code onmouseout="hideTip(event, '1580', 1580)" onmouseover="showTip(event, '1580', 1580)">
             Environment.ChangedFiles
           </code>
-          <div class="tip" id="1553">
+          <div class="tip" id="1580">
             <strong>Signature:</strong> FileChange list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L334-334" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L334-334" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Changed files (since previous build) that are included in this build</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1554', 1554)" onmouseover="showTip(event, '1554', 1554)">
+          <code onmouseout="hideTip(event, '1581', 1581)" onmouseover="showTip(event, '1581', 1581)">
             Environment.CheckoutDirectory
           </code>
-          <div class="tip" id="1554">
+          <div class="tip" id="1581">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L328-328" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L328-328" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Get the path to the build checkout directory</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1555', 1555)" onmouseover="showTip(event, '1555', 1555)">
+          <code onmouseout="hideTip(event, '1582', 1582)" onmouseover="showTip(event, '1582', 1582)">
             Environment.IsDefaultBranch
           </code>
-          <div class="tip" id="1555">
+          <div class="tip" id="1582">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L315-315" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L315-315" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Get if the current branch of the main VCS root is the one configured as default</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1556', 1556)" onmouseover="showTip(event, '1556', 1556)">
+          <code onmouseout="hideTip(event, '1583', 1583)" onmouseover="showTip(event, '1583', 1583)">
             Environment.ProjectName
           </code>
-          <div class="tip" id="1556">
+          <div class="tip" id="1583">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L287-287" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L287-287" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
@@ -481,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1557', 1557)" onmouseover="showTip(event, '1557', 1557)">
+          <code onmouseout="hideTip(event, '1584', 1584)" onmouseover="showTip(event, '1584', 1584)">
             Environment.RecentlyFailedTests
           </code>
-          <div class="tip" id="1557">
+          <div class="tip" id="1584">
             <strong>Signature:</strong> string list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L340-340" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L340-340" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Name of recently failing tests</p>
@@ -500,15 +504,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1558', 1558)" onmouseover="showTip(event, '1558', 1558)">
+          <code onmouseout="hideTip(event, '1585', 1585)" onmouseover="showTip(event, '1585', 1585)">
             Environment.Version
           </code>
-          <div class="tip" id="1558">
+          <div class="tip" id="1585">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L284-284" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L284-284" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
@@ -556,7 +560,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

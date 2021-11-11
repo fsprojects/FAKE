@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,33 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3629', 3629)" onmouseover="showTip(event, '3629', 3629)">
+          <code onmouseout="hideTip(event, '3703', 3703)" onmouseover="showTip(event, '3703', 3703)">
+            AccessToken
+          </code>
+          <div class="tip" id="3703">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L29-29" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          <p>Azure AccessToken</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3704', 3704)" onmouseover="showTip(event, '3704', 3704)">
             Action
           </code>
-          <div class="tip" id="3629">
+          <div class="tip" id="3704">
             <strong>Signature:</strong> DeployAction<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L27-27" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Type of action to execute. Defaults to Deploy.</p>
@@ -337,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3630', 3630)" onmouseover="showTip(event, '3630', 3630)">
+          <code onmouseout="hideTip(event, '3705', 3705)" onmouseover="showTip(event, '3705', 3705)">
             AdditionalSqlPackageProperties
           </code>
-          <div class="tip" id="3630">
+          <div class="tip" id="3705">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L41-41" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L43-43" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Additional configuration parameters required by sqlpackage.exe</p>
@@ -355,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3631', 3631)" onmouseover="showTip(event, '3631', 3631)">
+          <code onmouseout="hideTip(event, '3706', 3706)" onmouseover="showTip(event, '3706', 3706)">
             BlockOnPossibleDataLoss
           </code>
-          <div class="tip" id="3631">
+          <div class="tip" id="3706">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L35-35" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L37-37" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Block deployment if data loss can occur. Defaults to true.</p>
@@ -373,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3632', 3632)" onmouseover="showTip(event, '3632', 3632)">
+          <code onmouseout="hideTip(event, '3707', 3707)" onmouseover="showTip(event, '3707', 3707)">
             Destination
           </code>
-          <div class="tip" id="3632">
+          <div class="tip" id="3707">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to destination (path to DACPAC or Connection String).</p>
@@ -391,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3633', 3633)" onmouseover="showTip(event, '3633', 3633)">
+          <code onmouseout="hideTip(event, '3708', 3708)" onmouseover="showTip(event, '3708', 3708)">
             DropObjectsNotInSource
           </code>
-          <div class="tip" id="3633">
+          <div class="tip" id="3708">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L37-37" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L39-39" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Drops objects in the destination that do not exist in the source. Defaults to false.</p>
@@ -409,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3634', 3634)" onmouseover="showTip(event, '3634', 3634)">
+          <code onmouseout="hideTip(event, '3709', 3709)" onmouseover="showTip(event, '3709', 3709)">
             Profile
           </code>
-          <div class="tip" id="3634">
+          <div class="tip" id="3709">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L47-47" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs.</p>
@@ -427,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3635', 3635)" onmouseover="showTip(event, '3635', 3635)">
+          <code onmouseout="hideTip(event, '3710', 3710)" onmouseover="showTip(event, '3710', 3710)">
             RecreateDb
           </code>
-          <div class="tip" id="3635">
+          <div class="tip" id="3710">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L39-39" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L41-41" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.</p>
@@ -445,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3636', 3636)" onmouseover="showTip(event, '3636', 3636)">
+          <code onmouseout="hideTip(event, '3711', 3711)" onmouseover="showTip(event, '3711', 3711)">
             Source
           </code>
-          <div class="tip" id="3636">
+          <div class="tip" id="3711">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L29-29" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to source (path to DACPAC or Connection String).</p>
@@ -463,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3637', 3637)" onmouseover="showTip(event, '3637', 3637)">
+          <code onmouseout="hideTip(event, '3712', 3712)" onmouseover="showTip(event, '3712', 3712)">
             SqlPackageToolPath
           </code>
-          <div class="tip" id="3637">
+          <div class="tip" id="3712">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L25-25" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L25-25" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path to SqlPackage.exe.</p>
@@ -481,15 +503,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3638', 3638)" onmouseover="showTip(event, '3638', 3638)">
+          <code onmouseout="hideTip(event, '3713', 3713)" onmouseover="showTip(event, '3713', 3713)">
             Timeout
           </code>
-          <div class="tip" id="3638">
+          <div class="tip" id="3713">
             <strong>Signature:</strong> int option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L35-35" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout for deploy (defaults to 120 seconds).</p>
@@ -499,15 +521,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3639', 3639)" onmouseover="showTip(event, '3639', 3639)">
+          <code onmouseout="hideTip(event, '3714', 3714)" onmouseover="showTip(event, '3714', 3714)">
             Variables
           </code>
-          <div class="tip" id="3639">
+          <div class="tip" id="3714">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Sql.SqlPackage/Sql.SqlPackage.fs#L45-45" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>SQLCMD variables</p>
@@ -555,7 +577,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

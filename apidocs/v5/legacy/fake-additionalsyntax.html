@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(?)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L10-10" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to use Tokens instead of strings</p>
+                    <p>Allows to use Tokens instead of strings</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(?&lt;-)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to use Tokens instead of strings for TargetNames</p>
+                    <p>Allows to use Tokens instead of strings for TargetNames</p>
 
 
         </td>
@@ -400,10 +398,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(?=&gt;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
+                    <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
 
 
         </td>
@@ -426,10 +421,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(&lt;=?)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
+                    <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
 
 
         </td>
@@ -452,10 +444,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(&lt;=&gt;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
+                    <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
 
 
         </td>
@@ -478,10 +467,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(=?&gt;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
+                    <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
 
 
         </td>
@@ -504,10 +490,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(==&gt;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defines a dependency - y is dependent on x</p>
+                    <p>Defines a dependency - y is dependent on x</p>
 
 
         </td>
@@ -530,10 +513,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies that two targets have the same dependencies</p>
+                    <p>Specifies that two targets have the same dependencies</p>
 
 
         </td>
@@ -556,10 +536,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies that two targets have the same dependencies</p>
+                    <p>Specifies that two targets have the same dependencies</p>
 
 
         </td>
@@ -582,10 +559,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends the dependency to the list of dependencies</p>
+                    <p>Appends the dependency to the list of dependencies</p>
 
 
         </td>
@@ -608,10 +582,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts a dependency into a list</p>
+                    <p>Converts a dependency into a list</p>
 
 
         </td>
@@ -634,10 +605,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows to use For? syntax for Dependencies</p>
+                    <p>Allows to use For? syntax for Dependencies</p>
 
 
         </td>
@@ -660,10 +628,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.run)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a Target and its dependencies</p>
+                    <p>Runs a Target and its dependencies</p>
 
 
         </td>
@@ -686,10 +651,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the target given by the build script parameter or the given default target</p>
+                    <p>Runs the target given by the build script parameter or the given default target</p>
 
 
         </td>
@@ -712,10 +674,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrDefault with &quot;&quot; default target)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the target given by the target parameter</p>
+                    <p>Runs the target given by the target parameter</p>
 
 
         </td>
@@ -738,10 +697,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrDefault)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the target given by the target parameter or the given default target</p>
+                    <p>Runs the target given by the target parameter or the given default target</p>
 
 
         </td>
@@ -764,10 +720,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrList)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the target given by the target parameter or lists the available targets</p>
+                    <p>Runs the target given by the target parameter or lists the available targets</p>
 
 
         </td>
@@ -790,10 +743,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AdditionalSyntax.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies that two targets are on the same level of execution</p>
+                    <p>Specifies that two targets are on the same level of execution</p>
 
 
         </td>
@@ -837,7 +787,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -347,18 +351,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2410', 2410)" onmouseover="showTip(event, '2410', 2410)">
+          <code onmouseout="hideTip(event, '2375', 2375)" onmouseover="showTip(event, '2375', 2375)">
             compareBranches(...)
           </code>
-          <div class="tip" id="2410">
+          <div class="tip" id="2375">
             <strong>Signature:</strong> repositoryDir:string -&gt; local:string -&gt; remote:string -&gt; MergeType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Merge.fs#L33-33" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tests whether branches and their "origin" counterparts have diverged and need merging first.</p>
+                    <p>Tests whether branches and their "origin" counterparts have diverged and need merging first.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -371,54 +372,45 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2411', 2411)" onmouseover="showTip(event, '2411', 2411)">
+          <code onmouseout="hideTip(event, '2376', 2376)" onmouseover="showTip(event, '2376', 2376)">
             FastForwardFlag
           </code>
-          <div class="tip" id="2411">
+          <div class="tip" id="2376">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Merge.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Allows git to use fast-forward merges</p>
+                    <p>Allows git to use fast-forward merges</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2412', 2412)" onmouseover="showTip(event, '2412', 2412)">
+          <code onmouseout="hideTip(event, '2377', 2377)" onmouseover="showTip(event, '2377', 2377)">
             getMergeMessage(repositoryDir)
           </code>
-          <div class="tip" id="2412">
+          <div class="tip" id="2377">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Merge.fs#L10-10" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the current merge message.</p>
+                    <p>Gets the current merge message.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2413', 2413)" onmouseover="showTip(event, '2413', 2413)">
+          <code onmouseout="hideTip(event, '2378', 2378)" onmouseover="showTip(event, '2378', 2378)">
             merge repositoryDir flags branch
           </code>
-          <div class="tip" id="2413">
+          <div class="tip" id="2378">
             <strong>Signature:</strong> repositoryDir:string -&gt; flags:string -&gt; branch:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Merge.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a merge of the given branch with the current branch</p>
+                    <p>Performs a merge of the given branch with the current branch</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>repositoryDir</code> - The git repository.</p></li>
@@ -435,18 +427,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2414', 2414)" onmouseover="showTip(event, '2414', 2414)">
+          <code onmouseout="hideTip(event, '2379', 2379)" onmouseover="showTip(event, '2379', 2379)">
             NoFastForwardFlag
           </code>
-          <div class="tip" id="2414">
+          <div class="tip" id="2379">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/Merge.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Forbids git to use fast-forward merges</p>
+                    <p>Forbids git to use fast-forward merges</p>
 
 
         </td>
@@ -490,7 +479,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

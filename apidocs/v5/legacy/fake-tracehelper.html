@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -371,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L160-160" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -395,10 +396,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes an opening tag from the internal tag stack</p>
+                    <p>Removes an opening tag from the internal tag stack</p>
 
 
         </td>
@@ -421,10 +419,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L201-201" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -445,10 +440,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L77-77" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts an exception and its inner exceptions to a nice string.</p>
+                    <p>Converts an exception and its inner exceptions to a nice string.</p>
 
 
         </td>
@@ -471,10 +463,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Don&#39;t use anymore, there is no equivalent, please open an issue in FAKE if you need help.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the path of the current FAKE instance</p>
+                    <p>Gets the path of the current FAKE instance</p>
 
 
         </td>
@@ -497,10 +486,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use Fake.Runtime.Environment.fakeVersion instead (open Fake.Runtime and use &#39;Environment.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the FAKE version no.</p>
+                    <p>Gets the FAKE version no.</p>
 
 
         </td>
@@ -523,10 +509,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use Fake.Runtime.Environment.fakeVersionStr instead (open Fake.Runtime and use &#39;Environment.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the FAKE Version string</p>
+                    <p>Gets the FAKE Version string</p>
 
 
         </td>
@@ -549,10 +532,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the specified string</p>
+                    <p>Logs the specified string</p>
 
 
         </td>
@@ -575,10 +555,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.logItems&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L217-217" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the given files with the message.</p>
+                    <p>Logs the given files with the message.</p>
 
 
         </td>
@@ -589,8 +566,8 @@
             logf(fmt)
           </code>
           <div class="tip" id="896">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?13088,unit&gt; -&gt; &#39;?13088<br />
-                          <strong>Type parameters:</strong> '?13088                            <span>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?13096,unit&gt; -&gt; &#39;?13096<br />
+                          <strong>Type parameters:</strong> '?13096                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)&quot;)&gt;]<br />
                 </span>
@@ -601,10 +578,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the specified message (without line break)</p>
+                    <p>Logs the specified message (without line break)</p>
 
 
         </td>
@@ -627,10 +601,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the specified message</p>
+                    <p>Logs the specified message</p>
 
 
         </td>
@@ -653,10 +624,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Logs the specified string if the verbose mode is activated.</p>
+                    <p>Logs the specified string if the verbose mode is activated.</p>
 
 
         </td>
@@ -679,10 +647,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Puts an opening tag on the internal tag stack</p>
+                    <p>Puts an opening tag on the internal tag stack</p>
 
 
         </td>
@@ -705,10 +670,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to the command line (in green)</p>
+                    <p>Writes a trace to the command line (in green)</p>
 
 
         </td>
@@ -731,10 +693,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L145-145" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the end of the build</p>
+                    <p>Traces the end of the build</p>
 
 
         </td>
@@ -757,10 +716,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This method is unsafe, please use nuget &#39;Fake.Core.Trace&#39;, open Fake.Core and use &#39;use _ = Trace.traceTarget&#39; to properly finish the target on errors or use traceStartTargetUnsafe if you know what you do</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L174-174" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the end of a target</p>
+                    <p>Traces the end of a target</p>
 
 
         </td>
@@ -783,10 +739,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This method is unsafe, please use nuget &#39;Fake.Core.Trace&#39;, open Fake.Core and use &#39;use _ = Trace.traceTask&#39; to properly finish the task on errors or use traceStartTaskUnsafe if you know what you do</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L189-189" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the end of a task</p>
+                    <p>Traces the end of a task</p>
 
 
         </td>
@@ -809,10 +762,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L117-117" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the EnvironmentVariables</p>
+                    <p>Traces the EnvironmentVariables</p>
 
 
         </td>
@@ -835,10 +785,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces an error (in red)</p>
+                    <p>Traces an error (in red)</p>
 
 
         </td>
@@ -861,10 +808,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces an exception details (in red)</p>
+                    <p>Traces an exception details (in red)</p>
 
 
         </td>
@@ -887,10 +831,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a message to the command line (in green) and without a line break</p>
+                    <p>Writes a message to the command line (in green) and without a line break</p>
 
 
         </td>
@@ -913,10 +854,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to the command line (in yellow)</p>
+                    <p>Writes a trace to the command line (in yellow)</p>
 
 
         </td>
@@ -939,10 +877,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a message to the command line (in green)</p>
+                    <p>Writes a message to the command line (in green)</p>
 
 
         </td>
@@ -965,10 +900,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L133-133" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces a header</p>
+                    <p>Traces a header</p>
 
 
         </td>
@@ -991,10 +923,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to stderr (in yellow)</p>
+                    <p>Writes a trace to stderr (in yellow)</p>
 
 
         </td>
@@ -1017,10 +946,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces a line</p>
+                    <p>Traces a line</p>
 
 
         </td>
@@ -1043,10 +969,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L141-141" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the begin of the build</p>
+                    <p>Traces the begin of the build</p>
 
 
         </td>
@@ -1069,10 +992,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This method is unsafe, please use nuget &#39;Fake.Core.Trace&#39;, open Fake.Core and use &#39;use _ = Trace.traceTarget&#39; to properly finish the target on errors or use traceStartTargetUnsafe if you know what you do</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the begin of a target</p>
+                    <p>Traces the begin of a target</p>
 
 
         </td>
@@ -1095,10 +1015,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This method is unsafe, please use nuget &#39;Fake.Core.Trace&#39;, open Fake.Core and use &#39;use _ = Trace.traceTask&#39; to properly finish the task on errors or use traceStartTaskUnsafe if you know what you do</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L182-182" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the begin of a task</p>
+                    <p>Traces the begin of a task</p>
 
 
         </td>
@@ -1121,10 +1038,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use nuget &#39;Fake.Core.Trace&#39;, open Fake.Core and use &#39;use _ = Trace.traceTask&#39; to properly finish the task on errors or use traceStartTaskUnsafe if you know what you do</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L196-196" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Traces the begin of a task and closes it again after disposing of the return value
+                    <p>Traces the begin of a task and closes it again after disposing of the return value
 (call it with 'use')</p>
 
 
@@ -1148,10 +1062,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TraceHelper.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes a trace to the command line (in green) if the verbose mode is activated.</p>
+                    <p>Writes a trace to the command line (in green) if the verbose mode is activated.</p>
 
 
         </td>
@@ -1195,7 +1106,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

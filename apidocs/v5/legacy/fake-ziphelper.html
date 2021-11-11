@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files</p>
+                    <p>Creates a zip file with the given files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
@@ -383,10 +384,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -416,10 +414,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The default zip level</p>
+                    <p>The default zip level</p>
 
 
         </td>
@@ -442,10 +437,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a file with the given file name.</p>
+                    <p>Unzips a file with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -473,10 +465,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a single file from the archive with the given file name.</p>
+                    <p>Unzips a single file from the archive with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>predicate</code> - The predictae for the searched file in the archive.</li>
@@ -504,10 +493,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Unzips a single file from the archive with the given file name.</p>
+                    <p>Unzips a single file from the archive with the given file name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileToUnzip</code> - The file inside the archive.</li>
@@ -535,10 +521,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
@@ -567,10 +550,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L85-85" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given file.</p>
+                    <p>Creates a zip file with the given file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -598,10 +578,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO.Zip instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ZipHelper.fs#L193-193" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a zip file with the given files.</p>
+                    <p>Creates a zip file with the given files.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -687,7 +664,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

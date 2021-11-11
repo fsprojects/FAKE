@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -373,10 +377,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L141-141" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors</p>
+                    <p>Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors</p>
 
 
         </td>
@@ -399,10 +400,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L120-120" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors</p>
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors</p>
 
 
         </td>
@@ -425,10 +423,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to retrieve modified date.</p>
+                    <p>A Regex which allows to retrieve modified date.</p>
 
 
         </td>
@@ -451,10 +446,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns a standardized filename based on the given NavObject.</p>
+                    <p>Returns a standardized filename based on the given NavObject.</p>
 
 
         </td>
@@ -477,10 +469,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L246-246" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files</p>
+                    <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files</p>
 
 
         </td>
@@ -503,10 +492,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects</p>
+                    <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects</p>
 
 
         </td>
@@ -529,10 +515,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get all invalid tags from a Dynamics NAV version tag list</p>
+                    <p>Get all invalid tags from a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -555,10 +538,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get all missing required tags from a Dynamics NAV version tag list</p>
+                    <p>Get all missing required tags from a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -581,10 +561,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L232-232" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the version number for the specified version tag in a Dynamics NAV object</p>
+                    <p>Gets the version number for the specified version tag in a Dynamics NAV object</p>
 
 
         </td>
@@ -607,10 +584,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L221-221" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the version number for the specified version tag in a Dynamics NAV version tag list</p>
+                    <p>Gets the version number for the specified version tag in a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -633,10 +607,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the version tag list from Dynamics NAV object.</p>
+                    <p>Returns the version tag list from Dynamics NAV object.</p>
 
 
         </td>
@@ -659,10 +630,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to retrieve the modified flag.</p>
+                    <p>A Regex which allows to retrieve the modified flag.</p>
 
 
         </td>
@@ -685,10 +653,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L147-147" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
 
@@ -712,10 +677,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A NAV culture-specific date format.</p>
+                    <p>A NAV culture-specific date format.</p>
 
 
         </td>
@@ -738,10 +700,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to parse objects in a Dynamics NAV file.</p>
+                    <p>A Regex which allows to parse objects in a Dynamics NAV file.</p>
 
 
         </td>
@@ -764,10 +723,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L187-187" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits an object string into multiple Dynamics NAV objects of type NavObject.</p>
+                    <p>Splits an object string into multiple Dynamics NAV objects of type NavObject.</p>
 
 
         </td>
@@ -790,10 +746,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to find objects in a Dynamics NAV file.</p>
+                    <p>A Regex which allows to find objects in a Dynamics NAV file.</p>
 
 
         </td>
@@ -816,10 +769,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes the modified flag from a Dynamics NAV object.</p>
+                    <p>Removes the modified flag from a Dynamics NAV object.</p>
 
 
         </td>
@@ -842,10 +792,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the timestamp in a Dynamics NAV object.</p>
+                    <p>Replaces the timestamp in a Dynamics NAV object.</p>
 
 
         </td>
@@ -868,10 +815,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -892,10 +836,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
+                    <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
 
 
         </td>
@@ -918,10 +859,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L95-95" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces a version tag in a Dynamics NAV</p>
+                    <p>Replaces a version tag in a Dynamics NAV</p>
 
 
         </td>
@@ -944,10 +882,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces a version tag list from a complete Dynamics NAV object with a new version tag list</p>
+                    <p>Replaces a version tag list from a complete Dynamics NAV object with a new version tag list</p>
 
 
         </td>
@@ -970,10 +905,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L175-175" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
 
@@ -997,10 +929,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L205-205" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits the given files into individual object files in the specified destination directory.</p>
+                    <p>Splits the given files into individual object files in the specified destination directory.</p>
 
 
         </td>
@@ -1023,10 +952,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Splits a version tag list from Dynamics NAV object into single tags</p>
+                    <p>Splits a version tag list from Dynamics NAV object into single tags</p>
 
 
         </td>
@@ -1049,10 +975,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to retrieve the modified time.</p>
+                    <p>A Regex which allows to retrieve the modified time.</p>
 
 
         </td>
@@ -1075,10 +998,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DynamicsNavFile.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A Regex which allows to retrieve the version list.</p>
+                    <p>A Regex which allows to retrieve the version list.</p>
 
 
         </td>
@@ -1122,7 +1042,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

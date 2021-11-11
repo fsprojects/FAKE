@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,144 +332,120 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3986', 3986)" onmouseover="showTip(event, '3986', 3986)">
+          <code onmouseout="hideTip(event, '3951', 3951)" onmouseover="showTip(event, '3951', 3951)">
             ApiToken
           </code>
-          <div class="tip" id="3986">
+          <div class="tip" id="3951">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L13-13" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) API token from testflightapp.com/account/#api</p>
+                    <p>(Required) API token from testflightapp.com/account/#api</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3987', 3987)" onmouseover="showTip(event, '3987', 3987)">
+          <code onmouseout="hideTip(event, '3952', 3952)" onmouseover="showTip(event, '3952', 3952)">
             DistributionLists
           </code>
-          <div class="tip" id="3987">
+          <div class="tip" id="3952">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L23-23" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Distribution list names which will receive access to the build</p>
+                    <p>Distribution list names which will receive access to the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3988', 3988)" onmouseover="showTip(event, '3988', 3988)">
+          <code onmouseout="hideTip(event, '3953', 3953)" onmouseover="showTip(event, '3953', 3953)">
             DSym
           </code>
-          <div class="tip" id="3988">
+          <div class="tip" id="3953">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>iOS ONLY - the .dSYM corresponding to the build</p>
+                    <p>iOS ONLY - the .dSYM corresponding to the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3989', 3989)" onmouseover="showTip(event, '3989', 3989)">
+          <code onmouseout="hideTip(event, '3954', 3954)" onmouseover="showTip(event, '3954', 3954)">
             File
           </code>
-          <div class="tip" id="3989">
+          <div class="tip" id="3954">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L17-17" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) file data for the build (.ipa or .apk)</p>
+                    <p>(Required) file data for the build (.ipa or .apk)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3990', 3990)" onmouseover="showTip(event, '3990', 3990)">
+          <code onmouseout="hideTip(event, '3955', 3955)" onmouseover="showTip(event, '3955', 3955)">
             Notes
           </code>
-          <div class="tip" id="3990">
+          <div class="tip" id="3955">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Release notes for the build</p>
+                    <p>Release notes for the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3991', 3991)" onmouseover="showTip(event, '3991', 3991)">
+          <code onmouseout="hideTip(event, '3956', 3956)" onmouseover="showTip(event, '3956', 3956)">
             Notify
           </code>
-          <div class="tip" id="3991">
+          <div class="tip" id="3956">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L25-25" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Notify permitted teammates to install the build</p>
+                    <p>Notify permitted teammates to install the build</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3992', 3992)" onmouseover="showTip(event, '3992', 3992)">
+          <code onmouseout="hideTip(event, '3957', 3957)" onmouseover="showTip(event, '3957', 3957)">
             Replace
           </code>
-          <div class="tip" id="3992">
+          <div class="tip" id="3957">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace binary for an existing build if one is found with the same name/bundle version</p>
+                    <p>Replace binary for an existing build if one is found with the same name/bundle version</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3993', 3993)" onmouseover="showTip(event, '3993', 3993)">
+          <code onmouseout="hideTip(event, '3958', 3958)" onmouseover="showTip(event, '3958', 3958)">
             TeamToken
           </code>
-          <div class="tip" id="3993">
+          <div class="tip" id="3958">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TestFlightHelper.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Team token from testflightapp.com/dashboard/team/edit</p>
+                    <p>(Required) Team token from testflightapp.com/dashboard/team/edit</p>
 
 
         </td>
@@ -509,7 +489,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

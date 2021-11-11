@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,126 +332,105 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3194', 3194)" onmouseover="showTip(event, '3194', 3194)">
+          <code onmouseout="hideTip(event, '3159', 3159)" onmouseover="showTip(event, '3159', 3159)">
             AuthToken
           </code>
-          <div class="tip" id="3194">
+          <div class="tip" id="3159">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Auth token from HipChat</p>
+                    <p>(Required) Auth token from HipChat</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3195', 3195)" onmouseover="showTip(event, '3195', 3195)">
+          <code onmouseout="hideTip(event, '3160', 3160)" onmouseover="showTip(event, '3160', 3160)">
             Color
           </code>
-          <div class="tip" id="3195">
+          <div class="tip" id="3160">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The background color for the message, which can be yellow, red, green, purple, gray, or random. Default value: yellow</p>
+                    <p>The background color for the message, which can be yellow, red, green, purple, gray, or random. Default value: yellow</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3196', 3196)" onmouseover="showTip(event, '3196', 3196)">
+          <code onmouseout="hideTip(event, '3161', 3161)" onmouseover="showTip(event, '3161', 3161)">
             From
           </code>
-          <div class="tip" id="3196">
+          <div class="tip" id="3161">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) Name the message will appear to be sent from</p>
+                    <p>(Required) Name the message will appear to be sent from</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3197', 3197)" onmouseover="showTip(event, '3197', 3197)">
+          <code onmouseout="hideTip(event, '3162', 3162)" onmouseover="showTip(event, '3162', 3162)">
             Message
           </code>
-          <div class="tip" id="3197">
+          <div class="tip" id="3162">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) The message body</p>
+                    <p>(Required) The message body</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3198', 3198)" onmouseover="showTip(event, '3198', 3198)">
+          <code onmouseout="hideTip(event, '3163', 3163)" onmouseover="showTip(event, '3163', 3163)">
             MessageFormat
           </code>
-          <div class="tip" id="3198">
+          <div class="tip" id="3163">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The message format, which can either be text or html. Default value: text</p>
+                    <p>The message format, which can either be text or html. Default value: text</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3199', 3199)" onmouseover="showTip(event, '3199', 3199)">
+          <code onmouseout="hideTip(event, '3164', 3164)" onmouseover="showTip(event, '3164', 3164)">
             Notify
           </code>
-          <div class="tip" id="3199">
+          <div class="tip" id="3164">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Whether or not this message should trigger a notification for people in the room. Default value: false</p>
+                    <p>Whether or not this message should trigger a notification for people in the room. Default value: false</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3200', 3200)" onmouseover="showTip(event, '3200', 3200)">
+          <code onmouseout="hideTip(event, '3165', 3165)" onmouseover="showTip(event, '3165', 3165)">
             RoomId
           </code>
-          <div class="tip" id="3200">
+          <div class="tip" id="3165">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/HipChatNotificationHelper.fs#L16-16" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required) ID or name of the room to send the notification to</p>
+                    <p>(Required) ID or name of the room to send the notification to</p>
 
 
         </td>
@@ -491,7 +474,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

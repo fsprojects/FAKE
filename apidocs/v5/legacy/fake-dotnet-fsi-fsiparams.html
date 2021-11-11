@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,684 +324,570 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5467', 5467)" onmouseover="showTip(event, '5467', 5467)">
+          <code onmouseout="hideTip(event, '5411', 5411)" onmouseover="showTip(event, '5411', 5411)">
             Checked
           </code>
-          <div class="tip" id="5467">
+          <div class="tip" id="5411">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L77-77" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generate overflow checks</p>
+                    <p>Generate overflow checks</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5468', 5468)" onmouseover="showTip(event, '5468', 5468)">
+          <code onmouseout="hideTip(event, '5412', 5412)" onmouseover="showTip(event, '5412', 5412)">
             Codepage
           </code>
-          <div class="tip" id="5468">
+          <div class="tip" id="5412">
             <strong>Signature:</strong> int option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the codepage used to read source files</p>
+                    <p>Specify the codepage used to read source files</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5469', 5469)" onmouseover="showTip(event, '5469', 5469)">
+          <code onmouseout="hideTip(event, '5413', 5413)" onmouseover="showTip(event, '5413', 5413)">
             ConsoleColors
           </code>
-          <div class="tip" id="5469">
+          <div class="tip" id="5413">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L73-73" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output warning and error messages in color</p>
+                    <p>Output warning and error messages in color</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5470', 5470)" onmouseover="showTip(event, '5470', 5470)">
+          <code onmouseout="hideTip(event, '5414', 5414)" onmouseover="showTip(event, '5414', 5414)">
             CrossOptimize
           </code>
-          <div class="tip" id="5470">
+          <div class="tip" id="5414">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L59-59" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enable or disable cross-module optimizations</p>
+                    <p>Enable or disable cross-module optimizations</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5471', 5471)" onmouseover="showTip(event, '5471', 5471)">
+          <code onmouseout="hideTip(event, '5415', 5415)" onmouseover="showTip(event, '5415', 5415)">
             Debug
           </code>
-          <div class="tip" id="5471">
+          <div class="tip" id="5415">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Emit debug information (Short form: -g)</p>
+                    <p>Emit debug information (Short form: -g)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5472', 5472)" onmouseover="showTip(event, '5472', 5472)">
+          <code onmouseout="hideTip(event, '5416', 5416)" onmouseover="showTip(event, '5416', 5416)">
             DebugType
           </code>
-          <div class="tip" id="5472">
+          <div class="tip" id="5416">
             <strong>Signature:</strong> DebugTypes<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify debugging type: full, portable, embedded, pdbonly. PdbOnly is the default</p>
+                    <p>Specify debugging type: full, portable, embedded, pdbonly. PdbOnly is the default</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5473', 5473)" onmouseover="showTip(event, '5473', 5473)">
+          <code onmouseout="hideTip(event, '5417', 5417)" onmouseover="showTip(event, '5417', 5417)">
             Define
           </code>
-          <div class="tip" id="5473">
+          <div class="tip" id="5417">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Obsolete) Define a conditional compilation symbol (use FsiParams.Definitions instead)</p>
+                    <p>(Obsolete) Define a conditional compilation symbol (use FsiParams.Definitions instead)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5474', 5474)" onmouseover="showTip(event, '5474', 5474)">
+          <code onmouseout="hideTip(event, '5418', 5418)" onmouseover="showTip(event, '5418', 5418)">
             Definitions
           </code>
-          <div class="tip" id="5474">
+          <div class="tip" id="5418">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Define a list of conditional compilation symbols</p>
+                    <p>Define a list of conditional compilation symbols</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5475', 5475)" onmouseover="showTip(event, '5475', 5475)">
+          <code onmouseout="hideTip(event, '5419', 5419)" onmouseover="showTip(event, '5419', 5419)">
             Deterministic
           </code>
-          <div class="tip" id="5475">
+          <div class="tip" id="5419">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Produce a deterministic assembly (including module version GUID and timestamp)</p>
+                    <p>Produce a deterministic assembly (including module version GUID and timestamp)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5476', 5476)" onmouseover="showTip(event, '5476', 5476)">
+          <code onmouseout="hideTip(event, '5420', 5420)" onmouseover="showTip(event, '5420', 5420)">
             Environment
           </code>
-          <div class="tip" id="5476">
+          <div class="tip" id="5420">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Environment variables</p>
+                    <p>Environment variables</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5477', 5477)" onmouseover="showTip(event, '5477', 5477)">
+          <code onmouseout="hideTip(event, '5421', 5421)" onmouseover="showTip(event, '5421', 5421)">
             Exec
           </code>
-          <div class="tip" id="5477">
+          <div class="tip" id="5421">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Exit fsi after loading the files or running the .fsx script given on the command line</p>
+                    <p>Exit fsi after loading the files or running the .fsx script given on the command line</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5478', 5478)" onmouseover="showTip(event, '5478', 5478)">
+          <code onmouseout="hideTip(event, '5422', 5422)" onmouseover="showTip(event, '5422', 5422)">
             FullPaths
           </code>
-          <div class="tip" id="5478">
+          <div class="tip" id="5422">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output messages with fully qualified paths</p>
+                    <p>Output messages with fully qualified paths</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5479', 5479)" onmouseover="showTip(event, '5479', 5479)">
+          <code onmouseout="hideTip(event, '5423', 5423)" onmouseover="showTip(event, '5423', 5423)">
             GUI
           </code>
-          <div class="tip" id="5479">
+          <div class="tip" id="5423">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute interactions on a Windows Forms event loop (on by default)</p>
+                    <p>Execute interactions on a Windows Forms event loop (on by default)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5480', 5480)" onmouseover="showTip(event, '5480', 5480)">
+          <code onmouseout="hideTip(event, '5424', 5424)" onmouseover="showTip(event, '5424', 5424)">
             Help
           </code>
-          <div class="tip" id="5480">
+          <div class="tip" id="5424">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Display the commandline flags and their usage</p>
+                    <p>Display the commandline flags and their usage</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5481', 5481)" onmouseover="showTip(event, '5481', 5481)">
+          <code onmouseout="hideTip(event, '5425', 5425)" onmouseover="showTip(event, '5425', 5425)">
             Lib
           </code>
-          <div class="tip" id="5481">
+          <div class="tip" id="5425">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify a directory for the include path which is used to resolve source files and assemblies (Short form: -I)</p>
+                    <p>Specify a directory for the include path which is used to resolve source files and assemblies (Short form: -I)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5482', 5482)" onmouseover="showTip(event, '5482', 5482)">
+          <code onmouseout="hideTip(event, '5426', 5426)" onmouseover="showTip(event, '5426', 5426)">
             Load
           </code>
-          <div class="tip" id="5482">
+          <div class="tip" id="5426">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Load the given file on startup</p>
+                    <p>Load the given file on startup</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5483', 5483)" onmouseover="showTip(event, '5483', 5483)">
+          <code onmouseout="hideTip(event, '5427', 5427)" onmouseover="showTip(event, '5427', 5427)">
             MLCompatibility
           </code>
-          <div class="tip" id="5483">
+          <div class="tip" id="5427">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L83-83" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ignore ML compatibility warnings</p>
+                    <p>Ignore ML compatibility warnings</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5484', 5484)" onmouseover="showTip(event, '5484', 5484)">
+          <code onmouseout="hideTip(event, '5428', 5428)" onmouseover="showTip(event, '5428', 5428)">
             NoFramework
           </code>
-          <div class="tip" id="5484">
+          <div class="tip" id="5428">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Do not reference the default CLI assemblies by default</p>
+                    <p>Do not reference the default CLI assemblies by default</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5485', 5485)" onmouseover="showTip(event, '5485', 5485)">
+          <code onmouseout="hideTip(event, '5429', 5429)" onmouseover="showTip(event, '5429', 5429)">
             NoLogo
           </code>
-          <div class="tip" id="5485">
+          <div class="tip" id="5429">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress compiler copyright message</p>
+                    <p>Suppress compiler copyright message</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5486', 5486)" onmouseover="showTip(event, '5486', 5486)">
+          <code onmouseout="hideTip(event, '5430', 5430)" onmouseover="showTip(event, '5430', 5430)">
             NoWarn
           </code>
-          <div class="tip" id="5486">
+          <div class="tip" id="5430">
             <strong>Signature:</strong> int list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Disable specific warning messages</p>
+                    <p>Disable specific warning messages</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5487', 5487)" onmouseover="showTip(event, '5487', 5487)">
+          <code onmouseout="hideTip(event, '5431', 5431)" onmouseover="showTip(event, '5431', 5431)">
             Optimize
           </code>
-          <div class="tip" id="5487">
+          <div class="tip" id="5431">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enable optimizations (Short form: -O)</p>
+                    <p>Enable optimizations (Short form: -O)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5488', 5488)" onmouseover="showTip(event, '5488', 5488)">
+          <code onmouseout="hideTip(event, '5432', 5432)" onmouseover="showTip(event, '5432', 5432)">
             PreferredUiLang
           </code>
-          <div class="tip" id="5488">
+          <div class="tip" id="5432">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L97-97" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the preferred output language culture name (e.g. es-ES, ja-JP)</p>
+                    <p>Specify the preferred output language culture name (e.g. es-ES, ja-JP)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5489', 5489)" onmouseover="showTip(event, '5489', 5489)">
+          <code onmouseout="hideTip(event, '5433', 5433)" onmouseover="showTip(event, '5433', 5433)">
             Quiet
           </code>
-          <div class="tip" id="5489">
+          <div class="tip" id="5433">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Suppress fsi writing to stdout</p>
+                    <p>Suppress fsi writing to stdout</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5490', 5490)" onmouseover="showTip(event, '5490', 5490)">
+          <code onmouseout="hideTip(event, '5434', 5434)" onmouseover="showTip(event, '5434', 5434)">
             QuotationsDebug
           </code>
-          <div class="tip" id="5490">
+          <div class="tip" id="5434">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L117-117" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Emit debug information in quotations</p>
+                    <p>Emit debug information in quotations</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5491', 5491)" onmouseover="showTip(event, '5491', 5491)">
+          <code onmouseout="hideTip(event, '5435', 5435)" onmouseover="showTip(event, '5435', 5435)">
             ReadLine
           </code>
-          <div class="tip" id="5491">
+          <div class="tip" id="5435">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L115-115" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Support TAB completion in console (on by default)</p>
+                    <p>Support TAB completion in console (on by default)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5492', 5492)" onmouseover="showTip(event, '5492', 5492)">
+          <code onmouseout="hideTip(event, '5436', 5436)" onmouseover="showTip(event, '5436', 5436)">
             Reference
           </code>
-          <div class="tip" id="5492">
+          <div class="tip" id="5436">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reference an assembly (Short form: -r)</p>
+                    <p>Reference an assembly (Short form: -r)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5493', 5493)" onmouseover="showTip(event, '5493', 5493)">
+          <code onmouseout="hideTip(event, '5437', 5437)" onmouseover="showTip(event, '5437', 5437)">
             ShadowCopyReferences
           </code>
-          <div class="tip" id="5493">
+          <div class="tip" id="5437">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Prevents references from being locked by the F# Interactive process</p>
+                    <p>Prevents references from being locked by the F# Interactive process</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5494', 5494)" onmouseover="showTip(event, '5494', 5494)">
+          <code onmouseout="hideTip(event, '5438', 5438)" onmouseover="showTip(event, '5438', 5438)">
             SimpleResolution
           </code>
-          <div class="tip" id="5494">
+          <div class="tip" id="5438">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Resolve assembly references using directory-based rules rather than MSBuild resolution</p>
+                    <p>Resolve assembly references using directory-based rules rather than MSBuild resolution</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5495', 5495)" onmouseover="showTip(event, '5495', 5495)">
+          <code onmouseout="hideTip(event, '5439', 5439)" onmouseover="showTip(event, '5439', 5439)">
             TailCalls
           </code>
-          <div class="tip" id="5495">
+          <div class="tip" id="5439">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enable or disable tailcalls</p>
+                    <p>Enable or disable tailcalls</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5496', 5496)" onmouseover="showTip(event, '5496', 5496)">
+          <code onmouseout="hideTip(event, '5440', 5440)" onmouseover="showTip(event, '5440', 5440)">
             TargetProfile
           </code>
-          <div class="tip" id="5496">
+          <div class="tip" id="5440">
             <strong>Signature:</strong> Profile<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify target framework profile of this assembly. Valid values are mscorlib, netcore or netstandard. Default - mscorlib</p>
+                    <p>Specify target framework profile of this assembly. Valid values are mscorlib, netcore or netstandard. Default - mscorlib</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5497', 5497)" onmouseover="showTip(event, '5497', 5497)">
+          <code onmouseout="hideTip(event, '5441', 5441)" onmouseover="showTip(event, '5441', 5441)">
             ToolPath
           </code>
-          <div class="tip" id="5497">
+          <div class="tip" id="5441">
             <strong>Signature:</strong> FsiTool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the path to the fsharpi / fsi.exe to use</p>
+                    <p>Sets the path to the fsharpi / fsi.exe to use</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5498', 5498)" onmouseover="showTip(event, '5498', 5498)">
+          <code onmouseout="hideTip(event, '5442', 5442)" onmouseover="showTip(event, '5442', 5442)">
             Use
           </code>
-          <div class="tip" id="5498">
+          <div class="tip" id="5442">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use the given file on startup as initial input</p>
+                    <p>Use the given file on startup as initial input</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5499', 5499)" onmouseover="showTip(event, '5499', 5499)">
+          <code onmouseout="hideTip(event, '5443', 5443)" onmouseover="showTip(event, '5443', 5443)">
             Utf8Output
           </code>
-          <div class="tip" id="5499">
+          <div class="tip" id="5443">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L95-95" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output messages in UTF-8 encoding</p>
+                    <p>Output messages in UTF-8 encoding</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5500', 5500)" onmouseover="showTip(event, '5500', 5500)">
+          <code onmouseout="hideTip(event, '5444', 5444)" onmouseover="showTip(event, '5444', 5444)">
             Warn
           </code>
-          <div class="tip" id="5500">
+          <div class="tip" id="5444">
             <strong>Signature:</strong> int option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L67-67" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set a warning level (0-5)</p>
+                    <p>Set a warning level (0-5)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5501', 5501)" onmouseover="showTip(event, '5501', 5501)">
+          <code onmouseout="hideTip(event, '5445', 5445)" onmouseover="showTip(event, '5445', 5445)">
             WarnAsError
           </code>
-          <div class="tip" id="5501">
+          <div class="tip" id="5445">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Report all warnings as errors</p>
+                    <p>Report all warnings as errors</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5502', 5502)" onmouseover="showTip(event, '5502', 5502)">
+          <code onmouseout="hideTip(event, '5446', 5446)" onmouseover="showTip(event, '5446', 5446)">
             WarnAsErrors
           </code>
-          <div class="tip" id="5502">
+          <div class="tip" id="5446">
             <strong>Signature:</strong> bool * int list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Report specific warnings as errors</p>
+                    <p>Report specific warnings as errors</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5503', 5503)" onmouseover="showTip(event, '5503', 5503)">
+          <code onmouseout="hideTip(event, '5447', 5447)" onmouseover="showTip(event, '5447', 5447)">
             WarnOn
           </code>
-          <div class="tip" id="5503">
+          <div class="tip" id="5447">
             <strong>Signature:</strong> int list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enable specific warnings that may be off by default</p>
+                    <p>Enable specific warnings that may be off by default</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5504', 5504)" onmouseover="showTip(event, '5504', 5504)">
+          <code onmouseout="hideTip(event, '5448', 5448)" onmouseover="showTip(event, '5448', 5448)">
             WorkingDirectory
           </code>
-          <div class="tip" id="5504">
+          <div class="tip" id="5448">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L126-126" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").</p>
+                    <p>When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").</p>
 
 
         </td>
@@ -1012,18 +902,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5505', 5505)" onmouseover="showTip(event, '5505', 5505)">
+          <code onmouseout="hideTip(event, '5449', 5449)" onmouseover="showTip(event, '5449', 5449)">
             x.WithEnvironment(map)
           </code>
-          <div class="tip" id="5505">
+          <div class="tip" id="5449">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; FsiParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the current environment variables.</p>
+                    <p>Sets the current environment variables.</p>
 
 
         </td>
@@ -1038,34 +925,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5506', 5506)" onmouseover="showTip(event, '5506', 5506)">
+          <code onmouseout="hideTip(event, '5450', 5450)" onmouseover="showTip(event, '5450', 5450)">
             FsiParams.Create()
           </code>
-          <div class="tip" id="5506">
+          <div class="tip" id="5450">
             <strong>Signature:</strong> unit -&gt; FsiParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L204-204" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5507', 5507)" onmouseover="showTip(event, '5507', 5507)">
+          <code onmouseout="hideTip(event, '5451', 5451)" onmouseover="showTip(event, '5451', 5451)">
             FsiParams.ToArgsList(p)
           </code>
-          <div class="tip" id="5507">
+          <div class="tip" id="5451">
             <strong>Signature:</strong> p:FsiParams -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Fsi/Fsi.fs#L132-132" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -1107,7 +988,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -334,10 +338,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L173-173" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append all arguments after the current arguments</p>
+                    <p>Append all arguments after the current arguments</p>
 
 
         </td>
@@ -352,10 +353,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L220-220" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument to a command line if a condition is true.</p>
+                    <p>Append an argument to a command line if a condition is true.</p>
 
 
         </td>
@@ -370,10 +368,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L225-225" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument prefixed by another if the value is not null or empty</p>
+                    <p>Append an argument prefixed by another if the value is not null or empty</p>
 
 
         </td>
@@ -388,10 +383,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L214-214" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument prefixed by another if the value is Some.</p>
+                    <p>Append an argument prefixed by another if the value is Some.</p>
 
 
         </td>
@@ -399,19 +391,14 @@
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1186', 1186)" onmouseover="showTip(event, '1186', 1186)">
-            appendRaw s a
+            ofList(a)
           </code>
           <div class="tip" id="1186">
-            <strong>Signature:</strong> s:string -&gt; a:Arguments -&gt; Arguments<br />
+            <strong>Signature:</strong> a:string list -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L179-179" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends the given raw argument to the command line, you can not use other methods for this to work
-This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
-"raw" methods are not compatible with non-raw methods.</p>
+                    <p>Create a arguments instance from a list.</p>
 
 
         </td>
@@ -419,20 +406,14 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1187', 1187)" onmouseover="showTip(event, '1187', 1187)">
-            appendRawEscaped argPrefix paramValue a
+            toArray(a)
           </code>
           <div class="tip" id="1187">
-            <strong>Signature:</strong> argPrefix:string -&gt; paramValue:string -&gt; a:Arguments -&gt; Arguments<br />
+            <strong>Signature:</strong> a:Arguments -&gt; string []<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L188-188" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends the given raw argument to the command line, you can not use other methods for this to work
-This allows unusal quoting with the given prefix, like /k:"myarg" ("/k:" would be the argPrefix)
-This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
-"raw" methods are not compatible with non-raw methods.</p>
+                    <p>Convert the arguments instance to a string array</p>
 
 
         </td>
@@ -440,19 +421,14 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1188', 1188)" onmouseover="showTip(event, '1188', 1188)">
-            appendRawEscapedIf(...)
+            toLinuxShellCommandLine(a)
           </code>
           <div class="tip" id="1188">
-            <strong>Signature:</strong> b:bool -&gt; argPrefix:string -&gt; paramValue:string -&gt; a:Arguments -&gt; Arguments<br />
+            <strong>Signature:</strong> a:Arguments -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L196-196" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument prefixed by another if the value is Some.
-This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
-"raw" methods are not compatible with non-raw methods.</p>
+                    <p>Escape the given argument list according to a unix shell (bash)</p>
 
 
         </td>
@@ -460,19 +436,14 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1189', 1189)" onmouseover="showTip(event, '1189', 1189)">
-            appendRawEscapedNotEmpty(...)
+            toList(a)
           </code>
           <div class="tip" id="1189">
-            <strong>Signature:</strong> argPrefix:string -&gt; paramValue:string -&gt; a:Arguments -&gt; Arguments<br />
+            <strong>Signature:</strong> a:Arguments -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L210-210" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument prefixed by another if the value is Some.
-This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
-"raw" methods are not compatible with non-raw methods.</p>
+                    <p>Convert the arguments instance to a string list</p>
 
 
         </td>
@@ -480,109 +451,14 @@ This method is only required if you NEED quotes WITHIN your argument (some old M
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '1190', 1190)" onmouseover="showTip(event, '1190', 1190)">
-            appendRawEscapedOption(...)
-          </code>
-          <div class="tip" id="1190">
-            <strong>Signature:</strong> argPrefix:string -&gt; paramValue:string option -&gt; a:Arguments -&gt; Arguments<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L203-203" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append an argument prefixed by another if the value is Some.
-This method is only required if you NEED quotes WITHIN your argument (some old Microsoft Tools).
-"raw" methods are not compatible with non-raw methods.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1191', 1191)" onmouseover="showTip(event, '1191', 1191)">
-            ofList(a)
-          </code>
-          <div class="tip" id="1191">
-            <strong>Signature:</strong> a:string list -&gt; Arguments<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Create a arguments instance from a list.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1192', 1192)" onmouseover="showTip(event, '1192', 1192)">
-            toArray(a)
-          </code>
-          <div class="tip" id="1192">
-            <strong>Signature:</strong> a:Arguments -&gt; string []<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L234-234" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Convert the arguments instance to a string array</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1193', 1193)" onmouseover="showTip(event, '1193', 1193)">
-            toLinuxShellCommandLine(a)
-          </code>
-          <div class="tip" id="1193">
-            <strong>Signature:</strong> a:Arguments -&gt; string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Escape the given argument list according to a unix shell (bash)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1194', 1194)" onmouseover="showTip(event, '1194', 1194)">
-            toList(a)
-          </code>
-          <div class="tip" id="1194">
-            <strong>Signature:</strong> a:Arguments -&gt; string list<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Convert the arguments instance to a string list</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '1195', 1195)" onmouseover="showTip(event, '1195', 1195)">
             toStartInfo(a)
           </code>
-          <div class="tip" id="1195">
+          <div class="tip" id="1190">
             <strong>Signature:</strong> a:Arguments -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L167-167" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Create a new command line string which can be used in a ProcessStartInfo object.
+                    <p>Create a new command line string which can be used in a ProcessStartInfo object.
 If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise <code>ToWindowsCommandLine</code> (with some special code for <code>mono</code>) is used.</p>
 
 
@@ -590,36 +466,30 @@ If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1196', 1196)" onmouseover="showTip(event, '1196', 1196)">
+          <code onmouseout="hideTip(event, '1191', 1191)" onmouseover="showTip(event, '1191', 1191)">
             toWindowsCommandLine(a)
           </code>
-          <div class="tip" id="1196">
+          <div class="tip" id="1191">
             <strong>Signature:</strong> a:Arguments -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L162-162" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This is the reverse of <a href="https://msdn.microsoft.com/en-us/library/17w5ykft.aspx">https://msdn.microsoft.com/en-us/library/17w5ykft.aspx</a></p>
+                    <p>This is the reverse of <a href="https://msdn.microsoft.com/en-us/library/17w5ykft.aspx">https://msdn.microsoft.com/en-us/library/17w5ykft.aspx</a></p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1197', 1197)" onmouseover="showTip(event, '1197', 1197)">
+          <code onmouseout="hideTip(event, '1192', 1192)" onmouseover="showTip(event, '1192', 1192)">
             withPrefix s a
           </code>
-          <div class="tip" id="1197">
+          <div class="tip" id="1192">
             <strong>Signature:</strong> s:seq&lt;string&gt; -&gt; a:Arguments -&gt; Arguments<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L170-170" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Append the given arguments before all current arguments</p>
+                    <p>Append the given arguments before all current arguments</p>
 
 
         </td>
@@ -663,7 +533,7 @@ If given, returns the exact input of <code>OfWindowsCommandLine</code> otherwise
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

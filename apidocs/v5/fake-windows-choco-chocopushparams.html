@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4032', 4032)" onmouseover="showTip(event, '4032', 4032)">
+          <code onmouseout="hideTip(event, '4121', 4121)" onmouseover="showTip(event, '4121', 4121)">
             AdditionalArgs
           </code>
-          <div class="tip" id="4032">
+          <div class="tip" id="4121">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L213-213" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L213-213" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A character string containing additional arguments to give to choco.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4033', 4033)" onmouseover="showTip(event, '4033', 4033)">
+          <code onmouseout="hideTip(event, '4122', 4122)" onmouseover="showTip(event, '4122', 4122)">
             ApiKey
           </code>
-          <div class="tip" id="4033">
+          <div class="tip" id="4122">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L207-207" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L207-207" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The api key for the source. If not specified (and not local file source), does a lookup.
@@ -357,15 +361,15 @@ Equivalent to the <code>--apikey &lt;apikey&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4034', 4034)" onmouseover="showTip(event, '4034', 4034)">
+          <code onmouseout="hideTip(event, '4123', 4123)" onmouseover="showTip(event, '4123', 4123)">
             Force
           </code>
-          <div class="tip" id="4034">
+          <div class="tip" id="4123">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L221-221" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L221-221" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Force - force the behavior. Do not use force during normal operation -
@@ -378,15 +382,15 @@ Equivalent to the <code>--force</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4035', 4035)" onmouseover="showTip(event, '4035', 4035)">
+          <code onmouseout="hideTip(event, '4124', 4124)" onmouseover="showTip(event, '4124', 4124)">
             NonInteractive
           </code>
-          <div class="tip" id="4035">
+          <div class="tip" id="4124">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L216-216" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L216-216" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Do not prompt for user input or confirmations. Default <code>true</code>.
@@ -397,15 +401,15 @@ Equivalent to the <code>-y</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4036', 4036)" onmouseover="showTip(event, '4036', 4036)">
+          <code onmouseout="hideTip(event, '4125', 4125)" onmouseover="showTip(event, '4125', 4125)">
             Source
           </code>
-          <div class="tip" id="4036">
+          <div class="tip" id="4125">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L203-203" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The source we are pushing the package to. Default: "<a href="https://chocolatey.org/"
@@ -417,15 +421,15 @@ Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4037', 4037)" onmouseover="showTip(event, '4037', 4037)">
+          <code onmouseout="hideTip(event, '4126', 4126)" onmouseover="showTip(event, '4126', 4126)">
             Timeout
           </code>
-          <div class="tip" id="4037">
+          <div class="tip" id="4126">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L209-209" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L209-209" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The choco execution timeout.</p>
@@ -435,15 +439,15 @@ Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4038', 4038)" onmouseover="showTip(event, '4038', 4038)">
+          <code onmouseout="hideTip(event, '4127', 4127)" onmouseover="showTip(event, '4127', 4127)">
             ToolPath
           </code>
-          <div class="tip" id="4038">
+          <div class="tip" id="4127">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L211-211" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The location of the choco executable. Automatically found if null or empty.</p>
@@ -491,7 +495,7 @@ Equivalent</a> to the <code>--source &lt;source&gt;</code> option.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

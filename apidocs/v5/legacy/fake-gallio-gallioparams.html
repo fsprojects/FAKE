@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,18 +330,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2531', 2531)" onmouseover="showTip(event, '2531', 2531)">
+          <code onmouseout="hideTip(event, '2496', 2496)" onmouseover="showTip(event, '2496', 2496)">
             ApplicationBaseDirectory
           </code>
-          <div class="tip" id="2531">
+          <div class="tip" id="2496">
             <strong>Signature:</strong> DirectoryInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets or sets the relative or absolute path of the application base directory,
+                    <p>Gets or sets the relative or absolute path of the application base directory,
 or null to use a default value selected by the consumer.</p>
 
 
@@ -345,160 +346,133 @@ or null to use a default value selected by the consumer.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2532', 2532)" onmouseover="showTip(event, '2532', 2532)">
+          <code onmouseout="hideTip(event, '2497', 2497)" onmouseover="showTip(event, '2497', 2497)">
             Debug
           </code>
-          <div class="tip" id="2532">
+          <div class="tip" id="2497">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Attaches the debugger to the test process when set to true.</p>
+                    <p>Attaches the debugger to the test process when set to true.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2533', 2533)" onmouseover="showTip(event, '2533', 2533)">
+          <code onmouseout="hideTip(event, '2498', 2498)" onmouseover="showTip(event, '2498', 2498)">
             DoNotRun
           </code>
-          <div class="tip" id="2533">
+          <div class="tip" id="2498">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets whether to load the tests but not run them.</p>
+                    <p>Sets whether to load the tests but not run them.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2534', 2534)" onmouseover="showTip(event, '2534', 2534)">
+          <code onmouseout="hideTip(event, '2499', 2499)" onmouseover="showTip(event, '2499', 2499)">
             EchoResults
           </code>
-          <div class="tip" id="2534">
+          <div class="tip" id="2499">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets whether to echo results to the screen as tests finish.</p>
+                    <p>Sets whether to echo results to the screen as tests finish.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2535', 2535)" onmouseover="showTip(event, '2535', 2535)">
+          <code onmouseout="hideTip(event, '2500', 2500)" onmouseover="showTip(event, '2500', 2500)">
             Filters
           </code>
-          <div class="tip" id="2535">
+          <div class="tip" id="2500">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Test filters (i.e. exclusion rules)</p>
+                    <p>Test filters (i.e. exclusion rules)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2536', 2536)" onmouseover="showTip(event, '2536', 2536)">
+          <code onmouseout="hideTip(event, '2501', 2501)" onmouseover="showTip(event, '2501', 2501)">
             HintDirectories
           </code>
-          <div class="tip" id="2536">
+          <div class="tip" id="2501">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The list of directories used for loading referenced assemblies and other dependent resources.</p>
+                    <p>The list of directories used for loading referenced assemblies and other dependent resources.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2537', 2537)" onmouseover="showTip(event, '2537', 2537)">
+          <code onmouseout="hideTip(event, '2502', 2502)" onmouseover="showTip(event, '2502', 2502)">
             IgnoreAnnotations
           </code>
-          <div class="tip" id="2537">
+          <div class="tip" id="2502">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets whether to ignore annotations when determining the result code.</p>
+                    <p>Sets whether to ignore annotations when determining the result code.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2538', 2538)" onmouseover="showTip(event, '2538', 2538)">
+          <code onmouseout="hideTip(event, '2503', 2503)" onmouseover="showTip(event, '2503', 2503)">
             PluginDirectories
           </code>
-          <div class="tip" id="2538">
+          <div class="tip" id="2503">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Additional Gallio plugin directories to search recursively.</p>
+                    <p>Additional Gallio plugin directories to search recursively.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2539', 2539)" onmouseover="showTip(event, '2539', 2539)">
+          <code onmouseout="hideTip(event, '2504', 2504)" onmouseover="showTip(event, '2504', 2504)">
             ReportArchive
           </code>
-          <div class="tip" id="2539">
+          <div class="tip" id="2504">
             <strong>Signature:</strong> ReportArchiveMode option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2540', 2540)" onmouseover="showTip(event, '2540', 2540)">
+          <code onmouseout="hideTip(event, '2505', 2505)" onmouseover="showTip(event, '2505', 2505)">
             ReportDirectory
           </code>
-          <div class="tip" id="2540">
+          <div class="tip" id="2505">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the name of the directory where the reports will be put.
+                    <p>Sets the name of the directory where the reports will be put.
 The directory will be created if it doesn't exist. Existing files will be overwritten.
 The default report directory is "Reports".</p>
 
@@ -507,36 +481,30 @@ The default report directory is "Reports".</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2541', 2541)" onmouseover="showTip(event, '2541', 2541)">
+          <code onmouseout="hideTip(event, '2506', 2506)" onmouseover="showTip(event, '2506', 2506)">
             ReportFormatterOptions
           </code>
-          <div class="tip" id="2541">
+          <div class="tip" id="2506">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies option property key/value pairs for the report formatter</p>
+                    <p>Specifies option property key/value pairs for the report formatter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2542', 2542)" onmouseover="showTip(event, '2542', 2542)">
+          <code onmouseout="hideTip(event, '2507', 2507)" onmouseover="showTip(event, '2507', 2507)">
             ReportNameFormat
           </code>
-          <div class="tip" id="2542">
+          <div class="tip" id="2507">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the format string to use to generate the reports filenames.
+                    <p>Sets the format string to use to generate the reports filenames.
 Any occurence of {0} will be replaced by the date, and any occurrence of {1} by the time.
 The default format string is test-report-{0}-{1}.</p>
 
@@ -545,18 +513,15 @@ The default format string is test-report-{0}-{1}.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2543', 2543)" onmouseover="showTip(event, '2543', 2543)">
+          <code onmouseout="hideTip(event, '2508', 2508)" onmouseover="showTip(event, '2508', 2508)">
             RunnerExtensions
           </code>
-          <div class="tip" id="2543">
+          <div class="tip" id="2508">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the type, assembly, and parameters of custom test runner
+                    <p>Specifies the type, assembly, and parameters of custom test runner
 extensions to use during the test run.
 The value must be in the form '[Namespace.]Type,Assembly[;Parameters]'</p>
 
@@ -565,18 +530,15 @@ The value must be in the form '[Namespace.]Type,Assembly[;Parameters]'</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2544', 2544)" onmouseover="showTip(event, '2544', 2544)">
+          <code onmouseout="hideTip(event, '2509', 2509)" onmouseover="showTip(event, '2509', 2509)">
             RunnerType
           </code>
-          <div class="tip" id="2544">
+          <div class="tip" id="2509">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The types supported "out of the box" are: Local, IsolatedAppDomain
+                    <p>The types supported "out of the box" are: Local, IsolatedAppDomain
 and IsolatedProcess (default), but more types could be available as plugins.</p>
 
 
@@ -584,18 +546,15 @@ and IsolatedProcess (default), but more types could be available as plugins.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2545', 2545)" onmouseover="showTip(event, '2545', 2545)">
+          <code onmouseout="hideTip(event, '2510', 2510)" onmouseover="showTip(event, '2510', 2510)">
             RunTimeLimit
           </code>
-          <div class="tip" id="2545">
+          <div class="tip" id="2510">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the maximum amount of time (in seconds) the tests can run
+                    <p>Sets the maximum amount of time (in seconds) the tests can run
 before they are canceled.</p>
 
 
@@ -603,18 +562,15 @@ before they are canceled.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2546', 2546)" onmouseover="showTip(event, '2546', 2546)">
+          <code onmouseout="hideTip(event, '2511', 2511)" onmouseover="showTip(event, '2511', 2511)">
             RuntimeVersion
           </code>
-          <div class="tip" id="2546">
+          <div class="tip" id="2511">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets or sets the version of the .Net runtime to use for running tests.
+                    <p>Gets or sets the version of the .Net runtime to use for running tests.
 For the CLR, this must be the name of one of the framework directories in %SystemRoot%\Microsoft.Net\Framework.  eg. 'v2.0.50727'.
 The default is null which uses the most recent installed and supported framework.</p>
 
@@ -623,18 +579,15 @@ The default is null which uses the most recent installed and supported framework
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2547', 2547)" onmouseover="showTip(event, '2547', 2547)">
+          <code onmouseout="hideTip(event, '2512', 2512)" onmouseover="showTip(event, '2512', 2512)">
             ShadowCopy
           </code>
-          <div class="tip" id="2547">
+          <div class="tip" id="2512">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Shadow copying allows the original assemblies to be modified while the tests are running.
+                    <p>Shadow copying allows the original assemblies to be modified while the tests are running.
 However, shadow copying may occasionally cause some tests to fail if they depend on their original location.</p>
 
 
@@ -642,18 +595,15 @@ However, shadow copying may occasionally cause some tests to fail if they depend
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2548', 2548)" onmouseover="showTip(event, '2548', 2548)">
+          <code onmouseout="hideTip(event, '2513', 2513)" onmouseover="showTip(event, '2513', 2513)">
             ShowReports
           </code>
-          <div class="tip" id="2548">
+          <div class="tip" id="2513">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets whether to show generated reports in a window using the default system application
+                    <p>Sets whether to show generated reports in a window using the default system application
 registered to the report file type.</p>
 
 
@@ -661,84 +611,69 @@ registered to the report file type.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2549', 2549)" onmouseover="showTip(event, '2549', 2549)">
+          <code onmouseout="hideTip(event, '2514', 2514)" onmouseover="showTip(event, '2514', 2514)">
             TestExecutionOptions
           </code>
-          <div class="tip" id="2549">
+          <div class="tip" id="2514">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2550', 2550)" onmouseover="showTip(event, '2550', 2550)">
+          <code onmouseout="hideTip(event, '2515', 2515)" onmouseover="showTip(event, '2515', 2515)">
             TestExplorationOptions
           </code>
-          <div class="tip" id="2550">
+          <div class="tip" id="2515">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2551', 2551)" onmouseover="showTip(event, '2551', 2551)">
+          <code onmouseout="hideTip(event, '2516', 2516)" onmouseover="showTip(event, '2516', 2516)">
             TestRunnerOptions
           </code>
-          <div class="tip" id="2551">
+          <div class="tip" id="2516">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies option property key/value pairs for the test runner.</p>
+                    <p>Specifies option property key/value pairs for the test runner.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2552', 2552)" onmouseover="showTip(event, '2552', 2552)">
+          <code onmouseout="hideTip(event, '2517', 2517)" onmouseover="showTip(event, '2517', 2517)">
             Verbosity
           </code>
-          <div class="tip" id="2552">
+          <div class="tip" id="2517">
             <strong>Signature:</strong> Verbosity<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2553', 2553)" onmouseover="showTip(event, '2553', 2553)">
+          <code onmouseout="hideTip(event, '2518', 2518)" onmouseover="showTip(event, '2518', 2518)">
             WorkingDirectory
           </code>
-          <div class="tip" id="2553">
+          <div class="tip" id="2518">
             <strong>Signature:</strong> DirectoryInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.Gallio/GallioHelper.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets or sets the relative or absolute path of the working directory
+                    <p>Gets or sets the relative or absolute path of the working directory
 or null to use a default value selected by the consumer.</p>
 
 
@@ -783,7 +718,7 @@ or null to use a default value selected by the consumer.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

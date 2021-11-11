@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,18 +332,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4207', 4207)" onmouseover="showTip(event, '4207', 4207)">
+          <code onmouseout="hideTip(event, '4172', 4172)" onmouseover="showTip(event, '4172', 4172)">
             ForceCreateOnInstall
           </code>
-          <div class="tip" id="4207">
+          <div class="tip" id="4172">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L573-573" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set this attribute to 'yes' to create an empty key, if absent, when the parent component is installed
+                    <p>Set this attribute to 'yes' to create an empty key, if absent, when the parent component is installed
 This value is needed only to create an empty key with no subkeys or values.
 Windows Installer creates keys as needed to store subkeys and values. The default is "no"</p>
 
@@ -348,18 +349,15 @@ Windows Installer creates keys as needed to store subkeys and values. The defaul
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4208', 4208)" onmouseover="showTip(event, '4208', 4208)">
+          <code onmouseout="hideTip(event, '4173', 4173)" onmouseover="showTip(event, '4173', 4173)">
             ForceDeleteOnUninstall
           </code>
-          <div class="tip" id="4208">
+          <div class="tip" id="4173">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L577-577" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set this attribute to 'yes' to remove the key with all its values and subkeys when the parent component is uninstalled
+                    <p>Set this attribute to 'yes' to remove the key with all its values and subkeys when the parent component is uninstalled
 Note that this value is useful only if your program creates additional values or subkeys under this key and you want an uninstall to remove them
 MSI already removes all values and subkeys that it creates, so this option just adds additional overhead to uninstall. The default is "no"</p>
 
@@ -368,36 +366,30 @@ MSI already removes all values and subkeys that it creates, so this option just 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4209', 4209)" onmouseover="showTip(event, '4209', 4209)">
+          <code onmouseout="hideTip(event, '4174', 4174)" onmouseover="showTip(event, '4174', 4174)">
             Id
           </code>
-          <div class="tip" id="4209">
+          <div class="tip" id="4174">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L564-564" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Primary key used to identify this particular entry</p>
+                    <p>Primary key used to identify this particular entry</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4210', 4210)" onmouseover="showTip(event, '4210', 4210)">
+          <code onmouseout="hideTip(event, '4175', 4175)" onmouseover="showTip(event, '4175', 4175)">
             Key
           </code>
-          <div class="tip" id="4210">
+          <div class="tip" id="4175">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L569-569" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The localizable key for the registry value
+                    <p>The localizable key for the registry value
 If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent</p>
 
 
@@ -405,54 +397,45 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4211', 4211)" onmouseover="showTip(event, '4211', 4211)">
+          <code onmouseout="hideTip(event, '4176', 4176)" onmouseover="showTip(event, '4176', 4176)">
             Keys
           </code>
-          <div class="tip" id="4211">
+          <div class="tip" id="4176">
             <strong>Signature:</strong> seq&lt;WiXRegistryKey&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L579-579" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>You can nest child registry keys here</p>
+                    <p>You can nest child registry keys here</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4212', 4212)" onmouseover="showTip(event, '4212', 4212)">
+          <code onmouseout="hideTip(event, '4177', 4177)" onmouseover="showTip(event, '4177', 4177)">
             Root
           </code>
-          <div class="tip" id="4212">
+          <div class="tip" id="4177">
             <strong>Signature:</strong> Option&lt;WiXRegistryRootType&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L566-566" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The predefined root key for the registry value</p>
+                    <p>The predefined root key for the registry value</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4213', 4213)" onmouseover="showTip(event, '4213', 4213)">
+          <code onmouseout="hideTip(event, '4178', 4178)" onmouseover="showTip(event, '4178', 4178)">
             Values
           </code>
-          <div class="tip" id="4213">
+          <div class="tip" id="4178">
             <strong>Signature:</strong> seq&lt;WiXRegistryValue&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L581-581" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>You can nest child registry values here</p>
+                    <p>You can nest child registry values here</p>
 
 
         </td>
@@ -467,10 +450,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4214', 4214)" onmouseover="showTip(event, '4214', 4214)">
+          <code onmouseout="hideTip(event, '4179', 4179)" onmouseover="showTip(event, '4179', 4179)">
             x.createAttributeList()
           </code>
-          <div class="tip" id="4214">
+          <div class="tip" id="4179">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -483,10 +466,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey.createAttributeList)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L584-584" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -528,7 +508,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

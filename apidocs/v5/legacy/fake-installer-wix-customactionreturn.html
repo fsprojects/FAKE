@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,72 +326,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6219', 6219)" onmouseover="showTip(event, '6219', 6219)">
+          <code onmouseout="hideTip(event, '6123', 6123)" onmouseover="showTip(event, '6123', 6123)">
             AsyncNoWait
           </code>
-          <div class="tip" id="6219">
+          <div class="tip" id="6123">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1084-1084" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Indicates that the custom action will run asyncronously and execution may continue after the installer terminates.</p>
+                    <p>Indicates that the custom action will run asyncronously and execution may continue after the installer terminates.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6220', 6220)" onmouseover="showTip(event, '6220', 6220)">
+          <code onmouseout="hideTip(event, '6124', 6124)" onmouseover="showTip(event, '6124', 6124)">
             AsyncWait
           </code>
-          <div class="tip" id="6220">
+          <div class="tip" id="6124">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1086-1086" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end.</p>
+                    <p>Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6221', 6221)" onmouseover="showTip(event, '6221', 6221)">
+          <code onmouseout="hideTip(event, '6125', 6125)" onmouseover="showTip(event, '6125', 6125)">
             Check
           </code>
-          <div class="tip" id="6221">
+          <div class="tip" id="6125">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1088-1088" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Indicates that the custom action will run synchronously and the return code will be checked for success. This is the default.</p>
+                    <p>Indicates that the custom action will run synchronously and the return code will be checked for success. This is the default.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6222', 6222)" onmouseover="showTip(event, '6222', 6222)">
+          <code onmouseout="hideTip(event, '6126', 6126)" onmouseover="showTip(event, '6126', 6126)">
             Ignore
           </code>
-          <div class="tip" id="6222">
+          <div class="tip" id="6126">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1090-1090" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Indicates that the custom action will run synchronously and the return code will not be checked.</p>
+                    <p>Indicates that the custom action will run synchronously and the return code will not be checked.</p>
 
 
         </td>
@@ -431,7 +423,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

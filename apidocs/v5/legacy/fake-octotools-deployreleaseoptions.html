@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,18 +332,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3550', 3550)" onmouseover="showTip(event, '3550', 3550)">
+          <code onmouseout="hideTip(event, '3515', 3515)" onmouseover="showTip(event, '3515', 3515)">
             DeploymentCheckSleepCycle
           </code>
-          <div class="tip" id="3550">
+          <div class="tip" id="3515">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L83-83" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies how much time should elapse between deployment status
+                    <p>Specifies how much time should elapse between deployment status
 checks (default: 10 seconds)</p>
 
 
@@ -347,18 +348,15 @@ checks (default: 10 seconds)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3551', 3551)" onmouseover="showTip(event, '3551', 3551)">
+          <code onmouseout="hideTip(event, '3516', 3516)" onmouseover="showTip(event, '3516', 3516)">
             DeploymentTimeout
           </code>
-          <div class="tip" id="3551">
+          <div class="tip" id="3516">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies maximum time that deployment can take
+                    <p>Specifies maximum time that deployment can take
 (default: 10 minutes)</p>
 
 
@@ -366,36 +364,30 @@ checks (default: 10 seconds)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3552', 3552)" onmouseover="showTip(event, '3552', 3552)">
+          <code onmouseout="hideTip(event, '3517', 3517)" onmouseover="showTip(event, '3517', 3517)">
             DeployTo
           </code>
-          <div class="tip" id="3552">
+          <div class="tip" id="3517">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Environment to deploy to</p>
+                    <p>Environment to deploy to</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3553', 3553)" onmouseover="showTip(event, '3553', 3553)">
+          <code onmouseout="hideTip(event, '3518', 3518)" onmouseover="showTip(event, '3518', 3518)">
             Force
           </code>
-          <div class="tip" id="3553">
+          <div class="tip" id="3518">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L65-65" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If a project is configured to skip packages with already-installed
+                    <p>If a project is configured to skip packages with already-installed
 versions, override this setting to force re-deployment</p>
 
 
@@ -403,36 +395,30 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3554', 3554)" onmouseover="showTip(event, '3554', 3554)">
+          <code onmouseout="hideTip(event, '3519', 3519)" onmouseover="showTip(event, '3519', 3519)">
             NoRawLog
           </code>
-          <div class="tip" id="3554">
+          <div class="tip" id="3519">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Don't print the raw log of failed tasks</p>
+                    <p>Don't print the raw log of failed tasks</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3555', 3555)" onmouseover="showTip(event, '3555', 3555)">
+          <code onmouseout="hideTip(event, '3520', 3520)" onmouseover="showTip(event, '3520', 3520)">
             Progress
           </code>
-          <div class="tip" id="3555">
+          <div class="tip" id="3520">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Show progress of the deployment.
+                    <p>Show progress of the deployment.
 (Sets --waitfordeployment and --norawlog to true.)</p>
 
 
@@ -440,36 +426,30 @@ versions, override this setting to force re-deployment</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3556', 3556)" onmouseover="showTip(event, '3556', 3556)">
+          <code onmouseout="hideTip(event, '3521', 3521)" onmouseover="showTip(event, '3521', 3521)">
             Project
           </code>
-          <div class="tip" id="3556">
+          <div class="tip" id="3521">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Name of the project</p>
+                    <p>Name of the project</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3557', 3557)" onmouseover="showTip(event, '3557', 3557)">
+          <code onmouseout="hideTip(event, '3522', 3522)" onmouseover="showTip(event, '3522', 3522)">
             SpecificMachines
           </code>
-          <div class="tip" id="3557">
+          <div class="tip" id="3522">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A comma-separated list of machine names to target in the
+                    <p>A comma-separated list of machine names to target in the
 deployed environment. If not specified, all machines in
 the environment will be considered.</p>
 
@@ -478,18 +458,15 @@ the environment will be considered.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3558', 3558)" onmouseover="showTip(event, '3558', 3558)">
+          <code onmouseout="hideTip(event, '3523', 3523)" onmouseover="showTip(event, '3523', 3523)">
             Version
           </code>
-          <div class="tip" id="3558">
+          <div class="tip" id="3523">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Version number of the release to deploy; Specify "latest" for
+                    <p>Version number of the release to deploy; Specify "latest" for
 the latest release</p>
 
 
@@ -497,18 +474,15 @@ the latest release</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3559', 3559)" onmouseover="showTip(event, '3559', 3559)">
+          <code onmouseout="hideTip(event, '3524', 3524)" onmouseover="showTip(event, '3524', 3524)">
             WaitForDeployment
           </code>
-          <div class="tip" id="3559">
+          <div class="tip" id="3524">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/OctoTools.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Whether to wait synchronously for deployment to finish</p>
+                    <p>Whether to wait synchronously for deployment to finish</p>
 
 
         </td>
@@ -552,7 +526,7 @@ the latest release</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

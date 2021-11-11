@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,648 +332,540 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3819', 3819)" onmouseover="showTip(event, '3819', 3819)">
+          <code onmouseout="hideTip(event, '3784', 3784)" onmouseover="showTip(event, '3784', 3784)">
             AlterDatabaseFolderName
+          </code>
+          <div class="tip" id="3784">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your alter database scripts. Read up on token replacement. You will want to use {{DatabaseName}} here instead of specifying a database name.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3785', 3785)" onmouseover="showTip(event, '3785', 3785)">
+            CommandTimeout
+          </code>
+          <div class="tip" id="3785">
+            <strong>Signature:</strong> int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This is the timeout when commands are run. This is not for admin commands or restore.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3786', 3786)" onmouseover="showTip(event, '3786', 3786)">
+            CommandTimeoutAdmin
+          </code>
+          <div class="tip" id="3786">
+            <strong>Signature:</strong> int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This is the timeout when administration commands are run (except for restore, which has its own).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3787', 3787)" onmouseover="showTip(event, '3787', 3787)">
+            ConnectionString
+          </code>
+          <div class="tip" id="3787">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>As an alternative to ServerName and Database - You can provide an entire connection string instead.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3788', 3788)" onmouseover="showTip(event, '3788', 3788)">
+            ConnectionStringAdmin
+          </code>
+          <div class="tip" id="3788">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This is used for connecting to master when you may have a different uid and password than normal.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3789', 3789)" onmouseover="showTip(event, '3789', 3789)">
+            CustomCreateScript
+          </code>
+          <div class="tip" id="3789">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This instructs RH to use this script for creating a database instead of the default based on the SQLType.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3790', 3790)" onmouseover="showTip(event, '3790', 3790)">
+            DatabaseName
+          </code>
+          <div class="tip" id="3790">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The database you want to create/migrate.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3791', 3791)" onmouseover="showTip(event, '3791', 3791)">
+            DatabaseType
+          </code>
+          <div class="tip" id="3791">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Database Type (fully qualified class name implementing [roundhouse.sql.Database, roundhouse])</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3792', 3792)" onmouseover="showTip(event, '3792', 3792)">
+            Drop
+          </code>
+          <div class="tip" id="3792">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This instructs RH to remove a database and not run migration scripts.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3793', 3793)" onmouseover="showTip(event, '3793', 3793)">
+            Environment
+          </code>
+          <div class="tip" id="3793">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This allows RH to be environment aware and only run scripts that are in a particular environment based on the namingof the script. LOCAL.something<strong>.ENV.</strong>sql would only be run in the LOCAL environment.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3794', 3794)" onmouseover="showTip(event, '3794', 3794)">
+            FunctionsFolderName
+          </code>
+          <div class="tip" id="3794">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your functions.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3795', 3795)" onmouseover="showTip(event, '3795', 3795)">
+            IndexesFolderName
+          </code>
+          <div class="tip" id="3795">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your indexes.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3796', 3796)" onmouseover="showTip(event, '3796', 3796)">
+            OutputPath
+          </code>
+          <div class="tip" id="3796">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Output path. Path to where migration artifacts are stored.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3797', 3797)" onmouseover="showTip(event, '3797', 3797)">
+            PermissionsFolderName
+          </code>
+          <div class="tip" id="3797">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your permissions scripts.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3798', 3798)" onmouseover="showTip(event, '3798', 3798)">
+            RepositoryPath
+          </code>
+          <div class="tip" id="3798">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Path to code repository to be able to correlate versions</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3799', 3799)" onmouseover="showTip(event, '3799', 3799)">
+            Restore
+          </code>
+          <div class="tip" id="3799">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This instructs RH to do a restore (with the restorefrompath parameter) of a database before running migration scripts.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3800', 3800)" onmouseover="showTip(event, '3800', 3800)">
+            RestoreFilePath
+          </code>
+          <div class="tip" id="3800">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>File path of back when Restore is set to true</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3801', 3801)" onmouseover="showTip(event, '3801', 3801)">
+            RunAfterCreateDatabaseFolderName
+          </code>
+          <div class="tip" id="3801">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you will keep scripts that ONLY run after a database is created.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3802', 3802)" onmouseover="showTip(event, '3802', 3802)">
+            RunAfterOtherAnyTimeScriptsFolderName
+          </code>
+          <div class="tip" id="3802">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep scripts that will be run after all of the other any time scripts complete.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3803', 3803)" onmouseover="showTip(event, '3803', 3803)">
+            RunBeforeUpFolderName
+          </code>
+          <div class="tip" id="3803">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep scripts that you want to run before your update scripts.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3804', 3804)" onmouseover="showTip(event, '3804', 3804)">
+            RunFirstAfterUpdateFolderName
+          </code>
+          <div class="tip" id="3804">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep any functions, views, or sprocs that are order dependent. If you have a function that depends on a view, you definitely need the view in this folder.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3805', 3805)" onmouseover="showTip(event, '3805', 3805)">
+            SchemaName
+          </code>
+          <div class="tip" id="3805">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The schema where RH stores it's tables</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3806', 3806)" onmouseover="showTip(event, '3806', 3806)">
+            ServerDatabase
+          </code>
+          <div class="tip" id="3806">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The server and instance you would like to run on. (local) and (local)\SQL2008 are both valid values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3807', 3807)" onmouseover="showTip(event, '3807', 3807)">
+            Silent
+          </code>
+          <div class="tip" id="3807">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Tells RH not to ask for any input when it runs.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3808', 3808)" onmouseover="showTip(event, '3808', 3808)">
+            Simple
+          </code>
+          <div class="tip" id="3808">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This instructs RH to set the database recovery mode to simple recovery. Only works with SqlServer.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3809', 3809)" onmouseover="showTip(event, '3809', 3809)">
+            SprocsFolderName
+          </code>
+          <div class="tip" id="3809">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your stored procedures.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3810', 3810)" onmouseover="showTip(event, '3810', 3810)">
+            SqlFilesDirectory
+          </code>
+          <div class="tip" id="3810">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The directory where your SQL scripts are.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3811', 3811)" onmouseover="showTip(event, '3811', 3811)">
+            TimeOut
+          </code>
+          <div class="tip" id="3811">
+            <strong>Signature:</strong> TimeSpan<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>A timeout for the runner.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3812', 3812)" onmouseover="showTip(event, '3812', 3812)">
+            ToolPath
+          </code>
+          <div class="tip" id="3812">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>FileName of the Roundhouse runner.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3813', 3813)" onmouseover="showTip(event, '3813', 3813)">
+            UpFolderName
+          </code>
+          <div class="tip" id="3813">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your update scripts.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3814', 3814)" onmouseover="showTip(event, '3814', 3814)">
+            VersionFile
+          </code>
+          <div class="tip" id="3814">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Path to the file to use for versioning. Either a .XML file, a .DLL or a .TXT file that a version can be resolved from.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3815', 3815)" onmouseover="showTip(event, '3815', 3815)">
+            VersionXPath
+          </code>
+          <div class="tip" id="3815">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Works in conjunction with an XML version file.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3816', 3816)" onmouseover="showTip(event, '3816', 3816)">
+            ViewsFolderName
+          </code>
+          <div class="tip" id="3816">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>The name of the folder where you keep your views.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3817', 3817)" onmouseover="showTip(event, '3817', 3817)">
+            WarnOnOneTimeScriptChanges
+          </code>
+          <div class="tip" id="3817">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>Instructs RH to execute changed one time scripts (DDL/DML in Up folder) that have previously been run against the database instead of failing. A warning is logged for each one time scripts that is rerun.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3818', 3818)" onmouseover="showTip(event, '3818', 3818)">
+            WithTransaction
+          </code>
+          <div class="tip" id="3818">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    <p>This instructs RH to run inside of a transaction.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3819', 3819)" onmouseover="showTip(event, '3819', 3819)">
+            WorkingDir
           </code>
           <div class="tip" id="3819">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your alter database scripts. Read up on token replacement. You will want to use {{DatabaseName}} here instead of specifying a database name.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3820', 3820)" onmouseover="showTip(event, '3820', 3820)">
-            CommandTimeout
-          </code>
-          <div class="tip" id="3820">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This is the timeout when commands are run. This is not for admin commands or restore.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3821', 3821)" onmouseover="showTip(event, '3821', 3821)">
-            CommandTimeoutAdmin
-          </code>
-          <div class="tip" id="3821">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L33-33" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This is the timeout when administration commands are run (except for restore, which has its own).</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3822', 3822)" onmouseover="showTip(event, '3822', 3822)">
-            ConnectionString
-          </code>
-          <div class="tip" id="3822">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>As an alternative to ServerName and Database - You can provide an entire connection string instead.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3823', 3823)" onmouseover="showTip(event, '3823', 3823)">
-            ConnectionStringAdmin
-          </code>
-          <div class="tip" id="3823">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This is used for connecting to master when you may have a different uid and password than normal.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3824', 3824)" onmouseover="showTip(event, '3824', 3824)">
-            CustomCreateScript
-          </code>
-          <div class="tip" id="3824">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This instructs RH to use this script for creating a database instead of the default based on the SQLType.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3825', 3825)" onmouseover="showTip(event, '3825', 3825)">
-            DatabaseName
-          </code>
-          <div class="tip" id="3825">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The database you want to create/migrate.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3826', 3826)" onmouseover="showTip(event, '3826', 3826)">
-            DatabaseType
-          </code>
-          <div class="tip" id="3826">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Database Type (fully qualified class name implementing [roundhouse.sql.Database, roundhouse])</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3827', 3827)" onmouseover="showTip(event, '3827', 3827)">
-            Drop
-          </code>
-          <div class="tip" id="3827">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This instructs RH to remove a database and not run migration scripts.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3828', 3828)" onmouseover="showTip(event, '3828', 3828)">
-            Environment
-          </code>
-          <div class="tip" id="3828">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This allows RH to be environment aware and only run scripts that are in a particular environment based on the namingof the script. LOCAL.something<strong>.ENV.</strong>sql would only be run in the LOCAL environment.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3829', 3829)" onmouseover="showTip(event, '3829', 3829)">
-            FunctionsFolderName
-          </code>
-          <div class="tip" id="3829">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your functions.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3830', 3830)" onmouseover="showTip(event, '3830', 3830)">
-            IndexesFolderName
-          </code>
-          <div class="tip" id="3830">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your indexes.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3831', 3831)" onmouseover="showTip(event, '3831', 3831)">
-            OutputPath
-          </code>
-          <div class="tip" id="3831">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Output path. Path to where migration artifacts are stored.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3832', 3832)" onmouseover="showTip(event, '3832', 3832)">
-            PermissionsFolderName
-          </code>
-          <div class="tip" id="3832">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your permissions scripts.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3833', 3833)" onmouseover="showTip(event, '3833', 3833)">
-            RepositoryPath
-          </code>
-          <div class="tip" id="3833">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to code repository to be able to correlate versions</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3834', 3834)" onmouseover="showTip(event, '3834', 3834)">
-            Restore
-          </code>
-          <div class="tip" id="3834">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This instructs RH to do a restore (with the restorefrompath parameter) of a database before running migration scripts.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3835', 3835)" onmouseover="showTip(event, '3835', 3835)">
-            RestoreFilePath
-          </code>
-          <div class="tip" id="3835">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>File path of back when Restore is set to true</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3836', 3836)" onmouseover="showTip(event, '3836', 3836)">
-            RunAfterCreateDatabaseFolderName
-          </code>
-          <div class="tip" id="3836">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you will keep scripts that ONLY run after a database is created.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3837', 3837)" onmouseover="showTip(event, '3837', 3837)">
-            RunAfterOtherAnyTimeScriptsFolderName
-          </code>
-          <div class="tip" id="3837">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep scripts that will be run after all of the other any time scripts complete.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3838', 3838)" onmouseover="showTip(event, '3838', 3838)">
-            RunBeforeUpFolderName
-          </code>
-          <div class="tip" id="3838">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep scripts that you want to run before your update scripts.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3839', 3839)" onmouseover="showTip(event, '3839', 3839)">
-            RunFirstAfterUpdateFolderName
-          </code>
-          <div class="tip" id="3839">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep any functions, views, or sprocs that are order dependent. If you have a function that depends on a view, you definitely need the view in this folder.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3840', 3840)" onmouseover="showTip(event, '3840', 3840)">
-            SchemaName
-          </code>
-          <div class="tip" id="3840">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L120-120" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The schema where RH stores it's tables</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3841', 3841)" onmouseover="showTip(event, '3841', 3841)">
-            ServerDatabase
-          </code>
-          <div class="tip" id="3841">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The server and instance you would like to run on. (local) and (local)\SQL2008 are both valid values.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3842', 3842)" onmouseover="showTip(event, '3842', 3842)">
-            Silent
-          </code>
-          <div class="tip" id="3842">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tells RH not to ask for any input when it runs.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3843', 3843)" onmouseover="showTip(event, '3843', 3843)">
-            Simple
-          </code>
-          <div class="tip" id="3843">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L63-63" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This instructs RH to set the database recovery mode to simple recovery. Only works with SqlServer.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3844', 3844)" onmouseover="showTip(event, '3844', 3844)">
-            SprocsFolderName
-          </code>
-          <div class="tip" id="3844">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your stored procedures.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3845', 3845)" onmouseover="showTip(event, '3845', 3845)">
-            SqlFilesDirectory
-          </code>
-          <div class="tip" id="3845">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The directory where your SQL scripts are.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3846', 3846)" onmouseover="showTip(event, '3846', 3846)">
-            TimeOut
-          </code>
-          <div class="tip" id="3846">
-            <strong>Signature:</strong> TimeSpan<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L117-117" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A timeout for the runner.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3847', 3847)" onmouseover="showTip(event, '3847', 3847)">
-            ToolPath
-          </code>
-          <div class="tip" id="3847">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>FileName of the Roundhouse runner.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3848', 3848)" onmouseover="showTip(event, '3848', 3848)">
-            UpFolderName
-          </code>
-          <div class="tip" id="3848">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your update scripts.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3849', 3849)" onmouseover="showTip(event, '3849', 3849)">
-            VersionFile
-          </code>
-          <div class="tip" id="3849">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to the file to use for versioning. Either a .XML file, a .DLL or a .TXT file that a version can be resolved from.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3850', 3850)" onmouseover="showTip(event, '3850', 3850)">
-            VersionXPath
-          </code>
-          <div class="tip" id="3850">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Works in conjunction with an XML version file.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3851', 3851)" onmouseover="showTip(event, '3851', 3851)">
-            ViewsFolderName
-          </code>
-          <div class="tip" id="3851">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the folder where you keep your views.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3852', 3852)" onmouseover="showTip(event, '3852', 3852)">
-            WarnOnOneTimeScriptChanges
-          </code>
-          <div class="tip" id="3852">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L108-108" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Instructs RH to execute changed one time scripts (DDL/DML in Up folder) that have previously been run against the database instead of failing. A warning is logged for each one time scripts that is rerun.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3853', 3853)" onmouseover="showTip(event, '3853', 3853)">
-            WithTransaction
-          </code>
-          <div class="tip" id="3853">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This instructs RH to run inside of a transaction.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3854', 3854)" onmouseover="showTip(event, '3854', 3854)">
-            WorkingDir
-          </code>
-          <div class="tip" id="3854">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/RoundhouseHelper.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Working directory (optional).</p>
+                    <p>Working directory (optional).</p>
 
 
         </td>
@@ -1013,7 +909,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

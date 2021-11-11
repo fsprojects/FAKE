@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -323,36 +327,15 @@ Used to retrieve "pipes"</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4798', 4798)" onmouseover="showTip(event, '4798', 4798)">
-            onSet
+          <code onmouseout="hideTip(event, '4757', 4757)" onmouseover="showTip(event, '4757', 4757)">
+            retrieveRaw
           </code>
-          <div class="tip" id="4798">
-            <strong>Signature:</strong> &#39;T -&gt; unit<br />
-              <strong>Modifiers:</strong> mutable<br />
+          <div class="tip" id="4757">
+            <strong>Signature:</strong> (unit -&gt; &#39;T) ref<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '4799', 4799)" onmouseover="showTip(event, '4799', 4799)">
-            value
-          </code>
-          <div class="tip" id="4799">
-            <strong>Signature:</strong> &#39;T option<br />
-              <strong>Modifiers:</strong> mutable<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L75-75" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -365,18 +348,15 @@ Used to retrieve "pipes"</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4800', 4800)" onmouseover="showTip(event, '4800', 4800)">
+          <code onmouseout="hideTip(event, '4758', 4758)" onmouseover="showTip(event, '4758', 4758)">
             x.Value
           </code>
-          <div class="tip" id="4800">
+          <div class="tip" id="4758">
             <strong>Signature:</strong> &#39;T<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L83-83" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -389,34 +369,28 @@ Used to retrieve "pipes"</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4801', 4801)" onmouseover="showTip(event, '4801', 4801)">
+          <code onmouseout="hideTip(event, '4759', 4759)" onmouseover="showTip(event, '4759', 4759)">
             DataRef.Empty
           </code>
-          <div class="tip" id="4801">
+          <div class="tip" id="4759">
             <strong>Signature:</strong> DataRef&lt;&#39;T&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4802', 4802)" onmouseover="showTip(event, '4802', 4802)">
+          <code onmouseout="hideTip(event, '4760', 4760)" onmouseover="showTip(event, '4760', 4760)">
             DataRef.Map f inner
           </code>
-          <div class="tip" id="4802">
+          <div class="tip" id="4760">
             <strong>Signature:</strong> (f:(&#39;T -&gt; &#39;a)) -&gt; inner:DataRef&lt;&#39;T&gt; -&gt; DataRef&lt;&#39;a&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -458,7 +432,7 @@ Used to retrieve "pipes"</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>CreateProcess - FAKE - F# Make</title>
+	<title>ECMAScript - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,65 +301,168 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-core-createprocessdotnetext-createprocess.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.JavaScript.TypeScript" >Fake.JavaScript.TypeScript</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="CreateProcess" class="anchor" href="#CreateProcess">CreateProcess</a></h1>
-
+<h1><a name="ECMAScript" class="anchor" href="#ECMAScript">ECMAScript</a></h1>
 <div class="xmldoc">
-<p>Extensions to <a href="apidocs/v5/fake-core-createprocess.html"><code>CreateProcess</code></a>.</p>
+<p>Generated ECMAScript version</p>
 
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-
-  <h2><a name="Functions and values" class="anchor" href="#Functions and values">Functions and values</a></h2>
+  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
-            withToolType toolType c
+          <code onmouseout="hideTip(event, '3524', 3524)" onmouseover="showTip(event, '3524', 3524)">
+            ES2017
           </code>
-          <div class="tip" id="1274">
-            <strong>Signature:</strong> toolType:ToolType -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
-                          <strong>Type parameters:</strong> 'a                      </div>
+          <div class="tip" id="3524">
+            <strong>Signature:</strong> <br />
+                                  </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L116-116" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L23-23" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Ensures the command  is run with dotnet or with framework/mono as appropriate.</p>
-<h3>Example</h3>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Command</span><span class="pn">.</span><span class="id">RawCommand</span><span class="pn">(</span><span class="s">&quot;tool&quot;</span><span class="pn">,</span> <span class="id">Arguments</span><span class="pn">.</span><span class="id">OfArgs</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span><span class="pn">)</span>
-<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromCommand</span>
-<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">withToolType</span> <span class="id">toolType</span> <span class="c">// prepare to execute tool, mono tool, or dotnet localtool.</span>
-<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
-</code></pre></td>
-</tr>
-</table>
-<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
-
-
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3525', 3525)" onmouseover="showTip(event, '3525', 3525)">
+            ES2018
+          </code>
+          <div class="tip" id="3525">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L24-24" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3526', 3526)" onmouseover="showTip(event, '3526', 3526)">
+            ES2019
+          </code>
+          <div class="tip" id="3526">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L25-25" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3527', 3527)" onmouseover="showTip(event, '3527', 3527)">
+            ES2020
+          </code>
+          <div class="tip" id="3527">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L26-26" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3528', 3528)" onmouseover="showTip(event, '3528', 3528)">
+            ES3
+          </code>
+          <div class="tip" id="3528">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L19-19" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3529', 3529)" onmouseover="showTip(event, '3529', 3529)">
+            ES5
+          </code>
+          <div class="tip" id="3529">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L20-20" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3530', 3530)" onmouseover="showTip(event, '3530', 3530)">
+            ES6
+          </code>
+          <div class="tip" id="3530">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L21-21" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3531', 3531)" onmouseover="showTip(event, '3531', 3531)">
+            ES7
+          </code>
+          <div class="tip" id="3531">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L22-22" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3532', 3532)" onmouseover="showTip(event, '3532', 3532)">
+            ESNext
+          </code>
+          <div class="tip" id="3532">
+            <strong>Signature:</strong> <br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L27-27" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
         </td>
       </tr>
     </tbody>
@@ -369,6 +476,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -397,7 +505,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

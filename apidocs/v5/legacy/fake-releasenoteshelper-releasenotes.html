@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,88 +332,73 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3779', 3779)" onmouseover="showTip(event, '3779', 3779)">
+          <code onmouseout="hideTip(event, '3744', 3744)" onmouseover="showTip(event, '3744', 3744)">
             AssemblyVersion
           </code>
-          <div class="tip" id="3779">
+          <div class="tip" id="3744">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The parsed version.</p>
+                    <p>The parsed version.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3780', 3780)" onmouseover="showTip(event, '3780', 3780)">
+          <code onmouseout="hideTip(event, '3745', 3745)" onmouseover="showTip(event, '3745', 3745)">
             Date
           </code>
-          <div class="tip" id="3780">
+          <div class="tip" id="3745">
             <strong>Signature:</strong> DateTime option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L55-55" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Release date</p>
+                    <p>Release date</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3781', 3781)" onmouseover="showTip(event, '3781', 3781)">
+          <code onmouseout="hideTip(event, '3746', 3746)" onmouseover="showTip(event, '3746', 3746)">
             Notes
           </code>
-          <div class="tip" id="3781">
+          <div class="tip" id="3746">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3782', 3782)" onmouseover="showTip(event, '3782', 3782)">
+          <code onmouseout="hideTip(event, '3747', 3747)" onmouseover="showTip(event, '3747', 3747)">
             NugetVersion
           </code>
-          <div class="tip" id="3782">
+          <div class="tip" id="3747">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The nuget package version.</p>
+                    <p>The nuget package version.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3783', 3783)" onmouseover="showTip(event, '3783', 3783)">
+          <code onmouseout="hideTip(event, '3748', 3748)" onmouseover="showTip(event, '3748', 3748)">
             SemVer
           </code>
-          <div class="tip" id="3783">
+          <div class="tip" id="3748">
             <strong>Signature:</strong> SemVerInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Semantic version</p>
+                    <p>Semantic version</p>
 
 
         </td>
@@ -424,10 +413,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3784', 3784)" onmouseover="showTip(event, '3784', 3784)">
+          <code onmouseout="hideTip(event, '3749', 3749)" onmouseover="showTip(event, '3749', 3749)">
             ReleaseNotes.New(...)
           </code>
-          <div class="tip" id="3784">
+          <div class="tip" id="3749">
             <strong>Signature:</strong> (assemblyVersion:string * nugetVersion:string * notes:string list) -&gt; ReleaseNotes<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -440,18 +429,15 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.ReleaseNotes module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3785', 3785)" onmouseover="showTip(event, '3785', 3785)">
+          <code onmouseout="hideTip(event, '3750', 3750)" onmouseover="showTip(event, '3750', 3750)">
             ReleaseNotes.New(...)
           </code>
-          <div class="tip" id="3785">
+          <div class="tip" id="3750">
             <strong>Signature:</strong> (assemblyVersion:string * nugetVersion:string * date:DateTime option * notes:string list) -&gt; ReleaseNotes<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -464,10 +450,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.ReleaseNotes module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ReleaseNotesHelper.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -509,7 +492,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

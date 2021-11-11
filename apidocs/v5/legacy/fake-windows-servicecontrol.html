@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,18 +330,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2467', 2467)" onmouseover="showTip(event, '2467', 2467)">
+          <code onmouseout="hideTip(event, '2432', 2432)" onmouseover="showTip(event, '2432', 2432)">
             checkRemoteServiceExists host name
           </code>
-          <div class="tip" id="2467">
+          <div class="tip" id="2432">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns whether a remote service with the given name exists.</p>
+                    <p>Returns whether a remote service with the given name exists.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -349,18 +350,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2468', 2468)" onmouseover="showTip(event, '2468', 2468)">
+          <code onmouseout="hideTip(event, '2433', 2433)" onmouseover="showTip(event, '2433', 2433)">
             checkServiceExists(name)
           </code>
-          <div class="tip" id="2468">
+          <div class="tip" id="2433">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns whether a local service with the given name exists.</p>
+                    <p>Returns whether a local service with the given name exists.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -371,18 +369,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2469', 2469)" onmouseover="showTip(event, '2469', 2469)">
+          <code onmouseout="hideTip(event, '2434', 2434)" onmouseover="showTip(event, '2434', 2434)">
             ensureRemoteServiceHasStarted(...)
           </code>
-          <div class="tip" id="2469">
+          <div class="tip" id="2434">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the remote service with the given name has been started or fails after given timeout</p>
+                    <p>Waits until the remote service with the given name has been started or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -395,18 +390,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2470', 2470)" onmouseover="showTip(event, '2470', 2470)">
+          <code onmouseout="hideTip(event, '2435', 2435)" onmouseover="showTip(event, '2435', 2435)">
             ensureRemoteServiceHasStopped(...)
           </code>
-          <div class="tip" id="2470">
+          <div class="tip" id="2435">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the remote service with the given name has been stopped or fails after given timeout</p>
+                    <p>Waits until the remote service with the given name has been stopped or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -419,18 +411,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2471', 2471)" onmouseover="showTip(event, '2471', 2471)">
+          <code onmouseout="hideTip(event, '2436', 2436)" onmouseover="showTip(event, '2436', 2436)">
             ensureServiceHasStarted name timeout
           </code>
-          <div class="tip" id="2471">
+          <div class="tip" id="2436">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the local service with the given name has been started or fails after given timeout</p>
+                    <p>Waits until the local service with the given name has been started or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -442,18 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2472', 2472)" onmouseover="showTip(event, '2472', 2472)">
+          <code onmouseout="hideTip(event, '2437', 2437)" onmouseover="showTip(event, '2437', 2437)">
             ensureServiceHasStopped name timeout
           </code>
-          <div class="tip" id="2472">
+          <div class="tip" id="2437">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the local service with the given name has been stopped or fails after given timeout</p>
+                    <p>Waits until the local service with the given name has been stopped or fails after given timeout</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
@@ -465,54 +451,45 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2473', 2473)" onmouseover="showTip(event, '2473', 2473)">
+          <code onmouseout="hideTip(event, '2438', 2438)" onmouseover="showTip(event, '2438', 2438)">
             RunRemoteService(...)
           </code>
-          <div class="tip" id="2473">
+          <div class="tip" id="2438">
             <strong>Signature:</strong> command:string -&gt; host:string -&gt; serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends a command to a remote windows service.</p>
+                    <p>Sends a command to a remote windows service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2474', 2474)" onmouseover="showTip(event, '2474', 2474)">
+          <code onmouseout="hideTip(event, '2439', 2439)" onmouseover="showTip(event, '2439', 2439)">
             RunService command serviceName
           </code>
-          <div class="tip" id="2474">
+          <div class="tip" id="2439">
             <strong>Signature:</strong> command:string -&gt; serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L167-167" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends a command to a local windows service.</p>
+                    <p>Sends a command to a local windows service.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2475', 2475)" onmouseover="showTip(event, '2475', 2475)">
+          <code onmouseout="hideTip(event, '2440', 2440)" onmouseover="showTip(event, '2440', 2440)">
             startRemoteService host name
           </code>
-          <div class="tip" id="2475">
+          <div class="tip" id="2440">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts all remote services with given name.</p>
+                    <p>Starts all remote services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -524,36 +501,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2476', 2476)" onmouseover="showTip(event, '2476', 2476)">
+          <code onmouseout="hideTip(event, '2441', 2441)" onmouseover="showTip(event, '2441', 2441)">
             StartRemoteService host serviceName
           </code>
-          <div class="tip" id="2476">
+          <div class="tip" id="2441">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2477', 2477)" onmouseover="showTip(event, '2477', 2477)">
+          <code onmouseout="hideTip(event, '2442', 2442)" onmouseover="showTip(event, '2442', 2442)">
             startService(name)
           </code>
-          <div class="tip" id="2477">
+          <div class="tip" id="2442">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts all local services with given name.</p>
+                    <p>Starts all local services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
@@ -564,36 +535,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2478', 2478)" onmouseover="showTip(event, '2478', 2478)">
+          <code onmouseout="hideTip(event, '2443', 2443)" onmouseover="showTip(event, '2443', 2443)">
             StartService(serviceName)
           </code>
-          <div class="tip" id="2478">
+          <div class="tip" id="2443">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L181-181" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2479', 2479)" onmouseover="showTip(event, '2479', 2479)">
+          <code onmouseout="hideTip(event, '2444', 2444)" onmouseover="showTip(event, '2444', 2444)">
             stopRemoteService host name
           </code>
-          <div class="tip" id="2479">
+          <div class="tip" id="2444">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops all services with given name.</p>
+                    <p>Stops all services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
@@ -605,36 +570,30 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2480', 2480)" onmouseover="showTip(event, '2480', 2480)">
+          <code onmouseout="hideTip(event, '2445', 2445)" onmouseover="showTip(event, '2445', 2445)">
             StopRemoteService host serviceName
           </code>
-          <div class="tip" id="2480">
+          <div class="tip" id="2445">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L176-176" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2481', 2481)" onmouseover="showTip(event, '2481', 2481)">
+          <code onmouseout="hideTip(event, '2446', 2446)" onmouseover="showTip(event, '2446', 2446)">
             stopService(name)
           </code>
-          <div class="tip" id="2481">
+          <div class="tip" id="2446">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops all local services with given name.</p>
+                    <p>Stops all local services with given name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
@@ -645,18 +604,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2482', 2482)" onmouseover="showTip(event, '2482', 2482)">
+          <code onmouseout="hideTip(event, '2447', 2447)" onmouseover="showTip(event, '2447', 2447)">
             StopService(serviceName)
           </code>
-          <div class="tip" id="2482">
+          <div class="tip" id="2447">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.ServiceControl/ServiceControl.fs#L171-171" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -700,7 +656,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

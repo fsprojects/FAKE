@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,162 +326,135 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5799', 5799)" onmouseover="showTip(event, '5799', 5799)">
+          <code onmouseout="hideTip(event, '5718', 5718)" onmouseover="showTip(event, '5718', 5718)">
             ApiKey
           </code>
-          <div class="tip" id="5799">
+          <div class="tip" id="5718">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L363-363" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The API key for the server</p>
+                    <p>The API key for the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5800', 5800)" onmouseover="showTip(event, '5800', 5800)">
+          <code onmouseout="hideTip(event, '5719', 5719)" onmouseover="showTip(event, '5719', 5719)">
             DisableBuffering
           </code>
-          <div class="tip" id="5800">
+          <div class="tip" id="5719">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L361-361" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Disables buffering when pushing to an HTTP(S) server to reduce memory usage.</p>
+                    <p>Disables buffering when pushing to an HTTP(S) server to reduce memory usage.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5801', 5801)" onmouseover="showTip(event, '5801', 5801)">
+          <code onmouseout="hideTip(event, '5720', 5720)" onmouseover="showTip(event, '5720', 5720)">
             NoServiceEndpoint
           </code>
-          <div class="tip" id="5801">
+          <div class="tip" id="5720">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L367-367" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Doesn't append "api/v2/package" to the source URL.</p>
+                    <p>Doesn't append "api/v2/package" to the source URL.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5802', 5802)" onmouseover="showTip(event, '5802', 5802)">
+          <code onmouseout="hideTip(event, '5721', 5721)" onmouseover="showTip(event, '5721', 5721)">
             NoSymbols
           </code>
-          <div class="tip" id="5802">
+          <div class="tip" id="5721">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L365-365" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Doesn't push symbols (even if present).</p>
+                    <p>Doesn't push symbols (even if present).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5803', 5803)" onmouseover="showTip(event, '5803', 5803)">
+          <code onmouseout="hideTip(event, '5722', 5722)" onmouseover="showTip(event, '5722', 5722)">
             PushTrials
           </code>
-          <div class="tip" id="5803">
+          <div class="tip" id="5722">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L377-377" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Number of times to retry pushing the package</p>
+                    <p>Number of times to retry pushing the package</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5804', 5804)" onmouseover="showTip(event, '5804', 5804)">
+          <code onmouseout="hideTip(event, '5723', 5723)" onmouseover="showTip(event, '5723', 5723)">
             Source
           </code>
-          <div class="tip" id="5804">
+          <div class="tip" id="5723">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L369-369" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the server URL. This option is required unless DefaultPushSource config value is set in the NuGet config file.</p>
+                    <p>Specifies the server URL. This option is required unless DefaultPushSource config value is set in the NuGet config file.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5805', 5805)" onmouseover="showTip(event, '5805', 5805)">
+          <code onmouseout="hideTip(event, '5724', 5724)" onmouseover="showTip(event, '5724', 5724)">
             SymbolApiKey
           </code>
-          <div class="tip" id="5805">
+          <div class="tip" id="5724">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L371-371" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The API key for the symbol server.</p>
+                    <p>The API key for the symbol server.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5806', 5806)" onmouseover="showTip(event, '5806', 5806)">
+          <code onmouseout="hideTip(event, '5725', 5725)" onmouseover="showTip(event, '5725', 5725)">
             SymbolSource
           </code>
-          <div class="tip" id="5806">
+          <div class="tip" id="5725">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L373-373" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the symbol server URL.</p>
+                    <p>Specifies the symbol server URL.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5807', 5807)" onmouseover="showTip(event, '5807', 5807)">
+          <code onmouseout="hideTip(event, '5726', 5726)" onmouseover="showTip(event, '5726', 5726)">
             Timeout
           </code>
-          <div class="tip" id="5807">
+          <div class="tip" id="5726">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L375-375" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specifies the timeout for pushing to a server.</p>
+                    <p>Specifies the timeout for pushing to a server.</p>
 
 
         </td>
@@ -492,18 +469,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5808', 5808)" onmouseover="showTip(event, '5808', 5808)">
+          <code onmouseout="hideTip(event, '5727', 5727)" onmouseover="showTip(event, '5727', 5727)">
             NuGetPushParams.Create()
           </code>
-          <div class="tip" id="5808">
+          <div class="tip" id="5727">
             <strong>Signature:</strong> unit -&gt; NuGetPushParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L379-379" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -545,7 +519,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

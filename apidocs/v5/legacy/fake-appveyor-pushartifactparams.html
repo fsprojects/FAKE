@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,72 +332,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2614', 2614)" onmouseover="showTip(event, '2614', 2614)">
+          <code onmouseout="hideTip(event, '2579', 2579)" onmouseover="showTip(event, '2579', 2579)">
             DeploymentName
           </code>
-          <div class="tip" id="2614">
+          <div class="tip" id="2579">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L289-289" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deployment name</p>
+                    <p>Deployment name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2615', 2615)" onmouseover="showTip(event, '2615', 2615)">
+          <code onmouseout="hideTip(event, '2580', 2580)" onmouseover="showTip(event, '2580', 2580)">
             FileName
           </code>
-          <div class="tip" id="2615">
+          <div class="tip" id="2580">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L287-287" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>File name to display in the artifact tab</p>
+                    <p>File name to display in the artifact tab</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2616', 2616)" onmouseover="showTip(event, '2616', 2616)">
+          <code onmouseout="hideTip(event, '2581', 2581)" onmouseover="showTip(event, '2581', 2581)">
             Path
           </code>
-          <div class="tip" id="2616">
+          <div class="tip" id="2581">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L285-285" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The full local path to the artifact</p>
+                    <p>The full local path to the artifact</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2617', 2617)" onmouseover="showTip(event, '2617', 2617)">
+          <code onmouseout="hideTip(event, '2582', 2582)" onmouseover="showTip(event, '2582', 2582)">
             Type
           </code>
-          <div class="tip" id="2617">
+          <div class="tip" id="2582">
             <strong>Signature:</strong> ArtifactType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L291-291" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Type of the artifact</p>
+                    <p>Type of the artifact</p>
 
 
         </td>
@@ -437,7 +429,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

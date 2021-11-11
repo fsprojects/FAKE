@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -371,18 +375,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1859', 1859)" onmouseover="showTip(event, '1859', 1859)">
+          <code onmouseout="hideTip(event, '1838', 1838)" onmouseover="showTip(event, '1838', 1838)">
             DotCover.merge(setParams)
           </code>
-          <div class="tip" id="1859">
+          <div class="tip" id="1838">
             <strong>Signature:</strong> setParams:(MergeParams -&gt; MergeParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L158-158" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
+                    <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 snapshot, enabling you to merge test coverage from multiple test running frameworks</p>
 <h2>Parameters</h2>
 <ul>
@@ -407,18 +408,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1860', 1860)" onmouseover="showTip(event, '1860', 1860)">
+          <code onmouseout="hideTip(event, '1839', 1839)" onmouseover="showTip(event, '1839', 1839)">
             DotCover.report(setParams)
           </code>
-          <div class="tip" id="1860">
-            <strong>Signature:</strong> setParams:(ReportParams -&gt; ReportParams) -&gt; unit<br />
+          <div class="tip" id="1839">
+            <strong>Signature:</strong> setParams:(ReportParams -&gt; ReportParams) -&gt; bool -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L173-173" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
+                    <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -442,18 +440,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1861', 1861)" onmouseover="showTip(event, '1861', 1861)">
+          <code onmouseout="hideTip(event, '1840', 1840)" onmouseover="showTip(event, '1840', 1840)">
             DotCover.run(setParams)
           </code>
-          <div class="tip" id="1861">
+          <div class="tip" id="1840">
             <strong>Signature:</strong> setParams:(Params -&gt; Params) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L142-142" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
+                    <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover default parameters.</li>
@@ -464,18 +459,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1862', 1862)" onmouseover="showTip(event, '1862', 1862)">
+          <code onmouseout="hideTip(event, '1841', 1841)" onmouseover="showTip(event, '1841', 1841)">
             DotCover.runMSpec(...)
           </code>
-          <div class="tip" id="1862">
+          <div class="tip" id="1841">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSpecParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L318-318" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
+                    <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -504,18 +496,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1863', 1863)" onmouseover="showTip(event, '1863', 1863)">
+          <code onmouseout="hideTip(event, '1842', 1842)" onmouseover="showTip(event, '1842', 1842)">
             DotCover.runMSTest(...)
           </code>
-          <div class="tip" id="1863">
+          <div class="tip" id="1842">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSTestParams:(MSTestParams -&gt; MSTestParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L290-290" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
+                    <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -540,18 +529,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1864', 1864)" onmouseover="showTip(event, '1864', 1864)">
+          <code onmouseout="hideTip(event, '1843', 1843)" onmouseover="showTip(event, '1843', 1843)">
             DotCover.runNUnit(...)
           </code>
-          <div class="tip" id="1864">
+          <div class="tip" id="1843">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L191-191" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+                    <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -580,18 +566,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1865', 1865)" onmouseover="showTip(event, '1865', 1865)">
+          <code onmouseout="hideTip(event, '1844', 1844)" onmouseover="showTip(event, '1844', 1844)">
             DotCover.runNUnit3(...)
           </code>
-          <div class="tip" id="1865">
+          <div class="tip" id="1844">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L219-219" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+                    <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -620,18 +603,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1866', 1866)" onmouseover="showTip(event, '1866', 1866)">
+          <code onmouseout="hideTip(event, '1845', 1845)" onmouseover="showTip(event, '1845', 1845)">
             DotCover.runXUnit2(...)
           </code>
-          <div class="tip" id="1866">
+          <div class="tip" id="1845">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setXUnit2Params:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L245-245" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
+                    <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
@@ -693,7 +673,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

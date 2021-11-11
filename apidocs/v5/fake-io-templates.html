@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -324,15 +328,15 @@ Contains basic templating functions. Used in other helpers.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1001', 1001)" onmouseover="showTip(event, '1001', 1001)">
+          <code onmouseout="hideTip(event, '1005', 1005)" onmouseover="showTip(event, '1005', 1005)">
             Templates.load(seq)
           </code>
-          <div class="tip" id="1001">
+          <div class="tip" id="1005">
             <strong>Signature:</strong> seq:seq&lt;string&gt; -&gt; seq&lt;string * seq&lt;string&gt;&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L7-7" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L7-7" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Loads all templates (lazy - line by line!)</p>
@@ -342,15 +346,15 @@ Contains basic templating functions. Used in other helpers.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1002', 1002)" onmouseover="showTip(event, '1002', 1002)">
+          <code onmouseout="hideTip(event, '1006', 1006)" onmouseover="showTip(event, '1006', 1006)">
             Templates.replaceInFiles(...)
           </code>
-          <div class="tip" id="1002">
+          <div class="tip" id="1006">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L23-23" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L23-23" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replaces the templates with the given replacements</p>
@@ -360,15 +364,15 @@ Contains basic templating functions. Used in other helpers.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1003', 1003)" onmouseover="showTip(event, '1003', 1003)">
+          <code onmouseout="hideTip(event, '1007', 1007)" onmouseover="showTip(event, '1007', 1007)">
             Templates.replaceKeywords(replacements)
           </code>
-          <div class="tip" id="1003">
+          <div class="tip" id="1007">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?9531 * &#39;?9532&gt; -&gt; seq&lt;&#39;?9531 * seq&lt;string&gt;&gt;<br />
                           <strong>Type parameters:</strong> '?9531, '?9532                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L10-10" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L10-10" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replaces a bunch of the keywords in all files (lazy - line by line!)</p>
@@ -378,15 +382,15 @@ Contains basic templating functions. Used in other helpers.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1004', 1004)" onmouseover="showTip(event, '1004', 1004)">
+          <code onmouseout="hideTip(event, '1008', 1008)" onmouseover="showTip(event, '1008', 1008)">
             Templates.saveFiles
           </code>
-          <div class="tip" id="1004">
+          <div class="tip" id="1008">
             <strong>Signature:</strong> seq&lt;string * seq&lt;string&gt;&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L20-20" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L20-20" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Saves all files (lazy - file by file!)</p>
@@ -434,7 +438,7 @@ Contains basic templating functions. Used in other helpers.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -367,36 +371,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1880', 1880)" onmouseover="showTip(event, '1880', 1880)">
+          <code onmouseout="hideTip(event, '1859', 1859)" onmouseover="showTip(event, '1859', 1859)">
             buildArgs parameters assemblies
           </code>
-          <div class="tip" id="1880">
+          <div class="tip" id="1859">
             <strong>Signature:</strong> parameters:XUnit2Params -&gt; assemblies:seq&lt;string&gt; -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L194-194" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Builds the command line arguments from the given parameter record and the given assemblies.</p>
+                    <p>Builds the command line arguments from the given parameter record and the given assemblies.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1881', 1881)" onmouseover="showTip(event, '1881', 1881)">
+          <code onmouseout="hideTip(event, '1860', 1860)" onmouseover="showTip(event, '1860', 1860)">
             run setParams assemblies
           </code>
-          <div class="tip" id="1881">
+          <div class="tip" id="1860">
             <strong>Signature:</strong> setParams:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L270-270" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs xUnit v2 unit tests in the given assemblies via the given xUnit2 runner.
+                    <p>Runs xUnit v2 unit tests in the given assemblies via the given xUnit2 runner.
 Will fail if the runner terminates with non-zero exit code.</p>
 <p>The xUnit2 runner terminates with a non-zero exit code if any of the tests
 in the given assembly fail.</p>
@@ -410,45 +408,30 @@ in the given assembly fail.</p>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">DotNet</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Testing</span>
-<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">IO</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">Globbing</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">Operators</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span><span class="pn">)</span>
-    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="id">XUnit2</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">HtmlOutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 10)" onmouseover="showTip(event, 'fs9', 10)" class="id">Some</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xunit.html&quot;</span><span class="pn">)</span> <span class="pn">}</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">xUnit2</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">HtmlOutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Some</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xunit.html&quot;</span><span class="pn">)</span> <span class="pn">}</span><span class="pn">)</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
-<div class="tip" id="fs1">namespace Fake</div>
-<div class="tip" id="fs2">namespace Fake.DotNet</div>
-<div class="tip" id="fs3">namespace Fake.DotNet.Testing</div>
-<div class="tip" id="fs4">namespace Fake.IO</div>
-<div class="tip" id="fs5">namespace Fake.IO.Globbing</div>
-<div class="tip" id="fs6">module Operators<br /><br />from Fake.IO.Globbing</div>
-<div class="tip" id="fs7">module XUnit2<br /><br />from Fake.DotNet.Testing</div>
-<div class="tip" id="fs8">val run : setParams:(XUnit2.XUnit2Params -&gt; XUnit2.XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit</div>
-<div class="tip" id="fs9">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs1">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1882', 1882)" onmouseover="showTip(event, '1882', 1882)">
+          <code onmouseout="hideTip(event, '1861', 1861)" onmouseover="showTip(event, '1861', 1861)">
             XUnit2Defaults
           </code>
-          <div class="tip" id="1882">
+          <div class="tip" id="1861">
             <strong>Signature:</strong> XUnit2Params<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L170-170" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The xUnit2 default parameters.</p>
+                    <p>The xUnit2 default parameters.</p>
 <h2>Defaults</h2>
 <ul>
 <li><code>NoAppDomain</code> - <code>false</code></li>
@@ -515,7 +498,7 @@ in the given assembly fail.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

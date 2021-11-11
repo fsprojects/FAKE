@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,288 +330,240 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1610', 1610)" onmouseover="showTip(event, '1610', 1610)">
+          <code onmouseout="hideTip(event, '1592', 1592)" onmouseover="showTip(event, '1592', 1592)">
             createDoc(text)
           </code>
-          <div class="tip" id="1610">
+          <div class="tip" id="1592">
             <strong>Signature:</strong> text:string -&gt; XmlDocument<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Loads the given text into a XmlDocument</p>
+                    <p>Loads the given text into a XmlDocument</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1611', 1611)" onmouseover="showTip(event, '1611', 1611)">
+          <code onmouseout="hideTip(event, '1593', 1593)" onmouseover="showTip(event, '1593', 1593)">
             endElement(writer)
           </code>
-          <div class="tip" id="1611">
+          <div class="tip" id="1593">
             <strong>Signature:</strong> writer:XmlWriter -&gt; XmlWriter<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML end element to the given XmlTextWriter</p>
+                    <p>Writes an XML end element to the given XmlTextWriter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1612', 1612)" onmouseover="showTip(event, '1612', 1612)">
+          <code onmouseout="hideTip(event, '1594', 1594)" onmouseover="showTip(event, '1594', 1594)">
             getAttribute name node
           </code>
-          <div class="tip" id="1612">
+          <div class="tip" id="1594">
             <strong>Signature:</strong> name:string -&gt; node:&#39;a -&gt; string<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the attribute with the given name from the given XmlNode</p>
+                    <p>Gets the attribute with the given name from the given XmlNode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1613', 1613)" onmouseover="showTip(event, '1613', 1613)">
+          <code onmouseout="hideTip(event, '1595', 1595)" onmouseover="showTip(event, '1595', 1595)">
             getChilds(node)
           </code>
-          <div class="tip" id="1613">
+          <div class="tip" id="1595">
             <strong>Signature:</strong> node:&#39;a -&gt; seq&lt;XmlNode&gt;<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L87-87" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets a sequence of all child nodes for the given XmlNode</p>
+                    <p>Gets a sequence of all child nodes for the given XmlNode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1614', 1614)" onmouseover="showTip(event, '1614', 1614)">
+          <code onmouseout="hideTip(event, '1596', 1596)" onmouseover="showTip(event, '1596', 1596)">
             getDocElement(doc)
           </code>
-          <div class="tip" id="1614">
+          <div class="tip" id="1596">
             <strong>Signature:</strong> doc:XmlDocument -&gt; XmlElement<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the DocumentElement of the XmlDocument</p>
+                    <p>Gets the DocumentElement of the XmlDocument</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1615', 1615)" onmouseover="showTip(event, '1615', 1615)">
+          <code onmouseout="hideTip(event, '1597', 1597)" onmouseover="showTip(event, '1597', 1597)">
             getSubNode name node
           </code>
-          <div class="tip" id="1615">
+          <div class="tip" id="1597">
             <strong>Signature:</strong> name:string -&gt; node:XmlNode -&gt; XmlNode<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the first sub node with the given name from the given XmlNode</p>
+                    <p>Gets the first sub node with the given name from the given XmlNode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1616', 1616)" onmouseover="showTip(event, '1616', 1616)">
+          <code onmouseout="hideTip(event, '1598', 1598)" onmouseover="showTip(event, '1598', 1598)">
             getWriter(fileName)
           </code>
-          <div class="tip" id="1616">
+          <div class="tip" id="1598">
             <strong>Signature:</strong> fileName:string -&gt; XmlWriter<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a XmlWriter which writes to the given file name</p>
+                    <p>Creates a XmlWriter which writes to the given file name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1617', 1617)" onmouseover="showTip(event, '1617', 1617)">
+          <code onmouseout="hideTip(event, '1599', 1599)" onmouseover="showTip(event, '1599', 1599)">
             loadDoc(path)
           </code>
-          <div class="tip" id="1617">
+          <div class="tip" id="1599">
             <strong>Signature:</strong> path:string -&gt; XmlDocument<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L202-202" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Loads the given file path into a XmlDocument</p>
+                    <p>Loads the given file path into a XmlDocument</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1618', 1618)" onmouseover="showTip(event, '1618', 1618)">
+          <code onmouseout="hideTip(event, '1600', 1600)" onmouseover="showTip(event, '1600', 1600)">
             parse name f node
           </code>
-          <div class="tip" id="1618">
+          <div class="tip" id="1600">
             <strong>Signature:</strong> name:string -&gt; f:(&#39;a -&gt; &#39;b) -&gt; node:&#39;a -&gt; &#39;b<br />
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L99-99" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a XmlNode</p>
+                    <p>Parses a XmlNode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1619', 1619)" onmouseover="showTip(event, '1619', 1619)">
+          <code onmouseout="hideTip(event, '1601', 1601)" onmouseover="showTip(event, '1601', 1601)">
             parseSubNode name f
           </code>
-          <div class="tip" id="1619">
+          <div class="tip" id="1601">
             <strong>Signature:</strong> name:string -&gt; f:(XmlNode -&gt; &#39;a) -&gt; XmlNode -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L104-104" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a XML subnode</p>
+                    <p>Parses a XML subnode</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1620', 1620)" onmouseover="showTip(event, '1620', 1620)">
+          <code onmouseout="hideTip(event, '1602', 1602)" onmouseover="showTip(event, '1602', 1602)">
             poke fileName xpath value
           </code>
-          <div class="tip" id="1620">
+          <div class="tip" id="1602">
             <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L211-211" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML file at the location specified by a XPath expression.</p>
+                    <p>Replaces text in a XML file at the location specified by a XPath expression.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1621', 1621)" onmouseover="showTip(event, '1621', 1621)">
+          <code onmouseout="hideTip(event, '1603', 1603)" onmouseover="showTip(event, '1603', 1603)">
             pokeInnerText(...)
           </code>
-          <div class="tip" id="1621">
+          <div class="tip" id="1603">
             <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L217-217" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.</p>
+                    <p>Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1622', 1622)" onmouseover="showTip(event, '1622', 1622)">
+          <code onmouseout="hideTip(event, '1604', 1604)" onmouseover="showTip(event, '1604', 1604)">
             pokeInnerTextNS(...)
           </code>
-          <div class="tip" id="1622">
+          <div class="tip" id="1604">
             <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L250-250" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1623', 1623)" onmouseover="showTip(event, '1623', 1623)">
+          <code onmouseout="hideTip(event, '1605', 1605)" onmouseover="showTip(event, '1605', 1605)">
             pokeNS fileName namespaces xpath value
           </code>
-          <div class="tip" id="1623">
+          <div class="tip" id="1605">
             <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L244-244" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1624', 1624)" onmouseover="showTip(event, '1624', 1624)">
+          <code onmouseout="hideTip(event, '1606', 1606)" onmouseover="showTip(event, '1606', 1606)">
             read(...)
           </code>
-          <div class="tip" id="1624">
+          <div class="tip" id="1606">
             <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L16-16" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a value from a XML document using a XPath</p>
+                    <p>Reads a value from a XML document using a XPath</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1625', 1625)" onmouseover="showTip(event, '1625', 1625)">
+          <code onmouseout="hideTip(event, '1607', 1607)" onmouseover="showTip(event, '1607', 1607)">
             read_Int(...)
           </code>
-          <div class="tip" id="1625">
+          <div class="tip" id="1607">
             <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; bool * int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a value from a XML document using a XPath
+                    <p>Reads a value from a XML document using a XPath
 Returns if the value is an int and the value</p>
 
 
@@ -615,242 +571,203 @@ Returns if the value is an int and the value</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1626', 1626)" onmouseover="showTip(event, '1626', 1626)">
+          <code onmouseout="hideTip(event, '1608', 1608)" onmouseover="showTip(event, '1608', 1608)">
             replaceXPath xpath value doc
           </code>
-          <div class="tip" id="1626">
+          <div class="tip" id="1608">
             <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in the XML document specified by a XPath expression.</p>
+                    <p>Replaces text in the XML document specified by a XPath expression.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1627', 1627)" onmouseover="showTip(event, '1627', 1627)">
+          <code onmouseout="hideTip(event, '1609', 1609)" onmouseover="showTip(event, '1609', 1609)">
             replaceXPathAttribute(...)
           </code>
-          <div class="tip" id="1627">
+          <div class="tip" id="1609">
             <strong>Signature:</strong> xpath:string -&gt; attribute:string -&gt; value:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L136-136" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.</p>
+                    <p>Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1628', 1628)" onmouseover="showTip(event, '1628', 1628)">
+          <code onmouseout="hideTip(event, '1610', 1610)" onmouseover="showTip(event, '1610', 1610)">
             replaceXPathInnerText(...)
           </code>
-          <div class="tip" id="1628">
+          <div class="tip" id="1610">
             <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the inner text of an xml node in the XML document specified by a XPath expression.</p>
+                    <p>Replaces the inner text of an xml node in the XML document specified by a XPath expression.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1629', 1629)" onmouseover="showTip(event, '1629', 1629)">
+          <code onmouseout="hideTip(event, '1611', 1611)" onmouseover="showTip(event, '1611', 1611)">
             replaceXPathInnerTextNS(...)
           </code>
-          <div class="tip" id="1629">
-            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?17641 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                          <strong>Type parameters:</strong> '?17641                      </div>
+          <div class="tip" id="1611">
+            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?17268 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                          <strong>Type parameters:</strong> '?17268                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L234-234" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1630', 1630)" onmouseover="showTip(event, '1630', 1630)">
+          <code onmouseout="hideTip(event, '1612', 1612)" onmouseover="showTip(event, '1612', 1612)">
             replaceXPathNS(...)
           </code>
-          <div class="tip" id="1630">
+          <div class="tip" id="1612">
             <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; namespaces:&#39;a -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L223-223" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
+                    <p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1631', 1631)" onmouseover="showTip(event, '1631', 1631)">
+          <code onmouseout="hideTip(event, '1613', 1613)" onmouseover="showTip(event, '1613', 1613)">
             saveDoc fileName doc
           </code>
-          <div class="tip" id="1631">
+          <div class="tip" id="1613">
             <strong>Signature:</strong> fileName:string -&gt; doc:XmlDocument -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1632', 1632)" onmouseover="showTip(event, '1632', 1632)">
+          <code onmouseout="hideTip(event, '1614', 1614)" onmouseover="showTip(event, '1614', 1614)">
             selectXPathAttributeValue(...)
           </code>
-          <div class="tip" id="1632">
-            <strong>Signature:</strong> xpath:string -&gt; attribute:string -&gt; namespaces:&#39;?17630 -&gt; doc:XmlDocument -&gt; string<br />
-                          <strong>Type parameters:</strong> '?17630                      </div>
+          <div class="tip" id="1614">
+            <strong>Signature:</strong> xpath:string -&gt; attribute:string -&gt; namespaces:&#39;?17257 -&gt; doc:XmlDocument -&gt; string<br />
+                          <strong>Type parameters:</strong> '?17257                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L158-158" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Selects a xml node attribute value via XPath from the given document</p>
+                    <p>Selects a xml node attribute value via XPath from the given document</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1633', 1633)" onmouseover="showTip(event, '1633', 1633)">
+          <code onmouseout="hideTip(event, '1615', 1615)" onmouseover="showTip(event, '1615', 1615)">
             selectXPathNode xpath namespaces doc
           </code>
-          <div class="tip" id="1633">
-            <strong>Signature:</strong> xpath:string -&gt; namespaces:&#39;?17632 -&gt; doc:XmlDocument -&gt; XmlNode<br />
-                          <strong>Type parameters:</strong> '?17632                      </div>
+          <div class="tip" id="1615">
+            <strong>Signature:</strong> xpath:string -&gt; namespaces:&#39;?17259 -&gt; doc:XmlDocument -&gt; XmlNode<br />
+                          <strong>Type parameters:</strong> '?17259                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L172-172" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Selects a xml node via XPath from the given document</p>
+                    <p>Selects a xml node via XPath from the given document</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1634', 1634)" onmouseover="showTip(event, '1634', 1634)">
+          <code onmouseout="hideTip(event, '1616', 1616)" onmouseover="showTip(event, '1616', 1616)">
             selectXPathValue xpath namespaces doc
           </code>
-          <div class="tip" id="1634">
+          <div class="tip" id="1616">
             <strong>Signature:</strong> xpath:string -&gt; namespaces:&#39;a -&gt; doc:XmlDocument -&gt; string<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L149-149" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Selects a xml node value via XPath from the given document</p>
+                    <p>Selects a xml node value via XPath from the given document</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1635', 1635)" onmouseover="showTip(event, '1635', 1635)">
+          <code onmouseout="hideTip(event, '1617', 1617)" onmouseover="showTip(event, '1617', 1617)">
             startElement name writer
           </code>
-          <div class="tip" id="1635">
+          <div class="tip" id="1617">
             <strong>Signature:</strong> name:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML start element to the given XmlTextWriter</p>
+                    <p>Writes an XML start element to the given XmlTextWriter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1636', 1636)" onmouseover="showTip(event, '1636', 1636)">
+          <code onmouseout="hideTip(event, '1618', 1618)" onmouseover="showTip(event, '1618', 1618)">
             writeAttribute name value writer
           </code>
-          <div class="tip" id="1636">
-            <strong>Signature:</strong> name:string -&gt; value:&#39;?17610 -&gt; writer:XmlWriter -&gt; XmlWriter<br />
-                          <strong>Type parameters:</strong> '?17610                      </div>
+          <div class="tip" id="1618">
+            <strong>Signature:</strong> name:string -&gt; value:&#39;?17237 -&gt; writer:XmlWriter -&gt; XmlWriter<br />
+                          <strong>Type parameters:</strong> '?17237                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L71-71" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML attribute to current element of the given XmlTextWriter</p>
+                    <p>Writes an XML attribute to current element of the given XmlTextWriter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1637', 1637)" onmouseover="showTip(event, '1637', 1637)">
+          <code onmouseout="hideTip(event, '1619', 1619)" onmouseover="showTip(event, '1619', 1619)">
             writeCDataElement(...)
           </code>
-          <div class="tip" id="1637">
+          <div class="tip" id="1619">
             <strong>Signature:</strong> elementName:string -&gt; data:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an CData element to the given XmlTextWriter</p>
+                    <p>Writes an CData element to the given XmlTextWriter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1638', 1638)" onmouseover="showTip(event, '1638', 1638)">
+          <code onmouseout="hideTip(event, '1620', 1620)" onmouseover="showTip(event, '1620', 1620)">
             writeComment comment writer
           </code>
-          <div class="tip" id="1638">
+          <div class="tip" id="1620">
             <strong>Signature:</strong> comment:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes an XML comment to the given XmlTextWriter</p>
+                    <p>Writes an XML comment to the given XmlTextWriter</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1639', 1639)" onmouseover="showTip(event, '1639', 1639)">
+          <code onmouseout="hideTip(event, '1621', 1621)" onmouseover="showTip(event, '1621', 1621)">
             XmlTransform stylesheetUri fileName
           </code>
-          <div class="tip" id="1639">
+          <div class="tip" id="1621">
             <strong>Signature:</strong> stylesheetUri:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -863,10 +780,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L289-289" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Transforms a XML file using a XSL stylesheet file.</p>
+                    <p>Transforms a XML file using a XSL stylesheet file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>stylesheetUri</code> - The Uri for the XSL stylesheet file.</li>
@@ -878,10 +792,10 @@ Returns if the value is an int and the value</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1640', 1640)" onmouseover="showTip(event, '1640', 1640)">
+          <code onmouseout="hideTip(event, '1622', 1622)" onmouseover="showTip(event, '1622', 1622)">
             XslTransform xsl doc
           </code>
-          <div class="tip" id="1640">
+          <div class="tip" id="1622">
             <strong>Signature:</strong> xsl:XslCompiledTransform -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -894,10 +808,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L270-270" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Transforms a XmlDocument using a XslCompiledTransform.</p>
+                    <p>Transforms a XmlDocument using a XslCompiledTransform.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>xsl</code> - The XslCompiledTransform which should be applied.</li>
@@ -909,10 +820,10 @@ Returns if the value is an int and the value</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1641', 1641)" onmouseover="showTip(event, '1641', 1641)">
+          <code onmouseout="hideTip(event, '1623', 1623)" onmouseover="showTip(event, '1623', 1623)">
             XslTransformer(text)
           </code>
-          <div class="tip" id="1641">
+          <div class="tip" id="1623">
             <strong>Signature:</strong> text:string -&gt; XslCompiledTransform<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -925,10 +836,7 @@ Returns if the value is an int and the value</p>
                 <h5>OBSOLETE</h5>
                 <p>This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L258-258" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Loads the given text into a XslCompiledTransform.</p>
+                    <p>Loads the given text into a XslCompiledTransform.</p>
 
 
         </td>
@@ -972,7 +880,7 @@ Returns if the value is an int and the value</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

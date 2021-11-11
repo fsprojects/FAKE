@@ -2,7 +2,8 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>DotNetLocalTool - FAKE - F# Make</title>
+	<title>Running Unit Tests using Fixie
+</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,149 +302,48 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-dotnet-dotnetlocaltool.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
-                
-
-
-<h1><a name="DotNetLocalTool" class="anchor" href="#DotNetLocalTool">DotNetLocalTool</a></h1>
-<div class="xmldoc">
-<p>Information about a dotnet tool</p>
-
+				<h1><a name="Running-Unit-Tests-using-Fixie" class="anchor" href="#Running-Unit-Tests-using-Fixie">Running Unit Tests using Fixie</a></h1>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later.</p>
 </div>
-  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5666', 5666)" onmouseover="showTip(event, '5666', 5666)">
-            Options
-          </code>
-          <div class="tip" id="5666">
-            <strong>Signature:</strong> Options -&gt; Options<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parameters as for the dotnet call</p>
+<p>FAKE can be used to run unit tests using the Fixie testing framework. Your can use it with FAKE in three steps: Create a test project, add Fixie to it, and add a FAKE script to call Fixie.</p>
+<p>You can read up more on Fixie getting started guide <a href="https://github.com/fixie/fixie/wiki">here</a>.</p>
+<h2><a name="Sample-usage" class="anchor" href="#Sample-usage">Sample usage</a></h2>
+<p>Create a FAKE script in the root directory of your test project and add the following sample Fixie target to it:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Testing</span>
 
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Fixie&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Fixie</span><span class="pn">.</span><span class="id">Fixie</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">CustomArguments</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;custom&quot;</span><span class="pn">,</span><span class="s">&quot;1&quot;</span><span class="pn">;</span> <span class="s">&quot;test&quot;</span><span class="pn">,</span><span class="s">&quot;2&quot;</span><span class="pn">]</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5667', 5667)" onmouseover="showTip(event, '5667', 5667)">
-            PackageName
-          </code>
-          <div class="tip" id="5667">
-            <strong>Signature:</strong> string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5668', 5668)" onmouseover="showTip(event, '5668', 5668)">
-            ToolCommandName
-          </code>
-          <div class="tip" id="5668">
-            <strong>Signature:</strong> string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The command name of the tool (the first argument of 'dotnet'). For example <code>"fake"</code> for <code>dotnet fake</code>.
-By default we usually fallback to the executable name of ToolPath without file extension.</p>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Fixie&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Arguments" class="anchor" href="#Arguments">Arguments</a></h2>
+<p>You can provide following arguments:</p>
+<ul>
+<li>Configuration - The configuration under which to build. When this option is omitted, the default configuration is Debug.</li>
+<li>NoBuild - Skip building the test project prior to running it.</li>
+<li>Framework - Only run test assemblies targeting a specific framework.</li>
+<li>Report - Write test results to the specified path, using the xUnit XML format.</li>
+<li>CustomArguments - Arbitrary arguments made available to custom discovery/execution classes.</li>
+</ul>
 
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h2><a name="Instance members" class="anchor" href="#Instance members">Instance members</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5669', 5669)" onmouseover="showTip(event, '5669', 5669)">
-            x.WithDefaultToolCommandName(...)
-          </code>
-          <div class="tip" id="5669">
-            <strong>Signature:</strong> toolCommandName:string -&gt; DotNetLocalTool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h2><a name="Static members" class="anchor" href="#Static members">Static members</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5670', 5670)" onmouseover="showTip(event, '5670', 5670)">
-            DotNetLocalTool.Create()
-          </code>
-          <div class="tip" id="5670">
-            <strong>Signature:</strong> unit -&gt; DotNetLocalTool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '5671', 5671)" onmouseover="showTip(event, '5671', 5671)">
-            DotNetLocalTool.Create(install)
-          </code>
-          <div class="tip" id="5671">
-            <strong>Signature:</strong> (install:(Options -&gt; Options)) -&gt; DotNetLocalTool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+				
 			</article>
 		</div>
 
@@ -476,7 +380,7 @@ By default we usually fallback to the executable name of ToolPath without file e
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

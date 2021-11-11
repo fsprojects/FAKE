@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,144 +332,120 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2623', 2623)" onmouseover="showTip(event, '2623', 2623)">
+          <code onmouseout="hideTip(event, '2588', 2588)" onmouseover="showTip(event, '2588', 2588)">
             AuthorEmail
           </code>
-          <div class="tip" id="2623">
+          <div class="tip" id="2588">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L347-347" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit author email address</p>
+                    <p>Commit author email address</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2624', 2624)" onmouseover="showTip(event, '2624', 2624)">
+          <code onmouseout="hideTip(event, '2589', 2589)" onmouseover="showTip(event, '2589', 2589)">
             AuthorName
           </code>
-          <div class="tip" id="2624">
+          <div class="tip" id="2589">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L345-345" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit author name</p>
+                    <p>Commit author name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2625', 2625)" onmouseover="showTip(event, '2625', 2625)">
+          <code onmouseout="hideTip(event, '2590', 2590)" onmouseover="showTip(event, '2590', 2590)">
             CommitId
           </code>
-          <div class="tip" id="2625">
+          <div class="tip" id="2590">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L341-341" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit hash</p>
+                    <p>Commit hash</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2626', 2626)" onmouseover="showTip(event, '2626', 2626)">
+          <code onmouseout="hideTip(event, '2591', 2591)" onmouseover="showTip(event, '2591', 2591)">
             Committed
           </code>
-          <div class="tip" id="2626">
+          <div class="tip" id="2591">
             <strong>Signature:</strong> DateTime option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L343-343" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit date</p>
+                    <p>Commit date</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2627', 2627)" onmouseover="showTip(event, '2627', 2627)">
+          <code onmouseout="hideTip(event, '2592', 2592)" onmouseover="showTip(event, '2592', 2592)">
             CommitterEmail
           </code>
-          <div class="tip" id="2627">
+          <div class="tip" id="2592">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L351-351" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Committer email address</p>
+                    <p>Committer email address</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2628', 2628)" onmouseover="showTip(event, '2628', 2628)">
+          <code onmouseout="hideTip(event, '2593', 2593)" onmouseover="showTip(event, '2593', 2593)">
             CommitterName
           </code>
-          <div class="tip" id="2628">
+          <div class="tip" id="2593">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L349-349" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Committer name</p>
+                    <p>Committer name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2629', 2629)" onmouseover="showTip(event, '2629', 2629)">
+          <code onmouseout="hideTip(event, '2594', 2594)" onmouseover="showTip(event, '2594', 2594)">
             Message
           </code>
-          <div class="tip" id="2629">
+          <div class="tip" id="2594">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L339-339" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit message</p>
+                    <p>Commit message</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2630', 2630)" onmouseover="showTip(event, '2630', 2630)">
+          <code onmouseout="hideTip(event, '2595', 2595)" onmouseover="showTip(event, '2595', 2595)">
             Version
           </code>
-          <div class="tip" id="2630">
+          <div class="tip" id="2595">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L337-337" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Build version; must be unique for the current project</p>
+                    <p>Build version; must be unique for the current project</p>
 
 
         </td>
@@ -509,7 +489,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

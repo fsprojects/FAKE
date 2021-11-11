@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,198 +330,165 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2257', 2257)" onmouseover="showTip(event, '2257', 2257)">
+          <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
             environVar(name)
           </code>
-          <div class="tip" id="2257">
+          <div class="tip" id="2232">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L15-15" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name</p>
+                    <p>Retrieves the environment variable with the given name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2258', 2258)" onmouseover="showTip(event, '2258', 2258)">
+          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
             environVarOrDefault name defaultValue
           </code>
-          <div class="tip" id="2258">
+          <div class="tip" id="2233">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2259', 2259)" onmouseover="showTip(event, '2259', 2259)">
+          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
             environVarOrFail(name)
           </code>
-          <div class="tip" id="2259">
+          <div class="tip" id="2234">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or fails if not found</p>
+                    <p>Retrieves the environment variable with the given name or fails if not found</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2260', 2260)" onmouseover="showTip(event, '2260', 2260)">
+          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
             environVarOrNone(name)
           </code>
-          <div class="tip" id="2260">
+          <div class="tip" id="2235">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L51-51" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable or None</p>
+                    <p>Retrieves the environment variable or None</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2261', 2261)" onmouseover="showTip(event, '2261', 2261)">
+          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
             environVars()
           </code>
-          <div class="tip" id="2261">
+          <div class="tip" id="2236">
             <strong>Signature:</strong> unit -&gt; (obj * obj) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves all environment variables from the given target</p>
+                    <p>Retrieves all environment variables from the given target</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2262', 2262)" onmouseover="showTip(event, '2262', 2262)">
+          <code onmouseout="hideTip(event, '2237', 2237)" onmouseover="showTip(event, '2237', 2237)">
             fakeVersion
           </code>
-          <div class="tip" id="2262">
+          <div class="tip" id="2237">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L9-9" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the FAKE version no.</p>
+                    <p>Gets the FAKE version no.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2263', 2263)" onmouseover="showTip(event, '2263', 2263)">
+          <code onmouseout="hideTip(event, '2238', 2238)" onmouseover="showTip(event, '2238', 2238)">
             fakeVersionStr
           </code>
-          <div class="tip" id="2263">
+          <div class="tip" id="2238">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L12-12" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the FAKE Version string</p>
+                    <p>Gets the FAKE Version string</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2264', 2264)" onmouseover="showTip(event, '2264', 2264)">
+          <code onmouseout="hideTip(event, '2239', 2239)" onmouseover="showTip(event, '2239', 2239)">
             getEnvironmentVarAsBool(varName)
           </code>
-          <div class="tip" id="2264">
+          <div class="tip" id="2239">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2265', 2265)" onmouseover="showTip(event, '2265', 2265)">
+          <code onmouseout="hideTip(event, '2240', 2240)" onmouseover="showTip(event, '2240', 2240)">
             getEnvironmentVarAsBoolOrDefault(...)
           </code>
-          <div class="tip" id="2265">
+          <div class="tip" id="2240">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2266', 2266)" onmouseover="showTip(event, '2266', 2266)">
+          <code onmouseout="hideTip(event, '2241', 2241)" onmouseover="showTip(event, '2241', 2241)">
             hasEnvironVar(name)
           </code>
-          <div class="tip" id="2266">
+          <div class="tip" id="2241">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns if the build parameter with the given name was set</p>
+                    <p>Returns if the build parameter with the given name was set</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2267', 2267)" onmouseover="showTip(event, '2267', 2267)">
+          <code onmouseout="hideTip(event, '2242', 2242)" onmouseover="showTip(event, '2242', 2242)">
             setEnvironVar name value
           </code>
-          <div class="tip" id="2267">
+          <div class="tip" id="2242">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Environment.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the environment variable with the given name</p>
+                    <p>Sets the environment variable with the given name</p>
 
 
         </td>
@@ -561,7 +532,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

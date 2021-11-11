@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,8 +332,813 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2572', 2572)" onmouseover="showTip(event, '2572', 2572)">
+          <code onmouseout="hideTip(event, '2537', 2537)" onmouseover="showTip(event, '2537', 2537)">
             AppVeyorEnvironment.AccountName
+          </code>
+          <div class="tip" id="2537">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>AppVeyor Account Name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2538', 2538)" onmouseover="showTip(event, '2538', 2538)">
+            AppVeyorEnvironment.ApiUrl
+          </code>
+          <div class="tip" id="2538">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>AppVeyor Build Agent API URL</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2539', 2539)" onmouseover="showTip(event, '2539', 2539)">
+            AppVeyorEnvironment.ArtifactUploadTimeout(...)
+          </code>
+          <div class="tip" id="2539">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Artifact upload timeout in seconds. Default is 600 (10 minutes)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2540', 2540)" onmouseover="showTip(event, '2540', 2540)">
+            AppVeyorEnvironment.BuildFolder
+          </code>
+          <div class="tip" id="2540">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Path to clone directory</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2541', 2541)" onmouseover="showTip(event, '2541', 2541)">
+            AppVeyorEnvironment.BuildId
+          </code>
+          <div class="tip" id="2541">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>AppVeyor unique build ID</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2542', 2542)" onmouseover="showTip(event, '2542', 2542)">
+            AppVeyorEnvironment.BuildNumber
+          </code>
+          <div class="tip" id="2542">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Build number</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2543', 2543)" onmouseover="showTip(event, '2543', 2543)">
+            AppVeyorEnvironment.BuildVersion
+          </code>
+          <div class="tip" id="2543">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Build version</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2544', 2544)" onmouseover="showTip(event, '2544', 2544)">
+            AppVeyorEnvironment.BuildWorkerImage
+          </code>
+          <div class="tip" id="2544">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Current build worker image the build is running on, e.g. Visual Studio 2015</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2545', 2545)" onmouseover="showTip(event, '2545', 2545)">
+            AppVeyorEnvironment.CacheEntryUploadDownloadTimeout(...)
+          </code>
+          <div class="tip" id="2545">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2546', 2546)" onmouseover="showTip(event, '2546', 2546)">
+            AppVeyorEnvironment.CacheSkipRestore
+          </code>
+          <div class="tip" id="2546">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>set to true to disable cache restore</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2547', 2547)" onmouseover="showTip(event, '2547', 2547)">
+            AppVeyorEnvironment.CacheSkipSave
+          </code>
+          <div class="tip" id="2547">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>set to true to disable cache update</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2548', 2548)" onmouseover="showTip(event, '2548', 2548)">
+            AppVeyorEnvironment.Configuration
+          </code>
+          <div class="tip" id="2548">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2549', 2549)" onmouseover="showTip(event, '2549', 2549)">
+            AppVeyorEnvironment.FileDownloadTimeout
+          </code>
+          <div class="tip" id="2549">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2550', 2550)" onmouseover="showTip(event, '2550', 2550)">
+            AppVeyorEnvironment.IsForcedBuild
+          </code>
+          <div class="tip" id="2550">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>If the build has been started by the "New Build" button or from the same API</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2551', 2551)" onmouseover="showTip(event, '2551', 2551)">
+            AppVeyorEnvironment.IsReBuild
+          </code>
+          <div class="tip" id="2551">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>If the build has been started by the "Re-Build commit/PR" button or from the same API</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2552', 2552)" onmouseover="showTip(event, '2552', 2552)">
+            AppVeyorEnvironment.IsScheduledBuild
+          </code>
+          <div class="tip" id="2552">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>If the build runs by scheduler;</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2553', 2553)" onmouseover="showTip(event, '2553', 2553)">
+            AppVeyorEnvironment.JobId
+          </code>
+          <div class="tip" id="2553">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>AppVeyor unique job ID</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2554', 2554)" onmouseover="showTip(event, '2554', 2554)">
+            AppVeyorEnvironment.JobName
+          </code>
+          <div class="tip" id="2554">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>The job name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2555', 2555)" onmouseover="showTip(event, '2555', 2555)">
+            AppVeyorEnvironment.JobNumber
+          </code>
+          <div class="tip" id="2555">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>The Job Number</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2556', 2556)" onmouseover="showTip(event, '2556', 2556)">
+            AppVeyorEnvironment.Platform
+          </code>
+          <div class="tip" id="2556">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2557', 2557)" onmouseover="showTip(event, '2557', 2557)">
+            AppVeyorEnvironment.ProjectId
+          </code>
+          <div class="tip" id="2557">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>AppVeyor unique project ID</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2558', 2558)" onmouseover="showTip(event, '2558', 2558)">
+            AppVeyorEnvironment.ProjectName
+          </code>
+          <div class="tip" id="2558">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Project name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2559', 2559)" onmouseover="showTip(event, '2559', 2559)">
+            AppVeyorEnvironment.ProjectSlug
+          </code>
+          <div class="tip" id="2559">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Project slug (as seen in project details URL)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2560', 2560)" onmouseover="showTip(event, '2560', 2560)">
+            AppVeyorEnvironment.PullRequestNumber
+          </code>
+          <div class="tip" id="2560">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>GitHub Pull Request number</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2561', 2561)" onmouseover="showTip(event, '2561', 2561)">
+            AppVeyorEnvironment.PullRequestRepoBranch(...)
+          </code>
+          <div class="tip" id="2561">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>GitHub Pull Request branch</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2562', 2562)" onmouseover="showTip(event, '2562', 2562)">
+            AppVeyorEnvironment.PullRequestRepoName
+          </code>
+          <div class="tip" id="2562">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>GitHub Pull Request Repo name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2563', 2563)" onmouseover="showTip(event, '2563', 2563)">
+            AppVeyorEnvironment.PullRequestTitle
+          </code>
+          <div class="tip" id="2563">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>GitHub Pull Request title</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2564', 2564)" onmouseover="showTip(event, '2564', 2564)">
+            AppVeyorEnvironment.RepoBranch
+          </code>
+          <div class="tip" id="2564">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Build branch</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2565', 2565)" onmouseover="showTip(event, '2565', 2565)">
+            AppVeyorEnvironment.RepoCommit
+          </code>
+          <div class="tip" id="2565">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Commit ID (SHA)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2566', 2566)" onmouseover="showTip(event, '2566', 2566)">
+            AppVeyorEnvironment.RepoCommitAuthor
+          </code>
+          <div class="tip" id="2566">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Commit author's name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2567', 2567)" onmouseover="showTip(event, '2567', 2567)">
+            AppVeyorEnvironment.RepoCommitAuthorEmail(...)
+          </code>
+          <div class="tip" id="2567">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Commit author's email address</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2568', 2568)" onmouseover="showTip(event, '2568', 2568)">
+            AppVeyorEnvironment.RepoCommitMessage
+          </code>
+          <div class="tip" id="2568">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Commit message</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2569', 2569)" onmouseover="showTip(event, '2569', 2569)">
+            AppVeyorEnvironment.RepoCommitMessageExtended(...)
+          </code>
+          <div class="tip" id="2569">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>The rest of the commit message after line break (if exists)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2570', 2570)" onmouseover="showTip(event, '2570', 2570)">
+            AppVeyorEnvironment.RepoCommitTimestamp
+          </code>
+          <div class="tip" id="2570">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Commit date/time</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2571', 2571)" onmouseover="showTip(event, '2571', 2571)">
+            AppVeyorEnvironment.RepoName
+          </code>
+          <div class="tip" id="2571">
+            <strong>Signature:</strong> string<br />
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="notification is-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                    <p>Repository name in format owner-name/repo-name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '2572', 2572)" onmouseover="showTip(event, '2572', 2572)">
+            AppVeyorEnvironment.RepoProvider
           </code>
           <div class="tip" id="2572">
             <strong>Signature:</strong> string<br />
@@ -344,10 +1153,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor Account Name</p>
+                    <p>GitHub, BitBucket or Kiln</p>
 
 
         </td>
@@ -355,7 +1161,7 @@
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '2573', 2573)" onmouseover="showTip(event, '2573', 2573)">
-            AppVeyorEnvironment.ApiUrl
+            AppVeyorEnvironment.RepoScm
           </code>
           <div class="tip" id="2573">
             <strong>Signature:</strong> string<br />
@@ -370,10 +1176,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor Build Agent API URL</p>
+                    <p>git or mercurial</p>
 
 
         </td>
@@ -381,7 +1184,7 @@
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '2574', 2574)" onmouseover="showTip(event, '2574', 2574)">
-            AppVeyorEnvironment.ArtifactUploadTimeout(...)
+            AppVeyorEnvironment.RepositoryShallowCloneTimeout(...)
           </code>
           <div class="tip" id="2574">
             <strong>Signature:</strong> string<br />
@@ -396,10 +1199,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L160-160" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Artifact upload timeout in seconds. Default is 600 (10 minutes)</p>
+                    <p>Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)</p>
 
 
         </td>
@@ -407,10 +1207,10 @@
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '2575', 2575)" onmouseover="showTip(event, '2575', 2575)">
-            AppVeyorEnvironment.BuildFolder
+            AppVeyorEnvironment.RepoTag
           </code>
           <div class="tip" id="2575">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
@@ -422,10 +1222,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to clone directory</p>
+                    <p>true if build has started by pushed tag; otherwise false</p>
 
 
         </td>
@@ -433,7 +1230,7 @@
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '2576', 2576)" onmouseover="showTip(event, '2576', 2576)">
-            AppVeyorEnvironment.BuildId
+            AppVeyorEnvironment.RepoTagName
           </code>
           <div class="tip" id="2576">
             <strong>Signature:</strong> string<br />
@@ -448,920 +1245,7 @@
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor unique build ID</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2577', 2577)" onmouseover="showTip(event, '2577', 2577)">
-            AppVeyorEnvironment.BuildNumber
-          </code>
-          <div class="tip" id="2577">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Build number</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2578', 2578)" onmouseover="showTip(event, '2578', 2578)">
-            AppVeyorEnvironment.BuildVersion
-          </code>
-          <div class="tip" id="2578">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Build version</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2579', 2579)" onmouseover="showTip(event, '2579', 2579)">
-            AppVeyorEnvironment.BuildWorkerImage
-          </code>
-          <div class="tip" id="2579">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Current build worker image the build is running on, e.g. Visual Studio 2015</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2580', 2580)" onmouseover="showTip(event, '2580', 2580)">
-            AppVeyorEnvironment.CacheEntryUploadDownloadTimeout(...)
-          </code>
-          <div class="tip" id="2580">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L172-172" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2581', 2581)" onmouseover="showTip(event, '2581', 2581)">
-            AppVeyorEnvironment.CacheSkipRestore
-          </code>
-          <div class="tip" id="2581">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L148-148" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>set to true to disable cache restore</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2582', 2582)" onmouseover="showTip(event, '2582', 2582)">
-            AppVeyorEnvironment.CacheSkipSave
-          </code>
-          <div class="tip" id="2582">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L152-152" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>set to true to disable cache update</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2583', 2583)" onmouseover="showTip(event, '2583', 2583)">
-            AppVeyorEnvironment.Configuration
-          </code>
-          <div class="tip" id="2583">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L136-136" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2584', 2584)" onmouseover="showTip(event, '2584', 2584)">
-            AppVeyorEnvironment.FileDownloadTimeout
-          </code>
-          <div class="tip" id="2584">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2585', 2585)" onmouseover="showTip(event, '2585', 2585)">
-            AppVeyorEnvironment.IsForcedBuild
-          </code>
-          <div class="tip" id="2585">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If the build has been started by the "New Build" button or from the same API</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2586', 2586)" onmouseover="showTip(event, '2586', 2586)">
-            AppVeyorEnvironment.IsReBuild
-          </code>
-          <div class="tip" id="2586">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L118-118" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If the build has been started by the "Re-Build commit/PR" button or from the same API</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2587', 2587)" onmouseover="showTip(event, '2587', 2587)">
-            AppVeyorEnvironment.IsScheduledBuild
-          </code>
-          <div class="tip" id="2587">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L110-110" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If the build runs by scheduler;</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2588', 2588)" onmouseover="showTip(event, '2588', 2588)">
-            AppVeyorEnvironment.JobId
-          </code>
-          <div class="tip" id="2588">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor unique job ID</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2589', 2589)" onmouseover="showTip(event, '2589', 2589)">
-            AppVeyorEnvironment.JobName
-          </code>
-          <div class="tip" id="2589">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L140-140" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The job name</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2590', 2590)" onmouseover="showTip(event, '2590', 2590)">
-            AppVeyorEnvironment.JobNumber
-          </code>
-          <div class="tip" id="2590">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L144-144" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The Job Number</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2591', 2591)" onmouseover="showTip(event, '2591', 2591)">
-            AppVeyorEnvironment.Platform
-          </code>
-          <div class="tip" id="2591">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L132-132" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2592', 2592)" onmouseover="showTip(event, '2592', 2592)">
-            AppVeyorEnvironment.ProjectId
-          </code>
-          <div class="tip" id="2592">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>AppVeyor unique project ID</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2593', 2593)" onmouseover="showTip(event, '2593', 2593)">
-            AppVeyorEnvironment.ProjectName
-          </code>
-          <div class="tip" id="2593">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Project name</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2594', 2594)" onmouseover="showTip(event, '2594', 2594)">
-            AppVeyorEnvironment.ProjectSlug
-          </code>
-          <div class="tip" id="2594">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Project slug (as seen in project details URL)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2595', 2595)" onmouseover="showTip(event, '2595', 2595)">
-            AppVeyorEnvironment.PullRequestNumber
-          </code>
-          <div class="tip" id="2595">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>GitHub Pull Request number</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2596', 2596)" onmouseover="showTip(event, '2596', 2596)">
-            AppVeyorEnvironment.PullRequestRepoBranch(...)
-          </code>
-          <div class="tip" id="2596">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>GitHub Pull Request branch</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2597', 2597)" onmouseover="showTip(event, '2597', 2597)">
-            AppVeyorEnvironment.PullRequestRepoName
-          </code>
-          <div class="tip" id="2597">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>GitHub Pull Request Repo name</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2598', 2598)" onmouseover="showTip(event, '2598', 2598)">
-            AppVeyorEnvironment.PullRequestTitle
-          </code>
-          <div class="tip" id="2598">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>GitHub Pull Request title</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2599', 2599)" onmouseover="showTip(event, '2599', 2599)">
-            AppVeyorEnvironment.RepoBranch
-          </code>
-          <div class="tip" id="2599">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L82-82" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Build branch</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2600', 2600)" onmouseover="showTip(event, '2600', 2600)">
-            AppVeyorEnvironment.RepoCommit
-          </code>
-          <div class="tip" id="2600">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L86-86" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit ID (SHA)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2601', 2601)" onmouseover="showTip(event, '2601', 2601)">
-            AppVeyorEnvironment.RepoCommitAuthor
-          </code>
-          <div class="tip" id="2601">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit author's name</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2602', 2602)" onmouseover="showTip(event, '2602', 2602)">
-            AppVeyorEnvironment.RepoCommitAuthorEmail(...)
-          </code>
-          <div class="tip" id="2602">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit author's email address</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2603', 2603)" onmouseover="showTip(event, '2603', 2603)">
-            AppVeyorEnvironment.RepoCommitMessage
-          </code>
-          <div class="tip" id="2603">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit message</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2604', 2604)" onmouseover="showTip(event, '2604', 2604)">
-            AppVeyorEnvironment.RepoCommitMessageExtended(...)
-          </code>
-          <div class="tip" id="2604">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L106-106" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The rest of the commit message after line break (if exists)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2605', 2605)" onmouseover="showTip(event, '2605', 2605)">
-            AppVeyorEnvironment.RepoCommitTimestamp
-          </code>
-          <div class="tip" id="2605">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L98-98" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Commit date/time</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2606', 2606)" onmouseover="showTip(event, '2606', 2606)">
-            AppVeyorEnvironment.RepoName
-          </code>
-          <div class="tip" id="2606">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Repository name in format owner-name/repo-name</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2607', 2607)" onmouseover="showTip(event, '2607', 2607)">
-            AppVeyorEnvironment.RepoProvider
-          </code>
-          <div class="tip" id="2607">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>GitHub, BitBucket or Kiln</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2608', 2608)" onmouseover="showTip(event, '2608', 2608)">
-            AppVeyorEnvironment.RepoScm
-          </code>
-          <div class="tip" id="2608">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>git or mercurial</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2609', 2609)" onmouseover="showTip(event, '2609', 2609)">
-            AppVeyorEnvironment.RepositoryShallowCloneTimeout(...)
-          </code>
-          <div class="tip" id="2609">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L168-168" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2610', 2610)" onmouseover="showTip(event, '2610', 2610)">
-            AppVeyorEnvironment.RepoTag
-          </code>
-          <div class="tip" id="2610">
-            <strong>Signature:</strong> bool<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>true if build has started by pushed tag; otherwise false</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '2611', 2611)" onmouseover="showTip(event, '2611', 2611)">
-            AppVeyorEnvironment.RepoTagName
-          </code>
-          <div class="tip" id="2611">
-            <strong>Signature:</strong> string<br />
-                                        <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="notification is-warning">
-                <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>contains tag name for builds started by tag</p>
+                    <p>contains tag name for builds started by tag</p>
 
 
         </td>
@@ -1405,7 +1289,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

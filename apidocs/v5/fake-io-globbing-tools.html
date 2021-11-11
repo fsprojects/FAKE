@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -327,10 +331,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1026', 1026)" onmouseover="showTip(event, '1026', 1026)">
+          <code onmouseout="hideTip(event, '1030', 1030)" onmouseover="showTip(event, '1030', 1030)">
             Tools.findToolFolderInSubPath(...)
           </code>
-          <div class="tip" id="1026">
+          <div class="tip" id="1030">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -343,7 +347,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L253-253" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L253-253" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool in all subfolders - returns the folder where the tool was found.</p>
@@ -353,10 +357,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
+          <code onmouseout="hideTip(event, '1031', 1031)" onmouseover="showTip(event, '1031', 1031)">
             Tools.findToolInSubPath(...)
           </code>
-          <div class="tip" id="1027">
+          <div class="tip" id="1031">
             <strong>Signature:</strong> toolname:string -&gt; defaultPath:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -369,7 +373,7 @@
                 <h5>OBSOLETE</h5>
                 <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L228-228" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L228-228" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool first in its default path, if not found the in ./packages/ and then
@@ -380,10 +384,10 @@ in all subfolders of the root folder - returns the tool file name.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1028', 1028)" onmouseover="showTip(event, '1028', 1028)">
+          <code onmouseout="hideTip(event, '1032', 1032)" onmouseover="showTip(event, '1032', 1032)">
             Tools.tryFindToolFolderInSubPath(...)
           </code>
-          <div class="tip" id="1028">
+          <div class="tip" id="1032">
             <strong>Signature:</strong> toolname:string -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -396,7 +400,7 @@ in all subfolders of the root folder - returns the tool file name.</p>
                 <h5>OBSOLETE</h5>
                 <p>use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool &quot;TOOL&quot; &quot;tool&quot; [ &quot;.&quot;; defaultPath ]`</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L246-246" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L246-246" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Looks for a tool in all subfolders - returns the folder where the tool was found
@@ -445,7 +449,7 @@ or None if not found.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

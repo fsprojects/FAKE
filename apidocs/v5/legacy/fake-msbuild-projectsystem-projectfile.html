@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,18 +332,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6426', 6426)" onmouseover="showTip(event, '6426', 6426)">
+          <code onmouseout="hideTip(event, '6329', 6329)" onmouseover="showTip(event, '6329', 6329)">
             new(projectFileName, documentContent)
           </code>
-          <div class="tip" id="6426">
+          <div class="tip" id="6329">
             <strong>Signature:</strong> (projectFileName:string * documentContent:string) -&gt; ProjectFile<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -352,10 +353,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6427', 6427)" onmouseover="showTip(event, '6427', 6427)">
+          <code onmouseout="hideTip(event, '6330', 6330)" onmouseover="showTip(event, '6330', 6330)">
             x.AddContentFile(fileName)
           </code>
-          <div class="tip" id="6427">
+          <div class="tip" id="6330">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -368,20 +369,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Add a file to the Content nodes</p>
+                    <p>Add a file to the Content nodes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6428', 6428)" onmouseover="showTip(event, '6428', 6428)">
+          <code onmouseout="hideTip(event, '6331', 6331)" onmouseover="showTip(event, '6331', 6331)">
             x.AddFile(fileName)
           </code>
-          <div class="tip" id="6428">
+          <div class="tip" id="6331">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -394,20 +392,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Add a file to the Compile nodes</p>
+                    <p>Add a file to the Compile nodes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6429', 6429)" onmouseover="showTip(event, '6429', 6429)">
+          <code onmouseout="hideTip(event, '6332', 6332)" onmouseover="showTip(event, '6332', 6332)">
             x.ContentFiles
           </code>
-          <div class="tip" id="6429">
+          <div class="tip" id="6332">
             <strong>Signature:</strong> string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -420,20 +415,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L94-94" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>All files which are in "Content" sections</p>
+                    <p>All files which are in "Content" sections</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6430', 6430)" onmouseover="showTip(event, '6430', 6430)">
+          <code onmouseout="hideTip(event, '6333', 6333)" onmouseover="showTip(event, '6333', 6333)">
             x.Files
           </code>
-          <div class="tip" id="6430">
+          <div class="tip" id="6333">
             <strong>Signature:</strong> string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -446,20 +438,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L90-90" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>All files which are in "Compile" sections</p>
+                    <p>All files which are in "Compile" sections</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6431', 6431)" onmouseover="showTip(event, '6431', 6431)">
+          <code onmouseout="hideTip(event, '6334', 6334)" onmouseover="showTip(event, '6334', 6334)">
             x.FindDuplicateContentFiles()
           </code>
-          <div class="tip" id="6431">
+          <div class="tip" id="6334">
             <strong>Signature:</strong> unit -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -472,20 +461,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finds duplicate files which are in "Content" sections</p>
+                    <p>Finds duplicate files which are in "Content" sections</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6432', 6432)" onmouseover="showTip(event, '6432', 6432)">
+          <code onmouseout="hideTip(event, '6335', 6335)" onmouseover="showTip(event, '6335', 6335)">
             x.FindDuplicateFiles()
           </code>
-          <div class="tip" id="6432">
+          <div class="tip" id="6335">
             <strong>Signature:</strong> unit -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -498,20 +484,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L98-98" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finds duplicate files which are in "Compile" sections</p>
+                    <p>Finds duplicate files which are in "Compile" sections</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6433', 6433)" onmouseover="showTip(event, '6433', 6433)">
+          <code onmouseout="hideTip(event, '6336', 6336)" onmouseover="showTip(event, '6336', 6336)">
             x.ProjectFileName
           </code>
-          <div class="tip" id="6433">
+          <div class="tip" id="6336">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -524,20 +507,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The project file name</p>
+                    <p>The project file name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6434', 6434)" onmouseover="showTip(event, '6434', 6434)">
+          <code onmouseout="hideTip(event, '6337', 6337)" onmouseover="showTip(event, '6337', 6337)">
             x.RemoveContentFile(fileName)
           </code>
-          <div class="tip" id="6434">
+          <div class="tip" id="6337">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -550,20 +530,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L77-77" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes a file from the Content nodes</p>
+                    <p>Removes a file from the Content nodes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6435', 6435)" onmouseover="showTip(event, '6435', 6435)">
+          <code onmouseout="hideTip(event, '6338', 6338)" onmouseover="showTip(event, '6338', 6338)">
             x.RemoveDuplicates()
           </code>
-          <div class="tip" id="6435">
+          <div class="tip" id="6338">
             <strong>Signature:</strong> unit -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -576,18 +553,15 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6436', 6436)" onmouseover="showTip(event, '6436', 6436)">
+          <code onmouseout="hideTip(event, '6339', 6339)" onmouseover="showTip(event, '6339', 6339)">
             x.RemoveDuplicatesContent()
           </code>
-          <div class="tip" id="6436">
+          <div class="tip" id="6339">
             <strong>Signature:</strong> unit -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -600,18 +574,15 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L124-124" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6437', 6437)" onmouseover="showTip(event, '6437', 6437)">
+          <code onmouseout="hideTip(event, '6340', 6340)" onmouseover="showTip(event, '6340', 6340)">
             x.RemoveFile(fileName)
           </code>
-          <div class="tip" id="6437">
+          <div class="tip" id="6340">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -624,20 +595,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Removes a file from the Compile nodes</p>
+                    <p>Removes a file from the Compile nodes</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6438', 6438)" onmouseover="showTip(event, '6438', 6438)">
+          <code onmouseout="hideTip(event, '6341', 6341)" onmouseover="showTip(event, '6341', 6341)">
             x.Save(fileName)
           </code>
-          <div class="tip" id="6438">
+          <div class="tip" id="6341">
             <strong>Signature:</strong> (fileName:string option) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -650,10 +618,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Saves the project file</p>
+                    <p>Saves the project file</p>
 
 
         </td>
@@ -668,10 +633,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6439', 6439)" onmouseover="showTip(event, '6439', 6439)">
+          <code onmouseout="hideTip(event, '6342', 6342)" onmouseover="showTip(event, '6342', 6342)">
             ProjectFile.FromFile(projectFileName)
           </code>
-          <div class="tip" id="6439">
+          <div class="tip" id="6342">
             <strong>Signature:</strong> projectFileName:string -&gt; ProjectFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -684,10 +649,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a Project from a FileName</p>
+                    <p>Read a Project from a FileName</p>
 
 
         </td>
@@ -731,7 +693,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

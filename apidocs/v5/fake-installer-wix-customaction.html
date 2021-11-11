@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3293', 3293)" onmouseover="showTip(event, '3293', 3293)">
+          <code onmouseout="hideTip(event, '3320', 3320)" onmouseover="showTip(event, '3320', 3320)">
             ExeCommand
           </code>
-          <div class="tip" id="3293">
+          <div class="tip" id="3320">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1120-1120" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1120-1120" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This attribute specifies the command line parameters to supply to an externally run executable.
@@ -340,15 +344,15 @@ specify the executable to run.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3294', 3294)" onmouseover="showTip(event, '3294', 3294)">
+          <code onmouseout="hideTip(event, '3321', 3321)" onmouseover="showTip(event, '3321', 3321)">
             Execute
           </code>
-          <div class="tip" id="3294">
+          <div class="tip" id="3321">
             <strong>Signature:</strong> CustomActionExecute<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1111-1111" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1111-1111" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This attribute indicates the scheduling of the custom action.</p>
@@ -358,15 +362,15 @@ specify the executable to run.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3295', 3295)" onmouseover="showTip(event, '3295', 3295)">
+          <code onmouseout="hideTip(event, '3322', 3322)" onmouseover="showTip(event, '3322', 3322)">
             FileKey
           </code>
-          <div class="tip" id="3295">
+          <div class="tip" id="3322">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1108-1108" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1108-1108" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This attribute specifies a reference to a File element with matching Id attribute that will execute the custom action code
@@ -379,15 +383,15 @@ DLL to use for a type 17 custom action, or with the VBScriptCall or JScriptCall 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3296', 3296)" onmouseover="showTip(event, '3296', 3296)">
+          <code onmouseout="hideTip(event, '3323', 3323)" onmouseover="showTip(event, '3323', 3323)">
             Id
           </code>
-          <div class="tip" id="3296">
+          <div class="tip" id="3323">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1102-1102" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1102-1102" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The identifier of the custom action.</p>
@@ -397,15 +401,15 @@ DLL to use for a type 17 custom action, or with the VBScriptCall or JScriptCall 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3297', 3297)" onmouseover="showTip(event, '3297', 3297)">
+          <code onmouseout="hideTip(event, '3324', 3324)" onmouseover="showTip(event, '3324', 3324)">
             Impersonate
           </code>
-          <div class="tip" id="3297">
+          <div class="tip" id="3324">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1115-1115" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1115-1115" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This attribute specifies whether the Windows Installer, which executes as LocalSystem, should impersonate the user context of
@@ -417,15 +421,15 @@ elevated privileges to apply changes to the machine.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3298', 3298)" onmouseover="showTip(event, '3298', 3298)">
+          <code onmouseout="hideTip(event, '3325', 3325)" onmouseover="showTip(event, '3325', 3325)">
             Return
           </code>
-          <div class="tip" id="3298">
+          <div class="tip" id="3325">
             <strong>Signature:</strong> CustomActionReturn<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1122-1122" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1122-1122" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set this attribute to set the return behavior of the custom action.</p>
@@ -473,7 +477,7 @@ elevated privileges to apply changes to the machine.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

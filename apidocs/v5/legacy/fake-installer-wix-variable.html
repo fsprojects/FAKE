@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,36 +326,30 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6389', 6389)" onmouseover="showTip(event, '6389', 6389)">
+          <code onmouseout="hideTip(event, '6293', 6293)" onmouseover="showTip(event, '6293', 6293)">
             Id
           </code>
-          <div class="tip" id="6389">
+          <div class="tip" id="6293">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1297-1297" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The name of the variable.</p>
+                    <p>The name of the variable.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6390', 6390)" onmouseover="showTip(event, '6390', 6390)">
+          <code onmouseout="hideTip(event, '6294', 6294)" onmouseover="showTip(event, '6294', 6294)">
             Overridable
           </code>
-          <div class="tip" id="6390">
+          <div class="tip" id="6294">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1300-1300" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
+                    <p>Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
 If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'.</p>
 
 
@@ -359,18 +357,15 @@ If the same variable is declared overridable in multiple places it will cause an
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6391', 6391)" onmouseover="showTip(event, '6391', 6391)">
+          <code onmouseout="hideTip(event, '6295', 6295)" onmouseover="showTip(event, '6295', 6295)">
             Value
           </code>
-          <div class="tip" id="6391">
+          <div class="tip" id="6295">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1302-1302" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null.</p>
+                    <p>The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null.</p>
 
 
         </td>
@@ -414,7 +409,7 @@ If the same variable is declared overridable in multiple places it will cause an
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

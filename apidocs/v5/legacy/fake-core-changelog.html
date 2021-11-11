@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -313,43 +317,7 @@
 
 <div class="xmldoc">
 <p>Contains helpers which allow to parse Change log text files.
-These files have to be in a format as described on <a href="http://keepachangelog.com/en/1.1.0/">http://keepachangelog.com/en/1.1.0/</a></p>
-
-        <h2><a name="Format" class="anchor" href="#Format">Format</a></h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="markdown"># Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-## [0.1.0] - 2020-03-17
-First release
-
-### Added
-- This release already has lots of features
-
-[0.1.0]: https://github.com/user/MyCoolNewLib.git/releases/tag/v0.1.0
-</code></pre></td></tr></table>
+These files have to be in a format as described on <a href="http://keepachangelog.com/en/0.1.0/">http://keepachangelog.com/en/0.1.0/</a></p>
 
         <h2><a name="Sample" class="anchor" href="#Sample">Sample</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -373,8 +341,8 @@ First release
 <span class="l">19: </span>
 <span class="l">20: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">changelogFile</span> <span class="o">=</span> <span class="s">&quot;CHANGELOG.md&quot;</span>
-<span class="k">let</span> <span class="id">newVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">changelogFile</span> <span class="o">=</span> <span class="s">&quot;CHANGELOG.md&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">newVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;AssemblyInfo&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="k">let</span> <span class="id">changelog</span> <span class="o">=</span> <span class="id">changeLogFile</span> <span class="o">|&gt;</span> <span class="id">Changelog</span><span class="pn">.</span><span class="id">load</span>
@@ -388,14 +356,16 @@ First release
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Promote Unreleased to new version&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="k">let</span> <span class="id">newChangelog</span> <span class="o">=</span> 
-        <span class="id">changelogFile</span> 
+        <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">changelogFile</span> 
         <span class="o">|&gt;</span> <span class="id">ChangeLog</span><span class="pn">.</span><span class="id">load</span>
-        <span class="o">|&gt;</span> <span class="id">ChangeLog</span><span class="pn">.</span><span class="id">promoteUnreleased</span> <span class="id">newVersion</span>
-        <span class="o">|&gt;</span> <span class="id">ChangeLog</span><span class="pn">.</span><span class="id">save</span> <span class="id">changelogFile</span>
+        <span class="o">|&gt;</span> <span class="id">ChangeLog</span><span class="pn">.</span><span class="id">promoteUnreleased</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">newVersion</span>
+        <span class="o">|&gt;</span> <span class="id">ChangeLog</span><span class="pn">.</span><span class="id">save</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">changelogFile</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
+<div class="tip" id="fs1">val changelogFile : string</div>
+<div class="tip" id="fs2">val newVersion : string</div>
 
 </div>
 
@@ -460,66 +430,54 @@ First release
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1205', 1205)" onmouseover="showTip(event, '1205', 1205)">
+          <code onmouseout="hideTip(event, '1200', 1200)" onmouseover="showTip(event, '1200', 1200)">
             Changelog.create(...)
           </code>
-          <div class="tip" id="1205">
+          <div class="tip" id="1200">
             <strong>Signature:</strong> description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L279-279" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
+          <code onmouseout="hideTip(event, '1201', 1201)" onmouseover="showTip(event, '1201', 1201)">
             Changelog.createWithCustomHeader(...)
           </code>
-          <div class="tip" id="1206">
+          <div class="tip" id="1201">
             <strong>Signature:</strong> header:string -&gt; description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L278-278" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1207', 1207)" onmouseover="showTip(event, '1207', 1207)">
+          <code onmouseout="hideTip(event, '1202', 1202)" onmouseover="showTip(event, '1202', 1202)">
             Changelog.fromEntries(entries)
           </code>
-          <div class="tip" id="1207">
+          <div class="tip" id="1202">
             <strong>Signature:</strong> entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L280-280" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1208', 1208)" onmouseover="showTip(event, '1208', 1208)">
+          <code onmouseout="hideTip(event, '1203', 1203)" onmouseover="showTip(event, '1203', 1203)">
             Changelog.load(filename)
           </code>
-          <div class="tip" id="1208">
+          <div class="tip" id="1203">
             <strong>Signature:</strong> filename:string -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L426-426" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a Changelog text file and returns the lastest changelog.</p>
+                    <p>Parses a Changelog text file and returns the lastest changelog.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>filename</code> - Changelog text file name</li>
@@ -532,18 +490,15 @@ First release
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1209', 1209)" onmouseover="showTip(event, '1209', 1209)">
+          <code onmouseout="hideTip(event, '1204', 1204)" onmouseover="showTip(event, '1204', 1204)">
             Changelog.parse(data)
           </code>
-          <div class="tip" id="1209">
+          <div class="tip" id="1204">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L294-294" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a change log text and returns the change log.</p>
+                    <p>Parses a change log text and returns the change log.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>data</code> - change log text</li>
@@ -554,34 +509,28 @@ First release
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1210', 1210)" onmouseover="showTip(event, '1210', 1210)">
+          <code onmouseout="hideTip(event, '1205', 1205)" onmouseover="showTip(event, '1205', 1205)">
             Changelog.parseVersions(line)
           </code>
-          <div class="tip" id="1210">
+          <div class="tip" id="1205">
             <strong>Signature:</strong> line:string -&gt; Match * Match<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L204-204" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1211', 1211)" onmouseover="showTip(event, '1211', 1211)">
+          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
             Changelog.promoteUnreleased(...)
           </code>
-          <div class="tip" id="1211">
+          <div class="tip" id="1206">
             <strong>Signature:</strong> version:string -&gt; changelog:Changelog -&gt; Changelog<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L447-447" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Promotes the <code>Unreleased</code> section of a changelog
+                    <p>Promotes the <code>Unreleased</code> section of a changelog
 to a new changelog entry with the given version</p>
 <h2>Parameters</h2>
 <ul>
@@ -596,18 +545,15 @@ to a new changelog entry with the given version</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1212', 1212)" onmouseover="showTip(event, '1212', 1212)">
+          <code onmouseout="hideTip(event, '1207', 1207)" onmouseover="showTip(event, '1207', 1207)">
             Changelog.save filename changelog
           </code>
-          <div class="tip" id="1212">
+          <div class="tip" id="1207">
             <strong>Signature:</strong> filename:string -&gt; changelog:Changelog -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L435-435" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Saves a Changelog to a text file.</p>
+                    <p>Saves a Changelog to a text file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>filename</code> - Changelog text file name</li>
@@ -656,7 +602,7 @@ to a new changelog entry with the given version</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

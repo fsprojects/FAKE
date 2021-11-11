@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -407,10 +411,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L242-242" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a failed comparison.</p>
+                    <p>Reports a failed comparison.</p>
 
 
         </td>
@@ -433,10 +434,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the Trace module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L8-8" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Encapsulates special chars</p>
+                    <p>Encapsulates special chars</p>
 
 
         </td>
@@ -459,10 +457,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L158-158" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finishes the test case.</p>
+                    <p>Finishes the test case.</p>
 
 
         </td>
@@ -485,10 +480,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L181-181" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Finishes the test suite.</p>
+                    <p>Finishes the test suite.</p>
 
 
         </td>
@@ -511,10 +503,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Branch instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L578-578" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the branch of the main VCS root</p>
+                    <p>Get the branch of the main VCS root</p>
 
 
         </td>
@@ -537,10 +526,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.IsDefaultBranch instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L590-590" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get if the current branch is the one configured as default</p>
+                    <p>Get if the current branch is the one configured as default</p>
 
 
         </td>
@@ -563,10 +549,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Par
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BranchDisplayName instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L583-583" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the display name of the branch as shown in TeamCity
+                    <p>Get the display name of the branch as shown in TeamCity
 See <a href="https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">the documentation</a> for more information</p>
 
 
@@ -590,10 +573,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Working+with+Feature
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.RecentlyFailedTests instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L574-574" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Name of recently failing tests
+                    <p>Name of recently failing tests
 See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
 
 
@@ -617,10 +597,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L168-168" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ignores the test case.</p>
+                    <p>Ignores the test case.</p>
 
 
         </td>
@@ -643,10 +620,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L176-176" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Ignores the test case.</p>
+                    <p>Ignores the test case.</p>
 
 
         </td>
@@ -669,10 +643,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L216-216" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -693,10 +664,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L213-213" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Publishes an artifact on the TeamcCity build server.</p>
+                    <p>Publishes an artifact on the TeamcCity build server.</p>
 
 
         </td>
@@ -719,10 +687,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L209-209" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports the build status.</p>
+                    <p>Reports the build status.</p>
 
 
         </td>
@@ -745,10 +710,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L191-191" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports the progress.</p>
+                    <p>Reports the progress.</p>
 
 
         </td>
@@ -771,10 +733,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L199-199" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports the progress end.</p>
+                    <p>Reports the progress end.</p>
 
 
         </td>
@@ -797,10 +756,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L195-195" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports the progress start.</p>
+                    <p>Reports the progress start.</p>
 
 
         </td>
@@ -823,10 +779,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the Trace module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -847,10 +800,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the TeamCity.block instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Close Named Block</p>
+                    <p>Close Named Block</p>
 
 
         </td>
@@ -873,10 +823,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the TeamCity.block instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Open Named Block</p>
+                    <p>Open Named Block</p>
 
 
         </td>
@@ -899,10 +846,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the Trace module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Send message to TeamCity</p>
+                    <p>Send message to TeamCity</p>
 
 
         </td>
@@ -925,10 +869,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an Checkstyle results filename to TeamCity</p>
+                    <p>Sends an Checkstyle results filename to TeamCity</p>
 
 
         </td>
@@ -943,10 +884,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L123-123" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity</p>
+                    <p>Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity</p>
 
 
         </td>
@@ -969,10 +907,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>This function does not specify the type of coverage tool used to generate the report.  Use &#39;sendTeamCityDotNetCoverageImportForTool&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L112-112" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity</p>
+                    <p>Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity</p>
 
 
         </td>
@@ -995,10 +930,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L118-118" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity</p>
+                    <p>Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity</p>
 
 
         </td>
@@ -1021,10 +953,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L108-108" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an ReSharper dupfinder.exe results filename to TeamCity</p>
+                    <p>Sends an ReSharper dupfinder.exe results filename to TeamCity</p>
 
 
         </td>
@@ -1047,10 +976,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an error to TeamCity</p>
+                    <p>Sends an error to TeamCity</p>
 
 
         </td>
@@ -1073,10 +999,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L84-84" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an FindBugs results filename to TeamCity</p>
+                    <p>Sends an FindBugs results filename to TeamCity</p>
 
 
         </td>
@@ -1099,10 +1022,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an FxCop inspection results filename to TeamCity</p>
+                    <p>Sends an FxCop inspection results filename to TeamCity</p>
 
 
         </td>
@@ -1125,10 +1045,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an FXCop results filename to TeamCity</p>
+                    <p>Sends an FXCop results filename to TeamCity</p>
 
 
         </td>
@@ -1151,10 +1068,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L76-76" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an Google Test results filename to TeamCity</p>
+                    <p>Sends an Google Test results filename to TeamCity</p>
 
 
         </td>
@@ -1177,10 +1091,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an JSLint results filename to TeamCity</p>
+                    <p>Sends an JSLint results filename to TeamCity</p>
 
 
         </td>
@@ -1203,10 +1114,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an JUnit Ant task results filename to TeamCity</p>
+                    <p>Sends an JUnit Ant task results filename to TeamCity</p>
 
 
         </td>
@@ -1229,10 +1137,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an MSTest results filename to TeamCity</p>
+                    <p>Sends an MSTest results filename to TeamCity</p>
 
 
         </td>
@@ -1247,10 +1152,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L126-126" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends the full path to NCover installation folder to TeamCity</p>
+                    <p>Sends the full path to NCover installation folder to TeamCity</p>
 
 
         </td>
@@ -1265,10 +1167,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends arguments for the NCover report generator to TeamCity</p>
+                    <p>Sends arguments for the NCover report generator to TeamCity</p>
 
 
         </td>
@@ -1283,10 +1182,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L132-132" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends the path to NCoverExplorer to TeamCity</p>
+                    <p>Sends the path to NCoverExplorer to TeamCity</p>
 
 
         </td>
@@ -1301,10 +1197,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends additional arguments for NCover 1.x to TeamCity</p>
+                    <p>Sends additional arguments for NCover 1.x to TeamCity</p>
 
 
         </td>
@@ -1319,10 +1212,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L141-141" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends the value for NCover  /sort: argument to TeamCity</p>
+                    <p>Sends the value for NCover  /sort: argument to TeamCity</p>
 
 
         </td>
@@ -1337,10 +1227,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L138-138" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends the value for NCover /report: argument to TeamCity</p>
+                    <p>Sends the value for NCover /report: argument to TeamCity</p>
 
 
         </td>
@@ -1363,10 +1250,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an NUnit results filename to TeamCity</p>
+                    <p>Sends an NUnit results filename to TeamCity</p>
 
 
         </td>
@@ -1381,10 +1265,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L144-144" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity</p>
+                    <p>Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity</p>
 
 
         </td>
@@ -1407,10 +1288,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L104-104" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an PMD Copy/Paste Detector results filename to TeamCity</p>
+                    <p>Sends an PMD Copy/Paste Detector results filename to TeamCity</p>
 
 
         </td>
@@ -1433,10 +1311,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L100-100" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an PMD inspections results filename to TeamCity</p>
+                    <p>Sends an PMD inspections results filename to TeamCity</p>
 
 
         </td>
@@ -1459,10 +1334,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L92-92" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an ReSharper inspectCode.exe results filename to TeamCity</p>
+                    <p>Sends an ReSharper inspectCode.exe results filename to TeamCity</p>
 
 
         </td>
@@ -1485,10 +1357,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.publish instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends an Maven Surefire results filename to TeamCity</p>
+                    <p>Sends an Maven Surefire results filename to TeamCity</p>
 
 
         </td>
@@ -1511,10 +1380,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the Trace module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Send message to TeamCity</p>
+                    <p>Send message to TeamCity</p>
 
 
         </td>
@@ -1537,10 +1403,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.setBuildNumber instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L220-220" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the TeamCity build number.</p>
+                    <p>Sets the TeamCity build number.</p>
 
 
         </td>
@@ -1563,10 +1426,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L224-224" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a build statistic.</p>
+                    <p>Reports a build statistic.</p>
 
 
         </td>
@@ -1589,10 +1449,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a parameter value</p>
+                    <p>Reports a parameter value</p>
 
 
         </td>
@@ -1615,10 +1472,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L153-153" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the test case.</p>
+                    <p>Starts the test case.</p>
 
 
         </td>
@@ -1641,10 +1495,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L186-186" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the test suite.</p>
+                    <p>Starts the test suite.</p>
 
 
         </td>
@@ -1667,10 +1518,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reorderin
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use the TeamCity.block instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Open Named Block that will be closed when the block is disposed
+                    <p>Open Named Block that will be closed when the block is disposed
 Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 
 
@@ -1694,10 +1542,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildConfigurationName instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L258-258" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
+                    <p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
 
 
         </td>
@@ -1720,10 +1565,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildIsPersonal instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L262-262" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Is set to true if the build is a personal one.</p>
+                    <p>Is set to true if the build is a personal one.</p>
 
 
         </td>
@@ -1746,10 +1588,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildNumber instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L269-269" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
+                    <p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
 
 
         </td>
@@ -1772,10 +1611,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.ProjectName instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L254-254" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
+                    <p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
 
 
         </td>
@@ -1798,10 +1634,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Version instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L250-250" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
+                    <p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
 
 
         </td>
@@ -1824,10 +1657,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                 <h5>OBSOLETE</h5>
                 <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use Trace.&lt;&gt; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L236-236" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reports a failed test.</p>
+                    <p>Reports a failed test.</p>
 
 
         </td>
@@ -1871,7 +1701,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

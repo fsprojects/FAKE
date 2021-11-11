@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -365,7 +369,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L75-75" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Clears the environment variable with the given name for the current process.</p>
@@ -383,7 +387,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L53-53" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L53-53" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable with the given name</p>
@@ -401,7 +405,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L101-101" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L101-101" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
@@ -419,7 +423,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L94-94" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
@@ -437,7 +441,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L82-82" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L82-82" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
@@ -455,7 +459,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L88-88" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L88-88" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable with the given name or fails if not found</p>
@@ -473,7 +477,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L104-104" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L104-104" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves the environment variable or None</p>
@@ -491,7 +495,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L56-56" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L56-56" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieves all environment variables from the given target</p>
@@ -517,7 +521,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Will be removed in dotnetcore. Use environVars instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -541,7 +545,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use &#39;environVarOrDefault name String.Empty&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L130-130" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
@@ -567,7 +571,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use environVarOrDefault instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L124-124" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L124-124" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
@@ -585,7 +589,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L292-292" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L292-292" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
@@ -603,7 +607,7 @@
                           <strong>Type parameters:</strong> '?8134                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L278-278" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L278-278" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Helper function to help find framework or sdk tools from the
@@ -622,7 +626,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L324-324" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L324-324" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns the path to the user-specific nuget packages folder</p>
@@ -640,7 +644,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L287-287" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L287-287" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the local directory for the given target platform</p>
@@ -666,7 +670,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use hasEnvironVar instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L120-120" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L120-120" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns if the build parameter with the given name was set</p>
@@ -684,7 +688,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L116-116" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L116-116" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Returns if the build parameter with the given name was set</p>
@@ -710,7 +714,7 @@ newest toolkit available</p>
                 <h5>OBSOLETE</h5>
                 <p>Use isDotNetCore instead (different casing of &#39;N&#39;)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L211-211" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -726,7 +730,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L203-203" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -742,7 +746,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L175-175" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L175-175" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Determines if the current system is a Linux system</p>
@@ -760,7 +764,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L164-164" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L164-164" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Determines if the current system is a MacOs system</p>
@@ -778,7 +782,7 @@ newest toolkit available</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L196-196" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L196-196" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
@@ -797,7 +801,7 @@ Todo: Detect mono on windows</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L153-153" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Determines if the current system is an Unix system.
@@ -816,7 +820,7 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L184-184" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L184-184" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Determines if the current system is a Windows system</p>
@@ -834,7 +838,7 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L255-255" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L255-255" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -850,7 +854,7 @@ See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-e
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L237-237" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L237-237" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>required sometimes to workaround mono crashes
@@ -875,7 +879,7 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L250-250" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L250-250" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Gets the list of valid directories included in the PATH environment variable.</p>
@@ -893,7 +897,7 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L133-133" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L133-133" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
@@ -911,7 +915,7 @@ environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L138-138" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L138-138" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The path of Program Files (x86)
@@ -931,7 +935,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L274-274" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L274-274" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Base path for getting tools from windows SDKs</p>
@@ -957,7 +961,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                 <h5>OBSOLETE</h5>
                 <p>Use setEnvironVar instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L79-79" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the build parameter with the given name for the current process.</p>
@@ -975,7 +979,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the environment variable with the given name</p>
@@ -993,7 +997,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L110-110" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L110-110" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Splits the entries of an environment variable and removes the empty ones.</p>
@@ -1011,7 +1015,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L149-149" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L149-149" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The system root environment variable. Typically "C:\Windows"</p>
@@ -1059,7 +1063,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

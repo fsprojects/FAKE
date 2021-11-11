@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -457,10 +461,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L110-110" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default migration options</p>
+                    <p>Default migration options</p>
 
 
         </td>
@@ -483,10 +484,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L263-263" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Executes the specified task using configuration options</p>
+                    <p>Executes the specified task using configuration options</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>task</code> - Database task to execute</li>
@@ -515,10 +513,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L326-326" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Lists all migrations which were applied to the database
+                    <p>Lists all migrations which were applied to the database
 - <code>connection</code> - Database connection
 - <code>assemblies</code> - Assembly files which contain migrations</p>
 
@@ -543,10 +538,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L299-299" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Migrates database up to the specified version</p>
+                    <p>Migrates database up to the specified version</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>version</code> - Target version</li>
@@ -576,10 +568,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L288-288" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Migrates database up to the latest version</p>
+                    <p>Migrates database up to the latest version</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>connection</code> - Database connection</li>
@@ -608,10 +597,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L278-278" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Migrates database up to the specified version</p>
+                    <p>Migrates database up to the specified version</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>version</code> - Target version</li>
@@ -641,10 +627,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L310-310" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Rollbacks several applied migrations</p>
+                    <p>Rollbacks several applied migrations</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>steps</code> - Number of migrations to rollback</li>
@@ -674,10 +657,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.FluentMigrator/FluentMigratorHelper.fs#L319-319" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Rollbacks latest applied migration
+                    <p>Rollbacks latest applied migration
 - <code>connection</code> - Database connection
 - <code>assemblies</code> - Assembly files which contain migrations
 - <code>options</code> - Migration options which are passed to FluentMigrator</p>
@@ -724,7 +704,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -378,216 +382,180 @@ Please read the <a href="/core-vault.html">documentation</a></p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1596', 1596)" onmouseover="showTip(event, '1596', 1596)">
+          <code onmouseout="hideTip(event, '1578', 1578)" onmouseover="showTip(event, '1578', 1578)">
             Vault.createKey(file)
           </code>
-          <div class="tip" id="1596">
+          <div class="tip" id="1578">
             <strong>Signature:</strong> file:string option -&gt; KeyInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)</p>
+                    <p>Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1597', 1597)" onmouseover="showTip(event, '1597', 1597)">
+          <code onmouseout="hideTip(event, '1579', 1579)" onmouseover="showTip(event, '1579', 1579)">
             Vault.decryptVariable key base64Val
           </code>
-          <div class="tip" id="1597">
+          <div class="tip" id="1579">
             <strong>Signature:</strong> key:KeyInfo -&gt; base64Val:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L72-72" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>decrypt a given base64 encoded string and return the utf-8 string of the result</p>
+                    <p>decrypt a given base64 encoded string and return the utf-8 string of the result</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1598', 1598)" onmouseover="showTip(event, '1598', 1598)">
+          <code onmouseout="hideTip(event, '1580', 1580)" onmouseover="showTip(event, '1580', 1580)">
             Vault.empty
           </code>
-          <div class="tip" id="1598">
+          <div class="tip" id="1580">
             <strong>Signature:</strong> Vault<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>An empty vault without any variables</p>
+                    <p>An empty vault without any variables</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1599', 1599)" onmouseover="showTip(event, '1599', 1599)">
+          <code onmouseout="hideTip(event, '1581', 1581)" onmouseover="showTip(event, '1581', 1581)">
             Vault.encryptVariable key value
           </code>
-          <div class="tip" id="1599">
+          <div class="tip" id="1581">
             <strong>Signature:</strong> key:KeyInfo -&gt; value:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>encrypt the given utf-8 string and return the base64 encoded result</p>
+                    <p>encrypt the given utf-8 string and return the base64 encoded result</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1600', 1600)" onmouseover="showTip(event, '1600', 1600)">
+          <code onmouseout="hideTip(event, '1582', 1582)" onmouseover="showTip(event, '1582', 1582)">
             Vault.fromEncryptedVariables key vars
           </code>
-          <div class="tip" id="1600">
+          <div class="tip" id="1582">
             <strong>Signature:</strong> key:KeyInfo -&gt; vars:seq&lt;Variable&gt; -&gt; Vault<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a vault from the given encrypted variables</p>
+                    <p>Read a vault from the given encrypted variables</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1601', 1601)" onmouseover="showTip(event, '1601', 1601)">
+          <code onmouseout="hideTip(event, '1583', 1583)" onmouseover="showTip(event, '1583', 1583)">
             Vault.fromEnvironmentVariable(envVar)
           </code>
-          <div class="tip" id="1601">
+          <div class="tip" id="1583">
             <strong>Signature:</strong> envVar:string -&gt; Vault<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L133-133" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a vault from an environment variable.</p>
+                    <p>Read a vault from an environment variable.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1602', 1602)" onmouseover="showTip(event, '1602', 1602)">
+          <code onmouseout="hideTip(event, '1584', 1584)" onmouseover="showTip(event, '1584', 1584)">
             Vault.fromEnvironmentVariableOrNone(...)
           </code>
-          <div class="tip" id="1602">
+          <div class="tip" id="1584">
             <strong>Signature:</strong> envVar:string -&gt; Vault option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L143-143" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a vault from an environment variable or return None</p>
+                    <p>Read a vault from an environment variable or return None</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1603', 1603)" onmouseover="showTip(event, '1603', 1603)">
+          <code onmouseout="hideTip(event, '1585', 1585)" onmouseover="showTip(event, '1585', 1585)">
             Vault.fromFakeEnvironmentOrNone()
           </code>
-          <div class="tip" id="1603">
+          <div class="tip" id="1585">
             <strong>Signature:</strong> unit -&gt; Vault option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
+                    <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1604', 1604)" onmouseover="showTip(event, '1604', 1604)">
+          <code onmouseout="hideTip(event, '1586', 1586)" onmouseover="showTip(event, '1586', 1586)">
             Vault.fromFakeEnvironmentVariable()
           </code>
-          <div class="tip" id="1604">
+          <div class="tip" id="1586">
             <strong>Signature:</strong> unit -&gt; Vault<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L154-154" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
+                    <p>Read a vault from <code>FAKE_VAULT_VARIABLES</code></p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1605', 1605)" onmouseover="showTip(event, '1605', 1605)">
+          <code onmouseout="hideTip(event, '1587', 1587)" onmouseover="showTip(event, '1587', 1587)">
             Vault.fromJson(s)
           </code>
-          <div class="tip" id="1605">
+          <div class="tip" id="1587">
             <strong>Signature:</strong> s:string -&gt; Vault<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read in a vault from a given json string, make sure to delete the source of the json after using this API</p>
+                    <p>Read in a vault from a given json string, make sure to delete the source of the json after using this API</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1606', 1606)" onmouseover="showTip(event, '1606', 1606)">
+          <code onmouseout="hideTip(event, '1588', 1588)" onmouseover="showTip(event, '1588', 1588)">
             Vault.get name v
           </code>
-          <div class="tip" id="1606">
+          <div class="tip" id="1588">
             <strong>Signature:</strong> name:string -&gt; v:Vault -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L170-170" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>similar to tryGet but throws an exception if the variable with the given name is not available in the vault</p>
+                    <p>similar to tryGet but throws an exception if the variable with the given name is not available in the vault</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1607', 1607)" onmouseover="showTip(event, '1607', 1607)">
+          <code onmouseout="hideTip(event, '1589', 1589)" onmouseover="showTip(event, '1589', 1589)">
             Vault.tryGet name v
           </code>
-          <div class="tip" id="1607">
+          <div class="tip" id="1589">
             <strong>Signature:</strong> name:string -&gt; v:Vault -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Vault/Vault.fs#L164-164" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>try to retrieve the variable with the given name from the vault (decrypts the variable if needed)</p>
+                    <p>try to retrieve the variable with the given name from the vault (decrypts the variable if needed)</p>
 
 
         </td>
@@ -631,7 +599,7 @@ Please read the <a href="/core-vault.html">documentation</a></p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,90 +332,75 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4215', 4215)" onmouseover="showTip(event, '4215', 4215)">
+          <code onmouseout="hideTip(event, '4180', 4180)" onmouseover="showTip(event, '4180', 4180)">
             HKCR
           </code>
-          <div class="tip" id="4215">
+          <div class="tip" id="4180">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L437-437" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes this registry key inside either the HKEY<em>CLASSES</em>ROOT registry root</p>
+                    <p>Writes this registry key inside either the HKEY<em>CLASSES</em>ROOT registry root</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4216', 4216)" onmouseover="showTip(event, '4216', 4216)">
+          <code onmouseout="hideTip(event, '4181', 4181)" onmouseover="showTip(event, '4181', 4181)">
             HKCU
           </code>
-          <div class="tip" id="4216">
+          <div class="tip" id="4181">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L439-439" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes this registry key inside either the HKEY<em>CURRENT</em>USER registry root</p>
+                    <p>Writes this registry key inside either the HKEY<em>CURRENT</em>USER registry root</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4217', 4217)" onmouseover="showTip(event, '4217', 4217)">
+          <code onmouseout="hideTip(event, '4182', 4182)" onmouseover="showTip(event, '4182', 4182)">
             HKLM
           </code>
-          <div class="tip" id="4217">
+          <div class="tip" id="4182">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L441-441" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes this registry key inside either the HKEY<em>LOCAL</em>MACHINE registry root</p>
+                    <p>Writes this registry key inside either the HKEY<em>LOCAL</em>MACHINE registry root</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4218', 4218)" onmouseover="showTip(event, '4218', 4218)">
+          <code onmouseout="hideTip(event, '4183', 4183)" onmouseover="showTip(event, '4183', 4183)">
             HKMU
           </code>
-          <div class="tip" id="4218">
+          <div class="tip" id="4183">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L435-435" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes this registry key inside either HKEY<em>LOCAL</em>MACHINE or HKEY<em>CURRENT</em>USER. Wix decides at install time based on wether or not this is an "all users" install</p>
+                    <p>Writes this registry key inside either HKEY<em>LOCAL</em>MACHINE or HKEY<em>CURRENT</em>USER. Wix decides at install time based on wether or not this is an "all users" install</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4219', 4219)" onmouseover="showTip(event, '4219', 4219)">
+          <code onmouseout="hideTip(event, '4184', 4184)" onmouseover="showTip(event, '4184', 4184)">
             HKU
           </code>
-          <div class="tip" id="4219">
+          <div class="tip" id="4184">
             <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L443-443" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes this registry key inside either the HKEY_USers registry root</p>
+                    <p>Writes this registry key inside either the HKEY_USers registry root</p>
 
 
         </td>
@@ -455,7 +444,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

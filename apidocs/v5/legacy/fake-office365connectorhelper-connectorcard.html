@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,108 +332,90 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3577', 3577)" onmouseover="showTip(event, '3577', 3577)">
+          <code onmouseout="hideTip(event, '3542', 3542)" onmouseover="showTip(event, '3542', 3542)">
             PotentialActions
           </code>
-          <div class="tip" id="3577">
+          <div class="tip" id="3542">
             <strong>Signature:</strong> ViewAction list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L290-290" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This array of ViewAction objects will power the action links found at the bottom of the card</p>
+                    <p>This array of ViewAction objects will power the action links found at the bottom of the card</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3578', 3578)" onmouseover="showTip(event, '3578', 3578)">
+          <code onmouseout="hideTip(event, '3543', 3543)" onmouseover="showTip(event, '3543', 3543)">
             Sections
           </code>
-          <div class="tip" id="3578">
+          <div class="tip" id="3543">
             <strong>Signature:</strong> Section list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L287-287" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Contains a list of sections to display in the card</p>
+                    <p>Contains a list of sections to display in the card</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3579', 3579)" onmouseover="showTip(event, '3579', 3579)">
+          <code onmouseout="hideTip(event, '3544', 3544)" onmouseover="showTip(event, '3544', 3544)">
             Summary
           </code>
-          <div class="tip" id="3579">
+          <div class="tip" id="3544">
             <strong>Signature:</strong> SimpleString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L275-275" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Required, if the text property is not populated) A string used for summarizing card content. This will be shown as the message subject.</p>
+                    <p>(Required, if the text property is not populated) A string used for summarizing card content. This will be shown as the message subject.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3580', 3580)" onmouseover="showTip(event, '3580', 3580)">
+          <code onmouseout="hideTip(event, '3545', 3545)" onmouseover="showTip(event, '3545', 3545)">
             Text
           </code>
-          <div class="tip" id="3580">
+          <div class="tip" id="3545">
             <strong>Signature:</strong> MarkdownString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L281-281" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The main text of the card. This will be rendered below the sender information and optional title, and above any sections or actions present.</p>
+                    <p>The main text of the card. This will be rendered below the sender information and optional title, and above any sections or actions present.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3581', 3581)" onmouseover="showTip(event, '3581', 3581)">
+          <code onmouseout="hideTip(event, '3546', 3546)" onmouseover="showTip(event, '3546', 3546)">
             ThemeColor
           </code>
-          <div class="tip" id="3581">
+          <div class="tip" id="3546">
             <strong>Signature:</strong> ColorHexValue option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L284-284" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) Accent color used for branding or indicating status in the card</p>
+                    <p>(Optional) Accent color used for branding or indicating status in the card</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3582', 3582)" onmouseover="showTip(event, '3582', 3582)">
+          <code onmouseout="hideTip(event, '3547', 3547)" onmouseover="showTip(event, '3547', 3547)">
             Title
           </code>
-          <div class="tip" id="3582">
+          <div class="tip" id="3547">
             <strong>Signature:</strong> SimpleString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L278-278" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) A title for the Connector message. Shown at the top of the message.</p>
+                    <p>(Optional) A title for the Connector message. Shown at the top of the message.</p>
 
 
         </td>
@@ -444,10 +430,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3583', 3583)" onmouseover="showTip(event, '3583', 3583)">
+          <code onmouseout="hideTip(event, '3548', 3548)" onmouseover="showTip(event, '3548', 3548)">
             x.AsJson()
           </code>
-          <div class="tip" id="3583">
+          <div class="tip" id="3548">
             <strong>Signature:</strong> unit -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -460,20 +446,17 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L310-310" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Converts the connector card to a JSON string</p>
+                    <p>Converts the connector card to a JSON string</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3584', 3584)" onmouseover="showTip(event, '3584', 3584)">
+          <code onmouseout="hideTip(event, '3549', 3549)" onmouseover="showTip(event, '3549', 3549)">
             x.WriteJson(writer)
           </code>
-          <div class="tip" id="3584">
+          <div class="tip" id="3549">
             <strong>Signature:</strong> writer:JsonWriter -&gt; JsonWriter<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -486,10 +469,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L294-294" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -531,7 +511,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

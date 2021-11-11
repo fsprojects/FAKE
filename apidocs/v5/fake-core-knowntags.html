@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -320,15 +324,15 @@ Please consider not using a match on this type in code external to the fake repo
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1797', 1797)" onmouseover="showTip(event, '1797', 1797)">
+          <code onmouseout="hideTip(event, '1824', 1824)" onmouseover="showTip(event, '1824', 1824)">
             Compilation(compiler)
           </code>
-          <div class="tip" id="1797">
+          <div class="tip" id="1824">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L14-14" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L14-14" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -336,15 +340,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1798', 1798)" onmouseover="showTip(event, '1798', 1798)">
+          <code onmouseout="hideTip(event, '1825', 1825)" onmouseover="showTip(event, '1825', 1825)">
             FailureTarget(name)
           </code>
-          <div class="tip" id="1798">
+          <div class="tip" id="1825">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L13-13" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L13-13" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -352,15 +356,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1799', 1799)" onmouseover="showTip(event, '1799', 1799)">
+          <code onmouseout="hideTip(event, '1826', 1826)" onmouseover="showTip(event, '1826', 1826)">
             FinalTarget(name)
           </code>
-          <div class="tip" id="1799">
+          <div class="tip" id="1826">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L12-12" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L12-12" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -368,15 +372,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1800', 1800)" onmouseover="showTip(event, '1800', 1800)">
+          <code onmouseout="hideTip(event, '1827', 1827)" onmouseover="showTip(event, '1827', 1827)">
             Other(typeDef,name)
           </code>
-          <div class="tip" id="1800">
+          <div class="tip" id="1827">
             <strong>Signature:</strong> string * string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L17-17" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L17-17" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -384,15 +388,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1801', 1801)" onmouseover="showTip(event, '1801', 1801)">
+          <code onmouseout="hideTip(event, '1828', 1828)" onmouseover="showTip(event, '1828', 1828)">
             Target(name)
           </code>
-          <div class="tip" id="1801">
+          <div class="tip" id="1828">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L11-11" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L11-11" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -400,15 +404,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1802', 1802)" onmouseover="showTip(event, '1802', 1802)">
+          <code onmouseout="hideTip(event, '1829', 1829)" onmouseover="showTip(event, '1829', 1829)">
             Task(name)
           </code>
-          <div class="tip" id="1802">
+          <div class="tip" id="1829">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L10-10" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L10-10" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -416,15 +420,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1803', 1803)" onmouseover="showTip(event, '1803', 1803)">
+          <code onmouseout="hideTip(event, '1830', 1830)" onmouseover="showTip(event, '1830', 1830)">
             Test(testName)
           </code>
-          <div class="tip" id="1803">
+          <div class="tip" id="1830">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L16-16" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L16-16" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -432,15 +436,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1804', 1804)" onmouseover="showTip(event, '1804', 1804)">
+          <code onmouseout="hideTip(event, '1831', 1831)" onmouseover="showTip(event, '1831', 1831)">
             TestSuite(suiteName)
           </code>
-          <div class="tip" id="1804">
+          <div class="tip" id="1831">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L15-15" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L15-15" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -456,15 +460,15 @@ Please consider not using a match on this type in code external to the fake repo
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1805', 1805)" onmouseover="showTip(event, '1805', 1805)">
+          <code onmouseout="hideTip(event, '1832', 1832)" onmouseover="showTip(event, '1832', 1832)">
             x.Name
           </code>
-          <div class="tip" id="1805">
+          <div class="tip" id="1832">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L18-18" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L18-18" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -472,15 +476,15 @@ Please consider not using a match on this type in code external to the fake repo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1806', 1806)" onmouseover="showTip(event, '1806', 1806)">
+          <code onmouseout="hideTip(event, '1833', 1833)" onmouseover="showTip(event, '1833', 1833)">
             x.Type
           </code>
-          <div class="tip" id="1806">
+          <div class="tip" id="1833">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L28-28" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L28-28" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -526,7 +530,7 @@ Please consider not using a match on this type in code external to the fake repo
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2700', 2700)" onmouseover="showTip(event, '2700', 2700)">
+          <code onmouseout="hideTip(event, '2727', 2727)" onmouseover="showTip(event, '2727', 2727)">
             x.WithDefaultCliToolReferenceToolName(...)
           </code>
-          <div class="tip" id="2700">
+          <div class="tip" id="2727">
             <strong>Signature:</strong> toolCommandName:string -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L80-80" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L80-80" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -335,15 +339,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2701', 2701)" onmouseover="showTip(event, '2701', 2701)">
+          <code onmouseout="hideTip(event, '2728', 2728)" onmouseover="showTip(event, '2728', 2728)">
             x.WithDefaultToolCommandName(...)
           </code>
-          <div class="tip" id="2701">
+          <div class="tip" id="2728">
             <strong>Signature:</strong> toolCommandName:string -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L75-75" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L75-75" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -351,15 +355,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2702', 2702)" onmouseover="showTip(event, '2702', 2702)">
+          <code onmouseout="hideTip(event, '2729', 2729)" onmouseover="showTip(event, '2729', 2729)">
             x.WithDotNetOptions(setParams)
           </code>
-          <div class="tip" id="2702">
+          <div class="tip" id="2729">
             <strong>Signature:</strong> (setParams:(Options -&gt; Options)) -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L84-84" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L84-84" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -375,15 +379,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2703', 2703)" onmouseover="showTip(event, '2703', 2703)">
+          <code onmouseout="hideTip(event, '2730', 2730)" onmouseover="showTip(event, '2730', 2730)">
             ToolType.Create()
           </code>
-          <div class="tip" id="2703">
+          <div class="tip" id="2730">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2704', 2704)" onmouseover="showTip(event, '2704', 2704)">
+          <code onmouseout="hideTip(event, '2731', 2731)" onmouseover="showTip(event, '2731', 2731)">
             ToolType.CreateCLIToolReference(install)
           </code>
-          <div class="tip" id="2704">
+          <div class="tip" id="2731">
             <strong>Signature:</strong> (install:(Options -&gt; Options)) -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L74-74" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -407,15 +411,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2705', 2705)" onmouseover="showTip(event, '2705', 2705)">
+          <code onmouseout="hideTip(event, '2732', 2732)" onmouseover="showTip(event, '2732', 2732)">
             ToolType.CreateCLIToolReference()
           </code>
-          <div class="tip" id="2705">
+          <div class="tip" id="2732">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L73-73" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -423,15 +427,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2706', 2706)" onmouseover="showTip(event, '2706', 2706)">
+          <code onmouseout="hideTip(event, '2733', 2733)" onmouseover="showTip(event, '2733', 2733)">
             ToolType.CreateFrameworkDependentDeployment(...)
           </code>
-          <div class="tip" id="2706">
+          <div class="tip" id="2733">
             <strong>Signature:</strong> (install:(Options -&gt; Options)) -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L69-69" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L69-69" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -439,15 +443,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2707', 2707)" onmouseover="showTip(event, '2707', 2707)">
+          <code onmouseout="hideTip(event, '2734', 2734)" onmouseover="showTip(event, '2734', 2734)">
             ToolType.CreateFrameworkDependentDeployment(...)
           </code>
-          <div class="tip" id="2707">
+          <div class="tip" id="2734">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L68-68" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L68-68" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -455,15 +459,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2708', 2708)" onmouseover="showTip(event, '2708', 2708)">
+          <code onmouseout="hideTip(event, '2735', 2735)" onmouseover="showTip(event, '2735', 2735)">
             ToolType.CreateFullFramework()
           </code>
-          <div class="tip" id="2708">
+          <div class="tip" id="2735">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L67-67" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -471,15 +475,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2709', 2709)" onmouseover="showTip(event, '2709', 2709)">
+          <code onmouseout="hideTip(event, '2736', 2736)" onmouseover="showTip(event, '2736', 2736)">
             ToolType.CreateGlobalTool()
           </code>
-          <div class="tip" id="2709">
+          <div class="tip" id="2736">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L70-70" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L70-70" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -487,15 +491,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2710', 2710)" onmouseover="showTip(event, '2710', 2710)">
+          <code onmouseout="hideTip(event, '2737', 2737)" onmouseover="showTip(event, '2737', 2737)">
             ToolType.CreateLocalTool(install)
           </code>
-          <div class="tip" id="2710">
+          <div class="tip" id="2737">
             <strong>Signature:</strong> (install:(Options -&gt; Options)) -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L72-72" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L72-72" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -503,15 +507,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2711', 2711)" onmouseover="showTip(event, '2711', 2711)">
+          <code onmouseout="hideTip(event, '2738', 2738)" onmouseover="showTip(event, '2738', 2738)">
             ToolType.CreateLocalTool()
           </code>
-          <div class="tip" id="2711">
+          <div class="tip" id="2738">
             <strong>Signature:</strong> unit -&gt; ToolType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L71-71" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L71-71" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -557,7 +561,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

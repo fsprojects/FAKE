@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -326,10 +330,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3506', 3506)" onmouseover="showTip(event, '3506', 3506)">
+          <code onmouseout="hideTip(event, '3471', 3471)" onmouseover="showTip(event, '3471', 3471)">
             x.Head
           </code>
-          <div class="tip" id="3506">
+          <div class="tip" id="3471">
             <strong>Signature:</strong> string * string<br />
                                   </div>
         </td>
@@ -339,10 +343,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3507', 3507)" onmouseover="showTip(event, '3507', 3507)">
+          <code onmouseout="hideTip(event, '3472', 3472)" onmouseover="showTip(event, '3472', 3472)">
             x.IsEmpty
           </code>
-          <div class="tip" id="3507">
+          <div class="tip" id="3472">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -352,10 +356,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3508', 3508)" onmouseover="showTip(event, '3508', 3508)">
+          <code onmouseout="hideTip(event, '3473', 3473)" onmouseover="showTip(event, '3473', 3473)">
             [index]
           </code>
-          <div class="tip" id="3508">
+          <div class="tip" id="3473">
             <strong>Signature:</strong> index:int -&gt; string * string<br />
                                   </div>
         </td>
@@ -365,10 +369,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3509', 3509)" onmouseover="showTip(event, '3509', 3509)">
+          <code onmouseout="hideTip(event, '3474', 3474)" onmouseover="showTip(event, '3474', 3474)">
             x.Length
           </code>
-          <div class="tip" id="3509">
+          <div class="tip" id="3474">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
@@ -378,10 +382,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3510', 3510)" onmouseover="showTip(event, '3510', 3510)">
+          <code onmouseout="hideTip(event, '3475', 3475)" onmouseover="showTip(event, '3475', 3475)">
             x.Tail
           </code>
-          <div class="tip" id="3510">
+          <div class="tip" id="3475">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
@@ -399,10 +403,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3511', 3511)" onmouseover="showTip(event, '3511', 3511)">
+          <code onmouseout="hideTip(event, '3476', 3476)" onmouseover="showTip(event, '3476', 3476)">
             List.Empty
           </code>
-          <div class="tip" id="3511">
+          <div class="tip" id="3476">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
@@ -449,7 +453,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

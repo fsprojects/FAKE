@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -919,10 +923,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceControlToComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L909-909" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -935,10 +936,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L917-917" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -959,10 +957,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceInstallToComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L923-923" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this to attach service installs to your components.</p>
+                    <p>Use this to attach service installs to your components.</p>
 
 
         </td>
@@ -977,10 +972,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L931-931" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1001,10 +993,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreation)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L870-870" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates WiX component with directories and files from the given DirectoryInfo
+                    <p>Creates WiX component with directories and files from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
 and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
@@ -1031,10 +1020,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreationAsSubDir)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L899-899" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates WiX component with directories and files from the given DirectoryInfo
+                    <p>Creates WiX component with directories and files from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
 and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
@@ -1061,10 +1047,7 @@ The components are embedded into the passed in root directory.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentTreeCreation)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L842-842" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a WiX directory and component hierarchy from the given DirectoryInfo
+                    <p>Creates a WiX directory and component hierarchy from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
 and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
@@ -1092,10 +1075,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Candle)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1953-1953" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a> on the given WiX script with the given parameters</p>
+                    <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a> on the given WiX script with the given parameters</p>
 
 
         </td>
@@ -1118,10 +1098,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompName)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1142,10 +1119,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompRefName)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1166,10 +1140,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getDirName)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1190,10 +1161,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1151-1151" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for creating WiX Feature</p>
+                    <p>Default values for creating WiX Feature</p>
 
 
         </td>
@@ -1216,10 +1184,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Please use new fillInWiXTemplate function</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1722-1722" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Takes path where script files reside and sets all parameters as defined</p>
+                    <p>Takes path where script files reside and sets all parameters as defined</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>wiXPath</code> - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters</li>
@@ -1286,10 +1251,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FillInWiXTemplate)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1772-1772" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Takes path where script files reside and sets all parameters as defined</p>
+                    <p>Takes path where script files reside and sets all parameters as defined</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>wiXPath</code> - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters</li>
@@ -1358,10 +1320,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L769-769" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating single components</p>
+                    <p>Use this for generating single components</p>
 
 
         </td>
@@ -1384,10 +1343,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponentRef)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L648-648" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating component refs</p>
+                    <p>Use this for generating component refs</p>
 
 
         </td>
@@ -1410,10 +1366,7 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomAction)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1862-1862" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a customAction based on the given parameters, use toString on it when embedding it
+                    <p>Generates a customAction based on the given parameters, use toString on it when embedding it
 Be careful to make Id unique. FileKey is a reference to a file Id which you added by using wixDir or wixFile
 Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
 ExeCommand are the parameters passed to your executable</p>
@@ -1467,10 +1420,7 @@ ExeCommand are the parameters passed to your executable</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomActionExecution)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1882-1882" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a custom action execution based on the given parameters, use toString on it when embedding it
+                    <p>Generates a custom action execution based on the given parameters, use toString on it when embedding it
 Condition in sample makes execute only on install</p>
 <h2>Parameters</h2>
 <ul>
@@ -1518,10 +1468,7 @@ Condition in sample makes execute only on install</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectory)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L787-787" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating directories</p>
+                    <p>Use this for generating directories</p>
 
 
         </td>
@@ -1544,10 +1491,7 @@ Condition in sample makes execute only on install</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectoryRef)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L729-729" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating component refs</p>
+                    <p>Use this for generating component refs</p>
 
 
         </td>
@@ -1570,10 +1514,7 @@ Condition in sample makes execute only on install</p>
                 <h5>OBSOLETE</h5>
                 <p>Please use the new generateFeatureElement</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1816-1816" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a feature based on the given parameters, use toString on it when embedding it
+                    <p>Generates a feature based on the given parameters, use toString on it when embedding it
 You can pass other features into InnerContent for making a hierarchy</p>
 <h2>Parameters</h2>
 <ul>
@@ -1625,10 +1566,7 @@ You can pass other features into InnerContent for making a hierarchy</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateFeatureElement)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1838-1838" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a feature based on the given parameters, use toString on it when embedding it
+                    <p>Generates a feature based on the given parameters, use toString on it when embedding it
 You can pass other features into InnerContent for making a hierarchy</p>
 <h2>Parameters</h2>
 <ul>
@@ -1680,10 +1618,7 @@ You can pass other features into InnerContent for making a hierarchy</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateMajorUpgradeVersion)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1947-1947" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a major upgrade based on the given parameters, use toString on it when embedding it</p>
+                    <p>Generates a major upgrade based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -1724,10 +1659,7 @@ You can pass other features into InnerContent for making a hierarchy</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryKey)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L627-627" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a registry key based on the given parameters, use toString on it when embedding it
+                    <p>Generates a registry key based on the given parameters, use toString on it when embedding it
 You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy</p>
 <h2>Parameters</h2>
 <ul>
@@ -1766,10 +1698,7 @@ Values = someChildValues
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryValue)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L555-555" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a registry value based on the given parameters, use toString on it when embedding it</p>
+                    <p>Generates a registry value based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -1807,10 +1736,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceConfig)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L300-300" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating service configs</p>
+                    <p>Use this for generating service configs</p>
 
 
         </td>
@@ -1833,10 +1759,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceControl)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L170-170" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating service controls</p>
+                    <p>Use this for generating service controls</p>
 
 
         </td>
@@ -1859,10 +1782,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceDependency)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L334-334" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating service dependencies</p>
+                    <p>Use this for generating service dependencies</p>
 
 
         </td>
@@ -1885,10 +1805,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceInstall)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L425-425" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use this for generating service installs</p>
+                    <p>Use this for generating service installs</p>
 
 
         </td>
@@ -1911,10 +1828,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUIRef)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1898-1898" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates a ui ref based on the given parameters, use toString on it when embedding it</p>
+                    <p>Generates a ui ref based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -1955,10 +1869,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgrade)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1915-1915" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates an upgrade based on the given parameters, use toString on it when embedding it</p>
+                    <p>Generates an upgrade based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -1999,10 +1910,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgradeVersion)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1932-1932" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates an upgrade version based on the given parameters, use toString on it when embedding it</p>
+                    <p>Generates an upgrade version based on the given parameters, use toString on it when embedding it</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -2045,10 +1953,7 @@ Value = "2"
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateWiXScript)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1635-1635" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Generates WiX Template with specified file name (you can prepend location too)
+                    <p>Generates WiX Template with specified file name (you can prepend location too)
 You need to run this once every build an then use FillInWiXScript to replace placeholders</p>
 <h2>Parameters</h2>
 <ul>
@@ -2083,10 +1988,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentIdsFromWiXString)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L995-995" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves all component ids from given WiX directory string</p>
+                    <p>Retrieves all component ids from given WiX directory string</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>wiXString</code> - The directory string which was generated by wixDir</li>
@@ -2124,10 +2026,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefs)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L736-736" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -2148,10 +2047,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFileIdFromWiXString)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L976-976" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Retrieves the file id of the first file in WiXString, which name matches fileRegex</p>
+                    <p>Retrieves the file id of the first file in WiXString, which name matches fileRegex</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>wiXString</code> - The directory string which was generated by wixDir</li>
@@ -2190,10 +2086,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFilesAsWiXString)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates WiX File tags from the given files</p>
+                    <p>Creates WiX File tags from the given files</p>
 
 
         </td>
@@ -2216,10 +2109,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.harvestDirectory)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2077-2077" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Harvests the contents of a Directory for use with Wix using the <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.</p>
+                    <p>Harvests the contents of a Directory for use with Wix using the <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the Heat default parameters.</li>
@@ -2248,10 +2138,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatDefaulParams)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2053-2053" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for the Heat harvesting</p>
+                    <p>Default values for the Heat harvesting</p>
 
 
         </td>
@@ -2274,10 +2161,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Light)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1970-1970" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a> on the given WiX script with the given parameters</p>
+                    <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a> on the given WiX script with the given parameters</p>
 
 
         </td>
@@ -2300,10 +2184,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ScriptDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1602-1602" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for WiX Script properties</p>
+                    <p>Default values for WiX Script properties</p>
 
 
         </td>
@@ -2326,10 +2207,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.setComponentsNeverOverwrite)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1019-1019" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Take a component string and set "neverOverwrite" Tag
+                    <p>Take a component string and set "neverOverwrite" Tag
 This is useful for config files, since they are not replaced on upgrade like that</p>
 
 
@@ -2353,10 +2231,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.WiX)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2015-2015" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uses the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a> and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.</p>
+                    <p>Uses the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a> and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
@@ -2442,10 +2317,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L755-755" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for component</p>
+                    <p>Defaults for component</p>
 
 
         </td>
@@ -2468,10 +2340,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRefDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L641-641" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for component ref</p>
+                    <p>Defaults for component ref</p>
 
 
         </td>
@@ -2494,10 +2363,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefsTags)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1006-1006" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates WiX ComponentRef tags from the given DirectoryInfo</p>
+                    <p>Creates WiX ComponentRef tags from the given DirectoryInfo</p>
 
 
         </td>
@@ -2520,10 +2386,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1332-1332" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for WiX custom actions</p>
+                    <p>Default values for WiX custom actions</p>
 
 
         </td>
@@ -2546,10 +2409,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecutionDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1371-1371" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for WiX custom action executions</p>
+                    <p>Default values for WiX custom action executions</p>
 
 
         </td>
@@ -2572,10 +2432,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1035-1035" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Contains the WiX default parameters</p>
+                    <p>Contains the WiX default parameters</p>
 
 
         </td>
@@ -2598,10 +2455,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixDirTag)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L941-941" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates recursive WiX directory and file tags from the given DirectoryInfo
+                    <p>Creates recursive WiX directory and file tags from the given DirectoryInfo
 The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
 and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
@@ -2628,10 +2482,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L777-777" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for directories</p>
+                    <p>Defaults for directories</p>
 
 
         </td>
@@ -2654,10 +2505,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRefDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L721-721" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for component ref</p>
+                    <p>Defaults for component ref</p>
 
 
         </td>
@@ -2680,10 +2528,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Please use the new &#39;Feature&#39; type which features automatic string concatenation of inner features</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1094-1094" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for creating WiX Feature</p>
+                    <p>Default values for creating WiX Feature</p>
 
 
         </td>
@@ -2706,10 +2551,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixFileTag)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a WiX File tag from the given FileInfo</p>
+                    <p>Creates a WiX File tag from the given FileInfo</p>
 
 
         </td>
@@ -2732,10 +2574,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FileDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L92-92" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for WiX file</p>
+                    <p>Defaults for WiX file</p>
 
 
         </td>
@@ -2758,10 +2597,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1502-1502" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value for WiX Major Upgrade</p>
+                    <p>Default value for WiX Major Upgrade</p>
 
 
         </td>
@@ -2784,10 +2620,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKeyDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L599-599" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -2808,10 +2641,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L526-526" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -2832,10 +2662,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Please use new &#39;Script&#39; type</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1233-1233" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default values for WiX Script properties</p>
+                    <p>Default values for WiX Script properties</p>
 
 
         </td>
@@ -2858,10 +2685,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfigDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L286-286" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -2882,10 +2706,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControlDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L158-158" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for service control element</p>
+                    <p>Defaults for service control element</p>
 
 
         </td>
@@ -2908,10 +2729,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependencyDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L326-326" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -2932,10 +2750,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L403-403" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Defaults for service install element</p>
+                    <p>Defaults for service install element</p>
 
 
         </td>
@@ -2958,10 +2773,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1390-1390" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value for WiX UI Reference (WixUI_Minimal)</p>
+                    <p>Default value for WiX UI Reference (WixUI_Minimal)</p>
 
 
         </td>
@@ -2984,10 +2796,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1408-1408" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value for WiX Upgrade</p>
+                    <p>Default value for WiX Upgrade</p>
 
 
         </td>
@@ -3010,10 +2819,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersionDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1440-1440" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value for WiX Upgrade</p>
+                    <p>Default value for WiX Upgrade</p>
 
 
         </td>
@@ -3036,10 +2842,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.VariableDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1525-1525" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default value for WiX Variable</p>
+                    <p>Default value for WiX Variable</p>
 
 
         </td>
@@ -3083,7 +2886,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

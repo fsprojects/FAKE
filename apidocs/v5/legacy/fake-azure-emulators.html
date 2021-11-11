@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -334,10 +338,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Base path for getting tools from Microsoft SDKs</p>
+                    <p>Base path for getting tools from Microsoft SDKs</p>
 
 
         </td>
@@ -348,14 +349,11 @@
             Emulators.resetDevStorage(_arg1)
           </code>
           <div class="tip" id="1117">
-            <strong>Signature:</strong> _arg1:&#39;?19649 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19649                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?19243 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19243                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L78-78" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Resets the devstore (BLOB, Queues and Tables)</p>
+                    <p>Resets the devstore (BLOB, Queues and Tables)</p>
 
 
         </td>
@@ -366,14 +364,11 @@
             Emulators.startComputeEmulator(_arg1)
           </code>
           <div class="tip" id="1118">
-            <strong>Signature:</strong> _arg1:&#39;?19647 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19647                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?19241 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19241                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L68-68" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the compute emulator</p>
+                    <p>Starts the compute emulator</p>
 
 
         </td>
@@ -384,14 +379,11 @@
             Emulators.startStorageEmulator(_arg1)
           </code>
           <div class="tip" id="1119">
-            <strong>Signature:</strong> _arg1:&#39;?19643 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19643                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?19237 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19237                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the storage emulator</p>
+                    <p>Starts the storage emulator</p>
 
 
         </td>
@@ -402,14 +394,11 @@
             Emulators.stopComputeEmulator(_arg1)
           </code>
           <div class="tip" id="1120">
-            <strong>Signature:</strong> _arg1:&#39;?19645 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19645                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?19239 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19239                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops the compute emulator</p>
+                    <p>Stops the compute emulator</p>
 
 
         </td>
@@ -420,14 +409,11 @@
             Emulators.stopStorageEmulator(_arg1)
           </code>
           <div class="tip" id="1121">
-            <strong>Signature:</strong> _arg1:&#39;?19641 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?19641                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?19235 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?19235                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops the storage emulator</p>
+                    <p>Stops the storage emulator</p>
 
 
         </td>
@@ -471,7 +457,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

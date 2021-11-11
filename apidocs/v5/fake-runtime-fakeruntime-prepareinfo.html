@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>DigestAlgorithm - FAKE - F# Make</title>
+	<title>PrepareInfo - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,40 +301,35 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-tools-signtool-digestalgorithm.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.Runtime" >Fake.Runtime</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="DigestAlgorithm" class="anchor" href="#DigestAlgorithm">DigestAlgorithm</a></h1>
+<h1><a name="PrepareInfo" class="anchor" href="#PrepareInfo">PrepareInfo</a></h1>
 <div class="xmldoc">
-<p>Digest algorithm</p>
-
 </div>
-  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
+  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6787', 6787)" onmouseover="showTip(event, '6787', 6787)">
-            SHA1
+          <code onmouseout="hideTip(event, '3582', 3582)" onmouseover="showTip(event, '3582', 3582)">
+            _CacheDir
           </code>
-          <div class="tip" id="6787">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="3582">
+            <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L417-417" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -338,15 +337,87 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6788', 6788)" onmouseover="showTip(event, '6788', 6788)">
-            SHA256
+          <code onmouseout="hideTip(event, '3583', 3583)" onmouseover="showTip(event, '3583', 3583)">
+            _Config
           </code>
-          <div class="tip" id="6788">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="3583">
+            <strong>Signature:</strong> FakeConfig<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L418-418" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3584', 3584)" onmouseover="showTip(event, '3584', 3584)">
+            _DependencyType
+          </code>
+          <div class="tip" id="3584">
+            <strong>Signature:</strong> PreparedDependencyType<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L420-420" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3585', 3585)" onmouseover="showTip(event, '3585', 3585)">
+            _Section
+          </code>
+          <div class="tip" id="3585">
+            <strong>Signature:</strong> FakeSection<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L419-419" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2><a name="Instance members" class="anchor" href="#Instance members">Instance members</a></h2>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3586', 3586)" onmouseover="showTip(event, '3586', 3586)">
+            x.CacheDir
+          </code>
+          <div class="tip" id="3586">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L421-421" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3587', 3587)" onmouseover="showTip(event, '3587', 3587)">
+            x.DependencyType
+          </code>
+          <div class="tip" id="3587">
+            <strong>Signature:</strong> PreparedDependencyType<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L422-422" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -363,6 +434,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -391,7 +463,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -415,10 +419,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L21-21" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
+                    <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
 If set to false (default) only mono processes will be changed.</p>
 
 
@@ -442,10 +443,7 @@ If set to false (default) only mono processes will be changed.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L494-494" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Execute an external program asynchronously and return the exit code,
+                    <p>Execute an external program asynchronously and return the exit code,
 logging output and error messages to FAKE output. You can compose the result
 with Async.Parallel to run multiple external programs at once, but be
 sure that none of them depend on the output of another.</p>
@@ -471,10 +469,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L475-475" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Default parameters for process execution.</p>
+                    <p>Default parameters for process execution.</p>
 
 
         </td>
@@ -497,10 +492,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L261-261" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
+                    <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
 
 
         </td>
@@ -523,10 +515,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L604-604" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
+                    <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the processes in question.</li>
@@ -554,10 +543,7 @@ sure that none of them depend on the output of another.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L210-210" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</p></li>
@@ -593,10 +579,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L138-138" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the process result.</p>
+                    <p>Runs the given process and returns the process result.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -624,10 +607,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L220-220" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process in an elevated context and returns the exit code.</p>
+                    <p>Runs the given process in an elevated context and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>cmd</code> - The command which should be run in elavated context.</li>
@@ -656,10 +636,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L150-150" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the process result.</p>
+                    <p>Runs the given process and returns the process result.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -687,10 +664,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L91-91" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -721,10 +695,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L251-251" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the given process and returns immediatly.</p>
+                    <p>Starts the given process and returns immediatly.</p>
 
 
         </td>
@@ -747,10 +718,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L540-540" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns all processes with the given name</p>
+                    <p>Returns all processes with the given name</p>
 
 
         </td>
@@ -773,10 +741,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L528-528" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the given process</p>
+                    <p>Kills the given process</p>
 
 
         </td>
@@ -799,10 +764,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L576-576" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
+                    <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
 
 
         </td>
@@ -825,10 +787,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L564-564" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the F# Interactive (FSI) process.</p>
+                    <p>Kills the F# Interactive (FSI) process.</p>
 
 
         </td>
@@ -851,10 +810,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L568-568" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills the MSBuild process.</p>
+                    <p>Kills the MSBuild process.</p>
 
 
         </td>
@@ -877,10 +833,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L553-553" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes with the given name</p>
+                    <p>Kills all processes with the given name</p>
 
 
         </td>
@@ -903,10 +856,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L536-536" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes with the given id</p>
+                    <p>Kills all processes with the given id</p>
 
 
         </td>
@@ -929,10 +879,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L229-229" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the list of valid directories included in the PATH environment variable.</p>
+                    <p>Gets the list of valid directories included in the PATH environment variable.</p>
 
 
         </td>
@@ -955,10 +902,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
+                    <p>The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
 If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.</p>
 
 
@@ -982,10 +926,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L281-281" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends a command to a remote windows service.</p>
+                    <p>Sends a command to a remote windows service.</p>
 
 
         </td>
@@ -1008,10 +949,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L295-295" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sends a command to a local windows service.</p>
+                    <p>Sends a command to a local windows service.</p>
 
 
         </td>
@@ -1034,10 +972,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L273-273" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts the given process and forgets about it.</p>
+                    <p>Starts the given process and forgets about it.</p>
 
 
         </td>
@@ -1060,10 +995,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L318-318" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -1086,10 +1018,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L312-312" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Starts a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -1112,10 +1041,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L306-306" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -1138,10 +1064,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L300-300" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Stops a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -1164,10 +1087,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Core.Process module instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L416-416" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Searches the current directory and the directories within the PATH
+                    <p>Searches the current directory and the directories within the PATH
 environment variable for the given file. If successful returns the full
 path to the file.</p>
 <h2>Parameters</h2>
@@ -1217,7 +1137,7 @@ path to the file.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>TimeStampOption - FAKE - F# Make</title>
+	<title>AssemblyData - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,22 +301,17 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-tools-signtool-timestampoption.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.Runtime" >Fake.Runtime</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="TimeStampOption" class="anchor" href="#TimeStampOption">TimeStampOption</a></h1>
+<h1><a name="AssemblyData" class="anchor" href="#AssemblyData">AssemblyData</a></h1>
 <div class="xmldoc">
-<p>Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.</p>
-
 </div>
   <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
   <table class="table table-bordered member-list">
@@ -322,64 +321,34 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6807', 6807)" onmouseover="showTip(event, '6807', 6807)">
-            Algorithm
+          <code onmouseout="hideTip(event, '3577', 3577)" onmouseover="showTip(event, '3577', 3577)">
+            Info
           </code>
-          <div class="tip" id="6807">
-            <strong>Signature:</strong> DigestAlgorithm option<br />
+          <div class="tip" id="3577">
+            <strong>Signature:</strong> AssemblyInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L19-19" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Used to request a digest algorithm used by the RFC 3161 time stamp server. (signtool option: /td alg)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6808', 6808)" onmouseover="showTip(event, '6808', 6808)">
-            ServerUrl
+          <code onmouseout="hideTip(event, '3578', 3578)" onmouseover="showTip(event, '3578', 3578)">
+            IsReferenceAssembly
           </code>
-          <div class="tip" id="6808">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="3578">
+            <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L30-30" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/FakeRuntime.fs#L18-18" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)</p>
-
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h2><a name="Static members" class="anchor" href="#Static members">Static members</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6809', 6809)" onmouseover="showTip(event, '6809', 6809)">
-            TimeStampOption.Create(serverUrl)
-          </code>
-          <div class="tip" id="6809">
-            <strong>Signature:</strong> serverUrl:string -&gt; TimeStampOption<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Options default values.</p>
-
-
+          
         </td>
       </tr>
     </tbody>
@@ -393,6 +362,7 @@
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -421,7 +391,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

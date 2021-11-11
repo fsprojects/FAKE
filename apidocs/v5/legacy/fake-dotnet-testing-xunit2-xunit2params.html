@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,378 +326,315 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6091', 6091)" onmouseover="showTip(event, '6091', 6091)">
+          <code onmouseout="hideTip(event, '5995', 5995)" onmouseover="showTip(event, '5995', 5995)">
             Class
           </code>
-          <div class="tip" id="6091">
+          <div class="tip" id="5995">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L141-141" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run xUnit against a specific class</p>
+                    <p>Run xUnit against a specific class</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6092', 6092)" onmouseover="showTip(event, '6092', 6092)">
+          <code onmouseout="hideTip(event, '5996', 5996)" onmouseover="showTip(event, '5996', 5996)">
             ErrorLevel
           </code>
-          <div class="tip" id="6092">
+          <div class="tip" id="5996">
             <strong>Signature:</strong> TestRunnerErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L127-127" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Test runner error level.</p>
+                    <p>Test runner error level.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6093', 6093)" onmouseover="showTip(event, '6093', 6093)">
+          <code onmouseout="hideTip(event, '5997', 5997)" onmouseover="showTip(event, '5997', 5997)">
             ExcludeTraits
           </code>
-          <div class="tip" id="6093">
+          <div class="tip" id="5997">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L131-131" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List of traits to exclude.</p>
+                    <p>List of traits to exclude.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6094', 6094)" onmouseover="showTip(event, '6094', 6094)">
+          <code onmouseout="hideTip(event, '5998', 5998)" onmouseover="showTip(event, '5998', 5998)">
             ForceAppVeyor
           </code>
-          <div class="tip" id="6094">
+          <div class="tip" id="5998">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Forces AppVeyor CI mode (normally auto-detected).</p>
+                    <p>Forces AppVeyor CI mode (normally auto-detected).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6095', 6095)" onmouseover="showTip(event, '6095', 6095)">
+          <code onmouseout="hideTip(event, '5999', 5999)" onmouseover="showTip(event, '5999', 5999)">
             ForceTeamCity
           </code>
-          <div class="tip" id="6095">
+          <div class="tip" id="5999">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L133-133" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Forces TeamCity mode (normally auto-detected).</p>
+                    <p>Forces TeamCity mode (normally auto-detected).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6096', 6096)" onmouseover="showTip(event, '6096', 6096)">
+          <code onmouseout="hideTip(event, '6000', 6000)" onmouseover="showTip(event, '6000', 6000)">
             HtmlOutputPath
           </code>
-          <div class="tip" id="6096">
+          <div class="tip" id="6000">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output path of the xUnit HTML report.</p>
+                    <p>The output path of the xUnit HTML report.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6097', 6097)" onmouseover="showTip(event, '6097', 6097)">
+          <code onmouseout="hideTip(event, '6001', 6001)" onmouseover="showTip(event, '6001', 6001)">
             IncludeTraits
           </code>
-          <div class="tip" id="6097">
+          <div class="tip" id="6001">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L129-129" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List of traits to include.</p>
+                    <p>List of traits to include.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6098', 6098)" onmouseover="showTip(event, '6098', 6098)">
+          <code onmouseout="hideTip(event, '6002', 6002)" onmouseover="showTip(event, '6002', 6002)">
             MaxThreads
           </code>
-          <div class="tip" id="6098">
+          <div class="tip" id="6002">
             <strong>Signature:</strong> CollectionConcurrencyMode<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L109-109" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The xUnit thread limiting strategy.</p>
+                    <p>The xUnit thread limiting strategy.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6099', 6099)" onmouseover="showTip(event, '6099', 6099)">
+          <code onmouseout="hideTip(event, '6003', 6003)" onmouseover="showTip(event, '6003', 6003)">
             Method
           </code>
-          <div class="tip" id="6099">
+          <div class="tip" id="6003">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L143-143" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run xUnit against a specific method</p>
+                    <p>Run xUnit against a specific method</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6100', 6100)" onmouseover="showTip(event, '6100', 6100)">
+          <code onmouseout="hideTip(event, '6004', 6004)" onmouseover="showTip(event, '6004', 6004)">
             Namespace
           </code>
-          <div class="tip" id="6100">
+          <div class="tip" id="6004">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L139-139" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run xUnit against a specific namespace</p>
+                    <p>Run xUnit against a specific namespace</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6101', 6101)" onmouseover="showTip(event, '6101', 6101)">
+          <code onmouseout="hideTip(event, '6005', 6005)" onmouseover="showTip(event, '6005', 6005)">
             NoAppDomain
           </code>
-          <div class="tip" id="6101">
+          <div class="tip" id="6005">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L105-105" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Do not use app domains to run test code.</p>
+                    <p>Do not use app domains to run test code.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6102', 6102)" onmouseover="showTip(event, '6102', 6102)">
+          <code onmouseout="hideTip(event, '6006', 6006)" onmouseover="showTip(event, '6006', 6006)">
             NUnitXmlOutputPath
           </code>
-          <div class="tip" id="6102">
+          <div class="tip" id="6006">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L117-117" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output path of the NUnit XML report.</p>
+                    <p>The output path of the NUnit XML report.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6103', 6103)" onmouseover="showTip(event, '6103', 6103)">
+          <code onmouseout="hideTip(event, '6007', 6007)" onmouseover="showTip(event, '6007', 6007)">
             Parallel
           </code>
-          <div class="tip" id="6103">
+          <div class="tip" id="6007">
             <strong>Signature:</strong> ParallelMode<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The xUnit parallelization mode.</p>
+                    <p>The xUnit parallelization mode.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6104', 6104)" onmouseover="showTip(event, '6104', 6104)">
+          <code onmouseout="hideTip(event, '6008', 6008)" onmouseover="showTip(event, '6008', 6008)">
             ShadowCopy
           </code>
-          <div class="tip" id="6104">
+          <div class="tip" id="6008">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run xUnit with shadow copy enabled.</p>
+                    <p>Run xUnit with shadow copy enabled.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6105', 6105)" onmouseover="showTip(event, '6105', 6105)">
+          <code onmouseout="hideTip(event, '6009', 6009)" onmouseover="showTip(event, '6009', 6009)">
             Silent
           </code>
-          <div class="tip" id="6105">
+          <div class="tip" id="6009">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L123-123" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run xUnit without reporting test progress.</p>
+                    <p>Run xUnit without reporting test progress.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6106', 6106)" onmouseover="showTip(event, '6106', 6106)">
+          <code onmouseout="hideTip(event, '6010', 6010)" onmouseover="showTip(event, '6010', 6010)">
             TimeOut
           </code>
-          <div class="tip" id="6106">
+          <div class="tip" id="6010">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Maximum time to allow xUnit to run before being killed.</p>
+                    <p>Maximum time to allow xUnit to run before being killed.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6107', 6107)" onmouseover="showTip(event, '6107', 6107)">
+          <code onmouseout="hideTip(event, '6011', 6011)" onmouseover="showTip(event, '6011', 6011)">
             ToolPath
           </code>
-          <div class="tip" id="6107">
+          <div class="tip" id="6011">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path to the xUnit console runner: <code>xunit.console.exe</code></p>
+                    <p>The path to the xUnit console runner: <code>xunit.console.exe</code></p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6108', 6108)" onmouseover="showTip(event, '6108', 6108)">
+          <code onmouseout="hideTip(event, '6012', 6012)" onmouseover="showTip(event, '6012', 6012)">
             Wait
           </code>
-          <div class="tip" id="6108">
+          <div class="tip" id="6012">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Waits for input after completion.</p>
+                    <p>Waits for input after completion.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6109', 6109)" onmouseover="showTip(event, '6109', 6109)">
+          <code onmouseout="hideTip(event, '6013', 6013)" onmouseover="showTip(event, '6013', 6013)">
             WorkingDir
           </code>
-          <div class="tip" id="6109">
+          <div class="tip" id="6013">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The working directory for running the xunit console runner.</p>
+                    <p>The working directory for running the xunit console runner.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6110', 6110)" onmouseover="showTip(event, '6110', 6110)">
+          <code onmouseout="hideTip(event, '6014', 6014)" onmouseover="showTip(event, '6014', 6014)">
             XmlOutputPath
           </code>
-          <div class="tip" id="6110">
+          <div class="tip" id="6014">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L113-113" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output path of the xUnit XML report.</p>
+                    <p>The output path of the xUnit XML report.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6111', 6111)" onmouseover="showTip(event, '6111', 6111)">
+          <code onmouseout="hideTip(event, '6015', 6015)" onmouseover="showTip(event, '6015', 6015)">
             XmlV1OutputPath
           </code>
-          <div class="tip" id="6111">
+          <div class="tip" id="6015">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.XUnit2/XUnit2.fs#L115-115" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output path of the xUnit XML report (in the xUnit v1 style).</p>
+                    <p>The output path of the xUnit XML report (in the xUnit v1 style).</p>
 
 
         </td>
@@ -737,7 +678,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

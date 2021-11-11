@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -332,10 +336,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1958', 1958)" onmouseover="showTip(event, '1958', 1958)">
+          <code onmouseout="hideTip(event, '1937', 1937)" onmouseover="showTip(event, '1937', 1937)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="1958">
+          <div class="tip" id="1937">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "hard".
+                    <p>Performs a git reset "hard".
 Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.</p>
 <h2>Parameters</h2>
 <ul>
@@ -365,10 +366,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1959', 1959)" onmouseover="showTip(event, '1959', 1959)">
+          <code onmouseout="hideTip(event, '1938', 1938)" onmouseover="showTip(event, '1938', 1938)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="1959">
+          <div class="tip" id="1938">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -381,10 +382,7 @@ Resets the index and working tree. Any changes to tracked files in the working t
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "mixed".
+                    <p>Performs a git reset "mixed".
 Resets the index but not the working tree and reports what has not been updated.</p>
 <h2>Parameters</h2>
 <ul>
@@ -398,10 +396,10 @@ Resets the index but not the working tree and reports what has not been updated.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1960', 1960)" onmouseover="showTip(event, '1960', 1960)">
+          <code onmouseout="hideTip(event, '1939', 1939)" onmouseover="showTip(event, '1939', 1939)">
             ResetHard(repositoryDir)
           </code>
-          <div class="tip" id="1960">
+          <div class="tip" id="1939">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -414,10 +412,7 @@ Resets the index but not the working tree and reports what has not been updated.
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "hard" to the current HEAD.
+                    <p>Performs a git reset "hard" to the current HEAD.
 Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.</p>
 <h2>Parameters</h2>
 <ul>
@@ -429,10 +424,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1961', 1961)" onmouseover="showTip(event, '1961', 1961)">
+          <code onmouseout="hideTip(event, '1940', 1940)" onmouseover="showTip(event, '1940', 1940)">
             ResetMixed(repositoryDir)
           </code>
-          <div class="tip" id="1961">
+          <div class="tip" id="1940">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -445,10 +440,7 @@ Resets the index and working tree. Any changes to tracked files in the working t
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "mixed" to the current HEAD.
+                    <p>Performs a git reset "mixed" to the current HEAD.
 Resets the index but not the working tree and reports what has not been updated.</p>
 <h2>Parameters</h2>
 <ul>
@@ -460,10 +452,10 @@ Resets the index but not the working tree and reports what has not been updated.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1962', 1962)" onmouseover="showTip(event, '1962', 1962)">
+          <code onmouseout="hideTip(event, '1941', 1941)" onmouseover="showTip(event, '1941', 1941)">
             ResetSoft(repositoryDir)
           </code>
-          <div class="tip" id="1962">
+          <div class="tip" id="1941">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -476,10 +468,7 @@ Resets the index but not the working tree and reports what has not been updated.
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "soft" to the current HEAD.
+                    <p>Performs a git reset "soft" to the current HEAD.
 Does not touch the index file nor the working tree at all.</p>
 <h2>Parameters</h2>
 <ul>
@@ -491,10 +480,10 @@ Does not touch the index file nor the working tree at all.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1963', 1963)" onmouseover="showTip(event, '1963', 1963)">
+          <code onmouseout="hideTip(event, '1942', 1942)" onmouseover="showTip(event, '1942', 1942)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="1963">
+          <div class="tip" id="1942">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -507,10 +496,7 @@ Does not touch the index file nor the working tree at all.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Reset instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Reset.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a git reset "soft".
+                    <p>Performs a git reset "soft".
 Does not touch the index file nor the working tree at all.</p>
 <h2>Parameters</h2>
 <ul>
@@ -561,7 +547,7 @@ Does not touch the index file nor the working tree at all.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

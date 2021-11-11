@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,342 +332,285 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4037', 4037)" onmouseover="showTip(event, '4037', 4037)">
+          <code onmouseout="hideTip(event, '4002', 4002)" onmouseover="showTip(event, '4002', 4002)">
             EnableCodeCoverage
           </code>
-          <div class="tip" id="4037">
+          <div class="tip" id="4002">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Enables code coverage collection (optional).</p>
+                    <p>Enables code coverage collection (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4038', 4038)" onmouseover="showTip(event, '4038', 4038)">
+          <code onmouseout="hideTip(event, '4003', 4003)" onmouseover="showTip(event, '4003', 4003)">
             ErrorLevel
           </code>
-          <div class="tip" id="4038">
+          <div class="tip" id="4003">
             <strong>Signature:</strong> ErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L64-64" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Error level for controlling how VSTest failures should break the build (optional).</p>
+                    <p>Error level for controlling how VSTest failures should break the build (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4039', 4039)" onmouseover="showTip(event, '4039', 4039)">
+          <code onmouseout="hideTip(event, '4004', 4004)" onmouseover="showTip(event, '4004', 4004)">
             Framework
           </code>
-          <div class="tip" id="4039">
+          <div class="tip" id="4004">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L42-42" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Target .NET framework version to use for test execution (optional).</p>
+                    <p>Target .NET framework version to use for test execution (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4040', 4040)" onmouseover="showTip(event, '4040', 4040)">
+          <code onmouseout="hideTip(event, '4005', 4005)" onmouseover="showTip(event, '4005', 4005)">
             InIsolation
           </code>
-          <div class="tip" id="4040">
+          <div class="tip" id="4005">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L36-36" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run the tests in an isolated process (optional).</p>
+                    <p>Run the tests in an isolated process (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4041', 4041)" onmouseover="showTip(event, '4041', 4041)">
+          <code onmouseout="hideTip(event, '4006', 4006)" onmouseover="showTip(event, '4006', 4006)">
             ListDiscoverers
           </code>
-          <div class="tip" id="4041">
+          <div class="tip" id="4006">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L50-50" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List installed test discoverers (optional).</p>
+                    <p>List installed test discoverers (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4042', 4042)" onmouseover="showTip(event, '4042', 4042)">
+          <code onmouseout="hideTip(event, '4007', 4007)" onmouseover="showTip(event, '4007', 4007)">
             ListExecutors
           </code>
-          <div class="tip" id="4042">
+          <div class="tip" id="4007">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L52-52" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List installed test executors (optional).</p>
+                    <p>List installed test executors (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4043', 4043)" onmouseover="showTip(event, '4043', 4043)">
+          <code onmouseout="hideTip(event, '4008', 4008)" onmouseover="showTip(event, '4008', 4008)">
             ListLoggers
           </code>
-          <div class="tip" id="4043">
+          <div class="tip" id="4008">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L54-54" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List installed loggers (optional).</p>
+                    <p>List installed loggers (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4044', 4044)" onmouseover="showTip(event, '4044', 4044)">
+          <code onmouseout="hideTip(event, '4009', 4009)" onmouseover="showTip(event, '4009', 4009)">
             ListSettingsProviders
           </code>
-          <div class="tip" id="4044">
+          <div class="tip" id="4009">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L56-56" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List installed settings providers (optional).</p>
+                    <p>List installed settings providers (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4045', 4045)" onmouseover="showTip(event, '4045', 4045)">
+          <code onmouseout="hideTip(event, '4010', 4010)" onmouseover="showTip(event, '4010', 4010)">
             ListTestsPath
           </code>
-          <div class="tip" id="4045">
+          <div class="tip" id="4010">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>List discovered tests from the given container path (optional).</p>
+                    <p>List discovered tests from the given container path (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4046', 4046)" onmouseover="showTip(event, '4046', 4046)">
+          <code onmouseout="hideTip(event, '4011', 4011)" onmouseover="showTip(event, '4011', 4011)">
             Logger
           </code>
-          <div class="tip" id="4046">
+          <div class="tip" id="4011">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L46-46" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The logger to use for test results (optional).</p>
+                    <p>The logger to use for test results (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4047', 4047)" onmouseover="showTip(event, '4047', 4047)">
+          <code onmouseout="hideTip(event, '4012', 4012)" onmouseover="showTip(event, '4012', 4012)">
             Platform
           </code>
-          <div class="tip" id="4047">
+          <div class="tip" id="4012">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L40-40" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Target platform architecture for test execution (optional). Valid options include "x86", "x64" and "ARM".</p>
+                    <p>Target platform architecture for test execution (optional). Valid options include "x86", "x64" and "ARM".</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4048', 4048)" onmouseover="showTip(event, '4048', 4048)">
+          <code onmouseout="hideTip(event, '4013', 4013)" onmouseover="showTip(event, '4013', 4013)">
             SettingsPath
           </code>
-          <div class="tip" id="4048">
+          <div class="tip" id="4013">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to the run settings file to run tests with additional settings such as data collectors (optional).</p>
+                    <p>Path to the run settings file to run tests with additional settings such as data collectors (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4049', 4049)" onmouseover="showTip(event, '4049', 4049)">
+          <code onmouseout="hideTip(event, '4014', 4014)" onmouseover="showTip(event, '4014', 4014)">
             TestAdapterPath
           </code>
-          <div class="tip" id="4049">
+          <div class="tip" id="4014">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L66-66" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to test adapter e.g. xUnit (optional)</p>
+                    <p>Path to test adapter e.g. xUnit (optional)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4050', 4050)" onmouseover="showTip(event, '4050', 4050)">
+          <code onmouseout="hideTip(event, '4015', 4015)" onmouseover="showTip(event, '4015', 4015)">
             TestCaseFilter
           </code>
-          <div class="tip" id="4050">
+          <div class="tip" id="4015">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L44-44" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Run tests that match the given expression (optional). Cannot be used with the Tests argument</p>
+                    <p>Run tests that match the given expression (optional). Cannot be used with the Tests argument</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4051', 4051)" onmouseover="showTip(event, '4051', 4051)">
+          <code onmouseout="hideTip(event, '4016', 4016)" onmouseover="showTip(event, '4016', 4016)">
             Tests
           </code>
-          <div class="tip" id="4051">
+          <div class="tip" id="4016">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Names of the tests that should be run (optional).</p>
+                    <p>Names of the tests that should be run (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4052', 4052)" onmouseover="showTip(event, '4052', 4052)">
+          <code onmouseout="hideTip(event, '4017', 4017)" onmouseover="showTip(event, '4017', 4017)">
             TimeOut
           </code>
-          <div class="tip" id="4052">
+          <div class="tip" id="4017">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L62-62" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A timeout for the test runner (optional).</p>
+                    <p>A timeout for the test runner (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4053', 4053)" onmouseover="showTip(event, '4053', 4053)">
+          <code onmouseout="hideTip(event, '4018', 4018)" onmouseover="showTip(event, '4018', 4018)">
             ToolPath
           </code>
-          <div class="tip" id="4053">
+          <div class="tip" id="4018">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Path to VSTest.Console.exe (optional). By default the default install location is searched.</p>
+                    <p>Path to VSTest.Console.exe (optional). By default the default install location is searched.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4054', 4054)" onmouseover="showTip(event, '4054', 4054)">
+          <code onmouseout="hideTip(event, '4019', 4019)" onmouseover="showTip(event, '4019', 4019)">
             UseVsixExtensions
           </code>
-          <div class="tip" id="4054">
+          <div class="tip" id="4019">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Use installed VSIX extensions in VSTest (optional).</p>
+                    <p>Use installed VSIX extensions in VSTest (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4055', 4055)" onmouseover="showTip(event, '4055', 4055)">
+          <code onmouseout="hideTip(event, '4020', 4020)" onmouseover="showTip(event, '4020', 4020)">
             WorkingDir
           </code>
-          <div class="tip" id="4055">
+          <div class="tip" id="4020">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/VSTest.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Working directory (optional).</p>
+                    <p>Working directory (optional).</p>
 
 
         </td>
@@ -707,7 +654,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

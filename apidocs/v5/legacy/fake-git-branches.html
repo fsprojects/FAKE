@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -332,10 +336,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1889', 1889)" onmouseover="showTip(event, '1889', 1889)">
+          <code onmouseout="hideTip(event, '1868', 1868)" onmouseover="showTip(event, '1868', 1868)">
             checkout repositoryDir create branch
           </code>
-          <div class="tip" id="1889">
+          <div class="tip" id="1868">
             <strong>Signature:</strong> repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L102-102" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a checkout of the given branch to the working copy.</p>
+                    <p>Performs a checkout of the given branch to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -364,10 +365,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1890', 1890)" onmouseover="showTip(event, '1890', 1890)">
+          <code onmouseout="hideTip(event, '1869', 1869)" onmouseover="showTip(event, '1869', 1869)">
             checkoutBranch repositoryDir branch
           </code>
-          <div class="tip" id="1890">
+          <div class="tip" id="1869">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -380,10 +381,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a checkout of the given branch to the working copy.</p>
+                    <p>Performs a checkout of the given branch to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -395,10 +393,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1891', 1891)" onmouseover="showTip(event, '1891', 1891)">
+          <code onmouseout="hideTip(event, '1870', 1870)" onmouseover="showTip(event, '1870', 1870)">
             checkoutNewBranch(...)
           </code>
-          <div class="tip" id="1891">
+          <div class="tip" id="1870">
             <strong>Signature:</strong> repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -411,10 +409,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L91-91" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
+                    <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -427,10 +422,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1892', 1892)" onmouseover="showTip(event, '1892', 1892)">
+          <code onmouseout="hideTip(event, '1871', 1871)" onmouseover="showTip(event, '1871', 1871)">
             checkoutTracked(...)
           </code>
-          <div class="tip" id="1892">
+          <div class="tip" id="1871">
             <strong>Signature:</strong> repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -443,10 +438,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L81-81" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs a checkout of the given branch with an additional tracking branch.</p>
+                    <p>Performs a checkout of the given branch with an additional tracking branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -459,10 +451,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1893', 1893)" onmouseover="showTip(event, '1893', 1893)">
+          <code onmouseout="hideTip(event, '1872', 1872)" onmouseover="showTip(event, '1872', 1872)">
             createBranch(...)
           </code>
-          <div class="tip" id="1893">
+          <div class="tip" id="1872">
             <strong>Signature:</strong> repositoryDir:string -&gt; newBranchName:string -&gt; commit:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -475,10 +467,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new branch from the given commit.</p>
+                    <p>Creates a new branch from the given commit.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -491,10 +480,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1894', 1894)" onmouseover="showTip(event, '1894', 1894)">
+          <code onmouseout="hideTip(event, '1873', 1873)" onmouseover="showTip(event, '1873', 1873)">
             deleteBranch repositoryDir force branch
           </code>
-          <div class="tip" id="1894">
+          <div class="tip" id="1873">
             <strong>Signature:</strong> repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -507,10 +496,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes the given branch.</p>
+                    <p>Deletes the given branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -523,10 +509,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1895', 1895)" onmouseover="showTip(event, '1895', 1895)">
+          <code onmouseout="hideTip(event, '1874', 1874)" onmouseover="showTip(event, '1874', 1874)">
             deleteTag repositoryDir tag
           </code>
-          <div class="tip" id="1895">
+          <div class="tip" id="1874">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -539,10 +525,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L145-145" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes the given tag.</p>
+                    <p>Deletes the given tag.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -554,10 +537,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1896', 1896)" onmouseover="showTip(event, '1896', 1896)">
+          <code onmouseout="hideTip(event, '1875', 1875)" onmouseover="showTip(event, '1875', 1875)">
             findMergeBase(...)
           </code>
-          <div class="tip" id="1896">
+          <div class="tip" id="1875">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -570,10 +553,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
+                    <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -586,10 +566,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1897', 1897)" onmouseover="showTip(event, '1897', 1897)">
+          <code onmouseout="hideTip(event, '1876', 1876)" onmouseover="showTip(event, '1876', 1876)">
             getAllBranches(repositoryDir)
           </code>
-          <div class="tip" id="1897">
+          <div class="tip" id="1876">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -602,20 +582,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all local and remote branches from the given repository.</p>
+                    <p>Gets all local and remote branches from the given repository.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1898', 1898)" onmouseover="showTip(event, '1898', 1898)">
+          <code onmouseout="hideTip(event, '1877', 1877)" onmouseover="showTip(event, '1877', 1877)">
             getLocalBranches(repositoryDir)
           </code>
-          <div class="tip" id="1898">
+          <div class="tip" id="1877">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -628,20 +605,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L16-16" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all local branches from the given repository.</p>
+                    <p>Gets all local branches from the given repository.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1899', 1899)" onmouseover="showTip(event, '1899', 1899)">
+          <code onmouseout="hideTip(event, '1878', 1878)" onmouseover="showTip(event, '1878', 1878)">
             getRemoteBranches(repositoryDir)
           </code>
-          <div class="tip" id="1899">
+          <div class="tip" id="1878">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -654,20 +628,17 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets all remote branches from the given repository.</p>
+                    <p>Gets all remote branches from the given repository.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1900', 1900)" onmouseover="showTip(event, '1900', 1900)">
+          <code onmouseout="hideTip(event, '1879', 1879)" onmouseover="showTip(event, '1879', 1879)">
             getSHA1 repositoryDir commit
           </code>
-          <div class="tip" id="1900">
+          <div class="tip" id="1879">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -680,10 +651,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the SHA1 of the given commit from the given repository.</p>
+                    <p>Returns the SHA1 of the given commit from the given repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -695,10 +663,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1901', 1901)" onmouseover="showTip(event, '1901', 1901)">
+          <code onmouseout="hideTip(event, '1880', 1880)" onmouseover="showTip(event, '1880', 1880)">
             pull repositoryDir remote branch
           </code>
-          <div class="tip" id="1901">
+          <div class="tip" id="1880">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -711,10 +679,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L181-181" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pulls a given branch from the given remote.</p>
+                    <p>Pulls a given branch from the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -727,10 +692,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1902', 1902)" onmouseover="showTip(event, '1902', 1902)">
+          <code onmouseout="hideTip(event, '1881', 1881)" onmouseover="showTip(event, '1881', 1881)">
             push(repositoryDir)
           </code>
-          <div class="tip" id="1902">
+          <div class="tip" id="1881">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -743,10 +708,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L154-154" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pushes all branches to the default remote.</p>
+                    <p>Pushes all branches to the default remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -757,10 +719,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1903', 1903)" onmouseover="showTip(event, '1903', 1903)">
+          <code onmouseout="hideTip(event, '1882', 1882)" onmouseover="showTip(event, '1882', 1882)">
             pushBranch repositoryDir remote branch
           </code>
-          <div class="tip" id="1903">
+          <div class="tip" id="1882">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -773,10 +735,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L172-172" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pushes the given branch to the given remote.</p>
+                    <p>Pushes the given branch to the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -789,10 +748,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1904', 1904)" onmouseover="showTip(event, '1904', 1904)">
+          <code onmouseout="hideTip(event, '1883', 1883)" onmouseover="showTip(event, '1883', 1883)">
             pushTag repositoryDir remote tag
           </code>
-          <div class="tip" id="1904">
+          <div class="tip" id="1883">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; tag:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -805,10 +764,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L163-163" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Pushes the given tag to the given remote.</p>
+                    <p>Pushes the given tag to the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -821,10 +777,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1905', 1905)" onmouseover="showTip(event, '1905', 1905)">
+          <code onmouseout="hideTip(event, '1884', 1884)" onmouseover="showTip(event, '1884', 1884)">
             revisionsBetween(...)
           </code>
-          <div class="tip" id="1905">
+          <div class="tip" id="1884">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; int<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -837,10 +793,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Returns the number of revisions between the two given commits.</p>
+                    <p>Returns the number of revisions between the two given commits.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -853,10 +806,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1906', 1906)" onmouseover="showTip(event, '1906', 1906)">
+          <code onmouseout="hideTip(event, '1885', 1885)" onmouseover="showTip(event, '1885', 1885)">
             tag repositoryDir tag
           </code>
-          <div class="tip" id="1906">
+          <div class="tip" id="1885">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -869,10 +822,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.Tools.Git.Branches instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Git/Branches.fs#L135-135" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tags the current branch.</p>
+                    <p>Tags the current branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -921,7 +871,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

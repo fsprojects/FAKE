@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -329,234 +333,195 @@ The xUnit parameter type</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4328', 4328)" onmouseover="showTip(event, '4328', 4328)">
+          <code onmouseout="hideTip(event, '4293', 4293)" onmouseover="showTip(event, '4293', 4293)">
             ConfigFile
           </code>
-          <div class="tip" id="4328">
+          <div class="tip" id="4293">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L27-27" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The file name of the config file (optional).</p>
+                    <p>The file name of the config file (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4329', 4329)" onmouseover="showTip(event, '4329', 4329)">
+          <code onmouseout="hideTip(event, '4294', 4294)" onmouseover="showTip(event, '4294', 4294)">
             ErrorLevel
           </code>
-          <div class="tip" id="4329">
+          <div class="tip" id="4294">
             <strong>Signature:</strong> XUnitErrorLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L45-45" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Test runner error level. Option which allows to specify if an xUnit error should break the build.</p>
+                    <p>Test runner error level. Option which allows to specify if an xUnit error should break the build.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4330', 4330)" onmouseover="showTip(event, '4330', 4330)">
+          <code onmouseout="hideTip(event, '4295', 4295)" onmouseover="showTip(event, '4295', 4295)">
             ExcludeTraits
           </code>
-          <div class="tip" id="4330">
+          <div class="tip" id="4295">
             <strong>Signature:</strong> (string * string) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Exclude named traits with comma separated values</p>
+                    <p>Exclude named traits with comma separated values</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4331', 4331)" onmouseover="showTip(event, '4331', 4331)">
+          <code onmouseout="hideTip(event, '4296', 4296)" onmouseover="showTip(event, '4296', 4296)">
             HtmlOutput
           </code>
-          <div class="tip" id="4331">
+          <div class="tip" id="4296">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true a HTML output file will be generated.</p>
+                    <p>If set to true a HTML output file will be generated.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4332', 4332)" onmouseover="showTip(event, '4332', 4332)">
+          <code onmouseout="hideTip(event, '4297', 4297)" onmouseover="showTip(event, '4297', 4297)">
             IncludeTraits
           </code>
-          <div class="tip" id="4332">
+          <div class="tip" id="4297">
             <strong>Signature:</strong> (string * string) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L47-47" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Include named traits with comma separated values</p>
+                    <p>Include named traits with comma separated values</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4333', 4333)" onmouseover="showTip(event, '4333', 4333)">
+          <code onmouseout="hideTip(event, '4298', 4298)" onmouseover="showTip(event, '4298', 4298)">
             NUnitXmlOutput
           </code>
-          <div class="tip" id="4333">
+          <div class="tip" id="4298">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true a HTML output file will be generated in NUnit format.</p>
+                    <p>If set to true a HTML output file will be generated in NUnit format.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4334', 4334)" onmouseover="showTip(event, '4334', 4334)">
+          <code onmouseout="hideTip(event, '4299', 4299)" onmouseover="showTip(event, '4299', 4299)">
             OutputDir
           </code>
-          <div class="tip" id="4334">
+          <div class="tip" id="4299">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The output directory. It's the current directoy if nothing else is specified.</p>
+                    <p>The output directory. It's the current directoy if nothing else is specified.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4335', 4335)" onmouseover="showTip(event, '4335', 4335)">
+          <code onmouseout="hideTip(event, '4300', 4300)" onmouseover="showTip(event, '4300', 4300)">
             ShadowCopy
           </code>
-          <div class="tip" id="4335">
+          <div class="tip" id="4300">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true xUnit will run in ShadowCopy mode.</p>
+                    <p>If set to true xUnit will run in ShadowCopy mode.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4336', 4336)" onmouseover="showTip(event, '4336', 4336)">
+          <code onmouseout="hideTip(event, '4301', 4301)" onmouseover="showTip(event, '4301', 4301)">
             TimeOut
           </code>
-          <div class="tip" id="4336">
+          <div class="tip" id="4301">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L41-41" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If the timeout is reached the xUnit task will be killed. Default is 5 minutes.</p>
+                    <p>If the timeout is reached the xUnit task will be killed. Default is 5 minutes.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4337', 4337)" onmouseover="showTip(event, '4337', 4337)">
+          <code onmouseout="hideTip(event, '4302', 4302)" onmouseover="showTip(event, '4302', 4302)">
             ToolPath
           </code>
-          <div class="tip" id="4337">
+          <div class="tip" id="4302">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L25-25" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.</p>
+                    <p>The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4338', 4338)" onmouseover="showTip(event, '4338', 4338)">
+          <code onmouseout="hideTip(event, '4303', 4303)" onmouseover="showTip(event, '4303', 4303)">
             Verbose
           </code>
-          <div class="tip" id="4338">
+          <div class="tip" id="4303">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L39-39" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true xUnit will generate verbose output.</p>
+                    <p>If set to true xUnit will generate verbose output.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4339', 4339)" onmouseover="showTip(event, '4339', 4339)">
+          <code onmouseout="hideTip(event, '4304', 4304)" onmouseover="showTip(event, '4304', 4304)">
             WorkingDir
           </code>
-          <div class="tip" id="4339">
+          <div class="tip" id="4304">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L35-35" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The working directory (optional).</p>
+                    <p>The working directory (optional).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '4340', 4340)" onmouseover="showTip(event, '4340', 4340)">
+          <code onmouseout="hideTip(event, '4305', 4305)" onmouseover="showTip(event, '4305', 4305)">
             XmlOutput
           </code>
-          <div class="tip" id="4340">
+          <div class="tip" id="4305">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L33-33" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If set to true XML output will be generated.</p>
+                    <p>If set to true XML output will be generated.</p>
 
 
         </td>
@@ -600,7 +565,7 @@ The xUnit parameter type</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,72 +326,60 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5127', 5127)" onmouseover="showTip(event, '5127', 5127)">
+          <code onmouseout="hideTip(event, '5082', 5082)" onmouseover="showTip(event, '5082', 5082)">
             All
           </code>
-          <div class="tip" id="5127">
+          <div class="tip" id="5082">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L534-534" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If specified, all the available templates will be exported.</p>
+                    <p>If specified, all the available templates will be exported.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5128', 5128)" onmouseover="showTip(event, '5128', 5128)">
+          <code onmouseout="hideTip(event, '5083', 5083)" onmouseover="showTip(event, '5083', 5083)">
             Common
           </code>
-          <div class="tip" id="5128">
+          <div class="tip" id="5083">
             <strong>Signature:</strong> CommonParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L528-528" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify common docFx options</p>
+                    <p>Specify common docFx options</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5129', 5129)" onmouseover="showTip(event, '5129', 5129)">
+          <code onmouseout="hideTip(event, '5084', 5084)" onmouseover="showTip(event, '5084', 5084)">
             OutputFolder
           </code>
-          <div class="tip" id="5129">
+          <div class="tip" id="5084">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L537-537" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify the output folder path for the exported templates.</p>
+                    <p>Specify the output folder path for the exported templates.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5130', 5130)" onmouseover="showTip(event, '5130', 5130)">
+          <code onmouseout="hideTip(event, '5085', 5085)" onmouseover="showTip(event, '5085', 5085)">
             Templates
           </code>
-          <div class="tip" id="5130">
+          <div class="tip" id="5085">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L531-531" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Specify templates to export.</p>
+                    <p>Specify templates to export.</p>
 
 
         </td>
@@ -402,18 +394,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5131', 5131)" onmouseover="showTip(event, '5131', 5131)">
+          <code onmouseout="hideTip(event, '5086', 5086)" onmouseover="showTip(event, '5086', 5086)">
             x.WithCommon(f)
           </code>
-          <div class="tip" id="5131">
+          <div class="tip" id="5086">
             <strong>Signature:</strong> (f:(CommonParams -&gt; CommonParams)) -&gt; ExportTemplateParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L548-548" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Changes the "Common" parameters according to the given function</p>
+                    <p>Changes the "Common" parameters according to the given function</p>
 
 
         </td>
@@ -428,18 +417,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5132', 5132)" onmouseover="showTip(event, '5132', 5132)">
+          <code onmouseout="hideTip(event, '5087', 5087)" onmouseover="showTip(event, '5087', 5087)">
             ExportTemplateParams.Create()
           </code>
-          <div class="tip" id="5132">
+          <div class="tip" id="5087">
             <strong>Signature:</strong> unit -&gt; ExportTemplateParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L540-540" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>ExportTemplate default parameters</p>
+                    <p>ExportTemplate default parameters</p>
 
 
         </td>
@@ -483,7 +469,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

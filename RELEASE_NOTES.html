@@ -105,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -194,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -214,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -301,6 +305,24 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-21-0-alpha003-2021-11-11" class="anchor" href="#5-21-0-alpha003-2021-11-11">5.21.0-alpha003 - 2021-11-11</a></h2>
+<ul>
+<li>BUGFIX: add access token option to sqlpackage, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2581">https://github.com/fsprojects/FAKE/pull/2581</a></li>
+<li>NEW: Porting Fixie Module to FAKE 5, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2582">https://github.com/fsprojects/FAKE/pull/2582</a></li>
+<li>NEW: Porting Bitbucket module to FAKE 5, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2583">https://github.com/fsprojects/FAKE/pull/2583</a></li>
+<li>BUGFIX: Fix dotnet path on wsl, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/issues/2573">https://github.com/fsprojects/FAKE/issues/2573</a></li>
+<li>BUGFIX: Get by packageid and an api to search by title, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/issues/2575">https://github.com/fsprojects/FAKE/issues/2575</a></li>
+<li>NEW: Porting TypeScript module to FAKE 5, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2586">https://github.com/fsprojects/FAKE/pull/2586</a></li>
+<li>ENHANCEMENT: Changing coverlet output format to receive a list of formats, thanks @lucasteles - <a href="https://github.com/fsprojects/FAKE/pull/2562">https://github.com/fsprojects/FAKE/pull/2562</a></li>
+<li>ENHANCEMENT: Install Instruction, thanks @ShalokShalom - <a href="https://github.com/fsprojects/FAKE/pull/2578">https://github.com/fsprojects/FAKE/pull/2578</a></li>
+<li>ENHANCEMENT: GitVersion with dotnet tool, thanks @mcliment - <a href="https://github.com/fsprojects/FAKE/pull/2598">https://github.com/fsprojects/FAKE/pull/2598</a></li>
+<li>ENHANCEMENT: [Doc] Fix links inside one of the getting started's info box, thanks @boechat107 - <a href="https://github.com/fsprojects/FAKE/pull/2599">https://github.com/fsprojects/FAKE/pull/2599</a></li>
+<li>ENHANCEMENT: Fix some typos in fake-commandline.md, thanks @dawedawe - <a href="https://github.com/fsprojects/FAKE/pull/2602">https://github.com/fsprojects/FAKE/pull/2602</a></li>
+<li>ENHANCEMENT: Fix minor things in the documentation, thanks @dawedawe - <a href="https://github.com/fsprojects/FAKE/pull/2603">https://github.com/fsprojects/FAKE/pull/2603</a></li>
+<li>ENHANCEMENT: Add missing report types to ReportType, thanks @mcliment - <a href="https://github.com/fsprojects/FAKE/pull/2606">https://github.com/fsprojects/FAKE/pull/2606</a></li>
+<li>ENHANCEMENT: Support .net6 runtime assemblies, new Build system, and Legacy Fake Codebase Separation, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2609">https://github.com/fsprojects/FAKE/pull/2609</a></li>
+<li>BUGFIX: Update Octokit to 0.50 and fix upload assets, thanks @enovales - <a href="https://github.com/fsprojects/FAKE/issues/2601">https://github.com/fsprojects/FAKE/issues/2601</a></li>
+</ul>
 <h2><a name="5-20-4-2021-03-31" class="anchor" href="#5-20-4-2021-03-31">5.20.4 - 2021-03-31</a></h2>
 <ul>
 <li>ENHANCEMENT: Allow users of nunit3 set environment variables in the runner, thanks @robertpi - <a href="https://github.com/fsharp/FAKE/pull/2543">https://github.com/fsharp/FAKE/pull/2543</a></li>
@@ -2404,7 +2426,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

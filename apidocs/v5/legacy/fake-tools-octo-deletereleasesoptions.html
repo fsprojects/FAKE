@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,18 +326,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6746', 6746)" onmouseover="showTip(event, '6746', 6746)">
+          <code onmouseout="hideTip(event, '6645', 6645)" onmouseover="showTip(event, '6645', 6645)">
             Channel
           </code>
-          <div class="tip" id="6746">
+          <div class="tip" id="6645">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L128-128" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>If specified, only releases
+                    <p>If specified, only releases
 associated with the channel will be deleted;
 specify this argument multiple times to target
 multiple channels</p>
@@ -343,72 +344,60 @@ multiple channels</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6747', 6747)" onmouseover="showTip(event, '6747', 6747)">
+          <code onmouseout="hideTip(event, '6646', 6646)" onmouseover="showTip(event, '6646', 6646)">
             Common
           </code>
-          <div class="tip" id="6747">
+          <div class="tip" id="6646">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L131-131" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Common parameters</p>
+                    <p>Common parameters</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6748', 6748)" onmouseover="showTip(event, '6748', 6748)">
+          <code onmouseout="hideTip(event, '6647', 6647)" onmouseover="showTip(event, '6647', 6647)">
             MaxVersion
           </code>
-          <div class="tip" id="6748">
+          <div class="tip" id="6647">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L122-122" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Maximum (inclusive) version number for the range of versions to delete</p>
+                    <p>Maximum (inclusive) version number for the range of versions to delete</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6749', 6749)" onmouseover="showTip(event, '6749', 6749)">
+          <code onmouseout="hideTip(event, '6648', 6648)" onmouseover="showTip(event, '6648', 6648)">
             MinVersion
           </code>
-          <div class="tip" id="6749">
+          <div class="tip" id="6648">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Minimum (inclusive) version number for the range of versions to delete</p>
+                    <p>Minimum (inclusive) version number for the range of versions to delete</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6750', 6750)" onmouseover="showTip(event, '6750', 6750)">
+          <code onmouseout="hideTip(event, '6649', 6649)" onmouseover="showTip(event, '6649', 6649)">
             Project
           </code>
-          <div class="tip" id="6750">
+          <div class="tip" id="6649">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Octo/Octo.fs#L116-116" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Name of the project</p>
+                    <p>Name of the project</p>
 
 
         </td>
@@ -452,7 +441,7 @@ multiple channels</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

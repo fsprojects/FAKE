@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,162 +326,90 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6661', 6661)" onmouseover="showTip(event, '6661', 6661)">
+          <code onmouseout="hideTip(event, '6563', 6563)" onmouseover="showTip(event, '6563', 6563)">
             Config
           </code>
-          <div class="tip" id="6661">
+          <div class="tip" id="6563">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L34-34" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Read settings from configuration file</p>
+                    <p>Read settings from configuration file</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6662', 6662)" onmouseover="showTip(event, '6662', 6662)">
+          <code onmouseout="hideTip(event, '6564', 6564)" onmouseover="showTip(event, '6564', 6564)">
             Key
           </code>
-          <div class="tip" id="6662">
+          <div class="tip" id="6564">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L26-26" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Key to identify the SonarQube project</p>
+                    <p>Key to identify the SonarQube project</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6663', 6663)" onmouseover="showTip(event, '6663', 6663)">
+          <code onmouseout="hideTip(event, '6565', 6565)" onmouseover="showTip(event, '6565', 6565)">
             Name
           </code>
-          <div class="tip" id="6663">
+          <div class="tip" id="6565">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L28-28" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Name of the project</p>
+                    <p>Name of the project</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6664', 6664)" onmouseover="showTip(event, '6664', 6664)">
-            Organization
-          </code>
-          <div class="tip" id="6664">
-            <strong>Signature:</strong> string option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Organization which owns the SonarQube project</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6665', 6665)" onmouseover="showTip(event, '6665', 6665)">
+          <code onmouseout="hideTip(event, '6566', 6566)" onmouseover="showTip(event, '6566', 6566)">
             Settings
           </code>
-          <div class="tip" id="6665">
+          <div class="tip" id="6566">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Individual global settings for SonarQube</p>
+                    <p>Individual global settings for SonarQube</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6666', 6666)" onmouseover="showTip(event, '6666', 6666)">
+          <code onmouseout="hideTip(event, '6567', 6567)" onmouseover="showTip(event, '6567', 6567)">
             ToolsPath
           </code>
-          <div class="tip" id="6666">
+          <div class="tip" id="6567">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L22-22" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>FileName of the SonarQube runner exe.</p>
+                    <p>FileName of the SonarQube runner exe.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6667', 6667)" onmouseover="showTip(event, '6667', 6667)">
-            ToolType
-          </code>
-          <div class="tip" id="6667">
-            <strong>Signature:</strong> ToolType<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L20-20" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tool type</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6668', 6668)" onmouseover="showTip(event, '6668', 6668)">
+          <code onmouseout="hideTip(event, '6568', 6568)" onmouseover="showTip(event, '6568', 6568)">
             Version
           </code>
-          <div class="tip" id="6668">
+          <div class="tip" id="6568">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L30-30" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Version number of the project</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6669', 6669)" onmouseover="showTip(event, '6669', 6669)">
-            WorkingDirectory
-          </code>
-          <div class="tip" id="6669">
-            <strong>Signature:</strong> string<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The directory where the SonarQube scanner process will be started.</p>
+                    <p>Version number of the project</p>
 
 
         </td>
@@ -521,7 +453,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

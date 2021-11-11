@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -353,10 +357,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2302', 2302)" onmouseover="showTip(event, '2302', 2302)">
+          <code onmouseout="hideTip(event, '2277', 2277)" onmouseover="showTip(event, '2277', 2277)">
             Attach serverInfo attachOptions files
           </code>
-          <div class="tip" id="2302">
+          <div class="tip" id="2277">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; attachOptions:AttachOptions -&gt; files:seq&lt;string&gt; -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -369,20 +373,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Attach a database</p>
+                    <p>Attach a database</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2303', 2303)" onmouseover="showTip(event, '2303', 2303)">
+          <code onmouseout="hideTip(event, '2278', 2278)" onmouseover="showTip(event, '2278', 2278)">
             CreateDb(serverInfo)
           </code>
-          <div class="tip" id="2303">
+          <div class="tip" id="2278">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -395,20 +396,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L121-121" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a new db on the given server</p>
+                    <p>Creates a new db on the given server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2304', 2304)" onmouseover="showTip(event, '2304', 2304)">
+          <code onmouseout="hideTip(event, '2279', 2279)" onmouseover="showTip(event, '2279', 2279)">
             Detach(serverInfo)
           </code>
-          <div class="tip" id="2304">
+          <div class="tip" id="2279">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -421,20 +419,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L96-96" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Detaches a database</p>
+                    <p>Detaches a database</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2305', 2305)" onmouseover="showTip(event, '2305', 2305)">
+          <code onmouseout="hideTip(event, '2280', 2280)" onmouseover="showTip(event, '2280', 2280)">
             Disconnect(serverInfo)
           </code>
-          <div class="tip" id="2305">
+          <div class="tip" id="2280">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -447,20 +442,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L138-138" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Closes the connection to the server</p>
+                    <p>Closes the connection to the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2306', 2306)" onmouseover="showTip(event, '2306', 2306)">
+          <code onmouseout="hideTip(event, '2281', 2281)" onmouseover="showTip(event, '2281', 2281)">
             DropAndCreateDatabase(connectionString)
           </code>
-          <div class="tip" id="2306">
+          <div class="tip" id="2281">
             <strong>Signature:</strong> connectionString:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -473,20 +465,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L180-180" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Drops and creates the database (dropped if db exists. created nonetheless)</p>
+                    <p>Drops and creates the database (dropped if db exists. created nonetheless)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2307', 2307)" onmouseover="showTip(event, '2307', 2307)">
+          <code onmouseout="hideTip(event, '2282', 2282)" onmouseover="showTip(event, '2282', 2282)">
             DropDb(serverInfo)
           </code>
-          <div class="tip" id="2307">
+          <div class="tip" id="2282">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -499,20 +488,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L79-79" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Drops the given InitialCatalog from the server (if it exists)</p>
+                    <p>Drops the given InitialCatalog from the server (if it exists)</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2308', 2308)" onmouseover="showTip(event, '2308', 2308)">
+          <code onmouseout="hideTip(event, '2283', 2283)" onmouseover="showTip(event, '2283', 2283)">
             existDBOnServer serverInfo dbName
           </code>
-          <div class="tip" id="2308">
+          <div class="tip" id="2283">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; dbName:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -525,20 +511,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module and `dbExistsOnServer` instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L57-57" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given Database exists on the server</p>
+                    <p>Checks whether the given Database exists on the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2309', 2309)" onmouseover="showTip(event, '2309', 2309)">
+          <code onmouseout="hideTip(event, '2284', 2284)" onmouseover="showTip(event, '2284', 2284)">
             getDatabase(serverInfo)
           </code>
-          <div class="tip" id="2309">
+          <div class="tip" id="2284">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; Database<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -551,20 +534,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L69-69" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the initial catalog as database instance</p>
+                    <p>Gets the initial catalog as database instance</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2310', 2310)" onmouseover="showTip(event, '2310', 2310)">
+          <code onmouseout="hideTip(event, '2285', 2285)" onmouseover="showTip(event, '2285', 2285)">
             getDatabaseNamesFromServer(serverInfo)
           </code>
-          <div class="tip" id="2310">
+          <div class="tip" id="2285">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -577,20 +557,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L43-43" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>gets the DatabaseNames from the server</p>
+                    <p>gets the DatabaseNames from the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2311', 2311)" onmouseover="showTip(event, '2311', 2311)">
+          <code onmouseout="hideTip(event, '2286', 2286)" onmouseover="showTip(event, '2286', 2286)">
             getDatabasesFromServer(serverInfo)
           </code>
-          <div class="tip" id="2311">
+          <div class="tip" id="2286">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;Database&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -603,20 +580,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L38-38" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>gets the DatabaseNames from the server</p>
+                    <p>gets the DatabaseNames from the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2312', 2312)" onmouseover="showTip(event, '2312', 2312)">
+          <code onmouseout="hideTip(event, '2287', 2287)" onmouseover="showTip(event, '2287', 2287)">
             getDBName(serverInfo)
           </code>
-          <div class="tip" id="2312">
+          <div class="tip" id="2287">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -629,20 +603,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L49-49" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the initial catalog name</p>
+                    <p>Gets the initial catalog name</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2313', 2313)" onmouseover="showTip(event, '2313', 2313)">
+          <code onmouseout="hideTip(event, '2288', 2288)" onmouseover="showTip(event, '2288', 2288)">
             getServerInfo(connectionString)
           </code>
-          <div class="tip" id="2313">
+          <div class="tip" id="2288">
             <strong>Signature:</strong> connectionString:string -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -655,20 +626,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L19-19" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets a connection to the SQL server and an instance to the ConnectionStringBuilder</p>
+                    <p>Gets a connection to the SQL server and an instance to the ConnectionStringBuilder</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2314', 2314)" onmouseover="showTip(event, '2314', 2314)">
+          <code onmouseout="hideTip(event, '2289', 2289)" onmouseover="showTip(event, '2289', 2289)">
             getServerName(serverInfo)
           </code>
-          <div class="tip" id="2314">
+          <div class="tip" id="2289">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -681,20 +649,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L53-53" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the name of the server</p>
+                    <p>Gets the name of the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2315', 2315)" onmouseover="showTip(event, '2315', 2315)">
+          <code onmouseout="hideTip(event, '2290', 2290)" onmouseover="showTip(event, '2290', 2290)">
             intitialCatalogExistsOnServer(...)
           </code>
-          <div class="tip" id="2315">
+          <div class="tip" id="2290">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -707,20 +672,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L73-73" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks whether the given InitialCatalog exists on the server</p>
+                    <p>Checks whether the given InitialCatalog exists on the server</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2316', 2316)" onmouseover="showTip(event, '2316', 2316)">
+          <code onmouseout="hideTip(event, '2291', 2291)" onmouseover="showTip(event, '2291', 2291)">
             KillAllProcesses(serverInfo)
           </code>
-          <div class="tip" id="2316">
+          <div class="tip" id="2291">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -733,20 +695,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L88-88" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Kills all processes with the given server info</p>
+                    <p>Kills all processes with the given server info</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2317', 2317)" onmouseover="showTip(event, '2317', 2317)">
+          <code onmouseout="hideTip(event, '2292', 2292)" onmouseover="showTip(event, '2292', 2292)">
             ReplaceDatabaseFiles(...)
           </code>
-          <div class="tip" id="2317">
+          <div class="tip" id="2292">
             <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -759,20 +718,17 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the database files</p>
+                    <p>Replaces the database files</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2318', 2318)" onmouseover="showTip(event, '2318', 2318)">
+          <code onmouseout="hideTip(event, '2293', 2293)" onmouseover="showTip(event, '2293', 2293)">
             ReplaceDatabaseFilesWithCache(...)
           </code>
-          <div class="tip" id="2318">
+          <div class="tip" id="2293">
             <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -785,10 +741,7 @@
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L173-173" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces the database files from a cache.
+                    <p>Replaces the database files from a cache.
 If the files in the cache are not up to date, they will be refreshed.</p>
 
 
@@ -796,10 +749,10 @@ If the files in the cache are not up to date, they will be refreshed.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2319', 2319)" onmouseover="showTip(event, '2319', 2319)">
+          <code onmouseout="hideTip(event, '2294', 2294)" onmouseover="showTip(event, '2294', 2294)">
             runScript serverInfo sqlFile
           </code>
-          <div class="tip" id="2319">
+          <div class="tip" id="2294">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; sqlFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -812,20 +765,17 @@ If the files in the cache are not up to date, they will be refreshed.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L130-130" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a sql script on the server.</p>
+                    <p>Runs a sql script on the server.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2320', 2320)" onmouseover="showTip(event, '2320', 2320)">
+          <code onmouseout="hideTip(event, '2295', 2295)" onmouseover="showTip(event, '2295', 2295)">
             RunScripts connectionString scripts
           </code>
-          <div class="tip" id="2320">
+          <div class="tip" id="2295">
             <strong>Signature:</strong> connectionString:string -&gt; scripts:seq&lt;string&gt; -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -838,20 +788,17 @@ If the files in the cache are not up to date, they will be refreshed.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L191-191" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the given sql scripts on the server.</p>
+                    <p>Runs the given sql scripts on the server.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2321', 2321)" onmouseover="showTip(event, '2321', 2321)">
+          <code onmouseout="hideTip(event, '2296', 2296)" onmouseover="showTip(event, '2296', 2296)">
             RunScriptsFromDirectory(...)
           </code>
-          <div class="tip" id="2321">
+          <div class="tip" id="2296">
             <strong>Signature:</strong> connectionString:string -&gt; scriptDirectory:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -864,10 +811,7 @@ If the files in the cache are not up to date, they will be refreshed.</p>
                 <h5>OBSOLETE</h5>
                 <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs all sql scripts from the given directory on the server.</p>
+                    <p>Runs all sql scripts from the given directory on the server.</p>
 
 
         </td>
@@ -911,7 +855,7 @@ If the files in the cache are not up to date, they will be refreshed.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

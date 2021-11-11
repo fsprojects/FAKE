@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -348,10 +352,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L263-263" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Includes all files</p>
+                    <p>Includes all files</p>
 
 
         </td>
@@ -374,10 +375,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.AppendTextFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L331-331" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -405,10 +403,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use Path.ChangeExtension</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L528-528" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Change the extension of the file.</p>
+                    <p>Change the extension of the file.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The new extension containing the leading '.'.</li>
@@ -436,10 +431,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDir)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L290-290" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans a directory by removing all files and sub-directories.</p>
+                    <p>Cleans a directory by removing all files and sub-directories.</p>
 
 
         </td>
@@ -462,10 +454,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDirs)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L310-310" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Cleans multiple directories</p>
+                    <p>Cleans multiple directories</p>
 
 
         </td>
@@ -488,10 +477,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CompareFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L357-357" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Compares the given files for changes.
+                    <p>Compares the given files for changes.
 If delete is set to true then equal files will be removed.</p>
 
 
@@ -515,10 +501,7 @@ If delete is set to true then equal files will be removed.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Copy)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L180-180" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target.</p>
+                    <p>Copies the files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -546,10 +529,7 @@ If delete is set to true then equal files will be removed.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyCached)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files from a cache folder.
+                    <p>Copies the files from a cache folder.
 If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
 <h2>Parameters</h2>
 <ul>
@@ -579,10 +559,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyDir)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L272-272" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+                    <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -611,10 +588,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L119-119" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target and overwrites the existing file.</p>
+                    <p>Copies a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory or file.</li>
@@ -642,10 +616,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileIntoSubFolder)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L144-144" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to a relative subfolder of the target.</p>
+                    <p>Copies a single file to a relative subfolder of the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory</li>
@@ -673,10 +644,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L255-255" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the files to the target - Alias for Copy</p>
+                    <p>Copies the files to the target - Alias for Copy</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -704,10 +672,7 @@ If the files are not cached or the original files have a different write time th
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileWithSubfolder)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L156-156" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a single file to the target folder preserving the folder structure
+                    <p>Copies a single file to the target folder preserving the folder structure
 starting from the specified base folder.</p>
 <h2>Parameters</h2>
 <ul>
@@ -737,10 +702,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.copyRecursiveTo. NB: parameters order changed)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L423-423" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
@@ -763,10 +725,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyRecursive)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L443-443" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
@@ -789,10 +748,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyTo)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L190-190" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies the given files to the target.</p>
+                    <p>Copies the given files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -820,10 +776,7 @@ starting from the specified base folder.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L170-170" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies several file groups, each represented by a FileIncludes object,
+                    <p>Copies several file groups, each represented by a FileIncludes object,
 to the target folder preserving the folder structure
 starting from the BaseDirectory of each FileIncludes.</p>
 <h2>Parameters</h2>
@@ -853,10 +806,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.create)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L61-61" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a directory if it does not exist.</p>
+                    <p>Creates a directory if it does not exist.</p>
 
 
         </td>
@@ -879,10 +829,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.create)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L70-70" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a file if it does not exist.</p>
+                    <p>Creates a file if it does not exist.</p>
 
 
         </td>
@@ -905,10 +852,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.delete)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L48-48" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a directory if it exists.</p>
+                    <p>Deletes a directory if it exists.</p>
 
 
         </td>
@@ -931,10 +875,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.DeleteDirs)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L314-314" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes multiple directories</p>
+                    <p>Deletes multiple directories</p>
 
 
         </td>
@@ -957,10 +898,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.delete)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L80-80" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes a file if it exists.</p>
+                    <p>Deletes a file if it exists.</p>
 
 
         </td>
@@ -983,10 +921,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.deleteAll)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L89-89" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Deletes the given files.</p>
+                    <p>Deletes the given files.</p>
 
 
         </td>
@@ -1009,10 +944,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use Path.GetDirectoryName</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L560-560" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the directory of the specified path</p>
+                    <p>Get the directory of the specified path</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the directory is retrieved.</li>
@@ -1039,10 +971,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L259-259" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Exclude SVN files (path with .svn)</p>
+                    <p>Exclude SVN files (path with .svn)</p>
 
 
         </td>
@@ -1065,10 +994,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use Path.GetExtension</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L520-520" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the filename extension including the leading '.', or an empty string if the file has no extension.</p>
+                    <p>Get the filename extension including the leading '.', or an empty string if the file has no extension.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'fileName' - Name of the file from which the extension is retrieved.</li>
@@ -1095,10 +1021,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use Path.GetFileName</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L543-543" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the filename for the specified path</p>
+                    <p>Get the filename for the specified path</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the filename is retrieved.</li>
@@ -1125,10 +1048,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>This was a typo - please use fileNameWithoutExt</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L553-553" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1149,10 +1069,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use Path.GetFileNameWithoutExtension</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L550-550" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the filename for the specified path without it's extension</p>
+                    <p>Get the filename for the specified path without it's extension</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the filename is retrieved.</li>
@@ -1179,10 +1096,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.contentIsEqualTo)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L341-341" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the two files are byte-to-byte equal.</p>
+                    <p>Checks if the two files are byte-to-byte equal.</p>
 
 
         </td>
@@ -1205,10 +1119,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.getVersion)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L510-510" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Get the version a file.</p>
+                    <p>Get the version a file.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'fileName' - Name of file from which the version is retrieved. The path can be relative.</li>
@@ -1235,10 +1146,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatch)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L418-418" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release.</li>
@@ -1267,10 +1175,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatchWithFindOldFileFunction)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L399-399" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release</li>
@@ -1300,10 +1205,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Open System.IO and use System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L536-536" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Tests whether the file has specified extensions (containing the leading '.')</p>
+                    <p>Tests whether the file has specified extensions (containing the leading '.')</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The extension to fine containing the leading '.'.</li>
@@ -1331,10 +1233,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.MoveFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L451-451" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Moves a single file to the target and overwrites the existing file.</p>
+                    <p>Moves a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1362,10 +1261,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L319-319" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Reads a csv file line by line
+                    <p>Reads a csv file line by line
 delimiter is a ,</p>
 
 
@@ -1389,10 +1285,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Function is no more accessible (FAKE0003 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.recursively). If you consider, it is still useful, please open an issue and explain your use case</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L12-12" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Performs the given actions on all files and subdirectories</p>
+                    <p>Performs the given actions on all files and subdirectories</p>
 
 
         </td>
@@ -1415,10 +1308,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L502-502" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1448,10 +1338,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L489-489" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1481,10 +1368,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Rename)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Renames the file or directory to the target name.</p>
+                    <p>Renames the file or directory to the target name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target file or directory name.</li>
@@ -1512,10 +1396,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.ReplaceInFiles)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L479-479" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+                    <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
@@ -1543,10 +1424,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L24-24" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets the directory readonly</p>
+                    <p>Sets the directory readonly</p>
 
 
         </td>
@@ -1569,10 +1447,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnlyRecursive)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L32-32" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets all files in the directory readonly.</p>
+                    <p>Sets all files in the directory readonly.</p>
 
 
         </td>
@@ -1595,10 +1470,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L37-37" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets all given files readonly.</p>
+                    <p>Sets all given files readonly.</p>
 
 
         </td>
@@ -1621,10 +1493,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Copies a list of files to the specified directory without any output.</p>
+                    <p>Copies a list of files to the specified directory without any output.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1652,10 +1521,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestDir)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L375-375" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the directory exists</p>
+                    <p>Checks if the directory exists</p>
 
 
         </td>
@@ -1678,10 +1544,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L384-384" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks if the file exists</p>
+                    <p>Checks if the file exists</p>
 
 
         </td>
@@ -1692,8 +1555,8 @@ delimiter is a ,</p>
             WriteConfigFile(...)
           </code>
           <div class="tip" id="394">
-            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?12691 * &#39;?12692&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12691, '?12692                            <span>
+            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?12699 * &#39;?12700&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?12699, '?12700                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.WriteConfigFile)&quot;)&gt;]<br />
                 </span>
@@ -1704,10 +1567,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.WriteConfigFile)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L464-464" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a config file with the parameters as "key;value" lines</p>
+                    <p>Creates a config file with the parameters as "key;value" lines</p>
 
 
         </td>
@@ -1738,10 +1598,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.(|EndsWith|_|))</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L101-101" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active Pattern for determining file extension.</p>
+                    <p>Active Pattern for determining file extension.</p>
 
 
         </td>
@@ -1764,10 +1621,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystemInfo.(|File|Directory|))</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L93-93" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active pattern which discriminates between files and directories.</p>
+                    <p>Active pattern which discriminates between files and directories.</p>
 
 
         </td>
@@ -1790,10 +1644,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|FullName|))</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L107-107" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active Pattern for determining file name.</p>
+                    <p>Active Pattern for determining file name.</p>
 
 
         </td>
@@ -1816,10 +1667,7 @@ delimiter is a ,</p>
                 <h5>OBSOLETE</h5>
                 <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|NameSections|))</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L111-111" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Active Pattern for determining FileInfoNameSections.</p>
+                    <p>Active Pattern for determining FileInfoNameSections.</p>
 
 
         </td>
@@ -1863,7 +1711,7 @@ delimiter is a ,</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

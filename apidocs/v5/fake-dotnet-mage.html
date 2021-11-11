@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -371,15 +375,15 @@ a temporary certificate. And the latter one can be shared in the source control.
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
+          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
             Mage.createApp
           </code>
-          <div class="tip" id="738">
+          <div class="tip" id="741">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L143-143" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to create a new application's manifest</p>
@@ -389,15 +393,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
+          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
             Mage.deployApp
           </code>
-          <div class="tip" id="739">
+          <div class="tip" id="742">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to deploy an application</p>
@@ -407,15 +411,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
             Mage.run(mp)
           </code>
-          <div class="tip" id="740">
+          <div class="tip" id="743">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L161-161" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.</p>
@@ -425,15 +429,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
             Mage.signDeploy
           </code>
-          <div class="tip" id="741">
+          <div class="tip" id="744">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L158-158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to sign the deployment of an application</p>
@@ -443,15 +447,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
             Mage.signManifest
           </code>
-          <div class="tip" id="742">
+          <div class="tip" id="745">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L149-149" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L149-149" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to sign an application's manifest</p>
@@ -461,15 +465,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
+          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
             Mage.updateApp
           </code>
-          <div class="tip" id="743">
+          <div class="tip" id="746">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L146-146" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L146-146" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to update an existing application's manifest</p>
@@ -479,15 +483,15 @@ a temporary certificate. And the latter one can be shared in the source control.
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
             Mage.updateDeploy
           </code>
-          <div class="tip" id="744">
+          <div class="tip" id="747">
             <strong>Signature:</strong> MageParams -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L155-155" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Mage/Mage.fs#L155-155" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Encapsulates the MAGE call to update the deployment of an application</p>
@@ -535,7 +539,7 @@ a temporary certificate. And the latter one can be shared in the source control.
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

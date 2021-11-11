@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,7 +323,7 @@
 
 <div class="xmldoc">
 <p>Contains helpers which allow to parse Change log text files.
-These files have to be in a format as described on <a href="http://keepachangelog.com/en/1.1.0/">http://keepachangelog.com/en/1.1.0/</a></p>
+These files have to be in a format as described on <a href="http://keepachangelog.com/en/0.3.0/">http://keepachangelog.com/en/0.3.0/</a></p>
 
         <h2><a name="Sample" class="anchor" href="#Sample">Sample</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -456,10 +460,7 @@ These files have to be in a format as described on <a href="http://keepachangelo
                 <h5>OBSOLETE</h5>
                 <p>Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: load)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChangeLogHelper.fs#L403-403" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a Change log text file and returns the lastest change log.</p>
+                    <p>Parses a Change log text file and returns the lastest change log.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - ChangeLog text file name</li>
@@ -488,10 +489,7 @@ These files have to be in a format as described on <a href="http://keepachangelo
                 <h5>OBSOLETE</h5>
                 <p>Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: parse)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChangeLogHelper.fs#L267-267" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Parses a change log text and returns the change log.</p>
+                    <p>Parses a change log text and returns the change log.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>data</code> - change log text</li>
@@ -518,10 +516,7 @@ These files have to be in a format as described on <a href="http://keepachangelo
                 <h5>OBSOLETE</h5>
                 <p>Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: promoteUnreleased)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChangeLogHelper.fs#L426-426" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Promotes the <code>Unreleased</code> section of a changelog
+                    <p>Promotes the <code>Unreleased</code> section of a changelog
 to a new change log entry with the given version</p>
 <h2>Parameters</h2>
 <ul>
@@ -552,10 +547,7 @@ to a new change log entry with the given version</p>
                 <h5>OBSOLETE</h5>
                 <p>Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: save)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChangeLogHelper.fs#L413-413" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Saves a Change log to a text file.</p>
+                    <p>Saves a Change log to a text file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>fileName</code> - ChangeLog text file name</li>
@@ -604,7 +596,7 @@ to a new change log entry with the given version</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

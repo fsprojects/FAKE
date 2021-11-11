@@ -2,7 +2,8 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>StartedProcessInfo - FAKE - F# Make</title>
+	<title>Generate semantic version number from Git with GitVersion
+</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +105,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +195,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +216,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,71 +302,55 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-core-startedprocessinfo.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
-                
-
-
-<h1><a name="StartedProcessInfo" class="anchor" href="#StartedProcessInfo">StartedProcessInfo</a></h1>
-<div class="xmldoc">
-<p>Some information regaring the started process</p>
-
+				<h1><a name="Generate-semantic-version-number-from-Git-with-GitVersion" class="anchor" href="#Generate-semantic-version-number-from-Git-with-GitVersion">Generate semantic version number from Git with GitVersion</a></h1>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-gitversionhelper.html">here</a></p>
 </div>
-  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '4917', 4917)" onmouseover="showTip(event, '4917', 4917)">
-            InternalProcess
-          </code>
-          <div class="tip" id="4917">
-            <strong>Signature:</strong> Process<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L58-58" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h2><a name="Instance members" class="anchor" href="#Instance members">Instance members</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '4918', 4918)" onmouseover="showTip(event, '4918', 4918)">
-            x.Process
-          </code>
-          <div class="tip" id="4918">
-            <strong>Signature:</strong> Process<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L60-60" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<p><a href="https://gitversion.net/">GitVersion</a> is a tool that generates a Semantic Version number based on your Git history.</p>
+<p><a href="apidocs/v5/fake-tools-gitversion.html">API-Reference</a></p>
+<h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.DotNet.Cli</span>
+<span class="s">nuget Fake.Tools.GitVersion</span>
+<span class="s">//&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">install</span> <span class="o">=</span> <span class="k">lazy</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">install</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Versions</span><span class="pn">.</span><span class="id">FromGlobalJson</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Version&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">GitVersion</span><span class="pn">.</span><span class="id">generateProperties</span> <span class="id">gitVersionGenerateProperties</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ToolType</span> <span class="o">=</span> <span class="id">ToolType</span><span class="pn">.</span><span class="id">CreateCLIToolReference</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">install</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">Value</span><span class="pn">)</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+				<div class="tip" id="fs1">val install : Lazy&lt;obj&gt;</div>
+<div class="tip" id="fs2">property System.Lazy.Value: obj with get</div>
 
 			</article>
 		</div>
@@ -399,7 +388,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

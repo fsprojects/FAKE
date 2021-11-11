@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3401', 3401)" onmouseover="showTip(event, '3401', 3401)">
+          <code onmouseout="hideTip(event, '3428', 3428)" onmouseover="showTip(event, '3428', 3428)">
             ActionSequences
           </code>
-          <div class="tip" id="3401">
+          <div class="tip" id="3428">
             <strong>Signature:</strong> seq&lt;CustomActionExecution&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1372-1372" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1372-1372" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can nest InstallExecuteSequence actions in here</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3402', 3402)" onmouseover="showTip(event, '3402', 3402)">
+          <code onmouseout="hideTip(event, '3429', 3429)" onmouseover="showTip(event, '3429', 3429)">
             BuildNumber
           </code>
-          <div class="tip" id="3402">
+          <div class="tip" id="3429">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1363-1363" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1363-1363" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Build Number of product</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3403', 3403)" onmouseover="showTip(event, '3403', 3403)">
+          <code onmouseout="hideTip(event, '3430', 3430)" onmouseover="showTip(event, '3430', 3430)">
             Components
           </code>
-          <div class="tip" id="3403">
+          <div class="tip" id="3430">
             <strong>Signature:</strong> seq&lt;DirectoryComponent&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1360-1360" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1360-1360" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nest Components in here</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3404', 3404)" onmouseover="showTip(event, '3404', 3404)">
+          <code onmouseout="hideTip(event, '3431', 3431)" onmouseover="showTip(event, '3431', 3431)">
             CustomActions
           </code>
-          <div class="tip" id="3404">
+          <div class="tip" id="3431">
             <strong>Signature:</strong> seq&lt;CustomAction&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1369-1369" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1369-1369" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can nest custom actions in here</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3405', 3405)" onmouseover="showTip(event, '3405', 3405)">
+          <code onmouseout="hideTip(event, '3432', 3432)" onmouseover="showTip(event, '3432', 3432)">
             CustomReplacements
           </code>
-          <div class="tip" id="3405">
+          <div class="tip" id="3432">
             <strong>Signature:</strong> seq&lt;string * string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1375-1375" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1375-1375" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can add custom replacements for the wix xml here.</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3406', 3406)" onmouseover="showTip(event, '3406', 3406)">
+          <code onmouseout="hideTip(event, '3433', 3433)" onmouseover="showTip(event, '3433', 3433)">
             Description
           </code>
-          <div class="tip" id="3406">
+          <div class="tip" id="3433">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1327-1327" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1327-1327" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Product description</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3407', 3407)" onmouseover="showTip(event, '3407', 3407)">
+          <code onmouseout="hideTip(event, '3434', 3434)" onmouseover="showTip(event, '3434', 3434)">
             Directories
           </code>
-          <div class="tip" id="3407">
+          <div class="tip" id="3434">
             <strong>Signature:</strong> seq&lt;Dir&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1354-1354" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1354-1354" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nest directories in here</p>
@@ -445,15 +449,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3408', 3408)" onmouseover="showTip(event, '3408', 3408)">
+          <code onmouseout="hideTip(event, '3435', 3435)" onmouseover="showTip(event, '3435', 3435)">
             DirectoryRefs
           </code>
-          <div class="tip" id="3408">
+          <div class="tip" id="3435">
             <strong>Signature:</strong> seq&lt;DirectoryRef&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1357-1357" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1357-1357" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can nest DirectoryRefs in here</p>
@@ -463,15 +467,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3409', 3409)" onmouseover="showTip(event, '3409', 3409)">
+          <code onmouseout="hideTip(event, '3436', 3436)" onmouseover="showTip(event, '3436', 3436)">
             Features
           </code>
-          <div class="tip" id="3409">
+          <div class="tip" id="3436">
             <strong>Signature:</strong> seq&lt;Feature&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1366-1366" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1366-1366" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can nest feature elements in here</p>
@@ -481,15 +485,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3410', 3410)" onmouseover="showTip(event, '3410', 3410)">
+          <code onmouseout="hideTip(event, '3437', 3437)" onmouseover="showTip(event, '3437', 3437)">
             MajorUpgrade
           </code>
-          <div class="tip" id="3410">
+          <div class="tip" id="3437">
             <strong>Signature:</strong> seq&lt;MajorUpgrade&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1345-1345" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1345-1345" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nest major upgrade elements in here</p>
@@ -499,15 +503,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3411', 3411)" onmouseover="showTip(event, '3411', 3411)">
+          <code onmouseout="hideTip(event, '3438', 3438)" onmouseover="showTip(event, '3438', 3438)">
             Platform
           </code>
-          <div class="tip" id="3411">
+          <div class="tip" id="3438">
             <strong>Signature:</strong> Architecture<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1378-1378" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1378-1378" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.</p>
@@ -517,15 +521,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3412', 3412)" onmouseover="showTip(event, '3412', 3412)">
+          <code onmouseout="hideTip(event, '3439', 3439)" onmouseover="showTip(event, '3439', 3439)">
             ProductCode
           </code>
-          <div class="tip" id="3412">
+          <div class="tip" id="3439">
             <strong>Signature:</strong> Guid<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1318-1318" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1318-1318" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The product code GUID for the product.</p>
@@ -535,15 +539,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3413', 3413)" onmouseover="showTip(event, '3413', 3413)">
+          <code onmouseout="hideTip(event, '3440', 3440)" onmouseover="showTip(event, '3440', 3440)">
             ProductLanguage
           </code>
-          <div class="tip" id="3413">
+          <div class="tip" id="3440">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1330-1330" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1330-1330" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The decimal language ID (LCID) for the product.</p>
@@ -553,15 +557,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3414', 3414)" onmouseover="showTip(event, '3414', 3414)">
+          <code onmouseout="hideTip(event, '3441', 3441)" onmouseover="showTip(event, '3441', 3441)">
             ProductName
           </code>
-          <div class="tip" id="3414">
+          <div class="tip" id="3441">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1321-1321" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1321-1321" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The descriptive name of the product.</p>
@@ -571,15 +575,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3415', 3415)" onmouseover="showTip(event, '3415', 3415)">
+          <code onmouseout="hideTip(event, '3442', 3442)" onmouseover="showTip(event, '3442', 3442)">
             ProductPublisher
           </code>
-          <div class="tip" id="3415">
+          <div class="tip" id="3442">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1336-1336" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1336-1336" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The manufacturer of the product.</p>
@@ -589,15 +593,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3416', 3416)" onmouseover="showTip(event, '3416', 3416)">
+          <code onmouseout="hideTip(event, '3443', 3443)" onmouseover="showTip(event, '3443', 3443)">
             ProductVersion
           </code>
-          <div class="tip" id="3416">
+          <div class="tip" id="3443">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1333-1333" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1333-1333" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The product's version string.</p>
@@ -607,15 +611,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3417', 3417)" onmouseover="showTip(event, '3417', 3417)">
+          <code onmouseout="hideTip(event, '3444', 3444)" onmouseover="showTip(event, '3444', 3444)">
             ProgramFilesFolder
           </code>
-          <div class="tip" id="3417">
+          <div class="tip" id="3444">
             <strong>Signature:</strong> ProgramFilesFolder<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1324-1324" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1324-1324" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The program files folder</p>
@@ -625,15 +629,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3418', 3418)" onmouseover="showTip(event, '3418', 3418)">
+          <code onmouseout="hideTip(event, '3445', 3445)" onmouseover="showTip(event, '3445', 3445)">
             UIRefs
           </code>
-          <div class="tip" id="3418">
+          <div class="tip" id="3445">
             <strong>Signature:</strong> seq&lt;UIRef&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1348-1348" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1348-1348" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nest UIRefs in here</p>
@@ -643,15 +647,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3419', 3419)" onmouseover="showTip(event, '3419', 3419)">
+          <code onmouseout="hideTip(event, '3446', 3446)" onmouseover="showTip(event, '3446', 3446)">
             Upgrade
           </code>
-          <div class="tip" id="3419">
+          <div class="tip" id="3446">
             <strong>Signature:</strong> seq&lt;Upgrade&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1342-1342" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1342-1342" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>You can nest upgrade elements in here</p>
@@ -661,15 +665,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3420', 3420)" onmouseover="showTip(event, '3420', 3420)">
+          <code onmouseout="hideTip(event, '3447', 3447)" onmouseover="showTip(event, '3447', 3447)">
             UpgradeGuid
           </code>
-          <div class="tip" id="3420">
+          <div class="tip" id="3447">
             <strong>Signature:</strong> Guid<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1339-1339" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1339-1339" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The upgrade code GUID for the product.</p>
@@ -679,15 +683,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3421', 3421)" onmouseover="showTip(event, '3421', 3421)">
+          <code onmouseout="hideTip(event, '3448', 3448)" onmouseover="showTip(event, '3448', 3448)">
             WiXVariables
           </code>
-          <div class="tip" id="3421">
+          <div class="tip" id="3448">
             <strong>Signature:</strong> seq&lt;Variable&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1351-1351" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1351-1351" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Nest WiXVariables in here</p>
@@ -735,7 +739,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

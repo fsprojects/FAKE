@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3121', 3121)" onmouseover="showTip(event, '3121', 3121)">
+          <code onmouseout="hideTip(event, '3148', 3148)" onmouseover="showTip(event, '3148', 3148)">
             ExcludeByAttribute
           </code>
-          <div class="tip" id="3121">
+          <div class="tip" id="3148">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L49-49" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L49-49" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Exclude a class or method by filter(s) that match attributes that have been applied. An * can be used as a wildcard.</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3122', 3122)" onmouseover="showTip(event, '3122', 3122)">
+          <code onmouseout="hideTip(event, '3149', 3149)" onmouseover="showTip(event, '3149', 3149)">
             ExcludeByFile
           </code>
-          <div class="tip" id="3122">
+          <div class="tip" id="3149">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L51-51" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Exclude a class (or methods) by filter(s) that match the filenames. An * can be used as a wildcard.</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3123', 3123)" onmouseover="showTip(event, '3123', 3123)">
+          <code onmouseout="hideTip(event, '3150', 3150)" onmouseover="showTip(event, '3150', 3150)">
             ExcludeDirs
           </code>
-          <div class="tip" id="3123">
+          <div class="tip" id="3150">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L53-53" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L53-53" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Assemblies being loaded from these locations will be ignored.</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3124', 3124)" onmouseover="showTip(event, '3124', 3124)">
+          <code onmouseout="hideTip(event, '3151', 3151)" onmouseover="showTip(event, '3151', 3151)">
             ExePath
           </code>
-          <div class="tip" id="3124">
+          <div class="tip" id="3151">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L30-30" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L30-30" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) Path to the OpenCover console application</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3125', 3125)" onmouseover="showTip(event, '3125', 3125)">
+          <code onmouseout="hideTip(event, '3152', 3152)" onmouseover="showTip(event, '3152', 3152)">
             Filter
           </code>
-          <div class="tip" id="3125">
+          <div class="tip" id="3152">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L40-40" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results.</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3126', 3126)" onmouseover="showTip(event, '3126', 3126)">
+          <code onmouseout="hideTip(event, '3153', 3153)" onmouseover="showTip(event, '3153', 3153)">
             HideSkipped
           </code>
-          <div class="tip" id="3126">
+          <div class="tip" id="3153">
             <strong>Signature:</strong> HideSkippedType list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L55-55" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Remove information from output file that relates to classes/modules that have been skipped (filtered) due to the use of the parameters ExcludeBy*, Filter or where the PDB is missing.</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3127', 3127)" onmouseover="showTip(event, '3127', 3127)">
+          <code onmouseout="hideTip(event, '3154', 3154)" onmouseover="showTip(event, '3154', 3154)">
             MergeByHash
           </code>
-          <div class="tip" id="3127">
+          <div class="tip" id="3154">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L47-47" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L47-47" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This option is used to merge the coverage results for an assembly regardless of where it was loaded
@@ -446,15 +450,15 @@ assuming the assembly has the same file-hash in each location.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3128', 3128)" onmouseover="showTip(event, '3128', 3128)">
+          <code onmouseout="hideTip(event, '3155', 3155)" onmouseover="showTip(event, '3155', 3155)">
             MergeOutput
           </code>
-          <div class="tip" id="3128">
+          <div class="tip" id="3155">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L57-57" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L57-57" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Allow to merge the results with an existing file (specified by Output parameter). So the coverage from the output file will be loaded first (if exists).</p>
@@ -464,15 +468,15 @@ assuming the assembly has the same file-hash in each location.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3129', 3129)" onmouseover="showTip(event, '3129', 3129)">
+          <code onmouseout="hideTip(event, '3156', 3156)" onmouseover="showTip(event, '3156', 3156)">
             OptionalArguments
           </code>
-          <div class="tip" id="3129">
+          <div class="tip" id="3156">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L66-66" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>This options is used to add additional optional arguments, could be somthing like "-returntargetcode "</p>
@@ -482,15 +486,15 @@ assuming the assembly has the same file-hash in each location.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3130', 3130)" onmouseover="showTip(event, '3130', 3130)">
+          <code onmouseout="hideTip(event, '3157', 3157)" onmouseover="showTip(event, '3157', 3157)">
             Output
           </code>
-          <div class="tip" id="3130">
+          <div class="tip" id="3157">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L36-36" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The location and name of the output xml file.
@@ -502,15 +506,15 @@ will be used and the output filename will be results.xml.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3131', 3131)" onmouseover="showTip(event, '3131', 3131)">
+          <code onmouseout="hideTip(event, '3158', 3158)" onmouseover="showTip(event, '3158', 3158)">
             Register
           </code>
-          <div class="tip" id="3131">
+          <div class="tip" id="3158">
             <strong>Signature:</strong> RegisterType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Use this to register and de-register the code coverage profiler.</p>
@@ -520,15 +524,15 @@ will be used and the output filename will be results.xml.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3132', 3132)" onmouseover="showTip(event, '3132', 3132)">
+          <code onmouseout="hideTip(event, '3159', 3159)" onmouseover="showTip(event, '3159', 3159)">
             ReturnTargetCode
           </code>
-          <div class="tip" id="3132">
+          <div class="tip" id="3159">
             <strong>Signature:</strong> ReturnTargetCodeType<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L59-59" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Return the target process return code instead of the OpenCover console return code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p>
@@ -538,15 +542,15 @@ will be used and the output filename will be results.xml.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3133', 3133)" onmouseover="showTip(event, '3133', 3133)">
+          <code onmouseout="hideTip(event, '3160', 3160)" onmouseover="showTip(event, '3160', 3160)">
             SearchDirs
           </code>
-          <div class="tip" id="3133">
+          <div class="tip" id="3160">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L61-61" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Alternative locations to look for PDBs.</p>
@@ -556,15 +560,15 @@ will be used and the output filename will be results.xml.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3134', 3134)" onmouseover="showTip(event, '3134', 3134)">
+          <code onmouseout="hideTip(event, '3161', 3161)" onmouseover="showTip(event, '3161', 3161)">
             SkipAutoProps
           </code>
-          <div class="tip" id="3134">
+          <div class="tip" id="3161">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L64-64" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Neither track nor record auto-implemented properties.
@@ -575,15 +579,15 @@ That is, skip getters and setters like these: public bool Service { get; set; }<
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3135', 3135)" onmouseover="showTip(event, '3135', 3135)">
+          <code onmouseout="hideTip(event, '3162', 3162)" onmouseover="showTip(event, '3162', 3162)">
             TestRunnerExePath
           </code>
-          <div class="tip" id="3135">
+          <div class="tip" id="3162">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L32-32" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>(Required) Path to the NUnit/XUnit console runner</p>
@@ -593,15 +597,15 @@ That is, skip getters and setters like these: public bool Service { get; set; }<
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3136', 3136)" onmouseover="showTip(event, '3136', 3136)">
+          <code onmouseout="hideTip(event, '3163', 3163)" onmouseover="showTip(event, '3163', 3163)">
             TimeOut
           </code>
-          <div class="tip" id="3136">
+          <div class="tip" id="3163">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L42-42" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The timeout for the OpenCover process.</p>
@@ -611,15 +615,15 @@ That is, skip getters and setters like these: public bool Service { get; set; }<
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3137', 3137)" onmouseover="showTip(event, '3137', 3137)">
+          <code onmouseout="hideTip(event, '3164', 3164)" onmouseover="showTip(event, '3164', 3164)">
             WorkingDir
           </code>
-          <div class="tip" id="3137">
+          <div class="tip" id="3164">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L44-44" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L44-44" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The directory where the OpenCover process will be started.</p>
@@ -667,7 +671,7 @@ That is, skip getters and setters like these: public bool Service { get; set; }<
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

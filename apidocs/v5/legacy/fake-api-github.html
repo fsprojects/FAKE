@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -407,10 +411,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L103-103" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a GitHub API v3 client using the specified credentials</p>
+                    <p>Creates a GitHub API v3 client using the specified credentials</p>
 
 
         </td>
@@ -425,10 +426,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L114-114" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a GitHub API v3 client using the specified token</p>
+                    <p>Creates a GitHub API v3 client using the specified token</p>
 
 
         </td>
@@ -443,10 +441,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L125-125" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials</p>
+                    <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials</p>
 
 
         </td>
@@ -461,10 +456,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L137-137" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token</p>
+                    <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token</p>
 
 
         </td>
@@ -479,10 +471,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L155-155" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a GitHub Release for the specified repository and tag name</p>
+                    <p>Creates a GitHub Release for the specified repository and tag name</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>owner</code> - the repository's owner</li>
@@ -505,10 +494,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L276-276" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Downloads the asset with the specified id to the specified destination</p>
+                    <p>Downloads the asset with the specified id to the specified destination</p>
 
 
         </td>
@@ -523,10 +509,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L290-290" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Downloads all assets for the specified release to the specified destination</p>
+                    <p>Downloads all assets for the specified release to the specified destination</p>
 
 
         </td>
@@ -541,10 +524,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L192-192" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Creates a draft GitHub Release for the specified repository and tag name</p>
+                    <p>Creates a draft GitHub Release for the specified repository and tag name</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>owner</code> - the repository's owner</li>
@@ -568,10 +548,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L238-238" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the latest release for the specified repository</p>
+                    <p>Gets the latest release for the specified repository</p>
 
 
         </td>
@@ -586,10 +563,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L254-254" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets release with the specified tag for the specified repository</p>
+                    <p>Gets release with the specified tag for the specified repository</p>
 
 
         </td>
@@ -604,10 +578,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L229-229" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Publishes the specified release by removing its draft status</p>
+                    <p>Publishes the specified release by removing its draft status</p>
 
 
         </td>
@@ -622,10 +593,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L200-200" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads and attaches the specified file to the specified release</p>
+                    <p>Uploads and attaches the specified file to the specified release</p>
 
 
         </td>
@@ -640,10 +608,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L221-221" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Uploads and attaches the specified files to the specified release</p>
+                    <p>Uploads and attaches the specified files to the specified release</p>
 
 
         </td>
@@ -687,7 +652,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

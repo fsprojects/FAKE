@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2694', 2694)" onmouseover="showTip(event, '2694', 2694)">
+          <code onmouseout="hideTip(event, '2721', 2721)" onmouseover="showTip(event, '2721', 2721)">
             Options
           </code>
-          <div class="tip" id="2694">
+          <div class="tip" id="2721">
             <strong>Signature:</strong> Options -&gt; Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L32-32" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Parameters as for the dotnet call</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2695', 2695)" onmouseover="showTip(event, '2695', 2695)">
+          <code onmouseout="hideTip(event, '2722', 2722)" onmouseover="showTip(event, '2722', 2722)">
             PackageName
           </code>
-          <div class="tip" id="2695">
+          <div class="tip" id="2722">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L34-34" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L34-34" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -353,15 +357,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2696', 2696)" onmouseover="showTip(event, '2696', 2696)">
+          <code onmouseout="hideTip(event, '2723', 2723)" onmouseover="showTip(event, '2723', 2723)">
             ToolCommandName
           </code>
-          <div class="tip" id="2696">
+          <div class="tip" id="2723">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L37-37" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L37-37" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>The command name of the tool (the first argument of 'dotnet'). For example <code>"fake"</code> for <code>dotnet fake</code>.
@@ -380,15 +384,15 @@ By default we usually fallback to the executable name of ToolPath without file e
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2697', 2697)" onmouseover="showTip(event, '2697', 2697)">
+          <code onmouseout="hideTip(event, '2724', 2724)" onmouseover="showTip(event, '2724', 2724)">
             x.WithDefaultToolCommandName(...)
           </code>
-          <div class="tip" id="2697">
+          <div class="tip" id="2724">
             <strong>Signature:</strong> toolCommandName:string -&gt; DotNetLocalTool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L44-44" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L44-44" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -404,15 +408,15 @@ By default we usually fallback to the executable name of ToolPath without file e
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2698', 2698)" onmouseover="showTip(event, '2698', 2698)">
+          <code onmouseout="hideTip(event, '2725', 2725)" onmouseover="showTip(event, '2725', 2725)">
             DotNetLocalTool.Create()
           </code>
-          <div class="tip" id="2698">
+          <div class="tip" id="2725">
             <strong>Signature:</strong> unit -&gt; DotNetLocalTool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L42-42" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -420,15 +424,15 @@ By default we usually fallback to the executable name of ToolPath without file e
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '2699', 2699)" onmouseover="showTip(event, '2699', 2699)">
+          <code onmouseout="hideTip(event, '2726', 2726)" onmouseover="showTip(event, '2726', 2726)">
             DotNetLocalTool.Create(install)
           </code>
-          <div class="tip" id="2699">
+          <div class="tip" id="2726">
             <strong>Signature:</strong> (install:(Options -&gt; Options)) -&gt; DotNetLocalTool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -474,7 +478,7 @@ By default we usually fallback to the executable name of ToolPath without file e
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

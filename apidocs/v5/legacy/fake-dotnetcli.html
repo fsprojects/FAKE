@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -443,10 +447,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L212-212" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotnet "build" command.</p>
+                    <p>Runs the dotnet "build" command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setBuildParams</code> - Function used to overwrite the build default parameters.</li>
@@ -486,10 +487,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L14-14" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The dotnet command name</p>
+                    <p>The dotnet command name</p>
 
 
         </td>
@@ -512,10 +510,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L487-487" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
@@ -536,10 +531,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L492-492" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the DotNet SDK from the global.json</p>
+                    <p>Gets the DotNet SDK from the global.json</p>
 
 
         </td>
@@ -562,10 +554,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L18-18" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Gets the installed dotnet version</p>
+                    <p>Gets the installed dotnet version</p>
 
 
         </td>
@@ -588,10 +577,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L507-507" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Installs the DotNet SDK locally to the given path</p>
+                    <p>Installs the DotNet SDK locally to the given path</p>
 
 
         </td>
@@ -614,10 +600,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L29-29" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Checks wether the dotnet CLI is installed</p>
+                    <p>Checks wether the dotnet CLI is installed</p>
 
 
         </td>
@@ -640,10 +623,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L365-365" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotnet "pack" command.</p>
+                    <p>Runs the dotnet "pack" command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setPackParams</code> - Function used to overwrite the pack default parameters.</li>
@@ -683,10 +663,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L448-448" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotnet "publish" command.</p>
+                    <p>Runs the dotnet "publish" command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setPublishParams</code> - Function used to overwrite the publish default parameters.</li>
@@ -726,10 +703,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L134-134" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotnet "restore" command.</p>
+                    <p>Runs the dotnet "restore" command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setRestoreParams</code> - Function used to overwrite the restore default parameters.</li>
@@ -769,10 +743,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L74-74" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs a dotnet command.</p>
+                    <p>Runs a dotnet command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setCommandParams</code> - Function used to overwrite the default parameters.</li>
@@ -815,10 +786,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L477-477" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Sets version in project.json</p>
+                    <p>Sets version in project.json</p>
 
 
         </td>
@@ -841,10 +809,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L289-289" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Runs the dotnet "test" command.</p>
+                    <p>Runs the dotnet "test" command.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setTestParams</code> - Function used to overwrite the test default parameters.</li>
@@ -905,7 +870,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

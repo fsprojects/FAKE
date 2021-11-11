@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -323,15 +327,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1197', 1197)" onmouseover="showTip(event, '1197', 1197)">
+          <code onmouseout="hideTip(event, '1212', 1212)" onmouseover="showTip(event, '1212', 1212)">
             directRunGitCommand(...)
           </code>
-          <div class="tip" id="1197">
+          <div class="tip" id="1212">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L50-50" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L50-50" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the given git command, waits for its completion and returns whether it succeeded.</p>
@@ -341,15 +345,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1198', 1198)" onmouseover="showTip(event, '1198', 1198)">
+          <code onmouseout="hideTip(event, '1213', 1213)" onmouseover="showTip(event, '1213', 1213)">
             directRunGitCommandAndFail(...)
           </code>
-          <div class="tip" id="1198">
+          <div class="tip" id="1213">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L54-54" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L54-54" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the given git command, waits for its completion and fails when it didn't succeeded.</p>
@@ -359,15 +363,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1199', 1199)" onmouseover="showTip(event, '1199', 1199)">
+          <code onmouseout="hideTip(event, '1214', 1214)" onmouseover="showTip(event, '1214', 1214)">
             findGitDir(repositoryDir)
           </code>
-          <div class="tip" id="1199">
+          <div class="tip" id="1214">
             <strong>Signature:</strong> repositoryDir:string -&gt; DirectoryInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L98-98" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L98-98" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Searches for a .git directory in the specified directory or any parent directory.
@@ -378,15 +382,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1200', 1200)" onmouseover="showTip(event, '1200', 1200)">
+          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
             fireAndForgetGitCommand(...)
           </code>
-          <div class="tip" id="1200">
+          <div class="tip" id="1215">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L46-46" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L46-46" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Fires the given git command ind the given repository directory and returns immediatly.</p>
@@ -396,15 +400,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1201', 1201)" onmouseover="showTip(event, '1201', 1201)">
+          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
             gitCommand repositoryDir command
           </code>
-          <div class="tip" id="1201">
+          <div class="tip" id="1216">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L59-59" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L59-59" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the given git command, waits for its completion.</p>
@@ -414,15 +418,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1202', 1202)" onmouseover="showTip(event, '1202', 1202)">
+          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
             gitPath
           </code>
-          <div class="tip" id="1202">
+          <div class="tip" id="1217">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L17-17" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L17-17" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Tries to locate the git.exe via the eviroment variable "GIT".</p>
@@ -432,15 +436,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1203', 1203)" onmouseover="showTip(event, '1203', 1203)">
+          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
             gitTimeOut
           </code>
-          <div class="tip" id="1203">
+          <div class="tip" id="1218">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L12-12" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L12-12" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies a global timeout for git.exe - default is <em>no timeout</em></p>
@@ -450,15 +454,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1204', 1204)" onmouseover="showTip(event, '1204', 1204)">
+          <code onmouseout="hideTip(event, '1219', 1219)" onmouseover="showTip(event, '1219', 1219)">
             runGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1204">
+          <div class="tip" id="1219">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; bool * string list * string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs git.exe with the given command in the given repository directory.</p>
@@ -468,15 +472,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1205', 1205)" onmouseover="showTip(event, '1205', 1205)">
+          <code onmouseout="hideTip(event, '1220', 1220)" onmouseover="showTip(event, '1220', 1220)">
             runSimpleGitCommand(...)
           </code>
-          <div class="tip" id="1205">
+          <div class="tip" id="1220">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L77-77" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L77-77" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the git command and returns the first line of the result.</p>
@@ -486,15 +490,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
+          <code onmouseout="hideTip(event, '1221', 1221)" onmouseover="showTip(event, '1221', 1221)">
             showGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1206">
+          <div class="tip" id="1221">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L70-70" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.Git/CommandHelper.fs#L70-70" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the given git command, waits for its completion.
@@ -543,7 +547,7 @@ This version doesn't throw an exception if an error occurs. It just traces the e
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

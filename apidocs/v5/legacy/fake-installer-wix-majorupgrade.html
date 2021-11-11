@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -322,18 +326,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6266', 6266)" onmouseover="showTip(event, '6266', 6266)">
+          <code onmouseout="hideTip(event, '6170', 6170)" onmouseover="showTip(event, '6170', 6170)">
             AllowDowngrades
           </code>
-          <div class="tip" id="6266">
+          <div class="tip" id="6170">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1274-1274" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>When set to no (the default), products with lower version numbers are blocked from installing when a product with a higher version is installed; the DowngradeErrorMessage
+                    <p>When set to no (the default), products with lower version numbers are blocked from installing when a product with a higher version is installed; the DowngradeErrorMessage
 attribute must also be specified. When set to yes, any version can be installed over any other version.</p>
 
 
@@ -341,36 +342,30 @@ attribute must also be specified. When set to yes, any version can be installed 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6267', 6267)" onmouseover="showTip(event, '6267', 6267)">
+          <code onmouseout="hideTip(event, '6171', 6171)" onmouseover="showTip(event, '6171', 6171)">
             DowngradeErrorMessage
           </code>
-          <div class="tip" id="6267">
+          <div class="tip" id="6171">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1276-1276" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default).</p>
+                    <p>The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default).</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6268', 6268)" onmouseover="showTip(event, '6268', 6268)">
+          <code onmouseout="hideTip(event, '6172', 6172)" onmouseover="showTip(event, '6172', 6172)">
             Schedule
           </code>
-          <div class="tip" id="6268">
+          <div class="tip" id="6172">
             <strong>Signature:</strong> MajorUpgradeSchedule<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1271-1271" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the
+                    <p>Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the
 installed product entirely before installing the upgrade product. It's slowest but gives the most flexibility in changing components and features in the upgrade product.</p>
 
 
@@ -415,7 +410,7 @@ installed product entirely before installing the upgrade product. It's slowest b
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

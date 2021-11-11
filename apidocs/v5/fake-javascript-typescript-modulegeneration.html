@@ -2,7 +2,7 @@
 <html lang="en" class="has-navbar-fixed-top">
 
 <head>
-	<title>TimeStampOptions - FAKE - F# Make</title>
+	<title>ModuleGeneration - FAKE - F# Make</title>
 	<meta charset="utf-8" />
 
 	<!-- from https://realfavicongenerator.net -->
@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -297,199 +301,152 @@
 	
 <section id="content" class="section">
 	<div class="columns">
-		<div class="column is-9-desktop is-12-mobile">            
+		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
-                <div class="notification">
-                    Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
-                    <a href="/apidocs/v5/index.html">here</a>.
-                    If the API is already migrated you can check <a href="/apidocs/v5/fake-tools-signtool-timestampoptions.html">here if exists in a module</a>.
-                    More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
-                </div>
-
+								<p>
+										This is part of the <a href="https://www.nuget.org/packages/Fake.JavaScript.TypeScript" >Fake.JavaScript.TypeScript</a> module.
+								</p>
                 
+							
 
 
-<h1><a name="TimeStampOptions" class="anchor" href="#TimeStampOptions">TimeStampOptions</a></h1>
+<h1><a name="ModuleGeneration" class="anchor" href="#ModuleGeneration">ModuleGeneration</a></h1>
 <div class="xmldoc">
-<p>Timestamp command options</p>
+<p>Generated JavaScript module type</p>
 
 </div>
-  <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
+  <h2><a name="Union Cases" class="anchor" href="#Union Cases">Union Cases</a></h2>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6810', 6810)" onmouseover="showTip(event, '6810', 6810)">
-            Algorithm
+          <code onmouseout="hideTip(event, '3533', 3533)" onmouseover="showTip(event, '3533', 3533)">
+            AMD
           </code>
-          <div class="tip" id="6810">
-            <strong>Signature:</strong> DigestAlgorithm option<br />
+          <div class="tip" id="3533">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L164-164" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L36-36" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Used to request a digest algorithm used by the RFC 3161 time stamp server. (signtool option: /td alg)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6811', 6811)" onmouseover="showTip(event, '6811', 6811)">
-            Debug
+          <code onmouseout="hideTip(event, '3534', 3534)" onmouseover="showTip(event, '3534', 3534)">
+            CommonJs
           </code>
-          <div class="tip" id="6811">
-            <strong>Signature:</strong> bool option<br />
+          <div class="tip" id="3534">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L168-168" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L31-31" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Displays debugging information. (signtool option: /debug)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6812', 6812)" onmouseover="showTip(event, '6812', 6812)">
-            ServerUrl
+          <code onmouseout="hideTip(event, '3535', 3535)" onmouseover="showTip(event, '3535', 3535)">
+            ES2020
           </code>
-          <div class="tip" id="6812">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="3535">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6813', 6813)" onmouseover="showTip(event, '6813', 6813)">
-            Timeout
+          <code onmouseout="hideTip(event, '3536', 3536)" onmouseover="showTip(event, '3536', 3536)">
+            ES6
           </code>
-          <div class="tip" id="6813">
-            <strong>Signature:</strong> TimeSpan option<br />
+          <div class="tip" id="3536">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L175-175" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L32-32" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Timeout.</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6814', 6814)" onmouseover="showTip(event, '6814', 6814)">
-            TimestampIndex
+          <code onmouseout="hideTip(event, '3537', 3537)" onmouseover="showTip(event, '3537', 3537)">
+            ESNext
           </code>
-          <div class="tip" id="6814">
-            <strong>Signature:</strong> int option<br />
+          <div class="tip" id="3537">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L166-166" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L38-38" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Adds a timestamp to the signature at index. (signtool option: /tp Index)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6815', 6815)" onmouseover="showTip(event, '6815', 6815)">
-            ToolPath
+          <code onmouseout="hideTip(event, '3538', 3538)" onmouseover="showTip(event, '3538', 3538)">
+            None
           </code>
-          <div class="tip" id="6815">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="3538">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L34-34" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Path to signtool.exe.
-If not provided, an attempt will be made to locate it automatically in 'Program Files (x86)\Windows Kits'.</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6816', 6816)" onmouseover="showTip(event, '6816', 6816)">
-            Verbosity
+          <code onmouseout="hideTip(event, '3539', 3539)" onmouseover="showTip(event, '3539', 3539)">
+            System
           </code>
-          <div class="tip" id="6816">
-            <strong>Signature:</strong> Verbosity option<br />
+          <div class="tip" id="3539">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L170-170" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L37-37" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Output verbosity. (signtool options: /q, /v)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '6817', 6817)" onmouseover="showTip(event, '6817', 6817)">
-            WorkingDir
+          <code onmouseout="hideTip(event, '3540', 3540)" onmouseover="showTip(event, '3540', 3540)">
+            UMD
           </code>
-          <div class="tip" id="6817">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="3540">
+            <strong>Signature:</strong> <br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L178-178" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.JavaScript.TypeScript/TypeScript.fs#L35-35" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
-          <p>Working directory.
-If not provided, current directory will be used.</p>
-
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h2><a name="Static members" class="anchor" href="#Static members">Static members</a></h2>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '6818', 6818)" onmouseover="showTip(event, '6818', 6818)">
-            TimeStampOptions.Create(serverUrl)
-          </code>
-          <div class="tip" id="6818">
-            <strong>Signature:</strong> serverUrl:string -&gt; TimeStampOptions<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L182-182" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Options default values.</p>
-
-
+          
         </td>
       </tr>
     </tbody>
@@ -503,6 +460,7 @@ If not provided, current directory will be used.</p>
 		</aside>
 	</div>
 </section>
+
 
 	<footer>
 		<div class="hero is-dark">
@@ -531,7 +489,7 @@ If not provided, current directory will be used.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

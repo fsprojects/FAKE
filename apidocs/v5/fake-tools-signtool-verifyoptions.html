@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -319,15 +323,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3941', 3941)" onmouseover="showTip(event, '3941', 3941)">
+          <code onmouseout="hideTip(event, '4030', 4030)" onmouseover="showTip(event, '4030', 4030)">
             AllMethods
           </code>
-          <div class="tip" id="3941">
+          <div class="tip" id="4030">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L197-197" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies that all methods can be used to verify the file. First, the catalog databases are searched to determine whether the file is signed in a catalog. If the file is not signed in any catalog, SignTool attempts to verify the file's embedded signature. This option is recommended when verifying files that may or may not be signed in a catalog. Examples of files that may or may not be signed include Windows files or drivers. (signtool option: /a)</p>
@@ -337,15 +341,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3942', 3942)" onmouseover="showTip(event, '3942', 3942)">
+          <code onmouseout="hideTip(event, '4031', 4031)" onmouseover="showTip(event, '4031', 4031)">
             AllSignatures
           </code>
-          <div class="tip" id="3942">
+          <div class="tip" id="4031">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L199-199" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Verifies all signatures in a file with multiple signatures. (signtool option: /all)</p>
@@ -355,15 +359,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3943', 3943)" onmouseover="showTip(event, '3943', 3943)">
+          <code onmouseout="hideTip(event, '4032', 4032)" onmouseover="showTip(event, '4032', 4032)">
             Debug
           </code>
-          <div class="tip" id="3943">
+          <div class="tip" id="4032">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L217-217" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L217-217" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Displays debugging information. (signtool option: /debug)</p>
@@ -373,15 +377,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3944', 3944)" onmouseover="showTip(event, '3944', 3944)">
+          <code onmouseout="hideTip(event, '4033', 4033)" onmouseover="showTip(event, '4033', 4033)">
             PrintDescription
           </code>
-          <div class="tip" id="3944">
+          <div class="tip" id="4033">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L201-201" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L201-201" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Print the description and description URL. (signtool option: /d)</p>
@@ -391,15 +395,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3945', 3945)" onmouseover="showTip(event, '3945', 3945)">
+          <code onmouseout="hideTip(event, '4034', 4034)" onmouseover="showTip(event, '4034', 4034)">
             RootSubjectName
           </code>
-          <div class="tip" id="3945">
+          <div class="tip" id="4034">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L213-213" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L213-213" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies the name of the subject of the root certificate that the signing certificate must chain to. This value can be a substring of the entire subject name of the root certificate. (signtool option: /r RootSubjectName)</p>
@@ -409,15 +413,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3946', 3946)" onmouseover="showTip(event, '3946', 3946)">
+          <code onmouseout="hideTip(event, '4035', 4035)" onmouseover="showTip(event, '4035', 4035)">
             Timeout
           </code>
-          <div class="tip" id="3946">
+          <div class="tip" id="4035">
             <strong>Signature:</strong> TimeSpan option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L224-224" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L224-224" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Timeout.</p>
@@ -427,15 +431,15 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3947', 3947)" onmouseover="showTip(event, '3947', 3947)">
+          <code onmouseout="hideTip(event, '4036', 4036)" onmouseover="showTip(event, '4036', 4036)">
             ToolPath
           </code>
-          <div class="tip" id="3947">
+          <div class="tip" id="4036">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L222-222" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L222-222" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Path to signtool.exe.
@@ -446,15 +450,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3948', 3948)" onmouseover="showTip(event, '3948', 3948)">
+          <code onmouseout="hideTip(event, '4037', 4037)" onmouseover="showTip(event, '4037', 4037)">
             UseDefaultAuthenticationVerificationPolicy
           </code>
-          <div class="tip" id="3948">
+          <div class="tip" id="4037">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L211-211" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies that the Default Authentication Verification Policy is used. If the /pa option is not specified, SignTool uses the Windows Driver Verification Policy. This option cannot be used with the catdb options. (signtool option: /pa)</p>
@@ -464,15 +468,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3949', 3949)" onmouseover="showTip(event, '3949', 3949)">
+          <code onmouseout="hideTip(event, '4038', 4038)" onmouseover="showTip(event, '4038', 4038)">
             UseMultipleVerificationSemantics
           </code>
-          <div class="tip" id="3949">
+          <div class="tip" id="4038">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L207-207" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L207-207" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Uses multiple verification semantics. This is the default behavior of a WinVerifyTrust call. (signtool option: /ms)</p>
@@ -482,15 +486,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3950', 3950)" onmouseover="showTip(event, '3950', 3950)">
+          <code onmouseout="hideTip(event, '4039', 4039)" onmouseover="showTip(event, '4039', 4039)">
             UseX64KernelModeDriverSigningPolicy
           </code>
-          <div class="tip" id="3950">
+          <div class="tip" id="4039">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L205-205" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L205-205" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Performs the verification by using the x64 kernel-mode driver signing policy. (signtool option: /kp)</p>
@@ -500,15 +504,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3951', 3951)" onmouseover="showTip(event, '3951', 3951)">
+          <code onmouseout="hideTip(event, '4040', 4040)" onmouseover="showTip(event, '4040', 4040)">
             Verbosity
           </code>
-          <div class="tip" id="3951">
+          <div class="tip" id="4040">
             <strong>Signature:</strong> Verbosity option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L219-219" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L219-219" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Output verbosity. (signtool options: /q, /v)</p>
@@ -518,15 +522,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3952', 3952)" onmouseover="showTip(event, '3952', 3952)">
+          <code onmouseout="hideTip(event, '4041', 4041)" onmouseover="showTip(event, '4041', 4041)">
             VerifyByOperatingSystemVersion
           </code>
-          <div class="tip" id="3952">
+          <div class="tip" id="4041">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L209-209" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L209-209" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Verifies the file by operating system version. The version parameter is of the form: PlatformID&ast;&ast;:VerMajor.VerMinor.&ast;&ast;BuildNumber. The use of the /o switch is recommended. If /o is not specified SignTool may return unexpected results. For example, if you do not include the /o switch, then system catalogs that validate correctly on an older OS may not validate correctly on a newer OS. (signtool option: /o Version)</p>
@@ -536,15 +540,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3953', 3953)" onmouseover="showTip(event, '3953', 3953)">
+          <code onmouseout="hideTip(event, '4042', 4042)" onmouseover="showTip(event, '4042', 4042)">
             VerifyIndex
           </code>
-          <div class="tip" id="3953">
+          <div class="tip" id="4042">
             <strong>Signature:</strong> int option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L203-203" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Verifies the signature at a certain position. (signtool option: /ds Index)</p>
@@ -554,15 +558,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3954', 3954)" onmouseover="showTip(event, '3954', 3954)">
+          <code onmouseout="hideTip(event, '4043', 4043)" onmouseover="showTip(event, '4043', 4043)">
             WarnIfNotTimeStamped
           </code>
-          <div class="tip" id="3954">
+          <div class="tip" id="4043">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L215-215" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L215-215" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Specifies that a warning is generated if the signature is not time stamped. (signtool option: /tw)</p>
@@ -572,15 +576,15 @@ If not provided, an attempt will be made to locate it automatically in 'Program 
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3955', 3955)" onmouseover="showTip(event, '3955', 3955)">
+          <code onmouseout="hideTip(event, '4044', 4044)" onmouseover="showTip(event, '4044', 4044)">
             WorkingDir
           </code>
-          <div class="tip" id="3955">
+          <div class="tip" id="4044">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L227-227" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L227-227" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Working directory.
@@ -599,15 +603,15 @@ If not provided, current directory will be used.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3956', 3956)" onmouseover="showTip(event, '3956', 3956)">
+          <code onmouseout="hideTip(event, '4045', 4045)" onmouseover="showTip(event, '4045', 4045)">
             VerifyOptions.Create()
           </code>
-          <div class="tip" id="3956">
+          <div class="tip" id="4045">
             <strong>Signature:</strong> unit -&gt; VerifyOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L231-231" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Tools.SignTool/SignTool.fs#L231-231" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Options default values.</p>
@@ -655,7 +659,7 @@ If not provided, current directory will be used.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

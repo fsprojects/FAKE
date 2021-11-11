@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -328,180 +332,150 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3599', 3599)" onmouseover="showTip(event, '3599', 3599)">
+          <code onmouseout="hideTip(event, '3564', 3564)" onmouseover="showTip(event, '3564', 3564)">
             ActivityImage
           </code>
-          <div class="tip" id="3599">
+          <div class="tip" id="3564">
             <strong>Signature:</strong> ImageUri option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L221-221" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) An image representing the action. Often this is an avatar of the "actor" of the activity.</p>
+                    <p>(Optional) An image representing the action. Often this is an avatar of the "actor" of the activity.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3600', 3600)" onmouseover="showTip(event, '3600', 3600)">
+          <code onmouseout="hideTip(event, '3565', 3565)" onmouseover="showTip(event, '3565', 3565)">
             ActivitySubtitle
           </code>
-          <div class="tip" id="3600">
+          <div class="tip" id="3565">
             <strong>Signature:</strong> MarkdownString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L218-218" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) A subtitle describing the event or action. Often this will be a summary of the action.</p>
+                    <p>(Optional) A subtitle describing the event or action. Often this will be a summary of the action.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3601', 3601)" onmouseover="showTip(event, '3601', 3601)">
+          <code onmouseout="hideTip(event, '3566', 3566)" onmouseover="showTip(event, '3566', 3566)">
             ActivityText
           </code>
-          <div class="tip" id="3601">
+          <div class="tip" id="3566">
             <strong>Signature:</strong> MarkdownString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L224-224" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) A full description of the action.</p>
+                    <p>(Optional) A full description of the action.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3602', 3602)" onmouseover="showTip(event, '3602', 3602)">
+          <code onmouseout="hideTip(event, '3567', 3567)" onmouseover="showTip(event, '3567', 3567)">
             ActivityTitle
           </code>
-          <div class="tip" id="3602">
+          <div class="tip" id="3567">
             <strong>Signature:</strong> MarkdownString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L215-215" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) Title of the event or action. Often this will be the name of the "actor".</p>
+                    <p>(Optional) Title of the event or action. Often this will be the name of the "actor".</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3603', 3603)" onmouseover="showTip(event, '3603', 3603)">
+          <code onmouseout="hideTip(event, '3568', 3568)" onmouseover="showTip(event, '3568', 3568)">
             Facts
           </code>
-          <div class="tip" id="3603">
+          <div class="tip" id="3568">
             <strong>Signature:</strong> Fact list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L227-227" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of facts, displayed as key-value pairs.</p>
+                    <p>A list of facts, displayed as key-value pairs.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3604', 3604)" onmouseover="showTip(event, '3604', 3604)">
+          <code onmouseout="hideTip(event, '3569', 3569)" onmouseover="showTip(event, '3569', 3569)">
             Images
           </code>
-          <div class="tip" id="3604">
+          <div class="tip" id="3569">
             <strong>Signature:</strong> Image list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L230-230" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>A list of images that will be displayed at the bottom of the section.</p>
+                    <p>A list of images that will be displayed at the bottom of the section.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3605', 3605)" onmouseover="showTip(event, '3605', 3605)">
+          <code onmouseout="hideTip(event, '3570', 3570)" onmouseover="showTip(event, '3570', 3570)">
             IsMarkdown
           </code>
-          <div class="tip" id="3605">
+          <div class="tip" id="3570">
             <strong>Signature:</strong> bool option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L236-236" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) Set this to false to disable markdown parsing on this section's content. Markdown parsing is enabled by default.</p>
+                    <p>(Optional) Set this to false to disable markdown parsing on this section's content. Markdown parsing is enabled by default.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3606', 3606)" onmouseover="showTip(event, '3606', 3606)">
+          <code onmouseout="hideTip(event, '3571', 3571)" onmouseover="showTip(event, '3571', 3571)">
             PotentialActions
           </code>
-          <div class="tip" id="3606">
+          <div class="tip" id="3571">
             <strong>Signature:</strong> ViewAction list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L239-239" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>This list of ViewAction objects will power the action links found at the bottom of the section</p>
+                    <p>This list of ViewAction objects will power the action links found at the bottom of the section</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3607', 3607)" onmouseover="showTip(event, '3607', 3607)">
+          <code onmouseout="hideTip(event, '3572', 3572)" onmouseover="showTip(event, '3572', 3572)">
             Text
           </code>
-          <div class="tip" id="3607">
+          <div class="tip" id="3572">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L233-233" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) A text that will appear before the activity.</p>
+                    <p>(Optional) A text that will appear before the activity.</p>
 
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3608', 3608)" onmouseover="showTip(event, '3608', 3608)">
+          <code onmouseout="hideTip(event, '3573', 3573)" onmouseover="showTip(event, '3573', 3573)">
             Title
           </code>
-          <div class="tip" id="3608">
+          <div class="tip" id="3573">
             <strong>Signature:</strong> MarkdownString option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L212-212" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>(Optional) The title of the section</p>
+                    <p>(Optional) The title of the section</p>
 
 
         </td>
@@ -516,10 +490,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3609', 3609)" onmouseover="showTip(event, '3609', 3609)">
+          <code onmouseout="hideTip(event, '3574', 3574)" onmouseover="showTip(event, '3574', 3574)">
             x.WriteJson(writer)
           </code>
-          <div class="tip" id="3609">
+          <div class="tip" id="3574">
             <strong>Signature:</strong> writer:JsonWriter -&gt; JsonWriter<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -532,10 +506,7 @@
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/Office365ConnectorHelper.fs#L244-244" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          <p>Writes the Section to a JSON writer</p>
+                    <p>Writes the Section to a JSON writer</p>
 
 
         </td>
@@ -579,7 +550,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

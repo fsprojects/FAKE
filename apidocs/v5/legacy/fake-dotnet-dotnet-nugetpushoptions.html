@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -311,7 +315,7 @@
 
 <h1><a name="NuGetPushOptions" class="anchor" href="#NuGetPushOptions">NuGetPushOptions</a></h1>
 <div class="xmldoc">
-<p>nuget push parameters for <code>dotnet nuget push</code></p>
+<p>nuget push paramters for <code>dotnet nuget push</code></p>
 
 </div>
   <h2><a name="Record Fields" class="anchor" href="#Record Fields">Record Fields</a></h2>
@@ -322,34 +326,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5260', 5260)" onmouseover="showTip(event, '5260', 5260)">
+          <code onmouseout="hideTip(event, '5212', 5212)" onmouseover="showTip(event, '5212', 5212)">
             Common
           </code>
-          <div class="tip" id="5260">
+          <div class="tip" id="5212">
             <strong>Signature:</strong> Options<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1650-1650" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5261', 5261)" onmouseover="showTip(event, '5261', 5261)">
+          <code onmouseout="hideTip(event, '5213', 5213)" onmouseover="showTip(event, '5213', 5213)">
             PushParams
           </code>
-          <div class="tip" id="5261">
+          <div class="tip" id="5213">
             <strong>Signature:</strong> NuGetPushParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1651-1651" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -362,34 +360,28 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5262', 5262)" onmouseover="showTip(event, '5262', 5262)">
+          <code onmouseout="hideTip(event, '5214', 5214)" onmouseover="showTip(event, '5214', 5214)">
             x.WithCommon(common)
           </code>
-          <div class="tip" id="5262">
+          <div class="tip" id="5214">
             <strong>Signature:</strong> common:Options -&gt; NuGetPushOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1655-1655" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5263', 5263)" onmouseover="showTip(event, '5263', 5263)">
+          <code onmouseout="hideTip(event, '5215', 5215)" onmouseover="showTip(event, '5215', 5215)">
             x.WithPushParams(options)
           </code>
-          <div class="tip" id="5263">
+          <div class="tip" id="5215">
             <strong>Signature:</strong> options:NuGetPushParams -&gt; NuGetPushOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1657-1657" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -402,18 +394,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '5264', 5264)" onmouseover="showTip(event, '5264', 5264)">
+          <code onmouseout="hideTip(event, '5216', 5216)" onmouseover="showTip(event, '5216', 5216)">
             NuGetPushOptions.Create()
           </code>
-          <div class="tip" id="5264">
+          <div class="tip" id="5216">
             <strong>Signature:</strong> unit -&gt; NuGetPushOptions<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1652-1652" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -455,7 +444,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

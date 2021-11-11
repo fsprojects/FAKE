@@ -104,6 +104,7 @@
 								<a href="/apidocs/v5/fake-buildserver-githubactions.html" class="navbar-item">GitHub Actions</a>
 								<a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
 								<a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+								<a href="/apidocs/v5/fake-buildserver-bitbucketpipelines.html" class="navbar-item">Bitbucket</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -193,6 +194,7 @@
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
 								<a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+								<a href="/apidocs/v5/fake-javascript-typescript.html" class="navbar-item">TypeScript</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -213,13 +215,15 @@
 							<a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
-								<a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                                <a href="/testing-fixie.html" class="navbar-item">Fixie</a>
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+								<a href="/fake-tools-gitversion.html" class="navbar-item">GitVersion</a>
 								<a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
 								<a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
 								<a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
@@ -355,7 +359,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> '?8711, '?8712                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L575-575" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L575-575" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function after the process has been exited and the previous result has been calculated.</p>
@@ -373,7 +377,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> '?8677                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L335-335" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L335-335" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function when the process is cleaned up.</p>
@@ -391,7 +395,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> '?8674, '?8675                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L326-326" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L326-326" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function before the process is started</p>
@@ -409,7 +413,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> '?8679                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L343-343" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L343-343" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function right after the process is started.</p>
@@ -427,7 +431,7 @@ You can manage:</p>
                           <strong>Type parameters:</strong> '?8681                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L353-353" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L353-353" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Execute the given function right after the process is started.
@@ -446,7 +450,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8670, '?8671, '?8672                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L316-316" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L316-316" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Attaches the given functions to the current CreateProcess instance.</p>
@@ -464,7 +468,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8621                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L203-203" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Copies std-out and std-err into the corresponding <code>System.Console</code> streams (by using interceptStream).</p>
@@ -482,7 +486,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8625                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L220-220" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L220-220" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Disable the default trace of started processes.</p>
@@ -500,7 +504,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8717                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L606-606" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L606-606" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Makes sure the exit code is <code>0</code>, otherwise a detailed exception is thrown (showing the command line).</p>
@@ -518,7 +522,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8714                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L590-590" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L590-590" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>throws an exception with the given message if <code>exitCode &lt;&gt; 0</code></p>
@@ -536,7 +540,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L113-113" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L113-113" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a simple <code>CreateProcess&lt;_&gt;</code> instance from the given command.</p>
@@ -568,7 +572,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L168-168" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L168-168" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -598,7 +602,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L152-152" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -664,7 +668,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                 <h5>OBSOLETE</h5>
                 <p>Use fromRawCommandLine instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L158-158" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given file and arguments</p>
@@ -682,7 +686,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                           <strong>Type parameters:</strong> '?8687                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L372-372" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L372-372" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Retrieve the current environment map.</p>
@@ -700,7 +704,7 @@ PID for process can be obtained from p parameter (p.Process.Id).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L199-199" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>intercept the given StreamSpecification and writes the intercepted data into target.
@@ -719,7 +723,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> '?8697, '?8698                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L405-405" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L405-405" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map the current result to a new type.</p>
@@ -737,7 +741,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> '?8631                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L238-238" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L238-238" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map the file-path according to the given function.</p>
@@ -755,7 +759,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L418-418" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L418-418" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Map only the result object and leave the exit code in the result type.</p>
@@ -773,7 +777,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L172-172" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L172-172" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Create a CreateProcess from the given <code>ProcessStartInfo</code></p>
@@ -791,7 +795,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L424-424" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L424-424" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Starts redirecting the output streams and collects all data at the end.</p>
@@ -809,7 +813,7 @@ Throws if the stream is not redirected (ie is Inherit).</p>
                           <strong>Type parameters:</strong> '?8705                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L456-456" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L456-456" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Starts redirecting the output streams if they are not already redirected.
@@ -828,7 +832,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8629                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L230-230" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L230-230" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Replace the file-path</p>
@@ -846,7 +850,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8689                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L378-378" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L378-378" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the given environment variable.</p>
@@ -864,7 +868,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8719                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L622-622" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L622-622" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like<code>ensureExitCode</code> but only triggers a warning instead of failing.</p>
@@ -882,7 +886,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8627                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L225-225" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L225-225" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the command to the given one.</p>
@@ -900,7 +904,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8683                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L362-362" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L362-362" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the given environment variables</p>
@@ -918,7 +922,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8685                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L367-367" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L367-367" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Sets the given environment map.</p>
@@ -936,7 +940,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L518-518" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L518-518" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Calls the given functions whenever a new output-line is received.</p>
@@ -954,7 +958,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8709                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L569-569" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L569-569" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Like <code>withOutputEvents</code> but skips <code>null</code> objects.</p>
@@ -972,7 +976,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8693                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L392-392" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L392-392" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard error stream.</p>
@@ -990,7 +994,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8695                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L398-398" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L398-398" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard input stream.</p>
@@ -1008,7 +1012,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8691                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L386-386" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L386-386" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the standard output stream.</p>
@@ -1026,7 +1030,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L641-641" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L641-641" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the given timeout, kills the process after the specified timespan</p>
@@ -1044,7 +1048,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
                           <strong>Type parameters:</strong> '?8623                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L215-215" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L215-215" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Set the working directory of the new process.</p>
@@ -1092,7 +1096,7 @@ Be careful when using this function. Using redirectOutput is the preferred varia
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.20.4</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha003</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
