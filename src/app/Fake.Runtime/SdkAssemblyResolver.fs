@@ -39,7 +39,14 @@ type SdkAssemblyResolver() =
             | false -> systemInstallDir
 
         let dotnet6RuntimeVersion =
+            // See dotnet/runtime#61394
+            let stripBuildInformationIfExists (version: string) =
+                match version.IndexOf("-") with
+                | x when x < 0 -> version
+                | x -> version.Substring(0, x)
+            
             RuntimeInformation.FrameworkDescription.Replace(".NET ", "")
+            |> stripBuildInformationIfExists
 
         Directory.GetFiles(
             dotnet6ReferenceAssembliesPath
