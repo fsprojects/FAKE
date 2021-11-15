@@ -230,6 +230,8 @@ module DotNet =
             DryRun: bool
             /// Do not update path variable
             NoPath: bool
+            /// Command working directory
+            WorkingDirectory: string
         }
 
         /// Parameter default values.
@@ -243,6 +245,7 @@ module DotNet =
             DebugSymbols = false
             DryRun = false
             NoPath = true
+            WorkingDirectory = "."
         }
 
     /// The a list of well-known versions to install
@@ -940,7 +943,7 @@ module DotNet =
             match checkVersion with
             | Some version ->
                 let passVersion = if fromGlobalJson then None else Some version
-                withGlobalJson "." passVersion (fun () ->
+                withGlobalJson param.WorkingDirectory passVersion (fun () ->
                     dotnetInstallations
                     |> Seq.tryFind (fun dotnet ->
                         try

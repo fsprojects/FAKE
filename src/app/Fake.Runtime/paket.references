@@ -1,6 +1,7 @@
 group netcorerunner
 
 Paket.Core
+nuget Microsoft.Deployment.DotNet.Releases
 Mono.Cecil
 FSharp.Core
 

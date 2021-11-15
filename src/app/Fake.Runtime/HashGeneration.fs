@@ -112,7 +112,7 @@ let getStringHash (s:string) =
 let getCombinedString pathsAndContents compileOptions =
     let sb = new System.Text.StringBuilder()
     let inline appendSeq sequence =
-        for s in sequence do sb.AppendLine s |> ignore
+        for s:string in sequence do sb.AppendLine s |> ignore
     appendSeq (getAllScriptContents pathsAndContents)
     appendSeq (pathsAndContents |> Seq.map(fun x -> x.Location |> Path.normalizePath))
     appendSeq compileOptions
