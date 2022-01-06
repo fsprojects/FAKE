@@ -1,12 +1,12 @@
 module Fake.Runtime.SdkAssemblyResolver
 
 open System.IO
-open System.Runtime.InteropServices
 open Fake.Core
 open Fake.IO.FileSystemOperators
 open Fake.DotNet
 open Fake.Runtime
 open Paket
+open Microsoft.Deployment.DotNet.Releases
 
 /// here we will pin Fake runner execution framework to .NET 6 as in `SdkVersion`
 /// We will also try to resolve the current SDK that the runner is executing, if it is the same as pinned
@@ -15,17 +15,56 @@ open Paket
 /// package extract them a and reference them.
 type SdkAssemblyResolver() =
 #if DOTNETCORE
+    let CustomDotNetHostPath = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
 
-    member this.SdkVersion =
-        Paket.FrameworkIdentifier.DotNetFramework Paket.FrameworkVersion.V6
+    member this.SdkVersionRaw = "6.0"
 
-    member this.IsResolvedSdkVersionSameAsLTSVersion() =
-        match DotNet.tryGetSDKVersionFromGlobalJson () with
-        | Some version -> version.StartsWith "6" // this need to be kept in sync with SdkVersion number
+    member this.SdkVersion = ReleaseVersion("6.0.0")
+
+    member this.PaketFrameworkIdentifier =
+        FrameworkIdentifier.DotNetFramework (
+            FrameworkVersion.TryParse(this.SdkVersion.Major.ToString()).Value
+        )
+
+    member this.SdkVersionFromGlobalJson = DotNet.tryGetSDKVersionFromGlobalJson ()
+
+    member this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() =
+        match this.SdkVersionFromGlobalJson with
+        | Some version -> ReleaseVersion(version).Major.Equals(this.SdkVersion.Major)
         | None -> false
 
+    member this.ResolveSdkRuntimeVersion() =
+        let resolvedSdkVersion =
+            this.SdkVersionFromGlobalJson
+            |> Option.get
+            |> ReleaseVersion
+
+        let sdkVersionReleases =
+            ProductCollection.GetAsync()
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
+            |> List.ofSeq
+            |> List.find (fun product -> product.ProductVersion.Equals(this.SdkVersionRaw))
+
+        let sdkVersionRelease =
+            sdkVersionReleases.GetReleasesAsync()
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
+            |> List.ofSeq
+            |> List.tryFind
+                (fun release ->
+                    release.Sdks
+                    |> List.ofSeq
+                    |> List.exists (fun sdk -> sdk.Version.Equals(resolvedSdkVersion)))
+            |> Option.orElseWith
+                (fun _ ->
+                    failwithf "Could not find a sutable runtime version matching SDK version: %s" (resolvedSdkVersion.ToString()))
+            |> Option.get
+
+        sdkVersionRelease.Runtime.Version.ToString()
+
     member this.SdkReferenceAssemblies() =
-        let fileName =
+        let dotnetHost =
             match Environment.isUnix with
             | true -> "dotnet"
             | false -> "dotnet.exe"
@@ -33,24 +72,32 @@ type SdkAssemblyResolver() =
         let userInstallDir = DotNet.defaultUserInstallDir
         let systemInstallDir = DotNet.defaultSystemInstallDir
 
-        let dotnet6ReferenceAssembliesPath =
-            match File.Exists(userInstallDir </> fileName) with
-            | true -> userInstallDir
-            | false -> systemInstallDir
+        let dotnetHostPath =
+            if not(String.isNullOrEmpty CustomDotNetHostPath)
+            then CustomDotNetHostPath
+            else
+                match File.Exists(userInstallDir </> dotnetHost) with
+                | true -> userInstallDir
+                | false -> systemInstallDir
 
-        let dotnet6RuntimeVersion =
-            RuntimeInformation.FrameworkDescription.Replace(".NET ", "")
-
-        Directory.GetFiles(
-            dotnet6ReferenceAssembliesPath
+        let referenceAssembliesPath =
+            dotnetHostPath
             </> "packs"
             </> "Microsoft.NETCore.App.Ref"
-            </> dotnet6RuntimeVersion
+            </> this.ResolveSdkRuntimeVersion()
             </> "ref"
-            </> "net6.0",
-            "*.dll"
-        )
-        |> Seq.toList
+            </> "net" + this.SdkVersionRaw
+
+        Trace.traceVerbose <| sprintf "Resolved referenced SDK path: %s" referenceAssembliesPath
+        match Directory.Exists referenceAssembliesPath with
+        | true ->
+            Directory.GetFiles(
+                referenceAssembliesPath,
+                "*.dll"
+            )
+            |> Seq.toList
+        | false ->
+            failwithf "Could not find referenced assemblies in path: '%s', please check installed SDK and runtime versions" referenceAssembliesPath
 
     member this.NetStandard20ReferenceAssemblies
         (
@@ -131,13 +178,15 @@ type SdkAssemblyResolver() =
 
         Directory.GetFiles(sdkDir, "*.dll") |> Seq.toList
 
-    member this.ResolveSdkReferenceAssemblies(groupName: Domain.GroupName, paketDependenciesFile: Lazy<Paket.DependenciesFile>) =
-        // here we will match for .NET 6 sdk from a global.json file. If found we will use
-        // .NET 6 runtime assemblies. Otherwise we will default to .Netstandard 2.0.3
-        match this.IsResolvedSdkVersionSameAsLTSVersion() with
+    member this.ResolveSdkReferenceAssemblies
+        (
+            groupName: Domain.GroupName,
+            paketDependenciesFile: Lazy<Paket.DependenciesFile>
+        ) =
+        match this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() with
         | true ->
             Trace.traceVerbose
-            <| (sprintf "%s" "Using .Net 6 assemblies")
+            <| (sprintf "Using .Net %i assemblies" this.SdkVersion.Major)
 
             this.SdkReferenceAssemblies()
         | false ->
@@ -151,6 +200,4 @@ type SdkAssemblyResolver() =
                 groupName,
                 paketDependenciesFile
             )
-#else
-    member this.IsSdkVersionDotNet6() = false
 #endif

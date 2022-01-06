@@ -53,7 +53,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
 
 #if DOTNETCORE
   let sdkAssemblyResolver = SdkAssemblyResolver()
-  let framework = sdkAssemblyResolver.SdkVersion
+  let framework = sdkAssemblyResolver.PaketFrameworkIdentifier
   let rid = Paket.Rid.Of(RuntimeInformation.RuntimeIdentifier)
   let ridNotVersionSpecific =
     let osShortName =
