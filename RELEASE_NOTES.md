@@ -1,5 +1,7 @@
 # Release Notes
 
+## 5.21.0-alpha005 - tbd
+
 ## 5.21.0-alpha004 - 2022-01-06
 * BUGFIX: Fix sdk resolver for net6 assemblies. Using offical .NET release JSON to get runtime version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2625
 
