@@ -104,5 +104,50 @@ let tests =
               finally
                   // clean up after the test run
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
+          
+          testCase "Runner run script with 6.0.100 SDK version assemblies and resolve runtime version from cached file" <| fun _ ->
+              try
+                  use d = createTestDir()
+                  let installerDir = Path.Combine(d.Dir, "Temp Dir")
+                  Directory.create installerDir
+                  let preparedDir = Path.Combine(d.Dir, "Install Dir")
+                  Directory.create preparedDir
+
+                  DotNet.install (fun option ->
+                  { option with
+                        InstallerOptions = fun o ->
+                                  { option.InstallerOptions o with
+                                        CustomDownloadDir = Some installerDir }
+                        ForceInstall = true
+                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60"
+                        CustomInstallDir = Some preparedDir
+                        Channel = DotNet.CliChannel.Version 6 0
+                        Version = DotNet.CliVersion.Version "6.0.100" })
+                  |> ignore
+
+                  Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" preparedDir
+                  Environment.setEnvironVar "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" "cache"
+
+                  let result =
+                      handleAndFormat <| fun _ ->
+                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60"
+
+                  let stdOut =
+                      String.Join("\n", result.Messages).Trim()
+                  
+                  printfn "%s" stdOut
+
+                  let expectedNet6PathPortion = "packs"</>"Microsoft.NETCore.App.Ref"</>"6.0.0"</>"ref"</>"net6.0"
+                  let expectedCacheFileResolutionMessage = "Trying to resolve runtime version from cache.."
+
+                  (sprintf "stdout should contain path like '%s', but was: '%s'" expectedNet6PathPortion stdOut)
+                  |> Expect.isTrue (stdOut.Contains expectedNet6PathPortion)
+
+                  (sprintf "stdout should contain a message that cache file is used in runtime version resolution")
+                  |> Expect.isTrue (stdOut.Contains expectedCacheFileResolutionMessage)
+              finally
+                  // clean up after the test run
+                  Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
+                  Environment.setEnvironVar "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
 
         ]

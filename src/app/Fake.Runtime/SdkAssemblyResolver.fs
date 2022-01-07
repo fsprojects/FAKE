@@ -1,10 +1,14 @@
 module Fake.Runtime.SdkAssemblyResolver
 
 open System.IO
+open System.Net
+open System.Net.Http
+open System.Threading
 open Fake.Core
 open Fake.IO.FileSystemOperators
 open Fake.DotNet
 open Fake.Runtime
+open Newtonsoft.Json
 open Paket
 open Microsoft.Deployment.DotNet.Releases
 
@@ -13,9 +17,17 @@ open Microsoft.Deployment.DotNet.Releases
 /// one then we will use runtime assemblies from that SDK version on its installation on disk. Otherwise,
 /// we will default to NetStandard2.0 assemblies. We will download them since they are packaged in a NuGet
 /// package extract them a and reference them.
+/// the resolution of runtime version for the selected SDK is as follows; we will use the dotnet official release
+/// package to get the releases for pinned framework version, and get the runtime. If the accessing the network
+/// is not possible, then we will use a cached releases file.
+
 type SdkAssemblyResolver() =
 #if DOTNETCORE
+
+    // following environment variables are used in testing for different scenarios that the SDK resolver
+    // could encounter, they are not intended to be used other than that!
     let CustomDotNetHostPath = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
+    let RuntimeResolverResolveMethod = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
 
     member this.SdkVersionRaw = "6.0"
 
@@ -33,35 +45,77 @@ type SdkAssemblyResolver() =
         | Some version -> ReleaseVersion(version).Major.Equals(this.SdkVersion.Major)
         | None -> false
 
+    member this.TryResolveSdkRuntimeVersionFromNetwork() =
+        Trace.tracefn "Trying to resolve runtime version from network.."
+        try
+            let sdkVersionReleases =
+                ProductCollection.GetAsync()
+                |> Async.AwaitTask
+                |> Async.RunSynchronously
+                |> List.ofSeq
+                |> List.find (fun product -> product.ProductVersion.Equals(this.SdkVersionRaw))
+
+            sdkVersionReleases.GetReleasesAsync()
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
+            |> List.ofSeq
+            |> Some
+        with ex ->
+            Trace.traceError $"Could not get SDK runtime version from network due to: {ex.Message}"
+            None
+
+    member this.TryResolveSdkRuntimeVersionFromCache() =
+        Trace.tracefn "Trying to resolve runtime version from cache.."
+        try
+            System.Reflection.Assembly.GetExecutingAssembly().Location
+            |> Path.GetDirectoryName
+            </> "cachedDotnetSdkReleases.json"
+            |> Product.GetReleasesAsync
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
+            |> List.ofSeq
+            |> Some
+        with ex ->
+            Trace.traceError $"Could not get SDK runtime version from cache due to: {ex.Message}"
+            None
+
     member this.ResolveSdkRuntimeVersion() =
+
         let resolvedSdkVersion =
             this.SdkVersionFromGlobalJson
             |> Option.get
             |> ReleaseVersion
 
-        let sdkVersionReleases =
-            ProductCollection.GetAsync()
-            |> Async.AwaitTask
-            |> Async.RunSynchronously
-            |> List.ofSeq
-            |> List.find (fun product -> product.ProductVersion.Equals(this.SdkVersionRaw))
+        let resolutionMethod =
+            match not(String.isNullOrEmpty RuntimeResolverResolveMethod) with
+            | true ->
+                // for testing only!
+                match RuntimeResolverResolveMethod = "cache" with
+                | true -> this.TryResolveSdkRuntimeVersionFromCache()
+                | false -> this.TryResolveSdkRuntimeVersionFromNetwork()
+            | false ->
+                // this is the default case, we will try the network, if we could not, then we will reach for cached file.
+                this.TryResolveSdkRuntimeVersionFromNetwork()
+                |> Option.orElseWith(fun _ ->
+                    this.TryResolveSdkRuntimeVersionFromCache()
+                )
+        
 
-        let sdkVersionRelease =
-            sdkVersionReleases.GetReleasesAsync()
-            |> Async.AwaitTask
-            |> Async.RunSynchronously
-            |> List.ofSeq
+        let resolved =
+            resolutionMethod
+            |> Option.orElseWith(fun _ ->
+                failwithf $"Could not find a suitable runtime version matching SDK version: {resolvedSdkVersion.ToString()}"
+            )
+            |> Option.get
             |> List.tryFind
                 (fun release ->
                     release.Sdks
                     |> List.ofSeq
                     |> List.exists (fun sdk -> sdk.Version.Equals(resolvedSdkVersion)))
-            |> Option.orElseWith
-                (fun _ ->
-                    failwithf "Could not find a sutable runtime version matching SDK version: %s" (resolvedSdkVersion.ToString()))
             |> Option.get
 
-        sdkVersionRelease.Runtime.Version.ToString()
+        Trace.tracefn($"resolved runtime version: {resolved.Runtime.Version.ToString()}")
+        resolved.Runtime.Version.ToString()
 
     member this.SdkReferenceAssemblies() =
         let dotnetHost =
@@ -88,7 +142,7 @@ type SdkAssemblyResolver() =
             </> "ref"
             </> "net" + this.SdkVersionRaw
 
-        Trace.traceVerbose <| sprintf "Resolved referenced SDK path: %s" referenceAssembliesPath
+        Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
         match Directory.Exists referenceAssembliesPath with
         | true ->
             Directory.GetFiles(
@@ -185,13 +239,11 @@ type SdkAssemblyResolver() =
         ) =
         match this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() with
         | true ->
-            Trace.traceVerbose
-            <| (sprintf "Using .Net %i assemblies" this.SdkVersion.Major)
+            Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
 
             this.SdkReferenceAssemblies()
         | false ->
-            Trace.traceVerbose
-            <| (sprintf "%s" "Using .Netstandard assemblies")
+            Trace.tracefn "Using .Netstandard assemblies"
 
             this.NetStandard20ReferenceAssemblies(
                 "NETStandard.Library",
