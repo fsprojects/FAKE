@@ -21,13 +21,16 @@ open Microsoft.Deployment.DotNet.Releases
 /// package to get the releases for pinned framework version, and get the runtime. If the accessing the network
 /// is not possible, then we will use a cached releases file.
 
-type SdkAssemblyResolver() =
+type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
 #if DOTNETCORE
 
     // following environment variables are used in testing for different scenarios that the SDK resolver
     // could encounter, they are not intended to be used other than that!
     let CustomDotNetHostPath = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
     let RuntimeResolverResolveMethod = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
+
+
+    member this.LogLevel = logLevel
 
     member this.SdkVersionRaw = "6.0"
 
@@ -46,7 +49,8 @@ type SdkAssemblyResolver() =
         | None -> false
 
     member this.TryResolveSdkRuntimeVersionFromNetwork() =
-        Trace.tracefn "Trying to resolve runtime version from network.."
+        if this.LogLevel.PrintVerbose then
+            Trace.tracefn "Trying to resolve runtime version from network.."
         try
             let sdkVersionReleases =
                 ProductCollection.GetAsync()
@@ -65,7 +69,8 @@ type SdkAssemblyResolver() =
             None
 
     member this.TryResolveSdkRuntimeVersionFromCache() =
-        Trace.tracefn "Trying to resolve runtime version from cache.."
+        if this.LogLevel.PrintVerbose then 
+            Trace.tracefn "Trying to resolve runtime version from cache.."
         try
             System.Reflection.Assembly.GetExecutingAssembly().Location
             |> Path.GetDirectoryName
@@ -114,7 +119,8 @@ type SdkAssemblyResolver() =
                     |> List.exists (fun sdk -> sdk.Version.Equals(resolvedSdkVersion)))
             |> Option.get
 
-        Trace.tracefn($"resolved runtime version: {resolved.Runtime.Version.ToString()}")
+        if this.LogLevel.PrintVerbose then
+            Trace.tracefn $"resolved runtime version: {resolved.Runtime.Version.ToString()}"
         resolved.Runtime.Version.ToString()
 
     member this.SdkReferenceAssemblies() =
@@ -142,7 +148,8 @@ type SdkAssemblyResolver() =
             </> "ref"
             </> "net" + this.SdkVersionRaw
 
-        Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
+        if this.LogLevel.PrintVerbose then 
+            Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
         match Directory.Exists referenceAssembliesPath with
         | true ->
             Directory.GetFiles(
@@ -239,11 +246,13 @@ type SdkAssemblyResolver() =
         ) =
         match this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() with
         | true ->
-            Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
+            if this.LogLevel.PrintVerbose then 
+                Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
 
             this.SdkReferenceAssemblies()
         | false ->
-            Trace.tracefn "Using .Netstandard assemblies"
+            if this.LogLevel.PrintVerbose then
+                Trace.tracefn "Using .Netstandard assemblies"
 
             this.NetStandard20ReferenceAssemblies(
                 "NETStandard.Library",

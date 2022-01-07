@@ -52,7 +52,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
   let dependencyCacheFile = Path.Combine(cacheDir, "dependencies.txt")
 
 #if DOTNETCORE
-  let sdkAssemblyResolver = SdkAssemblyResolver()
+  let sdkAssemblyResolver = SdkAssemblyResolver(logLevel)
   let framework = sdkAssemblyResolver.PaketFrameworkIdentifier
   let rid = Paket.Rid.Of(RuntimeInformation.RuntimeIdentifier)
   let ridNotVersionSpecific =
