@@ -50,19 +50,23 @@ module SqlPackage =
         let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
         let getVsVersion (path: string) = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
         let sql = !!(Environment.ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
-        let vs = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
-        let vs2017 = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+        let vsOld32Bit = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+        let vsModern32Bit = !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+        let vs64bit =
+            !!(Environment.ProgramFiles </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\SqlPackage.exe")
+            |> Seq.map(fun path -> path, Reflection.Assembly.LoadFile(path).GetName().Version.Major)
 
-        [ sql; vs; vs2017 ]
-        |> List.collect Seq.toList
-        |> List.sortByDescending snd
-        |> List.map fst
+        [ sql; vsOld32Bit; vsModern32Bit; vs64bit ]
+        |> Seq.collect id
+        |> Seq.sortByDescending snd
+        |> Seq.map fst
+        |> Seq.cache
 
     /// The default DacPac deployment arguments.
-    let internal DefaultDeploymentArgs = 
-        { SqlPackageToolPath = 
+    let internal DefaultDeploymentArgs =
+        { SqlPackageToolPath =
             validPaths
-            |> List.tryHead
+            |> Seq.tryHead
             |> defaultArg <| ""
           Action = Deploy
           AccessToken = ""
@@ -163,7 +167,7 @@ module SqlPackage =
         let additionalSqlPackagePropertiesParameter = format AdditionalSqlPackageProperties
         let variablesParameter = format Variables
         let profileParameter = format Profile
-        
+
         [ actionParameter; accessTokenParameter; sourceParameter; destinationParameter; outputPathParameter; blockOnPossibleDataLossParameter; dropObjectsNotInSourceParameter; timeoutParameter; recreateDbParameter; additionalSqlPackagePropertiesParameter; variablesParameter; profileParameter ]
             |> List.filter (fun item -> item <> "")
             |> String.concat " "
@@ -188,10 +192,10 @@ module SqlPackage =
 
         if not (File.Exists args.SqlPackageToolPath) then
             let paths =
-                if validPaths |> List.contains args.SqlPackageToolPath then validPaths
+                if validPaths |> Seq.contains args.SqlPackageToolPath then validPaths
                 else [ args.SqlPackageToolPath ]
             failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
-        
+
         CreateProcess.fromRawCommandLine args.SqlPackageToolPath arguments
         |> CreateProcess.withTimeout TimeSpan.MaxValue
         |> CreateProcess.addOnExited (fun data exitCode ->
