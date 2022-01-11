@@ -32,9 +32,7 @@ nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
-nuget System.Net.Http
-nuget Octokit
-nuget Microsoft.Deployment.DotNet.Releases //"
+nuget Octokit //"
 
 open System.Reflection
 open System

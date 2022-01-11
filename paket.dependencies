@@ -15,10 +15,6 @@ group Build
     source https://api.nuget.org/v3/index.json
 
     nuget FSharp.Core
-    nuget System.AppContext prerelease
-    nuget Paket.Core
-    nuget Mono.Cecil prerelease
-    nuget System.Reactive.Compatibility
     nuget Suave
     nuget NuGet.CommandLine
     nuget FSharp.Formatting ~> 4.1
@@ -28,31 +24,6 @@ group Build
     nuget Newtonsoft.Json
     nuget System.Net.Http
     nuget Octokit
-    nuget Microsoft.Deployment.DotNet.Releases
-    nuget Fake.Api.GitHub prerelease
-    nuget Fake.BuildServer.AppVeyor prerelease
-    nuget Fake.BuildServer.TeamCity prerelease
-    nuget Fake.BuildServer.Travis prerelease
-    nuget Fake.BuildServer.TeamFoundation prerelease
-    nuget Fake.BuildServer.GitLab prerelease
-    nuget Fake.BuildServer.GitHubActions prerelease
-    nuget Fake.Core.Target prerelease
-    nuget Fake.Core.SemVer prerelease
-    nuget Fake.Core.Vault prerelease
-    nuget Fake.IO.FileSystem prerelease
-    nuget Fake.IO.Zip prerelease
-    nuget Fake.Core.ReleaseNotes prerelease
-    nuget Fake.DotNet.AssemblyInfoFile prerelease
-    nuget Fake.DotNet.MSBuild prerelease
-    nuget Fake.DotNet.Cli prerelease
-    nuget Fake.DotNet.NuGet prerelease
-    nuget Fake.DotNet.Paket prerelease
-    nuget Fake.DotNet.FSFormatting prerelease
-    nuget Fake.DotNet.Testing.MSpec prerelease
-    nuget Fake.DotNet.Testing.XUnit2 prerelease
-    nuget Fake.DotNet.Testing.NUnit prerelease
-    nuget Fake.Windows.Chocolatey prerelease
-    nuget Fake.Tools.Git prerelease
 
 
 group fakerunner
