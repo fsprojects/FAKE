@@ -12,7 +12,7 @@ open System.Reflection
 open System
 open System.IO
 open Yaaf.FSharp.Scripting
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.CodeAnalysis
 
 type Marker = class end
 

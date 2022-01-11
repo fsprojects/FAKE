@@ -1,4 +1,4 @@
-version 5.5
+version 5.6
 source https://api.nuget.org/v3/index.json
 content: none
 
@@ -11,84 +11,72 @@ group DocsLegacyV5
     nuget FAKE ~> 5.0
 
 group Build
+    source release/dotnetcore
     source https://api.nuget.org/v3/index.json
-    content: none
-
-    nuget FSharp.Core
-    nuget NuGet.CommandLine
-    nuget FSharp.Formatting ~> 4.1
-    nuget FSharp.Formatting.CommandTool ~> 4.1
-    nuget SourceLink.Fake
-    nuget ILRepack
-    nuget Newtonsoft.Json
-    github fsharp/FAKE modules/Octokit/Octokit.fsx
-
-// [ FAKE GROUP ]
-group NetcoreBuild
-    source https://api.nuget.org/v3/index.json
-    // FAKE_MYGET_FEED (don't edit this line)
-    framework: netstandard2.0, net6.0
     storage: none
 
-    nuget FSharp.Control.Reactive
-    nuget System.Reactive
     nuget FSharp.Core
-    nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core
-    nuget Fake.Api.GitHub prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.Core.Target prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.Core.SemVer prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.BuildServer.AppVeyor prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.BuildServer.TeamCity prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.BuildServer.Travis prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.BuildServer.TeamFoundation prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.BuildServer.GitLab prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.IO.FileSystem prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.IO.Zip prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.Core.ReleaseNotes prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.AssemblyInfoFile prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.MsBuild prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.Cli prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.NuGet prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.Paket prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.FSFormatting prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.Testing.MSpec prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.Testing.XUnit2 prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.DotNet.Testing.NUnit prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.Windows.Chocolatey prerelease // FAKE_VERSION (don't edit this line)
-    nuget Fake.Tools.Git prerelease // FAKE_VERSION (don't edit this line)
+    nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
-    nuget Octokit
+    nuget System.Reactive.Compatibility
+    nuget Suave
     nuget Newtonsoft.Json
+    nuget System.Net.Http
+    nuget Octokit
+    nuget Microsoft.Deployment.DotNet.Releases
+    nuget Fake.Api.GitHub prerelease
+    nuget Fake.BuildServer.AppVeyor prerelease
+    nuget Fake.BuildServer.TeamCity prerelease
+    nuget Fake.BuildServer.Travis prerelease
+    nuget Fake.BuildServer.TeamFoundation prerelease
+    nuget Fake.BuildServer.GitLab prerelease
+    nuget Fake.BuildServer.GitHubActions prerelease
+    nuget Fake.Core.Target prerelease
+    nuget Fake.Core.SemVer prerelease
+    nuget Fake.Core.Vault prerelease
+    nuget Fake.IO.FileSystem prerelease
+    nuget Fake.IO.Zip prerelease
+    nuget Fake.Core.ReleaseNotes prerelease
+    nuget Fake.DotNet.AssemblyInfoFile prerelease
+    nuget Fake.DotNet.MSBuild prerelease
+    nuget Fake.DotNet.Cli prerelease
+    nuget Fake.DotNet.NuGet prerelease
+    nuget Fake.DotNet.Paket prerelease
+    nuget Fake.DotNet.FSFormatting prerelease
+    nuget Fake.DotNet.Testing.MSpec prerelease
+    nuget Fake.DotNet.Testing.XUnit2 prerelease
+    nuget Fake.DotNet.Testing.NUnit prerelease
+    nuget Fake.Windows.Chocolatey prerelease
+    nuget Fake.Tools.Git prerelease
 
-// New group because of FSharp.Core 4.5 upgrade, see https://github.com/fsharp/FAKE/pull/2011
-group netcorerunner
+
+group fakerunner
     source https://api.nuget.org/v3/index.json
     framework: net472, netstandard2.0, netcoreapp2.1, net6.0
     storage: none
 
     nuget FSharp.Core
+    nuget FSharp.Compiler.Service
     nuget Microsoft.Deployment.DotNet.Releases
     nuget Paket.Core
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library
     nuget Packaging.Targets
-    nuget FSharp.Compiler.Service
     nuget System.Runtime.Loader
 
     // Testing
-    nuget Expecto ~> 8
-    nuget YoloDev.Expecto.TestSdk
-    nuget Microsoft.TestPlatform.TestHost
+    nuget Expecto
     nuget Expecto.TestResults
     nuget Expecto.FsCheck
+    nuget YoloDev.Expecto.TestSdk
+    nuget Microsoft.TestPlatform.TestHost
     nuget FsCheck
-    nuget FParsec // commandline tests
+    nuget FParsec
     nuget Newtonsoft.Json
 
-group netcore
+group fakemodule
     source https://api.nuget.org/v3/index.json
     framework: net472, netstandard2.0, netcoreapp2.1, net6.0
     storage: none
@@ -112,8 +100,6 @@ group netcore
         nuget Microsoft.Build.Tasks.Core
         nuget Microsoft.Build.Utilities.Core
     nuget BlackFox.VsWhere
-
-
     nuget System.Runtime.Loader
     nuget System.Collections.Immutable
     nuget System.Data.SqlClient

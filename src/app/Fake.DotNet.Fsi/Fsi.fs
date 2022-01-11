@@ -7,7 +7,7 @@ open Fake.DotNet
 open Fake.Tools
 open System.IO
 open System.Text
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.Diagnostics
 open FSharp.Compiler.Interactive.Shell
 
 (* - Fsi Types - *)
@@ -313,11 +313,14 @@ module internal InternalFsi =
         let fsiSession = FsiEvaluationSession.Create(fsiConfig, List.toArray allArgs, inStream, outStream, errStream)
         fsiSession.EvalScriptNonThrowing script
 
-    let private traceErrors (errors: FSharpErrorInfo []) =    
+    let private traceErrors (errors: FSharpDiagnostic []) =
         errors |> Array.iter (fun e -> 
-        match e.Severity with
-        | FSharpErrorSeverity.Error -> Trace.traceError e.Message
-        | FSharpErrorSeverity.Warning -> Trace.traceImportant e.Message)
+            match e.Severity with
+            | FSharpDiagnosticSeverity.Error -> Trace.traceError e.Message
+            | FSharpDiagnosticSeverity.Warning -> Trace.traceImportant e.Message
+            | FSharpDiagnosticSeverity.Hidden -> Trace.traceImportant e.Message
+            | FSharpDiagnosticSeverity.Info -> Trace.traceImportant e.Message
+        )
 
 
     let exec script allArgs =

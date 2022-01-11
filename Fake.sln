@@ -126,7 +126,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		build.fsx = build.fsx
 		global.json = global.json
 		paket.dependencies = paket.dependencies
-		paket.lock = paket.lock
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection

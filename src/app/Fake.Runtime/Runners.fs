@@ -1,31 +1,22 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.Runners
-open Fake.Runtime.Environment
-open Fake.Runtime.Trace
+open FSharp.Compiler.Diagnostics
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
 
-open System.Reflection
 open System
 open System.IO
-open System.Diagnostics
-open System.Threading
-open System.Text.RegularExpressions
-open System.Threading.Tasks
-open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
-open FSharp.Compiler.SourceCodeServices
-
 module internal ExnHelper =
-   let formatError (e:FSharpErrorInfo) =
-     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
+   let formatError (e:FSharpDiagnostic) =
+     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLine e.StartColumn e.EndLine e.EndColumn e.Severity e.ErrorNumber e.Message
    let formatErrors errors =
-        System.String.Join("\n", errors |> Seq.map formatError)
+        String.Join("\n", errors |> Seq.map formatError)
 
 type CompilationErrors =
-  { Errors : FSharpErrorInfo list }
+  { Errors : FSharpDiagnostic list }
   member x.FormattedErrors = ExnHelper.formatErrors x.Errors
   static member ofErrors errors = { Errors = errors }
 
