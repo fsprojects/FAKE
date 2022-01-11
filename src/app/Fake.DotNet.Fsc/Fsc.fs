@@ -5,7 +5,8 @@
 module Fake.DotNet.Fsc
 
 open System
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.CodeAnalysis
+open FSharp.Compiler.Diagnostics
 open Fake.IO
 open Fake.Core
 
@@ -370,10 +371,13 @@ let private scsCompile optsArr =
 
     /// Better compile reporting thanks to:
     /// https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
-    let errors = errors |> Array.map (fun (e: FSharpErrorInfo) -> 
+    let errors = errors |> Array.map (fun (e: FSharpDiagnostic) ->
         match e.Severity with
-            | FSharpErrorSeverity.Error -> FscResultMessage.Error e.Message
-            | FSharpErrorSeverity.Warning -> FscResultMessage.Warning e.Message)
+            | FSharpDiagnosticSeverity.Error -> FscResultMessage.Error e.Message
+            | FSharpDiagnosticSeverity.Warning -> FscResultMessage.Warning e.Message
+            | FSharpDiagnosticSeverity.Hidden -> FscResultMessage.Warning e.Message
+            | FSharpDiagnosticSeverity.Info -> FscResultMessage.Warning e.Message
+        )
 
     errors, exitcode
 

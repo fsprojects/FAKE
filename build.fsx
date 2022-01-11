@@ -195,10 +195,10 @@ let version =
                     Path.Combine (LocalRootForTempData,".nuget","packages")
             )
             let currentVer =
-                Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local.*")
+                Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local-*")
                 |> Seq.choose (fun dir ->
                     let n = Path.GetFileName dir
-                    let v = n.Substring(release.NugetVersion.Length + ".local.".Length)
+                    let v = n.Substring(release.NugetVersion.Length + ".local-".Length)
                     match System.Numerics.BigInteger.TryParse(v) with
                     | true, v -> Some v
                     | _ ->
@@ -447,7 +447,7 @@ let startWebServer () =
 
 let runExpecto workDir dllPath resultsXml =
     let processResult =
-        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) (sprintf "--nunit-summary %s" resultsXml)
 
     if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
     Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
@@ -570,94 +570,6 @@ Target.create "SetAssemblyInfo" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> AssemblyInfoFile.createFSharp assemblyFile
         ()
-)
-
-Target.create "StartBootstrapBuild" (fun _ ->
-    // Prepare stuff
-    let token = githubtoken.Value
-    let auth = sprintf "%s:x-oauth-basic@" token
-    let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
-    let gitDirectory = getVarOrDefault "GIT_DIRECTORY" "."
-    let remoteUrl =
-        if not BuildServer.isLocalBuild then
-            Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
-            Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
-            url
-        else "origin"
-    if BuildServer.buildServer = BuildServer.TeamFoundation then
-        Trace.trace "Prepare git directory"
-        Git.Branches.checkout gitDirectory false TeamFoundation.Environment.BuildSourceVersion
-
-    let oldBranch = Git.Information.getBranchName gitDirectory
-    let branchName = sprintf "release-stage/%s" nugetVersion
-    Git.Branches.checkout gitDirectory true branchName
-
-    // update paket.dependencies
-    let depsFile = File.ReadAllText (gitDirectory </> "paket.dependencies")
-    let replacedFile =
-        depsFile
-            .Replace("// FAKE_MYGET_FEED (don't edit this line)", "source https://www.myget.org/F/fake-vsts/api/v3/index.json")
-            .Replace("prerelease // FAKE_VERSION (don't edit this line)", nugetVersion)
-    File.WriteAllText(gitDirectory </> "paket.dependencies", replacedFile)
-
-    // paket update
-    callpaket gitDirectory "update --group NetcoreBuild"
-
-    // push to branch
-    Git.Staging.stageAll gitDirectory
-    Git.Commit.exec gitDirectory (sprintf "Bootstrap check for %s" simpleVersion)
-    Git.Branches.pushBranch gitDirectory remoteUrl branchName
-    let sha = Git.Information.getCurrentSHA1 gitDirectory
-
-    // check status API
-    let startTime = System.Diagnostics.Stopwatch.StartNew()
-    let maxTime = System.TimeSpan.FromMinutes 60.0
-    let formatState (state:Octokit.CommitStatus) =
-        sprintf "{ State: %O, Description: %O, TargetUrl: %O }"
-            state.State state.Description state.TargetUrl
-    let result =
-        async {
-            let! client = GitHub.createClientWithToken token
-            let mutable whileResult = None
-            while startTime.Elapsed < maxTime && whileResult.IsNone do
-                let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
-                let doWait () =
-                    async {
-                        Trace.trace "GitHub state is still pending:"
-                        for status in combStatus.Statuses do
-                            Trace.trace (sprintf " - %s" (formatState status))
-                        do! Async.Sleep (1000 * 60 * 2) // wait 2 minutes
-                    }
-
-                match combStatus.State.Value with
-                | _ when combStatus.TotalCount < 2 -> // not yet notified
-                    do! doWait()
-                | Octokit.CommitState.Success ->
-                    whileResult <- Some <| Result.Ok ()
-                    ()
-                | Octokit.CommitState.Error | Octokit.CommitState.Failure ->
-                    whileResult <- Some <| Result.Error combStatus
-                    ()
-                | _ -> // pending
-                    do! doWait()
-            match whileResult with
-            | Some r -> return r
-            | None ->
-                // time is up
-                let! combStatus = client.Repository.Status.GetCombined(github_release_user, gitName, sha) |> Async.AwaitTask
-                return
-                    match combStatus.State.Value with
-                    | Octokit.CommitState.Error | Octokit.CommitState.Failure ->
-                        Result.Error combStatus
-                    | _ -> // if pending then some ci is just crasy slow
-                        Result.Ok ()
-        } |> Async.RunSynchronously
-    match result with
-    | Result.Ok () ->
-        Trace.trace "All CI systems returned OK or pending... -> OK"
-    | Result.Error combStatus ->
-        System.String.Join("\n - ", combStatus.Statuses |> Seq.map formatState)
-        |> failwithf "At least one CI failed:\n - %s"
 )
 
 Target.create "UnskipAssemblyInfo" (fun _ ->
