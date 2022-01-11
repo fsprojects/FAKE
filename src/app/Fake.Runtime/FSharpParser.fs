@@ -1,6 +1,7 @@
 module Fake.Runtime.FSharpParser
 
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.Tokenization
+
 type Token = { Representation : string; LineNumber : int; TokenInfo : FSharpTokenInfo option }
 type TokenizedScript = private { Tokens : Token list }
     

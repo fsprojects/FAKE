@@ -1,4 +1,4 @@
-group netcore
+group fakemodule
 FSharp.Core
 NETStandard.Library
 DotNet.Xdt
