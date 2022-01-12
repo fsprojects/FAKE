@@ -6,10 +6,9 @@ open Fake.DotNet
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open System
-//open NUnit.Framework
+open System.Linq
 open Expecto
 open Expecto.Flip
-open System
 open System.IO
 
 type TestDir =
@@ -179,6 +178,12 @@ let checkIntellisenseInPath scriptName path =
          "#endif" ]
     Expect.equal "intellisense.fsx should be forwarding" expected lines
 
+let checkScriptAssemblyInPath (scriptName:string) path =
+    let scriptNameWithoutExtension = scriptName.Replace(".fsx", "")
+    let cachePath = path </> ".fake" </> scriptName
+    Directory.EnumerateFiles(cachePath, $"{scriptNameWithoutExtension}_*.dll").Any()
+        |> Expect.isTrue "Expect script compiled assembly to exist"
+
 let checkIntellisense scriptName scenario =
     let scenarioPath = scenarioTempPath scenario
     checkIntellisenseInPath scriptName scenarioPath
@@ -186,6 +191,7 @@ let checkIntellisense scriptName scenario =
 let fakeRunAndCheckInPath ctx scriptName runArgs scenario path =
     let result = fakeRunInPath ctx runArgs scenario path
     checkIntellisenseInPath scriptName (resolvePath scenario path)
+    checkScriptAssemblyInPath scriptName (resolvePath scenario path)
     result
 
 let fakeRunAndCheck ctx scriptName runArgs scenario =
