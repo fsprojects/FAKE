@@ -175,7 +175,13 @@ let compile (context:FakeContext) outDll =
     compileErrors, returnCode
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
-    let wishPath = context.CachedAssemblyFilePath + ".dll"
+    // FSharp compiler will try to clean up the script directory after running the script.
+    // so, all files in .fake/scriptName.fsx will be deleted. The workaround is to use
+    // relative path to DLL. See https://github.com/dotnet/fsharp/pull/12381
+    let dllAbsolutePath = context.CachedAssemblyFilePath + ".dll"
+    let scriptDirectory = Path.GetDirectoryName context.Config.ScriptFilePath
+    let wishPath = dllAbsolutePath.Replace(scriptDirectory, "")
+
     let compileErrors, returnCode = compile context wishPath
     let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
     if returnCode = 0 then
