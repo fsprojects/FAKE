@@ -13,6 +13,7 @@ group DocsLegacyV5
 group Build
     source release/dotnetcore
     source https://api.nuget.org/v3/index.json
+    content: none
 
     nuget FSharp.Core
     nuget Suave
