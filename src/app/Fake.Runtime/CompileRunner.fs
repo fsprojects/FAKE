@@ -189,13 +189,11 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
 
     let compileErrors, returnCode = compile context compilerAssemblyTempPath
 
-    trace "moving compiled files..."
-    // here we will move the result of compilation to FAKE script directory instead of temporary directory
-    File.Move(compilerAssemblyTempPath, wishPath)
-    File.Move(compilerPdbTempPath, pdbWishPath)
-
     let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
     if returnCode = 0 then
+        // here we will move the result of compilation to FAKE script directory instead of temporary directory
+        File.Move(compilerAssemblyTempPath, wishPath)
+        File.Move(compilerPdbTempPath, pdbWishPath)
         use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
         Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
         match cacheInfo.AsCacheInfo with
