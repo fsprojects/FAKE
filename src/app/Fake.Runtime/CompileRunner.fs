@@ -4,6 +4,7 @@ module Fake.Runtime.CompileRunner
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
 open Fake.Runtime.SdkAssemblyResolver
+open Fake.IO.FileSystemOperators
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
@@ -176,13 +177,23 @@ let compile (context:FakeContext) outDll =
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     // FSharp compiler will try to clean up the script directory after running the script.
-    // so, all files in .fake/scriptName.fsx will be deleted. The workaround is to use
-    // relative path to DLL. See https://github.com/dotnet/fsharp/pull/12381
-    let dllAbsolutePath = context.CachedAssemblyFilePath + ".dll"
-    let scriptDirectory = Path.GetDirectoryName context.Config.ScriptFilePath
-    let wishPath = dllAbsolutePath.Replace(scriptDirectory, "")
+    // so, all files in .fake/scriptName.fsx will be deleted and FAKE cache will always be deleted.
+    // the workaround is to let the compiler compile to a temp directory, move the resulted assembly
+    // file to FAKE script directory. Then compiler can delete the directory at its convenient and don't
+    // affect FAKE cache. Please see https://github.com/fsprojects/FAKE/pull/2632 for discussion about it.
+    let compilerTempPath = context.FakeDirectory </> context.FileNameWithExtension </> "compilerTempDir" </> context.CachedAssemblyFileName
+    let compilerAssemblyTempPath =  compilerTempPath + ".dll"
+    let compilerPdbTempPath = compilerTempPath + ".pdb"
+    let wishPath = context.CachedAssemblyFilePath + ".dll"
+    let pdbWishPath = context.CachedAssemblyFilePath + ".pdb"
 
-    let compileErrors, returnCode = compile context wishPath
+    let compileErrors, returnCode = compile context compilerAssemblyTempPath
+
+    trace "moving compiled files..."
+    // here we will move the result of compilation to FAKE script directory instead of temporary directory
+    File.Move(compilerAssemblyTempPath, wishPath)
+    File.Move(compilerPdbTempPath, pdbWishPath)
+
     let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
     if returnCode = 0 then
         use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
