@@ -59,8 +59,8 @@ module SqlPackage =
         |> List.map fst
 
     /// The default DacPac deployment arguments.
-    let internal DefaultDeploymentArgs = 
-        { SqlPackageToolPath = 
+    let internal DefaultDeploymentArgs =
+        { SqlPackageToolPath =
             validPaths
             |> List.tryHead
             |> defaultArg <| ""
@@ -112,26 +112,28 @@ module SqlPackage =
     [<Literal>]
     let internal Profile = "Profile"
 
+    let (|NullOrEmptyString|NonEmptyString|) (x:string) = if String.isNullOrEmpty x then NullOrEmptyString else NonEmptyString x
+
     /// [omit]
     let formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
-
-        match argumentName with
-        | Action -> sprintf "/Action:%s" action
-        | AccessToken when not(String.isNullOrEmpty args.AccessToken) -> sprintf """/AccessToken:"%s" """ args.AccessToken
-        | Source -> sprintf """/SourceFile:"%s" """ args.Source
-        | Destination when not(String.isNullOrEmpty(args.Destination)) -> sprintf """/TargetConnectionString:"%s" """ args.Destination
-        | OutputPath -> sprintf "%s" outputPath
-        | BlockOnPossibleDataLoss when args.BlockOnPossibleDataLoss.IsSome -> sprintf "/p:BlockOnPossibleDataLoss=%b" args.BlockOnPossibleDataLoss.Value
-        | BlockOnPossibleDataLoss when String.isNullOrEmpty(args.Profile) && args.BlockOnPossibleDataLoss.IsNone -> sprintf "/p:BlockOnPossibleDataLoss=%b" false
-        | DropObjectsNotInSource when args.DropObjectsNotInSource.IsSome -> sprintf "/p:DropObjectsNotInSource=%b" args.DropObjectsNotInSource.Value
-        | DropObjectsNotInSource when String.isNullOrEmpty(args.Profile) && args.DropObjectsNotInSource.IsNone -> sprintf "/p:DropObjectsNotInSource=%b" false
-        | Timeout when args.Timeout.IsSome -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | Timeout when String.isNullOrEmpty(args.Profile) && args.Timeout.IsSome -> sprintf "/p:CommandTimeout=%d" args.Timeout.Value
-        | RecreateDb when args.RecreateDb.IsSome -> sprintf "/p:CreateNewDatabase=%b" args.RecreateDb.Value
-        | RecreateDb when String.isNullOrEmpty(args.Profile) && args.RecreateDb.IsNone -> sprintf "/p:CreateNewDatabase=%b" false
-        | AdditionalSqlPackageProperties when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
-        | Variables when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
-        | Profile when not(System.String.IsNullOrEmpty(args.Profile)) -> sprintf "/pr:%s" args.Profile
+        match argumentName, args with
+        | Action, _ -> sprintf "/Action:%s" action
+        | AccessToken, { AccessToken = NonEmptyString token } -> sprintf """/AccessToken:"%s" """ token
+        | Source, _ -> sprintf """/SourceFile:"%s" """ args.Source
+        | Destination, { Destination = NonEmptyString destination } -> sprintf """/TargetConnectionString:"%s" """ destination
+        | OutputPath, _ -> sprintf "%s" outputPath
+        | BlockOnPossibleDataLoss, { BlockOnPossibleDataLoss = Some value } -> sprintf "/p:BlockOnPossibleDataLoss=%b" value
+        | BlockOnPossibleDataLoss, { Profile = NullOrEmptyString; BlockOnPossibleDataLoss = None } -> "/p:BlockOnPossibleDataLoss=false"
+        | DropObjectsNotInSource, { DropObjectsNotInSource = Some value } -> sprintf "/p:DropObjectsNotInSource=%b" value
+        | DropObjectsNotInSource, { Profile = NullOrEmptyString; DropObjectsNotInSource = None } -> "/p:DropObjectsNotInSource=false"
+        | Timeout, { Timeout = Some timeout }
+        | Timeout, { Profile = NullOrEmptyString; Timeout = Some timeout } ->
+            sprintf "/p:CommandTimeout=%d" timeout
+        | RecreateDb, { RecreateDb = Some value } -> sprintf "/p:CreateNewDatabase=%b" value
+        | RecreateDb, { Profile = NullOrEmptyString; RecreateDb = None } -> "/p:CreateNewDatabase=false"
+        | AdditionalSqlPackageProperties, _ when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
+        | Variables, _ when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
+        | Profile, { Profile = NonEmptyString profile } -> sprintf "/pr:%s" profile
         | _ -> ""
 
     module PropertyKeys =
@@ -148,25 +150,23 @@ module SqlPackage =
         action, outputPath
 
     let private formatDacPacArguments args action outputPath additionalParameters variables =
-
-        let format = formatArgument args action outputPath additionalParameters variables
-
-        let actionParameter = format Action
-        let accessTokenParameter = format AccessToken
-        let sourceParameter = format Source
-        let destinationParameter = format Destination
-        let outputPathParameter = format OutputPath
-        let blockOnPossibleDataLossParameter = format BlockOnPossibleDataLoss
-        let dropObjectsNotInSourceParameter = format DropObjectsNotInSource
-        let timeoutParameter = format Timeout
-        let recreateDbParameter = format RecreateDb
-        let additionalSqlPackagePropertiesParameter = format AdditionalSqlPackageProperties
-        let variablesParameter = format Variables
-        let profileParameter = format Profile
-        
-        [ actionParameter; accessTokenParameter; sourceParameter; destinationParameter; outputPathParameter; blockOnPossibleDataLossParameter; dropObjectsNotInSourceParameter; timeoutParameter; recreateDbParameter; additionalSqlPackagePropertiesParameter; variablesParameter; profileParameter ]
-            |> List.filter (fun item -> item <> "")
-            |> String.concat " "
+        [
+            Action
+            AccessToken
+            Source
+            Destination
+            OutputPath
+            BlockOnPossibleDataLoss
+            DropObjectsNotInSource
+            Timeout
+            RecreateDb
+            AdditionalSqlPackageProperties
+            Variables
+            Profile
+        ]
+        |> List.map (formatArgument args action outputPath additionalParameters variables)
+        |> List.filter ((<>) "")
+        |> String.concat " "
 
     /// Deploys a SQL DacPac or database to another database or DacPac.
     let deployDb setParams =
@@ -191,7 +191,7 @@ module SqlPackage =
                 if validPaths |> List.contains args.SqlPackageToolPath then validPaths
                 else [ args.SqlPackageToolPath ]
             failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
-        
+
         CreateProcess.fromRawCommandLine args.SqlPackageToolPath arguments
         |> CreateProcess.withTimeout TimeSpan.MaxValue
         |> CreateProcess.addOnExited (fun data exitCode ->
