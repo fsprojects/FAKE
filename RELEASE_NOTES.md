@@ -1,9 +1,8 @@
 # Release Notes
 
-## vNext
-* NEW: Support for SqlPackage installed on VS2022.
-
 ## 5.21.0-alpha005 - tbd
+* NEW: Support for SqlPackage installed on VS2022.
+* NEW: Support for SqlPackage on Linux.
 
 ## 5.21.0-alpha004 - 2022-01-06
 * BUGFIX: Fix sdk resolver for net6 assemblies. Using offical .NET release JSON to get runtime version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2625
