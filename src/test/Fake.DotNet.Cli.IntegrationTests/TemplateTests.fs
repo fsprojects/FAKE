@@ -2,6 +2,7 @@
 
 open Expecto
 open System
+open System.Linq
 open System.IO
 
 open Fake.Core
@@ -26,7 +27,14 @@ let inline redirect () =
     DotNet.Options.lift (fun opts -> { opts with RedirectOutput = true })
 
 let uninstallTemplate () =
-    DotNet.exec (opts() >> redirect()) "new" (sprintf "-u %s" templatePackageName)
+    let result = DotNet.exec (opts() >> redirect()) "new" $"-u %s{templatePackageName}"
+
+    // we will check if the install command has returned error and message is template is not found.
+    // if that is the case, then we will just redirect output as success and change process result to
+    // exit code of zero.
+    match result.Results.Any(fun (result:ConsoleMessage) -> result.Message.Equals $"The template package '{templatePackageName}' is not found.") with
+    | true -> ProcessResult.New 0 result.Results
+    | false -> result
 
 let installTemplateFrom pathToNupkg =
     DotNet.exec (opts() >> redirect()) "new" (sprintf "-i %s" pathToNupkg)
