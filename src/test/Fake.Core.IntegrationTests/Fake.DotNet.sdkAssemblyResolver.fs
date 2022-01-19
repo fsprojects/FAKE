@@ -119,7 +119,7 @@ let tests =
                                   { option.InstallerOptions o with
                                         CustomDownloadDir = Some installerDir }
                         ForceInstall = true
-                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60"
+                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
                         CustomInstallDir = Some preparedDir
                         Channel = DotNet.CliChannel.Version 6 0
                         Version = DotNet.CliVersion.Version "6.0.100" })
@@ -130,7 +130,7 @@ let tests =
 
                   let result =
                       handleAndFormat <| fun _ ->
-                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60"
+                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60100"
 
                   let stdOut =
                       String.Join("\n", result.Messages).Trim()
