@@ -1697,3 +1697,155 @@ module DotNet =
             nugetPush (fun _ -> param.WithPushParams { pushParams with PushTrials = pushParams.PushTrials - 1 }) nupkg
         else
             failwithf "dotnet nuget push failed with code %i" result.ExitCode
+
+    /// the languages supported by new command
+    type NewLanguage =
+        | FSharp
+        | CSharp
+        | VisualBasic
+
+        /// Convert the list option to string representation
+        override this.ToString() =
+            match this with
+            | FSharp -> "F#"
+            | CSharp -> "C#"
+            | VisualBasic -> "VB"
+
+    /// dotnet new command options
+    type NewOptions =
+        {
+            /// Common tool options
+            Common: Options
+            // Displays a summary of what would happen if the given command line were run if it would result in a template creation.
+            DryRun: bool
+            // Forces content to be generated even if it would change existing files.
+            Force: bool
+            // Filters templates based on language and specifies the language of the template to create.
+            Language: NewLanguage
+            // The name for the created output. If no name is specified, the name of the current directory is used.
+            Name: string option
+            // Disables checking for template package updates when instantiating a template.
+            NoUpdateCheck: bool
+            // Location to place the generated output. The default is the current directory.
+            Output: string option
+        }
+
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create()
+            DryRun = false
+            Force = false
+            Language = NewLanguage.FSharp
+            Name = None
+            NoUpdateCheck = false
+            Output = None
+        }
+
+    /// dotnet new --install options
+    type TemplateInstallOptions =
+        {
+            /// Common tool options
+            Common: Options
+            Install: string
+            NugetSource: string option
+        }
+
+        /// Parameter default values.
+        static member Create(packageOrSourceName) = {
+            Common = Options.Create()
+            Install = packageOrSourceName
+            NugetSource = None
+        }
+
+    /// dotnet new --install options
+    type TemplateUninstallOptions =
+        {
+            /// Common tool options
+            Common: Options
+            Uninstall: string
+        }
+
+        /// Parameter default values.
+        static member Create(packageOrSourceName) = {
+            Common = { Options.Create() with RedirectOutput = true }
+            Uninstall = packageOrSourceName
+        }
+
+    /// [omit]
+    let internal buildNewArgs (param: NewOptions) =
+        [
+            param.DryRun |>  argOption "dry-run"
+            param.Force |>  argOption "force"
+            argList2 "language" [param.Language.ToString()]
+            param.Name |> Option.toList |> argList2 "name"
+            param.NoUpdateCheck |> argOption "no-update-check"
+            param.Output |> Option.toList |> argList2 "output"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// [omit]
+    let internal buildTemplateInstallArgs (param: TemplateInstallOptions) =
+        [
+            argList2 "install" [param.Install]
+            param.NugetSource |> Option.toList |>  argList2 "nuget-source"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// [omit]
+    let internal buildTemplateUninstallArgs (param: TemplateUninstallOptions) =
+        [
+            argList2 "uninstall" [param.Uninstall]
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// Execute dotnet new command
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to create from
+    /// - 'setParams' - set version command parameters
+    let newFromTemplate templateName setParams =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new command"
+        let param = NewOptions.Create() |> setParams
+        let args = Args.toWindowsCommandLine(buildNewArgs param)
+        let result = exec (fun _ -> param.Common) $"new {templateName}" args
+        if not result.OK then failwithf $"dotnet new failed with code %i{result.ExitCode}"
+        __.MarkSuccess()
+
+    /// Execute dotnet new --install <PATH|NUGET_ID> command
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to install
+    /// - 'setParams' - set version command parameters
+    let newInstallTemplate templateName setParams =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new --install command"
+        let param = TemplateInstallOptions.Create(templateName) |> setParams
+        let args = Args.toWindowsCommandLine(buildTemplateInstallArgs param)
+        let result = exec (fun _ -> param.Common) "new" args
+        if not result.OK then failwithf $"dotnet new --install failed with code %i{result.ExitCode}"
+        __.MarkSuccess()
+
+    /// Execute dotnet new --uninstall <PATH|NUGET_ID> command
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to uninstall
+    /// - 'setParams' - set version command parameters
+    let newUninstallTemplate templateName setParams =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new --uninstall command"
+        let param = TemplateUninstallOptions.Create(templateName) |> setParams
+        let args = Args.toWindowsCommandLine(buildTemplateUninstallArgs param)
+        let result = exec (fun _ -> param.Common) "new" args
+
+        // we will check if the uninstall command has returned error and message is template is not found.
+        // if that is the case, then we will just redirect output as success and change process result to
+        // exit code of zero.
+        let templateIsNotFoundToUninstall =
+            result.Results
+            |> List.exists(fun (result:ConsoleMessage) -> result.Message.Contains $"The template package '{templateName}' is not found.")
+
+        match templateIsNotFoundToUninstall with
+        | true -> ignore ""
+        | false -> failwithf $"dotnet new --uninstall failed with code %i{result.ExitCode}"
+        __.MarkSuccess()
