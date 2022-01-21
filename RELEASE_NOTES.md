@@ -1,6 +1,8 @@
 # Release Notes
 
 ## 5.21.0-alpha005 - tbd
+* NEW: Support for SqlPackage installed on VS2022.
+* NEW: Support for SqlPackage on Linux.
 
 ## 5.21.0-alpha004 - 2022-01-06
 * BUGFIX: Fix sdk resolver for net6 assemblies. Using offical .NET release JSON to get runtime version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2625
@@ -149,7 +151,7 @@
 
 * LEGACY: Remove `Fake.Deploy` from repository and NuGet package, see https://github.com/fsharp/FAKE/issues/1820
 * LEGACY: Update to `net461` to support latest `FSharp.Compiler.Service` to fix https://github.com/fsharp/FAKE/issues/2362
-* LEGACY: Release a new version of `FakeLib.dll` (the original FAKE NuGet package) 
+* LEGACY: Release a new version of `FakeLib.dll` (the original FAKE NuGet package)
 * BUGFIX: Fake.Api.Slack uses `Username` not `From`, thanks @mastion - https://github.com/fsharp/FAKE/pull/2360
 * ENHANCEMENT: add rollforward policy to next-major to make `fake-cli` work in future dotnet sdk  major version, thanks @baronfel - https://github.com/fsharp/FAKE/pull/2372
 * ENHANCEMENT: `ProcessUtils` now considers `PATHEXT` on windows - https://github.com/fsharp/FAKE/pull/2368
@@ -343,7 +345,7 @@
 
 * ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
 * ENHANCEMENT: Added `SpecFlowNext` module to `Fake.DotNet.Testing.SpecFlow` with improved API and missing arguments - https://github.com/fsharp/FAKE/pull/2143
-* ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - https://github.com/fsharp/FAKE/pull/2131 
+* ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - https://github.com/fsharp/FAKE/pull/2131
 * ENHANCEMENT: Updated `Fake.Testing.ReportGenerator` to include `ClassFilter` and `FileFilter` - https://github.com/fsharp/FAKE/pull/2120
 * ENHANCEMENT: Improve TeamCity integrations - https://github.com/fsharp/FAKE/pull/2138
 * ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
@@ -938,7 +940,7 @@
 
 ## 4.64.17 - 2019-03-19
 
-* Add support for MSBuild16 
+* Add support for MSBuild16
 
 ## 4.64.16 - 2019-02-15
 
