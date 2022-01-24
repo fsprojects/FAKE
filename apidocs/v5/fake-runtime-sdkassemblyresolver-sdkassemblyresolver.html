@@ -316,7 +316,10 @@
 We will also try to resolve the current SDK that the runner is executing, if it is the same as pinned
 one then we will use runtime assemblies from that SDK version on its installation on disk. Otherwise,
 we will default to NetStandard2.0 assemblies. We will download them since they are packaged in a NuGet
-package extract them a and reference them.</p>
+package extract them a and reference them.
+the resolution of runtime version for the selected SDK is as follows; we will use the dotnet official release
+package to get the releases for pinned framework version, and get the runtime. If the accessing the network
+is not possible, then we will use a cached releases file.</p>
 
 </div>
   <h2><a name="Constructors" class="anchor" href="#Constructors">Constructors</a></h2>
@@ -327,15 +330,15 @@ package extract them a and reference them.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3641', 3641)" onmouseover="showTip(event, '3641', 3641)">
-            new()
+          <code onmouseout="hideTip(event, '3642', 3642)" onmouseover="showTip(event, '3642', 3642)">
+            new(logLevel)
           </code>
-          <div class="tip" id="3641">
-            <strong>Signature:</strong> unit -&gt; SdkAssemblyResolver<br />
+          <div class="tip" id="3642">
+            <strong>Signature:</strong> logLevel:VerboseLevel -&gt; SdkAssemblyResolver<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L16-16" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L24-24" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -351,31 +354,15 @@ package extract them a and reference them.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '3642', 3642)" onmouseover="showTip(event, '3642', 3642)">
+          <code onmouseout="hideTip(event, '3643', 3643)" onmouseover="showTip(event, '3643', 3643)">
             x.IsSdkVersionFromGlobalJsonSameAsSdkVersion(...)
           </code>
-          <div class="tip" id="3642">
+          <div class="tip" id="3643">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L31-31" class="github-link">
-              <i class="fab fa-github fa-fw"></i>
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-          <code onmouseout="hideTip(event, '3643', 3643)" onmouseover="showTip(event, '3643', 3643)">
-            x.NetStandard20ReferenceAssemblies(...)
-          </code>
-          <div class="tip" id="3643">
-            <strong>Signature:</strong> (nuGetPackage:string * version:string * pathSuffix:string * groupName:GroupName * paketDependenciesFile:Lazy&lt;DependenciesFile&gt;) -&gt; string list<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L102-102" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L46-46" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -384,14 +371,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3644', 3644)" onmouseover="showTip(event, '3644', 3644)">
-            x.PaketFrameworkIdentifier
+            x.LogLevel
           </code>
           <div class="tip" id="3644">
-            <strong>Signature:</strong> FrameworkIdentifier<br />
+            <strong>Signature:</strong> VerboseLevel<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L33-33" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -400,14 +387,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3645', 3645)" onmouseover="showTip(event, '3645', 3645)">
-            x.ResolveSdkReferenceAssemblies(...)
+            x.NetStandard20ReferenceAssemblies(...)
           </code>
           <div class="tip" id="3645">
-            <strong>Signature:</strong> (groupName:GroupName * paketDependenciesFile:Lazy&lt;DependenciesFile&gt;) -&gt; string list<br />
+            <strong>Signature:</strong> (nuGetPackage:string * version:string * pathSuffix:string * groupName:GroupName * paketDependenciesFile:Lazy&lt;DependenciesFile&gt;) -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L181-181" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L163-163" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -416,14 +403,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3646', 3646)" onmouseover="showTip(event, '3646', 3646)">
-            x.ResolveSdkRuntimeVersion()
+            x.PaketFrameworkIdentifier
           </code>
           <div class="tip" id="3646">
-            <strong>Signature:</strong> unit -&gt; string<br />
+            <strong>Signature:</strong> FrameworkIdentifier<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L39-39" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -432,14 +419,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3647', 3647)" onmouseover="showTip(event, '3647', 3647)">
-            x.SdkReferenceAssemblies()
+            x.ResolveSdkReferenceAssemblies(...)
           </code>
           <div class="tip" id="3647">
-            <strong>Signature:</strong> unit -&gt; string list<br />
+            <strong>Signature:</strong> (groupName:GroupName * paketDependenciesFile:Lazy&lt;DependenciesFile&gt;) -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L242-242" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -448,14 +435,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3648', 3648)" onmouseover="showTip(event, '3648', 3648)">
-            x.SdkVersion
+            x.ResolveSdkRuntimeVersion()
           </code>
           <div class="tip" id="3648">
-            <strong>Signature:</strong> ReleaseVersion<br />
+            <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L22-22" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L87-87" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -464,14 +451,14 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3649', 3649)" onmouseover="showTip(event, '3649', 3649)">
-            x.SdkVersionFromGlobalJson
+            x.SdkReferenceAssemblies()
           </code>
           <div class="tip" id="3649">
-            <strong>Signature:</strong> string option<br />
+            <strong>Signature:</strong> unit -&gt; string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L29-29" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L126-126" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -480,14 +467,78 @@ package extract them a and reference them.</p>
       <tr>
         <td class="member-name">
           <code onmouseout="hideTip(event, '3650', 3650)" onmouseover="showTip(event, '3650', 3650)">
-            x.SdkVersionRaw
+            x.SdkVersion
           </code>
           <div class="tip" id="3650">
+            <strong>Signature:</strong> ReleaseVersion<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L37-37" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3651', 3651)" onmouseover="showTip(event, '3651', 3651)">
+            x.SdkVersionFromGlobalJson
+          </code>
+          <div class="tip" id="3651">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L44-44" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3652', 3652)" onmouseover="showTip(event, '3652', 3652)">
+            x.SdkVersionRaw
+          </code>
+          <div class="tip" id="3652">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L20-20" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L35-35" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3653', 3653)" onmouseover="showTip(event, '3653', 3653)">
+            x.TryResolveSdkRuntimeVersionFromCache()
+          </code>
+          <div class="tip" id="3653">
+            <strong>Signature:</strong> unit -&gt; ProductRelease list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L71-71" class="github-link">
+              <i class="fab fa-github fa-fw"></i>
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+          <code onmouseout="hideTip(event, '3654', 3654)" onmouseover="showTip(event, '3654', 3654)">
+            x.TryResolveSdkRuntimeVersionFromNetwork(...)
+          </code>
+          <div class="tip" id="3654">
+            <strong>Signature:</strong> unit -&gt; ProductRelease list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.Runtime/SdkAssemblyResolver.fs#L51-51" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           
@@ -533,7 +584,7 @@ package extract them a and reference them.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha004</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

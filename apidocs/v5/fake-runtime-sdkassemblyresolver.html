@@ -332,7 +332,10 @@
 We will also try to resolve the current SDK that the runner is executing, if it is the same as pinned
 one then we will use runtime assemblies from that SDK version on its installation on disk. Otherwise,
 we will default to NetStandard2.0 assemblies. We will download them since they are packaged in a NuGet
-package extract them a and reference them.</p>
+package extract them a and reference them.
+the resolution of runtime version for the selected SDK is as follows; we will use the dotnet official release
+package to get the releases for pinned framework version, and get the runtime. If the accessing the network
+is not possible, then we will use a cached releases file.</p>
 
 
           </td>
@@ -380,7 +383,7 @@ package extract them a and reference them.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0-alpha004</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
