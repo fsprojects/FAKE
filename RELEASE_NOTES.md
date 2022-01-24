@@ -1,8 +1,10 @@
 # Release Notes
 
-## 5.21.0-alpha005 - tbd
-* NEW: Support for SqlPackage installed on VS2022.
-* NEW: Support for SqlPackage on Linux.
+## 5.21.0 - 2022-01-24
+* ENHANCEMENT: Refactor of SqlPackage code, thanks @isaacabraham - https://github.com/fsprojects/FAKE/pull/2634
+* ENHANCEMENT: update FAKE to DotNet 6.0.101 version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2635
+* BUGFIX: Add an option to resolve SDK runtime version from a cache file, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2630
+* NEW: Support for SqlPackage on Linux and installation on VS2022, thanks @isaacabraham - https://github.com/fsprojects/FAKE/pull/2631
 
 ## 5.21.0-alpha004 - 2022-01-06
 * BUGFIX: Fix sdk resolver for net6 assemblies. Using offical .NET release JSON to get runtime version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2625
