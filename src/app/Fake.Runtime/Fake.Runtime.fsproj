@@ -41,5 +41,10 @@
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="cachedDotnetSdkReleases.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -32,7 +32,9 @@ nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
-nuget Octokit //"
+nuget System.Net.Http
+nuget Octokit
+nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
 open System
@@ -49,6 +51,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 open Fake.Core.TargetOperators
+open System.Net.Http
+open Microsoft.Deployment.DotNet.Releases
 
 // ****************************************************************************************************
 // ------------------------------------------- Definitions -------------------------------------------
@@ -1308,6 +1312,30 @@ for runtime in "current" :: "portable" :: runtimes do
     | None -> "_DotNetPackage" ?=> rawTargetName |> ignore
     prev <- Some rawTargetName
 
+Target.create "CacheDotNetReleases" (fun _ ->
+    let sdkVersionReleases =
+        ProductCollection.GetAsync()
+        |> Async.AwaitTask
+        |> Async.RunSynchronously
+        |> List.ofSeq
+        |> List.find (fun product -> product.ProductVersion.Equals("6.0"))
+
+    let client = new HttpClient()
+    try
+      let response =
+          sdkVersionReleases.ReleasesJson
+          |> client.GetAsync
+          |> Async.AwaitTask
+          |> Async.RunSynchronously
+
+      response.Content.ReadAsStringAsync()
+          |> Async.AwaitTask
+          |> Async.RunSynchronously
+          |> Fake.IO.File.writeString false "src/app/Fake.Runtime/cachedDotnetSdkReleases.json"
+      with e ->
+        failwith "Could not update DotNet releases file."
+)
+
 // ****************************************************************************************************
 // --------------------------------------- Targets Dependencies ---------------------------------------
 // ****************************************************************************************************
@@ -1327,6 +1355,7 @@ for runtime in "current" :: "portable" :: runtimes do
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "_StartDnc"
+    ==> "CacheDotNetReleases"
     ==> "_DotNetPackage"
 "_DotNetPackage"
     ==> "DotNetPackage"
