@@ -1,5 +1,8 @@
 # Release Notes
 
+## 5.22.0-alpha001 - tbd
+
+
 ## 5.21.0 - 2022-01-24
 * ENHANCEMENT: Refactor of SqlPackage code, thanks @isaacabraham - https://github.com/fsprojects/FAKE/pull/2634
 * ENHANCEMENT: update FAKE to DotNet 6.0.101 version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2635
