@@ -69,7 +69,7 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             None
 
     member this.TryResolveSdkRuntimeVersionFromCache() =
-        if this.LogLevel.PrintVerbose then 
+        if this.LogLevel.PrintVerbose then
             Trace.tracefn "Trying to resolve runtime version from cache.."
         try
             System.Reflection.Assembly.GetExecutingAssembly().Location
@@ -104,7 +104,7 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
                 |> Option.orElseWith(fun _ ->
                     this.TryResolveSdkRuntimeVersionFromCache()
                 )
-        
+
 
         let resolved =
             resolutionMethod
@@ -148,7 +148,7 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             </> "ref"
             </> "net" + this.SdkVersionRaw
 
-        if this.LogLevel.PrintVerbose then 
+        if this.LogLevel.PrintVerbose then
             Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
         match Directory.Exists referenceAssembliesPath with
         | true ->
@@ -246,7 +246,7 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
         ) =
         match this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() with
         | true ->
-            if this.LogLevel.PrintVerbose then 
+            if this.LogLevel.PrintVerbose then
                 Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
 
             this.SdkReferenceAssemblies()
