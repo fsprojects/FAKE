@@ -106,7 +106,7 @@ let setupTemplate() =
     Process.setEnableProcessTracing true
 
     try
-        DotNet.newUninstallTemplate templatePackageName id
+        DotNet.uninstallTemplate templatePackageName
     with exn ->
         $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo}"
         |> Expect.isTrue false
@@ -127,7 +127,7 @@ let setupTemplate() =
         | Some t -> t
         | Option.None -> templatePackageName
     try
-        DotNet.newInstallTemplate fakeTemplateName id
+        DotNet.installTemplate fakeTemplateName id
     with exn ->
         $"should install new FAKE template\nDebugging Info: {getDebuggingInfo}"
         |> Expect.isTrue false

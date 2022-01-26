@@ -1814,12 +1814,12 @@ module DotNet =
         if not result.OK then failwithf $"dotnet new failed with code %i{result.ExitCode}"
         __.MarkSuccess()
 
-    /// Execute dotnet new --install <PATH|NUGET_ID> command
+    /// Execute dotnet new --install <PATH|NUGET_ID> command to install a new template
     /// ## Parameters
     ///
     /// - 'templateName' - template short name to install
     /// - 'setParams' - set version command parameters
-    let newInstallTemplate templateName setParams =
+    let installTemplate templateName setParams =
         use __ = Trace.traceTask "DotNet:new" "dotnet new --install command"
         let param = TemplateInstallOptions.Create(templateName) |> setParams
         let args = Args.toWindowsCommandLine(buildTemplateInstallArgs param)
@@ -1827,14 +1827,14 @@ module DotNet =
         if not result.OK then failwithf $"dotnet new --install failed with code %i{result.ExitCode}"
         __.MarkSuccess()
 
-    /// Execute dotnet new --uninstall <PATH|NUGET_ID> command
+    /// Execute dotnet new --uninstall <PATH|NUGET_ID> command to uninstall a new template
     /// ## Parameters
     ///
     /// - 'templateName' - template short name to uninstall
     /// - 'setParams' - set version command parameters
-    let newUninstallTemplate templateName setParams =
+    let uninstallTemplate templateName =
         use __ = Trace.traceTask "DotNet:new" "dotnet new --uninstall command"
-        let param = TemplateUninstallOptions.Create(templateName) |> setParams
+        let param = TemplateUninstallOptions.Create(templateName)
         let args = Args.toWindowsCommandLine(buildTemplateUninstallArgs param)
         let result = exec (fun _ -> param.Common) "new" args
 
