@@ -15,7 +15,7 @@
       ]
     },
     "fake-cli": {
-      "version": "5.21.0-alpha004",
+      "version": "5.21.0",
       "commands": [
         "fake"
       ]
