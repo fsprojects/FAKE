@@ -1,9 +1,11 @@
 module Fake.Runtime.SdkAssemblyResolver
 
+open System
 open System.IO
 open System.Net
 open System.Net.Http
 open System.Threading
+open System.Runtime.InteropServices
 open Fake.Core
 open Fake.IO.FileSystemOperators
 open Fake.DotNet
@@ -124,41 +126,111 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
         resolved.Runtime.Version.ToString()
 
     member this.SdkReferenceAssemblies() =
-        let dotnetHost =
-            match Environment.isUnix with
-            | true -> "dotnet"
-            | false -> "dotnet.exe"
+        let isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        let isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+        let isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+        let isUnix = isLinux || isMac
 
-        let userInstallDir = DotNet.defaultUserInstallDir
-        let systemInstallDir = DotNet.defaultSystemInstallDir
-
-        let dotnetHostPath =
-            if not(String.isNullOrEmpty CustomDotNetHostPath)
-            then CustomDotNetHostPath
+        let dotnetBinaryName =
+            if Environment.isUnix then
+                "dotnet"
             else
-                match File.Exists(userInstallDir </> dotnetHost) with
-                | true -> userInstallDir
-                | false -> systemInstallDir
+                "dotnet.exe"
 
+        let potentialDotnetHostEnvVars =
+            [ "DOTNET_HOST_PATH", id // is a full path to dotnet binary
+              "DOTNET_ROOT", (fun s -> Path.Combine(s, dotnetBinaryName)) // needs dotnet binary appended
+              "DOTNET_ROOT(x86)", (fun s -> Path.Combine(s, dotnetBinaryName)) ] // needs dotnet binary appended
+
+        let existingEnvVarValue envVarValue =
+            match envVarValue with
+            | null
+            | "" -> None
+            | other -> Some other
+
+        let tryFindFromEnvVar () =
+            potentialDotnetHostEnvVars
+            |> List.tryPick (fun (envVar, transformer) ->
+                match Environment.GetEnvironmentVariable envVar |> existingEnvVarValue with
+                | Some varValue -> Some(transformer varValue |> FileInfo)
+                | None -> None)
+
+        let PATHSeparator =
+            if isUnix then
+                ':'
+            else
+                ';'
+
+        let tryFindFromPATH () =
+            Environment
+                .GetEnvironmentVariable("PATH")
+                .Split(PATHSeparator, StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
+            |> Array.tryPick (fun d ->
+                let fi = Path.Combine(d, dotnetBinaryName) |> FileInfo
+
+                if fi.Exists then
+                    Some fi
+                else
+                    None)
+
+        let  tryFindFromDefaultDirs () =
+            let windowsPath = $"C:\\Program Files\\dotnet\\{dotnetBinaryName}"
+            let macosPath = $"/usr/local/share/dotnet/{dotnetBinaryName}"
+            let linuxPath = $"/usr/share/dotnet/{dotnetBinaryName}"
+
+            let tryFindFile p =
+                let f = FileInfo p
+
+                if f.Exists then
+                    Some f
+                else
+                    None
+
+            if isWindows then
+                tryFindFile windowsPath
+            else if isMac then
+                tryFindFile macosPath
+            else if isLinux then
+                tryFindFile linuxPath
+            else
+                None
+        
+        /// <summary>
+        /// provides the path to the `dotnet` binary running this library, respecting various dotnet <see href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_root-dotnet_rootx86%5D">environment variables</see>.
+        /// Also probes the PATH and checks the default installation locations
+        /// </summary>
+        let dotnetRoot =
+            if not(String.isNullOrEmpty CustomDotNetHostPath) then
+                Some CustomDotNetHostPath
+            else
+                tryFindFromEnvVar ()
+                |> Option.orElseWith tryFindFromPATH
+                |> Option.orElseWith tryFindFromDefaultDirs
+                |> Option.map (fun dotnetRoot -> dotnetRoot.Directory.FullName)
+        
         let referenceAssembliesPath =
-            dotnetHostPath
-            </> "packs"
-            </> "Microsoft.NETCore.App.Ref"
-            </> this.ResolveSdkRuntimeVersion()
-            </> "ref"
-            </> "net" + this.SdkVersionRaw
+            dotnetRoot
+            |> Option.map (fun dotnetRoot ->
+                dotnetRoot
+                </> "packs"
+                </> "Microsoft.NETCore.App.Ref"
+                </> this.ResolveSdkRuntimeVersion()
+                </> "ref"
+                </> "net" + this.SdkVersionRaw)
 
-        if this.LogLevel.PrintVerbose then
-            Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
-        match Directory.Exists referenceAssembliesPath with
-        | true ->
-            Directory.GetFiles(
-                referenceAssembliesPath,
-                "*.dll"
-            )
-            |> Seq.toList
-        | false ->
-            failwithf "Could not find referenced assemblies in path: '%s', please check installed SDK and runtime versions" referenceAssembliesPath
+        match referenceAssembliesPath with
+        | None -> failwithf "Could not find referenced assemblies, please check installed SDK and runtime versions"
+        | Some referenceAssembliesPath ->
+            if this.LogLevel.PrintVerbose then
+                Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
+            if Directory.Exists referenceAssembliesPath then
+                Directory.GetFiles(
+                    referenceAssembliesPath,
+                    "*.dll"
+                )
+                |> Seq.toList
+            else
+                failwithf "Could not find referenced assemblies in path: '%s', please check installed SDK and runtime versions" referenceAssembliesPath
 
     member this.NetStandard20ReferenceAssemblies
         (

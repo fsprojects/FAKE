@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.21.1 - 2022-01-30
+* BUGFIX: Update logic of resolving SdkReferenceAssemblies., thanks @nojaf - https://github.com/fsprojects/FAKE/pull/2639
+* BUGFIX: Fix FAKE template integration tests., thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2640
+
+
 ## 5.21.0 - 2022-01-24
 * ENHANCEMENT: Refactor of SqlPackage code, thanks @isaacabraham - https://github.com/fsprojects/FAKE/pull/2634
 * ENHANCEMENT: update FAKE to DotNet 6.0.101 version, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2635
