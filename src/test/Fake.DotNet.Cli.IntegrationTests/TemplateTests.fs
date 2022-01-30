@@ -37,7 +37,7 @@ let inline opts () = DotNet.Options.lift dotnetSdk.Value
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
-    
+
 let inline redirect () =
     DotNet.Options.lift (fun opts -> { opts with RedirectOutput = true })
 
@@ -57,7 +57,7 @@ let runTemplate rootDir kind dependencies dsl =
     Directory.ensure rootDir
     try
         let result =
-            DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" $"{templateName} --allow-scripts yes --version 5.16.2-alpha.1304 --bootstrap {string kind} --dependencies {string dependencies} --dsl {string dsl}"
+            DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" $"{templateName} --allow-scripts yes --bootstrap {string kind} --dependencies {string dependencies} --dsl {string dsl}"
 
         let errors =
             result.Results

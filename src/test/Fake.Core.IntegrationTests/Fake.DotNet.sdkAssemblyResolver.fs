@@ -104,7 +104,7 @@ let tests =
               finally
                   // clean up after the test run
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
-          
+
           testCase "Runner run script with 6.0.100 SDK version assemblies and resolve runtime version from cached file" <| fun _ ->
               try
                   use d = createTestDir()
@@ -134,7 +134,7 @@ let tests =
 
                   let stdOut =
                       String.Join("\n", result.Messages).Trim()
-                  
+
                   printfn "%s" stdOut
 
                   let expectedNet6PathPortion = "packs"</>"Microsoft.NETCore.App.Ref"</>"6.0.0"</>"ref"</>"net6.0"
