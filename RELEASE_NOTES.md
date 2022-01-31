@@ -1,5 +1,7 @@
 # Release Notes
 
+## 5.22.0-alpha001 - tbd
+
 ## 5.21.1 - 2022-01-30
 * BUGFIX: Update logic of resolving SdkReferenceAssemblies., thanks @nojaf - https://github.com/fsprojects/FAKE/pull/2639
 * BUGFIX: Fix FAKE template integration tests., thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2640
