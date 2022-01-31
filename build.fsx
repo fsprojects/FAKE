@@ -32,7 +32,9 @@ nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
-nuget Octokit //"
+nuget System.Net.Http
+nuget Octokit
+nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
 open System
@@ -193,10 +195,10 @@ let version =
                     Path.Combine (LocalRootForTempData,".nuget","packages")
             )
             let currentVer =
-                Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local-*")
+                Directory.EnumerateDirectories (Path.Combine(UserNuGetPackagesFolder, "fake.core.context"), release.NugetVersion + ".local.*")
                 |> Seq.choose (fun dir ->
                     let n = Path.GetFileName dir
-                    let v = n.Substring(release.NugetVersion.Length + ".local-".Length)
+                    let v = n.Substring(release.NugetVersion.Length + ".local.".Length)
                     match System.Numerics.BigInteger.TryParse(v) with
                     | true, v -> Some v
                     | _ ->
@@ -442,7 +444,7 @@ let startWebServer () =
 
 let runExpecto workDir dllPath resultsXml =
     let processResult =
-        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) (sprintf "--nunit-summary %s" resultsXml)
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
     Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
