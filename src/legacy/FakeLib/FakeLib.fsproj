@@ -251,6 +251,9 @@
     <Compile Include="..\..\app\Fake.Net.SSH\SSH.fs">
       <Link>Fake.Net.SSH/SSH.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Net.FTP\FTP.fs">
+      <Link>Fake.Net.FTP/FTP.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Core.Xml\Xml.fs">
       <Link>Fake.Core.Xml/Xml.fs</Link>
     </Compile>

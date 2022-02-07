@@ -382,6 +382,7 @@ let dotnetAssemblyInfos =
       "Fake.JavaScript.TypeScript", "Running TypeScript compiler"
       "Fake.Net.Http", "HTTP Client"
       "Fake.Net.SSH", "SSH operations"
+      "Fake.Net.FTP", "FTP operations"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations (Obsolete: Use Fake.Sql.SqlPackage instead)"
