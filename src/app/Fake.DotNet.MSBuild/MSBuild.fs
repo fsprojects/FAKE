@@ -135,6 +135,11 @@ module private MSBuildExe =
                                      @"\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin"
                                      @"\MSBuild\Current\Bin"
                                      @"\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin"] }
+        { Version = "16.0"; Paths = [@"\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
+                                     @"\MSBuild\Current\Bin"
+                                     @"\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"] }
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
