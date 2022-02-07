@@ -20,6 +20,8 @@ type ReportType =
   | Json = 1
   | Xml = 2
   | NDependXml = 3
+  | DetailedXml = 4
+  | SummaryXml = 5
 
 /// The dotCover parameter type for running coverage
 type Params = 
