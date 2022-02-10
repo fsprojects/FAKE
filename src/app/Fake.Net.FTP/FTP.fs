@@ -64,10 +64,10 @@ module FTP =
 
     /// Gets the contents/listing of files and folders in a given FTP server folder
     /// ## Parameters
-    ///  - `dirPath` - The full name of folder whose content need to be listed
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `dirPath` - The full name of folder whose content need to be listed
     let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
         Trace.logfn $"Getting FTP dir contents for %s{dirPath}"
         dirPath
@@ -80,11 +80,11 @@ module FTP =
 
     /// Uploads a single file from local directory into remote FTP folder.
     /// ## Parameters
-    ///  - `destPath` - The full local file path that needs to be uploaded
-    ///  - `srcPath` - The full path to file which needs to be created, including all its parent folders
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `destPath` - The full local file path that needs to be uploaded
+    ///  - `srcPath` - The full path to file which needs to be created, including all its parent folders
     let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
         Trace.logfn $"Uploading %s{srcPath} to %s{destPath}"
         let fl = FileInfo(srcPath)
@@ -111,10 +111,10 @@ module FTP =
 
     /// Given a folder path, will check if that folder is present at a given root directory of a FTP server.
     /// ## Parameters
-    ///  - `destPath` - The full name of folder which needs to be checked for existence, including all its parent folders
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `destPath` - The full name of folder which needs to be checked for existence, including all its parent folders
     let isFolderPresent server user pwd (destPath : string) = 
         destPath
         |> getLastSlashPosition
@@ -123,10 +123,10 @@ module FTP =
 
     /// Creates a matching folder in FTP folder, if not already present.
     /// ## Parameters
-    ///  - `destPath` - The full name of folder which needs to be created, including all its parent folders
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `destPath` - The full name of folder which needs to be created, including all its parent folders
     let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Creating folder %s{destPath}"
         if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
@@ -138,11 +138,11 @@ module FTP =
 
     /// Uploads a given local folder to a given root dir on a FTP server.
     /// ## Parameters
-    ///  - `srcPath` - The local server path from which files need to be uploaded
-    ///  - `rootDir` - The remote root dir where files need to be uploaded, leave this as empty, if files need to be uploaded to root dir of FTP server
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `srcPath` - The local server path from which files need to be uploaded
+    ///  - `rootDir` - The remote root dir where files need to be uploaded, leave this as empty, if files need to be uploaded to root dir of FTP server
     let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
         Trace.logfn $"Uploading folder %s{srcPath}"
         let dirInfo = DirectoryInfo(srcPath)
@@ -160,10 +160,10 @@ module FTP =
 
     /// Deletes a single file from remote FTP folder.
     /// ## Parameters
-    ///  - `destPath` - The full path to the file which needs to be deleted, including all its parent folders
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `destPath` - The full path to the file which needs to be deleted, including all its parent folders
     let deleteAFile (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Deleting %s{destPath}"
         destPath
@@ -189,10 +189,10 @@ module FTP =
 
     /// Deletes a single folder from remote FTP folder.
     /// ## Parameters
-    ///  - `destPath` - The full path to the folder which needs to be deleted, including all its parent folders
     ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
     ///  - `user` - FTP Server login name (ex: "joebloggs")
     ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    ///  - `destPath` - The full path to the folder which needs to be deleted, including all its parent folders
     let rec deleteAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Deleting %s{destPath}"
         let folderContents = getFolderContents server user pwd destPath
