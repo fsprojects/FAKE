@@ -201,7 +201,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -2739,6 +2741,29 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 
           </td>
         </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-net-ftp.html">FTP</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains helpers which allow to upload a whole folder/specific file into a FTP Server.
+Uses <code>Passive Mode</code> FTP and handles all files as binary (and not ASCII).
+Assumes direct network connectivity to destination FTP server (not via a proxy).
+Does not support FTPS and SFTP.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-net-ssh.html">SSH</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains a task which allows to perform SSH operations</p>
+
+
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -3294,7 +3319,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

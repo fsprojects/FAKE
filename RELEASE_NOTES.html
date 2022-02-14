@@ -202,7 +202,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -305,6 +307,14 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-22-0-2022-02-14" class="anchor" href="#5-22-0-2022-02-14">5.22.0 - 2022-02-14</a></h2>
+<ul>
+<li>ENHANCEMENT: Enhance template tests and add dotnet cli APIs for new command, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2636">https://github.com/fsprojects/FAKE/pull/2636</a></li>
+<li>ENHANCEMENT: Porting SSH module to FAKE 5, thanks @ziadadeela - <a href="https://github.com/fsprojects/FAKE/pull/2652">https://github.com/fsprojects/FAKE/pull/2652</a></li>
+<li>ENHANCEMENT: Add missing report types, thanks @alcated - <a href="https://github.com/fsprojects/FAKE/pull/2654">https://github.com/fsprojects/FAKE/pull/2654</a></li>
+<li>ENHANCEMENT: Add known paths for more recent versions of msbuild, thanks @alcated - <a href="https://github.com/fsprojects/FAKE/pull/2655">https://github.com/fsprojects/FAKE/pull/2655</a></li>
+<li>ENHANCEMENT: Porting FTP module to FAKE 5, thanks @ziadadeela - <a href="https://github.com/fsprojects/FAKE/pull/2656">https://github.com/fsprojects/FAKE/pull/2656</a></li>
+</ul>
 <h2><a name="5-21-1-2022-01-30" class="anchor" href="#5-21-1-2022-01-30">5.21.1 - 2022-01-30</a></h2>
 <ul>
 <li>BUGFIX: Update logic of resolving SdkReferenceAssemblies., thanks @nojaf - <a href="https://github.com/fsprojects/FAKE/pull/2639">https://github.com/fsprojects/FAKE/pull/2639</a></li>
@@ -2442,7 +2452,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

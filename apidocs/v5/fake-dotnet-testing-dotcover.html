@@ -201,7 +201,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -372,15 +374,15 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '819', 819)" onmouseover="showTip(event, '819', 819)">
+          <code onmouseout="hideTip(event, '822', 822)" onmouseover="showTip(event, '822', 822)">
             DotCover.merge(setParams)
           </code>
-          <div class="tip" id="819">
+          <div class="tip" id="822">
             <strong>Signature:</strong> setParams:(MergeParams -&gt; MergeParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L160-160" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
@@ -408,15 +410,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '820', 820)" onmouseover="showTip(event, '820', 820)">
+          <code onmouseout="hideTip(event, '823', 823)" onmouseover="showTip(event, '823', 823)">
             DotCover.report(setParams)
           </code>
-          <div class="tip" id="820">
+          <div class="tip" id="823">
             <strong>Signature:</strong> setParams:(ReportParams -&gt; ReportParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L173-173" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L175-175" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
@@ -443,15 +445,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '821', 821)" onmouseover="showTip(event, '821', 821)">
+          <code onmouseout="hideTip(event, '824', 824)" onmouseover="showTip(event, '824', 824)">
             DotCover.run(setParams)
           </code>
-          <div class="tip" id="821">
+          <div class="tip" id="824">
             <strong>Signature:</strong> setParams:(Params -&gt; Params) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L142-142" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L144-144" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
@@ -465,15 +467,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '822', 822)" onmouseover="showTip(event, '822', 822)">
+          <code onmouseout="hideTip(event, '825', 825)" onmouseover="showTip(event, '825', 825)">
             DotCover.runMSpec(...)
           </code>
-          <div class="tip" id="822">
+          <div class="tip" id="825">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSpecParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L318-318" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L320-320" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
@@ -505,15 +507,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '823', 823)" onmouseover="showTip(event, '823', 823)">
+          <code onmouseout="hideTip(event, '826', 826)" onmouseover="showTip(event, '826', 826)">
             DotCover.runMSTest(...)
           </code>
-          <div class="tip" id="823">
+          <div class="tip" id="826">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSTestParams:(MSTestParams -&gt; MSTestParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L290-290" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L292-292" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
@@ -541,15 +543,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '824', 824)" onmouseover="showTip(event, '824', 824)">
+          <code onmouseout="hideTip(event, '827', 827)" onmouseover="showTip(event, '827', 827)">
             DotCover.runNUnit(...)
           </code>
-          <div class="tip" id="824">
+          <div class="tip" id="827">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L191-191" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L193-193" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
@@ -581,15 +583,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '825', 825)" onmouseover="showTip(event, '825', 825)">
+          <code onmouseout="hideTip(event, '828', 828)" onmouseover="showTip(event, '828', 828)">
             DotCover.runNUnit3(...)
           </code>
-          <div class="tip" id="825">
+          <div class="tip" id="828">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L219-219" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L221-221" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
@@ -621,15 +623,15 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '826', 826)" onmouseover="showTip(event, '826', 826)">
+          <code onmouseout="hideTip(event, '829', 829)" onmouseover="showTip(event, '829', 829)">
             DotCover.runXUnit2(...)
           </code>
-          <div class="tip" id="826">
+          <div class="tip" id="829">
             <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setXUnit2Params:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L245-245" class="github-link">
+                      <a href="https://github.com/fsprojects/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L247-247" class="github-link">
               <i class="fab fa-github fa-fw"></i>
             </a>
           <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
@@ -695,7 +697,7 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

@@ -201,7 +201,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -362,10 +364,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1100', 1100)" onmouseover="showTip(event, '1100', 1100)">
+          <code onmouseout="hideTip(event, '1116', 1116)" onmouseover="showTip(event, '1116', 1116)">
             fakeDirectoryName
           </code>
-          <div class="tip" id="1100">
+          <div class="tip" id="1116">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -378,10 +380,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1101', 1101)" onmouseover="showTip(event, '1101', 1101)">
+          <code onmouseout="hideTip(event, '1117', 1117)" onmouseover="showTip(event, '1117', 1117)">
             findAndLoadInRuntimeDeps(...)
           </code>
-          <div class="tip" id="1101">
+          <div class="tip" id="1117">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; name:AssemblyName -&gt; logLevel:VerboseLevel -&gt; runtimeDependencies:AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
@@ -394,10 +396,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1102', 1102)" onmouseover="showTip(event, '1102', 1102)">
+          <code onmouseout="hideTip(event, '1118', 1118)" onmouseover="showTip(event, '1118', 1118)">
             findAndLoadInRuntimeDepsCached
           </code>
-          <div class="tip" id="1102">
+          <div class="tip" id="1118">
             <strong>Signature:</strong> AssemblyLoadContext -&gt; AssemblyName -&gt; VerboseLevel -&gt; AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
@@ -410,10 +412,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1103', 1103)" onmouseover="showTip(event, '1103', 1103)">
+          <code onmouseout="hideTip(event, '1119', 1119)" onmouseover="showTip(event, '1119', 1119)">
             findInAssemblyList(...)
           </code>
-          <div class="tip" id="1103">
+          <div class="tip" id="1119">
             <strong>Signature:</strong> name:AssemblyName -&gt; runtimeDependencies:AssemblyInfo list -&gt; (bool * AssemblyInfo) option<br />
                                   </div>
         </td>
@@ -426,10 +428,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
+          <code onmouseout="hideTip(event, '1120', 1120)" onmouseover="showTip(event, '1120', 1120)">
             findUnmanagedInRuntimeDeps(...)
           </code>
-          <div class="tip" id="1104">
+          <div class="tip" id="1120">
             <strong>Signature:</strong> unmanagedDllName:string -&gt; logLevel:VerboseLevel -&gt; nativeLibraries:NativeLibrary list -&gt; string<br />
                                   </div>
         </td>
@@ -442,10 +444,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
+          <code onmouseout="hideTip(event, '1121', 1121)" onmouseover="showTip(event, '1121', 1121)">
             getCached(...)
           </code>
-          <div class="tip" id="1105">
+          <div class="tip" id="1121">
             <strong>Signature:</strong> getUncached:(unit -&gt; &#39;a) -&gt; readFromCache:(unit -&gt; &#39;a) -&gt; writeToCache:(&#39;a -&gt; unit) -&gt; checkCacheUpToDate:(unit -&gt; bool) -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
@@ -458,10 +460,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1106', 1106)" onmouseover="showTip(event, '1106', 1106)">
+          <code onmouseout="hideTip(event, '1122', 1122)" onmouseover="showTip(event, '1122', 1122)">
             loadAssembly(...)
           </code>
-          <div class="tip" id="1106">
+          <div class="tip" id="1122">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; logLevel:VerboseLevel -&gt; assemInfo:AssemblyInfo -&gt; (string option * Assembly) option<br />
                                   </div>
         </td>
@@ -474,10 +476,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1107', 1107)" onmouseover="showTip(event, '1107', 1107)">
+          <code onmouseout="hideTip(event, '1123', 1123)" onmouseover="showTip(event, '1123', 1123)">
             prepareContext config cache
           </code>
-          <div class="tip" id="1107">
+          <div class="tip" id="1123">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; FakeContext * CoreCacheInfo option<br />
                                   </div>
         </td>
@@ -490,10 +492,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1108', 1108)" onmouseover="showTip(event, '1108', 1108)">
+          <code onmouseout="hideTip(event, '1124', 1124)" onmouseover="showTip(event, '1124', 1124)">
             resolveUnmanagedDependencyCached
           </code>
-          <div class="tip" id="1108">
+          <div class="tip" id="1124">
             <strong>Signature:</strong> (string -&gt; nativeint) -&gt; string -&gt; VerboseLevel -&gt; NativeLibrary list -&gt; nativeint<br />
                                   </div>
         </td>
@@ -506,10 +508,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1109', 1109)" onmouseover="showTip(event, '1109', 1109)">
+          <code onmouseout="hideTip(event, '1125', 1125)" onmouseover="showTip(event, '1125', 1125)">
             runScriptWithCacheProvider config cache
           </code>
-          <div class="tip" id="1109">
+          <div class="tip" id="1125">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -530,10 +532,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1110', 1110)" onmouseover="showTip(event, '1110', 1110)">
+          <code onmouseout="hideTip(event, '1126', 1126)" onmouseover="showTip(event, '1126', 1126)">
             runScriptWithCacheProviderExt(...)
           </code>
-          <div class="tip" id="1110">
+          <div class="tip" id="1126">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult * ResultCoreCacheInfo * FakeContext<br />
                                   </div>
         </td>
@@ -546,10 +548,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1111', 1111)" onmouseover="showTip(event, '1111', 1111)">
+          <code onmouseout="hideTip(event, '1127', 1127)" onmouseover="showTip(event, '1127', 1127)">
             setupAssemblyResolverLogger(context)
           </code>
-          <div class="tip" id="1111">
+          <div class="tip" id="1127">
             <strong>Signature:</strong> context:FakeContext -&gt; unit<br />
                                   </div>
         </td>
@@ -600,7 +602,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

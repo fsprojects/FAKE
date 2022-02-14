@@ -201,7 +201,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -384,10 +386,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1284', 1284)" onmouseover="showTip(event, '1284', 1284)">
+          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
             ChocoInstallDefaults
           </code>
-          <div class="tip" id="1284">
+          <div class="tip" id="1300">
             <strong>Signature:</strong> ChocoInstallParams<br />
                                   </div>
         </td>
@@ -402,10 +404,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1285', 1285)" onmouseover="showTip(event, '1285', 1285)">
+          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
             ChocoPackDefaults
           </code>
-          <div class="tip" id="1285">
+          <div class="tip" id="1301">
             <strong>Signature:</strong> ChocoPackParams<br />
                                   </div>
         </td>
@@ -420,10 +422,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
+          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
             ChocoPushDefaults
           </code>
-          <div class="tip" id="1286">
+          <div class="tip" id="1302">
             <strong>Signature:</strong> ChocoPushParams<br />
                                   </div>
         </td>
@@ -438,10 +440,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1287', 1287)" onmouseover="showTip(event, '1287', 1287)">
+          <code onmouseout="hideTip(event, '1303', 1303)" onmouseover="showTip(event, '1303', 1303)">
             exec args timeout
           </code>
-          <div class="tip" id="1287">
+          <div class="tip" id="1303">
             <strong>Signature:</strong> args:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
@@ -490,10 +492,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1288', 1288)" onmouseover="showTip(event, '1288', 1288)">
+          <code onmouseout="hideTip(event, '1304', 1304)" onmouseover="showTip(event, '1304', 1304)">
             install setParams packages
           </code>
-          <div class="tip" id="1288">
+          <div class="tip" id="1304">
             <strong>Signature:</strong> setParams:(ChocoInstallParams -&gt; ChocoInstallParams) -&gt; packages:string -&gt; unit<br />
                                   </div>
         </td>
@@ -519,10 +521,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1289', 1289)" onmouseover="showTip(event, '1289', 1289)">
+          <code onmouseout="hideTip(event, '1305', 1305)" onmouseover="showTip(event, '1305', 1305)">
             IsAvailable
           </code>
-          <div class="tip" id="1289">
+          <div class="tip" id="1305">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -544,10 +546,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1290', 1290)" onmouseover="showTip(event, '1290', 1290)">
+          <code onmouseout="hideTip(event, '1306', 1306)" onmouseover="showTip(event, '1306', 1306)">
             pack(setParams)
           </code>
-          <div class="tip" id="1290">
+          <div class="tip" id="1306">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -572,10 +574,10 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1291', 1291)" onmouseover="showTip(event, '1291', 1291)">
+          <code onmouseout="hideTip(event, '1307', 1307)" onmouseover="showTip(event, '1307', 1307)">
             packFromTemplate setParams nuspecPath
           </code>
-          <div class="tip" id="1291">
+          <div class="tip" id="1307">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; nuspecPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -601,10 +603,10 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1292', 1292)" onmouseover="showTip(event, '1292', 1292)">
+          <code onmouseout="hideTip(event, '1308', 1308)" onmouseover="showTip(event, '1308', 1308)">
             push setParams nupkgPath
           </code>
-          <div class="tip" id="1292">
+          <div class="tip" id="1308">
             <strong>Signature:</strong> setParams:(ChocoPushParams -&gt; ChocoPushParams) -&gt; nupkgPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -668,7 +670,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

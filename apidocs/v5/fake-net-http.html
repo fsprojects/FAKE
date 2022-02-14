@@ -201,7 +201,9 @@
 							<a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/net-http.html" class="navbar-item">Http</a>
-							</div>
+								<a href="/apidocs/v5/fake-net-ssh.html" class="navbar-item">SSH</a>
+							    <a href="/apidocs/v5/fake-net-ftp.html" class="navbar-item">FTP</a>
+                            </div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
@@ -358,10 +360,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1087', 1087)" onmouseover="showTip(event, '1087', 1087)">
+          <code onmouseout="hideTip(event, '1090', 1090)" onmouseover="showTip(event, '1090', 1090)">
             downloadFile localFilePath uri
           </code>
-          <div class="tip" id="1087">
+          <div class="tip" id="1090">
             <strong>Signature:</strong> localFilePath:string -&gt; uri:string -&gt; string<br />
                                   </div>
         </td>
@@ -386,10 +388,10 @@ string -&gt; string -&gt; string</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1088', 1088)" onmouseover="showTip(event, '1088', 1088)">
+          <code onmouseout="hideTip(event, '1091', 1091)" onmouseover="showTip(event, '1091', 1091)">
             downloadFiles(input)
           </code>
-          <div class="tip" id="1088">
+          <div class="tip" id="1091">
             <strong>Signature:</strong> input:DownloadParameters list -&gt; string list<br />
                                   </div>
         </td>
@@ -413,10 +415,10 @@ DownloadParameters -&gt; string list</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1089', 1089)" onmouseover="showTip(event, '1089', 1089)">
+          <code onmouseout="hideTip(event, '1092', 1092)" onmouseover="showTip(event, '1092', 1092)">
             get userName password url
           </code>
-          <div class="tip" id="1089">
+          <div class="tip" id="1092">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                                   </div>
         </td>
@@ -438,10 +440,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1090', 1090)" onmouseover="showTip(event, '1090', 1090)">
+          <code onmouseout="hideTip(event, '1093', 1093)" onmouseover="showTip(event, '1093', 1093)">
             getWithHeaders(...)
           </code>
-          <div class="tip" id="1090">
+          <div class="tip" id="1093">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; Map&lt;string,string list&gt; * string<br />
                                   </div>
         </td>
@@ -456,10 +458,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1091', 1091)" onmouseover="showTip(event, '1091', 1091)">
+          <code onmouseout="hideTip(event, '1094', 1094)" onmouseover="showTip(event, '1094', 1094)">
             post url userName password data
           </code>
-          <div class="tip" id="1091">
+          <div class="tip" id="1094">
             <strong>Signature:</strong> url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -482,10 +484,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1092', 1092)" onmouseover="showTip(event, '1092', 1092)">
+          <code onmouseout="hideTip(event, '1095', 1095)" onmouseover="showTip(event, '1095', 1095)">
             postCommand(...)
           </code>
-          <div class="tip" id="1092">
+          <div class="tip" id="1095">
             <strong>Signature:</strong> headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -510,10 +512,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1093', 1093)" onmouseover="showTip(event, '1093', 1093)">
+          <code onmouseout="hideTip(event, '1096', 1096)" onmouseover="showTip(event, '1096', 1096)">
             upload url file
           </code>
-          <div class="tip" id="1093">
+          <div class="tip" id="1096">
             <strong>Signature:</strong> url:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -566,7 +568,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.21.1</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
