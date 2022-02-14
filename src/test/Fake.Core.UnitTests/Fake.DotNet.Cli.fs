@@ -82,4 +82,64 @@ let tests =
             let expected = "--configuration Release --manifest Path1 --manifest Path2"
                 
             Expect.equal cli expected "Push args generated correctly."
+
+        testCase "Test that the dotnet new command works as expected" <| fun _ ->
+            let param =
+                { DotNet.NewOptions.Create() with
+                    DryRun = true
+                    Force = true
+                    Language = DotNet.NewLanguage.FSharp
+                    Name = Some("my-awesome-project")
+                    NoUpdateCheck = true
+                    Output = Some("/path/to/code") }
+            let cli =
+                param
+                |> DotNet.buildNewArgs
+                |> Args.toWindowsCommandLine
+
+            let expected = "--dry-run --force --language F# --name my-awesome-project --no-update-check --output /path/to/code"
+
+            Expect.equal cli expected "New args generated correctly."
+
+        testCase "Test that the dotnet new command works as expected with spaces in arguments" <| fun _ ->
+            let param =
+                { DotNet.NewOptions.Create() with
+                    DryRun = true
+                    Force = true
+                    Language = DotNet.NewLanguage.FSharp
+                    Name = Some("my awesome project")
+                    NoUpdateCheck = true
+                    Output = Some("/path to/code") }
+            let cli =
+                param
+                |> DotNet.buildNewArgs
+                |> Args.toWindowsCommandLine
+
+            let expected = "--dry-run --force --language F# --name \"my awesome project\" --no-update-check --output \"/path to/code\""
+
+            Expect.equal cli expected "New args generated correctly."
+
+        testCase "Test that the dotnet new --install command works as expected" <| fun _ ->
+            let param =
+                { DotNet.TemplateInstallOptions.Create("my-awesome-template") with
+                    NugetSource = Some("C:\\path\\to\\tool") }
+            let cli =
+                param
+                |> DotNet.buildTemplateInstallArgs
+                |> Args.toWindowsCommandLine
+
+            let expected = "--install my-awesome-template --nuget-source \"C:\\path\\to\\tool\""
+
+            Expect.equal cli expected "New --install args generated correctly."
+
+        testCase "Test that the dotnet new --uninstall command works as expected" <| fun _ ->
+            let param = DotNet.TemplateUninstallOptions.Create("my-awesome-template")
+            let cli =
+                param
+                |> DotNet.buildTemplateUninstallArgs
+                |> Args.toWindowsCommandLine
+
+            let expected = "--uninstall my-awesome-template"
+
+            Expect.equal cli expected "New --uninstall args generated correctly."
     ]

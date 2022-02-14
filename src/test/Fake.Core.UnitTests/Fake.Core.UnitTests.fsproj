@@ -15,6 +15,8 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.VSTest\Fake.DotNet.Testing.VSTest.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Net.SSH\Fake.Net.SSH.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Net.FTP\Fake.Net.FTP.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Testing.Fixie\Fake.Testing.Fixie.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.GitVersion\Fake.Tools.GitVersion.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
@@ -76,6 +78,8 @@
     <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
+    <Compile Include="Fake.Net.SSH.fs" />
+    <Compile Include="Fake.Net.FTP.fs" />
     <Compile Include="Fake.Tools.GitVersion.fs" />
     <Compile Include="Fake.Tools.Octo.fs" />
     <Compile Include="Fake.Sql.SqlPackage.fs" />

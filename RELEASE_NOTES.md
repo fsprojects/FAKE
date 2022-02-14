@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.22.0 - 2022-02-14
+* ENHANCEMENT: Enhance template tests and add dotnet cli APIs for new command, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2636
+* ENHANCEMENT: Porting SSH module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2652
+* ENHANCEMENT: Add missing report types, thanks @alcated - https://github.com/fsprojects/FAKE/pull/2654
+* ENHANCEMENT: Add known paths for more recent versions of msbuild, thanks @alcated - https://github.com/fsprojects/FAKE/pull/2655
+* ENHANCEMENT: Porting FTP module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2656
+
 ## 5.21.1 - 2022-01-30
 * BUGFIX: Update logic of resolving SdkReferenceAssemblies., thanks @nojaf - https://github.com/fsprojects/FAKE/pull/2639
 * BUGFIX: Fix FAKE template integration tests., thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2640
