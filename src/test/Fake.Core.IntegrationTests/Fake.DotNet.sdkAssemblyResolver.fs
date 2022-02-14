@@ -14,23 +14,6 @@ open Fake.Runtime
 let tests =
     testList
         "Fake.DotNet.sdkAssemblyResolverTests" [
-          testCase "Runner run script with NETStandard2.0 SDK assemblies" <| fun _ ->
-              let result =
-                  handleAndFormat <| fun _ ->
-                      fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-netstandard20"
-
-              let stdOut =
-                  String.Join("\n", result.Messages).Trim()
-
-              let expectedNetStandardPathPortion =
-                  ".nuget"
-                  </> "packages"
-                  </> "netstandard.library"
-                  </> "2.0.0"
-
-              (sprintf "stdout should contain '%s', but was: '%s'" expectedNetStandardPathPortion stdOut)
-              |> Expect.isTrue (stdOut.Contains expectedNetStandardPathPortion)
-
           testCase "Runner run script with 6.0.100 SDK version assemblies" <| fun _ ->
               try
                   use d = createTestDir()
