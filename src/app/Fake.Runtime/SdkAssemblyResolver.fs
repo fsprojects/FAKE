@@ -328,21 +328,8 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             groupName: Domain.GroupName,
             paketDependenciesFile: Lazy<Paket.DependenciesFile>
         ) =
-        match this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() with
-        | true ->
-            if this.LogLevel.PrintVerbose then
-                Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
+        if this.LogLevel.PrintVerbose then
+            Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
 
-            this.SdkReferenceAssemblies()
-        | false ->
-            if this.LogLevel.PrintVerbose then
-                Trace.tracefn "Using .Netstandard assemblies"
-
-            this.NetStandard20ReferenceAssemblies(
-                "NETStandard.Library",
-                "2.0.0",
-                Path.Combine("build", "netstandard2.0", "ref"),
-                groupName,
-                paketDependenciesFile
-            )
+        this.SdkReferenceAssemblies()
 #endif
