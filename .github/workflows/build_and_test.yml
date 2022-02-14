@@ -2,9 +2,9 @@ name: FAKE Build and Test
 
 on:
     push:
-        branches: [ release/next ]
+        branches: [ release/v6 ]
     pull_request:
-        branches: [ release/next ]
+        branches: [ release/v6 ]
 
 jobs:
     build:

@@ -17,6 +17,6 @@ let main argv =
         { config with
               runInParallel = false
               parallelWorkers = 0
-              printer = TestPrinters.summaryWithLocationPrinter (TestPrinters.defaultPrinter)
+              printer = ExpectoHelpers.fakeDefaultPrinter
               verbosity = LogLevel.Debug }
         argv

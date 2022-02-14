@@ -447,7 +447,7 @@ let startWebServer () =
 
 let runExpecto workDir dllPath resultsXml =
     let processResult =
-        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) "--summary"
+        DotNet.exec (dtntWorkDir workDir) (sprintf "%s" dllPath) (sprintf "--nunit-summary %s" resultsXml)
 
     if processResult.ExitCode <> 0 then failwithf "Tests in %s failed." (Path.GetFileName dllPath)
     Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (workDir </> resultsXml)
