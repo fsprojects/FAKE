@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.22.0 - 2022-01-14
+## 5.22.0 - 2022-02-14
 * ENHANCEMENT: Enhance template tests and add dotnet cli APIs for new command, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2636
 * ENHANCEMENT: Porting SSH module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2652
 * ENHANCEMENT: Add missing report types, thanks @alcated - https://github.com/fsprojects/FAKE/pull/2654
