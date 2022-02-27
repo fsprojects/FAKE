@@ -160,6 +160,15 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
                 ':'
             else
                 ';'
+                
+        /// Fully resolve the symlink, returning a fully-resolved FileInfo
+        /// that is not a symlink,
+        /// or returning None if the file or any of its resolved targets
+        /// does not exist.
+        let rec resolveFile (fi: System.IO.FileInfo) : FileInfo option =
+            if not fi.Exists then None
+            elif isNull fi.LinkTarget then Some fi
+            else resolveFile (System.IO.FileInfo fi.LinkTarget)
 
         let tryFindFromPATH () =
             Environment
@@ -168,12 +177,9 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             |> Array.tryPick (fun d ->
                 let fi = Path.Combine(d, dotnetBinaryName) |> FileInfo
 
-                if fi.Exists then
-                    Some fi
-                else
-                    None)
+                resolveFile fi)
 
-        let  tryFindFromDefaultDirs () =
+        let tryFindFromDefaultDirs () =
             let windowsPath = $"C:\\Program Files\\dotnet\\{dotnetBinaryName}"
             let macosPath = $"/usr/local/share/dotnet/{dotnetBinaryName}"
             let linuxPath = $"/usr/share/dotnet/{dotnetBinaryName}"
