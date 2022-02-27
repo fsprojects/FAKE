@@ -6,6 +6,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.Build.CMake\Fake.Build.CMake.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.AssemblyInfoFile\Fake.DotNet.AssemblyInfoFile.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Fsi\Fake.DotNet.Fsi.fsproj" />
@@ -51,6 +52,7 @@
     <Compile Include="Fake.ContextHelper.fs" />
     <Compile Include="Fake.Testing.ArgumentHelper.fs" />
     <Compile Include="Fake.IO.Globbing.fs" />
+    <Compile Include="Fake.Build.CMake.fs" />
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.DotNet.AssemblyInfoFile.fs" />
     <Compile Include="Fake.DotNet.ILMerge.fs" />

@@ -171,7 +171,8 @@ module CMake =
                     |> Proc.run
         if result.ExitCode <> 0 then failwithf $"CMake failed with exit code %i{result.ExitCode}."
 
-    let private getGenerateArguments parameters =
+    /// [omit]
+    let getGenerateArguments parameters =
         // CMake expects an existing source directory.
         // Not defaulted because it would prevent building multiple CMake projects in the same FAKE script.
         if String.IsNullOrEmpty parameters.SourceDirectory then failwith "The CMake source directory is not set."
