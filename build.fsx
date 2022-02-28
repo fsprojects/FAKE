@@ -328,6 +328,7 @@ let dotnetAssemblyInfos =
       "Fake.Azure.Emulators", "Azure Emulators Support"
       "Fake.Azure.Kudu", "Azure Kudu Support"
       "Fake.Azure.WebJobs", "Azure Web Jobs Support"
+      "Fake.Build.CMake", "CMake commands"
       "Fake.BuildServer.AppVeyor", "Integration into AppVeyor buildserver"
       "Fake.BuildServer.GitLab", "Integration into GitLab-CI buildserver"
       "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
