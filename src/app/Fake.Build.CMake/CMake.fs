@@ -5,88 +5,88 @@ open System.IO
 open Fake.Core
 open Fake.IO.FileSystemOperators
 
-/// The possible variable value types for CMake variables.
-type CMakeValue =
-    | CMakeBoolean of bool
-    | CMakeString of string
-    | CMakeFilePath of string
-    | CMakeDirPath of string
-
-/// A CMake variable.
-type CMakeVariable = {
-    /// The name of the variable.
-    /// It cannot contains spaces and special characters.
-    Name:string
-    /// The value of the variable.
-    /// Will be automatically converted to the CMake format when required.
-    Value:CMakeValue
-}
-
-/// The CMakeGenerate parameter type.
-type CMakeGenerateParams = {
-    /// The location of the CMake executable. Automatically found if null or empty.
-    ToolPath:string
-    /// The source directory which should include a `CMakeLists.txt` file.
-    SourceDirectory:string
-    /// The binary build directory where CMake will generate the files.
-    BinaryDirectory:string
-    /// An optional toolchain file to load.
-    /// Equivalent to the `-D CMAKE_TOOLCHAIN_FILE:FILEPATH="<toolchain-file>"` CMake option.
-    Toolchain:string
-    /// The native build system generator to use for writing the files.
-    /// See `cmake --help` for a list of the available entries.
-    /// *To avoid unpredictable generator usage, it is recommended to define it.*
-    /// Equivalent to the `-G <generator-name>` option.
-    Generator:string
-    /// An optional toolset (!= toolchain) to use.
-    /// Equivalent to the `-T <toolset-name>` option.
-    /// Not supported by every generator.
-    Toolset:string
-    /// An optional CMake platform.
-    /// Equivalent to the `-A <platform-name>` option.
-    /// Not supported by every generator.
-    Platform:string
-    /// A list of the optional CMake cache files to load.
-    /// Equivalent to the `-C <initial-cache>` options.
-    Caches:string list
-    /// The directory where CMake will install the generated files.
-    /// Equivalent to the `-D CMAKE_INSTALL_PREFIX:DIRPATH="<install-directory>"` CMake option.
-    InstallDirectory:string
-    /// A list of every variable to pass as a CMake argument.
-    /// Equivalent to the `-D <var>:<type>=<value>` options.
-    Variables:CMakeVariable list
-    /// Remove matching entries from CMake cache.
-    /// Equivalent to the `-U <globbing_expr>` options.
-    CacheEntriesToRemove:string list
-    /// The CMake execution timeout.
-    Timeout:TimeSpan
-    /// A character string containing additional arguments to give to CMake.
-    AdditionalArgs:string
-}
-
-/// The CMakeBuild parameter type.
-type CMakeBuildParams = {
-    /// The location of the CMake executable. Automatically found if null or empty.
-    ToolPath:string
-    /// The binary build directory where CMake will generate the files.
-    BinaryDirectory:string
-    /// The CMake target to build instead of the default one.
-    /// Equivalent to the `--target <target>` option.
-    Target:string
-    /// The build configuration to use (e.g. `Release`).
-    /// Equivalent to the `--config <cfg>` option.
-    /// Not supported by every generator.
-    Config:string
-    /// The CMake execution timeout.
-    Timeout:TimeSpan
-    /// A character string containing additional arguments to give to CMake.
-    AdditionalArgs:string
-}
-
 /// Contains tasks which allow to use CMake to build CMakeLists files.
 /// See `Samples/CMakeSupport` for usage examples.
 [<RequireQualifiedAccess>]
 module CMake =
+
+    /// The possible variable value types for CMake variables.
+    type CMakeValue =
+        | CMakeBoolean of bool
+        | CMakeString of string
+        | CMakeFilePath of string
+        | CMakeDirPath of string
+    
+    /// A CMake variable.
+    type CMakeVariable = {
+        /// The name of the variable.
+        /// It cannot contains spaces and special characters.
+        Name:string
+        /// The value of the variable.
+        /// Will be automatically converted to the CMake format when required.
+        Value:CMakeValue
+    }
+    
+    /// The CMakeGenerate parameter type.
+    type CMakeGenerateParams = {
+        /// The location of the CMake executable. Automatically found if null or empty.
+        ToolPath:string
+        /// The source directory which should include a `CMakeLists.txt` file.
+        SourceDirectory:string
+        /// The binary build directory where CMake will generate the files.
+        BinaryDirectory:string
+        /// An optional toolchain file to load.
+        /// Equivalent to the `-D CMAKE_TOOLCHAIN_FILE:FILEPATH="<toolchain-file>"` CMake option.
+        Toolchain:string
+        /// The native build system generator to use for writing the files.
+        /// See `cmake --help` for a list of the available entries.
+        /// *To avoid unpredictable generator usage, it is recommended to define it.*
+        /// Equivalent to the `-G <generator-name>` option.
+        Generator:string
+        /// An optional toolset (!= toolchain) to use.
+        /// Equivalent to the `-T <toolset-name>` option.
+        /// Not supported by every generator.
+        Toolset:string
+        /// An optional CMake platform.
+        /// Equivalent to the `-A <platform-name>` option.
+        /// Not supported by every generator.
+        Platform:string
+        /// A list of the optional CMake cache files to load.
+        /// Equivalent to the `-C <initial-cache>` options.
+        Caches:string list
+        /// The directory where CMake will install the generated files.
+        /// Equivalent to the `-D CMAKE_INSTALL_PREFIX:DIRPATH="<install-directory>"` CMake option.
+        InstallDirectory:string
+        /// A list of every variable to pass as a CMake argument.
+        /// Equivalent to the `-D <var>:<type>=<value>` options.
+        Variables:CMakeVariable list
+        /// Remove matching entries from CMake cache.
+        /// Equivalent to the `-U <globbing_expr>` options.
+        CacheEntriesToRemove:string list
+        /// The CMake execution timeout.
+        Timeout:TimeSpan
+        /// A character string containing additional arguments to give to CMake.
+        AdditionalArgs:string
+    }
+    
+    /// The CMakeBuild parameter type.
+    type CMakeBuildParams = {
+        /// The location of the CMake executable. Automatically found if null or empty.
+        ToolPath:string
+        /// The binary build directory where CMake will generate the files.
+        BinaryDirectory:string
+        /// The CMake target to build instead of the default one.
+        /// Equivalent to the `--target <target>` option.
+        Target:string
+        /// The build configuration to use (e.g. `Release`).
+        /// Equivalent to the `--config <cfg>` option.
+        /// Not supported by every generator.
+        Config:string
+        /// The CMake execution timeout.
+        Timeout:TimeSpan
+        /// A character string containing additional arguments to give to CMake.
+        AdditionalArgs:string
+    }
     let private currentDirectory = Directory.GetCurrentDirectory();
     /// The default option set given to CMakeGenerate.
     let CMakeGenerateDefaults = {

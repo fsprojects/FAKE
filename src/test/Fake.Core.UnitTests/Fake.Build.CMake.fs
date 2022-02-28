@@ -9,7 +9,7 @@ let tests =
 
   testList "Fake.Build.CMake.Tests" [
       testCase "Test all arguments are mapped correctly" <| fun _ ->
-          let args: CMakeGenerateParams = 
+          let args: CMake.CMakeGenerateParams = 
             { ToolPath = "cmake"
               SourceDirectory = "source-directory"
               BinaryDirectory = "binary-directory"
@@ -21,7 +21,7 @@ let tests =
               InstallDirectory = "install-directory"
               Variables = [{
                   Name = "var1"
-                  Value = CMakeString("v1")
+                  Value = CMake.CMakeString("v1")
               }]
               CacheEntriesToRemove = ["cache1"]
               Timeout = TimeSpan.MaxValue
@@ -40,7 +40,7 @@ let tests =
           \"source-directory\"" "expected proper arguments formatting"
           
       testCase "Test missing arguments are not mapped" <| fun _ ->
-          let args: CMakeGenerateParams = 
+          let args: CMake.CMakeGenerateParams = 
             { ToolPath = "cmake"
               SourceDirectory = "source-directory"
               BinaryDirectory = "binary-directory"
@@ -52,7 +52,7 @@ let tests =
               InstallDirectory = "install-directory"
               Variables = [{
                   Name = "var1"
-                  Value = CMakeString("v1")
+                  Value = CMake.CMakeString("v1")
               }]
               CacheEntriesToRemove = ["cache1"]
               Timeout = TimeSpan.MaxValue
@@ -67,7 +67,7 @@ let tests =
           \"source-directory\"" "expected proper arguments formatting"
           
       testCase "Test variables arg is mapped correctly" <| fun _ ->
-          let args: CMakeGenerateParams = 
+          let args: CMake.CMakeGenerateParams = 
             { ToolPath = "cmake"
               SourceDirectory = "source-directory"
               BinaryDirectory = "binary-directory"
@@ -80,19 +80,19 @@ let tests =
               Variables = [
                   {
                       Name = "var1-str"
-                      Value = CMakeString("v1")
+                      Value = CMake.CMakeString("v1")
                   }
                   {
                       Name = "var2-bool"
-                      Value = CMakeBoolean(true)
+                      Value = CMake.CMakeBoolean(true)
                   }
                   {
                       Name = "var3-dirPath"
-                      Value = CMakeDirPath("v3")
+                      Value = CMake.CMakeDirPath("v3")
                   }
                   {
                       Name = "var4-filePath"
-                      Value = CMakeFilePath("v4")
+                      Value = CMake.CMakeFilePath("v4")
                   }
               ]
               CacheEntriesToRemove = [""]
