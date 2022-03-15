@@ -88,7 +88,7 @@ module InnoSetup =
             |> CreateProcess.withTimeout timeout
             |> Proc.run
 
-        if processResult.ExitCode <> 0 then failwithf $"InnoSetup command %s{command} failed."
+        if processResult.ExitCode <> 0 then failwithf $"InnoSetup command {command} failed."
 
         __.MarkSuccess()
 
