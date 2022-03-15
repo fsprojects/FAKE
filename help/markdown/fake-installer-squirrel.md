@@ -5,7 +5,7 @@
     <p>This documentation is for FAKE version 5.0 or later.</p>
 </div>
 
-[Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows) is an installation an auto-update system for Windows desktop apps.
+[Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows) is an installation with an auto-update system for Windows desktop apps.
 
 [API-Reference](apidocs/v5/fake-installer-squirrel.html)
 
