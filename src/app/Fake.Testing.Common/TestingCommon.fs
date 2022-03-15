@@ -2,7 +2,6 @@
 module Fake.Testing.Common
 
 open Fake.Core
-open System
 
 /// Option which allows to specify if a test runner error should break the build.
 type TestRunnerErrorLevel =

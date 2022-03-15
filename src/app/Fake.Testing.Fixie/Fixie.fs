@@ -1,6 +1,8 @@
+namespace Fake.Testing
+
 /// Contains tasks to run [Fixie](https://fixie.github.io/) unit tests.
 [<RequireQualifiedAccess>]
-module Fake.Testing.Fixie
+module Fixie =
 
     open System.Text
     open Fake.Core
@@ -82,13 +84,11 @@ module Fake.Testing.Fixie
         |> String.trim
 
 
-    /// This task to can be used to run [Fixie](http://patrick.lioi.net/fixie/) on test libraries.
+    /// This task to can be used to run [Fixie](https://fixie.github.io/) on test libraries.
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to overwrite the Fixie default parameters.
     ///
     /// ## Sample
-    ///
     ///   Fixie (fun p -> { p with Configuration = "Release"; CustomArguments = ["custom","1"; "test","2"] })
     let Fixie setParams =
         let parameters = setParams FixieDefaults

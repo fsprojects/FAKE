@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" >
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <AssemblyName>Fake.Testing.SonarQube</AssemblyName>
     <OutputType>Library</OutputType>
@@ -20,7 +20,6 @@
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
-    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
