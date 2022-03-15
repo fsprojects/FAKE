@@ -1,4 +1,8 @@
 # Release Notes
+## 6.0.0 - 2022-03-15
+* ENHANCEMENT: Add Net6 Target to Fake.JavaScript.Npm and replace deprecated process utils with alternatives
+* ENHANCEMENT: Add Net6 Target to Fake.JavaScript.Yarn
+* ENHANCEMENT: Add Net6 Target to Fake.JavaScript.TypeScript and add support for resolving TSC from global NPM and Yarn installation
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673

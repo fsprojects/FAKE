@@ -10,9 +10,9 @@ open System.IO
 /// ## Sample
 ///
 ///     Yarn.install (fun o ->
-///                     { o with
-///                         WorkingDirectory = "./src/FAKESimple.Web/"
-///                     })
+///         { o with
+///             WorkingDirectory = "./src/FAKESimple.Web/"
+///         })
 [<RequireQualifiedAccess>]
 module Yarn =
 
@@ -88,98 +88,107 @@ module Yarn =
     /// Run `yarn install`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.install (fun o ->
-    ///                     { o with
-    ///                         WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                     })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let install setParams = yarn setParams <| Install Standard
 
     /// Run `yarn install --production`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installProduction (fun o ->
-    ///                               { o with
-    ///                                   WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                               })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
 
     let installProduction setParams = yarn setParams <| Install Production
     /// Run `yarn install --force`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installForced (fun o ->
-    ///                           { o with
-    ///                               WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                           })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installForced setParams = yarn setParams <| Install Force
 
     /// Run `yarn install --flat`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installFlat (fun o ->
-    ///                         { o with
-    ///                             WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                         })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installFlat setParams = yarn setParams <| Install Flat
 
     /// Run `yarn install --har`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installHar (fun o ->
-    ///                        { o with
-    ///                            WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                        })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installHar setParams = yarn setParams <| Install Har
 
     /// Run `yarn install --no-lockfile`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installNoLock (fun o ->
-    ///                           { o with
-    ///                               WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                           })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installNoLock setParams = yarn setParams <| Install NoLockFile
 
     /// Run `yarn install --pure-lockfile`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installPureLock (fun o ->
-    ///                             { o with
-    ///                                 WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                             })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installPureLock setParams = yarn setParams <| Install PureLockFile
 
     /// Run `yarn install --frozen-lockfile`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.installFrozenLockFile (fun o ->
-    ///                             { o with
-    ///                                 WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                             })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let installFrozenLockFile setParams = yarn setParams <| Install FrozenLockFile
 
     /// Run `yarn <command>`
     /// ## Parameters
     /// - 'setParams' - set command parameters
+    ///
     /// ## Sample
     ///
     ///     Yarn.exec "someCommand" (fun o ->
-    ///                                { o with
-    ///                                    WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                                })
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
     let exec command setParams = yarn setParams <| Custom command

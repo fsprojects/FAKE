@@ -61,34 +61,47 @@ module TypeScript =
           /// Specifies the timeout for the TypeScript compiler.
           TimeOut : TimeSpan }
 
-    let internal TypeScriptCompilerPrefix = "Microsoft SDKs" </> "TypeScript"
-
-    let extractVersionNumber (di : DirectoryInfo) = 
+    /// [omit]
+    let extractVersionNumber (di : DirectoryInfo) =
         match Double.TryParse di.Name with
         | true, d -> d
         | false, _ -> 0.0
 
+    /// We will resolve TypeScript compiler installation in the following order for a Windows installation
+    ///  (Please see TypeScript installation page: https://www.typescriptlang.org/download)
+    /// 2. We will try to look for global installation of TypeScript as a global NPM or Yarn tool
+    /// 3. Then, we will try to resolve it from Microsoft Visual Studio installation.
+    /// 4. Finally, we will default to "tsc.exe"
+    let internal resolveTypeScriptCompilerInstallation () =
+        if Environment.isUnix then "tsc"
+        else
+            let globalNodePackageInstallationPaths =
+                [ Environment.GetFolderPath Environment.SpecialFolder.ApplicationData </> "Local" </> "Yarn" </> "bin"
+                  Environment.GetFolderPath Environment.SpecialFolder.ApplicationData </> "Roaming" </> "npm" ]
+
+            let visualStudioInstallationPaths =
+                [ Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
+                  Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86 ]
+                |> List.map (fun p -> p </> "Microsoft SDKs" </> "TypeScript")
+                |> List.collect (fun p -> try DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
+                |> List.sortByDescending extractVersionNumber
+                |> List.map (fun di -> di.FullName)
+
+            ProcessUtils.tryFindPath globalNodePackageInstallationPaths "tsc.cmd"
+            |> Option.orElseWith(fun _ -> ProcessUtils.tryFindPath visualStudioInstallationPaths "tsc.exe")
+            |> Option.defaultWith (fun _ -> "tsc.exe")
+
     /// Default parameters for the TypeScript task
     let TypeScriptDefaultParams = 
-        { ECMAScript = ES3
+        { ECMAScript = ECMAScript.ESNext
           OutputSingleFile = Option.None
           EmitDeclaration = false
-          ModuleGeneration = CommonJs
+          ModuleGeneration = ModuleGeneration.ESNext
           EmitSourceMaps = false
           NoLib = false
           RemoveComments = false
           OutputPath = null
-          ToolPath = 
-                if Environment.isUnix then "tsc"
-                else 
-                    let paths = 
-                        [ System.Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles; System.Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86]
-                        |> List.map (fun p -> p </> TypeScriptCompilerPrefix)
-                        |> List.collect (fun p -> try DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
-                        |> List.sortByDescending extractVersionNumber
-                        |> List.map (fun di -> di.FullName)
-                    ProcessUtils.tryFindPath paths "tsc.exe"
-                    |> Option.defaultWith (fun _ -> "tsc.exe")
+          ToolPath = resolveTypeScriptCompilerInstallation()
           TimeOut = TimeSpan.FromMinutes 5. }
 
     /// [omit]
@@ -151,17 +164,12 @@ module TypeScript =
             |> Seq.map (fun arguments ->
                 Diagnostics.ProcessStartInfo(FileName = parameters.ToolPath, Arguments = arguments)
                 |> CreateProcess.ofStartInfo
-                |> CreateProcess.redirectOutput
                 |> CreateProcess.withTimeout parameters.TimeOut
                 |> Proc.run)
 
         let hasErrors =
             callResults
-            |> Seq.fold (fun acc result -> 
-                match result.ExitCode = 0 with
-                | true -> Trace.trace result.Result.Output
-                | false -> Trace.traceError result.Result.Output
-                if result.ExitCode = 0 then acc else acc + 1) 0
-        
-        if hasErrors > 0 then 
+            |> Seq.exists (fun result -> result.ExitCode <> 0)
+
+        if hasErrors then
             failwith "TypeScript compiler encountered errors!"
