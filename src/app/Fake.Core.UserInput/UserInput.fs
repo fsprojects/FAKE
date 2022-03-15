@@ -15,7 +15,7 @@ module UserInput =
 
             Console.SetCursorPosition(left, top)
             Console.Write(' ')
-            Console.SetCursorPosition(left, top)    
+            Console.SetCursorPosition(left, top)
         with
         | :? IO.IOException ->
             // Console is dumb, might be redirected. We don't care,
@@ -27,14 +27,14 @@ module UserInput =
             let key = Console.ReadKey(true)
             match (key.Key, cs) with
             | (ConsoleKey.Backspace, []) -> loop []
-            | (ConsoleKey.Backspace, _::cs) -> 
+            | (ConsoleKey.Backspace, _::cs) ->
                 erasePreviousChar ()
                 loop cs
             | (ConsoleKey.Enter, _) -> cs
             | _ ->
                 if echo then Console.Write(key.KeyChar) else Console.Write('*')
                 loop (key.KeyChar :: cs)
-        
+
         loop []
         |> List.rev
         |> Array.ofList
@@ -47,15 +47,20 @@ module UserInput =
           code ()
         finally
           Console.ForegroundColor <- before
-        
 
+
+    /// Get plain text input from user
+    /// ## Parameters
+    ///  - `prompt` - text to display as a prompt
     let getUserInput prompt =
         color ConsoleColor.White (fun _ -> printf "%s" prompt)
         let s = readString true
         printfn ""
         s
 
-
+    /// Get masked input from user - Display asterisks (*) as user type
+    /// ## Parameters
+    ///  - `prompt` - text to display as a prompt
     let getUserPassword prompt =
         color ConsoleColor.White (fun _ -> printf "%s" prompt)
         let s = readString false
