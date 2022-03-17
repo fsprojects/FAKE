@@ -13,6 +13,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Testing.ReportGenerator, replace deprecated process utils with alternatives, and update documentation
 * ENHANCEMENT: Add Net6 Target to Fake.Testing.SonarQube
 * ENHANCEMENT: Add Net6 Target to Fake.Core.FakeVar and add documentation
+* ENHANCEMENT: Remove Fake.Tools.ServiceControl since it is obsolete
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
