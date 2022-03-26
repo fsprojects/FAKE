@@ -177,7 +177,10 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             |> Array.tryPick (fun d ->
                 let fi = Path.Combine(d, dotnetBinaryName) |> FileInfo
 
-                resolveFile fi)
+                if fi.Exists then
+                    Some fi
+                else
+                    None)
 
         let tryFindFromDefaultDirs () =
             let windowsPath = $"C:\\Program Files\\dotnet\\{dotnetBinaryName}"
@@ -212,6 +215,7 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
                 tryFindFromEnvVar ()
                 |> Option.orElseWith tryFindFromPATH
                 |> Option.orElseWith tryFindFromDefaultDirs
+                |> Option.bind resolveFile
                 |> Option.map (fun dotnetRoot -> dotnetRoot.Directory.FullName)
         
         let referenceAssembliesPath =
