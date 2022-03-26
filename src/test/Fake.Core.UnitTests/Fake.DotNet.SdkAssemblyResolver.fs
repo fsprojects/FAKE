@@ -92,10 +92,9 @@ let tests =
                     let resolver = SdkAssemblyResolver VerboseLevel.Silent
                     Environment.SetEnvironmentVariable(resolverEnvVar, "")
 
-                    let actual =
-                        resolver.SdkReferenceAssemblies ()
-                        |> List.head
-                    Expect.equal actual (Path.getDirectory corelib) "did not locate correct reference assemblies"
+                    // Observe that this does not throw
+                    resolver.SdkReferenceAssemblies ()
+                    |> ignore
                 finally
                     Environment.SetEnvironmentVariable(dotnetHostPathEnvVar, oldDotnetHostPath)
                     Environment.SetEnvironmentVariable(resolverEnvVar, oldResolver)
