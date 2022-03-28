@@ -5,31 +5,30 @@ open Fake.IO
 open System
 open System.IO
 
-/// Helpers for running rsync tool
+/// Helpers for running [rsync tool](https://rsync.samba.org/)
 ///
 /// Under windows you will need to add it yourself to your system or use something like cygwin/babun
 ///
 /// ## Sample
 ///
-/// > let result =
-/// >      Rsync.exec
-/// >         (Rsync.Options.WithActions
-/// >              [
-/// >                  Rsync.Compress
-/// >                  Rsync.Archive
-/// >                  Rsync.Verbose
-/// >                  Rsync.NoOption Rsync.Perms
-/// >                  Rsync.Delete
-/// >                  Rsync.Exclude ".keep"
-/// >              ]
-/// >          >> Rsync.Options.WithSources
-/// >              [ FleetMapping.server </> "build"
-/// >                FleetMapping.server </> "package.json"
-/// >                FleetMapping.server </> "yarn.lock" ]
-/// >          >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
-/// >          ""
-/// >
-/// > if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+///     let result =
+///          Rsync.exec
+///             (Rsync.Options.WithActions
+///                  [
+///                      Rsync.Compress
+///                      Rsync.Archive
+///                      Rsync.Verbose
+///                      Rsync.NoOption Rsync.Perms
+///                      Rsync.Delete
+///                      Rsync.Exclude ".keep"
+///                  ]
+///              >> Rsync.Options.WithSources
+///                  [ FleetMapping.server </> "build"
+///                    FleetMapping.server </> "package.json"
+///                    FleetMapping.server </> "yarn.lock" ]
+///              >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
+///              ""
+///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
 [<RequireQualifiedAccess>]
 module Rsync =
 
@@ -249,25 +248,34 @@ module Rsync =
         /// Show this help (-h works with no other options)
         | Help
 
+    /// The rsync command options
     type Options =
-        { /// Command working directory
+        {
+          /// Command working directory
           WorkingDirectory: string
+          /// Possible actions/options for rsync tool
           Actions : Action list
+          /// The list of source directories/files
           Sources : string list
+          /// The destination connection/location
           Destination : string }
 
+        /// Create an rsync options type with default values
         static member Create () =
             { WorkingDirectory = Directory.GetCurrentDirectory()
               Actions = []
               Sources = []
               Destination = "" }
 
+        /// Add actions to rsync
         static member WithActions actions options =
             { options with Actions = actions }
 
+        /// Add the list of sources to rsync
         static member WithSources sources options =
             { options with Sources = sources }
 
+        /// Add the destination connection or location to rsync
         static member WithDestination dest options =
             { options with Destination = dest }
 
@@ -339,7 +347,7 @@ module Rsync =
         | IgnoreTimes -> "--ignore-times"
         | SizeOnly -> "--size-only"
         | ModifyWindow num -> "--modify-window=" + num
-        | TempDir dir -> "--temp-dir" + dir
+        | TempDir dir -> "--temp-dir=" + dir
         | Fuzzy -> "--fuzzy"
         | CompareDest dir -> "--compare-dest=" + dir
         | CopyDest dir -> "--copy-dest=" + dir
@@ -371,7 +379,7 @@ module Rsync =
         | PasswordFile file -> "--password-file=" + file
         | ListOnly -> "--list-only"
         | Bwlimit kbps -> "--bwlimit=" + kbps
-        | WriteBatch file -> "--write-bratch=" + file
+        | WriteBatch file -> "--write-batch=" + file
         | OnlyWriteBatch file -> "--only-write-batch=" + file
         | ReadBatch file -> "--read-batch=" + file
         | Protocol num -> "--protocol=" + string num
@@ -388,8 +396,24 @@ module Rsync =
         @ [ param.Destination ]
         |> String.concat " "
 
+    /// Run rsync tool with the provided actions/options list of directories/files sources to
+    /// given the destination.
+    ///
+    /// ## Parameters
+    /// - `buildOptions` - A function to configure actions/options, sources, and destination.
+    ///  - `args` - String arguments to pass to rsync
+    ///
+    /// ## Sample
+    ///
+    ///     let result =
+    ///          Rsync.exec
+    ///             (Rsync.Options.WithActions [ Rsync.Compress ]
+    ///              >> Rsync.Options.WithSources [ FleetMapping.server </> "build" ]
+    ///              >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
+    ///              ""
+    ///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
     let exec (buildOptions: Options -> Options) args =
-        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
+        let results = System.Collections.Generic.List<ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
         let errorF msg =
@@ -404,12 +428,12 @@ module Rsync =
         let commonOptions = buildCommonArgs options
         let cmdArgs = sprintf "%s %s " commonOptions args
 
-        let result =
-            let f (info:ProcStartInfo) =
-                { info with
-                    FileName = "rsync"
-                    WorkingDirectory = options.WorkingDirectory
-                    Arguments = cmdArgs }
+        let processResult =
+            CreateProcess.fromRawCommandLine "rsync" cmdArgs
+            |> CreateProcess.withWorkingDirectory options.WorkingDirectory
+            |> CreateProcess.withTimeout timeout
+            |> CreateProcess.redirectOutput
+            |> CreateProcess.withOutputEventsNotNull errorF messageF
+            |> Proc.run
 
-            Process.execRaw f timeout true errorF messageF
-        ProcessResult.New result (results |> List.ofSeq)
+        ProcessResult.New processResult.ExitCode (results |> List.ofSeq)
