@@ -1,10 +1,5 @@
 # Sending Notifications to a Slack Webhook
 
-<div class="alert alert-info">
-<h5>INFO</h5>
-This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-slacknotification.html">here</a>
-</div>
-
 In this article you will learn how to create a [Slack](https://slack.com) webhook integration and send a notification to it. This article assumes that you already have a Slack team setup.
 
 [API-Reference](apidocs/v5/fake-api-slack.html)
