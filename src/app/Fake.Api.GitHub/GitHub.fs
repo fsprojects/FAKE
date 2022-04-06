@@ -16,11 +16,11 @@ open System.IO
 ///                match Environment.environVarOrDefault "github_token" "" with
 ///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
 ///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
-///        
+///
 ///            let files =
 ///                runtimes @ [ "portable"; "packages" ]
 ///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-///        
+///
 ///            GitHub.createClientWithToken token
 ///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
 ///            |> GitHub.uploadFiles files
@@ -30,20 +30,26 @@ open System.IO
 [<RequireQualifiedAccess>]
 module GitHub =
 
+    /// The release parameters
     [<NoComparison>]
     type Release =
-        { Client : GitHubClient
+        { /// The GitHub client
+          Client : GitHubClient
+          /// THe owner name of the repository - GitHub handle
           Owner : string
+          /// The repository name
           RepoName : string
+          /// The release to create parameters
           Release : Octokit.Release }
 
+    /// The release creation parameters
     type CreateReleaseParams =
         { /// The name of the release
-          Name : string 
+          Name : string
           /// The text describing the contents of the release
           Body : string
           /// Indicates whether the release will be created as a draft
-          Draft : bool 
+          Draft : bool
           /// Indicates whether the release will be created as a prerelease
           Prerelease : bool
           /// Commit hash or branch name that will be used to create the release tag.
@@ -56,14 +62,12 @@ module GitHub =
     let private createHttpClient =
         let handlerFactory () =
             let handler = HttpMessageHandlerFactory.CreateDefault()
-#if NETSTANDARD2_0
             // Ensure the default credentials are used with any system-configured proxy
             // https://github.com/dotnet/runtime/issues/25745#issuecomment-378322214
             match handler with
             | :? HttpClientHandler as h ->
                 h.DefaultProxyCredentials <- CredentialCache.DefaultCredentials
             | _ -> ()
-#endif
             handler
 
         fun () -> new HttpClientAdapter(Func<_> handlerFactory)
@@ -89,17 +93,20 @@ module GitHub =
         }
 
     /// Retry the Octokit action count times after input succeed
-    let private retryWithArg count input asycnF =
+    let private retryWithArg count input asyncF =
         async {
             let! choice = input |> Async.Catch
             match choice with
             | Choice1Of2 input' ->
-                return! (asycnF input') |> retry count
+                return! (asyncF input') |> retry count
             | Choice2Of2 ex ->
                 return captureAndReraise ex
         }
 
     /// Creates a GitHub API v3 client using the specified credentials
+    /// ## Parameters
+    /// - `user` - The user name
+    /// - `password` - The user password
     let createClient (user:string) (password:string) =
         async {
             let httpClient = createHttpClient()
@@ -111,6 +118,8 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client using the specified token
+    /// ## Parameters
+    /// - `token` - The authentication token
     let createClientWithToken (token:string) =
         async {
             let httpClient = createHttpClient()
@@ -122,6 +131,9 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials
+    /// ## Parameters
+    /// - `user` - The user name
+    /// - `password` - The user password
     let createGHEClient url (user:string) (password:string) =
         async {
             let credentials = Credentials(user, password)
@@ -134,6 +146,9 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token
+    /// ## Parameters
+    /// - `url` - The GitHub enterprise server URL
+    /// - `token` - The authentication token
     let createGHEClientWithToken url (token:string) =
         async {
             let credentials = Credentials(token)
@@ -152,15 +167,15 @@ module GitHub =
     /// - `tagName` - the name of the tag to use for this release
     /// - `setParams` - function used to override the default release parameters
     /// - `client` - GitHub API v3 client
-    let createRelease owner repoName tagName setParams (client : Async<GitHubClient>) =    
+    let createRelease owner repoName tagName setParams (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
-            let p = 
+            let p =
                 { Name = tagName
                   Body = ""
-                  Draft = true 
+                  Draft = true
                   Prerelease = false
                   TargetCommitish = "" } |> setParams
-            
+
             let data = NewRelease(tagName)
             data.Name <- p.Name
             data.Body <- p.Body
@@ -190,13 +205,16 @@ module GitHub =
     /// - `notes` - collection of release notes that will be inserted into the body of the release
     /// - `client` - GitHub API v3 client
     let draftNewRelease owner repoName tagName prerelease (notes : seq<string>) client =
-        let setParams p = 
-            { p with 
-                Body = String.Join(Environment.NewLine, notes) 
+        let setParams p =
+            { p with
+                Body = String.Join(Environment.NewLine, notes)
                 Prerelease = prerelease }
         createRelease owner repoName tagName setParams client
 
     /// Uploads and attaches the specified file to the specified release
+    /// ## Parameters
+    /// - `fileName` - The name of the file to upload
+    /// - `release` - The release to create
     let uploadFile fileName (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let fi = FileInfo(fileName)
@@ -207,17 +225,20 @@ module GitHub =
             | Some s ->
                 printfn "removing asset '%s' as previous upload failed" s.Name
                 do! Async.AwaitTask(release'.Client.Repository.Release.DeleteAsset(release'.Owner, release'.RepoName, s.Id))
-            | None -> ()                        
+            | None -> ()
 
             let archiveContents = File.OpenRead(fi.FullName)
             let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable timeout)
-            
+
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload, Async.DefaultCancellationToken)
             printfn "Uploaded %s" asset.Name
             return release'
         }
 
     /// Uploads and attaches the specified files to the specified release
+    /// ## Parameters
+    /// - `fileNames` - The list of files names to upload
+    /// - `release` - The release to create
     let uploadFiles fileNames (release : Async<Release>) = async {
         let! release' = release
         let releaseW = async { return release' }
@@ -226,6 +247,8 @@ module GitHub =
     }
 
     /// Publishes the specified release by removing its draft status
+    /// ## Parameters
+    /// - `release` - The release to publish
     let publishDraft (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let update = release'.Release.ToUpdate()
@@ -235,6 +258,10 @@ module GitHub =
         }
 
     /// Gets the latest release for the specified repository
+    /// ## Parameters
+    /// - `owner` - The owner of the repository - GitHub handle
+    /// - `repoName` - The repository name
+    /// - `client` - The GitHub client to use for communication
     let getLastRelease owner repoName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
             let! release = Async.AwaitTask <| client'.Repository.Release.GetLatest(owner, repoName)
@@ -251,6 +278,11 @@ module GitHub =
         }
 
     /// Gets release with the specified tag for the specified repository
+    /// ## Parameters
+    /// - `owner` - The owner of the repository - GitHub handle
+    /// - `repoName` - The repository name
+    /// - `tagName` - The tag to retrieve release for
+    /// - `client` - The GitHub client to use for communication
     let getReleaseByTag (owner:string) repoName tagName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
             let! releases = client'.Repository.Release.GetAll(owner, repoName) |> Async.AwaitTask
@@ -273,6 +305,10 @@ module GitHub =
         }
 
     /// Downloads the asset with the specified id to the specified destination
+    /// ## Parameters
+    /// - `id` - The id of the asset to download
+    /// - `destination` - The download destination
+    /// - `release` - The release to act upon
     let downloadAsset id destination (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.GetAsset(release'.Owner,release'.RepoName,id)
@@ -287,6 +323,9 @@ module GitHub =
         }
 
     /// Downloads all assets for the specified release to the specified destination
+    /// ## Parameters
+    /// - `destination` - The download destination
+    /// - `release` - The release to act upon
     let downloadAssets destination (release : Async<Release>) = async {
         let! release' = release
         let releaseW = async { return release' }
