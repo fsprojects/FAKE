@@ -1,15 +1,13 @@
 # Generate semantic version number from Git with GitVersion
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-gitversionhelper.html">here</a></p>
-</div>
-
 [GitVersion] is a tool that generates a Semantic Version number based on your Git history.
 
 [API-Reference](apidocs/v5/fake-tools-gitversion.html)
 
 ## Minimal working example
+To get started, [install GitVersion](https://gitversion.net/docs/usage/cli/installation) as a Chocolaty tool
+or if you would like to use the DotNet tool version of GitVersion then you need to provide full path to
+GitVersion installed location.
 
 ```fsharp
 #r "paket:
@@ -25,10 +23,8 @@ open Fake.Tools
 let install = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
 Target.create "Version" (fun _ ->
-    GitVersion.generateProperties gitVersionGenerateProperties (fun p ->
+    GitVersion.generateProperties (fun p ->
         { p with ToolType = ToolType.CreateCLIToolReference(install.Value) })
 )
 
 ```
-
-[GitVersion]: https://gitversion.net/
