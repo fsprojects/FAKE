@@ -16,6 +16,7 @@
 * ENHANCEMENT: Remove Fake.Tools.ServiceControl since it is obsolete
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.Rsync and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.Azure.CloudServices and replace deprecated process utils with alternatives
+* ENHANCEMENT: Add Net6 Target to Fake.Azure.Emulators and replace deprecated process utils with alternatives
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
