@@ -22,6 +22,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Api.Slack and remove compiler directives and code for non-netstandard code
 * ENHANCEMENT: Add Net6 Target to Fake.Api.GitHub and remove compiler directives and code for non-netstandard code
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.GitVersion and rename `GitVersionParams` type
+* ENHANCEMENT: Add Net6 Target to Fake.Tools.Pickles and add option to resolve tool as a Chocolaty tool
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
