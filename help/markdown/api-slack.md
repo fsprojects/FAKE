@@ -6,7 +6,7 @@ In this article you will learn how to create a [Slack](https://slack.com) webhoo
 
 ## Adding a Webhook Integration to a Channel
 
-Follow the [instructions](https://my.slack.com/services/new/incoming-webhook/) for setting up an incoming webhook integration. When finished, you should have a Webhook URL that looks like "https://hooks.slack.com/services/some/random/text".
+Follow the [instructions](https://api.slack.com/messaging/webhooks) for setting up an incoming webhook integration. When finished, you should have a Webhook URL that looks like "https://hooks.slack.com/services/some/random/text".
 
 ## Sending a Notification to the Webhook
 
