@@ -66,6 +66,7 @@
     <Compile Include="Fake.DotNet.Testing.Coverlet.fs" />
     <Compile Include="Fake.DotNet.Fsi.fs" />
     <Compile Include="Fake.DotNet.Xdt.fs" />
+    <Compile Include="Fake.DotNet.SdkAssemblyResolver.fs" />
     <Compile Include="Fake.Testing.ReportGenerator.fs" />
     <Compile Include="Fake.Testing.SonarQube.fs" />
     <Compile Include="Fake.Testing.Fixie.fs" />
