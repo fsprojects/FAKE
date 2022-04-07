@@ -1,8 +1,10 @@
+namespace Fake.Windows
+
 /// Contains tasks which allow to call [Chocolatey](https://chocolatey.org)
-module Fake.Windows.Choco
+[<RequireQualifiedAccess>]
+module Choco =
 
     open System
-    open System.Diagnostics
     open System.Text;
     open System.IO
     open System.Xml.Linq
@@ -11,12 +13,14 @@ module Fake.Windows.Choco
     open Fake.IO
     open Fake.IO.FileSystemOperators
 
+    /// The choco installer type
     type ChocolateyInstallerType =
     | Zip
     | Exe
     | Msi
     | SelfContained
 
+    /// The choco checksum type
     type ChocolateyChecksumType =
     | Md5
     | Sha1
@@ -35,7 +39,7 @@ module Fake.Windows.Choco
         /// Equivalent to the `--params <params>` option.
         PackageParameters: string
         /// The source to find the package(s) to install.
-        // Special sources  include: ruby, webpi, cygwin, windowsfeatures, and python.
+        /// Special sources  include: ruby, webpi, cygwin, windowsfeatures, and python.
         /// Equivalent to the `--source <source>` option.
         Source: string
         /// Force x86 (32bit) installation on 64 bit systems. Default `false`.
@@ -174,7 +178,6 @@ module Fake.Windows.Choco
         /// Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.
         InstallerType: ChocolateyInstallerType
         /// Either:
-        ///
         /// - For zip: the zip filename originally installed
         /// - For exe or msi: the full path to the native uninstaller to run
         UninstallPath: string
@@ -360,12 +363,13 @@ module Fake.Windows.Choco
             if found <> None then found.Value else failwith "Cannot find the choco executable."
 
         use __ = Trace.traceTask "choco" args
-        let setInfo (info:ProcStartInfo) =
-            { info with
-                FileName = chocoExe
-                Arguments = args }
-        let result = Process.execSimple (setInfo) timeout
-        if result <> 0 then failwithf "choco failed with exit code %i." result
+        let processResult =
+            CreateProcess.fromRawCommandLine chocoExe args
+            |> CreateProcess.withTimeout timeout
+            |> Proc.run
+
+        if processResult.ExitCode <> 0 then
+            failwithf "choco failed with exit code %i." processResult.ExitCode
         __.MarkSuccess()
 
     let private getTempFolder =
@@ -382,7 +386,6 @@ module Fake.Windows.Choco
 
         tempFolder.FullName
 
-
     let private appendLine line builder =
         Printf.bprintf builder "%s%s" line Environment.NewLine
         builder
@@ -395,7 +398,6 @@ module Fake.Windows.Choco
         else appendFormattedLine format value builder
 
     let private getNuspecData parameters =
-
         let getFrameworkGroup (frameworkTags : (string * string) seq) =
             frameworkTags
             |> Seq.map (fun (frameworkVersion, tags) ->
@@ -544,7 +546,7 @@ module Fake.Windows.Choco
 
         let nuspecData = getNuspecData parameters
 
-        let nuspecContent = new StringBuilder()
+        let nuspecContent = StringBuilder()
                             |> appendLine "<?xml version=\"1.0\"?>"
                             |> appendLine "<package xmlns=\"http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd\">"
                             |> appendLine "  <metadata>"
@@ -586,8 +588,6 @@ module Fake.Windows.Choco
         | Exe -> "exe"
         | Msi -> "msi"
         | SelfContained -> failwithf "this should never be used (this type is from us -> to embedd everything) and not known by the choco helpers."
-        //match getUnionFields(x, typeof<ChocolateyInstallerType>) with
-        //| case, _ -> case.Name.ToLower()
 
     let private checksumTypeToString x =
         match x with
@@ -595,8 +595,6 @@ module Fake.Windows.Choco
         | Sha1 -> "sha1"
         | Sha256 -> "sha256"
         | Sha512 -> "sha512"
-        //match getUnionFields(x, typeof<ChocolateyChecksumType>) with
-        //| case, _ -> case.Name.ToLower()
 
     let private createChocolateyInstallPs1 (parameters:ChocoPackParams) outputDir =
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
@@ -605,7 +603,7 @@ module Fake.Windows.Choco
         if String.isNullOrWhiteSpace parameters.Title || String.isNullOrWhiteSpace parameters.PackageDownloadUrl
         then failwith "chocolateyInstall.ps1 need at least Title and PackageDownloadUrl to be created."
 
-        let installContent = new StringBuilder()
+        let installContent = StringBuilder()
                             |> appendFormattedLine "$packageName = '%s'" parameters.Title
                             |> match parameters.InstallerType with ChocolateyInstallerType.Zip -> id | _ -> appendFormattedLine "$installerType = '%s'" (installerTypeToString parameters.InstallerType)
                             |> appendFormattedLine "$url = '%s'" parameters.PackageDownloadUrl
@@ -626,7 +624,6 @@ module Fake.Windows.Choco
         File.writeString false outputPath installContent
 
         Trace.tracefn "Created chocolateyInstall.ps1 at %s" outputPath
-
 
     let private createChocolateyInstallPs1FromTemplate (parameters:ChocoPackParams) templatePath outputDir =
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
@@ -652,13 +649,12 @@ module Fake.Windows.Choco
         Trace.tracefn "Created chocolateyInstall.ps1 at %sfrom template %s" outputPath templatePath
 
     let private createChocolateyUninstallPs1 (parameters: ChocoPackParams) outputDir =
-
         if not (String.isNullOrWhiteSpace parameters.Title) && not (String.isNullOrWhiteSpace parameters.UninstallPath)
         then
             let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> Path.getFullName
             Trace.tracefn "Create chocolateyUninstall.ps1 at %s" outputPath
 
-            let uninstallContent = new StringBuilder()
+            let uninstallContent = StringBuilder()
                                 |> appendFormattedLine "$packageName = '%s'" parameters.Title
                                 |> match parameters.InstallerType with ChocolateyInstallerType.Zip -> id | _ -> appendFormattedLine "$installerType = '%s'" (installerTypeToString parameters.InstallerType)
                                 |> appendFormattedLine "$file = \"%s\"" parameters.UninstallPath
@@ -691,7 +687,7 @@ module Fake.Windows.Choco
         Trace.tracefn "Created chocolateyUninstall.ps1 at %sfrom template %s" outputPath templatePath
 
     let private callChocoPack nuspecFile (parameters: ChocoPackParams) =
-        let args = new StringBuilder()
+        let args = StringBuilder()
                 |> StringBuilder.appendWithoutQuotes "pack"
                 |> StringBuilder.append nuspecFile
                 |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Version "--version "
@@ -702,25 +698,25 @@ module Fake.Windows.Choco
         callChoco parameters.ToolPath args parameters.Timeout
 
     /// True if choco is available (only on windows)
-    /// ## Sample usage
+    /// ## Sample
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
     let IsAvailable = not Environment.isUnix && findExe <> None
 
-    /// Call choco to [install](https://github.com/chocolatey/choco/wiki/CommandsInstall) a package
+    /// Call choco to [install](https://docs.chocolatey.org/en-us/choco/commands/install) a package
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoInstallParams`
     ///  - `packages` - Names of packages, path to packages.config, .nuspec or .nupkg to install
-    /// ## Sample usage
     ///
+    /// ## Sample
     ///     Target "ChocoInstall" (fun _ ->
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
-    let install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
+    let install (setParams: ChocoInstallParams -> ChocoInstallParams) (packages: string) =
         if packages |> String.isNullOrEmpty then failwith "'packages' must not be empty."
 
         let parameters = setParams ChocoInstallDefaults
 
-        let args = new StringBuilder()
+        let args = StringBuilder()
                 |> StringBuilder.appendWithoutQuotes "install"
                 |> StringBuilder.append packages
                 |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Version "--version "
@@ -739,11 +735,11 @@ module Fake.Windows.Choco
 
         callChoco parameters.ToolPath args parameters.Timeout
 
-    /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified
+    /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
-    /// ## Sample usage
-    ///
+
+    /// ## Sample
     ///     Target "ChocoPack" (fun _ ->
     ///         Choco.Pack (fun p -> { p with Version = "0.5.0"; ... })
     ///     )
@@ -766,12 +762,12 @@ module Fake.Windows.Choco
 
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
-    /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
+    /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
     ///  - `nuspecPath` - path to the .nuspec to pack
-    /// ## Sample usage
-    ///
+
+    /// ## Sample
     ///     Target "ChocoPack" (fun _ ->
     ///         "pretzel.nuspec" |> Choco.Pack (fun p -> { p with Version = "0.5.0" })
     ///     )
@@ -796,7 +792,6 @@ module Fake.Windows.Choco
         elif parameters.InstallerType <> ChocolateyInstallerType.SelfContained
         then createChocolateyInstallPs1 parameters tempFolder
 
-
         let chocoUninstallPath = rootFolder @@ "tools" @@ "chocolateyUninstall.ps1"
         if File.Exists chocoUninstallPath
         then createChocolateyUninstallPs1FromTemplate parameters chocoUninstallPath tempFolder
@@ -807,12 +802,12 @@ module Fake.Windows.Choco
 
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
-    /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
+    /// Call choco to [push](https://docs.chocolatey.org/en-us/create/commands/push) a package
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPushParams`
     ///  - `nupkgPath` - path to the .nupkg to push
-    /// ## Sample usage
     ///
+    /// ## Sample
     ///     Target "ChocoPush" (fun _ ->
     ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
     ///     )
@@ -821,7 +816,7 @@ module Fake.Windows.Choco
 
         let parameters = setParams ChocoPushDefaults
 
-        let args = new StringBuilder()
+        let args = StringBuilder()
                 |> StringBuilder.appendWithoutQuotes "push"
                 |> StringBuilder.append nupkgPath
                 |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Source "--source "
@@ -841,10 +836,10 @@ module Fake.Windows.Choco
                 
     /// Call custom choco command
     /// ## Parameters
-    ///  - `args` - string that will be appendedn to choco.exe call
-    ///  - `timeout` - parrent process maximum completion time
-    /// ## Sample usage
+    ///  - `args` - string that will be appended to choco.exe call
+    ///  - `timeout` - parent process maximum completion time
     ///
+    /// ## Sample
     ///     Target "ChocoPush" (fun _ ->
     ///
     ///          let newSpecFile = ...
