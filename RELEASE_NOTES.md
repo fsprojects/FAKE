@@ -24,6 +24,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.GitVersion and rename `GitVersionParams` type
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.Pickles and add option to resolve tool as a Chocolaty tool
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.Octo and add option to resolve tool as a Chocolaty tool
+* ENHANCEMENT: Add Net6 Target to Fake.Tools.SignTool and fix typos and add documentation
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673

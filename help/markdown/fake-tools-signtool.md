@@ -1,11 +1,5 @@
 # SignTool
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-signtoolhelper.html">here</a>.</p>
-</div>
-
-
 This module is a wrapper around the [signtool.exe](https://docs.microsoft.com/en-gb/windows/win32/seccrypto/signtool) tool, a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
 
 The 3 supported functions are:
@@ -31,7 +25,7 @@ API Reference:
  - [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html): Timestamp command options
  - [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html): Verify command options
 
-<hr /><hr />
+<hr />
 
 ## Open namespace
 
@@ -39,7 +33,7 @@ API Reference:
 open Fake.Tools
 ```
 
-<hr /><hr />
+<hr />
 
 ## Signing
 
@@ -163,7 +157,7 @@ SignTool.signWithTimeStamp
 
 Only a subset of options is shown in the example, see API Reference for all available options: [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html), [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html).
 
-<hr /><hr />
+<hr />
 
 ## Time stamping
 
@@ -210,7 +204,7 @@ SignTool.timeStamp
 
 Only a subset of options is shown in the example, see API Reference for all available options: [`TimeStampOption`](apidocs/v5/fake-tools-signtool-timestampoption.html), [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html).
 
-<hr /><hr />
+<hr />
 
 ## Verifying
 
@@ -252,7 +246,7 @@ SignTool.verify
 
 Only a subset of options is shown in the example, see API Reference for all available options: [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html).
 
-<hr /><hr />
+<hr />
 
 ## Common options
 
@@ -304,7 +298,7 @@ Verbosity - output verbosity (signtool options: /q, /v). This option is not set 
 
 API Reference: [`SignOptions`](apidocs/v5/fake-tools-signtool-signoptions.html), [`TimeStampOptions`](apidocs/v5/fake-tools-signtool-timestampoptions.html), [`VerifyOptions`](apidocs/v5/fake-tools-signtool-verifyoptions.html), [`Verbosity`](apidocs/v5/fake-tools-signtool-verbosity.html).
 
-<hr /><hr />
+<hr />
 
 ## Certificates
 
@@ -340,7 +334,7 @@ Now the certificate can be used with the [`CertificateFromFile`](#When-the-certi
 
 This certificate should not be used for prod / release purposes as it is self-signed and not trusted.
 
-<hr /><hr />
+<hr />
 
 ## SHA1/SHA256
 
