@@ -386,7 +386,6 @@ let dotnetAssemblyInfos =
       "Fake.Net.FTP", "FTP operations"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
-      "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations (Obsolete: Use Fake.Sql.SqlPackage instead)"
       "Fake.Sql.SqlPackage", "Sql Server Data Tools DacPac operations"
       "Fake.Sql.SqlServer", "Helpers around interacting with SQL Server databases"
       "Fake.Testing.Common", "Common testing data types"
