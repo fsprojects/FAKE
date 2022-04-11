@@ -31,7 +31,6 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
     let CustomDotNetHostPath = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
     let RuntimeResolverResolveMethod = Environment.environVarOrDefault "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
 
-
     member this.LogLevel = logLevel
 
     member this.SdkVersionRaw = "6.0"
@@ -49,6 +48,98 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
         match this.SdkVersionFromGlobalJson with
         | Some version -> ReleaseVersion(version).Major.Equals(this.SdkVersion.Major)
         | None -> false
+
+    member this.DotNetBinaryName = 
+        if Environment.isUnix then
+            "dotnet"
+        else
+            "dotnet.exe"
+
+    /// <summary>
+    /// provides the path to the `dotnet` binary running this library, respecting various dotnet <see href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_root-dotnet_rootx86%5D">environment variables</see>.
+    /// Also probes the PATH and checks the default installation locations
+    /// </summary>
+    member this.ResolveDotNetRoot() = 
+        let isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        let isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+        let isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+        let isUnix = isLinux || isMac
+        
+        let potentialDotnetHostEnvVars =
+            [ "DOTNET_HOST_PATH", id // is a full path to dotnet binary
+              "DOTNET_ROOT", (fun s -> Path.Combine(s, this.DotNetBinaryName)) // needs dotnet binary appended
+              "DOTNET_ROOT(x86)", (fun s -> Path.Combine(s, this.DotNetBinaryName)) ] // needs dotnet binary appended
+
+        let existingEnvVarValue envVarValue =
+            match envVarValue with
+            | null
+            | "" -> None
+            | other -> Some other
+
+        let tryFindFromEnvVar () =
+            potentialDotnetHostEnvVars
+            |> List.tryPick (fun (envVar, transformer) ->
+                match Environment.GetEnvironmentVariable envVar |> existingEnvVarValue with
+                | Some varValue -> Some(transformer varValue |> FileInfo)
+                | None -> None)
+
+        let PATHSeparator =
+            if isUnix then
+                ':'
+            else
+                ';'
+                
+        /// Fully resolve the symlink, returning a fully-resolved FileInfo
+        /// that is not a symlink,
+        /// or returning None if the file or any of its resolved targets
+        /// does not exist.
+        let rec resolveFile (fi: System.IO.FileInfo) : FileInfo option =
+            if not fi.Exists then None
+            elif isNull fi.LinkTarget then Some fi
+            else resolveFile (System.IO.FileInfo fi.LinkTarget)
+
+        let tryFindFromPATH () =
+            Environment
+                .GetEnvironmentVariable("PATH")
+                .Split(PATHSeparator, StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
+            |> Array.tryPick (fun d ->
+                let fi = Path.Combine(d, this.DotNetBinaryName) |> FileInfo
+
+                if fi.Exists then
+                    Some fi
+                else
+                    None)
+
+        let tryFindFromDefaultDirs () =
+            let windowsPath = $"C:\\Program Files\\dotnet\\{this.DotNetBinaryName}"
+            let macosPath = $"/usr/local/share/dotnet/{this.DotNetBinaryName}"
+            let linuxPath = $"/usr/share/dotnet/{this.DotNetBinaryName}"
+
+            let tryFindFile p =
+                let f = FileInfo p
+
+                if f.Exists then
+                    Some f
+                else
+                    None
+
+            if isWindows then
+                tryFindFile windowsPath
+            else if isMac then
+                tryFindFile macosPath
+            else if isLinux then
+                tryFindFile linuxPath
+            else
+                None
+        
+        if not(String.isNullOrEmpty CustomDotNetHostPath) then
+            Some CustomDotNetHostPath
+        else
+            tryFindFromEnvVar ()
+            |> Option.orElseWith tryFindFromPATH
+            |> Option.orElseWith tryFindFromDefaultDirs
+            |> Option.bind resolveFile
+            |> Option.map (fun dotnetRoot -> dotnetRoot.Directory.FullName)
 
     member this.TryResolveSdkRuntimeVersionFromNetwork() =
         if this.LogLevel.PrintVerbose then
@@ -86,140 +177,51 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             Trace.traceError $"Could not get SDK runtime version from cache due to: {ex.Message}"
             None
 
-    member this.ResolveSdkRuntimeVersion() =
-
-        let resolvedSdkVersion =
-            this.SdkVersionFromGlobalJson
-            |> Option.get
-            |> ReleaseVersion
-
-        let resolutionMethod =
-            match not(String.isNullOrEmpty RuntimeResolverResolveMethod) with
-            | true ->
+    member this.GetProductReleaseForSdk (version: ReleaseVersion) =
+        let net60releases = 
+            if RuntimeResolverResolveMethod = "cache" then
                 // for testing only!
-                match RuntimeResolverResolveMethod = "cache" with
-                | true -> this.TryResolveSdkRuntimeVersionFromCache()
-                | false -> this.TryResolveSdkRuntimeVersionFromNetwork()
-            | false ->
+                this.TryResolveSdkRuntimeVersionFromCache ()
+            else 
                 // this is the default case, we will try the network, if we could not, then we will reach for cached file.
-                this.TryResolveSdkRuntimeVersionFromNetwork()
-                |> Option.orElseWith(fun _ ->
-                    this.TryResolveSdkRuntimeVersionFromCache()
-                )
+                this.TryResolveSdkRuntimeVersionFromNetwork ()
+                |> Option.orElseWith(this.TryResolveSdkRuntimeVersionFromCache)
 
+        let sdkRelease (release: ProductRelease) =  
+            release.Sdks
+            |> List.ofSeq
+            |> List.exists (fun sdk -> sdk.Version.Equals(version))
+            
+        net60releases |> Option.bind (List.tryFind sdkRelease)
 
-        let resolved =
-            resolutionMethod
-            |> Option.orElseWith(fun _ ->
-                failwithf $"Could not find a suitable runtime version matching SDK version: {resolvedSdkVersion.ToString()}"
-            )
-            |> Option.get
-            |> List.tryFind
-                (fun release ->
-                    release.Sdks
-                    |> List.ofSeq
-                    |> List.exists (fun sdk -> sdk.Version.Equals(resolvedSdkVersion)))
-            |> Option.get
+    member this.ResolveSdkRuntimeVersion() =
+        let versionOptions (options: DotNet.VersionOptions) = 
+            // If a custom CLI path is provided, configure the version command
+            // to use that path.  This really only accomodates a test scenarios 
+            // in which FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH is set.
+            match this.ResolveDotNetRoot() with
+            | Some root -> 
+                options.WithCommon(fun common -> 
+                     { common with DotNetCliPath = root </> this.DotNetBinaryName } ) 
+            | None -> options
+            
+        let sdkVersion = DotNet.getVersion versionOptions |> ReleaseVersion
+        
+        match this.GetProductReleaseForSdk sdkVersion with
+        | Some release -> 
+            let version = release.Runtime.Version.ToString()
+            if this.LogLevel.PrintVerbose then
+                Trace.trace $"Resolved runtime version: {version}"
 
-        if this.LogLevel.PrintVerbose then
-            Trace.tracefn $"resolved runtime version: {resolved.Runtime.Version.ToString()}"
-        resolved.Runtime.Version.ToString()
+            version
+
+        | None -> 
+            failwithf $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()}"
 
     member this.SdkReferenceAssemblies() =
-        let isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-        let isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-        let isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-        let isUnix = isLinux || isMac
-
-        let dotnetBinaryName =
-            if Environment.isUnix then
-                "dotnet"
-            else
-                "dotnet.exe"
-
-        let potentialDotnetHostEnvVars =
-            [ "DOTNET_HOST_PATH", id // is a full path to dotnet binary
-              "DOTNET_ROOT", (fun s -> Path.Combine(s, dotnetBinaryName)) // needs dotnet binary appended
-              "DOTNET_ROOT(x86)", (fun s -> Path.Combine(s, dotnetBinaryName)) ] // needs dotnet binary appended
-
-        let existingEnvVarValue envVarValue =
-            match envVarValue with
-            | null
-            | "" -> None
-            | other -> Some other
-
-        let tryFindFromEnvVar () =
-            potentialDotnetHostEnvVars
-            |> List.tryPick (fun (envVar, transformer) ->
-                match Environment.GetEnvironmentVariable envVar |> existingEnvVarValue with
-                | Some varValue -> Some(transformer varValue |> FileInfo)
-                | None -> None)
-
-        let PATHSeparator =
-            if isUnix then
-                ':'
-            else
-                ';'
-                
-        /// Fully resolve the symlink, returning a fully-resolved FileInfo
-        /// that is not a symlink,
-        /// or returning None if the file or any of its resolved targets
-        /// does not exist.
-        let rec resolveFile (fi: System.IO.FileInfo) : FileInfo option =
-            if not fi.Exists then None
-            elif isNull fi.LinkTarget then Some fi
-            else resolveFile (System.IO.FileInfo fi.LinkTarget)
-
-        let tryFindFromPATH () =
-            Environment
-                .GetEnvironmentVariable("PATH")
-                .Split(PATHSeparator, StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
-            |> Array.tryPick (fun d ->
-                let fi = Path.Combine(d, dotnetBinaryName) |> FileInfo
-
-                if fi.Exists then
-                    Some fi
-                else
-                    None)
-
-        let tryFindFromDefaultDirs () =
-            let windowsPath = $"C:\\Program Files\\dotnet\\{dotnetBinaryName}"
-            let macosPath = $"/usr/local/share/dotnet/{dotnetBinaryName}"
-            let linuxPath = $"/usr/share/dotnet/{dotnetBinaryName}"
-
-            let tryFindFile p =
-                let f = FileInfo p
-
-                if f.Exists then
-                    Some f
-                else
-                    None
-
-            if isWindows then
-                tryFindFile windowsPath
-            else if isMac then
-                tryFindFile macosPath
-            else if isLinux then
-                tryFindFile linuxPath
-            else
-                None
-        
-        /// <summary>
-        /// provides the path to the `dotnet` binary running this library, respecting various dotnet <see href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_root-dotnet_rootx86%5D">environment variables</see>.
-        /// Also probes the PATH and checks the default installation locations
-        /// </summary>
-        let dotnetRoot =
-            if not(String.isNullOrEmpty CustomDotNetHostPath) then
-                Some CustomDotNetHostPath
-            else
-                tryFindFromEnvVar ()
-                |> Option.orElseWith tryFindFromPATH
-                |> Option.orElseWith tryFindFromDefaultDirs
-                |> Option.bind resolveFile
-                |> Option.map (fun dotnetRoot -> dotnetRoot.Directory.FullName)
         
         let referenceAssembliesPath =
-            dotnetRoot
+            this.ResolveDotNetRoot()
             |> Option.map (fun dotnetRoot ->
                 dotnetRoot
                 </> "packs"

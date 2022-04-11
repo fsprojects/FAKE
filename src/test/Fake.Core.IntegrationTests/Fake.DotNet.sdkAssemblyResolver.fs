@@ -104,6 +104,31 @@ let tests =
               finally
                   // clean up after the test run
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
+          
+          testCase "Runner run script with Can properly rollForward to latestPatch" <| fun _ ->
+                use d = createTestDir()
+                let installerDir = Path.Combine(d.Dir, "Temp Dir")
+                Directory.create installerDir
+                let preparedDir = Path.Combine(d.Dir, "Install Dir")
+                Directory.create preparedDir
+
+                DotNet.install (fun option ->
+                { option with
+                    InstallerOptions = fun o ->
+                                { option.InstallerOptions o with
+                                    CustomDownloadDir = Some installerDir }
+                    ForceInstall = true
+                    WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101-rollforward"
+                    CustomInstallDir = Some preparedDir
+                    Channel = DotNet.CliChannel.Version 6 0
+                    Version = DotNet.CliVersion.Version "6.0.101" })
+                |> ignore
+
+                let result =
+                    handleAndFormat <| fun _ ->
+                        fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60101-rollforward"
+
+                Expect.isTrue result.OK "The build did not succeed"
 
           testCase "Runner run script with 6.0.100 SDK version assemblies and resolve runtime version from cached file" <| fun _ ->
               try
