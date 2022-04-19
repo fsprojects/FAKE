@@ -88,7 +88,7 @@ let tests =
         let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
 
-        stdOut.Trim() |> Expect.stringContains "Hello FAKE exected" "Hello FAKE"
+        stdOut.Trim() |> Expect.stringContains "Hello FAKE expected" "Hello FAKE"
         stdErr.Trim() |> Expect.equal "empty expected" ""
 
     testCase "simple failed to compile" <| fun _ ->
