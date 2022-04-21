@@ -661,10 +661,8 @@ module DotNet =
                 // make sure to write global.json if we did not read the version from it
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
-                if File.Exists globalJsonPath then
-                    let readVersion = getSDKVersionFromGlobalJsonDir workDir
-                    if readVersion <> version then failwithf "Existing global.json with a different version found!"
-                    false
+                if File.Exists globalJsonPath 
+                then false 
                 else
                     let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
