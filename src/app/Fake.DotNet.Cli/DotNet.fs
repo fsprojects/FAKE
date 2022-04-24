@@ -1836,14 +1836,16 @@ module DotNet =
         let args = Args.toWindowsCommandLine(buildTemplateUninstallArgs param)
         let result = exec (fun _ -> param.Common) "new" args
 
-        // we will check if the uninstall command has returned error and message is template is not found.
-        // if that is the case, then we will just redirect output as success and change process result to
-        // exit code of zero.
+        // If the process returns error (exit code != 0) then check to see if a message is 
+        // that the template was not found.  If this message exists, assume the process 
+        // completed with success
         let templateIsNotFoundToUninstall =
             result.Results
             |> List.exists(fun (result:ConsoleMessage) -> result.Message.Contains $"The template package '{templateName}' is not found.")
 
-        match templateIsNotFoundToUninstall with
-        | true -> ignore ""
+        let success = (result.ExitCode = 0) || templateIsNotFoundToUninstall
+        match success with
+        | true -> ()
         | false -> failwithf $"dotnet new --uninstall failed with code %i{result.ExitCode}"
+
         __.MarkSuccess()
