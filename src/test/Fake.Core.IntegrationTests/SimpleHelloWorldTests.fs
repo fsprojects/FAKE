@@ -148,7 +148,7 @@ let tests =
             if CoreTracing.importantMessagesToStdErr then
                 "Some Info from FAKE"
             else ""
-        stdErr.Trim() |> Expect.equal "exected correct stderr" expected
+        stdErr.Trim() |> Expect.stringContains "expected correct stderr" expected
 
         // Check if --write-info <file> works
         let tempFile = Path.GetTempFileName()
