@@ -6,8 +6,8 @@ open System
 open Fake.Core.CommandLineParsing
 
 let fakeArgsHint =
-  """
-FAKE 5
+  $"""
+{Fake.Runtime.Environment.fakeVersionStr}
 
 """
 
