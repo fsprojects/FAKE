@@ -108,7 +108,7 @@ let setupTemplate() =
     try
         DotNet.uninstallTemplate templatePackageName
     with exn ->
-        $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo}"
+        $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo()}"
         |> Expect.isTrue false
 
     printfn $"%s{Environment.CurrentDirectory}"
