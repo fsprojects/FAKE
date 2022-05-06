@@ -100,13 +100,13 @@ module internal InternalStreams =
             let asyncResult = ref null
             Async.FromBeginEnd(
                 (fun (callback, state) -> 
-                    asyncResult := beginAction(callback, state)
-                    !asyncResult), 
+                    asyncResult.Value <- beginAction(callback, state)
+                    asyncResult.Value),
                 (fun res -> 
                     endAction res), 
                 cancelAction  = (fun () -> 
-                    while !asyncResult = null do Thread.Sleep 20
-                    cancelAction(!asyncResult)))
+                    while asyncResult.Value = null do Thread.Sleep 20
+                    cancelAction(asyncResult.Value)))
     open AsyncHelper
 
     type ConcurrentQueueMessage<'a> =
@@ -232,12 +232,12 @@ module internal InternalStreams =
                 while not cts.IsCancellationRequested do
                     let! data = innerStream.Read()
                     let finished = ref false
-                    while not !finished do
+                    while not finished.Value do
                         let! (asyncResult:MyIAsyncReadResult<'a>) = queue.DequeAsync()
                         if not asyncResult.IsCanceled then
                             try
                                 asyncResult.End(data)
-                                finished := true
+                                finished.Value <- true
                             with ReadCanceledException -> () // find next
                 return ()
             }, cancellationToken = workerCts.Token)
@@ -466,7 +466,7 @@ module internal InternalStreams =
             //let raw = infiniteStream()
             let readFinished = ref false
             let read () =
-                if !readFinished then
+                if readFinished.Value then
                    async.Return None
                 else 
                   async {
@@ -477,16 +477,16 @@ module internal InternalStreams =
                             match s with
                             | Some d -> Some d
                             | None -> 
-                                readFinished := true
+                                readFinished.Value <- true
                                 None
                         | None -> 
                             failwith "stream should not be limited as we are using an infiniteStream!" }
             let isFinished = ref false
             let finish () = async {
                 do! raw.Write None
-                isFinished := true }
+                isFinished.Value <- true }
             let write item = 
-                if !isFinished then
+                if isFinished.Value then
                     failwith "stream is in finished state so it should not be written to!"
                 raw.Write (Some item)
             finish,
