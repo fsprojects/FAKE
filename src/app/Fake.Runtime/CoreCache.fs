@@ -485,7 +485,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let fakeLoadContext () : AssemblyLoadContext =
         FakeLoadContext(context.Config.VerboseLevel, context.Config.RuntimeOptions.RuntimeDependencies, context.Config.RuntimeOptions.NativeLibraries) :> _
 #else
-    let fakeLoadContext () : AssemblyLoadContext = new AssemblyLoadContext()
+    let fakeLoadContext () : AssemblyLoadContext = new AssemblyLoadContext(true)
 #endif
     { context with CreateAssemblyContext = fakeLoadContext }, cache
 
