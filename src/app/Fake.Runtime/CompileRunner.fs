@@ -91,7 +91,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
           ()
           // When we have netcore 3 unload assemblies to fix https://github.com/fsharp/FAKE/issues/2314
           // https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
-          //assemblyContext.Unload()
+          assemblyContext.Unload()
     match result with
     | None -> RunResult.SuccessRun c.Warnings
     | Some e -> RunResult.RuntimeError e
