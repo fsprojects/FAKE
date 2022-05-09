@@ -399,7 +399,7 @@ This can happen for various reasons:
 // See https://github.com/dotnet/coreclr/issues/6411
 type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list, nativeLibraries:NativeLibrary list) =
   // Mark as Collectible once supported: https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
-  inherit AssemblyLoadContext()
+  inherit AssemblyLoadContext(true)
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
        findAndLoadInRuntimeDepsCached x assem printDetails allReferences
