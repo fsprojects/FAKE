@@ -1,4 +1,4 @@
-﻿/// Contains helper functions which can be used to retrieve status information from git.
+/// Contains helper functions which can be used to retrieve status information from git.
 module Fake.Tools.Git.Information
 
 open Fake.Tools.Git.CommandHelper
@@ -88,7 +88,10 @@ let shortlog repositoryDir =
     msg |> Seq.head
 
 /// Gets the last git tag of the current repository by calling git describe
-let getLastTag() = (describe "").Split('-') |> Seq.head
+let getLastTag () =
+    let _,msg,error = runGitCommand "" "describe --tags --abbrev=0"
+    if error <> "" then failwithf "git describe --tags failed: %s" error
+    msg |> Seq.head
 
 /// Gets the current hash of the current repository
 let getCurrentHash() =
