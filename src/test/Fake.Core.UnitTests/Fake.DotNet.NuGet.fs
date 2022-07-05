@@ -100,16 +100,6 @@ let tests =
         testCase "Search by title returns results for matching packages by provided title" <| fun _ ->
             let packages: NuGet.NugetPackageInfo list = NuGet.searchByTitle (NuGet.getRepoUrl()) "FAKE"
             Expect.isGreaterThanOrEqual packages.Length 1 "Expected result has at least one element"
-            Expect.equal packages.[0].Id "FAKE" "Id filled"
-            Expect.isNotEmpty packages.[0].Version "Version filled"
-            Expect.isNotEmpty packages.[0].Description "Description filled"
-            Expect.isNotEmpty packages.[0].Summary "Id filled"
-            Expect.isFalse packages.[0].IsLatestVersion "IsLatestVersion filled"
-            Expect.isNotEmpty packages.[0].Authors "Authors filled"
-            Expect.isNotEmpty packages.[0].Owners "Owners filled"
-            Expect.isNotEmpty packages.[0].Tags "Tags filled"
-            Expect.isNotEmpty packages.[0].ProjectUrl "ProjectUrl filled"
-            Expect.isNotEmpty packages.[0].LicenseUrl "LicenseUrl filled"
-            Expect.equal packages.[0].Title "FAKE" "Title filled"
+            Expect.stringContains (packages.[0].Id.ToLower()) "fake" "Id filled"
     ]
 
