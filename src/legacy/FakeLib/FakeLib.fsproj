@@ -410,6 +410,9 @@
     <Compile Include="..\..\app\Fake.Azure.WebJobs\WebJobs.fs">
       <Link>Fake.Azure.WebJobs/WebJobs.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Build.CMake\CMake.fs">
+      <Link>Fake.Build.CMake/CMake.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyorInternal.fs">
       <Link>Fake.BuildServer.AppVeyor/AppVeyorInternal.fs</Link>
     </Compile>

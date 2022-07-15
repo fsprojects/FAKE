@@ -1,100 +1,94 @@
-﻿namespace Fake.CMakeSupport
+namespace Fake.Build
 
-open Fake
 open System
-open System.Diagnostics
 open System.IO
-
-/// The possible variable value types for CMake variables.
-[<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
-type CMakeValue =
-    | CMakeBoolean of bool
-    | CMakeString of string
-    | CMakeFilePath of string
-    | CMakeDirPath of string
-
-/// A CMake variable.
-[<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
-type CMakeVariable = {
-    /// The name of the variable.
-    /// It cannot contains spaces and special characters.
-    Name:string
-    /// The value of the variable.
-    /// Will be automatically converted to the CMake format when required.
-    Value:CMakeValue
-}
-
-/// The CMakeGenerate parameter type.
-[<CLIMutable>]
-[<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
-type CMakeGenerateParams = {
-    /// The location of the CMake executable. Automatically found if null or empty.
-    ToolPath:string
-    /// The source directory which should include a `CMakeLists.txt` file.
-    SourceDirectory:string
-    /// The binary build directory where CMake will generate the files.
-    BinaryDirectory:string
-    /// An optional toolchain file to load.
-    /// Equivalent to the `-D CMAKE_TOOLCHAIN_FILE:FILEPATH="<toolchain-file>"` CMake option.
-    Toolchain:string
-    /// The native build system generator to use for writing the files.
-    /// See `cmake --help` for a list of the available entries.
-    /// *To avoid unpredictable generator usage, it is recommended to define it.*
-    /// Equivalent to the `-G <generator-name>` option.
-    Generator:string
-    /// An optional toolset (!= toolchain) to use.
-    /// Equivalent to the `-T <toolset-name>` option.
-    /// Not supported by every generator.
-    Toolset:string
-    /// An optional CMake platform.
-    /// Equivalent to the `-A <platform-name>` option.
-    /// Not supported by every generator.
-    Platform:string
-    /// A list of the optional CMake cache files to load.
-    /// Equivalent to the `-C <initial-cache>` options.
-    Caches:string list
-    /// The directory where CMake will install the generated files.
-    /// Equivalent to the `-D CMAKE_INSTALL_PREFIX:DIRPATH="<install-directory>"` CMake option.
-    InstallDirectory:string
-    /// A list of every variable to pass as a CMake argument.
-    /// Equivalent to the `-D <var>:<type>=<value>` options.
-    Variables:CMakeVariable list
-    /// Remove matching entries from CMake cache.
-    /// Equivalent to the `-U <globbing_expr>` options.
-    CacheEntriesToRemove:string list
-    /// The CMake execution timeout.
-    Timeout:TimeSpan
-    /// A character string containing additional arguments to give to CMake.
-    AdditionalArgs:string
-}
-
-/// The CMakeBuild parameter type.
-[<CLIMutable>]
-[<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
-type CMakeBuildParams = {
-    /// The location of the CMake executable. Automatically found if null or empty.
-    ToolPath:string
-    /// The binary build directory where CMake will generate the files.
-    BinaryDirectory:string
-    /// The CMake target to build instead of the default one.
-    /// Equivalent to the `--target <target>` option.
-    Target:string
-    /// The build configuration to use (e.g. `Release`).
-    /// Equivalent to the `--config <cfg>` option.
-    /// Not supported by every generator.
-    Config:string
-    /// The CMake execution timeout.
-    Timeout:TimeSpan
-    /// A character string containing additional arguments to give to CMake.
-    AdditionalArgs:string
-}
+open Fake.Core
+open Fake.IO.FileSystemOperators
 
 /// Contains tasks which allow to use CMake to build CMakeLists files.
 /// See `Samples/CMakeSupport` for usage examples.
-[<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
+[<RequireQualifiedAccess>]
 module CMake =
+
+    /// The possible variable value types for CMake variables.
+    type CMakeValue =
+        | CMakeBoolean of bool
+        | CMakeString of string
+        | CMakeFilePath of string
+        | CMakeDirPath of string
+    
+    /// A CMake variable.
+    type CMakeVariable = {
+        /// The name of the variable.
+        /// It cannot contains spaces and special characters.
+        Name:string
+        /// The value of the variable.
+        /// Will be automatically converted to the CMake format when required.
+        Value:CMakeValue
+    }
+    
+    /// The CMakeGenerate parameter type.
+    type CMakeGenerateParams = {
+        /// The location of the CMake executable. Automatically found if null or empty.
+        ToolPath:string
+        /// The source directory which should include a `CMakeLists.txt` file.
+        SourceDirectory:string
+        /// The binary build directory where CMake will generate the files.
+        BinaryDirectory:string
+        /// An optional toolchain file to load.
+        /// Equivalent to the `-D CMAKE_TOOLCHAIN_FILE:FILEPATH="<toolchain-file>"` CMake option.
+        Toolchain:string
+        /// The native build system generator to use for writing the files.
+        /// See `cmake --help` for a list of the available entries.
+        /// *To avoid unpredictable generator usage, it is recommended to define it.*
+        /// Equivalent to the `-G <generator-name>` option.
+        Generator:string
+        /// An optional toolset (!= toolchain) to use.
+        /// Equivalent to the `-T <toolset-name>` option.
+        /// Not supported by every generator.
+        Toolset:string
+        /// An optional CMake platform.
+        /// Equivalent to the `-A <platform-name>` option.
+        /// Not supported by every generator.
+        Platform:string
+        /// A list of the optional CMake cache files to load.
+        /// Equivalent to the `-C <initial-cache>` options.
+        Caches:string list
+        /// The directory where CMake will install the generated files.
+        /// Equivalent to the `-D CMAKE_INSTALL_PREFIX:DIRPATH="<install-directory>"` CMake option.
+        InstallDirectory:string
+        /// A list of every variable to pass as a CMake argument.
+        /// Equivalent to the `-D <var>:<type>=<value>` options.
+        Variables:CMakeVariable list
+        /// Remove matching entries from CMake cache.
+        /// Equivalent to the `-U <globbing_expr>` options.
+        CacheEntriesToRemove:string list
+        /// The CMake execution timeout.
+        Timeout:TimeSpan
+        /// A character string containing additional arguments to give to CMake.
+        AdditionalArgs:string
+    }
+    
+    /// The CMakeBuild parameter type.
+    type CMakeBuildParams = {
+        /// The location of the CMake executable. Automatically found if null or empty.
+        ToolPath:string
+        /// The binary build directory where CMake will generate the files.
+        BinaryDirectory:string
+        /// The CMake target to build instead of the default one.
+        /// Equivalent to the `--target <target>` option.
+        Target:string
+        /// The build configuration to use (e.g. `Release`).
+        /// Equivalent to the `--config <cfg>` option.
+        /// Not supported by every generator.
+        Config:string
+        /// The CMake execution timeout.
+        Timeout:TimeSpan
+        /// A character string containing additional arguments to give to CMake.
+        AdditionalArgs:string
+    }
+    let private currentDirectory = Directory.GetCurrentDirectory();
     /// The default option set given to CMakeGenerate.
-    [<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
     let CMakeGenerateDefaults = {
         ToolPath = ""
         SourceDirectory = currentDirectory
@@ -112,7 +106,6 @@ module CMake =
     }
 
     /// The default option set given to CMakeBuild.
-    [<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
     let CMakeBuildDefaults = {
         ToolPath = ""
         BinaryDirectory = currentDirectory @@ "build"
@@ -131,20 +124,19 @@ module CMake =
     /// ## Parameters
     ///  - `exeName` - The name of the CMake executable (e.g. `cmake`, `ctest`, etc.) to find.
     ///    The `.exe` suffix will be automatically appended on Windows.
-    [<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
     let FindExe exeName =
-        let fullName = exeName + if isUnix then "" else ".exe"
+        let fullName = exeName + if Environment.isUnix then "" else ".exe"
         [
             Seq.singleton (currentDirectory @@ "tools" @@ "cmake.portable" @@ "tools" @@ "bin")
             Seq.singleton (currentDirectory @@ "packages" @@ "cmake.portable" @@ "tools" @@ "bin")
             Seq.singleton (currentDirectory @@ "tools" @@ "cmake" @@ "tools" @@ "bin")
             Seq.singleton (currentDirectory @@ "packages" @@ "cmake" @@ "tools" @@ "bin")
-            pathDirectories
+            Environment.pathDirectories
         ]
-        |> (fun list -> if isUnix then list else List.append list [Seq.singleton (ProgramFilesX86 @@ "CMake" @@ "bin")])
+        |> (fun list -> if Environment.isUnix then list else List.append list [Seq.singleton (Environment.ProgramFilesX86 @@ "CMake" @@ "bin")])
         |> Seq.concat
         |> Seq.map (fun directory -> directory @@ fullName)
-        |> Seq.tryFind fileExists
+        |> Seq.tryFind File.Exists
 
     /// [omit]
     /// Converts a file path to a valid CMake format.
@@ -162,34 +154,30 @@ module CMake =
     let private CallCMake toolPath binaryDir args timeout =
         // CMake expects an existing binary directory.
         // Not defaulted because it would prevent building multiple CMake projects in the same FAKE script.
-        if isNullOrEmpty binaryDir then failwith "The CMake binary directory is not set."
+        if String.IsNullOrEmpty binaryDir then failwith "The CMake binary directory is not set."
         // Try to find the CMake executable if not specified by the user.
         let cmakeExe =
-            if not <| isNullOrEmpty toolPath then toolPath else
+            if String.isNotNullOrEmpty toolPath then toolPath else
             let found = FindExe "cmake"
             if found <> None then found.Value else failwith "Cannot find the CMake executable."
         // CMake expects the binary directory to be passed as an argument.
         let arguments = if (String.IsNullOrEmpty args) then "\"" + binaryDir + "\"" else args
         let fullCommand = cmakeExe + " " + arguments
-        use __ = traceStartTaskUsing "CMake" fullCommand
-        let setInfo (info:ProcessStartInfo) =
-            info.FileName <- cmakeExe
-            info.WorkingDirectory <- binaryDir
-            info.Arguments <- arguments
-        let result = ExecProcess (setInfo) timeout
-        if result <> 0 then failwithf "CMake failed with exit code %i." result
+        use __ = Trace.traceTask "CMake" fullCommand
 
-    /// Calls `cmake` to generate a project.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeGenerateParams`.
-    [<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
-    let Generate setParams =
-        let parameters = setParams CMakeGenerateDefaults
+        let result = CreateProcess.fromRawCommandLine cmakeExe arguments
+                    |> CreateProcess.withWorkingDirectory binaryDir
+                    |> CreateProcess.withTimeout(timeout)
+                    |> Proc.run
+        if result.ExitCode <> 0 then failwithf $"CMake failed with exit code %i{result.ExitCode}."
+
+    /// [omit]
+    let getGenerateArguments parameters =
         // CMake expects an existing source directory.
         // Not defaulted because it would prevent building multiple CMake projects in the same FAKE script.
-        if isNullOrEmpty parameters.SourceDirectory then failwith "The CMake source directory is not set."
+        if String.IsNullOrEmpty parameters.SourceDirectory then failwith "The CMake source directory is not set."
         let argsIfNotEmpty format values =
-            List.filter (isNotNullOrEmpty) values
+            List.filter String.isNotNullOrEmpty values
             |> List.map (sprintf format)
         let generator = argsIfNotEmpty "-G \"%s\"" [parameters.Generator]
         let toolchain = argsIfNotEmpty "-D CMAKE_TOOLCHAIN_FILE:FILEPATH=\"%s\"" [FormatCMakePath parameters.Toolchain]
@@ -212,19 +200,26 @@ module CMake =
             [ generator; toolchain; toolset; platform; caches; installDir; variables; cacheEntriesToRemove
               [parameters.AdditionalArgs; "\"" + parameters.SourceDirectory + "\""]
             ] |> List.concat |> String.concat " "
+        args
+
+    /// Calls `cmake` to generate a project.
+    /// ## Parameters
+    ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeGenerateParams`.
+    let Generate setParams =
+        let parameters = setParams CMakeGenerateDefaults
+        let args = getGenerateArguments parameters
         CallCMake parameters.ToolPath parameters.BinaryDirectory args parameters.Timeout
 
     /// Calls `cmake --build` to build a project.
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeBuildParams`.
-    [<System.Obsolete("Use the Fake.Build.CMake module instead.")>]
     let Build setParams =
         let parameters = setParams CMakeBuildDefaults
         let targetArgs =
-            if isNullOrEmpty parameters.Target then ""
+            if String.IsNullOrEmpty parameters.Target then ""
             else " --target \"" + parameters.Target + "\""
         let configArgs =
-            if isNullOrEmpty parameters.Config then ""
+            if String.IsNullOrEmpty parameters.Config then ""
             else " --config \"" + parameters.Config + "\""
         let args =
             "--build \"" + parameters.BinaryDirectory + "\"" +
