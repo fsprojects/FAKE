@@ -95,6 +95,12 @@
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
+                        	<a href="/apidocs/v5/index.html#Fake.Build" class="navbar-link">Build</a>
+                        	<div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-build-cmake.html" class="navbar-item">CMake</a>
+                            </div>
+                        </div>
+						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
@@ -307,6 +313,12 @@
 		<div class="column is-9-desktop is-12-mobile">
 			<article class="content">
 				<h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-23-0-alpha001-2022-04-26" class="anchor" href="#5-23-0-alpha001-2022-04-26">5.23.0-alpha001 - 2022-04-26</a></h2>
+<ul>
+<li>ENHANCEMENT: Porting CMake module to FAKE 5, thanks @ziadadeela - <a href="https://github.com/fsprojects/FAKE/pull/2658">https://github.com/fsprojects/FAKE/pull/2658</a></li>
+<li>BUGFIX: Resolve symlinks while searching for dotnet, thanks @Smaug123 - <a href="https://github.com/fsprojects/FAKE/pull/2662">https://github.com/fsprojects/FAKE/pull/2662</a></li>
+<li>BUGFIX: SdkAssemblyResolver: Use dotnet --version to resolve the correct SDK, thanks @mclark1129 - <a href="https://github.com/fsprojects/FAKE/pull/2665">https://github.com/fsprojects/FAKE/pull/2665</a></li>
+</ul>
 <h2><a name="5-22-0-2022-02-14" class="anchor" href="#5-22-0-2022-02-14">5.22.0 - 2022-02-14</a></h2>
 <ul>
 <li>ENHANCEMENT: Enhance template tests and add dotnet cli APIs for new command, thanks @yazeedobaid - <a href="https://github.com/fsprojects/FAKE/pull/2636">https://github.com/fsprojects/FAKE/pull/2636</a></li>
@@ -2452,7 +2464,7 @@ New tasks:
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.23.0-alpha001</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

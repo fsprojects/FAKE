@@ -94,6 +94,12 @@
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
+                        	<a href="/apidocs/v5/index.html#Fake.Build" class="navbar-link">Build</a>
+                        	<div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-build-cmake.html" class="navbar-item">CMake</a>
+                            </div>
+                        </div>
+						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
@@ -378,10 +384,10 @@
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1139', 1139)" onmouseover="showTip(event, '1139', 1139)">
+          <code onmouseout="hideTip(event, '1143', 1143)" onmouseover="showTip(event, '1143', 1143)">
             createConfig(...)
           </code>
-          <div class="tip" id="1139">
+          <div class="tip" id="1143">
             <strong>Signature:</strong> logLevel:VerboseLevel -&gt; fsiOptions:string list -&gt; scriptPath:string -&gt; scriptArgs:string list -&gt; redirectConfig:((string -&gt; unit) * (string -&gt; unit)) option -&gt; useCache:bool -&gt; restoreOnlyGroup:bool -&gt; FakeConfig<br />
                                   </div>
         </td>
@@ -394,10 +400,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1140', 1140)" onmouseover="showTip(event, '1140', 1140)">
+          <code onmouseout="hideTip(event, '1144', 1144)" onmouseover="showTip(event, '1144', 1144)">
             createConfigSimple(...)
           </code>
-          <div class="tip" id="1140">
+          <div class="tip" id="1144">
             <strong>Signature:</strong> logLevel:VerboseLevel -&gt; fsiOptions:string list -&gt; scriptPath:string -&gt; scriptArgs:string list -&gt; useCache:bool -&gt; restoreOnlyGroup:bool -&gt; FakeConfig<br />
                                   </div>
         </td>
@@ -410,10 +416,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1141', 1141)" onmouseover="showTip(event, '1141', 1141)">
+          <code onmouseout="hideTip(event, '1145', 1145)" onmouseover="showTip(event, '1145', 1145)">
             paketCachingProvider(...)
           </code>
-          <div class="tip" id="1141">
+          <div class="tip" id="1145">
             <strong>Signature:</strong> config:FakeConfig -&gt; cacheDir:string -&gt; paketApi:Dependencies -&gt; paketDependenciesFile:Lazy&lt;DependenciesFile&gt; -&gt; group:string option -&gt; ICachingProvider<br />
                                   </div>
         </td>
@@ -426,10 +432,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1142', 1142)" onmouseover="showTip(event, '1142', 1142)">
+          <code onmouseout="hideTip(event, '1146', 1146)" onmouseover="showTip(event, '1146', 1146)">
             prepareFakeScript(config)
           </code>
-          <div class="tip" id="1142">
+          <div class="tip" id="1146">
             <strong>Signature:</strong> config:FakeConfig -&gt; PrepareInfo<br />
                                   </div>
         </td>
@@ -442,10 +448,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1143', 1143)" onmouseover="showTip(event, '1143', 1143)">
+          <code onmouseout="hideTip(event, '1147', 1147)" onmouseover="showTip(event, '1147', 1147)">
             restoreAndCreateCachingProvider(p)
           </code>
-          <div class="tip" id="1143">
+          <div class="tip" id="1147">
             <strong>Signature:</strong> p:PrepareInfo -&gt; ICachingProvider<br />
                                   </div>
         </td>
@@ -458,10 +464,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1144', 1144)" onmouseover="showTip(event, '1144', 1144)">
+          <code onmouseout="hideTip(event, '1148', 1148)" onmouseover="showTip(event, '1148', 1148)">
             runScript(preparedScript)
           </code>
-          <div class="tip" id="1144">
+          <div class="tip" id="1148">
             <strong>Signature:</strong> preparedScript:PrepareInfo -&gt; RunResult * ResultCoreCacheInfo * FakeContext<br />
                                   </div>
         </td>
@@ -474,10 +480,10 @@
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1145', 1145)" onmouseover="showTip(event, '1145', 1145)">
+          <code onmouseout="hideTip(event, '1149', 1149)" onmouseover="showTip(event, '1149', 1149)">
             tryPrepareFakeScript(config)
           </code>
-          <div class="tip" id="1145">
+          <div class="tip" id="1149">
             <strong>Signature:</strong> config:FakeConfig -&gt; TryPrepareInfo<br />
                                   </div>
         </td>
@@ -530,7 +536,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.23.0-alpha001</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

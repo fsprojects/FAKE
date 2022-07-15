@@ -94,6 +94,12 @@
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
+                        	<a href="/apidocs/v5/index.html#Fake.Build" class="navbar-link">Build</a>
+                        	<div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-build-cmake.html" class="navbar-item">CMake</a>
+                            </div>
+                        </div>
+						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
@@ -451,10 +457,10 @@ There is also a tutorial about <a href="/dotnet-nuget.html">nuget package creati
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '779', 779)" onmouseover="showTip(event, '779', 779)">
+          <code onmouseout="hideTip(event, '783', 783)" onmouseover="showTip(event, '783', 783)">
             galleryV3
           </code>
-          <div class="tip" id="779">
+          <div class="tip" id="783">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -476,10 +482,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '780', 780)" onmouseover="showTip(event, '780', 780)">
+          <code onmouseout="hideTip(event, '784', 784)" onmouseover="showTip(event, '784', 784)">
             getDependencies(packagesFile)
           </code>
-          <div class="tip" id="780">
+          <div class="tip" id="784">
             <strong>Signature:</strong> packagesFile:string -&gt; NuGetDependency list<br />
                                   </div>
         </td>
@@ -494,10 +500,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '781', 781)" onmouseover="showTip(event, '781', 781)">
+          <code onmouseout="hideTip(event, '785', 785)" onmouseover="showTip(event, '785', 785)">
             getLatestPackage repoUrl packageName
           </code>
-          <div class="tip" id="781">
+          <div class="tip" id="785">
             <strong>Signature:</strong> repoUrl:string -&gt; packageName:string -&gt; NugetPackageInfo<br />
                                   </div>
         </td>
@@ -517,10 +523,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '782', 782)" onmouseover="showTip(event, '782', 782)">
+          <code onmouseout="hideTip(event, '786', 786)" onmouseover="showTip(event, '786', 786)">
             getNuspecProperties(nuspec)
           </code>
-          <div class="tip" id="782">
+          <div class="tip" id="786">
             <strong>Signature:</strong> nuspec:string -&gt; NuSpecPackage<br />
                                   </div>
         </td>
@@ -539,10 +545,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '783', 783)" onmouseover="showTip(event, '783', 783)">
+          <code onmouseout="hideTip(event, '787', 787)" onmouseover="showTip(event, '787', 787)">
             getPackage repoUrl packageName version
           </code>
-          <div class="tip" id="783">
+          <div class="tip" id="787">
             <strong>Signature:</strong> repoUrl:string -&gt; packageName:string -&gt; version:string -&gt; NugetPackageInfo<br />
                                   </div>
         </td>
@@ -563,10 +569,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '784', 784)" onmouseover="showTip(event, '784', 784)">
+          <code onmouseout="hideTip(event, '788', 788)" onmouseover="showTip(event, '788', 788)">
             GetPackageVersion deploymentsDir package
           </code>
-          <div class="tip" id="784">
+          <div class="tip" id="788">
             <strong>Signature:</strong> deploymentsDir:string -&gt; package:string -&gt; string<br />
                                   </div>
         </td>
@@ -581,10 +587,10 @@ Default NuGet feed
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '785', 785)" onmouseover="showTip(event, '785', 785)">
+          <code onmouseout="hideTip(event, '789', 789)" onmouseover="showTip(event, '789', 789)">
             NuGet setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="785">
+          <div class="tip" id="789">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                   </div>
         </td>
@@ -605,10 +611,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '786', 786)" onmouseover="showTip(event, '786', 786)">
+          <code onmouseout="hideTip(event, '790', 790)" onmouseover="showTip(event, '790', 790)">
             NuGetDefaults()
           </code>
-          <div class="tip" id="786">
+          <div class="tip" id="790">
             <strong>Signature:</strong> unit -&gt; NuGetParams<br />
                                   </div>
         </td>
@@ -623,10 +629,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '787', 787)" onmouseover="showTip(event, '787', 787)">
+          <code onmouseout="hideTip(event, '791', 791)" onmouseover="showTip(event, '791', 791)">
             NuGetPack setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="787">
+          <div class="tip" id="791">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                   </div>
         </td>
@@ -647,10 +653,10 @@ Template parameter substitution is performed when passing a .nuspec</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '788', 788)" onmouseover="showTip(event, '788', 788)">
+          <code onmouseout="hideTip(event, '792', 792)" onmouseover="showTip(event, '792', 792)">
             NuGetPackDirectly(...)
           </code>
-          <div class="tip" id="788">
+          <div class="tip" id="792">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                                   </div>
         </td>
@@ -671,10 +677,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '789', 789)" onmouseover="showTip(event, '789', 789)">
+          <code onmouseout="hideTip(event, '793', 793)" onmouseover="showTip(event, '793', 793)">
             NuGetPublish(setParams)
           </code>
-          <div class="tip" id="789">
+          <div class="tip" id="793">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -693,10 +699,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '790', 790)" onmouseover="showTip(event, '790', 790)">
+          <code onmouseout="hideTip(event, '794', 794)" onmouseover="showTip(event, '794', 794)">
             RequireExactly(version)
           </code>
-          <div class="tip" id="790">
+          <div class="tip" id="794">
             <strong>Signature:</strong> version:string -&gt; string<br />
                                   </div>
         </td>
@@ -711,10 +717,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '791', 791)" onmouseover="showTip(event, '791', 791)">
+          <code onmouseout="hideTip(event, '795', 795)" onmouseover="showTip(event, '795', 795)">
             RequireRange breakingPoint version
           </code>
-          <div class="tip" id="791">
+          <div class="tip" id="795">
             <strong>Signature:</strong> breakingPoint:BreakingPoint -&gt; version:string -&gt; string<br />
                                   </div>
         </td>
@@ -727,10 +733,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '792', 792)" onmouseover="showTip(event, '792', 792)">
+          <code onmouseout="hideTip(event, '796', 796)" onmouseover="showTip(event, '796', 796)">
             searchByTitle repoUrl packageName
           </code>
-          <div class="tip" id="792">
+          <div class="tip" id="796">
             <strong>Signature:</strong> repoUrl:string -&gt; packageName:string -&gt; NugetPackageInfo list<br />
                                   </div>
         </td>
@@ -758,10 +764,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '793', 793)" onmouseover="showTip(event, '793', 793)">
+          <code onmouseout="hideTip(event, '797', 797)" onmouseover="showTip(event, '797', 797)">
             x.DownloadData(uri)
           </code>
-          <div class="tip" id="793">
+          <div class="tip" id="797">
             <strong>Signature:</strong> uri:string -&gt; byte []<br />
                                   </div>
         </td>
@@ -774,10 +780,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '794', 794)" onmouseover="showTip(event, '794', 794)">
+          <code onmouseout="hideTip(event, '798', 798)" onmouseover="showTip(event, '798', 798)">
             x.DownloadData(uri)
           </code>
-          <div class="tip" id="794">
+          <div class="tip" id="798">
             <strong>Signature:</strong> uri:Uri -&gt; byte []<br />
                                   </div>
         </td>
@@ -790,10 +796,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '795', 795)" onmouseover="showTip(event, '795', 795)">
+          <code onmouseout="hideTip(event, '799', 799)" onmouseover="showTip(event, '799', 799)">
             x.DownloadDataTaskAsync(uri)
           </code>
-          <div class="tip" id="795">
+          <div class="tip" id="799">
             <strong>Signature:</strong> uri:Uri -&gt; Task&lt;byte []&gt;<br />
                                   </div>
         </td>
@@ -806,10 +812,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '796', 796)" onmouseover="showTip(event, '796', 796)">
+          <code onmouseout="hideTip(event, '800', 800)" onmouseover="showTip(event, '800', 800)">
             x.DownloadDataTaskAsync(uri)
           </code>
-          <div class="tip" id="796">
+          <div class="tip" id="800">
             <strong>Signature:</strong> uri:string -&gt; Task&lt;byte []&gt;<br />
                                   </div>
         </td>
@@ -822,10 +828,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '797', 797)" onmouseover="showTip(event, '797', 797)">
+          <code onmouseout="hideTip(event, '801', 801)" onmouseover="showTip(event, '801', 801)">
             x.DownloadFile(uri, filePath)
           </code>
-          <div class="tip" id="797">
+          <div class="tip" id="801">
             <strong>Signature:</strong> (uri:string * filePath:string) -&gt; unit<br />
                                   </div>
         </td>
@@ -838,10 +844,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '798', 798)" onmouseover="showTip(event, '798', 798)">
+          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
             x.DownloadFile(uri, filePath)
           </code>
-          <div class="tip" id="798">
+          <div class="tip" id="802">
             <strong>Signature:</strong> (uri:Uri * filePath:string) -&gt; unit<br />
                                   </div>
         </td>
@@ -854,10 +860,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '799', 799)" onmouseover="showTip(event, '799', 799)">
+          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
             x.DownloadFileTaskAsync(uri, filePath)
           </code>
-          <div class="tip" id="799">
+          <div class="tip" id="803">
             <strong>Signature:</strong> (uri:Uri * filePath:string) -&gt; Task&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -870,10 +876,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '800', 800)" onmouseover="showTip(event, '800', 800)">
+          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
             x.DownloadFileTaskAsync(uri, filePath)
           </code>
-          <div class="tip" id="800">
+          <div class="tip" id="804">
             <strong>Signature:</strong> (uri:string * filePath:string) -&gt; Task&lt;unit&gt;<br />
                                   </div>
         </td>
@@ -886,10 +892,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '801', 801)" onmouseover="showTip(event, '801', 801)">
+          <code onmouseout="hideTip(event, '805', 805)" onmouseover="showTip(event, '805', 805)">
             x.DownloadString(uri)
           </code>
-          <div class="tip" id="801">
+          <div class="tip" id="805">
             <strong>Signature:</strong> uri:string -&gt; string<br />
                                   </div>
         </td>
@@ -902,10 +908,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
+          <code onmouseout="hideTip(event, '806', 806)" onmouseover="showTip(event, '806', 806)">
             x.DownloadString(uri)
           </code>
-          <div class="tip" id="802">
+          <div class="tip" id="806">
             <strong>Signature:</strong> uri:Uri -&gt; string<br />
                                   </div>
         </td>
@@ -918,10 +924,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
+          <code onmouseout="hideTip(event, '807', 807)" onmouseover="showTip(event, '807', 807)">
             x.DownloadStringTaskAsync(uri)
           </code>
-          <div class="tip" id="803">
+          <div class="tip" id="807">
             <strong>Signature:</strong> uri:Uri -&gt; Task&lt;string&gt;<br />
                                   </div>
         </td>
@@ -934,10 +940,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
+          <code onmouseout="hideTip(event, '808', 808)" onmouseover="showTip(event, '808', 808)">
             x.DownloadStringTaskAsync(uri)
           </code>
-          <div class="tip" id="804">
+          <div class="tip" id="808">
             <strong>Signature:</strong> uri:string -&gt; Task&lt;string&gt;<br />
                                   </div>
         </td>
@@ -950,10 +956,10 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '805', 805)" onmouseover="showTip(event, '805', 805)">
+          <code onmouseout="hideTip(event, '809', 809)" onmouseover="showTip(event, '809', 809)">
             x.UploadFileAsMultipart url filename
           </code>
-          <div class="tip" id="805">
+          <div class="tip" id="809">
             <strong>Signature:</strong> url:Uri -&gt; filename:string -&gt; HttpResponseMessage<br />
                                   </div>
         </td>
@@ -1004,7 +1010,7 @@ The .nuspec / projectfile is passed as-is (no templating is performed)</p>
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.23.0-alpha001</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>

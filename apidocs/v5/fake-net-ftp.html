@@ -94,6 +94,12 @@
 							</div>
 						</div>
 						<div class="navbar-item has-dropdown is-hoverable">
+                        	<a href="/apidocs/v5/index.html#Fake.Build" class="navbar-link">Build</a>
+                        	<div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-build-cmake.html" class="navbar-item">CMake</a>
+                            </div>
+                        </div>
+						<div class="navbar-item has-dropdown is-hoverable">
 							<a href="/buildserver.html" class="navbar-link">BuildServer</a>
 							<div class="navbar-dropdown" class="navbar-item">
 								<a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
@@ -351,10 +357,10 @@ Does not support FTPS and SFTP.</p>
     <tbody>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1097', 1097)" onmouseover="showTip(event, '1097', 1097)">
+          <code onmouseout="hideTip(event, '1101', 1101)" onmouseover="showTip(event, '1101', 1101)">
             FTP.createAFolder(...)
           </code>
-          <div class="tip" id="1097">
+          <div class="tip" id="1101">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -376,10 +382,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1098', 1098)" onmouseover="showTip(event, '1098', 1098)">
+          <code onmouseout="hideTip(event, '1102', 1102)" onmouseover="showTip(event, '1102', 1102)">
             FTP.deleteAFile server user pwd destPath
           </code>
-          <div class="tip" id="1098">
+          <div class="tip" id="1102">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -401,10 +407,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1099', 1099)" onmouseover="showTip(event, '1099', 1099)">
+          <code onmouseout="hideTip(event, '1103', 1103)" onmouseover="showTip(event, '1103', 1103)">
             FTP.deleteAFolder(...)
           </code>
-          <div class="tip" id="1099">
+          <div class="tip" id="1103">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -426,10 +432,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1100', 1100)" onmouseover="showTip(event, '1100', 1100)">
+          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
             FTP.getFtpDirContents(...)
           </code>
-          <div class="tip" id="1100">
+          <div class="tip" id="1104">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; dirPath:string -&gt; string<br />
                                   </div>
         </td>
@@ -451,10 +457,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1101', 1101)" onmouseover="showTip(event, '1101', 1101)">
+          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
             FTP.getServerInfo(...)
           </code>
-          <div class="tip" id="1101">
+          <div class="tip" id="1105">
             <strong>Signature:</strong> serverNameIp:string -&gt; user:string -&gt; password:string -&gt; ftpMethod:string -&gt; FtpServerInfo<br />
                                   </div>
         </td>
@@ -469,10 +475,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1102', 1102)" onmouseover="showTip(event, '1102', 1102)">
+          <code onmouseout="hideTip(event, '1106', 1106)" onmouseover="showTip(event, '1106', 1106)">
             FTP.isFolderPresent(...)
           </code>
-          <div class="tip" id="1102">
+          <div class="tip" id="1106">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; bool<br />
                                   </div>
         </td>
@@ -494,10 +500,10 @@ Does not support FTPS and SFTP.</p>
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1103', 1103)" onmouseover="showTip(event, '1103', 1103)">
+          <code onmouseout="hideTip(event, '1107', 1107)" onmouseover="showTip(event, '1107', 1107)">
             FTP.isValidDirectoryName(directoryName)
           </code>
-          <div class="tip" id="1103">
+          <div class="tip" id="1107">
             <strong>Signature:</strong> directoryName:string -&gt; bool<br />
                                   </div>
         </td>
@@ -513,10 +519,10 @@ Partial validation for folder name, based on <a href="http://msdn.microsoft.com/
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1104', 1104)" onmouseover="showTip(event, '1104', 1104)">
+          <code onmouseout="hideTip(event, '1108', 1108)" onmouseover="showTip(event, '1108', 1108)">
             FTP.regexCheck folderName ftpContents
           </code>
-          <div class="tip" id="1104">
+          <div class="tip" id="1108">
             <strong>Signature:</strong> folderName:string -&gt; ftpContents:string -&gt; bool<br />
               <strong>Modifiers:</strong> inline<br />
                                   </div>
@@ -532,10 +538,10 @@ Partial validation for folder name, based on <a href="http://msdn.microsoft.com/
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1105', 1105)" onmouseover="showTip(event, '1105', 1105)">
+          <code onmouseout="hideTip(event, '1109', 1109)" onmouseover="showTip(event, '1109', 1109)">
             FTP.uploadAFile(...)
           </code>
-          <div class="tip" id="1105">
+          <div class="tip" id="1109">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; srcPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -558,10 +564,10 @@ Partial validation for folder name, based on <a href="http://msdn.microsoft.com/
       </tr>
       <tr>
         <td class="member-name">
-          <code onmouseout="hideTip(event, '1106', 1106)" onmouseover="showTip(event, '1106', 1106)">
+          <code onmouseout="hideTip(event, '1110', 1110)" onmouseover="showTip(event, '1110', 1110)">
             FTP.uploadAFolder(...)
           </code>
-          <div class="tip" id="1106">
+          <div class="tip" id="1110">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; srcPath:string -&gt; rootDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -622,7 +628,7 @@ Partial validation for folder name, based on <a href="http://msdn.microsoft.com/
 									</ul>
 								</div>
 							</div>
-							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.22.0</a></div>
+							<div class="p-t-lg has-text-grey-light">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.23.0-alpha001</a></div>
 						</div>
 						<div class="column is-6">
 							<h4 class="title is-4">FAKE is a community effort</h4>
