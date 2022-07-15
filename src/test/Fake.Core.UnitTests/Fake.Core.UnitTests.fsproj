@@ -6,6 +6,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.Build.CMake\Fake.Build.CMake.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.AssemblyInfoFile\Fake.DotNet.AssemblyInfoFile.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Fsi\Fake.DotNet.Fsi.fsproj" />
@@ -15,6 +16,8 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.VSTest\Fake.DotNet.Testing.VSTest.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Net.SSH\Fake.Net.SSH.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Net.FTP\Fake.Net.FTP.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Testing.Fixie\Fake.Testing.Fixie.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.GitVersion\Fake.Tools.GitVersion.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
@@ -49,6 +52,7 @@
     <Compile Include="Fake.ContextHelper.fs" />
     <Compile Include="Fake.Testing.ArgumentHelper.fs" />
     <Compile Include="Fake.IO.Globbing.fs" />
+    <Compile Include="Fake.Build.CMake.fs" />
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.DotNet.AssemblyInfoFile.fs" />
     <Compile Include="Fake.DotNet.ILMerge.fs" />
@@ -62,6 +66,7 @@
     <Compile Include="Fake.DotNet.Testing.Coverlet.fs" />
     <Compile Include="Fake.DotNet.Fsi.fs" />
     <Compile Include="Fake.DotNet.Xdt.fs" />
+    <Compile Include="Fake.DotNet.SdkAssemblyResolver.fs" />
     <Compile Include="Fake.Testing.ReportGenerator.fs" />
     <Compile Include="Fake.Testing.SonarQube.fs" />
     <Compile Include="Fake.Testing.Fixie.fs" />
@@ -76,6 +81,8 @@
     <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
+    <Compile Include="Fake.Net.SSH.fs" />
+    <Compile Include="Fake.Net.FTP.fs" />
     <Compile Include="Fake.Tools.GitVersion.fs" />
     <Compile Include="Fake.Tools.Octo.fs" />
     <Compile Include="Fake.Sql.SqlPackage.fs" />

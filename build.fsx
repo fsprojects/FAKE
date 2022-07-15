@@ -32,7 +32,9 @@ nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
-nuget Octokit //"
+nuget System.Net.Http
+nuget Octokit
+nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
 open System
@@ -49,6 +51,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 open Fake.Core.TargetOperators
+open System.Net.Http
+open Microsoft.Deployment.DotNet.Releases
 
 // ****************************************************************************************************
 // ------------------------------------------- Definitions -------------------------------------------
@@ -203,7 +207,7 @@ let version =
                 |> Seq.append [ 0I ]
                 |> Seq.max
             let d = System.DateTime.Now
-            [ PreReleaseSegment.AlphaNumeric ("local-" + (currentVer + 1I).ToString()) ], d.ToString("yyyy-MM-dd-HH-mm")
+            [ PreReleaseSegment.AlphaNumeric ("local." + (currentVer + 1I).ToString()) ], d.ToString("yyyy-MM-dd-HH-mm")
 
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =
@@ -324,6 +328,7 @@ let dotnetAssemblyInfos =
       "Fake.Azure.Emulators", "Azure Emulators Support"
       "Fake.Azure.Kudu", "Azure Kudu Support"
       "Fake.Azure.WebJobs", "Azure Web Jobs Support"
+      "Fake.Build.CMake", "CMake commands"
       "Fake.BuildServer.AppVeyor", "Integration into AppVeyor buildserver"
       "Fake.BuildServer.GitLab", "Integration into GitLab-CI buildserver"
       "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
@@ -377,6 +382,8 @@ let dotnetAssemblyInfos =
       "Fake.JavaScript.Yarn", "Running Yarn commands"
       "Fake.JavaScript.TypeScript", "Running TypeScript compiler"
       "Fake.Net.Http", "HTTP Client"
+      "Fake.Net.SSH", "SSH operations"
+      "Fake.Net.FTP", "FTP operations"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations (Obsolete: Use Fake.Sql.SqlPackage instead)"
@@ -1308,6 +1315,30 @@ for runtime in "current" :: "portable" :: runtimes do
     | None -> "_DotNetPackage" ?=> rawTargetName |> ignore
     prev <- Some rawTargetName
 
+Target.create "CacheDotNetReleases" (fun _ ->
+    let sdkVersionReleases =
+        ProductCollection.GetAsync()
+        |> Async.AwaitTask
+        |> Async.RunSynchronously
+        |> List.ofSeq
+        |> List.find (fun product -> product.ProductVersion.Equals("6.0"))
+
+    let client = new HttpClient()
+    try
+      let response =
+          sdkVersionReleases.ReleasesJson
+          |> client.GetAsync
+          |> Async.AwaitTask
+          |> Async.RunSynchronously
+
+      response.Content.ReadAsStringAsync()
+          |> Async.AwaitTask
+          |> Async.RunSynchronously
+          |> Fake.IO.File.writeString false "src/app/Fake.Runtime/cachedDotnetSdkReleases.json"
+      with e ->
+        failwith "Could not update DotNet releases file."
+)
+
 // ****************************************************************************************************
 // --------------------------------------- Targets Dependencies ---------------------------------------
 // ****************************************************************************************************
@@ -1327,6 +1358,7 @@ for runtime in "current" :: "portable" :: runtimes do
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "_StartDnc"
+    ==> "CacheDotNetReleases"
     ==> "_DotNetPackage"
 "_DotNetPackage"
     ==> "DotNetPackage"

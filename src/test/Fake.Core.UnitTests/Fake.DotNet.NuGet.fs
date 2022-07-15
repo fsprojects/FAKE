@@ -98,18 +98,25 @@ let tests =
             Expect.equal package.Title "FAKE" "Title filled"
         
         testCase "Search by title returns results for matching packages by provided title" <| fun _ ->
-            let packages: NuGet.NugetPackageInfo list = NuGet.searchByTitle (NuGet.getRepoUrl()) "FAKE"
-            Expect.isGreaterThanOrEqual packages.Length 1 "Expected result has at least one element"
-            Expect.equal packages.[0].Id "FAKE" "Id filled"
-            Expect.isNotEmpty packages.[0].Version "Version filled"
-            Expect.isNotEmpty packages.[0].Description "Description filled"
-            Expect.isNotEmpty packages.[0].Summary "Id filled"
-            Expect.isFalse packages.[0].IsLatestVersion "IsLatestVersion filled"
-            Expect.isNotEmpty packages.[0].Authors "Authors filled"
-            Expect.isNotEmpty packages.[0].Owners "Owners filled"
-            Expect.isNotEmpty packages.[0].Tags "Tags filled"
-            Expect.isNotEmpty packages.[0].ProjectUrl "ProjectUrl filled"
-            Expect.isNotEmpty packages.[0].LicenseUrl "LicenseUrl filled"
-            Expect.equal packages.[0].Title "FAKE" "Title filled"
+            let package = 
+                NuGet.searchByTitle 
+                    (NuGet.getRepoUrl()) 
+                    "FAKE"
+                |> List.tryFind (fun p -> p.Id = "FAKE")
+
+            Expect.isSome package "FAKE package was not found in NuGet"
+
+            let p = package.Value
+            Expect.equal p.Id "FAKE" "Id filled"
+            Expect.isNotEmpty p.Version "Version filled"
+            Expect.isNotEmpty p.Description "Description filled"
+            Expect.isNotEmpty p.Summary "Summary filled"
+            Expect.isFalse p.IsLatestVersion "IsLatestVersion filled"
+            Expect.isNotEmpty p.Authors "Authors filled"
+            Expect.isNotEmpty p.Owners "Owners filled"
+            Expect.isNotEmpty p.Tags "Tags filled"
+            Expect.isNotEmpty p.ProjectUrl "ProjectUrl filled"
+            Expect.isNotEmpty p.LicenseUrl "LicenseUrl filled"
+            Expect.equal p.Title "FAKE" "Title filled"
     ]
 

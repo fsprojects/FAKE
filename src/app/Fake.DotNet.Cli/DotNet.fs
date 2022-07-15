@@ -230,6 +230,8 @@ module DotNet =
             DryRun: bool
             /// Do not update path variable
             NoPath: bool
+            /// Command working directory
+            WorkingDirectory: string
         }
 
         /// Parameter default values.
@@ -243,6 +245,7 @@ module DotNet =
             DebugSymbols = false
             DryRun = false
             NoPath = true
+            WorkingDirectory = "."
         }
 
     /// The a list of well-known versions to install
@@ -658,10 +661,8 @@ module DotNet =
                 // make sure to write global.json if we did not read the version from it
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
-                if File.Exists globalJsonPath then
-                    let readVersion = getSDKVersionFromGlobalJsonDir workDir
-                    if readVersion <> version then failwithf "Existing global.json with a different version found!"
-                    false
+                if File.Exists globalJsonPath 
+                then false 
                 else
                     let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
@@ -940,7 +941,7 @@ module DotNet =
             match checkVersion with
             | Some version ->
                 let passVersion = if fromGlobalJson then None else Some version
-                withGlobalJson "." passVersion (fun () ->
+                withGlobalJson param.WorkingDirectory passVersion (fun () ->
                     dotnetInstallations
                     |> Seq.tryFind (fun dotnet ->
                         try
@@ -1694,3 +1695,157 @@ module DotNet =
             nugetPush (fun _ -> param.WithPushParams { pushParams with PushTrials = pushParams.PushTrials - 1 }) nupkg
         else
             failwithf "dotnet nuget push failed with code %i" result.ExitCode
+
+    /// the languages supported by new command
+    type NewLanguage =
+        | FSharp
+        | CSharp
+        | VisualBasic
+
+        /// Convert the list option to string representation
+        override this.ToString() =
+            match this with
+            | FSharp -> "F#"
+            | CSharp -> "C#"
+            | VisualBasic -> "VB"
+
+    /// dotnet new command options
+    type NewOptions =
+        {
+            /// Common tool options
+            Common: Options
+            // Displays a summary of what would happen if the given command line were run if it would result in a template creation.
+            DryRun: bool
+            // Forces content to be generated even if it would change existing files.
+            Force: bool
+            // Filters templates based on language and specifies the language of the template to create.
+            Language: NewLanguage
+            // The name for the created output. If no name is specified, the name of the current directory is used.
+            Name: string option
+            // Disables checking for template package updates when instantiating a template.
+            NoUpdateCheck: bool
+            // Location to place the generated output. The default is the current directory.
+            Output: string option
+        }
+
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create()
+            DryRun = false
+            Force = false
+            Language = NewLanguage.FSharp
+            Name = None
+            NoUpdateCheck = false
+            Output = None
+        }
+
+    /// dotnet new --install options
+    type TemplateInstallOptions =
+        {
+            /// Common tool options
+            Common: Options
+            Install: string
+            NugetSource: string option
+        }
+
+        /// Parameter default values.
+        static member Create(packageOrSourceName) = {
+            Common = Options.Create()
+            Install = packageOrSourceName
+            NugetSource = None
+        }
+
+    /// dotnet new --install options
+    type TemplateUninstallOptions =
+        {
+            /// Common tool options
+            Common: Options
+            Uninstall: string
+        }
+
+        /// Parameter default values.
+        static member Create(packageOrSourceName) = {
+            Common = { Options.Create() with RedirectOutput = true }
+            Uninstall = packageOrSourceName
+        }
+
+    /// [omit]
+    let internal buildNewArgs (param: NewOptions) =
+        [
+            param.DryRun |>  argOption "dry-run"
+            param.Force |>  argOption "force"
+            argList2 "language" [param.Language.ToString()]
+            param.Name |> Option.toList |> argList2 "name"
+            param.NoUpdateCheck |> argOption "no-update-check"
+            param.Output |> Option.toList |> argList2 "output"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// [omit]
+    let internal buildTemplateInstallArgs (param: TemplateInstallOptions) =
+        [
+            argList2 "install" [param.Install]
+            param.NugetSource |> Option.toList |>  argList2 "nuget-source"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// [omit]
+    let internal buildTemplateUninstallArgs (param: TemplateUninstallOptions) =
+        [
+            argList2 "uninstall" [param.Uninstall]
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
+
+    /// Execute dotnet new command
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to create from
+    /// - 'setParams' - set version command parameters
+    let newFromTemplate templateName setParams =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new command"
+        let param = NewOptions.Create() |> setParams
+        let args = Args.toWindowsCommandLine(buildNewArgs param)
+        let result = exec (fun _ -> param.Common) $"new {templateName}" args
+        if not result.OK then failwithf $"dotnet new failed with code %i{result.ExitCode}"
+        __.MarkSuccess()
+
+    /// Execute dotnet new --install <PATH|NUGET_ID> command to install a new template
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to install
+    /// - 'setParams' - set version command parameters
+    let installTemplate templateName setParams =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new --install command"
+        let param = TemplateInstallOptions.Create(templateName) |> setParams
+        let args = Args.toWindowsCommandLine(buildTemplateInstallArgs param)
+        let result = exec (fun _ -> param.Common) "new" args
+        if not result.OK then failwithf $"dotnet new --install failed with code %i{result.ExitCode}"
+        __.MarkSuccess()
+
+    /// Execute dotnet new --uninstall <PATH|NUGET_ID> command to uninstall a new template
+    /// ## Parameters
+    ///
+    /// - 'templateName' - template short name to uninstall
+    /// - 'setParams' - set version command parameters
+    let uninstallTemplate templateName =
+        use __ = Trace.traceTask "DotNet:new" "dotnet new --uninstall command"
+        let param = TemplateUninstallOptions.Create(templateName)
+        let args = Args.toWindowsCommandLine(buildTemplateUninstallArgs param)
+        let result = exec (fun _ -> param.Common) "new" args
+
+        // If the process returns error (exit code != 0) then check to see if a message is 
+        // that the template was not found.  If this message exists, assume the process 
+        // completed with success
+        let templateIsNotFoundToUninstall =
+            result.Results
+            |> List.exists(fun (result:ConsoleMessage) -> result.Message.Contains $"The template package '{templateName}' is not found.")
+
+        let success = (result.ExitCode = 0) || templateIsNotFoundToUninstall
+        match success with
+        | true -> ()
+        | false -> failwithf $"dotnet new --uninstall failed with code %i{result.ExitCode}"
+
+        __.MarkSuccess()

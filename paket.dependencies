@@ -69,6 +69,7 @@ group netcorerunner
     storage: none
 
     nuget FSharp.Core
+    nuget Microsoft.Deployment.DotNet.Releases
     nuget Paket.Core
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1

@@ -124,7 +124,7 @@ let compile (context:FakeContext) outDll =
     let co = context.Config.CompileOptions
 
     let targetProfile = 
-        if SdkAssemblyResolver().IsResolvedSdkVersionSameAsLTSVersion()
+        if SdkAssemblyResolver(context.Config.VerboseLevel).IsSdkVersionFromGlobalJsonSameAsSdkVersion()
         then "--targetprofile:netcore"
         else "--targetprofile:netstandard"
 
