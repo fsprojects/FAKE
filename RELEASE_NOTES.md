@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.23.0-alpha001 - 2022-04-26
+* ENHANCEMENT: Porting CMake module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2658
+* BUGFIX: Resolve symlinks while searching for dotnet, thanks @Smaug123 - https://github.com/fsprojects/FAKE/pull/2662
+* BUGFIX: SdkAssemblyResolver: Use dotnet --version to resolve the correct SDK, thanks @mclark1129 - https://github.com/fsprojects/FAKE/pull/2665
+
 ## 5.22.0 - 2022-02-14
 * ENHANCEMENT: Enhance template tests and add dotnet cli APIs for new command, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2636
 * ENHANCEMENT: Porting SSH module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2652
