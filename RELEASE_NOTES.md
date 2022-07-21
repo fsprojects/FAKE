@@ -41,6 +41,8 @@
 * ENHANCEMENT: Add Net6 Target to Fake.BuildServer.GitHubActions
 * ENHANCEMENT: Add Net6 Target to Fake.BuildServer.GitLab
 * ENHANCEMENT: Add Net6 Target to Fake.BuildServer.TeamFoundation and remove FAKE_VSO_PUSH_ALWAYS since issue is now fixed
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.TeamCity
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.AppVeyor and replace deprecated `Process.quoteIfNeeded` with alternatives
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
