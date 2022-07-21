@@ -70,12 +70,7 @@ let private parseVersions =
     let nugetRegexLegacy = String.getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     let nugetRegex = 
         /// From Fake.Core.SemVer
-        let pattern =
-            @"^(?<major>\d+)" +
-            @"(\.(?<minor>\d+))?" +
-            @"(\.(?<patch>\d+))?" +
-            @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
-            @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
+        let pattern = SemVerActivePattern.Pattern
         String.getRegEx pattern
     let assemblyVersionRegex = String.getRegEx @"([0-9]+.)+[0-9]+"
     fun line ->
@@ -84,22 +79,24 @@ let private parseVersions =
         then failwithf "Unable to parse valid Assembly version from release notes (%s)." line
 
         let nugetVersion = 
-            /// Must split by whitespace to try match start of line and end of line in SemVer regex pattern
             let nugetVersion = 
+                // Must split by whitespace to try match start of line and end of line in SemVer regex pattern
                 line.Split(' ') 
                 |> Array.tryPick (fun segment -> 
+                  // Trim() might be unnecessary
                   let m = segment.Trim() |> nugetRegex.Match
                   if m.Success then Some m else None
                 )
-            if nugetVersion.IsSome // if isSome then it must be Success, so no need to check for that
-            then nugetVersion.Value
-            else
-                /// Adds support for "nugetRegexLegacy" after change to correct SemVer parsing.
-                /// This should lead to the least disruption to users.
-                let nugetVersionLegacy = nugetRegexLegacy.Match line
-                if nugetVersionLegacy.Success
-                then nugetVersionLegacy
-                else failwithf "Unable to parse valid Nuget version from release notes (%s)." line
+            // Add support for "nugetRegexLegacy" after change to correct SemVer parsing.
+            // This should lead to the least disruption to users.
+            let nugetVersionLegacy = 
+                let m = nugetRegexLegacy.Match line
+                if m.Success then Some m else None
+            match nugetVersion, nugetVersionLegacy with
+            // if nugetVersion.IsSome then it must be Success, so no need to check for that
+            | Some nugetVersionValue, _             -> nugetVersionValue
+            | None, Some nugetVersionLegacyValue    -> nugetVersionLegacyValue
+            | None, none                            -> failwithf "Unable to parse valid Nuget version from release notes (%s)." line
         assemblyVersion, nugetVersion
 
 let private parseDate =
