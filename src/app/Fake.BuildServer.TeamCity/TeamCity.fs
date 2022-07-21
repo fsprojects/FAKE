@@ -1,4 +1,3 @@
-/// Contains support for various build servers
 namespace Fake.BuildServer
 
 open System
@@ -39,19 +38,16 @@ module TeamCityImportExtensions =
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
-/// 
 /// For more information on TeamCity interaction from build scripts [see here](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity)
 [<RequireQualifiedAccess>]
 module TeamCity =
     open Fake.IO
 
-    
-
     /// Open Named Block that will be closed when the block is disposed
     /// Usage: `use __ = TeamCity.block "My Block"`
     let block name description =
         TeamCityWriter.sendOpenBlock name description
-        { new System.IDisposable
+        { new IDisposable
             with member __.Dispose() = TeamCityWriter.sendCloseBlock name }
 
     /// Sends an error to TeamCity
@@ -134,7 +130,7 @@ module TeamCity =
     let internal startTestCase testCaseName = TeamCityWriter.sendTestStarted testCaseName
 
     /// Finishes the test case.
-    let internal finishTestCase testCaseName (duration : System.TimeSpan) = 
+    let internal finishTestCase testCaseName (duration : TimeSpan) = 
         TeamCityWriter.sendTestFinished testCaseName (duration.TotalMilliseconds |> round |> string)
 
     /// Ignores the test case.
@@ -199,7 +195,6 @@ module TeamCity =
     let internal error message = TeamCityWriter.sendMessage "ERROR" message
 
     /// TeamCity build parameters
-    ///
     /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
     type BuildParameters =
         /// Get all system build parameters (Without the 'system.' prefix)
@@ -247,9 +242,9 @@ module TeamCity =
                     for line in File.read file do
                         let split = line.Split(':')
                         if split.Length = 3 then
-                            let filePath = split.[0]
+                            let filePath = split[0]
                             let modificationType =
-                                match split.[1].ToUpperInvariant() with
+                                match split[1].ToUpperInvariant() with
                                 | "CHANGED" -> FileChanged
                                 | "ADDED" -> FileAdded
                                 | "REMOVED" -> FileRemoved
@@ -257,9 +252,9 @@ module TeamCity =
                                 | "DIRECTORY_CHANGED" -> DirectoryChanged
                                 | "DIRECTORY_ADDED" -> DirectoryAdded
                                 | "DIRECTORY_REMOVED" -> DirectoryRemoved
-                                | _ -> failwithf "Unknown change type: %s" (split.[1])
+                                | _ -> failwithf "Unknown change type: %s" split[1]
                             let revision =
-                                match split.[2] with
+                                match split[2] with
                                 | "<personal>" -> None
                                 | revision -> Some revision
 
@@ -279,6 +274,8 @@ module TeamCity =
 
         let cache = lazy (get ())
 
+    /// Exported environment variables during build.
+    /// See the [official documentation](https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#Predefined+Server+Build+Parameters) for details.
     type Environment =
         /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
         static member Version = Environment.environVarOrNone "TEAMCITY_VERSION"
@@ -314,7 +311,7 @@ module TeamCity =
         /// Get if the current branch of the main VCS root is the one configured as default
         static member IsDefaultBranch
             with get() =
-                if BuildServer.buildServer = BuildServer.TeamCity then
+                if BuildServer.buildServer = TeamCity then
                     match BuildParameters.Configuration |> Map.tryFind "teamcity.build.branch.is_default" with
                     | Some "true" -> true
                     | Some _ -> false
@@ -341,7 +338,6 @@ module TeamCity =
             with get() = RecentlyFailedTests.cache.Value
 
     /// Implements a TraceListener for TeamCity build servers.
-    /// 
     /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity) for more information
     type internal TeamCityTraceListener() =
 
@@ -399,16 +395,23 @@ module TeamCity =
                     TeamCityWriter.sendImportData typ.TeamCityName path
                 | TraceData.BuildNumber number -> setBuildNumber number
 
+    /// [omit]
     let defaultTraceListener =
         TeamCityTraceListener() :> ITraceListener
+    
+    /// [omit]
     let detect () =
-        BuildServer.buildServer = BuildServer.TeamCity
+        BuildServer.buildServer = TeamCity
+    
+    /// [omit]
     let install(force:bool) =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-TeamCity environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
         ()
+    
+    /// [omit]
     let Installer =
         { new BuildServerInstaller() with
-            member __.Install () = install (false)
+            member __.Install () = install false
             member __.Detect () = detect() }
