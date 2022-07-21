@@ -18,16 +18,18 @@ module SemVerActivePattern =
         | false ->
             None
 
+    [<Literal>]
+    let Pattern =
+        @"^(?<major>\d+)" +
+        @"(\.(?<minor>\d+))?" +
+        @"(\.(?<patch>\d+))?" +
+        @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
+        @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
+
     let (|SemVer|_|) version =
-        let pattern =
-            @"^(?<major>\d+)" +
-            @"(\.(?<minor>\d+))?" +
-            @"(\.(?<patch>\d+))?" +
-            @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
-            @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
 
         match version with
-        | ParseRegex pattern [major; minor; patch; pre; build] ->
+        | ParseRegex Pattern [major; minor; patch; pre; build] ->
             Some [major; minor; patch; pre; build]
         | _ ->
             None
