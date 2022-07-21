@@ -1,22 +1,14 @@
-/// Contains support for various build servers
 namespace Fake.BuildServer
 
-open System
-open System.IO
 open Fake.Core
-open Fake.IO
 
 /// native support for Travis specific APIs.
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
-/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue.
 [<RequireQualifiedAccess>]
 module Travis =
-
-    /// Implements a TraceListener for TeamCity build servers.
-    /// ## Parameters
-    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
-    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+    /// Implements a TraceListener for Travis build servers.
     type internal TravisTraceListener() =
         interface ITraceListener with
             /// Writes the given message to the Console.
@@ -45,15 +37,22 @@ module Travis =
                 | TraceData.BuildState (state, _) ->
                     write false color true (sprintf "Build State: %A" state)
 
+    /// [omit]
     let defaultTraceListener =
         TravisTraceListener() :> ITraceListener
+    
+    /// [omit]
     let detect () =
-        BuildServer.buildServer = BuildServer.Travis
+        BuildServer.buildServer = Travis
+    
+    /// [omit]
     let install(force:bool) =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-Travis environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
         ()
+    
+    /// [omit]
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
