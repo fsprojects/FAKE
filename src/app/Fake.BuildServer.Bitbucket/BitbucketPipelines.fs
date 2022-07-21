@@ -1,13 +1,17 @@
-/// Contains code to configure FAKE for Bitbucket Pipelines integration
 namespace Fake.BuildServer
 
-open System
-open System.IO
 open Fake.Core
 
+/// native support for GitHub Actions specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue.
 [<RequireQualifiedAccess>]
 module BitbucketPipelines =
+    /// Contains references to Bitbucket Pipeline environment variables
+    /// See the [official documentation](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/) for details. 
     type BitbucketPipelinesEnvironment =
+        
         /// The commit hash of a commit that kicked off the build
         static member Commit = Environment.environVar "BITBUCKET_COMMIT"
 
@@ -19,10 +23,7 @@ module BitbucketPipelines =
         
         /// The URL-friendly version of a repository name.
         static member RepoSlug = Environment.environVar "BITBUCKET_REPO_SLUG"
-        
-        /// The name of the account in which the repository lives
-        static member RepoOwner = Environment.environVar "BITBUCKET_REPO_OWNER"
-        
+     
         /// The UUID of the repository.
         static member RepoUuid = Environment.environVar "BITBUCKET_REPO_UUID"
 
