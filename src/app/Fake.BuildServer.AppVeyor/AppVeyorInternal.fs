@@ -1,14 +1,17 @@
-﻿/// Contains support for various build servers
-namespace Fake.BuildServer
+﻿namespace Fake.BuildServer
 
 open System.IO
+open System.Text
 open Fake.Core
 open Fake.IO
 open Fake.Net
 
 module internal AppVeyorInternal =
+    
     let environVar = Environment.environVar
+    
     let getJobId () = environVar "APPVEYOR_JOB_ID"
+    
     let internal sendToAppVeyor args =
         let argsList = Arguments.OfStartInfo args
         CreateProcess.fromCommand <| RawCommand("appveyor", argsList)
@@ -30,8 +33,6 @@ module internal AppVeyorInternal =
 
     let AddMessage (category:MessageCategory) details msg =
         if not <| String.isNullOrEmpty msg then
-            //let enableProcessTracingPreviousValue = Process.enableProcessTracing
-            //Process.enableProcessTracing <- false
             try
                 [ yield "AddMessage"
                   yield msg
@@ -48,34 +49,35 @@ module internal AppVeyorInternal =
             with e ->
                 // because otherwise there might be recursive failure...
                 eprintfn "AppVeyor 'AddMessage' failed: %O" e             
-            //sprintf "AddMessage %s -Category %s" (Process.quoteIfNeeded msg) (category.ToString())
-            //Process.enableProcessTracing <- enableProcessTracingPreviousValue
-    //let private addNoCategory msg = sprintf "AddMessage %s" (Process.quoteIfNeeded msg) |> sendToAppVeyor
 
+    let internal quoteString str =
+        StringBuilder()
+        |> StringBuilder.appendQuotedIfNotNull Some str
+        |> StringBuilder.toText
+    
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
         sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
 
     /// Updates test info
     let UpdateTest testSuiteName testCaseName outcome =
-        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome %s"
-            (Process.quoteIfNeeded (testSuiteName + " - " + testCaseName)) outcome
+        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome %s" (quoteString (testSuiteName + " - " + testCaseName)) outcome
 
     /// Updates test info
     let UpdateTestEx testSuiteName testCaseName outcome message stackTrace stdOut stdErr =
         sendToAppVeyor <| sprintf "UpdateTest %s -Outcome %s -ErrorMessage %s -ErrorStackTrace %s -StdOut %s -StdErr %s"
-            (Process.quoteIfNeeded (testSuiteName + " - " + testCaseName)) outcome
-            (Process.quoteIfNeeded message) (Process.quoteIfNeeded stackTrace)
-            (Process.quoteIfNeeded stdOut) (Process.quoteIfNeeded stdErr)
+            (quoteString (testSuiteName + " - " + testCaseName)) outcome
+            (quoteString message) (quoteString stackTrace)
+            (quoteString stdOut) (quoteString stdErr)
 
     /// Reports a failed test.
     let TestFailed testSuiteName testCaseName message details =
         sendToAppVeyor <| sprintf "UpdateTest %s -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s"
-            (Process.quoteIfNeeded (testSuiteName + " - " + testCaseName))
-            (Process.quoteIfNeeded message) (Process.quoteIfNeeded details)
+            (quoteString (testSuiteName + " - " + testCaseName))
+            (quoteString message) (quoteString details)
 
     /// Ignores the test case.
-    let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
+    let IgnoreTestCase testSuiteName testCaseName _ = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
     /// Reports a succeeded test.
     let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
@@ -109,7 +111,7 @@ module internal AppVeyorInternal =
 
     /// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
     let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
-        System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
+        Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
         |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
         |> Async.Parallel
         |> Async.RunSynchronously
@@ -153,7 +155,7 @@ module internal AppVeyorInternal =
     /// Push an artifact
     let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
         let parameters = setParams defaultPushArtifactParams
-        new System.Text.StringBuilder()
+        StringBuilder()
         |> StringBuilder.append "PushArtifact"
         |> StringBuilder.append parameters.Path
         |> appendArgIfNotNullOrEmpty parameters.FileName "FileName"

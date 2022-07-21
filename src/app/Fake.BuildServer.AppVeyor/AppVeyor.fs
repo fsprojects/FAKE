@@ -1,4 +1,3 @@
-/// Contains support for various build servers
 namespace Fake.BuildServer
 
 open System
@@ -74,7 +73,9 @@ module AppVeyor =
           AuthorEmail = ""
           CommitterName = ""
           CommitterEmail = "" }
+        
     let private appendArgIfNotNullOrEmpty = AppVeyorInternal.appendArgIfNotNullOrEmpty
+    
     /// Update build details
     let updateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
         let parameters = setParams defaultUpdateBuildParams
@@ -100,11 +101,15 @@ module AppVeyor =
     /// Update build version. This must be unique for the current project.
     let private updateBuildVersion version =
         updateBuild (fun p -> { p with Version = version })
+        
+    /// set given variable name to given value
     let setVariable name value =
         AppVeyorInternal.sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
+        
     let private environVar = Environment.environVar
 
-    /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
+    /// Exported environment variables during build.
+    /// See the [official documentation](http://www.appveyor.com/docs/environment-variables) for details.
     type Environment =
 
         /// AppVeyor Build Agent API URL
@@ -134,22 +139,16 @@ module AppVeyor =
         /// Build version
         static member BuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
-        /// GitHub Pull Request number
+        /// Pull (Merge) Request number
         static member PullRequestNumber = environVar "APPVEYOR_PULL_REQUEST_NUMBER"
 
-        /// GitHub Pull Request title
+        /// Pull (Merge) Request title
         static member PullRequestTitle = environVar "APPVEYOR_PULL_REQUEST_TITLE"
-
-        /// GitHub Pull Request Repo name
-        static member PullRequestRepoName = environVar "APPVEYOR_PULL_REQUEST_REPO_NAME"
-
-        /// GitHub Pull Request branch
-        static member PullRequestRepoBranch = environVar "APPVEYOR_PULL_REQUEST_REPO_BRANCH"
 
         /// AppVeyor unique job ID
         static member JobId = environVar "APPVEYOR_JOB_ID"
 
-        /// GitHub, BitBucket or Kiln
+        /// gitHub, bitBucket, kiln, vso, gitLab, gitHubEnterprise, gitLabEnterprise, stash, gitea, git, mercurial or subversion
         static member RepoProvider = environVar "APPVEYOR_REPO_PROVIDER"
 
         /// git or mercurial
@@ -195,7 +194,7 @@ module AppVeyor =
         /// true if build has started by pushed tag; otherwise false
         static member RepoTag =
             let rt = environVar "APPVEYOR_REPO_TAG"
-            not (isNull rt) && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
+            not (isNull rt) && rt.Equals("true", StringComparison.OrdinalIgnoreCase)
 
         /// contains tag name for builds started by tag
         static member RepoTagName = environVar "APPVEYOR_REPO_TAG_NAME"
@@ -234,11 +233,7 @@ module AppVeyor =
         static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
         
 
-
     /// Implements a TraceListener for TeamCity build servers.
-    /// ## Parameters
-    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
-    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
     type internal AppVeyorTraceListener() =
         let mutable currentTestSuite = None
         let getCurrentTestSuite() =
@@ -257,11 +252,11 @@ module AppVeyor =
                 match msg with
                 | TraceData.OpenTag (KnownTags.Test name, _) ->
                     AppVeyorInternal.StartTestCase (getCurrentTestSuite()) name 
-                | TraceData.TestOutput (testName,out,err) ->
+                | TraceData.TestOutput (_,out,err) ->
                     currentTestOutput <- Some(out,err)
-                | TraceData.TestStatus (testName, status) ->
+                | TraceData.TestStatus (_, status) ->
                     currentTestResult <- Some status
-                | TraceData.CloseTag (KnownTags.Test name, time, status) ->
+                | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     let outcome, msg, detail =
                         match currentTestResult with
                         | None -> "Passed", "", ""
@@ -277,7 +272,7 @@ module AppVeyor =
                     AppVeyorInternal.FinishTestCase (getCurrentTestSuite()) name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
                     currentTestSuite <- Some name
-                | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
+                | TraceData.CloseTag (KnownTags.TestSuite _, _, _) ->
                     currentTestSuite <- None
                 | TraceData.BuildState (state, _) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
@@ -313,15 +308,22 @@ module AppVeyor =
                         { parms with Path = path; FileName = Path.GetFileName path; DeploymentName = typ.AppVeyorName })
                 | TraceData.BuildNumber number -> updateBuildVersion number
 
+    /// [omit]
     let defaultTraceListener =
       AppVeyorTraceListener() :> ITraceListener
+    
+    /// [omit]
     let detect () =
-        BuildServer.buildServer = BuildServer.AppVeyor
+        BuildServer.buildServer = AppVeyor
+    
+    /// [omit]
     let install(force:bool) =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
-        () 
+        ()
+    
+    /// [omit]
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
