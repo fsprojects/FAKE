@@ -85,11 +85,11 @@ module GitHub =
             with ex ->
                 return!
                     match (ex, ex.InnerException) with
-                    | (:? AggregateException, (:? AuthorizationException as ex)) -> captureAndReraise ex
+                    | :? AggregateException, (:? AuthorizationException as ex) -> captureAndReraise ex
                     | _ when count > 0 ->
                         printfn "Something failed, trying again: %O" ex
                         retry (count - 1) asyncF
-                    | (ex, _) -> captureAndReraise ex
+                    | ex, _ -> captureAndReraise ex
         }
 
     /// Retry the Octokit action count times after input succeed
@@ -312,7 +312,7 @@ module GitHub =
     let downloadAsset id destination (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.GetAsset(release'.Owner,release'.RepoName,id)
-            let! resp = Async.AwaitTask <| release'.Client.Connection.Get(Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
+            let! resp = Async.AwaitTask <| release'.Client.Connection.Get(Uri(asset.Url), System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
 
             let bytes = resp.HttpResponse.Body :?> byte[]
             let filename = Path.Combine(destination, asset.Name)
