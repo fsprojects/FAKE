@@ -36,6 +36,11 @@
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.DotCover and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.Expecto and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.MSpec and replace deprecated process utils with alternatives
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.Travis
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.Bitbucket and remove BITBUCKET_REPO_OWNER since it is removed from Bitbucket pipeline
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.GitHubActions
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.GitLab
+* ENHANCEMENT: Add Net6 Target to Fake.BuildServer.TeamFoundation and remove FAKE_VSO_PUSH_ALWAYS since issue is now fixed
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
