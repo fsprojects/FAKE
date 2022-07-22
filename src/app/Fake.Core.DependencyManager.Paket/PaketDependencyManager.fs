@@ -15,7 +15,7 @@ module Internals =
     /// returned structure from the ResolveDependencies method call. 
     type ResolveDependenciesResult (success: bool, stdOut: string array, stdError: string array, resolutions: string seq, sourceFiles: string seq, roots: string seq) =
 
-        /// Succeded?
+        /// Succeeded?
         member __.Success = success
 
         /// The resolution output log
@@ -38,7 +38,7 @@ module Internals =
     type TFM = string
 
     [<DependencyManager>]
-    /// the type _must_ take an optional output directory
+    // the type _must_ take an optional output directory
     type PaketDependencyManager(outputDir: string option) =
 
         /// Name of the dependency manager
@@ -50,7 +50,7 @@ module Internals =
         /// Resolve the dependencies, for the given set of arguments, go find the .dll references, scripts and additional include values.
         member _.ResolveDependencies(scriptExt: ScriptExtension, includeLines: HashRLines, tfm: TFM): obj = 
             // generally, here we'd parse the includeLines to determine what to do,
-            // package those results into a `ResolveDepndenciesResult`,
+            // package those results into a `ResolveDependenciesResult`,
             // and return it boxed as obj.
             // but here we will return a dummy
             ResolveDependenciesResult(true, [|"Skipped processing of paket references"|], [||], Seq.empty, Seq.empty, Seq.empty) :> _
