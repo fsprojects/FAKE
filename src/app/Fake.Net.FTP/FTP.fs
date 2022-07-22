@@ -6,18 +6,30 @@ open System.Net
 open System.Text.RegularExpressions
 open Fake.Core
 
-[<RequireQualifiedAccess>]
 /// Contains helpers which allow to upload a whole folder/specific file into a FTP Server. 
 /// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
 /// Assumes direct network connectivity to destination FTP server (not via a proxy).
 /// Does not support FTPS and SFTP.
+[<RequireQualifiedAccess>]
 module FTP = 
 
+    /// Server information
     type FtpServerInfo = 
-        { Server : string
-          Request : FtpWebRequest }
+        {
+          /// Server name
+          Server : string
+          
+          /// FTP request
+          Request : FtpWebRequest
+        }
 
     /// Gets a connection to the FTP server
+    /// ## Parameters
+    ///  - `serverNameIp` - The server IP address
+    ///  - `user` - The user name to use in login credentials
+    ///  - `password` - FTP Server login name
+    ///  - `password` - FTP Server login password
+    ///  - `ftpMethod` - Command to send to FTP server
     let getServerInfo (serverNameIp : string) (user : string) (password : string) ftpMethod = 
         let ftpRequest = (WebRequest.Create serverNameIp) :?> FtpWebRequest
         ftpRequest.Credentials <- NetworkCredential(user, password)
@@ -50,7 +62,7 @@ module FTP =
         not (directoryName.EndsWith("."))
         
     /// [omit]
-    ///Partial validation for folder name, based on http://msdn.microsoft.com/en-us/library/aa365247.aspx
+    /// Partial validation for folder name, based on http://msdn.microsoft.com/en-us/library/aa365247.aspx
     let isValidDirectoryName (directoryName : string) =
         let validators = [
             charactersValidator
