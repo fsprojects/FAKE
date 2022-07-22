@@ -527,10 +527,10 @@ module internal TeamCityRest =
               Description = Xml.getAttribute "description" n
               WebURL = Xml.getAttribute "webUrl" n
               Archived = Xml.getAttribute "archived" n |> parseBooleanOrFalse
-              BuildConfigs = Xml.parseSubNode "buildTypes" Xml.getChilds n |> Seq.map (Xml.getAttribute "id") })
+              BuildConfigs = Xml.parseSubNode "buildTypes" Xml.getSubNodes n |> Seq.map (Xml.getAttribute "id") })
 
     /// Gets all projects on the TeamCity server.
     let getProjects serverURL username password =
         getFirstNode serverURL username password "/httpAuth/app/rest/projects"
-        |> Xml.parse "projects" Xml.getChilds
+        |> Xml.parse "projects" Xml.getSubNodes
         |> Seq.map (Xml.getAttribute "id")
