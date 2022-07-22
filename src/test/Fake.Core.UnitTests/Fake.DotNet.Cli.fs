@@ -7,7 +7,7 @@ open Expecto
 [<Tests>]
 let tests =
     testList "Fake.DotNet.Cli.Tests" [
-        testCase "Test that we can use Process-Helpers on Cli Paramters" <| fun _ ->
+        testCase "Test that we can use Process-Helpers on Cli Parameters" <| fun _ ->
             let cli =
                 DotNet.Options.Create()
                 |> Process.setEnvironmentVariable "Somevar" "someval"
@@ -22,7 +22,7 @@ let tests =
                   
             Expect.isEmpty cli "Empty push args."
           
-        testCase "Test that the dotnet nuget push arguments with all params setreturns correct string" <| fun _ ->
+        testCase "Test that the dotnet nuget push arguments with all params set returns correct string" <| fun _ ->
             let param =
                 { DotNet.NuGetPushOptions.Create().PushParams with
                     DisableBuffering = true
