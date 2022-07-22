@@ -10,7 +10,7 @@ let runCreateProcess setParams =
   let _, cp = 
     "projectfile.csproj"
     |> SpecFlow.createProcess (fun param -> 
-         { setParams param with ToolPath = "specflow" })
+         { setParams param with ToolPath = Path.Combine("specflow", "specflow.exe") })
 
   let file, args =
     match cp.Command with
