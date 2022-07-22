@@ -48,7 +48,7 @@ module FTP =
 
     let private charactersValidator (directoryName : string) =
         let invalidChars = [ "<"; ">"; ":"; "\""; "/"; "\\"; "|"; "?"; "*" ]
-        not (List.exists directoryName.Contains invalidChars)
+        not (invalidChars |> List.exists directoryName.Contains)
         
     let private namesValidator (directoryName : string) =
         let invalidNames = 
