@@ -52,6 +52,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.MSTest and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.Net.FTP
 * ENHANCEMENT: Add Net6 Target to Fake.Net.Http
+* ENHANCEMENT: Add Net6 Target to Fake.Core.SemVer
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673

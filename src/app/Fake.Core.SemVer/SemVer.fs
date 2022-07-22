@@ -1,5 +1,4 @@
-﻿
-namespace Fake.Core
+﻿namespace Fake.Core
 
 // This implementation is taken from Paket
 
@@ -52,7 +51,7 @@ type PreReleaseSegment =
         | AlphaNumeric _, Numeric _ -> 1
         | Numeric _, AlphaNumeric _ -> -1
 
-    interface System.IComparable with
+    interface IComparable with
         member x.CompareTo yobj =
             match yobj with
             | :? PreReleaseSegment as y -> x.CompareTo(y)                
@@ -138,7 +137,7 @@ type PreRelease =
         let len = min x.Values.Length yobj.Values.Length // compare up to common len
         cmp 0 len x.Values yobj.Values
         
-    interface System.IComparable with
+    interface IComparable with
         member x.CompareTo yobj =
             match yobj with
             | :? PreRelease as y -> x.CompareTo(y)
@@ -213,7 +212,7 @@ type SemVerInfo =
                             match x.PreRelease, y.PreRelease with
                             | None, None -> 0
                             | Some _, None -> -1
-                            | None, Some p -> 1
+                            | None, Some _ -> 1
                             | Some p, Some p2 when p.Origin = "prerelease" && p2.Origin = "prerelease" -> 0
                             | Some p, _ when p.Origin = "prerelease" -> -1
                             | _, Some p when p.Origin = "prerelease" -> 1
@@ -224,7 +223,7 @@ type SemVerInfo =
             | c -> c
         comparison
     
-    interface System.IComparable with
+    interface IComparable with
         member x.CompareTo yobj = 
             match yobj with
             | :? SemVerInfo as y -> x.CompareTo(y)
@@ -280,7 +279,6 @@ module SemVer =
     /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
     /// according to the rules described in the [SemVer docs](http://semver.org/).
     /// ## Sample
-    ///
     ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
     ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
     ///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
@@ -288,12 +286,12 @@ module SemVer =
     ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
     let parse (version : string) = 
         try
-            /// sanity check to make sure that all of the integers in the string are positive.
-            /// because we use raw substrings with dashes this is very complex :(
+            // sanity check to make sure that all of the integers in the string are positive.
+            // because we use raw substrings with dashes this is very complex :(
             for s in version.Split([|'.'|]) do
                 match Int32.TryParse s with 
                 | true, s when s < 0 -> failwith "no negatives!" 
-                | _ -> ignore ()  // non-numeric parts are valid
+                | _ -> ()  // non-numeric parts are valid
 
             if version.Contains("!") then 
                 failwithf "Invalid character found in %s" version
@@ -309,7 +307,7 @@ module SemVer =
 
             /// there can only be one piece of build metadata, and it is signified by + sign
             /// and then any number of dot-separated alpha-numeric groups.
-            let buildmeta =
+            let buildMeta =
                 match plusIndex with
                 | -1 -> ""
                 | n when n = version.Length - 1 -> ""
@@ -321,10 +319,10 @@ module SemVer =
             /// matches over list of the version fragments *and* delimiters
             let major, minor, patch, revision, suffix =
                 match fragments with
-                | (Int M)::"."::(Int m)::"."::(Int p)::"."::(Big b)::tail -> M, m, p, b, tail
-                | (Int M)::"."::(Int m)::"."::(Int p)::tail -> M, m, p, 0I, tail
-                | (Int M)::"."::(Int m)::tail -> M, m, 0, 0I, tail
-                | (Int M)::tail -> M, 0, 0, 0I, tail
+                | Int M::"."::Int m::"."::Int p::"."::Big b::tail -> M, m, p, b, tail
+                | Int M::"."::Int m::"."::Int p::tail -> M, m, p, 0I, tail
+                | Int M::"."::Int m::tail -> M, m, 0, 0I, tail
+                | Int M::tail -> M, 0, 0, 0I, tail
                 | _ -> raise(ArgumentException("SemVer.Parse", "version"))
                 //this is expected to fail, for now :/
                 //| [text] -> 0, 0, 0, 0I, [text] 
@@ -340,7 +338,7 @@ module SemVer =
               Patch = uint32 patch
               Build = revision
               PreRelease = PreRelease.TryParse prerelease
-              BuildMetaData = buildmeta
+              BuildMetaData = buildMeta
               Original = Some version }
 
         with
