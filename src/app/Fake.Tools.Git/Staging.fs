@@ -1,18 +1,23 @@
-﻿/// Contains helper functions which allow to deal with git's staging area.
-module Fake.Tools.Git.Staging
+﻿namespace Fake.Tools.Git
 
 open Fake.Core
-open Fake.Tools.Git.CommandHelper
 
-/// Adds a file to the staging area
-let stageFile repositoryDir file =
-    file
-    |> fixPath
-    |> sprintf "update-index --add \"%s\""
-    |> runGitCommand repositoryDir
+/// Contains helper functions which allow to deal with git's staging area.
+[<RequireQualifiedAccess>]
+module Staging =
 
-/// Adds all files to the staging area
-let stageAll repositoryDir =
-    "add . --all"
-    |> runSimpleGitCommand repositoryDir
-    |> Trace.trace
+    /// Adds a file to the staging area
+    /// ## Parameters
+    ///  - `repositoryDir` - The git repository.
+    ///  - `file` - The file to stage
+    let stageFile repositoryDir file =
+        file
+        |> CommandHelper.fixPath
+        |> sprintf "update-index --add \"%s\""
+        |> CommandHelper.runGitCommand repositoryDir
+
+    /// Adds all files to the staging area
+    /// ## Parameters
+    ///  - `repositoryDir` - The git repository.
+    let stageAll repositoryDir =
+        "add . --all" |> CommandHelper.runSimpleGitCommand repositoryDir |> Trace.trace
