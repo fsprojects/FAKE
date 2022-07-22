@@ -1,107 +1,149 @@
-/// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests.
-[<RequireQualifiedAccess>]
-[<System.Obsolete("This API is obsolete after SpecFlow V2.4. Please use the SpecFlowNext module instead.")>]
-module Fake.DotNet.Testing.SpecFlow
+namespace Fake.DotNet.Testing
 
 open Fake.Core
 open Fake.IO
-open Fake.IO.Globbing
-open Fake.IO.FileSystemOperators
 open System.IO
-open System.Text
-open System.Runtime.CompilerServices
 
-/// SpecFlow execution parameter type.
-type SpecFlowParams = { 
-    SubCommand:         string
-    ProjectFile:        string
-    ToolName:           string
-    ToolPath:           string
-    WorkingDir:         string
-    BinFolder:          string
-    OutputFile:         string
-    XmlTestResultFile:  string
-    TestOutputFile:     string
-    Verbose:            bool
-    ForceRegeneration:  bool
-    XsltFile:           string
-}
+/// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests with SpecFlow v2.4+.
+[<RequireQualifiedAccess>]
+module SpecFlow =
 
-let private toolname = "specflow.exe"
-let private currentDirectory = Directory.GetCurrentDirectory ()
+    /// The subcommands to execute against SpecFlow
+    type SubCommand =
+        | GenerateAll
+        | StepDefinitionReport
+        | NUnitExecutionReport
+        | MsTestExecutionReport
 
-/// SpecFlow default execution parameters.
-let private SpecFlowDefaults = { 
-    SubCommand =        "generateall"
-    ProjectFile =       null
-    ToolName =          toolname
-    ToolPath =          Tools.findToolFolderInSubPath toolname (currentDirectory </> "tools" </> "SpecFlow")
-    WorkingDir =        null
-    BinFolder =         null
-    OutputFile =        null
-    XmlTestResultFile = null
-    TestOutputFile =    null
-    Verbose =           false
-    ForceRegeneration = false
-    XsltFile =          null
-}
+        override x.ToString() =
+            match x with
+            | GenerateAll -> "GenerateAll"
+            | StepDefinitionReport -> "StepDefinitionReport"
+            | NUnitExecutionReport -> "NUnitExecutionReport"
+            | MsTestExecutionReport -> "MsTestExecutionReport"
 
-// Runs SpecFlow on a project.
-/// ## Parameters
-///
-///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
-let run setParams =    
-    let parameters = setParams SpecFlowDefaults
+    /// SpecFlow execution parameter type.
+    type SpecFlowParams =
+        {
+            /// The subcommand to execute, see `SpecFlow.SubCommand` type
+            SubCommand: SubCommand
 
-    use __ = Trace.traceTask "SpecFlow " parameters.SubCommand
+            /// SpecFlow executable path
+            ToolPath: string
 
-    let tool = parameters.ToolPath </> parameters.ToolName
+            /// The working directory to execute SpecFlow in
+            WorkingDir: string
 
-    let isMsTest = String.toLower >> ((=) "mstestexecutionreport")
+            /// The bin folder
+            BinFolder: string option
 
-    let yieldIfNotNull paramName value =
-        seq {
-            match value with
-            | null -> ()
-            | "" -> ()
-            | v -> yield (sprintf "/%s:%s" paramName v)
+            /// Output file name
+            OutputFile: string option
+
+            /// XML test result file name
+            XmlTestResultFile: string option
+
+            /// Test output file name
+            TestOutputFile: string option
+
+            /// The feature language to use
+            FeatureLanguage: string option
+
+            /// Set if SpecFlow command is executed in verbose mode
+            Verbose: bool
+
+            /// For regeneration of test results
+            ForceRegeneration: bool
+
+            /// the Xslt file to use
+            XsltFile: string option
         }
 
-    let args = 
-        [
-            yield parameters.SubCommand            
-            yield parameters.ProjectFile
+    let private toolName = "specflow.exe"
 
-            yield! parameters.BinFolder 
-                   |> yieldIfNotNull "binFolder" 
+    let internal toolPath toolName =
+        let toolPath =
+            ProcessUtils.tryFindLocalTool "TOOL" toolName [ Directory.GetCurrentDirectory() ]
 
-            yield! parameters.OutputFile 
-                   |> yieldIfNotNull "out"
+        match toolPath with
+        | Some path -> path
+        | None -> toolName
 
-            yield! parameters.XmlTestResultFile 
-                   |> yieldIfNotNull (if isMsTest parameters.SubCommand 
-                                      then "testResult" 
-                                      else "xmlTestResult")
+    /// SpecFlow default execution parameters.
+    let private SpecFlowDefaults =
+        { SubCommand = GenerateAll
+          ToolPath = toolPath toolName
+          WorkingDir = null
+          BinFolder = None
+          OutputFile = None
+          XmlTestResultFile = None
+          TestOutputFile = None
+          FeatureLanguage = None
+          Verbose = false
+          ForceRegeneration = false
+          XsltFile = None }
 
-            yield! parameters.TestOutputFile 
-                   |> yieldIfNotNull "testOutput"
+    let internal createProcess setParams projectFile =
+        if projectFile |> String.isNullOrWhiteSpace then
+            Trace.traceError "SpecFlow needs a non empty project file!"
+            failwithf "SpecFlow needs a non empty project file!"
 
-            if parameters.Verbose then yield "/verbose"
-            if parameters.ForceRegeneration then yield "/force"
+        let parameters = setParams SpecFlowDefaults
 
-            yield! parameters.XsltFile 
-                   |> yieldIfNotNull "xsltFile"
-        ]
-        |> Args.toWindowsCommandLine
+        let yieldIfSome paramName value =
+            seq {
+                match value with
+                | Some v ->
+                    yield sprintf "--%s" paramName
+                    yield v
+                | _ -> ()
+            }
 
-    Trace.trace (tool + " " + args)
+        let args =
+            [ yield parameters.SubCommand |> string
 
-    let processStartInfo info = 
-         { info with FileName = tool
-                     WorkingDirectory = parameters.WorkingDir
-                     Arguments = args }
+              yield "--ProjectFile"
+              yield projectFile
 
-    match Process.execSimple processStartInfo System.TimeSpan.MaxValue with
-    | 0 -> ()
-    | errorNumber -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand errorNumber
-    __.MarkSuccess()
+              yield! parameters.BinFolder |> yieldIfSome "binFolder"
+
+              yield! parameters.OutputFile |> yieldIfSome "OutputFile"
+
+              yield!
+                  parameters.XmlTestResultFile
+                  |> yieldIfSome (
+                      match parameters.SubCommand with
+                      | MsTestExecutionReport -> "TestResult"
+                      | _ -> "xmlTestResult"
+                  )
+
+              yield! parameters.TestOutputFile |> yieldIfSome "testOutput"
+
+              yield! parameters.FeatureLanguage |> yieldIfSome "FeatureLanguage"
+
+              if parameters.Verbose then
+                  yield "--verbose"
+              if parameters.ForceRegeneration then
+                  yield "--force"
+
+              yield! parameters.XsltFile |> yieldIfSome "XsltFile" ]
+            |> Arguments.OfArgs
+
+        parameters,
+        CreateProcess.fromCommand (RawCommand(parameters.ToolPath, args))
+        |> CreateProcess.withFramework
+        |> CreateProcess.withWorkingDirectory parameters.WorkingDir
+        |> CreateProcess.ensureExitCode
+        |> fun command ->
+            Trace.trace command.CommandLine
+            command
+
+    // Runs SpecFlow on a project.
+    /// ## Parameters
+    ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
+    ///  - `projectFile` - The required project file.
+    let run setParams projectFile =
+        let parameters, cp = projectFile |> createProcess setParams
+        use __ = Trace.traceTask "SpecFlow " (parameters.SubCommand |> string)
+        cp |> Proc.run |> ignore
+        __.MarkSuccess()

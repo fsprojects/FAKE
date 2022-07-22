@@ -9,7 +9,7 @@ open Expecto
 let runCreateProcess setParams =
   let _, cp = 
     "projectfile.csproj"
-    |> SpecFlowNext.createProcess (fun param -> 
+    |> SpecFlow.createProcess (fun param -> 
          { setParams param with ToolPath = "specflow" })
 
   let file, args =
@@ -30,14 +30,14 @@ let tests =
       let expectedPath, commandLine =
         runCreateProcess (fun param -> 
           { param with 
-              SubCommand = SpecFlowNext.MsTestExecutionReport })
+              SubCommand = SpecFlow.MsTestExecutionReport })
 
       Expect.equal commandLine 
         (sprintf "%s MsTestExecutionReport --ProjectFile projectfile.csproj" expectedPath) "expected proper command line"
 
     testCase "Test that argument generation fails with exception if project file is not given" <| fun _ ->
       Expect.throws 
-        (fun _ -> SpecFlowNext.createProcess id "" |> ignore)
+        (fun _ -> SpecFlow.createProcess id "" |> ignore)
         "expected to throw an exception"
 
     testCase "Test that argument generation works with default arguments" <| fun _ ->
@@ -51,7 +51,7 @@ let tests =
       let expectedPath, commandLine =
         runCreateProcess (fun param -> 
           { param with 
-              SubCommand = SpecFlowNext.NUnitExecutionReport
+              SubCommand = SpecFlow.NUnitExecutionReport
               BinFolder = Some "bin/debug"
               OutputFile = Some "output.html"
               XmlTestResultFile = Some "testresult.xml"
