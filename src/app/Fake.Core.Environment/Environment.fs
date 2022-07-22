@@ -92,8 +92,10 @@ module Environment =
 
     /// Retrieves the environment variable with the given name or returns the default bool if no value was set
     let environVarAsBoolOrDefault varName defaultValue =
-        try  
-            (environVar varName).ToUpper() = "TRUE" 
+        try
+            match environVar varName with
+            | null -> defaultValue
+            | var -> var.ToUpper() = "TRUE"
         with
         | _ ->  defaultValue
 

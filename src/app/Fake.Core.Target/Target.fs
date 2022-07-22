@@ -17,10 +17,11 @@ Usage:
   fake-run --help | -h
   fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
-Target Module Options [target_opts]:
-    -t, --target <target>    Run the given target (ignored if positional argument 'target' is given)
+Target Module options [target_opts]:
+    -t, --target <target>    Run the given target (ignored if a target is already provided with '[target <target>]')
     -e, --environment-variable <keyval> [*]
-                             Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html
+                             Set an environment variable. Use 'key=val'.
+                             Consider using regular arguments, see https://fake.build/core-targets.html
     -s, --single-target      Run only the specified target.
     -p, --parallel <num>     Run parallel with the given number of tasks.
         """
