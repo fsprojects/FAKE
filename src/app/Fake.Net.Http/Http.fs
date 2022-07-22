@@ -2,10 +2,9 @@ namespace Fake.Net
 
 open System
 open System.IO
+open System.Net
 open System.Net.Http
-
 open Fake.Core
-
 open Fake.Net.Async
 open Fake.Net.Result
 open Fake.Net.List
@@ -32,17 +31,15 @@ module Http =
         LocalFilePath: FilePath
     }
 
-    /// [omit]
     let private createFilePath (filePathStr: string): Result<FilePath, Err list>  = 
         try
             let fullPath = Path.GetFullPath(filePathStr)
-            Ok (fullPath)
+            Ok fullPath
         with
         | ex -> 
             let err = sprintf "[%s] %s" filePathStr ex.Message
             Error [err ]
 
-    /// [omit]
     let private createUri (uriStr: string): Result<Uri, Err list> = 
         try
             Ok (Uri uriStr)
@@ -51,7 +48,6 @@ module Http =
             let err = sprintf "[%s] %s" uriStr ex.Message
             Error [err ]
 
-    /// [omit]
     let private createDownloadInfo (input: DownloadParameters): Result<DownloadInfo, Err list> = 
         let (<!>) = Result.map
         let (<*>) = Result.apply
@@ -64,7 +60,6 @@ module Http =
         createDownloadInfoRecord <!> filePathResult <*> urlResult
        
     /// Unwraps the Result type and throws an exception if download process failed  
-    /// [omit]
     let private processResults result =
         match result with
             | Ok result -> 
@@ -73,7 +68,6 @@ module Http =
             | Error errs -> 
                 failwith <| sprintf "Download failed : [%A]" errs
 
-    /// [omit]
     let private saveStreamToFileAsync (filePath: FilePath) (stream: Stream) : Async<Result<FilePath, Err list>> =
         async {
             try
@@ -86,7 +80,6 @@ module Http =
                 return Error [err ]
         }
 
-    /// [omit]
     let private downloadStreamToFileAsync (info: DownloadInfo) : Async<Result<FilePath, Err list>>  =
         async {
             use client = new HttpClient()
@@ -102,8 +95,7 @@ module Http =
                 let err = sprintf "[%s] %s" info.Uri.OriginalString ex.Message
                 return Error [err ]
             }
-
-    /// [omit]     
+    
     let private downloadFileAsync (input: DownloadParameters): Async<Result<FilePath, Err list>> =
         let valImp = createDownloadInfo input
         match valImp with
@@ -113,13 +105,9 @@ module Http =
                 Async.result (Error errs)
         
     /// Download file by the given file path and Uri
-    /// string -> string -> string
     /// ## Parameters
     ///  - `localFilePath` - A local file path to download file
     ///  - `uri` - A Uri to download from
-    ///
-    /// ## Returns
-    ///  - `string` type. Contains a downloaded file path
     let downloadFile (localFilePath: string) (uri: string) : string =
         downloadFileAsync { Uri=uri;  Path=localFilePath }
         |> Async.RunSynchronously
@@ -129,9 +117,6 @@ module Http =
     /// DownloadParameters -> string list
     /// ## Parameters
     ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
-    ///
-    /// ## Returns
-    ///  - `string list` type. Contains a list of downloaded file paths
     let downloadFiles (input: DownloadParameters list) : string list =
         input
         // DownloadParameters -> "Async<Result<FilePath, Err list>> list"
@@ -148,10 +133,10 @@ module Http =
         | GET
         | POST
 
-    /// Executes an HTTP GET command and retrives the information.
+    /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
     /// ## Parameters
-    ///
+    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
     ///  - `url` - The URL to perform the GET operation.
@@ -159,9 +144,8 @@ module Http =
         use client = new HttpClient()
         if not (isNull userName) || not (isNull password) then
             let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
-            client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-        //try 
         let request = new HttpRequestMessage(HttpMethod.Get, url)
         headerF request.Headers
         let! response = client.SendAsync(request) |> Async.AwaitTask
@@ -172,18 +156,20 @@ module Http =
             |> Seq.append (response.Content.Headers :> seq<System.Collections.Generic.KeyValuePair<string, seq<string>>>)
             |> Seq.map (fun kv -> kv.Key, kv.Value |> Seq.toList)
             |> Map.ofSeq
-        use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
-        use reader = new StreamReader(stream)
-        return headers, reader.ReadToEnd()
-        //with exn -> 
-        //    // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
-        //    null
+        
+        match response.StatusCode with
+        | HttpStatusCode.NotFound
+        | HttpStatusCode.NoContent ->
+            return headers, ""
+        | _ ->
+            use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
+            use reader = new StreamReader(stream)
+            return headers, reader.ReadToEnd()
     }
 
-    /// Executes an HTTP GET command and retrives the information.
+    /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
     /// ## Parameters
-    ///
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
     ///  - `url` - The URL to perform the GET operation.
@@ -192,11 +178,10 @@ module Http =
         |> Async.RunSynchronously
         |> snd
 
-    /// Executes an HTTP POST command and retrives the information.    
+    /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
     /// ## Parameters
-    ///
     ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `url` - The URL to perform the POST operation.
     ///  - `userName` - The username to use with the request.
@@ -209,7 +194,7 @@ module Http =
                 invalidArg userName "You have to specify username and password for post operations."
 
             let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
-            client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         
                 
         let request = new HttpRequestMessage(HttpMethod.Post, url)
@@ -217,7 +202,7 @@ module Http =
         let bytes = System.Text.Encoding.UTF8.GetBytes data
 
         request.Content <- new ByteArrayContent(bytes, 0, bytes.Length)
-        request.Content.Headers.ContentType <- new MediaTypeHeaderValue("application/x-www-form-urlencoded")
+        request.Content.Headers.ContentType <- MediaTypeHeaderValue("application/x-www-form-urlencoded")
         let! response = client.SendAsync(request) |> Async.AwaitTask
         response.EnsureSuccessStatusCode () |> ignore
         
@@ -231,11 +216,10 @@ module Http =
         return headers, reader.ReadToEnd() }
 
 
-    /// Executes an HTTP POST command and retrives the information.    
+    /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
     /// ## Parameters
-    ///
     ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `url` - The URL to perform the POST operation.
     ///  - `userName` - The username to use with the request.
@@ -247,10 +231,9 @@ module Http =
         |> snd
 
 
-    /// Executes an HTTP POST command and retrives the information.
+    /// Executes an HTTP POST command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
     /// ## Parameters
-    ///
     ///  - `url` - The URL to perform the POST operation.
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
@@ -273,9 +256,17 @@ module Http =
         response.EnsureSuccessStatusCode () |> ignore }
 
     /// Upload the given file to the given endpoint
+    /// ## Parameters
+    ///  - `url` - The URL to perform the POST operation.
+    ///  - `file` - The file to upload.
     let upload url file = uploadAsync url file |> Async.RunSynchronously
 
     /// Like 'get' but allow to set headers and returns the response headers.
+    /// ## Parameters
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
+    ///  - `url` - The URL to perform the POST operation.
     let getWithHeaders userName password headerF (url:string) : Map<string, string list> * string =
         getAsync headerF userName password url
         |> Async.RunSynchronously

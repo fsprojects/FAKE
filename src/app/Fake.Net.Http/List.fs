@@ -3,7 +3,6 @@
 open Fake.Net.Async
 open Fake.Net.Result
 
-/// [omit]
 // List extensions for traversing Result and Async types
 // Functions from fsharpforfunandprofit.com, please see details here:
 // https://fsharpforfunandprofit.com/posts/elevated-world-5/
