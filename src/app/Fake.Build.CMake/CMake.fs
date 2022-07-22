@@ -6,7 +6,6 @@ open Fake.Core
 open Fake.IO.FileSystemOperators
 
 /// Contains tasks which allow to use CMake to build CMakeLists files.
-/// See `Samples/CMakeSupport` for usage examples.
 [<RequireQualifiedAccess>]
 module CMake =
 
@@ -138,13 +137,11 @@ module CMake =
         |> Seq.map (fun directory -> directory @@ fullName)
         |> Seq.tryFind File.Exists
 
-    /// [omit]
     /// Converts a file path to a valid CMake format.
     /// ## Parameters
     ///  - `path` - The path to reformat.
     let private FormatCMakePath (path:string) = path.Replace("\\", "/")
 
-    /// [omit]
     /// Invokes the CMake executable with the specified arguments.
     /// ## Parameters
     ///  - `toolPath` - The location of the executable. Automatically found if null or empty.
