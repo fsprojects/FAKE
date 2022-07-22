@@ -55,6 +55,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Core.SemVer
 * ENHANCEMENT: Add Net6 Target to Fake.Core.DependencyManager.Paket
 * ENHANCEMENT: Add Net6 Target to Fake.Core.Tasks
+* ENHANCEMENT: Add Net6 Target to Fake.Core.Xml, changed `getChilds` to `getSubNodes`, and Enable `XslTransformer` , `XslTransform` & `XmlTransform` APIs for Net Core
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
