@@ -47,6 +47,7 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Documentation.DocFx and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.Tools.Git, replace deprecated process utils with alternatives, `fullclean` renamed to `fullClean`, and mark GIT modules with `RequireQualifiedAccess` attribute
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.SpecFlow, replace deprecated process utils with alternatives, and remove deprecated SpecFlow support and renaming `SpecFlowNext` to `SpecFlow`
+* ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.VSTest
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
