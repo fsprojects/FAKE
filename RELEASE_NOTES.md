@@ -1,6 +1,13 @@
 # Release Notes
 
-## 5.23.0-alpha001 - 2022-04-26
+## 5.23.0-alpha002 - 2022-07-22
+* ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
+* BUGFIX: Fix getLastTag, thanks @akhansari - https://github.com/fsprojects/FAKE/issues/2677
+* BUGFIX: Fix ReleaseNotes SemVer, thanks @Freymaurer - https://github.com/fsprojects/FAKE/issues/2557
+* ENHANCEMENT: Switch release process to manual trigger, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2687
+* ENHANCEMENT: Try to clarify CLI --help, thanks @mlaily - https://github.com/fsprojects/FAKE/pull/2667
+
+## 5.23.0-alpha001 - 2022-07-15
 * ENHANCEMENT: Porting CMake module to FAKE 5, thanks @ziadadeela - https://github.com/fsprojects/FAKE/pull/2658
 * BUGFIX: Resolve symlinks while searching for dotnet, thanks @Smaug123 - https://github.com/fsprojects/FAKE/pull/2662
 * BUGFIX: SdkAssemblyResolver: Use dotnet --version to resolve the correct SDK, thanks @mclark1129 - https://github.com/fsprojects/FAKE/pull/2665
