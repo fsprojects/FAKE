@@ -35,7 +35,7 @@ jobs:
             - name: remove current fake runner tool
               run: dotnet tool uninstall fake-cli
             - name: Build fake runner
-              run: dotnet pack --version-suffix 1 src/app/fake-cli/fake-cli.fsproj
+              run: dotnet pack -p:PackageVersion=${{ github.event.inputs.releaseVersion }} src/app/fake-cli/fake-cli.fsproj
             - name: add fake runner as a tool
               run: dotnet tool install fake-cli --add-source "./src/app/fake-cli/bin/Debug" --version ${{ github.event.inputs.releaseVersion }}
             - name: Build
