@@ -33,7 +33,9 @@ module EnvMap =
         else IMap.empty
 
     let ofSeq l : EnvMap =
-        empty.AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
+        empty
+            .AddRange(Environment.environVars () |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
+            .AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
 
     let create() =
         ofSeq (Environment.environVars ())
