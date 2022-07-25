@@ -2,7 +2,7 @@ namespace Fake.Core
 
 #nowarn "44"
 
-/// Provices a encrypted store of variables to prevent accidential leakage 
+/// Provides a encrypted store of variables to prevent accidental leakage 
 /// Please read the [documentation](/core-vault.html)
 [<RequireQualifiedAccess>]
 module Vault =
@@ -19,7 +19,7 @@ module Vault =
 
         if (salt.Length <> blockSize) then
             raise <|
-                new ArgumentException(
+                ArgumentException(
                     String.Format(
                         "Salt size must be same as block size (actual: {0}, expected: {1})",
                         salt.Length, blockSize))
@@ -29,12 +29,12 @@ module Vault =
             // https://security.stackexchange.com/questions/4606/is-this-how-to-implement-ctr-around-a-system-that-only-implements-cbc-cfb-cts
             seq {
                 for i2 in counter.Length - 1 .. -1 .. 0  do
-                    counter.[i2] <- counter.[i2] + 1uy
-                    if (counter.[i2] <> 0uy) then
+                    counter[i2] <- counter[i2] + 1uy
+                    if (counter[i2] <> 0uy) then
                         yield ()
             } |> Seq.tryItem 0 |> ignore
 
-        let xorMask = new Queue<byte>()
+        let xorMask = Queue<byte>()
 
         let zeroIv : byte[] = Array.zeroCreate blockSize
         let counterEncryptor = aes.CreateEncryptor(key, zeroIv)
@@ -69,6 +69,10 @@ module Vault =
           Iv : string }
 
     /// decrypt a given base64 encoded string and return the utf-8 string of the result
+    ///
+    /// ## Parameters
+    ///  - `key` - The file with the key
+    ///  - `base64Val` - The base64 encoded value to decrypt 
     let decryptVariable (key:KeyInfo) (base64Val:string) =
         let keyBytes = Convert.FromBase64String(File.ReadAllText(key.KeyFile))
         let ivBytes = Convert.FromBase64String(key.Iv)
@@ -76,30 +80,52 @@ module Vault =
         System.Text.Encoding.UTF8.GetString(aesCtrTransformBytes(keyBytes, ivBytes, exampleBytes))
 
     /// encrypt the given utf-8 string and return the base64 encoded result
+    ///
+    /// ## Parameters
+    ///  - `key` - The file with the key
+    ///  - `value` - The utf-8 value to encrypt 
     let encryptVariable (key:KeyInfo) (value:string) =
         let keyBytes = Convert.FromBase64String(File.ReadAllText(key.KeyFile))
         let ivBytes = Convert.FromBase64String(key.Iv)
         let exampleBytes = System.Text.Encoding.UTF8.GetBytes(value)
         Convert.ToBase64String(aesCtrTransformBytes(keyBytes, ivBytes, exampleBytes))
 
+    /// The vault variable type
     type Variable = 
-        { Secret : bool
-          Value : string 
+        {
+          /// Mark variable as being a secret or not
+          Secret : bool
+          
+          /// The variable value
+          Value : string
+          
+          /// The variable name
           Name : string }
 
+    /// Variable group type
     [<Obsolete "Need to be public because of Newtonsoft.Json, don't use">]
     type Variables =
-        { keyFile : String
+        {
+          /// The key file to use for encryption/decryption operations of variable group
+          keyFile : String
+          
+          /// The IV-Bytes (16 byte as base64 encoded string)
           iv : string
+          
+          /// The variables info in variable group
           values : Variable[] }
 
-    /// The vault which stores the encryptes values
+    /// The vault which stores the encrypts values
     type Vault =
         internal { 
           Key : KeyInfo
           Variables : Map<string, Variable> }
 
     /// Read a vault from the given encrypted variables
+    ///
+    /// ## Parameters
+    ///  - `key` - The encryption/decryption key
+    ///  - `vars` - The vault variables
     let fromEncryptedVariables key vars =
         let variables =
             vars
@@ -108,6 +134,9 @@ module Vault =
         { Key = key; Variables = variables }
 
     /// Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)
+    ///
+    /// ## Parameters
+    ///  - `file` - The secret file to use to create the key
     let createKey (file : string option) =
         let rnd = new RNGCryptoServiceProvider()
         let iv = Array.zeroCreate 16
@@ -125,11 +154,17 @@ module Vault =
     let empty = { Key = { KeyFile = null; Iv = null }; Variables = Map.empty }
 
     /// Read in a vault from a given json string, make sure to delete the source of the json after using this API
-    let fromJson s =
-        let vars = JsonConvert.DeserializeObject<Variables>(s)
+    ///
+    /// ## Parameters
+    ///  - `str` - The JSON string of the vault to read
+    let fromJson str =
+        let vars = JsonConvert.DeserializeObject<Variables>(str)
         fromEncryptedVariables { KeyFile = vars.keyFile; Iv = vars.iv } vars.values
 
-    /// Read a vault from an environment variable.    
+    /// Read a vault from an environment variable.
+    ///
+    /// ## Parameters
+    ///  - `envVar` - The environment variable to use
     let fromEnvironmentVariable envVar =
         let result = Environment.GetEnvironmentVariable(envVar)
         if String.IsNullOrEmpty result then
@@ -140,6 +175,9 @@ module Vault =
             vault
 
     /// Read a vault from an environment variable or return None
+    ///
+    /// ## Parameters
+    ///  - `envVar` - The environment variable to use
     let fromEnvironmentVariableOrNone envVar =
         let vars = Environment.GetEnvironmentVariable envVar
         if String.IsNullOrEmpty vars then
@@ -161,12 +199,20 @@ module Vault =
         else v.Value       
 
     /// try to retrieve the variable with the given name from the vault (decrypts the variable if needed)
+    ///
+    /// ## Parameters
+    ///  - `name` - The variable name to retrieve
+    ///  - `v` - The vault to check
     let tryGet name (v:Vault) =
         v.Variables
         |> Map.tryFind name
         |> Option.map (fromVariable v.Key)
 
-    /// similar to tryGet but throws an exception if the variable with the given name is not available in the vault    
+    /// similar to tryGet but throws an exception if the variable with the given name is not available in the vault
+    ///
+    /// ## Parameters
+    ///  - `name` - The variable name to retrieve
+    ///  - `v` - The vault to check
     let get name (v:Vault) =
         match tryGet name v with
         | Some s -> s
