@@ -1,6 +1,4 @@
-﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
-/// There is also a tutorial about the [AssemblyInfo tasks](/assemblyinfo.html) available.
-namespace Fake.DotNet
+﻿namespace Fake.DotNet
 
 open System
 open System.IO
@@ -39,7 +37,7 @@ module internal Helper =
 
     let NormalizeVersion version =
         let m = assemblyVersionRegex.Match(version)
-        if m.Captures.Count > 0 then m.Captures.[0].Value
+        if m.Captures.Count > 0 then m.Captures[0].Value
         else version
 
 /// Represents options for configuring the emission of AssemblyInfo
@@ -50,29 +48,43 @@ type AssemblyInfoFileConfig
       ?emitResharperSupressions : bool,
       // The optional namespace into which assembly info will be generated; defaults to "System".
       ?useNamespace : string ) =
-        member __.GenerateClass = generateClass
-        member __.UseNamespace =
+        member _.GenerateClass = generateClass
+        member _.UseNamespace =
             match useNamespace with
             | Some n -> n
             | None -> "System"
-        member __.EmitResharperSuppressions =
+        member _.EmitResharperSuppressions =
             match emitResharperSupressions with
             | Some n -> generateClass && n
             | None -> false
         static member Default = AssemblyInfoFileConfig(true)
 
+/// Contains tasks to generate AssemblyInfo files for C# and F#.
+/// There is also a tutorial about the [AssemblyInfo tasks](/dotnet-assemblyinfo.html) available.
 [<RequireQualifiedAccess>]
 module AssemblyInfo =
 
     /// Represents AssemblyInfo attributes
     type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
-        member __.Name = name
-        member __.Value = value
-        member __.Namespace = inNamespace
-        member __.StaticPropertyName = staticPropName
-        member __.StaticPropertyType = staticPropType
-        member __.StaticPropertyValue = staticPropValue
+        /// the name of the attribute
+        member _.Name = name
+        
+        /// the value for the attribute
+        member _.Value = value
+        
+        /// the namespace of the attribute
+        member _.Namespace = inNamespace
+        
+        /// static property name
+        member _.StaticPropertyName = staticPropName
+        
+        /// static property type
+        member _.StaticPropertyType = staticPropType
+        
+        /// static property value
+        member _.StaticPropertyValue = staticPropValue
 
+        /// Create a new assembly info attribute with given data
         new(name, value, inNamespace, staticPropType) =
             Attribute(name, value, inNamespace, name, staticPropType, value)
 
@@ -83,84 +95,156 @@ module AssemblyInfo =
             sprintf "\"%s\"" value
 
     /// Creates a simple attribute with string values. Used as base for other attributes
+    /// 
+    /// ## Parameters
+    ///  - `name` - the attribute name
+    ///  - `value` - the attribute value
+    ///  - `inNamespace` - the attribute namespace
+    ///  - `staticName` - static property name
+    ///  - `staticValue` - static property value
     let StringAttributeWithStatic(name, value, inNamespace, staticName, staticValue) =
         let quotedValue = quote value
         let quotedStaticValue = quote staticValue
         Attribute(name, quotedValue, inNamespace, staticName, typeof<string>.FullName, quotedStaticValue)
 
-    [<System.Obsolete "Please use 'StringAttributeWithStatic' instead">]
-    let StringAttributeEx(name, value, inNamespace, staticName, staticValue) =
-        StringAttributeWithStatic(name, value, inNamespace, staticName, staticValue)
-
+    /// Create a string attribute
+    /// 
+    /// ## Parameters
+    ///  - `name` - the attribute name
+    ///  - `value` - the attribute value
+    ///  - `inNamespace` - the attribute namespace
     let StringAttribute(name, value, inNamespace) =
         let quotedValue = quote value
         Attribute(name, quotedValue, inNamespace, name, typeof<string>.FullName, quotedValue)
 
     /// Creates a simple attribute with boolean values. Used as base for other attributes
+    /// 
+    /// ## Parameters
+    ///  - `name` - the attribute name
+    ///  - `value` - the attribute value
+    ///  - `inNamespace` - the attribute namespace
     let BoolAttribute(name, value, inNamespace) =
         Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
 
     /// Creates an attribute which holds the company information
-    let Company(value) = StringAttribute("AssemblyCompany", value, "System.Reflection")
+    /// 
+    /// ## Parameters
+    ///  - `value` - the company attribute value
+    let Company value = StringAttribute("AssemblyCompany", value, "System.Reflection")
 
     /// Creates an attribute which holds the product name
-    let Product(value) = StringAttribute("AssemblyProduct", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the product attribute value
+    let Product value = StringAttribute("AssemblyProduct", value, "System.Reflection")
 
     /// Creates an attribute which holds the copyright information
-    let Copyright(value) = StringAttribute("AssemblyCopyright", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the copyright attribute value
+    let Copyright value = StringAttribute("AssemblyCopyright", value, "System.Reflection")
 
     /// Creates an attribute which holds the product title
-    let Title(value) = StringAttribute("AssemblyTitle", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the title attribute value
+    let Title value = StringAttribute("AssemblyTitle", value, "System.Reflection")
 
     /// Creates an attribute which holds the product description
-    let Description(value) = StringAttribute("AssemblyDescription", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the description attribute value
+    let Description value = StringAttribute("AssemblyDescription", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly culture information
-    let Culture(value) = StringAttribute("AssemblyCulture", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the culture attribute value
+    let Culture value = StringAttribute("AssemblyCulture", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly configuration
-    let Configuration(value) = StringAttribute("AssemblyConfiguration", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the configuration attribute value
+    let Configuration value = StringAttribute("AssemblyConfiguration", value, "System.Reflection")
 
     /// Creates an attribute which holds the trademark
-    let Trademark(value) = StringAttribute("AssemblyTrademark", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the trademark attribute value
+    let Trademark value = StringAttribute("AssemblyTrademark", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly version
-    let Version(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the version attribute value
+    let Version value =
         StringAttribute("AssemblyVersion", Helper.NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key file
-    let KeyFile(value) = StringAttribute("AssemblyKeyFile", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the key file attribute value
+    let KeyFile value = StringAttribute("AssemblyKeyFile", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key name
-    let KeyName(value) = StringAttribute("AssemblyKeyName", value, "System.Reflection")
+    ///
+    /// ## Parameters
+    ///  - `value` - the key name attribute value
+    let KeyName value = StringAttribute("AssemblyKeyName", value, "System.Reflection")
 
     /// Creates an attribute which holds the "InternalVisibleTo" data
-    let InternalsVisibleTo(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the internals visible to attribute value
+    let InternalsVisibleTo value =
         StringAttribute("InternalsVisibleTo", value, "System.Runtime.CompilerServices")
 
     /// Creates an attribute which holds the assembly file version
-    let FileVersion(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the file version attribute value
+    let FileVersion value =
         StringAttribute("AssemblyFileVersion", Helper.NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds an assembly information version
-    let InformationalVersion(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the informational version attribute value
+    let InformationalVersion value =
         StringAttribute("AssemblyInformationalVersion", value, "System.Reflection")
 
     /// Creates an attribute which holds the Guid
-    let Guid(value) = StringAttribute("Guid", value, "System.Runtime.InteropServices")
+    ///
+    /// ## Parameters
+    ///  - `value` - the guid attribute value
+    let Guid value = StringAttribute("Guid", value, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is visible via COM
-    let ComVisible(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the COM attribute value
+    let ComVisible value =
         BoolAttribute("ComVisible", value, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is CLS compliant
-    let CLSCompliant(value) = BoolAttribute("CLSCompliant", value, "System")
+    ///
+    /// ## Parameters
+    ///  - `value` - the CLS Compliant attribute value
+    let CLSCompliant value = BoolAttribute("CLSCompliant", value, "System")
 
     /// Creates an attribute which specifies if the assembly uses delayed signing
-    let DelaySign(value) =
+    ///
+    /// ## Parameters
+    ///  - `value` - the delay sign attribute value
+    let DelaySign value =
         BoolAttribute("AssemblyDelaySign", value, "System.Reflection")
 
     /// Create an attribute which specifies metadata about the assembly
+    ///
+    /// ## Parameters
+    ///  - `name` - the attribute name
+    ///  - `value` - the attribute value
     let Metadata(name,value) =
         let nameValue = sprintf "\"%s\",\"%s\"" name value
         StringAttributeWithStatic("AssemblyMetadata", nameValue, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), value)
@@ -176,11 +260,11 @@ module AssemblyInfoFile =
     let private writeToFile outputFileName (lines : seq<string>) =
         let fi = FileInfo.ofPath outputFileName
         if fi.Exists then fi.Delete()
-        let dirName = System.IO.Path.GetDirectoryName(outputFileName)
+        let dirName = Path.GetDirectoryName(outputFileName)
         if not (String.isNullOrEmpty dirName) then
-            System.IO.Directory.CreateDirectory(dirName) |> ignore
+            Directory.CreateDirectory(dirName) |> ignore
         use f = fi.Open(FileMode.Create)
-        use writer = new System.IO.StreamWriter(f, System.Text.Encoding.UTF8)
+        use writer = new StreamWriter(f, System.Text.Encoding.UTF8)
         lines |> Seq.iter writer.WriteLine
 
     let private getDependencies attributes =
@@ -379,7 +463,7 @@ module AssemblyInfoFile =
         let text = File.ReadAllText assemblyInfoFile
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly
-        let (regex, additionalRegexOptions) =
+        let regex, additionalRegexOptions =
             match assemblyInfoFile.ToLower() with
             | Suffix ".cs" _ -> (regexAttrNameValueCs, RegexOptions.Multiline ||| RegexOptions.None)
             | Suffix ".fs" _ -> (regexAttrNameValueFs, RegexOptions.Multiline ||| RegexOptions.None)
@@ -388,8 +472,8 @@ module AssemblyInfoFile =
             | _ -> failwithf "Assembly info file type not supported: %s" assemblyInfoFile
 
         let assemblyMap (m:Match) = 
-            let v = m.Groups.["value"].Value.Trim([|'"'|])
-            let n = m.Groups.["name"].Value |> removeAtEnd "Attribute"
+            let v = m.Groups["value"].Value.Trim([|'"'|])
+            let n = m.Groups["name"].Value |> removeAtEnd "Attribute"
             let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
             match n.ToLower() with
             | "assemblycompany" -> AssemblyInfo.Company(v)
@@ -414,7 +498,7 @@ module AssemblyInfoFile =
 
         Regex.Matches(text, regex, additionalRegexOptions)
         |> Seq.cast<Match>
-        |> Seq.map (assemblyMap)
+        |> Seq.map assemblyMap
 
     /// Read a single attribute from an AssemblyInfo file.
     /// ## Parameters
@@ -459,7 +543,7 @@ module AssemblyInfoFile =
         Trace.tracefn "Updating attributes in: %s" assemblyInfoFile
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly
-        let (regexFactory, regexOptions) =
+        let regexFactory, regexOptions =
             match assemblyInfoFile.ToLower() with
             | Suffix ".cs" _ -> (regexAttrValueCs, RegexOptions.Multiline ||| RegexOptions.None)
             | Suffix ".fs" _ -> (regexAttrValueFs, RegexOptions.Multiline ||| RegexOptions.None)
