@@ -64,6 +64,12 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Core.Vault
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.Testing.NUnit and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.NuGet and replace deprecated process utils with alternatives
+* ENHANCEMENT: Add Net6 Target to Fake.DotNet.MSBuild and replace deprecated process utils with alternatives
+  * removed `BuildException` since it is replaced with `MSBuildException`
+  * removed `msBuildExe`
+  * removed `processReferences`
+  * removed `serializeMSBuildParams`
+  * opened `buildWithRedirect` as a public API
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
