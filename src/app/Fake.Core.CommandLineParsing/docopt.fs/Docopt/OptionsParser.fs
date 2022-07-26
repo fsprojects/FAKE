@@ -12,6 +12,7 @@ type OptionsParserState =
    mutable DefaultValue : string option
    AllowMultiple : bool
    ArgName : string option }
+ 
   static member CreateEmpty() =
     { ShortName = None
       LongName = None
@@ -72,15 +73,15 @@ type OptionsParser(soptChars':string) =
         | '=' -> ``expecting arg (short)`` stream' state
         | ',' -> ``expecting space`` stream' state
         | _   -> Reply(state)
-    and ``expecting arg (short)`` stream' (state) =
+    and ``expecting arg (short)`` stream' state =
       let () = stream'.Skip() in
       let r = parg stream' 
       match r.Status with
       | Ok -> ``short option plus arg`` stream' { state with ArgName = Some(r.Result)}
       | _  -> Reply(Error, r.Error)
-    and ``argument or hyphens or space`` stream' (state) =
+    and ``argument or hyphens or space`` stream' state =
       match stream'.SkipAndPeek() with
-        | '-' -> ``expecting hyphen 2`` stream' (state)
+        | '-' -> ``expecting hyphen 2`` stream' state
         | ' ' -> Reply(state)
         | _   ->
           let r = parg stream'
@@ -117,7 +118,7 @@ type OptionsParser(soptChars':string) =
         | _   -> Reply(state)
     and ``expecting arg or space (long)`` stream' state =
       match stream'.SkipAndPeek() with
-      | ' ' -> Reply (state)
+      | ' ' -> Reply state
       | '[' -> ``parameters and end`` stream' state
       | _ ->
         let r = parg stream'
@@ -168,7 +169,7 @@ type OptionsParser(soptChars':string) =
                              RegexOptions.RightToLeft
                              ||| RegexOptions.IgnoreCase)
 
-    member __.Parse(optionStrings':string seq) =
+    member _.Parse(optionStrings':string seq) =
       let parseAsync line' = async {
           let dflt =
             let df = defaultRegex.Match(line')
@@ -176,7 +177,7 @@ type OptionsParser(soptChars':string) =
             else None
           return
             match run (poptLine dflt) line' with
-            | Failure(e, _, _) -> match dflt with
+            | Failure _ -> match dflt with
                                   | Some dfltVal -> Val(dfltVal)
                                   | None -> Nil
             | Success(r, _, _) -> Opt(r)
@@ -186,10 +187,10 @@ type OptionsParser(soptChars':string) =
       let action = function
       | Nil      -> ()
       | Opt(opt) ->
-        lastOpt := Some opt
+        lastOpt.Value <- Some opt
         options.Add(opt)
       | Val(str) -> 
-          match !lastOpt with // In order to parse defaults from follow-up lines...
+          match lastOpt.Value with // In order to parse defaults from follow-up lines...
           | Some lastOptCopy ->
             lastOptCopy.DefaultValue <- Some str
           | None -> ()

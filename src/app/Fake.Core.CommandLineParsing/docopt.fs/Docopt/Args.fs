@@ -20,8 +20,8 @@ type DocoptMap = Map<string, DocoptResult>
 module DocoptResult =
   let getFlagCount flag (map:DocoptMap) =
     match Map.tryFind flag map with
-    | Some (NoResult) -> 0
-    | Some (Flag) -> 1
+    | Some NoResult -> 0
+    | Some Flag -> 1
     | Some (Flags n) -> n
     | Some (Argument _) -> 1
     | Some (Arguments l) -> l.Length

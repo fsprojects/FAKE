@@ -8,7 +8,6 @@ namespace Fake.Core.CommandLineParsing
 open Fake.Core
 open FParsec
 open System
-open System.Text
 
 exception private InternalException of ErrorMessageList
 exception UsageException of string

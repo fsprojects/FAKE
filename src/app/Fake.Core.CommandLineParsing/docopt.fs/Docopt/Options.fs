@@ -44,26 +44,20 @@ type SafeOptions(list:SafeOption list) =
       member x.GetEnumerator () = (list :> System.Collections.IEnumerable).GetEnumerator()
     interface IEnumerable<SafeOption> with
       member x.GetEnumerator () = (list :> IEnumerable<SafeOption>).GetEnumerator()
-    member __.Find(s':char) =
+    member _.Find(s':char) =
       list |> List.tryFind(fun o' -> o'.Short = Some s')
-    member __.AddRange(opts:SafeOption list) =
+    member _.AddRange(opts:SafeOption list) =
       SafeOptions(opts @ list)
-    member __.FindAndRemove(s':char) =
+    member _.FindAndRemove(s':char) =
       match list |> List.tryFindIndex(fun o' -> o'.Short = Some s') with
       | None -> None
       | Some i  ->
-        let ret = list.[i]
+        let ret = list[i]
         Some (
           SafeOptions(list |> List.filter (fun t -> not <| obj.ReferenceEquals(t, ret))),
           ret)
-    member __.Find(l':string) =
+    member _.Find(l':string) =
       findIn l' list
-      //match base.Find(fun o' -> o'.Long = l') with
-      //| null -> base.Find(fun o' -> o'.Long.StartsWith(l'))
-      //| opt  -> opt
-    member __.FindLast(l':string) =
+    member _.FindLast(l':string) =
       findIn l' (list |> List.rev)
-      //match base.FindLast(fun o' -> o'.Long = l') with
-      //| null -> base.FindLast(fun o' -> o'.Long.StartsWith(l'))
-      //| opt  -> opt
-    member __.Last = list |> List.last
+    member _.Last = list |> List.last
