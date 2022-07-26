@@ -27,6 +27,7 @@ Target Module options [target_opts]:
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
+    
 /// [omit]
 type TargetDescription = string
 
@@ -102,7 +103,7 @@ type [<NoComparison>] [<NoEquality>] internal InternalTarget =
 
 /// Exception for request errors
 #if !NETSTANDARD1_6
-[<System.Serializable>]
+[<Serializable>]
 #endif
 type BuildFailedException =
     val private info : TargetContext option
@@ -138,19 +139,19 @@ module Target =
     //let mutable PrintStackTraceOnError = false
     let private printStackTraceOnErrorVar = "Fake.Core.Target.PrintStackTraceOnError"
     let private getPrintStackTraceOnError, _, (setPrintStackTraceOnError:bool -> unit) =
-        Fake.Core.FakeVar.define printStackTraceOnErrorVar
+        FakeVar.define printStackTraceOnErrorVar
 
     /// [omit]
     //let mutable LastDescription = null
     let private lastDescriptionVar = "Fake.Core.Target.LastDescription"
     let private getLastDescription, removeLastDescription, setLastDescription =
-        Fake.Core.FakeVar.define lastDescriptionVar
+        FakeVar.define lastDescriptionVar
     
     /// [omit]
     //let mutable LastDescription = null
     let private collectStackVar = "Fake.Core.Target.CollectStack"
     let private getCollectStack, removeCollectStack, (setCollectStack : bool -> unit) =
-        Fake.Core.FakeVar.define collectStackVar
+        FakeVar.define collectStackVar
 
     let private shouldCollectStack() =
         match getCollectStack () with
@@ -165,7 +166,7 @@ module Target =
 
     let internal getDeclaration () =
         if shouldCollectStack () then
-            let ctx = Fake.Core.Context.forceFakeContext ()
+            let ctx = Context.forceFakeContext ()
             let st1 = System.Diagnostics.StackTrace(1, true)
             let frames =
                 [ 0 .. st1.FrameCount - 1 ]
@@ -176,11 +177,11 @@ module Target =
             let fn =
                 let compiledAssembly =
                     frames
-                    |> Seq.tryFind (fun (fn, sf) ->
+                    |> Seq.tryFind (fun (fn, _) ->
                         // Find a frame where we are quite positive it belongs to us
                         let scriptName = getNormalizedFileName fn
                         not (String.IsNullOrEmpty fn) && (scriptName = normalizedScriptFile))
-                    |> Option.map (fun (fn, frame) -> frame.GetMethod().DeclaringType.Assembly)
+                    |> Option.map (fun (_, frame) -> frame.GetMethod().DeclaringType.Assembly)
 
                 compiledAssembly
                 // First try to find the first frame with the correct assembly
@@ -192,13 +193,13 @@ module Target =
                 // if not found fallback to any script
                 |> Option.orElseWith (fun _ ->
                     frames
-                    |> Seq.tryFind (fun (fn, sf) ->
+                    |> Seq.tryFind (fun (fn, _) ->
                         let scriptName = getNormalizedFileName fn
                         not (String.IsNullOrEmpty fn) && (fn.EndsWith ".fsx" || scriptName = normalizedScriptFile)))
                 // if not found fallback to any information we might have
                 |> Option.orElseWith (fun _ ->
                     frames
-                    |> Seq.tryFind (fun (fn, sf) ->
+                    |> Seq.tryFind (fun (fn, _) ->
                         // fallback to any information we might have...
                         not (String.IsNullOrEmpty fn)))
             fn
@@ -239,7 +240,7 @@ module Target =
     let internal getVarWithInit name f =
         let varName = sprintf "Fake.Core.Target.%s" name
         let getVar, _, setVar =
-            Fake.Core.FakeVar.define varName
+            FakeVar.define varName
         fun () ->
             match getVar() with
             | Some d -> d
@@ -249,15 +250,15 @@ module Target =
                 d
     
     let internal getTargetDict =
-        getVarWithInit "TargetDict" (fun () -> new Dictionary<string,InternalTarget>(StringComparer.OrdinalIgnoreCase))
+        getVarWithInit "TargetDict" (fun () -> Dictionary<string,InternalTarget>(StringComparer.OrdinalIgnoreCase))
 
     /// Final Targets - stores final targets and if they are activated.
     let internal getFinalTargets =
-        getVarWithInit "FinalTargets" (fun () -> new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
+        getVarWithInit "FinalTargets" (fun () -> Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
     /// BuildFailureTargets - stores build failure targets and if they are activated.
     let internal getBuildFailureTargets =
-        getVarWithInit "BuildFailureTargets" (fun () -> new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
+        getVarWithInit "BuildFailureTargets" (fun () -> Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
 
     /// Resets the state so that a deployment can be invoked multiple times
@@ -273,7 +274,7 @@ module Target =
     /// Gets a target with the given name from the target dictionary.
     let internal getInternal name : InternalTarget =
         let d = getTargetDict()
-        match d.TryGetValue (name) with
+        match d.TryGetValue name with
         | true, target -> target
         | _  ->
             Trace.traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
@@ -296,7 +297,7 @@ module Target =
         let error =
             try
                 if not context.IsRunningFinalTargets then
-                    context.CancellationToken.ThrowIfCancellationRequested()|>ignore
+                    context.CancellationToken.ThrowIfCancellationRequested()
                 target.Function { TargetInfo = target; Context = context }
                 None
             with e -> Some e
@@ -312,13 +313,15 @@ module Target =
             t.MarkSuccess()
         { context with PreviousTargets = context.PreviousTargets @ [result] }
 
-    /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
+    /// This simply runs the function of a target without doing anything (like tracing, stop watching or adding
+    /// it to the results at the end)
     let runSimple name args =
         let target = get name
         target
         |> runSimpleInternal (TargetContext.Create name [target] args CancellationToken.None)
 
-    /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
+    /// This simply runs the function of a target without doing anything (like tracing, stop watching or
+    /// adding it to the results at the end)
     let runSimpleWithContext name ctx =
         let target = get name
         target
@@ -331,10 +334,6 @@ module Target =
           |> Seq.map (fun d -> (get d.Name).Name)
           |> String.separated ", "
           |> sprintf "(?=> %s)"
-
-    /// Do nothing - Can be used to define empty targets.
-    [<Obsolete("Use ignore instead")>]
-    let DoNothing = (fun (_:TargetParameter) -> ())
 
     /// Checks whether the dependency (soft or normal) can be added.
     /// [omit]
@@ -452,7 +451,7 @@ module Target =
 
     /// Runs all build failure targets.
     /// [omit]
-    let internal runBuildFailureTargets (context) =
+    let internal runBuildFailureTargets context =
         getBuildFailureTargets()
         |> Seq.filter (fun kv -> kv.Value)     // only if activated
         |> Seq.map (fun kv -> get kv.Key)
@@ -465,7 +464,7 @@ module Target =
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
 
     /// List all targets available.
-    let internal writeInfoFile(file) =
+    let internal writeInfoFile file =
         let escapeJson (s:string) =
             let sb = System.Text.StringBuilder(s.Length)
             for c in s do
@@ -523,7 +522,7 @@ module Target =
     // in the list than the target.
     let private visitDependencies repeatVisit fVisit targetName =
         let visit fGetDependencies fVisit targetName =
-            let visited = new HashSet<_>(StringComparer.OrdinalIgnoreCase)
+            let visited = HashSet<_>(StringComparer.OrdinalIgnoreCase)
             let rec visitDependenciesAux orderedTargets = function
                 // NOTE: should be tail recursive
                 | (level, depType, targetName) :: workLeft ->
@@ -549,22 +548,22 @@ module Target =
              // visited.
              (t.SoftDependencies |> List.filter visited.Contains |> withDependencyType DependencyType.Soft)
 
-        // Now make second pass, adding in soft depencencies if appropriate
+        // Now make second pass, adding in soft dependencies if appropriate
         visit getAllDependencies fVisit targetName
 
     /// <summary>Writes a dependency graph.</summary>
     /// <param name="verbose">Whether to print verbose output or not.</param>
     /// <param name="target">The target for which the dependencies should be printed.</param>
     let printDependencyGraph verbose target =
-        match getTargetDict().TryGetValue (target) with
+        match getTargetDict().TryGetValue target with
         | false,_ -> listAvailable()
         | true,target ->
             let sb = System.Text.StringBuilder()
             let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
 
             appendfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
-            let logDependency ((t: Target), depType, level) =
-                let indent = (String(' ', level * 3))
+            let logDependency (t: Target, depType, level) =
+                let indent = String(' ', level * 3)
                 if depType = DependencyType.Soft then
                     appendfn "%s<=? %s" indent t.Name
                 else
@@ -596,11 +595,11 @@ module Target =
         if executedTargets.Length > 0 then
             let width =
                 executedTargets
-                  |> Seq.map (fun (tres) -> tres.Target.Name.Length)
+                  |> Seq.map (fun tres -> tres.Target.Name.Length)
                   |> Seq.max
                   |> max 8
 
-            let alignedString (name:string) (duration) extra =
+            let alignedString (name:string) duration extra =
                 let durString = sprintf "%O" duration
                 if (String.IsNullOrEmpty extra) then
                     sprintf "%s   %s" (name.PadRight width) durString
@@ -612,7 +611,7 @@ module Target =
             aligned "Target" "Duration" null
             aligned "------" "--------" null
             executedTargets
-              |> Seq.iter (fun (tres) ->
+              |> Seq.iter (fun tres ->
                     let name = tres.Target.Name
                     let time = tres.Time
                     match tres.Error with
@@ -632,8 +631,8 @@ module Target =
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
-        let visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        let visitedTargets = new List<Target>()
+        let visited = HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        let visitedTargets = List<Target>()
         let rec visitDependenciesAux = function
             // NOTE: should be tail recursive
             | targetName :: workLeft ->
@@ -728,7 +727,7 @@ module Target =
                         | GetNextTarget (newCtx, reply) ->
                             let failwithf pf =
                                 // handle reply before throwing.
-                                let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                let tcs = TaskCompletionSource<TargetContext * Target option>()
                                 waitList <- waitList @ [ tcs ]
                                 reply.Reply (tcs.Task |> Async.AwaitTask)
                                 failwithf pf
@@ -744,7 +743,7 @@ module Target =
                                 runningTasks
                                 |> List.filter (fun t -> not(known.ContainsKey (String.toLower t.Name)))
                             if known.Count = targetCount then
-                                for (w:System.Threading.Tasks.TaskCompletionSource<TargetContext * Target option>) in waitList do
+                                for w:TaskCompletionSource<TargetContext * Target option> in waitList do
                                     w.SetResult (ctx, None)
                                 waitList <- []
                                 reply.Reply (async.Return(ctx, None))
@@ -787,8 +786,8 @@ module Target =
                                         let knownStr = sprintf "[%s]" (String.Join(",", known.Keys))
                                         failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
-                                    let tcs = new TaskCompletionSource<TargetContext * Target option>()
-                                    let running = System.String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
+                                    let tcs = TaskCompletionSource<TargetContext * Target option>()
+                                    let running = String.Join(", ", runningTasks |> Seq.map (fun t -> sprintf "'%s'" t.Name))
                                     // recalculate openTargets as getNextFreeRunableTarget could change runningTasks
                                     let openTargets = calculateOpenTargets() |> Seq.toList
                                     let orderedOpen =
@@ -804,14 +803,14 @@ module Target =
                                             |> Seq.filter (isDependencyResolvedOrRunning >> not)
                                             |> Seq.length)
                                     let openList = 
-                                        System.String.Join(", ", orderedOpen :> seq<_> |> (if orderedOpen.Length > 3 then Seq.take 3 else id) |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
+                                        String.Join(", ", orderedOpen :> seq<_> |> (if orderedOpen.Length > 3 then Seq.take 3 else id) |> Seq.map (fun t ->  sprintf "'%s'" t.Name))
                                           + (if orderedOpen.Length > 3 then ", ..." else "")
                                     Trace.tracefn "FAKE worker idle because '%d' targets (%s) are still running and all ('%d') open targets (%s) depend on those. You might improve performance by splitting targets or removing dependencies."
                                         runningTasks.Length running openTargets.Length openList
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
-                    for (w:System.Threading.Tasks.TaskCompletionSource<TargetContext * Target option>) in waitList do
+                    for w:TaskCompletionSource<TargetContext * Target option> in waitList do
                         w.SetException (exn("mailbox failed", e))
                     waitList <- []
                     while true do
@@ -823,7 +822,7 @@ module Target =
 
             let mbox = MailboxProcessor.Start(body)
             { new IRunnerHelper with
-                member __.GetNextTarget (ctx) = async {
+                member _.GetNextTarget ctx = async {
                     let! repl = mbox.PostAndAsyncReply(fun reply -> GetNextTarget(ctx, reply))
                     return! repl
                 }
@@ -834,12 +833,12 @@ module Target =
             let targetRunner () =
                 async {
                     let token = targetContext.CancellationToken
-                    let! (tctx, tt) = mgr.GetNextTarget(targetContext)
+                    let! tctx, tt = mgr.GetNextTarget(targetContext)
                     let mutable ctx = tctx
                     let mutable nextTarget = tt
                     while nextTarget.IsSome && not token.IsCancellationRequested do
                         let newCtx = runSingleTarget nextTarget.Value ctx
-                        let! (tctx, tt) = mgr.GetNextTarget(newCtx)
+                        let! tctx, tt = mgr.GetNextTarget(newCtx)
                         ctx <- tctx
                         nextTarget <- tt
                     return ctx
@@ -858,7 +857,7 @@ module Target =
             Console.CancelKeyPress
             |> Observable.first
             |> Observable.subscribe (fun _ ->  Environment.Exit 1)
-        Process.killAllCreatedProcesses() |> ignore
+        Process.killAllCreatedProcesses()
         cts.Cancel()
     
     /// Optional `TargetContext`
@@ -878,7 +877,7 @@ module Target =
         | None -> ()
 
         printfn "run %s" targetName
-        let watch = new System.Diagnostics.Stopwatch()
+        let watch = System.Diagnostics.Stopwatch()
         watch.Start()
 
         Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
@@ -991,11 +990,6 @@ module Target =
         if c.IsSome && c.Value.HasError && not c.Value.CancellationToken.IsCancellationRequested then
             getBuildFailedException c.Value
             |> raise
-
-
-    /// Runs a target and its dependencies and returns a `TargetContext`
-    [<Obsolete "Use Target.WithContext.run instead">]
-    let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
     
     type internal ArgResults =
         | ListTargets
@@ -1007,10 +1001,10 @@ module Target =
     let private argResultsVar = "Fake.Core.Target.ArgResults"
     /// [omit]
     let private privGetArgResults, private removeArgResults, private setArgResults =
-        Fake.Core.FakeVar.define argResultsVar
+        FakeVar.define argResultsVar
 
     let internal parseArgsAndSetEnvironment () =
-        let ctx = Fake.Core.Context.forceFakeContext ()
+        let ctx = Context.forceFakeContext ()
         
         let trySplitEnvArg (arg:string) =
             let idx = arg.IndexOf('=')
@@ -1031,7 +1025,7 @@ module Target =
                 | Some args ->
                     args |> List.choose trySplitEnvArg
                 | None -> []
-            for (key, value) in envs do Environment.setEnvironVar key value
+            for key, value in envs do Environment.setEnvironVar key value
 
             if DocoptResult.hasFlag "--list" results then
                 ListTargets
@@ -1040,7 +1034,7 @@ module Target =
                 | None -> failwithf "--write-info needs an file argument"
                 | Some arg ->
                     setCollectStack true
-                    WriteInfo (arg)
+                    WriteInfo arg
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
@@ -1071,7 +1065,7 @@ module Target =
                 let parallelJobs =
                     match DocoptResult.tryGetArgument "--parallel" results with
                     | Some arg ->
-                        match System.Int32.TryParse(arg) with
+                        match Int32.TryParse(arg) with
                         | true, i -> i
                         | _ -> failwithf "--parallel needs an integer argument, could not parse '%s'" arg
                     | None ->
@@ -1119,7 +1113,7 @@ module Target =
         | _ -> OptionalTargetContext.MaybeSet(None)
         
     /// allows to initialize FAKE, see initEnvironment and getArguments
-    let internal initAndProcess (proc) =
+    let internal initAndProcess proc =
         match privGetArgResults () with
         | Some args -> proc args
         | None ->

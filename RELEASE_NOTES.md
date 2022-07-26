@@ -131,6 +131,10 @@
   * Removed `Fake.DotNet.DotNet.PublishOptions.Default` since it is deprecated, alternative is `Create`
   * Removed `Fake.DotNet.DotNet.BuildOptions.Default` since it is deprecated, alternative is `Create`
   * Removed `Fake.DotNet.DotNet.TestOptions.Default` since it is deprecated, alternative is `Create`
+* ENHANCEMENT: Add Net6 Target to Fake.Core.Target
+  * Removed `Fake.Core.TargetModule.DoNothing` since it is deprecated, alternative is `ignore`
+  * Removed `Fake.Core.TargetModule.runAndGetContext` since it is deprecated, alternative is `Target.WithContext.run`
+
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
