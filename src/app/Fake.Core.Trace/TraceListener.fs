@@ -1,9 +1,9 @@
-﻿/// Defines default listeners for build output traces
-namespace Fake.Core
+﻿namespace Fake.Core
 
 open System
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The supported tracing tags
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type KnownTags =
@@ -36,7 +36,8 @@ type KnownTags =
         | Test _ -> "test"
         | Other (t, _) -> t
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The list of DotNet coverage tools supported
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type DotNetCoverageTool =
@@ -51,14 +52,16 @@ type DotNetCoverageTool =
         | NCover -> "ncover"
         | NCover3 -> "ncover3"
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The NUnit versions supported 
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type NunitDataVersion =
     | Nunit
     | Nunit3
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The types of data to import in build process 
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type ImportData =
@@ -106,13 +109,15 @@ type ImportData =
         | DotNetCoverage tool -> sprintf "dotNetCoverage (%O)" tool
         | _ -> x.Name
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The testing statuses supported
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TestStatus =
     | Ignored of message:string
     | Failed of message:string * details:string * expectedActual:(string * string) option
 
+/// Testing status 
 module TestStatus =
     let inline mapMessage f (t:TestStatus) =
         match t with
@@ -122,7 +127,8 @@ module TestStatus =
             TestStatus.Failed (f message, f details, None)
         | _ -> t
 
-/// Note: Adding new cases to this type is not considered a breaking change!
+// Note: Adding new cases to this type is not considered a breaking change!
+/// The types of tagging on testing supported
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TagStatus =
@@ -130,8 +136,8 @@ type TagStatus =
     | Warning
     | Failed
 
+// Note: Adding new cases to this type is not considered a breaking change!
 /// Defines Tracing information for TraceListeners
-/// Note: Adding new cases to this type is not considered a breaking change!
 /// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TraceData =
@@ -267,13 +273,15 @@ module ConsoleWriter =
         | _ -> ConsoleColor.Gray
 
 /// Implements a TraceListener for System.Console.
+/// 
 /// ## Parameters
+/// 
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
     interface ITraceListener with
         /// Writes the given message to the Console.
-        member __.Write msg =
+        member _.Write msg =
             let color = colorMap msg
             let write = if ansiColor then ConsoleWriter.writeAnsiColor else ConsoleWriter.write
             match msg with
@@ -311,10 +319,11 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
 type TraceSecret =
     { Value : string; Replacement : string }
 
+/// Module to handle tracing secret values in logs
 module TraceSecrets =
     let private traceSecretsVar = "Fake.Core.Trace.TraceSecrets"
     let private getTraceSecrets, _, (setTraceSecrets:TraceSecret list -> unit) =
-        Fake.Core.FakeVar.defineOrNone traceSecretsVar
+        FakeVar.defineOrNone traceSecretsVar
 
     let getAll () =
         match getTraceSecrets() with
@@ -343,12 +352,10 @@ module CoreTracing =
     let defaultConsoleTraceListener  =
       ConsoleTraceListener(importantMessagesToStdErr, ConsoleWriter.colorMap, false) :> ITraceListener
 
-
     /// A List with all registered listeners
-
     let private traceListenersVar = "Fake.Core.Trace.TraceListeners"
     let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) =
-        Fake.Core.FakeVar.defineOrNone traceListenersVar
+        FakeVar.defineOrNone traceListenersVar
 
     let areListenersSet () =
         match getTraceListeners() with

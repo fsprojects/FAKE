@@ -106,6 +106,13 @@
   * Removed `Fake.IO.Shell.RegexReplaceInFileWithEncoding` since it is deprecated, alternative is `Fake.IO.Shell.regexReplaceInFileWithEncoding`
   * Removed `Fake.IO.Shell.RegexReplaceInFilesWithEncoding` since it is deprecated, alternative is `Fake.IO.Shell.regexReplaceInFilesWithEncoding`
   * Changed `Fake.IO.File.getEncoding` by removing case for UTF7 since it is deprecated and marked as unsafe.
+* ENHANCEMENT: Add Net6 Target to Fake.Core.Trace
+  * Removed `Fake.Core.Trace.openTag` since it is deprecated 
+  * Removed `Fake.Core.Trace.closeTag` since it is deprecated 
+  * Removed `Fake.Core.Trace.traceStartTarget` since it is deprecated 
+  * Removed `Fake.Core.Trace.traceEndTarget` since it is deprecated 
+  * Removed `Fake.Core.Trace.traceStartTask` since it is deprecated 
+  * Removed `Fake.Core.Trace.traceEndTask` since it is deprecated
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
