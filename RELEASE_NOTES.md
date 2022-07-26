@@ -134,6 +134,12 @@
 * ENHANCEMENT: Add Net6 Target to Fake.Core.Target
   * Removed `Fake.Core.TargetModule.DoNothing` since it is deprecated, alternative is `ignore`
   * Removed `Fake.Core.TargetModule.runAndGetContext` since it is deprecated, alternative is `Target.WithContext.run`
+* ENHANCEMENT: Add Net6 Target to Fake.Core.Context
+  * Removed `Fake.Core.Context.getFakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.getFakeVar`
+  * Removed `Fake.Core.Context.removeFakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.removeFakeVar`
+  * Removed `Fake.Core.Context.setFakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.setFakeVar`
+  * Removed `Fake.Core.Context.fakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.fakeVar`
+  * Removed `Fake.Core.Context.fakeVarAllowNoContext` since it is deprecated, alternative is `Fake.Core.FakeVar.fakeVarAllowNoContext`
 
 
 ## 5.23.0-alpha002 - 2022-07-22
