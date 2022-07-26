@@ -1,7 +1,7 @@
-/// This module contains a file pattern globbing implementation.
 namespace Fake.IO
 open System.Collections.Generic
 
+/// The glob pattern type
 type IGlobbingPattern =
     inherit IEnumerable<string>
     abstract BaseDirectory : string
@@ -12,6 +12,7 @@ namespace Fake.IO.Globbing
 open Fake.IO
 open System.Collections.Generic
 
+/// The lazy glob pattern type
 type LazyGlobbingPattern =
     { BaseDirectory : string
       Includes : string list
@@ -101,7 +102,7 @@ module GlobbingPatternExtensions =
                 if Path.IsPathRooted(pattern) then
                     pattern
                 else
-                    System.IO.Path.Combine(this.BaseDirectory, pattern)
+                    Path.Combine(this.BaseDirectory, pattern)
             let fullPath = Path.GetFullPath path
             let included = 
                 this.Includes
@@ -138,35 +139,19 @@ module GlobbingPattern =
 
     /// Get base include directories. Used to get a smaller set of directories from a globbing pattern.
     let getBaseDirectoryIncludes (fileIncludes: IGlobbingPattern) =
-            let directoryIncludes = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
+            let directoryIncludes = fileIncludes.Includes |> Seq.map (fun file -> Glob.getRoot fileIncludes.BaseDirectory file)
 
             // remove subdirectories
             directoryIncludes
             |> Seq.filter (fun d ->
                             directoryIncludes
-                            |> Seq.exists (fun p -> d.StartsWith (p + string System.IO.Path.DirectorySeparatorChar) && p <> d)
+                            |> Seq.exists (fun p -> d.StartsWith (p + string Path.DirectorySeparatorChar) && p <> d)
                             |> not)
             |> Seq.toList
 
 namespace Fake.IO.Globbing
 
 open Fake.IO
-open System.IO
-
-// Compat
-[<System.Obsolete("Please use IGlobbingPattern instead")>]
-type FileIncludes = IGlobbingPattern
-
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-[<System.Obsolete("Please use GlobbingPattern instead")>]
-module FileIncludes =
-    /// Include files
-    [<System.Obsolete("Please use GlobbingPattern.create instead")>]
-    let Include x = GlobbingPattern.create x
-
-    /// Sets a directory as baseDirectory for fileIncludes. 
-    [<System.Obsolete("Please use GlobbingPattern instead")>]
-    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.setBaseDir dir fileIncludes
 
 /// Contains operators to find and process files.
 /// This module is part of the `Fake.IO.FileSystem` package
@@ -207,50 +192,19 @@ module FileIncludes =
 ///
 module Operators =
     /// Add Include operator
+    ///
+    /// ## Parameters
+    ///  - `x` - The pattern to include
     let inline (++) (x : IGlobbingPattern) pattern = x.And pattern
 
     /// Exclude operator
+    ///
+    /// ## Parameters
+    ///  - `x` - The pattern to exclude
     let inline (--) (x : IGlobbingPattern) pattern = x.ButNot pattern
 
-    /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
+    /// Includes a single pattern and scans the files - `!! x = AllFilesMatching x`
+    ///
+    /// ## Parameters
+    ///  - `x` - The pattern to create globbing from
     let inline (!!) x = GlobbingPattern.create x
-
-[<RequireQualifiedAccess>]
-[<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead.">]
-module Tools =
-    open Operators
-
-    let private (@@) path1 (path2:string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
-
-    /// Looks for a tool first in its default path, if not found the in ./packages/ and then
-    /// in all subfolders of the root folder - returns the tool file name.
-    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
-    let findToolInSubPath (toolname:string) (defaultPath:string) =
-        try
-            let tools = !! (defaultPath @@ "/**/" @@ toolname)
-            if  Seq.isEmpty tools then 
-                let packages = !! ("./packages/**/" @@ toolname)
-                if Seq.isEmpty packages then
-                    let root = !! ("./**/" @@ toolname)
-                    Seq.head root
-                else
-                    Seq.head packages
-            else
-                Seq.head tools
-        with
-        | _ -> defaultPath @@ toolname
-
-    /// Looks for a tool in all subfolders - returns the folder where the tool was found
-    /// or None if not found.
-    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
-    let tryFindToolFolderInSubPath toolname =
-        !! ("./**/" @@ toolname)
-        |> Seq.tryHead
-        |> Option.map Path.GetDirectoryName
-
-    /// Looks for a tool in all subfolders - returns the folder where the tool was found.
-    [<System.Obsolete "use Fake.Core.Process and the ProcessUtils helpers instead. Example: `tryFindLocalTool \"TOOL\" \"tool\" [ \".\"; defaultPath ]`">]
-    let findToolFolderInSubPath toolname defaultPath =
-        toolname
-        |> tryFindToolFolderInSubPath 
-        |> Option.defaultValue defaultPath

@@ -72,6 +72,40 @@
   * opened `buildWithRedirect` as a public API
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.FSI and replace deprecated process utils with alternatives
 * ENHANCEMENT: Add Net6 Target to Fake.DotNet.FSC
+* ENHANCEMENT: Add Net6 Target to Fake.IO.FileSystem
+  * Removed `FileIncludes` since it is deprecated 
+  * Removed `Fake.IO.Globbing.Tools` module since it is deprecated and replaced with Process module 
+  * Removed `FileFilter` module since it is not used 
+  * Removed `Fake.IO.Shell.CopyFile` since it is deprecated, alternative is `Fake.IO.Shell.copyFile`
+  * Removed `Fake.IO.Shell.CopyFileIntoSubFolder` since it is deprecated, alternative is `Fake.IO.Shell.copyFileIntoSubFolder`
+  * Removed `Fake.IO.Shell.CopyFileWithSubfolder` since it is deprecated, alternative is `Fake.IO.Shell.copyFileWithSubfolder`
+  * Removed `Fake.IO.Shell.Copy` since it is deprecated, alternative is `Fake.IO.Shell.copy`
+  * Removed `Fake.IO.Shell.CopyTo` since it is deprecated, alternative is `Fake.IO.Shell.copyTo`
+  * Removed `Fake.IO.Shell.CopyCached` since it is deprecated, alternative is `Fake.IO.Shell.copyCached`
+  * Removed `Fake.IO.Shell.Rename` since it is deprecated, alternative is `Fake.IO.Shell.rename`
+  * Removed `Fake.IO.Shell.SilentCopy` since it is deprecated, alternative is `Fake.IO.Shell.silentCopy`
+  * Removed `Fake.IO.Shell.CopyFiles` since it is deprecated, alternative is `Fake.IO.Shell.copyFiles`
+  * Removed `Fake.IO.Shell.CopyDir` since it is deprecated, alternative is `Fake.IO.Shell.copyDir`
+  * Removed `Fake.IO.Shell.CleanDir` since it is deprecated, alternative is `Fake.IO.Shell.cleanDir`
+  * Removed `Fake.IO.Shell.CleanDirs` since it is deprecated, alternative is `Fake.IO.Shell.cleanDirs`
+  * Removed `Fake.IO.Shell.DeleteDir` since it is deprecated, alternative is `Fake.IO.Shell.deleteDir`
+  * Removed `Fake.IO.Shell.DeleteDirs` since it is deprecated, alternative is `Fake.IO.Shell.deleteDirs`
+  * Removed `Fake.IO.Shell.AppendTextFilesWithEncoding` since it is deprecated, alternative is `Fake.IO.Shell.appendTextFilesWithEncoding`
+  * Removed `Fake.IO.Shell.AppendTextFiles` since it is deprecated, alternative is `Fake.IO.Shell.appendTextFiles`
+  * Removed `Fake.IO.Shell.CompareFiles` since it is deprecated, alternative is `Fake.IO.Shell.compareFiles`
+  * Removed `Fake.IO.Shell.GeneratePatchWithFindOldFileFunction` since it is deprecated, alternative is `Fake.IO.Shell.generatePatchWithFindOldFileFunction`
+  * Removed `Fake.IO.Shell.GeneratePatch` since it is deprecated, alternative is `Fake.IO.Shell.generatePatch`
+  * Removed `Fake.IO.Shell.TestDir` since it is deprecated, alternative is `Fake.IO.Shell.testDir`
+  * Removed `Fake.IO.Shell.TestFile` since it is deprecated, alternative is `Fake.IO.Shell.testFile`
+  * Removed `Fake.IO.Shell.CopyRecursive` since it is deprecated, alternative is `Fake.IO.Shell.copyRecursive`
+  * Removed `Fake.IO.Shell.CopyRecursiveTo` since it is deprecated, alternative is `Fake.IO.Shell.copyRecursiveTo`
+  * Removed `Fake.IO.Shell.CopyRecursive2` since it is deprecated, alternative is `Fake.IO.Shell.copyRecursive2`
+  * Removed `Fake.IO.Shell.MoveFile` since it is deprecated, alternative is `Fake.IO.Shell.moveFile`
+  * Removed `Fake.IO.Shell.WriteConfigFile` since it is deprecated, alternative is `Fake.IO.Shell.writeConfigFile`
+  * Removed `Fake.IO.Shell.ReplaceInFiles` since it is deprecated, alternative is `Fake.IO.Shell.replaceInFiles`
+  * Removed `Fake.IO.Shell.RegexReplaceInFileWithEncoding` since it is deprecated, alternative is `Fake.IO.Shell.regexReplaceInFileWithEncoding`
+  * Removed `Fake.IO.Shell.RegexReplaceInFilesWithEncoding` since it is deprecated, alternative is `Fake.IO.Shell.regexReplaceInFilesWithEncoding`
+  * Changed `Fake.IO.File.getEncoding` by removing case for UTF7 since it is deprecated and marked as unsafe.
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
