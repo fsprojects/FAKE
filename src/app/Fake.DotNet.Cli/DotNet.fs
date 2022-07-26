@@ -1,6 +1,6 @@
-/// .NET Core + CLI tools helpers
 namespace Fake.DotNet
 
+/// .NET Core + CLI tools helpers
 [<RequireQualifiedAccess>]
 module DotNet =
 
@@ -16,21 +16,27 @@ module DotNet =
     open System.Security.Cryptography
     open System.Text
     open Newtonsoft.Json.Linq
-    open System
 
-    /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
+    /// .NET Core SDK default install directory (set to default SDK installer paths
+    /// (`%HOME/.dotnet` or `%LOCALAPPDATA%/Microsoft/dotnet`).
     let defaultUserInstallDir =
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
 
-    /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet))
+    /// .NET Core SDK default install directory (set to default SDK installer paths
+    /// (`/usr/local/share/dotnet` or `C:\Program Files\dotnet`))
     let defaultSystemInstallDir =
         if Environment.isUnix
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
 
-    /// Tries to get the DotNet SDK from the global.json, starts searching in the given directory. Returns None if global.json is not found
+    /// Tries to get the DotNet SDK from the global.json, starts searching in the given directory.
+    /// Returns None if global.json is not found
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `startDir` - The directory to start search from
     let internal tryGetSDKVersionFromGlobalJsonDir startDir : string option =
         let globalJsonPaths rootDir =
             let rec loop (dir: DirectoryInfo) = seq {
@@ -63,18 +69,18 @@ module DotNet =
         | Some version -> version
         | None -> failwithf "global.json not found"
 
-    /// Tries the DotNet SDK from the global.json
-    /// This file can exist in the working directory or any of the parent directories
-    /// Returns None if global.json is not found
+    /// Tries the DotNet SDK from the global.json. This file can exist in the working
+    /// directory or any of the parent directories Returns None if global.json is not found
     let tryGetSDKVersionFromGlobalJson() : string option = 
         tryGetSDKVersionFromGlobalJsonDir "."
     
-    /// Gets the DotNet SDK from the global.json
-    /// This file can exist in the working directory or any of the parent directories
+    /// Gets the DotNet SDK from the global.json. This file can exist in the working
+    /// directory or any of the parent directories
     let getSDKVersionFromGlobalJson() : string = 
         getSDKVersionFromGlobalJsonDir "."
 
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
+    ///
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - the path to check else will probe system PATH
@@ -84,10 +90,10 @@ module DotNet =
             ProcessUtils.findFilesOnPath "dotnet"
             |> Seq.filter File.Exists
             |> Seq.filter (fun dotPath -> dotPath.EndsWith fileName)
-        let userInstalldir = defaultUserInstallDir </> fileName
-        if File.exists userInstalldir then yield userInstalldir
-        let systemInstalldir = defaultSystemInstallDir </> fileName
-        if File.exists systemInstalldir then yield systemInstalldir
+        let userInstallDir = defaultUserInstallDir </> fileName
+        if File.exists userInstallDir then yield userInstallDir
+        let systemInstallDir = defaultSystemInstallDir </> fileName
+        if File.exists systemInstallDir then yield systemInstallDir
         match dotnetCliDir with
         | Some userSetPath ->
             let defaultCliPath = userSetPath @@ fileName
@@ -132,8 +138,10 @@ module DotNet =
         {
             /// Always download install script (otherwise install script is cached in temporary folder)
             AlwaysDownload: bool
+            
             /// Download installer from this github branch
             Branch: string
+            
             // Use the given directory to download the script into. If None the temp-dir is used
             CustomDownloadDir: string option
         }
@@ -146,6 +154,7 @@ module DotNet =
         }
 
     /// Download .NET Core SDK installer
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set download installer options
@@ -206,6 +215,7 @@ module DotNet =
         {
             /// Custom installer obtain (download) options
             InstallerOptions: InstallerOptions -> InstallerOptions
+            
             /// Specifies the source channel for the installation. The possible values are:
             /// - `Current` - Most current release.
             /// - `LTS` - Long-Term Support channel (most current supported release).
@@ -216,20 +226,28 @@ module DotNet =
             /// 
             /// Use the `CliChannel` module, for example `CliChannel.Current`
             Channel: string option
+            
             /// .NET Core SDK version
             Version: CliVersion
+            
             /// Custom installation directory (for local build installation)
             CustomInstallDir: string option
+            
             /// Always download and run the installer, ignore potentiall existing installations.
             ForceInstall : bool
+            
             /// Architecture
             Architecture: CliArchitecture
+            
             /// Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet)
             DebugSymbols: bool
+            
             /// If set it will not perform installation but instead display what command line to use
             DryRun: bool
+            
             /// Do not update path variable
             NoPath: bool
+            
             /// Command working directory
             WorkingDirectory: string
         }
@@ -292,7 +310,8 @@ module DotNet =
                 Version = Version "1.0.0-rc4-004771"
             }
 
-        /// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools
+        /// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1
+        /// release of the .NET Core tools
         let internal RC4_004973ToolingOptions options =
             { options with
                 InstallerOptions = (fun io ->
@@ -420,41 +439,6 @@ module DotNet =
                 Version = CliVersion.GlobalJson
             }
 
-
-    /// .NET Core SDK install options preconfigured for preview2 tooling
-    [<Obsolete "Please use a stable release at this point">]
-    let Preview2ToolingOptions options = Versions.Preview4_004233ToolingOptions options
-
-    /// .NET Core SDK install options preconfigured for preview4 tooling
-    [<Obsolete "Please use a stable release at this point">]
-    let LatestPreview4ToolingOptions options = Versions.LatestPreview4ToolingOptions options
-
-    /// .NET Core SDK install options preconfigured for preview4 tooling
-    [<Obsolete "Please use a stable release at this point">]
-    let RC4_004771ToolingOptions options = Versions.RC4_004771ToolingOptions options
-
-    /// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools
-    [<Obsolete "Please use a stable release at this point">]
-    let RC4_004973ToolingOptions options = Versions.RC4_004973ToolingOptions options
-
-    [<Obsolete "Please use DotNet.Versions.Release_1_0_4 instead">]
-    let Release_1_0_4 options = Versions.Release_1_0_4 options
-
-    [<Obsolete "Please use DotNet.Versions.Release_2_0_0 instead">]
-    let Release_2_0_0 options = Versions.Release_2_0_0 options
-
-    [<Obsolete "Please use DotNet.Versions.Release_2_0_3 instead">]
-    let Release_2_0_3 options = Versions.Release_2_0_3 options
-
-    [<Obsolete "Please use DotNet.Versions.Release_2_1_4 instead">]
-    let Release_2_1_4 options =Versions.Release_2_1_4 options
-
-    [<Obsolete "Please use DotNet.Versions.Release_2_1_300_RC1 instead">]
-    let Release_2_1_300_RC1 option = Versions.Release_2_1_300_RC1 option
-
-    [<Obsolete "Please use DotNet.Versions.Release_2_1_300 instead">]
-    let Release_2_1_300 option = Versions.Release_2_1_300 option
-
     /// [omit]
     let private optionToParam option paramFormat =
         match option with
@@ -513,23 +497,32 @@ module DotNet =
         {
             /// DotNet cli executable path
             DotNetCliPath: string
+            
             /// Write a global.json with the given version (required to make SDK choose the correct version)
             Version : string option
+            
             /// Command working directory
             WorkingDirectory: string
+            
             /// Process timeout, kills the process after the specified time
             Timeout: TimeSpan option
+            
             /// Custom parameters
             CustomParams: string option
+            
             /// Logging verbosity (--verbosity)
             Verbosity: Verbosity option
+            
             /// Restore logging verbosity (--diagnostics)
             Diagnostics: bool
+            
             /// If true the function will redirect the output of the called process (but will disable colors, false by default)
             RedirectOutput : bool
+            
             /// If RedirectOutput is true this flag decides if FAKE emits the output into the standard output/error otherwise the flag is ignored.
             /// True by default.
             PrintRedirectedOutput : bool
+            
             /// Gets the environment variables that apply to this process and its child processes.
             /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
             /// NOTE: This field is ignored when UseShellExecute is true.
@@ -692,7 +685,7 @@ module DotNet =
 
     let internal runRaw (firstArg:FirstArgReplacement) options (c:CreateProcess<'a>) =
         //let timeout = TimeSpan.MaxValue
-        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
+        let results = System.Collections.Generic.List<ConsoleMessage>()
         let errorF msg =
             if options.PrintRedirectedOutput then
                 Trace.traceError msg
@@ -703,7 +696,7 @@ module DotNet =
                 Trace.trace msg
             results.Add (ConsoleMessage.CreateOut msg)
 
-        let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+        let dir = Path.GetDirectoryName options.DotNetCliPath
         let oldPath =
             options
             |> Process.getEnvironmentVariable "PATH"
@@ -719,18 +712,16 @@ module DotNet =
         |> CreateProcess.withCommand cmd
         |> (if c.WorkingDirectory.IsNone then CreateProcess.withWorkingDirectory options.WorkingDirectory else id)
         |> (match options.Timeout with Some timeout -> CreateProcess.withTimeout timeout | None -> id)
-        //|> CreateProcess.withArguments (Args.toWindowsCommandLine cmdArgs)
         |> CreateProcess.withEnvironmentMap (EnvMap.ofMap options.Environment)
         |> CreateProcess.setEnvironmentVariable "PATH" (
             match oldPath with
-            | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+            | Some oldPath -> sprintf "%s%c%s" dir Path.PathSeparator oldPath
             | None -> dir)
         |> CreateProcess.appendSimpleFuncs
             (fun _ -> withGlobalJsonDispose options.WorkingDirectory options.Version)
             (fun state p -> ())
             (fun prev state exitCode -> prev)
             (fun s -> s.Dispose())
-        //|> CreateProcess.withTimeout timeout        
         |> (if options.RedirectOutput then 
                 CreateProcess.redirectOutputIfNotRedirected
                 >> CreateProcess.withOutputEventsNotNull messageF errorF
@@ -750,6 +741,7 @@ module DotNet =
       buildOptions (Options.Create())
 
     /// Execute raw dotnet cli command
+    /// 
     /// ## Parameters
     ///
     /// - 'buildOptions' - build common execution options
@@ -765,6 +757,7 @@ module DotNet =
         run cmdArgs options
 
     /// Replace the current `CreateProcess` instance to run with dotnet.exe
+    /// 
     /// ## Parameters
     ///
     /// - 'buildOptions' - build common execution options
@@ -777,21 +770,23 @@ module DotNet =
         |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
         |> CreateProcess.map fst
 
-    /// Setup the environment (`PATH` and `DOTNET_ROOT`) in such a way that started processes use the given dotnet SDK installation.
-    /// This is useful for example when using fable, see https://github.com/fsharp/FAKE/issues/2405
+    /// Setup the environment (`PATH` and `DOTNET_ROOT`) in such a way that started processes use the given
+    /// dotnet SDK installation. This is useful for example when using fable,
+    /// see https://github.com/fsharp/FAKE/issues/2405
+    /// 
     /// ## Parameters
     ///
     /// - 'install' - The SDK to use (result of `DotNet.install`)
     let setupEnv (install: Options -> Options) = 
         let options = setOptions install
-        let dotnetTool = System.IO.Path.GetFullPath options.DotNetCliPath
-        let dotnetFolder = System.IO.Path.GetDirectoryName dotnetTool
+        let dotnetTool = Path.GetFullPath options.DotNetCliPath
+        let dotnetFolder = Path.GetDirectoryName dotnetTool
         let currentPath = Environment.environVar "PATH"
         match currentPath with
         | null | "" ->
-            Environment.setEnvironVar "PATH" (dotnetFolder)
-        | _ when not (currentPath.Contains (dotnetFolder)) ->
-            Environment.setEnvironVar "PATH" (dotnetFolder + string System.IO.Path.PathSeparator + currentPath)
+            Environment.setEnvironVar "PATH" dotnetFolder
+        | _ when not (currentPath.Contains dotnetFolder) ->
+            Environment.setEnvironVar "PATH" (dotnetFolder + string Path.PathSeparator + currentPath)
         | _ -> ()
 
         let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
@@ -801,15 +796,15 @@ module DotNet =
                 // resolve potential symbolic link to the real location
                 // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
                 Mono.Unix.UnixPath.GetRealPath(dotnetTool)
-                |> System.IO.Path.GetDirectoryName
+                |> Path.GetDirectoryName
 #else
                 eprintf "Setting 'DOTNET_ROOT' to '%s' this might be wrong as we didn't follow the symlink. Please upgrade to netcore." dotnetFolder
                 dotnetFolder
 #endif        
             else dotnetFolder
         
-        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains (realFolder)) then
-            Environment.setEnvironVar "DOTNET_ROOT" (realFolder)
+        if String.IsNullOrEmpty currentDotNetRoot || not (currentDotNetRoot.Contains realFolder) then
+            Environment.setEnvironVar "DOTNET_ROOT" realFolder
 
     /// dotnet --info command options
     type InfoOptions =
@@ -821,8 +816,6 @@ module DotNet =
         static member Create() = {
             Common = Options.Create().WithRedirectOutput(true).WithPrintRedirectedOutput(false)
         }
-        [<Obsolete("Use InfoOptions.Create instead")>]
-        static member Default = InfoOptions.Create()
         /// Gets the current environment
         member x.Environment = x.Common.Environment
         /// Sets the current environment variables.
@@ -844,6 +837,7 @@ module DotNet =
         }
 
     /// Execute dotnet --info command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set info command parameters
@@ -855,7 +849,7 @@ module DotNet =
         let rawOutput =
             result.Results
             |> Seq.map (fun c -> sprintf "%s: %s" (if c.IsError then "stderr: " else "stdout: ") c.Message)
-            |> fun s -> System.String.Join("\n", s)
+            |> fun s -> String.Join("\n", s)
         
         if not result.OK then
             failwithf "dotnet --info failed with code '%i': \n%s" result.ExitCode rawOutput
@@ -899,6 +893,7 @@ module DotNet =
     type VersionResult = string
 
     /// Execute dotnet --version command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set version command parameters
@@ -914,12 +909,13 @@ module DotNet =
             |> String.separated "\n"
             |> String.trim
 
-        if String.isNullOrWhiteSpace version then failwithf "could not read version from output: \n%s" (System.String.Join("\n", result.Messages))
+        if String.isNullOrWhiteSpace version then failwithf "could not read version from output: \n%s" (String.Join("\n", result.Messages))
 
         __.MarkSuccess()
         version
 
     /// Install .NET Core SDK if required
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set installation options
@@ -999,16 +995,18 @@ module DotNet =
                         // powershell really is a waste of time
                         |> Arguments.appendNotEmpty "-Command" (sprintf "& %s; if (-not $?) { exit -1 };" command.ToWindowsCommandLine)
                     args, "powershell"
-            Process.execSimple (fun info ->
-            { info with
-                FileName = fileName
-                WorkingDirectory = Path.GetDirectoryName fileName
-                Arguments = args.ToStartInfo }
-            ) TimeSpan.MaxValue
+                    
+            let processResult =
+                CreateProcess.fromRawCommandLine fileName args.ToStartInfo
+                |> CreateProcess.withTimeout TimeSpan.MaxValue
+                |> CreateProcess.withWorkingDirectory (Path.GetDirectoryName fileName)
+                |> Proc.run
+            
+            processResult.ExitCode
 
         if exitCode <> 0 then
             // force download new installer script
-            Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
+            Trace.traceError ".NET Core SDK install failed, trying to re-download installer..."
             downloadInstaller (param.InstallerOptions >> (fun o ->
                 { o with
                     AlwaysDownload = true
@@ -1024,6 +1022,8 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
+            /// MSBuild parameters
             MSBuildParams : MSBuild.CliArguments
         }
 
@@ -1067,7 +1067,7 @@ module DotNet =
                       Verbosity = None
                       Diagnostics = false }) "msbuild" args
             if not result.OK then
-                failwithf "msbuild failed with exitcode '%d'" result.ExitCode
+                failwithf "msbuild failed with exit code '%d'" result.ExitCode
             String.Join("\n", result.Messages)
         MSBuild.addBinaryLogger (common.DotNetCliPath + " msbuild") callMsBuildExe args disableFakeBinLog
    
@@ -1087,7 +1087,9 @@ module DotNet =
         with e -> Choice2Of2 (e, result)
 
     /// Runs a MSBuild project
+    /// 
     /// ## Parameters
+    /// 
     ///  - `setParams` - A function that overwrites the default MSBuildOptions
     ///  - `project` - A string with the path to the project file to build.
     ///
@@ -1137,20 +1139,28 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             /// The runtime to restore for (seems added in RC4). Maybe a bug, but works.
             Runtime: string option
+            
             /// Nuget feeds to search updates in. Use default if empty.
             Sources: string list
+            
             /// Directory to install packages in (--packages).
             Packages: string list
+            
             /// Path to the nuget configuration file (nuget.config).
             ConfigFile: string option
+            
             /// No cache flag (--no-cache)
             NoCache: bool
+            
             /// Only warning failed sources if there are packages meeting version requirement (--ignore-failed-sources)
             IgnoreFailedSources: bool
+            
             /// Disables restoring multiple projects in parallel (--disable-parallel)
             DisableParallel: bool
+            
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1167,8 +1177,6 @@ module DotNet =
             DisableParallel = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
-        [<Obsolete("Use Options.Create instead")>]
-        static member Default = Options.Create()
 
         /// Gets the current environment
         member x.Environment = x.Common.Environment
@@ -1199,6 +1207,7 @@ module DotNet =
 
 
     /// Execute dotnet restore command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set restore command parameters
@@ -1247,22 +1256,31 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             /// Pack configuration (--configuration)
             Configuration: BuildConfiguration
+            
             /// Version suffix to use
             VersionSuffix: string option
+            
             /// Build base path (--build-base-path)
             BuildBasePath: string option
+            
             /// Output path (--output)
             OutputPath: string option
+            
             /// Don't show copyright messages. (--nologo)
             NoLogo: bool
+            
             /// No build flag (--no-build)
             NoBuild: bool
+            
             /// Doesn't execute an implicit restore when running the command. (--no-restore)
             NoRestore: bool
+            
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
+            
             /// Includes the debug symbols NuGet packages in addition to the regular NuGet packages in the output directory (--include-symbols)
             IncludeSymbols: bool
         }
@@ -1280,8 +1298,6 @@ module DotNet =
             MSBuildParams = MSBuild.CliArguments.Create()
             IncludeSymbols = false
         }
-        [<Obsolete("Use PackOptions.Create instead")>]
-        static member Default = PackOptions.Create()
         /// Gets the current environment
         member x.Environment = x.Common.Environment
         /// Sets the current environment variables.
@@ -1312,6 +1328,7 @@ module DotNet =
 
 
     /// Execute dotnet pack command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set pack command parameters
@@ -1338,34 +1355,47 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             /// Pack configuration (--configuration)
             Configuration: BuildConfiguration
+            
             /// Target framework to compile for (--framework)
             Framework: string option
+            
             /// Target runtime to publish for (--runtime)
             Runtime: string option
+            
             /// Build base path (--build-base-path)
             BuildBasePath: string option
+            
             /// Output path (--output)
             OutputPath: string option
+            
             /// Defines what `*` should be replaced with in version field in project.json (--version-suffix)
             VersionSuffix: string option
+            
             /// Specifies one or several target manifests to use to trim the set of packages published with the app.
             /// The manifest file is part of the output of the dotnet store command.
             /// This option is available starting with .NET Core 2.0 SDK. (--manifest)
             Manifest: string list option
+            
             /// Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
             /// The default is 'true' if a runtime identifier is specified. (--self-contained)
             SelfContained: bool option
+            
             /// Don't show copyright messages. (--nologo)
             NoLogo: bool
+            
             /// No build flag (--no-build)
             NoBuild: bool
+            
             /// Doesn't execute an implicit restore when running the command. (--no-restore)
             NoRestore: bool
+            
             /// Force all dependencies to be resolved even if the last restore was successful.
             /// This is equivalent to deleting project.assets.json. (--force)
             Force: bool option
+            
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1387,8 +1417,6 @@ module DotNet =
             Manifest = None
             MSBuildParams = MSBuild.CliArguments.Create()
         }
-        [<Obsolete("Use PublishOptions.Create instead")>]
-        static member Default = PublishOptions.Create()
         /// Gets the current environment
         member x.Environment = x.Common.Environment
         /// Sets the current environment variables.
@@ -1423,6 +1451,7 @@ module DotNet =
 
 
     /// Execute dotnet publish command
+    
     /// ## Parameters
     ///
     /// - 'setParams' - set publish command parameters
@@ -1439,22 +1468,31 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             /// Pack configuration (--configuration)
             Configuration: BuildConfiguration
+            
             /// Target framework to compile for (--framework)
             Framework: string option
+            
             /// Target runtime to publish for (--runtime)
             Runtime: string option
+            
             /// Build base path (--build-base-path)
             BuildBasePath: string option
+            
             /// Output path (--output)
             OutputPath: string option
+            
             /// Native flag (--native)
             Native: bool
+            
             /// Don't show copyright messages. (--nologo)
             NoLogo: bool
+            
             /// Doesn't execute an implicit restore during build. (--no-restore)
             NoRestore: bool
+            
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1472,8 +1510,6 @@ module DotNet =
             NoRestore = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
-        [<Obsolete("Use BuildOptions.Create instead")>]
-        static member Default = BuildOptions.Create()
         /// Gets the current environment
         member x.Environment = x.Common.Environment
         /// Sets the current environment variables.
@@ -1505,6 +1541,7 @@ module DotNet =
 
 
     /// Execute dotnet build command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set compile command parameters
@@ -1521,10 +1558,13 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             /// Settings to use when running tests (--settings)
             Settings: string option
+            
             /// Lists discovered tests (--list-tests)
             ListTests: bool
+            
             /// Run tests that match the given expression. (--filter)
             ///  Examples:
             ///   Run tests with priority set to 1: --filter "Priority = 1"
@@ -1532,32 +1572,45 @@ module DotNet =
             ///   Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class"
             ///   More info on filtering support: https://aka.ms/vstest-filtering
             Filter: string option
+            
             /// Use custom adapters from the given path in the test run. (--test-adapter-path)
             TestAdapterPath: string option
+            
             /// Specify a logger for test results. (--logger)
             Logger: string option
+            
             ///Configuration to use for building the project.  Default for most projects is  "Debug". (--configuration)
             Configuration: BuildConfiguration
+            
             /// Target framework to publish for. The target framework has to be specified in the project file. (--framework)
             Framework: string option
+            
             ///  Directory in which to find the binaries to be run (--output)
             Output: string option
+            
             /// Enable verbose logs for test platform. Logs are written to the provided file. (--diag)
             Diag: string option
+            
             /// Don't show copyright messages. (--nologo)
             NoLogo: bool
+            
             ///  Do not build project before testing. (--no-build)
             NoBuild: bool
+            
             /// The directory where the test results are going to be placed. The specified directory will be created if it does not exist. (--results-directory)
             ResultsDirectory: string option
+            
             /// Enables data collector for the test run. More info here : https://aka.ms/vstest-collect (--collect)
             Collect: string option
+            
             ///  Does not do an implicit restore when executing the command. (--no-restore)
             NoRestore: bool
-            /// Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
+            /// Arguments to pass run settings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
             RunSettingsArguments : string option
+            
             /// Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as Sequence.xml that captures the order of tests execution before the crash.  (--blame)
             Blame: bool
+            
             /// Other msbuild specific parameters
             MSBuildParams : MSBuild.CliArguments
         }
@@ -1583,8 +1636,6 @@ module DotNet =
             Blame = false
             MSBuildParams = MSBuild.CliArguments.Create()
         }
-        [<Obsolete("Use TestOptions.Create instead")>]
-        static member Default = TestOptions.Create()
         /// Gets the current environment
         member x.Environment = x.Common.Environment
         /// Sets the current environment variables.
@@ -1622,6 +1673,7 @@ module DotNet =
 
 
     /// Execute dotnet test command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set test command parameters
@@ -1660,6 +1712,7 @@ module DotNet =
             { this with PushParams = options }
 
     /// Execute dotnet nuget push command
+    /// 
     /// ## Parameters
     ///
     /// - 'setParams' - set nuget push command parameters
@@ -1714,16 +1767,22 @@ module DotNet =
         {
             /// Common tool options
             Common: Options
+            
             // Displays a summary of what would happen if the given command line were run if it would result in a template creation.
             DryRun: bool
+            
             // Forces content to be generated even if it would change existing files.
             Force: bool
+            
             // Filters templates based on language and specifies the language of the template to create.
             Language: NewLanguage
+            
             // The name for the created output. If no name is specified, the name of the current directory is used.
             Name: string option
+            
             // Disables checking for template package updates when instantiating a template.
             NoUpdateCheck: bool
+            
             // Location to place the generated output. The default is the current directory.
             Output: string option
         }
@@ -1800,6 +1859,7 @@ module DotNet =
         |> List.filter (not << String.IsNullOrEmpty)
 
     /// Execute dotnet new command
+    /// 
     /// ## Parameters
     ///
     /// - 'templateName' - template short name to create from
@@ -1813,6 +1873,7 @@ module DotNet =
         __.MarkSuccess()
 
     /// Execute dotnet new --install <PATH|NUGET_ID> command to install a new template
+    /// 
     /// ## Parameters
     ///
     /// - 'templateName' - template short name to install
@@ -1826,6 +1887,7 @@ module DotNet =
         __.MarkSuccess()
 
     /// Execute dotnet new --uninstall <PATH|NUGET_ID> command to uninstall a new template
+    /// 
     /// ## Parameters
     ///
     /// - 'templateName' - template short name to uninstall

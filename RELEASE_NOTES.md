@@ -114,6 +114,23 @@
   * Removed `Fake.Core.Trace.traceStartTask` since it is deprecated 
   * Removed `Fake.Core.Trace.traceEndTask` since it is deprecated
 * ENHANCEMENT: Add Net6 Target to Fake.Core.CommandLineParsing
+* ENHANCEMENT: Add Net6 Target to Fake.DotNet.Cli
+  * Removed `Fake.DotNet.Cli.Preview2ToolingOptions` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.LatestPreview4ToolingOptions` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.RC4_004771ToolingOptions` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.RC4_004973ToolingOptions` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_1_0_4` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_2_0_0` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_2_0_3` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_2_1_4` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_2_1_300_RC1` since it is deprecated 
+  * Removed `Fake.DotNet.Cli.Release_2_1_300` since it is deprecated 
+  * Removed `Fake.DotNet.DotNet.InfoOptions.Default` since it is deprecated, alternative is `Create`
+  * Removed `Fake.DotNet.DotNet.RestoreOptions.Default` since it is deprecated, alternative is `Create`
+  * Removed `Fake.DotNet.DotNet.PackOptions.Default` since it is deprecated, alternative is `Create`
+  * Removed `Fake.DotNet.DotNet.PublishOptions.Default` since it is deprecated, alternative is `Create`
+  * Removed `Fake.DotNet.DotNet.BuildOptions.Default` since it is deprecated, alternative is `Create`
+  * Removed `Fake.DotNet.DotNet.TestOptions.Default` since it is deprecated, alternative is `Create`
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673

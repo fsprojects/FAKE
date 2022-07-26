@@ -124,7 +124,7 @@ module CreateProcessDotNetExt =
       | ToolType.SelfContainedDeployment// just ToolPath
       | ToolType.GlobalTool -> // just ToolPath
         c
-      /// local dotnet tool
+      //local dotnet tool
       | ToolType.LocalTool tool // ToolPath is ignored or stripped
       | ToolType.CLIToolReference tool -> // ToolPath is ignored or stripped
         let toolArgs =
