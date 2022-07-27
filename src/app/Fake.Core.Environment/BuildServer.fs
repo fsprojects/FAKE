@@ -1,5 +1,4 @@
-﻿/// Contains functions which allow build scripts to interact with a build server.
-namespace Fake.Core
+﻿namespace Fake.Core
 
 open System
 
@@ -27,13 +26,9 @@ type BuildServerInstaller () =
     abstract member Install : unit -> unit
     abstract member Detect : unit -> bool
 
+/// Contains functions which allow build scripts to interact with a build server.
 [<RequireQualifiedAccess>]
 module BuildServer =
-    /// Defines if FAKE will use verbose tracing.
-    /// This flag can be specified by setting the *verbose* build parameter.
-    [<Obsolete "use 'Trace.isVerbose ()' and 'Trace.setVerbose true' instead">]
-    let mutable verbose = Environment.hasEnvironVar "verbose"
-
     /// A constant label for local builds
     /// [omit]
     let localBuildLabel = "LocalBuild"
@@ -157,6 +152,10 @@ module BuildServer =
         | LocalBuild -> false
 
 
+    /// Install given list of build servers
+    ///
+    /// ## Parameters
+    ///  - `servers` - The list of build servers to install
     let install (servers: BuildServerInstaller list) =
         servers
         |> List.iter (fun f ->

@@ -1,4 +1,3 @@
-/// This module contains functions which allow to read and write environment variables and build parameters
 namespace Fake.SystemHelper
 
 #if DOTNETCORE
@@ -28,9 +27,10 @@ module Environment =
 
 namespace Fake.Core
 
+/// This module contains functions which allow to read and write environment variables and build parameters
 [<RequireQualifiedAccess>]
 module Environment =
-//    type Environment = System.Environment
+
 #if DOTNETCORE
     open Fake.SystemHelper
 #endif
@@ -50,47 +50,57 @@ module Environment =
     #endif
 
     /// Retrieves the environment variable with the given name
-    let environVar name = System.Environment.GetEnvironmentVariable name
+    let environVar name = Environment.GetEnvironmentVariable name
 
     /// Retrieves all environment variables from the given target
     let environVars () = 
-        let vars = System.Environment.GetEnvironmentVariables ()
+        let vars = Environment.GetEnvironmentVariables ()
         [ for e in vars -> 
               let e1 = e :?> Collections.DictionaryEntry
               e1.Key.ToString(), e1.Value.ToString() ]
 
-    #if !DOTNETCORE
-    [<Obsolete("Will be removed in dotnetcore. Use environVars instead.")>]
-    let environVarsWithMode mode = 
-        let vars = System.Environment.GetEnvironmentVariables (mode)
-        [ for e in vars -> 
-              let e1 = e :?> Collections.DictionaryEntry
-              e1.Key, e1.Value ]
-    #endif
-
     /// Sets the environment variable with the given name
-    let setEnvironVar name value = System.Environment.SetEnvironmentVariable(name, value)
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable to set
+    ///  - `value` - The value of the environment variable to set
+    let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
 
     /// Clears the environment variable with the given name for the current process.
-    let clearEnvironVar name = System.Environment.SetEnvironmentVariable(name, null)
-
-    [<Obsolete("Use setEnvironVar instead")>]
-    /// Sets the build parameter with the given name for the current process.
-    let setBuildParam name value = setEnvironVar name value
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
+    let clearEnvironVar name = Environment.SetEnvironmentVariable(name, null)
 
     /// Retrieves the environment variable with the given name or returns the default if no value was set
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
+    ///  - `defaultValue` - The default value to return if no value was set
     let environVarOrDefault name defaultValue = 
         let var = environVar name
         if String.IsNullOrEmpty var then defaultValue
         else var
 
     /// Retrieves the environment variable with the given name or fails if not found
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
     let environVarOrFail name = 
         let var = environVar name
         if String.IsNullOrEmpty var then failwith <| sprintf "Environment variable '%s' not found" name
         else var
 
     /// Retrieves the environment variable with the given name or returns the default bool if no value was set
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
+    ///  - `defaultValue` - The default value to return if no value was set
     let environVarAsBoolOrDefault varName defaultValue =
         try
             match environVar varName with
@@ -100,36 +110,38 @@ module Environment =
         | _ ->  defaultValue
 
     /// Retrieves the environment variable with the given name or returns the false if no value was set
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `varName` - The name of the environment variable
     let environVarAsBool varName = environVarAsBoolOrDefault varName false
 
     /// Retrieves the environment variable or None
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
     let environVarOrNone name = 
         let var = environVar name
         if String.IsNullOrEmpty var then None
         else Some var
 
     /// Splits the entries of an environment variable and removes the empty ones.
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
     let splitEnvironVar name =
         let var = environVarOrNone name
         if var = None then [ ]
         else var.Value.Split([| Path.PathSeparator |]) |> Array.toList
 
     /// Returns if the build parameter with the given name was set
+    ///
+    /// ## Parameters
+    /// 
+    ///  - `name` - The name of the environment variable
     let inline hasEnvironVar name = not (isNull (environVar name))
-
-    [<Obsolete("Use hasEnvironVar instead")>]
-    /// Returns if the build parameter with the given name was set
-    let inline hasBuildParam name = hasEnvironVar name
-
-    [<Obsolete("Use environVarOrDefault instead")>]
-    /// Returns the value of the build parameter with the given name if it was set and otherwise the given default value
-    let inline getBuildParamOrDefault name defaultParam = 
-        if hasEnvironVar name then environVar name
-        else defaultParam
-
-    [<Obsolete("Use 'environVarOrDefault name String.Empty' instead")>]
-    /// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
-    let inline getBuildParam name = environVarOrDefault name String.Empty
 
     /// The path of the "Program Files" folder - might be x64 on x64 machine
     let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
@@ -209,8 +221,6 @@ module Environment =
     #else
         false
     #endif
-    [<System.Obsolete("Use isDotNetCore instead (different casing of 'N')")>]
-    let isDotnetCore = isDotNetCore
     
     module Internal =
         /// Internal, do not use.
@@ -219,13 +229,13 @@ module Environment =
             let pattern = Regex("\d+(\.\d+)+")
             let m = pattern.Match(displayName)
             // NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
-            let minimizeVersion (v:System.Version) =
+            let minimizeVersion (v:Version) =
                 match v.Minor = 0, v.Revision = 0 with
-                | true, true -> System.Version(v.Major, v.Minor)
-                | _, true -> System.Version(v.Major, v.Minor, v.Build)
+                | true, true -> Version(v.Major, v.Minor)
+                | _, true -> Version(v.Major, v.Minor, v.Build)
                 | _ -> v
 
-            match System.Version.TryParse m.Value with
+            match Version.TryParse m.Value with
             | true, v -> Some (minimizeVersion v)
             | _ -> None
 
@@ -242,7 +252,7 @@ module Environment =
 #if NETSTANDARD
             let t = t.GetTypeInfo()
 #endif
-            let displayNameMeth = t.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic ||| System.Reflection.BindingFlags.Static)
+            let displayNameMeth = t.GetMethod("GetDisplayName", BindingFlags.NonPublic ||| BindingFlags.Static)
             let displayName = displayNameMeth.Invoke(null, null).ToString()
             Some (displayName, Internal.parseMonoDisplayName displayName)
         else None
@@ -268,7 +278,7 @@ module Environment =
             | _ -> a
         environVarOrNone "FrameworkDir32" <|> if (String.IsNullOrEmpty SystemRoot) then None
                                               else Some(Path.Combine(SystemRoot, "Microsoft.NET", "Framework")) 
-        <|> if (isUnix) then Some "/usr/lib/mono"
+        <|> if isUnix then Some "/usr/lib/mono"
             else Some @"C:\Windows\Microsoft.NET\Framework"
         |> Option.get
 
@@ -296,9 +306,9 @@ module Environment =
 #if !NETSTANDARD
         | "default" -> Text.Encoding.Default
 #else
-        | "default" -> Text.Encoding.UTF8
+        | "default" -> Encoding.UTF8
 #endif
-        | enc -> Text.Encoding.GetEncoding(enc)
+        | enc -> Encoding.GetEncoding(enc)
 
     let private getEnvDir specialPath =
         let dir = Environment.GetFolderPath specialPath 

@@ -140,7 +140,14 @@
   * Removed `Fake.Core.Context.setFakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.setFakeVar`
   * Removed `Fake.Core.Context.fakeVar` since it is deprecated, alternative is `Fake.Core.FakeVar.fakeVar`
   * Removed `Fake.Core.Context.fakeVarAllowNoContext` since it is deprecated, alternative is `Fake.Core.FakeVar.fakeVarAllowNoContext`
-
+* ENHANCEMENT: Add Net6 Target to Fake.Core.Context
+  * Removed `Fake.Core.BuildServerModule.verbose` since it is deprecated, alternative is `Trace.isVerbose ()`
+  * Removed `Fake.Core.Environment.environVarsWithMode` since it is deprecated, alternative is `Fake.Core.Environment.environVars`
+  * Removed `Fake.Core.Environment.setBuildParam` since it is deprecated, alternative is `Fake.Core.Environment.setEnvironVar`
+  * Removed `Fake.Core.Environment.hasBuildParam` since it is deprecated, alternative is `Fake.Core.Environment.hasEnvironVar`
+  * Removed `Fake.Core.Environment.getBuildParamOrDefault` since it is deprecated, alternative is `Fake.Core.Environment.environVarOrDefault`
+  * Removed `Fake.Core.Environment.getBuildParam` since it is deprecated, alternative is `Fake.Core.Environment.environVarOrDefault`
+  * Removed `Fake.Core.Environment.isDotnetCore` since it is deprecated, alternative is `Fake.Core.Environment.isDotNetCore`
 
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
