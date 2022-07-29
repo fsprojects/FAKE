@@ -4,6 +4,10 @@ open System.Text
 open System.IO
 open Operators
 
+[<RequireQualifiedAccess>]
+module FileFilter =
+    let allFiles _ = true
+
 /// Contains helpers which allow to interact with the file system.
 [<RequireQualifiedAccess>]
 module File =

@@ -75,7 +75,6 @@
 * ENHANCEMENT: Add Net6 Target to Fake.IO.FileSystem
   * Removed `FileIncludes` since it is deprecated 
   * Removed `Fake.IO.Globbing.Tools` module since it is deprecated and replaced with Process module 
-  * Removed `FileFilter` module since it is not used 
   * Removed `Fake.IO.Shell.CopyFile` since it is deprecated, alternative is `Fake.IO.Shell.copyFile`
   * Removed `Fake.IO.Shell.CopyFileIntoSubFolder` since it is deprecated, alternative is `Fake.IO.Shell.copyFileIntoSubFolder`
   * Removed `Fake.IO.Shell.CopyFileWithSubfolder` since it is deprecated, alternative is `Fake.IO.Shell.copyFileWithSubfolder`
