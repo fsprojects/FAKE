@@ -1,5 +1,6 @@
 ﻿namespace Fake.Tools.Git
 
+open System
 open Fake.Core
 open System.IO
 open Fake.IO
@@ -74,3 +75,11 @@ module Repository =
 
         // set writeable
         File.SetAttributes(repositoryDir, FileAttributes.Normal)
+
+    /// Cleans a directory by removing all files and sub-directories.
+    /// ## Parameters
+    ///
+    ///  - `repositoryDir` - The path of the directory to clean.
+    [<Obsolete("Please use fullClean instead. This method will be removed in FAKE next major release")>]
+    let fullclean repositoryDir =
+        fullClean repositoryDir
