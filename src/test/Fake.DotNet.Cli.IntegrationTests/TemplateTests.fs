@@ -47,7 +47,7 @@ let getDebuggingInfo() =
 let isProcessSucceeded message (r: ProcessResult<ProcessOutput>) =
     $"Message: {message}\n
     Exit Code: {r.ExitCode}\n
-    Debugging Info: {getDebuggingInfo}\n
+    Debugging Info: {getDebuggingInfo()}\n
     Result:\n    stderr: {r.Result.Error}\n    stdout: {r.Result.Output}"
     |> Expect.isTrue (r.ExitCode = 0)
 
@@ -111,7 +111,7 @@ let setupTemplate() =
         $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo()}"
         |> Expect.isTrue false
 
-    printfn $"%s{Environment.CurrentDirectory}"
+    printfn $"{Environment.CurrentDirectory}"
 
     DotNet.setupEnv dotnetSdk.Value
 
@@ -129,7 +129,7 @@ let setupTemplate() =
     try
         DotNet.installTemplate fakeTemplateName id
     with exn ->
-        $"should install new FAKE template\nDebugging Info: {getDebuggingInfo}"
+        $"should install new FAKE template\nDebugging Info: {getDebuggingInfo()}"
         |> Expect.isTrue false
 
 [<Tests>]
