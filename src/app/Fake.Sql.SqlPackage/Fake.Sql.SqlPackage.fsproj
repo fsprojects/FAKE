@@ -7,7 +7,6 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Sql.SqlPackage.fs" />
   </ItemGroup>
   <ItemGroup>

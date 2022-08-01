@@ -1628,7 +1628,7 @@ NUGET
       System.Configuration.ConfigurationManager (>= 4.7)
       System.Security.Permissions (>= 4.7) - restriction: || (== net6.0) (== netcoreapp2.1) (== netstandard2.0)
       System.Text.Encoding.CodePages (>= 4.0.1) - restriction: || (== net6.0) (== netcoreapp2.1) (== netstandard2.0)
-    Microsoft.Deployment.DotNet.Releases (1.0.0-preview3.6.22115.1)
+    Microsoft.Deployment.DotNet.Releases (1.0.0-preview4.1.22206.3)
       Newtonsoft.Json (>= 13.0.1)
       System.Net.Http (>= 4.3.4)
       System.ValueTuple (>= 4.5)

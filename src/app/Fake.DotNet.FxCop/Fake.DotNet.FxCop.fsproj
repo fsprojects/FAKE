@@ -18,7 +18,6 @@
     <NoWarn>FS2003</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="FxCop.fs" />
   </ItemGroup>

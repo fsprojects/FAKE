@@ -10,7 +10,6 @@
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Zip.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="MSTest.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@ module Fake.Runtime.FakeRuntimeHints
 
 open System
 open System.IO
+open System.Reflection
 open Fake.Runtime
 open Fake.Runtime.Runners
 open Fake.Runtime.Trace
@@ -103,13 +104,29 @@ let retrieveHints (prepareInfo:FakeRuntime.PrepareInfo) (context:FakeContext) (r
 
         | FakeRuntime.DefaultDependencies -> None
 
+    /// This will get build date from assembly informational version attribute. The assembly informational
+    /// version is set to include the SourceRevisionId attribute which has the build date value. Please see
+    /// Directory.Build.props file in root of the project for more info. See this link also for more information
+    /// about SourceRevisionId attribute: https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#generateassemblyinfo
+    /// [omit]
+    let getLinkerTime (assembly:Assembly) =
+        let buildVersionMetadataPrefix = "+build"
+        let attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+        match attribute.InformationalVersion <> null with
+        | true ->
+            let mutable value = attribute.InformationalVersion
+            let index = value.IndexOf(buildVersionMetadataPrefix)
+            match index > 0 with
+            | true ->
+                value <- value[(index + buildVersionMetadataPrefix.Length)..]
+                Some(DateTime.ParseExact(value, "yyyy-MM-ddTHH:mm:ss:fffZ", System.Globalization.CultureInfo.InvariantCulture))
+                | false -> None
+        | false -> None
+    
     let versionUpgradeHint =
-        match DateTime.TryParseExact
-                (AssemblyVersionInformation.AssemblyMetadata_BuildDate,
-                 "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
-                 System.Globalization.DateTimeStyles.AssumeUniversal) with
+        match getLinkerTime(Assembly.GetExecutingAssembly()) with
         // around 6 months old.              
-        | true, dt when DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 6.) ->
+        | Some dt when DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 6.) ->
             let atLeast12 = DateTime.UtcNow - dt > TimeSpan.FromDays(30. * 12.)
             { Important = atLeast12
               Text = 

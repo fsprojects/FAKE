@@ -12,7 +12,6 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Wix.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />

@@ -2,6 +2,7 @@
 
 open System
 open System.Collections.Generic
+open System.Reflection
 open Fake.Core
 open System.Threading.Tasks
 open System.Threading
@@ -1040,7 +1041,8 @@ module Target =
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
                 NoAction
             elif DocoptResult.hasFlag "--version" results then
-                printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
+                let targetAssembly = Assembly.GetAssembly(typeof<Target>)
+                printfn "Target Module Version: %s" (targetAssembly.GetName().Version.ToString())
                 NoAction
             else
                 let target =

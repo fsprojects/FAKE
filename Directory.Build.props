@@ -1,0 +1,25 @@
+<Project>
+    <PropertyGroup>
+        <!-- Include PDBs in Nuget package. -->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb; $(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    </PropertyGroup>
+    <PropertyGroup>
+        <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+        <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <!-- Workaround The type referenced through 'System.Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'netstandard'. -->
+        <Reference Condition=" '$(TargetFramework)' == 'net472' " Include="netstandard"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)help/content/assets/img/logo.png" Pack="true" PackagePath="\" />
+        <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+</Project>

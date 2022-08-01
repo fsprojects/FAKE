@@ -11,7 +11,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Async.fs" />
     <Compile Include="Result.fs" />
     <Compile Include="List.fs" />

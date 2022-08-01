@@ -82,6 +82,7 @@ project.lock.json
 
 /fake-dotnetcore
 /fake-dotnetcore*.zip
+/build.fsx.lock
 /testbuild.fsx
 /testbuild.fsx.lock
 /src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.dll

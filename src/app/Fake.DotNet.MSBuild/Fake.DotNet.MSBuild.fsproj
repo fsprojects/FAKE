@@ -19,7 +19,6 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="BinLog.fs" />
     <Compile Include="MSBuild.fs" />

@@ -15,7 +15,6 @@
     <DefineConstants>$(DefineConstants);FX_NO_POSIX</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="DotNet.fs" />
     <Compile Include="CreateProcessExt.fs" />

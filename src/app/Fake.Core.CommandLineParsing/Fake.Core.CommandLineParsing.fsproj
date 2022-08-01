@@ -8,7 +8,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="docopt.fs/Docopt/Options.fs" />
     <Compile Include="docopt.fs/Docopt/OptionsParser.fs" />
     <Compile Include="docopt.fs/Docopt/Args.fs" />

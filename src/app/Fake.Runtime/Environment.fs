@@ -5,12 +5,6 @@ module Fake.Runtime.Environment
 open System
 open System.IO
 
-/// Gets the FAKE version no.
-let fakeVersion = AssemblyVersionInformation.AssemblyInformationalVersion
-
-/// Gets the FAKE Version string
-let fakeVersionStr = sprintf "FAKE 5 - F# Make (%s)" fakeVersion
-
 /// Retrieves the environment variable with the given name
 let environVar name = System.Environment.GetEnvironmentVariable name
 
@@ -67,3 +61,9 @@ let inline internal getAssemblyFromType (t:System.Type) =
 
 let inline internal fsCoreAssembly () = getAssemblyFromType typeof<Microsoft.FSharp.Core.AutoOpenAttribute>
 let inline internal fakeContextAssembly () = getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext>
+
+/// Gets the FAKE version no.
+let fakeVersion = fakeContextAssembly().GetName().Version.ToString()
+
+/// Gets the FAKE Version string
+let fakeVersionStr = sprintf "FAKE 5 - F# Make (%s)" fakeVersion

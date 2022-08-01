@@ -19,7 +19,6 @@
   </PropertyGroup>  
   <ItemGroup>
     <Compile Include="VisibleTo.fs" />
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ILMerge.fs" />
   </ItemGroup>
   <ItemGroup>

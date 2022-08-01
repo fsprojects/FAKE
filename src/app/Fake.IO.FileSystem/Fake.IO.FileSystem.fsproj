@@ -6,7 +6,6 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Globbing.fs" />
     <Compile Include="GlobbingFileSystem.fs" />
     <Compile Include="Path.fs" />

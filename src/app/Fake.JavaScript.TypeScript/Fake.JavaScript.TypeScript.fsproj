@@ -5,7 +5,6 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="TypeScript.fs" />
   </ItemGroup>
   <ItemGroup>

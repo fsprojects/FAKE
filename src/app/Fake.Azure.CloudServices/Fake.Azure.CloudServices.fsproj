@@ -8,7 +8,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="CloudServices.fs" />
   </ItemGroup>
   <ItemGroup>

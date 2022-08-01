@@ -14,7 +14,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="YaafFSharpScripting.fs" />
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ThisAssemblyInfo.fs" />
     <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
     <Compile Include="Profile.fs" />
