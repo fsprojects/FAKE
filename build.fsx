@@ -210,10 +210,13 @@ let version =
         | None ->
             let toAdd = String.Join(".", source |> Seq.map segToString)
 
-            Some
-                { Name = ""
-                  Values = source
-                  Origin = toAdd }
+            match String.IsNullOrWhiteSpace toAdd with
+            | true -> None
+            | false ->
+                Some
+                    { Name = ""
+                      Values = source
+                      Origin = toAdd }
         | Some p ->
             let toAdd = String.Join(".", source |> Seq.map segToString)
             let toAdd = if String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
