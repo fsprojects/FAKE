@@ -585,6 +585,8 @@ Target.create "GenerateDocs" (fun _ ->
 
     let projInfo =
         [ "page-description", "FAKE - F# Make"
+          "page-author", "Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich"
+          "project-author", "Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich"
           "github-link", githubLink
           "version", simpleVersion
           "project-github", sprintf "http://github.com/%s/%s" githubReleaseUser gitName
