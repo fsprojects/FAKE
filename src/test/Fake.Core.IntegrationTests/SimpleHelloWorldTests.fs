@@ -1,5 +1,6 @@
 ﻿module Fake.Core.IntegrationTests.SimpleHelloWorldTests
 
+open System.Text.RegularExpressions
 open Expecto
 open Expecto.Flip
 open System
@@ -33,29 +34,17 @@ type Target =
       SoftDependencies : Dependency list
       Declaration : Declaration
       Description : string }
-
-let getInfoVersion () =
-    let attr = typeof<Fake.Core.Process.ProcessList>.Assembly.GetCustomAttributes(typeof<System.Reflection.AssemblyInformationalVersionAttribute>, false)
-    match attr |> Seq.tryHead with
-    | Some (:? Reflection.AssemblyInformationalVersionAttribute as attr) -> attr.InformationalVersion
-    | _ -> failwithf "Could not retrieve version"
-
-let skipIfNoVersion () =
-    if getInfoVersion() = "1.0.0" then
-        skiptestf "This test is skipped as 1.0.0 is probably not a valid version and this test requires the current version of the package. Use 'fake build -t DotNetCoreIntegrationTests' to run this test."
-
+    
 [<Tests>]
 let tests = 
   testList "Fake.Core.IntegrationTests" [
     testCase "fake-cli local tool works, #2425" <| fun _ ->
-        skipIfNoVersion ()
         let scenario = "i002425-dotnet-cli-tool-works"
         prepare scenario
         let scenarioPath = resolvePath scenario ""
-        let version = getInfoVersion ()
         // dotnet tool install --version 5.19.0-alpha.local.1 fake-cli --add-source /e/Projects/FAKE/release/dotnetcore/
         [
-            yield! ["tool"; "install"; "--version"; version; "fake-cli"; "--add-source"; releaseDotnetCoreDir ]
+            yield! ["tool"; "install"; "--prerelease"; "fake-cli"; "--add-source"; releaseDotnetCoreDir ]
         ]
         |> runDotNetRaw
         |> CreateProcess.withWorkingDirectory scenarioPath
@@ -73,7 +62,8 @@ let tests =
             |> CreateProcess.ensureExitCode
             |> Proc.run
         
-        Expect.stringContains "Expected version in stderror string" version output.Result.Error 
+        let ss = Regex.Match (output.Result.Error, "FAKE [0-9]+ \- F# Make *")
+        ss.Success |> Expect.isTrue "Expected version in stderror string" 
         Expect.stringContains "Expected Fake.Runtime.dll in stderror string" "Fake.Runtime.dll" output.Result.Error
 
 
