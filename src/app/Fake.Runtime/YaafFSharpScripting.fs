@@ -720,7 +720,7 @@ module internal Extensions =
           let typeName = typeof<'a>.FSharpFullNameWithTypeArgs
           x.EvalInteraction (sprintf "let mutable __hook = ref Unchecked.defaultof<%s>" typeName)
           let __hook = x.EvalExpression<'a ref> "__hook"
-          __hook := obj
+          __hook.Value <- obj
           x.EvalInteraction (sprintf "let %s = !__hook" varName)
 
       member x.Open ns =
@@ -745,7 +745,7 @@ module internal Extensions =
               member __.Dispose() =
                 if not !isDisposed then
                   cd oldDir
-                  isDisposed := true }
+                  isDisposed.Value <- true }
 
       /// Same as Cd but takes a function for the scope.
       member x.WithCd dir f =
@@ -766,7 +766,7 @@ module internal Extensions =
               member __.Dispose() =
                 if not !isDisposed then
                   cd oldDir
-                  isDisposed := true }
+                  isDisposed.Value <- true }
 
       /// Same as ChangeCurrentDirectory but takes a function for the scope.
       member x.WithCurrentDirectory dir f =
@@ -1466,10 +1466,10 @@ type internal ScriptHost private() =
           line <- reader.ReadLine()
           if isNull line |> not then
             if reader.Peek() = -1 && not (current.EndsWith "\n") then
-              properEndLine := false
+              properEndLine.Value <- false
               builder.Append line |> ignore
             else
-              properEndLine := true
+              properEndLine.Value <- true
               f line
       (fun (data:string) ->
         if isNull data then

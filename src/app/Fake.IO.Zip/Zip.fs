@@ -118,7 +118,7 @@ let zipSpec fileName items = createZipSpec fileName "" DefaultZipLevel items
 ///  - `targetFileName` - The file to zip.
 let zipFile fileName targetFileName = 
     let fi = FileInfo.ofPath targetFileName
-    createZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [ fi.FullName ]
+    createZip fi.Directory.FullName fileName "" DefaultZipLevel false [ fi.FullName ]
 
 
 /// Unzips a file with the given file name.

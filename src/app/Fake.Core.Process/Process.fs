@@ -285,9 +285,9 @@ module Process =
                         // process IDs may be reused by the operating system so we need
                         // to make sure the process is indeed the one we started
                         | Some proc when proc.StartTime = startTime && not proc.HasExited ->
-                            if not !traced then
+                            if not traced.Value then
                               Trace.tracefn "Killing all processes that are created by FAKE and are still running."
-                              traced := true
+                              traced.Value <- true
 
                             kill proc
                         | _ -> ()                    
@@ -628,13 +628,13 @@ module Process =
         let messages = ref []
         
         let appendMessage isError msg = 
-            messages := { IsError = isError
-                          Message = msg
-                          Timestamp = DateTimeOffset.UtcNow } :: !messages
+            messages.Value <- { IsError = isError
+                                Message = msg
+                                Timestamp = DateTimeOffset.UtcNow } :: messages.Value
         
         let exitCode = 
             execRaw configProcessStartInfoF timeOut true (appendMessage true) (appendMessage false)
-        ProcessResult.New exitCode (!messages |> List.rev)
+        ProcessResult.New exitCode (messages.Value |> List.rev)
 
     /// Runs the given process and returns the exit code.
     /// ## Parameters
