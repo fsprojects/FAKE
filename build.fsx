@@ -133,6 +133,8 @@ let apiKey = releaseSecret "<nugetkey>" "NUGET_KEY"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
 let githubToken = releaseSecret "<githubtoken>" "TOKEN_GITHUB"
 
+do Environment.setEnvironVar "COREHOST_TRACE" "0"
+
 BuildServer.install [ GitHubActions.Installer ]
 
 // Parsing version. Base version come from RELEASE_NOTES;

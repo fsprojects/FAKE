@@ -467,6 +467,7 @@ module SignTool =
 
 
     /// Signs files according to the options specified.
+    ///
     /// ## Parameters
     /// - `certificate` - The signing certificate
     /// - `setOptions` - The sign tool options
@@ -476,6 +477,7 @@ module SignTool =
         signInternal defaultRunner defaultSignToolExeLocator options files
 
     /// Signs and time stamps files according to the options specified.
+    ///
     /// ## Parameters
     /// - `certificate` - The signing certificate
     /// - `setSignOptions` - The sign tool options
@@ -494,6 +496,7 @@ module SignTool =
         signWithTimeStampInternal defaultRunner defaultSignToolExeLocator signOptions timeStampOptions files
 
     /// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
+    ///
     /// ## Parameters
     /// - `serverUrl` - The timestamp server URL
     /// - `setOptions` - The signing timestamp options
@@ -504,6 +507,7 @@ module SignTool =
 
     /// Verifies files according to the options specified.
     /// The SignTool verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.
+    ///
     /// ## Parameters
     /// - `setOptions` - The verifying options
     /// - `files` - The files list to verify the signing

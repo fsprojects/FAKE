@@ -3,7 +3,6 @@ namespace Fake.DotNet.Testing
 /// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
 ///
 /// ### Sample
-///
 ///        Target.create "Test" (fun _ ->
 ///            !! (testDir + "/NUnit.Test.*.dll")
 ///              |> NUnit3.run (fun p ->

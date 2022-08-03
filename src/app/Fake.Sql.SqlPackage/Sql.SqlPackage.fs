@@ -121,7 +121,7 @@ module SqlPackage =
     [<Literal>]
     let internal Profile = "Profile"
 
-    let internal (|NullOrEmptyString|NonEmptyString|) (x:string) = if String.isNullOrEmpty x then NullOrEmptyString else NonEmptyString x
+    let (|NullOrEmptyString|NonEmptyString|) (x:string) = if String.isNullOrEmpty x then NullOrEmptyString else NonEmptyString x
 
     /// [omit]
     let formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
@@ -144,6 +144,10 @@ module SqlPackage =
         | Variables, _ when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
         | Profile, { Profile = NonEmptyString profile } -> sprintf "/pr:%s" profile
         | _ -> ""
+
+    module PropertyKeys =
+        /// When creating a new SQL Azure database, specifies the database service tier to use e.g. S2, P1
+        let sqlAzureDbSize = "DatabaseServiceObjective"
 
     let private generateCommandLine args =
         let action, outputPath =
@@ -174,6 +178,7 @@ module SqlPackage =
         |> String.concat " "
 
     /// Deploys a SQL DacPac or database to another database or DacPac.
+    ///
     /// ## Parameters
     /// - `setParams` - The SQL deployment parameters
     ///

@@ -433,7 +433,6 @@ module Fsi =
     ///  - `scriptArgs` - Any script arguments
     /// 
     /// ## Sample
-    ///
     /// e.g: Passing some arguments to fsi, along with the script and some args to be passed to the script
     ///
     ///     let fsiExe = "path/to/fsi.exe"

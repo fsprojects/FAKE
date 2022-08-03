@@ -266,7 +266,7 @@ module GitLab =
     
     /// [omit]
     let detect () =
-        BuildServer.buildServer = BuildServer.GitLabCI
+        BuildServer.buildServer = GitLabCI
     
     /// [omit]
     let install(force:bool) =

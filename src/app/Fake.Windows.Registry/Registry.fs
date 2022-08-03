@@ -49,6 +49,7 @@ module Registry =
         | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)
 
     /// Gets a 64-bit registry key
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -58,6 +59,7 @@ module Registry =
             .OpenSubKey(subKey, writePermission)
 
     /// Gets a registry key and falls back to 32 bit if the 64bit key is not there
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -74,6 +76,7 @@ module Registry =
                 .OpenSubKey(subKey, writePermission) // fall back to 32 bit
 
     /// Gets a registry value as string
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -96,6 +99,7 @@ module Registry =
         value.ToString()
 
     /// Gets a registry value as string
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -114,6 +118,7 @@ module Registry =
         value.ToString()
 
     /// Sets a registry value
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -128,6 +133,7 @@ module Registry =
         key.SetValue(name, value)
 
     /// Deletes the registry value from its key
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -140,6 +146,7 @@ module Registry =
         key.DeleteValue name
 
     /// Returns all the value names of a registry key
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -152,6 +159,7 @@ module Registry =
         key.GetValueNames()
 
     /// Returns whether or not a registry value name exists for a key
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -167,6 +175,7 @@ module Registry =
             |> Seq.exists (fun n -> n = name)
 
     /// Create a registry subKey
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -179,6 +188,7 @@ module Registry =
         key.CreateSubKey subKey |> ignore
 
     /// Deletes a registry subKey
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key
@@ -190,6 +200,7 @@ module Registry =
         key.DeleteSubKey subKey
 
     /// Returns all the subKey names of a registry key
+    ///
     /// ## Parameters
     /// - `baseKey` - The registry value base key
     /// - `subKey` - The sub key

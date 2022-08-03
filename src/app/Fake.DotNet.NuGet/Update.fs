@@ -88,7 +88,6 @@ module Update =
     /// Fails if packages file has no corresponding VS project; see [nuget bug](https://nuget.codeplex.com/workitem/3875).
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default parameters.
     ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file.
     let NugetUpdate setParams packagesFile =

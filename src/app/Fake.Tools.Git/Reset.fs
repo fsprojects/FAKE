@@ -28,6 +28,7 @@ module Reset =
 
     /// Performs a git reset "soft".
     /// Does not touch the index file nor the working tree at all.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `commit` - The commit to which git should perform the reset.
@@ -37,6 +38,7 @@ module Reset =
 
     /// Performs a git reset "mixed".
     /// Resets the index but not the working tree and reports what has not been updated.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `commit` - The commit to which git should perform the reset.
@@ -46,6 +48,7 @@ module Reset =
 
     /// Performs a git reset "hard".
     /// Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `commit` - The commit to which git should perform the reset.
@@ -55,18 +58,21 @@ module Reset =
 
     /// Performs a git reset "soft" to the current HEAD.
     /// Does not touch the index file nor the working tree at all.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let ResetSoft repositoryDir = soft repositoryDir null null
 
     /// Performs a git reset "mixed" to the current HEAD.
     /// Resets the index but not the working tree and reports what has not been updated.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let ResetMixed repositoryDir = mixed repositoryDir null null
 
     /// Performs a git reset "hard" to the current HEAD.
     /// Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let ResetHard repositoryDir = hard repositoryDir null null

@@ -14,7 +14,6 @@ module Path =
     /// This makes `combineTrimEnd "/test" "/sub"` return `/test/sub`
     ///
     /// ## Parameters
-    ///
     /// - `path1` - The first path to combine
     /// - `path2` - The second path to combine
     let inline combineTrimEnd path1 (path2: string) =
@@ -23,7 +22,6 @@ module Path =
     /// Combines two path strings using Path.Combine
     ///
     /// ## Parameters
-    ///
     /// - `path1` - The first path to combine
     /// - `path2` - The second path to combine
     let inline combine path1 path2 = Path.Combine(path1, path2)
@@ -31,7 +29,6 @@ module Path =
     /// Detects whether the given path is a directory.
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to check
     let isDirectory path =
         let attr = File.GetAttributes path
@@ -40,14 +37,12 @@ module Path =
     /// Detects whether the given path is a file.
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to check
     let isFile path = isDirectory path |> not
 
     /// Normalizes a filename.
     ///
     /// ## Parameters
-    ///
     /// - `fileName` - The file name to normalize
     let normalizeFileName (fileName: string) =
         let dirSepChar = Path.DirectorySeparatorChar
@@ -62,7 +57,6 @@ module Path =
     /// Detects whether the given path does not contains invalid characters.
     ///
     /// ## Parameters
-    ///
     /// - `fileName` - The path to operate on
     let isValidPath (path: string) =
         Path.GetInvalidPathChars()
@@ -72,7 +66,6 @@ module Path =
     /// Change the extension of the file.
     /// 
     /// ## Parameters
-    ///
     /// - `extension` - The new extension containing the leading '.'.
     /// - `fileName` - Name of the file from which the extension is retrieved.
     let changeExtension extension fileName =
@@ -81,7 +74,6 @@ module Path =
     /// Tests whether the file has specified extensions (containing the leading '.')
     /// 
     /// ## Parameters
-    ///
     /// - `extension` - The extension to fine containing the leading '.'.
     /// - `fileName` - Name of the file from which the extension is retrieved.
     let hasExtension extension (fileName: string) =
@@ -90,7 +82,6 @@ module Path =
     /// Get the directory of the specified path
     /// 
     /// ## Parameters
-    ///
     /// - `path` - The path from which the directory is retrieved.
     let getDirectory (path: string) = Path.GetDirectoryName path
 
@@ -101,14 +92,12 @@ module Path =
 
     /// Gets the absolute path for the given path
     /// ## Parameters
-    ///
     /// - `p` - The path to get its absolute path
     let getFullName p = Path.GetFullPath p
 
     /// Replaces any occurence of the currentDirectory with "."
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to operate on
     let inline shortenCurrentDirectory path =
         String.replace (Directory.GetCurrentDirectory()) "." path
@@ -183,7 +172,6 @@ module Path =
     /// Replaces the absolute path with a relative path
     /// 
     /// ## Parameters
-    ///
     /// - `path` - The path to operate on
     let toRelativeFromCurrent path =
         let currentDir = normalizeFileName <| Directory.GetCurrentDirectory()
@@ -192,7 +180,6 @@ module Path =
     /// Convert the given windows path to a path in the current system
     ///
     /// ## Parameters
-    ///
     /// - `windowsPath` - The path to operate on
     let convertWindowsToCurrentPath (windowsPath: string) =
         if (windowsPath.Length > 2 && windowsPath[1] = ':' && windowsPath[2] = '\\') then

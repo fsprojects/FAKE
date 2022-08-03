@@ -183,7 +183,6 @@ module ReportGenerator =
 
     /// Runs ReportGenerator on one or more coverage reports.
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to overwrite the default ReportGenerator parameters.
     ///  - `reports` - Coverage reports.
     ///

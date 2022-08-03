@@ -35,7 +35,6 @@ module DotNet =
     /// Returns None if global.json is not found
     ///
     /// ## Parameters
-    /// 
     ///  - `startDir` - The directory to start search from
     let internal tryGetSDKVersionFromGlobalJsonDir startDir : string option =
         let globalJsonPaths rootDir =
@@ -82,7 +81,6 @@ module DotNet =
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     ///
     /// ## Parameters
-    ///
     /// - 'dotnetCliDir' - the path to check else will probe system PATH
     let findPossibleDotnetCliPaths dotnetCliDir = seq {
         let fileName = if Environment.isUnix then "dotnet" else "dotnet.exe"
@@ -156,7 +154,6 @@ module DotNet =
     /// Download .NET Core SDK installer
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set download installer options
     let downloadInstaller setParams =
         let param = InstallerOptions.Default |> setParams
@@ -743,7 +740,6 @@ module DotNet =
     /// Execute raw dotnet cli command
     /// 
     /// ## Parameters
-    ///
     /// - 'buildOptions' - build common execution options
     /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
     /// - 'args' - command arguments
@@ -759,7 +755,6 @@ module DotNet =
     /// Replace the current `CreateProcess` instance to run with dotnet.exe
     /// 
     /// ## Parameters
-    ///
     /// - 'buildOptions' - build common execution options
     /// - 'firstArg' - the first argument (like t)
     /// - 'args' - command arguments
@@ -775,7 +770,6 @@ module DotNet =
     /// see https://github.com/fsharp/FAKE/issues/2405
     /// 
     /// ## Parameters
-    ///
     /// - 'install' - The SDK to use (result of `DotNet.install`)
     let setupEnv (install: Options -> Options) = 
         let options = setOptions install
@@ -839,7 +833,6 @@ module DotNet =
     /// Execute dotnet --info command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set info command parameters
     let info setParams =
         use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
@@ -895,7 +888,6 @@ module DotNet =
     /// Execute dotnet --version command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set version command parameters
     let getVersion setParams =
         use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
@@ -917,7 +909,6 @@ module DotNet =
     /// Install .NET Core SDK if required
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set installation options
     let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
@@ -1089,7 +1080,6 @@ module DotNet =
     /// Runs a MSBuild project
     /// 
     /// ## Parameters
-    /// 
     ///  - `setParams` - A function that overwrites the default MSBuildOptions
     ///  - `project` - A string with the path to the project file to build.
     ///
@@ -1209,7 +1199,6 @@ module DotNet =
     /// Execute dotnet restore command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set restore command parameters
     /// - 'project' - project to restore packages
     let restore setParams project =
@@ -1330,12 +1319,10 @@ module DotNet =
     /// Execute dotnet pack command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set pack command parameters
     /// - 'project' - project to pack
     ///
     /// ## Sample
-    ///
     ///     let packConfiguration (defaults:DotNet.PackOptions) =
     ///         { defaults with
     ///               Configuration = DotNet.Debug
@@ -1543,7 +1530,6 @@ module DotNet =
     /// Execute dotnet build command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set compile command parameters
     /// - 'project' - project to compile
     let build setParams project =
@@ -1675,7 +1661,6 @@ module DotNet =
     /// Execute dotnet test command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set test command parameters
     /// - 'project' - project to test
     let test setParams project =
@@ -1714,12 +1699,10 @@ module DotNet =
     /// Execute dotnet nuget push command
     /// 
     /// ## Parameters
-    ///
     /// - 'setParams' - set nuget push command parameters
     /// - 'nupkg' - nupkg to publish
     /// 
     /// ## Sample
-    ///
     ///     open Fake.DotNet
     ///     let setNugetPushParams (defaults:NuGet.NuGetPushParams) =
     ///             { defaults with
@@ -1861,7 +1844,6 @@ module DotNet =
     /// Execute dotnet new command
     /// 
     /// ## Parameters
-    ///
     /// - 'templateName' - template short name to create from
     /// - 'setParams' - set version command parameters
     let newFromTemplate templateName setParams =
@@ -1875,7 +1857,6 @@ module DotNet =
     /// Execute dotnet new --install <PATH|NUGET_ID> command to install a new template
     /// 
     /// ## Parameters
-    ///
     /// - 'templateName' - template short name to install
     /// - 'setParams' - set version command parameters
     let installTemplate templateName setParams =
@@ -1889,7 +1870,6 @@ module DotNet =
     /// Execute dotnet new --uninstall <PATH|NUGET_ID> command to uninstall a new template
     /// 
     /// ## Parameters
-    ///
     /// - 'templateName' - template short name to uninstall
     /// - 'setParams' - set version command parameters
     let uninstallTemplate templateName =

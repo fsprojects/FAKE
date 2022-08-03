@@ -41,6 +41,7 @@ module CloudServices =
         let A9 = VmSize "A9"
 
     /// Modifies the size of the Worker Role in the csdef.
+    ///
     /// ## Parameters
     ///  - `vmSize` - The virtual machine size
     ///  - `cloudService` - The cloud service instance to update
@@ -59,6 +60,7 @@ module CloudServices =
             doc.Save fileStream
 
     /// Packages a cloud service role into a .cspkg, ready for deployment.
+    ///
     /// ## Parameters
     ///  - `packageCloudServiceParams` - Could service parameters of type `PackageCloudServiceParams`
     let packageRole packageCloudServiceParams =

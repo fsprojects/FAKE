@@ -18,11 +18,13 @@ module FakeVar =
                 <| exn (sprintf "Cast error on variable '%s'" name, e))
 
     /// Gets a strongly typed FakeVar by name returning an option type
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let get<'a> name = forceFakeContext () |> getFrom<'a> name
 
     /// Gets a strongly typed FakeVar by name will fail if variable is not found
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let getOrFail<'a> name =
@@ -31,6 +33,7 @@ module FakeVar =
         | _ -> failwithf "Unable to find variable '%s'" name
 
     /// Gets a strongly typed FakeVar by name will return default value if variable is not found
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     ///  - `defaultValue` - the default value to return if variable is not found
@@ -44,6 +47,7 @@ module FakeVar =
         context |> removeFakeContext name |> ignore
 
     /// Removes a FakeVar by name
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let remove name = forceFakeContext () |> removeFrom name
@@ -55,6 +59,7 @@ module FakeVar =
         |> ignore
 
     /// Sets value of a FakeVar
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     ///  - `v` - the value of the FakeVar
@@ -62,6 +67,7 @@ module FakeVar =
 
     /// Define a named FakeVar providing the get, remove and set
     /// And of the functions will fail if there is no context
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let define<'a> name =
@@ -80,6 +86,7 @@ module FakeVar =
 
     /// Define a named FakeVar providing the get, remove and set
     /// Will use a local variable if there is no context
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let defineAllowNoContext<'a> name =
@@ -100,6 +107,7 @@ module FakeVar =
 
     /// Define a named FakeVar providing the get, remove and set
     /// Will always return 'None' when no context is set and 'throw' on set
+    ///
     /// ## Parameters
     ///  - `name` - the name of the FakeVar
     let defineOrNone<'a> name =

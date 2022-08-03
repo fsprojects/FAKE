@@ -82,6 +82,7 @@ module Xdt =
                     Trace.log (String.Format(message, messageArgs))
 
     /// Reads XML file (typically a config file), makes changes according to XDT transform syntax, saves result.
+    ///
     /// ## Parameters
     /// - `inXmlFile` - The XML file to read
     /// - `transformFile` - The XML transformation file
@@ -108,6 +109,7 @@ module Xdt =
         xml.Save(outXmlFile)
 
     /// Modifies an XML file in place using an XDT file named by inserting a .configName in between the filename and .extension.
+    ///
     /// ## Parameters
     /// - `configName` - The config name to insert
     /// - `xmlFile` - The XML file to transform
@@ -120,6 +122,7 @@ module Xdt =
             Trace.traceImportantfn "No %s config file found for '%s'. Skipping." configName xmlFile
 
     /// Modifies XML files in place using an XDT file named by inserting a .configName in between each filename and .extension.
+    ///
     /// ## Parameters
     /// - `configName` - The config name to insert
     /// - `files` - The set of XML files to transform

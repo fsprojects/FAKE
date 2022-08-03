@@ -75,6 +75,7 @@ module GitVersion =
             command
 
     /// Runs [GitVersion](https://gitversion.net/docs/) on a .NET project file.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the GitVersionDefaults value.
     ///

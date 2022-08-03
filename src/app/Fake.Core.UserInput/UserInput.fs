@@ -50,6 +50,7 @@ module UserInput =
 
 
     /// Get plain text input from user
+    ///
     /// ## Parameters
     ///  - `prompt` - text to display as a prompt
     let getUserInput prompt =
@@ -59,6 +60,7 @@ module UserInput =
         s
 
     /// Get masked input from user - Display asterisks (*) as user type
+    ///
     /// ## Parameters
     ///  - `prompt` - text to display as a prompt
     let getUserPassword prompt =

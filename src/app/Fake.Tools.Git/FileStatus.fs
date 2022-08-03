@@ -27,6 +27,7 @@ module FileStatus =
             | _ -> Modified
 
     /// Gets the changed files between the given revisions
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `revision1` - The first revision to use.
@@ -47,6 +48,7 @@ module FileStatus =
             FileStatus.Parse a[0], a[1])
 
     /// Gets all changed files in the current revision
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getAllFiles repositoryDir =
@@ -54,6 +56,7 @@ module FileStatus =
         msg |> Seq.map (fun line -> Added, line)
 
     /// Gets the changed files since the given revision incl. changes in the working copy
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `revision` - The revision to use.
@@ -61,6 +64,7 @@ module FileStatus =
         getChangedFiles repositoryDir revision ""
 
     /// Gets all conflicted files
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getConflictedFiles repositoryDir =
@@ -73,11 +77,13 @@ module FileStatus =
         |> Seq.toList
 
     /// Returns true if the working copy is in a conflicted merge otherwise false
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let isInTheMiddleOfConflictedMerge repositoryDir = [] <> getConflictedFiles repositoryDir
 
     /// Returns the current rebase directory for the given repository.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getRebaseDir (repositoryDir: string) =
@@ -89,6 +95,7 @@ module FileStatus =
             ""
 
     /// Returns true if the given repository is in the middle of a rebase process.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let isInTheMiddleOfRebase repositoryDir =
@@ -96,6 +103,7 @@ module FileStatus =
         Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "applying"))
 
     /// Returns true if the given repository is in the middle of a patch process.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let isInTheMiddleOfPatch repositoryDir =
@@ -103,6 +111,7 @@ module FileStatus =
         Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "rebasing"))
 
     /// Cleans the working copy by doing a git reset --hard and a clean -f.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let cleanWorkingCopy repositoryDir =

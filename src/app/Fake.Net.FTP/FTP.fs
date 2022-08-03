@@ -24,6 +24,7 @@ module FTP =
         }
 
     /// Gets a connection to the FTP server
+    ///
     /// ## Parameters
     ///  - `serverNameIp` - The server IP address
     ///  - `user` - The user name to use in login credentials

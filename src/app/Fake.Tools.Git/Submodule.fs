@@ -36,6 +36,7 @@ module Submodule =
     let internal trimChars (s: string) = s.Trim [| '('; ')'; ' ' |]
 
     /// Gets all submodules from the given repository directory.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The path of the target directory.
     let getSubModules repositoryDir =
@@ -61,6 +62,7 @@ module Submodule =
               UpToDate = submodule[0] <> '+' })
 
     /// Inits a submodule with the given name in a subfolder of the given super repository.
+    ///
     /// ## Parameters
     ///  - `superRepositoryDir` - The super repository.
     ///  - `name` - The name of the new repository.
@@ -72,6 +74,7 @@ module Submodule =
         |> CommandHelper.gitCommand superRepositoryDir
 
     /// Adds a submodule to the given super repository.
+    ///
     /// ## Parameters
     ///  - `superRepositoryDir` - The super repository.
     ///  - `remotePath` - The path to the remote repository of the submodule.

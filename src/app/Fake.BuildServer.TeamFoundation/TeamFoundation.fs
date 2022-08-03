@@ -70,9 +70,13 @@ module TeamFoundation =
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
 
-    let private seqToPropValue (args: _ seq) = System.String.Join(",", args)
+    let private seqToPropValue (args: _ seq) = String.Join(",", args)
 
-    /// Set task.setvariable with given name and value
+    /// Set `task.setvariable` with given name and value
+    ///
+    /// ## Parameters
+    /// `variableName` - The name of the variable to set
+    /// `value` - The value of the variable to set
     let setVariable variableName value =
         write "task.setvariable" [ "variable", variableName ] value
 
@@ -80,7 +84,7 @@ module TeamFoundation =
     
     let private toList t o = o |> toType t |> Option.toList
 
-    /// Set the task.logissue with given data
+    /// Set the `task.logissue` with given data
     let logIssue isWarning sourcePath lineNumber columnNumber code message =
 
         let typ = if isWarning then "warning" else "error"
@@ -104,7 +108,11 @@ module TeamFoundation =
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
 
-    /// Set the task.complete to given state and message
+    /// Set the `task.complete` to given state and message
+    ///
+    /// ## Parameters
+    /// `state` - The build state
+    /// `message` - The build state resulting message
     let setBuildState state message =
         write "task.complete" [ "result", state ] message
 
@@ -302,15 +310,17 @@ module TeamFoundation =
             Environment.environVar "SYSTEM_PULLREQUEST_TARGETBRANCH"
 
     let private publishArtifactIfOk artifactFolder artifactName path =
+        let pushAnyWay = Environment.environVarAsBoolOrDefault "FAKE_VSO_PUSH_ALWAYS" false
         let canPush =
             match Environment.SystemPullRequestIsFork with
             | Some true when Environment.BuildReason = BuildReason.PullRequest -> false
             | _ -> true
-
-        if canPush then
+        if pushAnyWay || canPush then
             publishArtifact artifactFolder artifactName path
         else
-            logIssue true None None None None (sprintf "Cannot publish artifact '%s' in PR" path)
+            logIssue true None None None None 
+                (sprintf "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
+                    path)
 
     /// Implements a TraceListener for Azure DevOps (previously VSTS) / Team Foundation build servers.
     type internal TeamFoundationTraceListener() =
@@ -388,7 +398,7 @@ module TeamFoundation =
 
     /// [omit]
     let detect () =
-        BuildServer.buildServer = BuildServer.TeamFoundation
+        BuildServer.buildServer = TeamFoundation
 
     /// [omit]
     let install (force: bool) =

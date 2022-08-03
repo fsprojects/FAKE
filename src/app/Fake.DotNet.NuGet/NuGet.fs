@@ -731,7 +731,6 @@ module NuGet =
     /// The .nuspec / projectfile is passed as-is (no templating is performed)
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
     let NuGetPackDirectly setParams nuspecOrProjectFile =
@@ -754,7 +753,6 @@ module NuGet =
     /// Template parameter substitution is performed when passing a .nuspec
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
     let NuGetPack setParams nuspecOrProjectFile =
@@ -780,7 +778,6 @@ module NuGet =
     /// Publishes a NuGet package to the nuget server.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     let NuGetPublish setParams =
         let parameters = NuGetDefaults() |> setParams
@@ -802,7 +799,6 @@ module NuGet =
     /// Template parameter substitution is performed when passing a .nuspec
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `nuspecOrProjectFile` - The .nuspec file name.
     let NuGet setParams nuspecOrProjectFile =
@@ -894,7 +890,6 @@ module NuGet =
     /// Parses nuspec metadata from a nuspec file.
     /// 
     /// ## Parameters
-    ///
     ///  - `nuspec` - The .nuspec file content.
     let getNuspecProperties (nuspec: string) =
         let doc = Xml.createDoc nuspec
@@ -1173,7 +1168,6 @@ module NuGet =
     /// Gets a Package information from NuGet feed by package id.
     /// 
     /// ## Parameters
-    ///
     ///  - `repoUrl` - Query endpoint of NuGet search service
     ///  - `packageName` - The package to get
     ///  - `version` - The specific version to get
@@ -1199,7 +1193,6 @@ module NuGet =
     /// Gets the latest published package from NuGet feed by package id.
     /// 
     /// ## Parameters
-    ///
     ///  - `repoUrl` - Query endpoint of NuGet search service
     ///  - `packageName` - The package to get
     let getLatestPackage (repoUrl: string) packageName =
@@ -1212,7 +1205,6 @@ module NuGet =
     /// Search NuGet query endpoint for packages matching given name by title
     /// 
     /// ## Parameters
-    ///
     ///  - `repoUrl` - Query endpoint of NuGet search service
     ///  - `packageName` - The package to search for
     let searchByTitle (repoUrl: string) (packageName: string) =
@@ -1258,7 +1250,6 @@ module NuGet =
     /// Returns the dependencies from specified packages.config file
     ///
     /// ## Parameters
-    ///
     ///  - `packagesFile` - The packages file to use
     let getDependencies (packagesFile: string) =
         let xName = XName.op_Implicit

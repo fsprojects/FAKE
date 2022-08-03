@@ -236,8 +236,8 @@ module Changelog =
     let internal assemblyVersionRegex = String.getRegEx @"([0-9]+\.)+[0-9]+"
 
     /// parse versions in changelog file
-    /// ## Parameters
     ///
+    /// ## Parameters
     ///  - `line` - the changelog line to parse version from
     let parseVersions =
         fun line ->
@@ -335,8 +335,8 @@ module Changelog =
             |> String.trim
 
     /// Create a changelog with given custom header value
-    /// ## Parameters
     ///
+    /// ## Parameters
     ///  - `header` - the custom header value for changelog
     ///  - `description` - the descriptive text for changelog 
     ///  - `unreleased` - the unreleased list of changelog entries
@@ -345,8 +345,8 @@ module Changelog =
         Changelog.New(header, description, unreleased, entries)
 
     /// Create a changelog with given data
-    /// ## Parameters
     ///
+    /// ## Parameters
     ///  - `description` - the descriptive text for changelog 
     ///  - `unreleased` - the unreleased list of changelog entries
     ///  - `entries` - the list of changelog entries

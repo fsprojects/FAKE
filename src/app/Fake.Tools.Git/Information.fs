@@ -11,6 +11,7 @@ module Information =
     let internal versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
 
     /// Gets the git version
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getVersion repositoryDir =
@@ -27,6 +28,7 @@ module Information =
             failwith "unable to find git version"
 
     /// Check if the given reference version is higher or equal to found git version
+    ///
     /// ## Parameters
     ///  - `referenceVersion` - The version to compare with
     let isGitVersionHigherOrEqual referenceVersion =
@@ -35,6 +37,7 @@ module Information =
         versionParts > SemVer.parse referenceVersion
 
     /// Gets the git branch name
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getBranchName repositoryDir =
@@ -59,6 +62,7 @@ module Information =
             | Some s -> s
 
     /// Returns the SHA1 of the current HEAD
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getCurrentSHA1 repositoryDir =
@@ -72,11 +76,13 @@ module Information =
             | Some s -> s
 
     /// Shows the git status
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let showStatus repositoryDir = CommandHelper.showGitCommand repositoryDir "status"
 
     /// Checks if the working copy is clean
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let isCleanWorkingCopy repositoryDir =
@@ -84,6 +90,7 @@ module Information =
         msg |> Seq.fold (fun acc s -> acc || "nothing to commit" <* s) false
 
     /// Returns a friendly name from a SHA1
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `sha1` - The sha1 to use
@@ -92,6 +99,7 @@ module Information =
         if msg.Length = 0 then sha1 else msg[0]
 
     /// Returns true if rev1 is ahead of rev2
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `rev1` - The first revision to use
@@ -103,6 +111,7 @@ module Information =
             Branches.findMergeBase repositoryDir rev1 rev2 = rev2
 
     /// Gets the last git tag by calling git describe
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let describe repositoryDir =
@@ -114,6 +123,7 @@ module Information =
         msg |> Seq.head
 
     /// Gets the git log in one line
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let shortlog repositoryDir =

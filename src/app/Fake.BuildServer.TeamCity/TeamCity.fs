@@ -413,5 +413,5 @@ module TeamCity =
     /// [omit]
     let Installer =
         { new BuildServerInstaller() with
-            member __.Install () = install false
-            member __.Detect () = detect() }
+            member _.Install () = install false
+            member _.Detect () = detect() }

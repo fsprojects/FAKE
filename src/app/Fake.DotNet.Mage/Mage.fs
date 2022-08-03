@@ -271,6 +271,7 @@ module Mage =
     let signDeploy = call SignDeploy
 
     /// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.
+    ///
     /// ## Parameters
     /// - `mp` - Mage parameters
     let run (mp: MageParams) =

@@ -11,6 +11,7 @@ open Fake.IO
 module Repository =
 
     /// Clones a git repository.
+    ///
     /// ## Parameters
     ///  - `workingDir` - The working directory.
     ///  - `repoUrl` - The URL to the origin.
@@ -19,6 +20,7 @@ module Repository =
         CommandHelper.gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
     /// Clones a single branch of a git repository.
+    ///
     /// ## Parameters
     ///  - `workingDir` - The working directory.
     ///  - `repoUrl` - The URL to the origin.
@@ -30,6 +32,7 @@ module Repository =
         |> Trace.trace
 
     /// Inits a git repository.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The path of the target directory.
     ///  - `bare` - If the new directory is a bare directory.
@@ -42,6 +45,7 @@ module Repository =
         | _ -> CommandHelper.gitCommand repositoryDir "init"
 
     /// Cleans a directory by removing all files and sub-directories.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The path of the directory to clean.
     let fullClean repositoryDir =
@@ -77,6 +81,7 @@ module Repository =
         File.SetAttributes(repositoryDir, FileAttributes.Normal)
 
     /// Cleans a directory by removing all files and sub-directories.
+    ///
     /// ## Parameters
     ///
     ///  - `repositoryDir` - The path of the directory to clean.

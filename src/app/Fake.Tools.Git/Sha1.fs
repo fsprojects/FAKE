@@ -9,6 +9,7 @@ open System.Security.Cryptography
 module SHA1 =
 
     /// Calculates the SHA1 for a given string.
+    ///
     /// ## Parameters
     ///  - `text` - The string to calculate SHA1 for
     let calcSHA1 (text: string) =
@@ -21,6 +22,7 @@ module SHA1 =
             ""
 
     /// Calculates the SHA1 for a given string like git.
+    ///
     /// ## Parameters
     ///  - `text` - The string to calculate SHA1 for
     let calcGitSHA1 (text: string) =
@@ -29,6 +31,7 @@ module SHA1 =
 
     /// Shows the SHA1 calculated by git.
     /// Assumes that the CommandHelper module can find git.exe.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `fileName` - The file name to show SHA1 for

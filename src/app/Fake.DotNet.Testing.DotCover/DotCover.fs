@@ -155,8 +155,10 @@ module DotCover =
             Trace.trace (sprintf "DotCover exited successfully")
 
     /// Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the dotCover default parameters.
+    ///
     /// ## Sample
     ///     DotCover.run (fun p -> { p with
     ///         TargetExecutable = "path to NUnit or MSpec"
@@ -174,6 +176,7 @@ module DotCover =
 
     /// Runs the dotCover "merge" command. This combines dotCover snaphots into a single
     /// snapshot, enabling you to merge test coverage from multiple test running frameworks
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the dotCover merge default parameters.
     ///
@@ -187,6 +190,7 @@ module DotCover =
         buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir true
 
     /// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the dotCover report default parameters.
     ///
@@ -200,6 +204,7 @@ module DotCover =
         buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir true
 
     /// Runs the dotCover "cover" command against the NUnit test runner.
+    ///
     /// ## Parameters
     ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
     ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
@@ -231,6 +236,7 @@ module DotCover =
             |> setDotCoverParams)
 
     /// Runs the dotCover "cover" command against the NUnit test runner.
+    ///
     /// ## Parameters
     ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
     ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
@@ -262,6 +268,7 @@ module DotCover =
             |> setDotCoverParams)
 
     /// Runs the dotCover "cover" command against the XUnit2 test runner.
+    ///
     /// ## Parameters
     ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
     ///  - `setXUnit2Params` - Function used to overwrite the XUnit2 default parameters.
@@ -315,6 +322,7 @@ module DotCover =
         |> StringBuilder.toText
 
     /// Runs the dotCover "cover" command against the MSTest test runner.
+    ///
     /// ## Parameters
     ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
     ///  - `setMSTestParams` - Function used to overwrite the MSTest default parameters.
@@ -344,6 +352,7 @@ module DotCover =
             |> setDotCoverParams)
 
     /// Runs the dotCover "cover" command against the MSpec test runner.
+    ///
     /// ## Parameters
     ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
     ///  - `setMSpecParams` - Function used to overwrite the MSpec default parameters.

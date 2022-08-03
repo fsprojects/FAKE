@@ -53,6 +53,7 @@ module Kudu =
           PackageLocation: string }
 
     /// Stages a folder and all subdirectories into the temp deployment area, ready for deployment into the website.
+    ///
     /// ## Parameters
     ///  - `source` - The source folder to copy.
     ///  - `shouldInclude` - A predicate which includes files from the folder. If the entire directory should be copied, this predicate should always return true.
@@ -62,6 +63,7 @@ module Kudu =
         |> Seq.iter File.Delete
 
     /// Gets the path for deploying a web job to.
+    ///
     /// ## Parameters
     ///  - `webJobType` - The web job type. Of type `WebJobType`
     ///  - `webJobName` - The name of the web job
@@ -74,6 +76,7 @@ module Kudu =
         sprintf @"%s\app_data\jobs\%s\%s\" deploymentTemp webJobType webJobName
 
     /// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
+    ///
     /// ## Parameters
     ///  - `webJobType` - The web job type. Of type `WebJobType`
     ///  - `webJobName` - The name of the web job
@@ -124,6 +127,7 @@ module Kudu =
             failwith "Error occurred during Kudu Sync deployment."
 
     /// Synchronizes contents of the zip package with the target web app using Kudu ZipDeploy.
+    ///
     /// ## Parameters
     ///  - `zipDeployParams` - The parameters for zip deploy command
     let zipDeploy (zipDeployParams: ZipDeployParams) =

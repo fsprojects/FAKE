@@ -466,12 +466,10 @@ module Fsc =
     /// Compiles the given F# source files with the specified parameters.
     ///
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to overwrite the default Fsc parameters.
     ///  - `inputFiles` - The F# input files.
     ///
     /// ## Sample
-    ///
     ///     ["file1.fs"; "file2.fs"]
     ///     |> compileWithResult [Out ""
     ///                 Target Exe
@@ -485,12 +483,10 @@ module Fsc =
     /// Compiles one or more F# source files with the specified parameters.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to overwrite the default Fsc parameters.
     ///  - `inputFiles` - The F# input files.
     ///
     /// ## Sample
-    ///
     ///     ["file1.fs"; "file2.fs"]
     ///     |> compile [Out ""
     ///                 Target Exe
@@ -529,13 +525,11 @@ module Fsc =
     /// Compiles the given F# source files with the specified parameters.
     ///
     /// ## Parameters
-    ///
     ///  - `fscTool` - Path to an existing fsc.exe executable
     ///  - `setParams` - Function used to overwrite the default Fsc parameters.
     ///  - `inputFiles` - The F# input files.
     /// 
     /// ## Sample
-    ///
     ///     ["file1.fs"; "file2.fs"]
     ///     |> compileExternalWithResult "path/to/fsc.exe"
     ///                 [Out ""
@@ -552,13 +546,11 @@ module Fsc =
     /// using an existing fsc.exe installed on the system
     /// 
     /// ## Parameters
-    ///
     ///  - `fscTool` - Path to an existing fsc.exe executable
     ///  - `setParams` - Function used to overwrite the default Fsc parameters.
     ///  - `inputFiles` - The F# input files.
     ///
     /// ## Sample
-    ///
     ///     ["file1.fs"; "file2.fs"]
     ///     |> compileExternal "path/to/fsc.exe"
     ///                 [Out ""

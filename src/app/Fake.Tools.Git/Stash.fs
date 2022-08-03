@@ -5,6 +5,7 @@
 module Stash =
 
     /// Stash the changes in a dirty working directory away.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `message` - The stash message
@@ -15,6 +16,7 @@ module Stash =
     /// apply it on top of the current working tree state,
     /// i.e., do the inverse operation of git stash save.
     /// The working directory must match the index.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let pop repositoryDir = CommandHelper.gitCommand repositoryDir "stash pop"

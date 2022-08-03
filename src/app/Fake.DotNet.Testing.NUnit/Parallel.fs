@@ -32,12 +32,10 @@ module Parallel =
     /// Runs NUnit in parallel on a group of assemblies.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default `NUnitParams` value.
     ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
     ///
-    /// ## Sample usage
-    ///
+    /// ## Sample
     ///     Target "Test" (fun _ ->
     ///         !! (testDir + @"\Test.*.dll")
     ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })

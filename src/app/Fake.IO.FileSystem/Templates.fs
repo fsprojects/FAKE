@@ -8,7 +8,6 @@ module Templates =
     /// Loads all templates (lazy - line by line!)
     ///
     /// ## Parameters
-    /// 
     ///  - `seq` - The files to load
     let load seq =
         Seq.map (fun fileName -> fileName, File.read fileName) seq
@@ -16,7 +15,6 @@ module Templates =
     /// Replaces a bunch of the keywords in all files (lazy - line by line!)
     ///
     /// ## Parameters
-    /// 
     ///  - `replacements` - The replacement map
     let replaceKeywords replacements =
         Seq.map (fun (fileName, file) ->
@@ -33,7 +31,6 @@ module Templates =
     /// Saves all files (lazy - file by file!)
     ///
     /// ## Parameters
-    /// 
     ///  - `seq` - The sequence of file names and lines to save
     let saveFiles =
         Seq.iter (fun (fileName, file) -> File.write false fileName (Seq.toList file))
@@ -41,7 +38,6 @@ module Templates =
     /// Replaces the templates with the given replacements
     ///
     /// ## Parameters
-    /// 
     ///  - `replacements` - The replacement map
     ///  - `files` - The files to replace text in
     let replaceInFiles replacements files =

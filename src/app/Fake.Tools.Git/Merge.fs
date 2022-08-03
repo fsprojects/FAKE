@@ -8,6 +8,7 @@ open Fake.Tools.Git
 module Merge =
 
     /// Gets the current merge message.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getMergeMessage repositoryDir =
@@ -28,6 +29,7 @@ module Merge =
         | NeedsRealMerge
 
     /// Tests whether branches and their "origin" counterparts have diverged and need merging first.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `local` - The local branch name.
@@ -45,12 +47,12 @@ module Merge =
             | _ -> NeedsRealMerge
 
     /// Performs a merge of the given branch with the current branch
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `flags` - Additional flags.
     ///  - `branch` - The branch we want to merge in.
     /// ## Sample
-    ///
     ///     merge @"C:\code\Fake" NoFastForwardFlag "master"
     let merge repositoryDir flags branch =
         sprintf "merge %s %s" flags branch |> CommandHelper.gitCommand repositoryDir

@@ -104,6 +104,7 @@ module MSTest =
         |> StringBuilder.toText
 
     /// Runs MSTest command line tool on a group of assemblies.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default MSTestParams value.
     ///  - `assemblies` - Sequence of one or more assemblies containing Microsoft Visual Studio Unit Test Framework unit tests.

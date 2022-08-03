@@ -26,7 +26,6 @@ module Trace =
     /// Logs the specified string
     ///
     /// ## Parameters
-    /// 
     ///  - `message` - The message to log
     let log message =
         TraceData.LogMessage(message, true) |> CoreTracing.postMessage
@@ -34,7 +33,6 @@ module Trace =
     /// Checks if FAKE is running in verbose mode
     ///
     /// ## Parameters
-    /// 
     ///  - `printHint` - Flag to mark if a hint will be written to log for verbosity
     let isVerbose printHint =
         if printHint && not hintPrinted then
@@ -50,14 +48,12 @@ module Trace =
     /// Logs the specified message
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to log
     let logfn fmt = Printf.ksprintf log fmt
 
     /// Logs the specified message (without line break)
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to log
     let logf fmt =
         Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.LogMessage(text, false))) fmt
@@ -65,7 +61,6 @@ module Trace =
     /// Logs the specified string if the verbose mode is activated.
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to log
     let logVerbosefn fmt =
         Printf.ksprintf (if isVerbose false then log else ignore) fmt
@@ -73,7 +68,6 @@ module Trace =
     /// Writes a trace to the command line (in green)
     ///
     /// ## Parameters
-    /// 
     ///  - `message` - The message to log
     let trace message =
         CoreTracing.postMessage (TraceData.TraceMessage(message, true))
@@ -81,14 +75,12 @@ module Trace =
     /// Writes a message to the command line (in green)
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to log
     let tracefn fmt = Printf.ksprintf trace fmt
 
     /// Writes a message to the command line (in green) and without a line break
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to log
     let tracef fmt =
         Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.TraceMessage(text, false))) fmt
@@ -96,7 +88,6 @@ module Trace =
     /// Writes a trace to the command line (in green) if the verbose mode is activated.
     ///
     /// ## Parameters
-    /// 
     ///  - `s` - The message to trace
     let traceVerbose s =
         if isVerbose false then
@@ -105,7 +96,6 @@ module Trace =
     /// Writes a trace to stderr (in yellow)
     ///
     /// ## Parameters
-    /// 
     ///  - `text` - The text to trace
     let traceImportant text =
         CoreTracing.postMessage (TraceData.ImportantMessage text)
@@ -113,14 +103,12 @@ module Trace =
     /// Writes a message to stderr (in yellow)
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to trace
     let traceImportantfn fmt = Printf.ksprintf traceImportant fmt
 
     /// Writes a trace to the command line (in yellow)
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted message to trace
     let traceFAKE fmt =
         Printf.ksprintf (TraceData.ImportantMessage >> CoreTracing.postMessage) fmt
@@ -128,7 +116,6 @@ module Trace =
     /// Traces an error (in red)
     ///
     /// ## Parameters
-    /// 
     ///  - `error` - The error message to trace
     let traceError error =
         CoreTracing.postMessage (TraceData.ErrorMessage error)
@@ -136,7 +123,6 @@ module Trace =
     /// Writes an error message to stderr (in red)
     ///
     /// ## Parameters
-    /// 
     ///  - `fmt` - The formatted error message to trace
     let traceErrorfn fmt = Printf.ksprintf traceError fmt
 
@@ -145,7 +131,6 @@ module Trace =
     /// Converts an exception and its inner exceptions to a nice string.
     ///
     /// ## Parameters
-    /// 
     ///  - `ex` - The exception to convert
     let exceptionAndInnersToString (ex: Exception) =
         let sb = Text.StringBuilder()
@@ -195,7 +180,6 @@ module Trace =
     /// Traces an exception details (in red)
     ///
     /// ## Parameters
-    /// 
     ///  - `ex` - The exception to trace
     let traceException (ex: Exception) =
         exceptionAndInnersToString ex |> traceError
@@ -222,7 +206,6 @@ module Trace =
     /// Traces a header
     ///
     /// ## Parameters
-    /// 
     ///  - `name` - The header value
     let traceHeader name =
         trace ""
@@ -233,7 +216,6 @@ module Trace =
     /// Puts an opening tag on the internal tag stack
     ///
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to insert
     ///  - `description` - The tag description
     let openTagUnsafe tag description =
@@ -271,7 +253,6 @@ module Trace =
     /// Removes an opening tag from the internal tag stack
     ///
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to close
     let closeTagUnsafeEx status tag =
         let time =
@@ -286,14 +267,12 @@ module Trace =
     /// Removes an opening tag from the internal tag stack
     /// 
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to insert
     let closeTagUnsafe tag = closeTagUnsafeEx TagStatus.Success tag
 
     /// Traces a tag
     /// 
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to trace
     ///  - `description` - the tag description
     let traceTag tag description =
@@ -303,7 +282,6 @@ module Trace =
     /// Set build state with the given tag and message
     /// 
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to trace
     ///  - `message` - the build message
     let setBuildStateWithMessage tag message =
@@ -312,7 +290,6 @@ module Trace =
     /// Set build state with the given tag
     /// 
     /// ## Parameters
-    /// 
     ///  - `tag` - The tag to trace
     let setBuildState tag =
         TraceData.BuildState(tag, None) |> CoreTracing.postMessage
@@ -320,7 +297,6 @@ module Trace =
     /// Set status for the given test 
     /// 
     /// ## Parameters
-    /// 
     ///  - `testName` - The test name
     ///  - `testStatus` - The test status
     let testStatus testName testStatus =
@@ -330,7 +306,6 @@ module Trace =
     /// Trace test output and errors
     /// 
     /// ## Parameters
-    /// 
     ///  - `testName` - The test name
     ///  - `out` - The test output
     ///  - `err` - The test error
@@ -341,7 +316,6 @@ module Trace =
     /// Publish given type in given path
     /// 
     /// ## Parameters
-    /// 
     ///  - `typ` - The type to publish
     ///  - `path` - The path to publish type to
     let publish typ path =
@@ -350,7 +324,6 @@ module Trace =
     /// Trace the given build number
     /// 
     /// ## Parameters
-    /// 
     ///  - `number` - The build number to trace
     let setBuildNumber number =
         TraceData.BuildNumber number |> CoreTracing.postMessage
@@ -362,7 +335,6 @@ module Trace =
     /// Traces the begin of a target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -372,7 +344,6 @@ module Trace =
     /// Traces the begin of a final target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -382,7 +353,6 @@ module Trace =
     /// Traces the begin of a failure target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -392,7 +362,6 @@ module Trace =
     /// Traces the end of a target
     /// 
     /// ## Parameters
-    /// 
     ///  - `state` - The target state
     ///  - `name` - The name of the target
     let traceEndTargetUnsafeEx state name =
@@ -401,7 +370,6 @@ module Trace =
     /// Traces the end of a final target
     /// 
     /// ## Parameters
-    /// 
     ///  - `state` - The target state
     ///  - `name` - The name of the target
     let traceEndFinalTargetUnsafeEx state name =
@@ -410,7 +378,6 @@ module Trace =
     /// Traces the end of a failure target
     /// 
     /// ## Parameters
-    /// 
     ///  - `state` - The target state
     ///  - `name` - The name of the target
     let traceEndFailureTargetUnsafeEx state name =
@@ -419,7 +386,6 @@ module Trace =
     /// Traces the end of a target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     let traceEndTargetUnsafe name =
         traceEndTargetUnsafeEx TagStatus.Success name
@@ -427,7 +393,6 @@ module Trace =
     /// Traces a target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -438,7 +403,6 @@ module Trace =
     /// Traces a final target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -449,7 +413,6 @@ module Trace =
     /// Traces a failed target
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the target
     ///  - `description` - The description of the target
     ///  - `dependencyString` - The target dependency string
@@ -460,7 +423,6 @@ module Trace =
     /// Traces the begin of a task
     /// 
     /// ## Parameters
-    /// 
     ///  - `task` - The name of the task
     ///  - `description` - The description of the task
     let traceStartTaskUnsafe task description =
@@ -469,7 +431,6 @@ module Trace =
     /// Traces the end of a task
     /// 
     /// ## Parameters
-    /// 
     ///  - `state` - The state of the task
     ///  - `task` - The name of the task
     let traceEndTaskUnsafeEx state task =
@@ -478,7 +439,6 @@ module Trace =
     /// Traces the end of a task
     /// 
     /// ## Parameters
-    /// 
     ///  - `task` - The name of the task
     let traceEndTaskUnsafe task =
         traceEndTaskUnsafeEx TagStatus.Success task
@@ -486,7 +446,6 @@ module Trace =
     /// Wrap functions in a 'use' of this function
     /// 
     /// ## Parameters
-    /// 
     ///  - `name` - The name of the task
     ///  - `description` - The description of the task
     let traceTask name description =
@@ -498,7 +457,6 @@ module Trace =
     /// Any exception thrown will result in a mark failed and exception re-thrown
     /// 
     /// ## Parameters
-    /// 
     ///  - `automaticSuccess` - Flag to mark trace task as success
     ///  - `func` - Callback to call on result of task trace
     ///  - `trace` - The trace instance
@@ -527,7 +485,6 @@ module Trace =
     /// Traces the message to the console
     /// 
     /// ## Parameters
-    /// 
     ///  - `msg` - The message to log
     ///  - `eventLogEntry` - The message log level
     let logToConsole (msg, eventLogEntry: EventLogEntryType) =
@@ -543,7 +500,6 @@ module Trace =
     /// Logs the given files with the message.
     /// 
     /// ## Parameters
-    /// 
     ///  - `message` - The message to log
     ///  - `items` - The files to log message to
     let logItems message items =

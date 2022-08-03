@@ -5,6 +5,7 @@
 module SanityChecks =
 
     /// Checks if the given branch exists.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `revision1` - The revision to check for.
@@ -16,6 +17,7 @@ module SanityChecks =
 
 
     /// Checks if the given branch exists.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `branch` - The branch name to check
@@ -24,6 +26,7 @@ module SanityChecks =
             failwithf "Branch %s doesn't exists." branch
 
     /// Checks if the given branch is absent.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `branch` - The branch name to check
@@ -32,6 +35,7 @@ module SanityChecks =
             failwithf "Branch %s exists but should be absent." branch
 
     /// Checks if the given branch is a local branch.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `branch` - The branch name to check
@@ -40,6 +44,7 @@ module SanityChecks =
             failwithf "Branch %s doesn't exists locally." branch
 
     /// Checks if the given branch is a remote branch.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `branch` - The branch name to check

@@ -14,6 +14,7 @@ module Xml =
     open System.Xml.Xsl
 
     /// Reads a value from a XML document using a XPath
+    ///
     /// ## Parameters
     ///  - `failOnError` - Flag to fail the operation when an error happens
     ///  - `xmlFileName` - The XML file name
@@ -53,6 +54,7 @@ module Xml =
 
     /// Reads a value from a XML document using a XPath
     /// Returns if the value is an int and the value
+    ///
     /// ## Parameters
     ///  - `failOnError` - Flag to fail the operation when an error happens
     ///  - `xmlFileName` - The XML file name
@@ -72,6 +74,7 @@ module Xml =
                 headOrDefault (false, 0) seq)
 
     /// Creates a XmlWriter which writes to the given file name
+    ///
     /// ## Parameters
     ///  - `fileName` - The XML file name
     let getWriter (fileName: string) =
@@ -80,6 +83,7 @@ module Xml =
         writer
 
     /// Writes an XML comment to the given XmlTextWriter
+    ///
     /// ## Parameters
     ///  - `comment` - The comment to write
     ///  - `writer` - The XML writer to use
@@ -88,6 +92,7 @@ module Xml =
         writer
 
     /// Writes an XML start element to the given XmlTextWriter
+    ///
     /// ## Parameters
     ///  - `name` - The element name to start
     ///  - `writer` - The XML writer to use
@@ -96,6 +101,7 @@ module Xml =
         writer
 
     /// Writes an XML end element to the given XmlTextWriter
+    ///
     /// ## Parameters
     ///  - `writer` - The XML writer to use
     let endElement (writer: XmlWriter) =
@@ -103,6 +109,7 @@ module Xml =
         writer
 
     /// Writes an XML attribute to current element of the given XmlTextWriter
+    ///
     /// ## Parameters
     ///  - `name` - The attribute name
     ///  - `value` - The attribute value
@@ -112,6 +119,7 @@ module Xml =
         writer
 
     /// Writes an CData element to the given XmlTextWriter
+    ///
     /// ## Parameters
     ///  - `elementName` - The element name
     ///  - `data` - The CData to write
@@ -122,6 +130,7 @@ module Xml =
         endElement writer
 
     /// Gets the attribute with the given name from the given XmlNode
+    ///
     /// ## Parameters
     ///  - `name` - The attribute name to get
     ///  - `node` - The XML node to get attribute on
@@ -130,11 +139,13 @@ module Xml =
         if not (isNull attribute) then attribute.Value else null
 
     /// Gets a sequence of all sub nodes for the given XmlNode
+    ///
     /// ## Parameters
     ///  - `node` - The XML node to get sub nodes for
     let getSubNodes (node: #XmlNode) = seq { for x in node.ChildNodes -> x }
 
     /// Gets the first sub node with the given name from the given XmlNode
+    ///
     /// ## Parameters
     ///  - `name` - The sub node name
     ///  - `node` - The XML node to get sub node for
@@ -142,6 +153,7 @@ module Xml =
         getSubNodes node |> Seq.filter (fun x -> x.Name = name) |> Seq.head
 
     /// Parses a XmlNode
+    ///
     /// ## Parameters
     ///  - `name` - The node name
     ///  - `f` - The parser function to use
@@ -153,12 +165,14 @@ module Xml =
             failwithf "Could not parse %s - Node was %s" name node.Name
 
     /// Parses a XML sub node
+    ///
     /// ## Parameters
     ///  - `name` - The sub node name
     ///  - `f` - The parser function to use
     let parseSubNode name f = getSubNode name >> parse name f
 
     /// Loads the given text into a XmlDocument
+    ///
     /// ## Parameters
     ///  - `text` - The XML text
     let createDoc text =
@@ -170,11 +184,13 @@ module Xml =
             xmlDocument
 
     /// Gets the DocumentElement of the XmlDocument
+    ///
     /// ## Parameters
     ///  - `doc` - The XmlDocument object
     let getDocElement (doc: XmlDocument) = doc.DocumentElement
 
     /// Replaces text in the XML document specified by a XPath expression.
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `value` - The new value
@@ -189,6 +205,7 @@ module Xml =
             doc
 
     /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `innerTextValue` - The new value
@@ -203,6 +220,7 @@ module Xml =
             doc
 
     /// Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `attribute` - The attribute name
@@ -223,6 +241,7 @@ module Xml =
                 doc
 
     /// Selects a xml node value via XPath from the given document
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `namespaces` - The namespaces list
@@ -238,6 +257,7 @@ module Xml =
             node.InnerText
 
     /// Selects a xml node attribute value via XPath from the given document
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `attribute` - The attribute name
@@ -259,6 +279,7 @@ module Xml =
                 attributeValue.Value
 
     /// Selects a xml node via XPath from the given document
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression to use to select node
     ///  - `namespaces` - The namespaces list
@@ -278,6 +299,7 @@ module Xml =
         doc.Load fs
 
     /// Save the given XmlDocument to file path
+    ///
     /// ## Parameters
     ///  - `fileName` - The output file name
     ///  - `doc` - The XML document to save
@@ -300,6 +322,7 @@ module Xml =
         doc.Save fs
 
     /// Loads the given file path into a XmlDocument
+    ///
     /// ## Parameters
     ///  - `path` - The file path to load an XmlDocument from
     let loadDoc (path: string) =
@@ -311,6 +334,7 @@ module Xml =
             xmlDocument
 
     /// Replaces text in a XML file at the location specified by a XPath expression.
+    ///
     /// ## Parameters
     ///  - `fileName` - The file name to use
     ///  - `xpath` - The XPath expression used to select text
@@ -321,6 +345,7 @@ module Xml =
         replaceXPath xpath value doc |> saveDoc fileName
 
     /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
+    ///
     /// ## Parameters
     ///  - `fileName` - The file name to use
     ///  - `xpath` - The XPath expression used to select text
@@ -331,6 +356,7 @@ module Xml =
         replaceXPathInnerText xpath innerTextValue doc |> saveDoc fileName
 
     /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression used to select text
     ///  - `value` - The new value
@@ -349,6 +375,7 @@ module Xml =
             doc
 
     /// Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.
+    ///
     /// ## Parameters
     ///  - `xpath` - The XPath expression used to select text
     ///  - `innerTextValue` - The new value
@@ -367,6 +394,7 @@ module Xml =
             doc
 
     /// Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.
+    ///
     /// ## Parameters
     ///  - `fileName` - The file name to use
     ///  - `namespaces` - The namespaces list
@@ -378,6 +406,7 @@ module Xml =
         replaceXPathNS xpath value namespaces doc |> saveDoc fileName
 
     /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
+    ///
     /// ## Parameters
     ///  - `fileName` - The file name to use
     ///  - `namespaces` - The namespaces list
@@ -389,6 +418,7 @@ module Xml =
         replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> saveDoc fileName
 
     /// Loads the given text into a XslCompiledTransform.
+    ///
     /// ## Parameters
     ///  - `text` - The text to use
     let XslTransformer text =
@@ -400,6 +430,7 @@ module Xml =
             xslCompiledTransform
 
     /// Transforms a XmlDocument using a XslCompiledTransform.
+    ///
     /// ## Parameters
     ///  - `xsl` - The XslCompiledTransform which should be applied.
     ///  - `doc` - The XmlDocument to transform.
@@ -415,6 +446,7 @@ module Xml =
         outputDoc
 
     /// Transforms a XML file using a XSL stylesheet file.
+    ///
     /// ## Parameters
     ///  - `stylesheetUri` - The Uri for the XSL stylesheet file.
     ///  - `fileName` - The XML file to transform.

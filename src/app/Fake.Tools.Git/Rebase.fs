@@ -5,6 +5,7 @@
 module Rebase =
 
     /// Performs a rebase on top of the given branch with the current branch
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `onTopOfBranch` - The branch name to use for rebase
@@ -15,24 +16,28 @@ module Rebase =
             failwithf "Rebaseing on %s failed." onTopOfBranch
 
     /// Restore the original branch and abort the rebase operation.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let abort repositoryDir =
         CommandHelper.gitCommand repositoryDir "rebase --abort"
 
     /// Restart the rebasing process after having resolved a merge conflict.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let continueRebase repositoryDir =
         CommandHelper.gitCommand repositoryDir "rebase --continue"
 
     /// Restart the rebasing process by skipping the current patch.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let skip repositoryDir =
         CommandHelper.gitCommand repositoryDir "rebase --skip"
 
     /// rebase failed ==> fallback on merge
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `onTopOfBranch` - The branch name to use for rebase
@@ -44,6 +49,7 @@ module Rebase =
     /// Tries to rebase on top of the given branch.
     /// If the rebasing process fails a normal merge will be started.
     /// Returns if the process used merge instead of rebase.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `onTopOfBranch` - The branch name to use for rebase

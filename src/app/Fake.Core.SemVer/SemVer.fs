@@ -278,6 +278,7 @@ module SemVer =
 
     /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
     /// according to the rules described in the [SemVer docs](http://semver.org/).
+    ///
     /// ## Sample
     ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
     ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true

@@ -275,7 +275,6 @@ module ConsoleWriter =
 /// Implements a TraceListener for System.Console.
 /// 
 /// ## Parameters
-/// 
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =

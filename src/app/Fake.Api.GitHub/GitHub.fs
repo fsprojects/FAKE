@@ -104,6 +104,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client using the specified credentials
+    ///
     /// ## Parameters
     /// - `user` - The user name
     /// - `password` - The user password
@@ -118,6 +119,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client using the specified token
+    ///
     /// ## Parameters
     /// - `token` - The authentication token
     let createClientWithToken (token:string) =
@@ -131,6 +133,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials
+    ///
     /// ## Parameters
     /// - `user` - The user name
     /// - `password` - The user password
@@ -146,6 +149,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token
+    ///
     /// ## Parameters
     /// - `url` - The GitHub enterprise server URL
     /// - `token` - The authentication token
@@ -212,6 +216,7 @@ module GitHub =
         createRelease owner repoName tagName setParams client
 
     /// Uploads and attaches the specified file to the specified release
+    ///
     /// ## Parameters
     /// - `fileName` - The name of the file to upload
     /// - `release` - The release to create
@@ -236,6 +241,7 @@ module GitHub =
         }
 
     /// Uploads and attaches the specified files to the specified release
+    ///
     /// ## Parameters
     /// - `fileNames` - The list of files names to upload
     /// - `release` - The release to create
@@ -247,6 +253,7 @@ module GitHub =
     }
 
     /// Publishes the specified release by removing its draft status
+    ///
     /// ## Parameters
     /// - `release` - The release to publish
     let publishDraft (release : Async<Release>) =
@@ -258,6 +265,7 @@ module GitHub =
         }
 
     /// Gets the latest release for the specified repository
+    ///
     /// ## Parameters
     /// - `owner` - The owner of the repository - GitHub handle
     /// - `repoName` - The repository name
@@ -278,6 +286,7 @@ module GitHub =
         }
 
     /// Gets release with the specified tag for the specified repository
+    ///
     /// ## Parameters
     /// - `owner` - The owner of the repository - GitHub handle
     /// - `repoName` - The repository name
@@ -305,6 +314,7 @@ module GitHub =
         }
 
     /// Downloads the asset with the specified id to the specified destination
+    ///
     /// ## Parameters
     /// - `id` - The id of the asset to download
     /// - `destination` - The download destination
@@ -323,6 +333,7 @@ module GitHub =
         }
 
     /// Downloads all assets for the specified release to the specified destination
+    ///
     /// ## Parameters
     /// - `destination` - The download destination
     /// - `release` - The release to act upon

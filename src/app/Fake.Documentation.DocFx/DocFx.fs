@@ -39,6 +39,7 @@ module DocFx =
               Timeout = TimeSpan.FromMinutes 5. }
 
     /// Execute the given DocFx command
+    ///
     /// ## Parameters
     ///  - `command` - The command to execute
     ///  - `args` - The arguments list to give to the command
@@ -401,6 +402,7 @@ module DocFx =
 
 
     /// Builds a DocFx documentation.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default build parameters. See `BuildParams.Create()`
     /// 
@@ -506,6 +508,7 @@ module DocFx =
         |> sprintf "%s %s" p.BuildParams.ConfigFile
 
     /// Builds a Pdf-File from a DocFx documentation.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default pdf parameters. See `PdfParams.Create()`
     /// 
@@ -556,6 +559,7 @@ module DocFx =
         |> sprintf "export %s %s" (p.Templates |> seperated)
 
     /// Exports template files.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default exportTemplate parameters. See `ExportTemplateParams.Create()`
     /// 
@@ -595,6 +599,7 @@ module DocFx =
         [ ("xref", p.Uri) ] |> stringifyParams |> sprintf "%s %s" p.ArchiveFile
 
     /// Download xref archive.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default download parameters. See `DownloadParams.Create()`
     /// 
@@ -642,6 +647,7 @@ module DocFx =
         |> sprintf "%s %s" p.Folder
 
     /// Serves a DocFx documentation.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default serve parameters. See `ServeParams.Create()`
     /// 
@@ -737,6 +743,7 @@ module DocFx =
         |> sprintf "%s %s %s" p.ConfigFile (seperated p.Projects)
 
     /// Serves a DocFx documentation.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default serve parameters. See `MetadataParams.Create()`
     /// 

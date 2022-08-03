@@ -11,6 +11,7 @@ open System.IO
 module CommitMessage =
 
     /// Returns the commit message file.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getCommitMessageFileInfos repositoryDir =
@@ -20,6 +21,7 @@ module CommitMessage =
           gitDir.FullName </> "COMMIT_EDITMSG" |> FileInfo.ofPath ]
 
     /// Gets the commit message
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let getCommitMessage repositoryDir =
@@ -28,6 +30,7 @@ module CommitMessage =
         | _ -> ""
 
     /// Sets the commit message
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `text` - The commit message text.

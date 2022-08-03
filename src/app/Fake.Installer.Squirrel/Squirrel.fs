@@ -148,12 +148,10 @@ module Squirrel =
     /// Creates a Squirrel installer for given NuGet package. Will fail if Squirrel terminates with non-zero exit code.
     ///
     /// ## Parameters
-    ///
     ///  - `nugetPackage` - The package to create an installer for
     ///  - `setParams` - Function used to manipulate the default `SquirrelParams` value.
     ///
-    /// ## Sample usage
-    ///
+    /// ## Sample
     ///     Target.create "CreatePackage" (fun _ ->
     ///         Squirrel.releasify "./my.nupkg" (fun p -> { p with ReleaseDir = "./squirrel_release")
     ///     )

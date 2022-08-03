@@ -178,7 +178,6 @@ module VSTest =
     ///  - `assemblies` - Sequence of one or more assemblies containing Microsoft Visual Studio Unit Test Framework unit tests.
     ///
     /// ## Sample usage
-    ///
     ///     Target.create "Test" (fun _ ->
     ///         !! (testDir + @"\*.Tests.dll")
     ///           |> VSTest.run (fun p -> { p with SettingsPath = "Local.RunSettings" })

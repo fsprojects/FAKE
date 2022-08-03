@@ -93,6 +93,7 @@ module Coverlet =
         | ThresholdStat.Average -> "average"
 
     /// Add Coverlet parameters to the MSBuild command.
+    ///
     /// ## Parameters
     /// - `param` - The coverlet parameters
     /// - `args` - MSBuild arguments
@@ -126,6 +127,7 @@ module Coverlet =
         { args with Properties = args.Properties @ properties }
 
     /// Add Coverlet parameters to the dotnet test command.
+    ///
     /// ## Parameters
     /// - `param` - The coverlet parameters
     /// - `options` - dotnet test cli command options

@@ -58,6 +58,12 @@ type SafeOptions(list:SafeOption list) =
           ret)
     member _.Find(l':string) =
       findIn l' list
+      //match base.Find(fun o' -> o'.Long = l') with
+      //| null -> base.Find(fun o' -> o'.Long.StartsWith(l'))
+      //| opt  -> opt
     member _.FindLast(l':string) =
       findIn l' (list |> List.rev)
+      //match base.FindLast(fun o' -> o'.Long = l') with
+      //| null -> base.FindLast(fun o' -> o'.Long.StartsWith(l'))
+      //| opt  -> opt
     member _.Last = list |> List.last

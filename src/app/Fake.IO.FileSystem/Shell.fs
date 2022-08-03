@@ -11,7 +11,6 @@ module Shell =
     /// Copies a single file to the target and overwrites the existing file.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory or file.
     ///  - `fileName` - The FileName.
     let copyFile target fileName =
@@ -38,7 +37,6 @@ module Shell =
     /// Copies a single file to a relative subfolder of the target.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory
     ///  - `fileName` - The fileName
     let copyFileIntoSubFolder target fileName =
@@ -49,7 +47,6 @@ module Shell =
     /// starting from the specified base folder.
     /// 
     /// ## Parameters
-    ///
     ///  - `baseDir` - The base directory.
     ///  - `target` - The target directory.
     ///  - `fileName` - The file name.
@@ -62,7 +59,6 @@ module Shell =
     /// Copies the files to the target.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory.
     ///  - `files` - The original file names as a sequence.
     let copy target files =
@@ -72,7 +68,6 @@ module Shell =
     /// Copies the given files to the target.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory.
     ///  - `files` - The original file names as a sequence.
     let copyTo target files = copy target files
@@ -81,7 +76,6 @@ module Shell =
     /// If the files are not cached or the original files have a different write time the cache will be refreshed.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target FileName.
     ///  - `cacheDir` - The cache directory.
     ///  - `files` - The original files.
@@ -117,7 +111,6 @@ module Shell =
     /// Renames the file or directory to the target name.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target file or directory name.
     ///  - `fileName` - The original file or directory name.
     let rename target fileName =
@@ -143,7 +136,6 @@ module Shell =
     /// Copies the files to the target - Alias for Copy
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory.
     ///  - `files` - The original file names.
     let copyFiles target files = copy target files
@@ -151,12 +143,10 @@ module Shell =
     /// Copies the given glob-matches into another directory by leaving relative paths in place based on the globbing base-directory
     ///
     /// ## Parameters
-    ///
     ///  - `targetDir` - The target directory.
     ///  - `files` - The file names.
     /// 
     /// ## Sample
-    /// 
     ///      !! "**/My*Glob*.exe"
     ///      |> GlobbingPattern.setBaseDir "baseDir"
     ///      |> Shell.copyFilesWithSubFolder "targetDir"
@@ -177,7 +167,6 @@ module Shell =
     /// Copies a directory recursively. If the target directory does not exist, it will be created
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory
     ///  - `source` - The source directory
     ///  - `filterFile` - A file filter predicate
@@ -199,7 +188,6 @@ module Shell =
     /// Cleans a directory by removing all files and sub-directories
     ///
     /// ## Parameters
-    ///
     ///  - `path` - The directory path
     let cleanDir path =
         let di = DirectoryInfo.ofPath path
@@ -222,28 +210,24 @@ module Shell =
     /// Cleans multiple directories
     ///
     /// ## Parameters
-    ///
     ///  - `dirs` - The directories to clean
     let cleanDirs dirs = Seq.iter cleanDir dirs
 
     /// Delete a directory
     ///
     /// ## Parameters
-    ///
     ///  - `dir` - The directory path to delete
     let deleteDir dir = Directory.delete dir
 
     /// Deletes multiple directories
     ///
     /// ## Parameters
-    ///
     ///  - `dirs` - The directories to delete
     let deleteDirs dirs = Seq.iter Directory.delete dirs
 
     /// Appends all given files to one file.
     /// 
     /// ## Parameters
-    ///
     ///  - `encoding` - The encoding to use.
     ///  - `newFileName` - The target FileName.
     ///  - `files` - The original FileNames as a sequence.
@@ -258,7 +242,6 @@ module Shell =
     /// Appends all given files to one file.
     /// 
     /// ## Parameters
-    ///
     ///  - `newFileName` - The target FileName.
     ///  - `files` - The original FileNames as a sequence.
     let appendTextFiles newFileName files = appendTextFilesWithEncoding System.Text.Encoding.UTF8 newFileName files
@@ -267,7 +250,6 @@ module Shell =
     /// If delete is set to true then equal files will be removed.
     ///
     /// ## Parameters
-    ///
     ///  - `delete` - Mark if to delete same files or not
     ///  - `originalFileName` - Original directory to use in comparision
     ///  - `compareFileName` - Other directory to use in comparision
@@ -290,7 +272,6 @@ module Shell =
     /// Checks the srcFiles for changes to the last release.
     /// 
     /// ## Parameters
-    ///
     ///  - `lastReleaseDir` - The directory of the last release
     ///  - `patchDir` - The target directory
     ///  - `srcFiles` - The source files
@@ -310,7 +291,6 @@ module Shell =
     /// Checks the srcFiles for changes to the last release.
     /// 
     /// ## Parameters
-    ///
     ///  - `lastReleaseDir` - The directory of the last release.
     ///  - `patchDir` - The target directory.
     ///  - `srcFiles` - The source files.
@@ -320,7 +300,6 @@ module Shell =
     /// Checks if the directory exists
     ///
     /// ## Parameters
-    ///
     ///  - `path` - Directory path to check
     let testDir path =
         let di = DirectoryInfo.ofPath path
@@ -332,7 +311,6 @@ module Shell =
     /// Checks if the file exists
     ///
     /// ## Parameters
-    ///
     ///  - `path` - Directory path to check
     let testFile path =
         let fi = FileInfo.ofPath path
@@ -345,7 +323,6 @@ module Shell =
     /// Copies the file structure recursively.
     ///
     /// ## Parameters
-    ///
     ///  - `dir` - Directory path to copy
     ///  - `outputDir` - The target directory to copy to
     ///  - `overWrite` - Flag to overwrite any matching files/directories or not
@@ -355,7 +332,6 @@ module Shell =
     /// Copies the file structure recursively.
     /// 
     /// ## Parameters
-    ///
     ///  - `overWrite` - Flag to overwrite any matching files/directories or not
     ///  - `outputDir` - The target directory to copy to
     ///  - `dir` - Directory path to copy
@@ -376,7 +352,6 @@ module Shell =
     /// Copies the file structure recursively.
     /// 
     /// ## Parameters
-    ///
     ///  - `method` - the method to decide which files get copied
     ///  - `dir` - The source directory.
     ///  - `outputDir` - The target directory.
@@ -398,7 +373,6 @@ module Shell =
     /// If `fileName` is a directory the functions does nothing.
     /// 
     /// ## Parameters
-    ///
     ///  - `target` - The target directory.
     ///  - `fileName` - The FileName.
     let moveFile target fileName =
@@ -425,7 +399,6 @@ module Shell =
     /// Creates a config file with the parameters as "key;value" lines
     /// 
     /// ## Parameters
-    ///
     ///  - `configFileName` - The configuration file name
     ///  - `parameters` - The parameters to write to config file
     let writeConfigFile configFileName parameters =
@@ -440,7 +413,6 @@ module Shell =
     /// Replaces all occurrences of the patterns in the given files with the given replacements.
     /// 
     /// ## Parameters
-    ///
     ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
     ///  - `files` - The files to process.
     let replaceInFiles replacements files = Templates.replaceInFiles replacements files
@@ -448,7 +420,6 @@ module Shell =
     /// Replace all occurrences of the regex pattern with the given replacement in the specified file
     /// 
     /// ## Parameters
-    ///
     /// - `pattern` - The string to search for a match
     /// - `replacement` - The replacement string
     /// - `encoding` - The encoding to use when reading and writing the file
@@ -461,7 +432,6 @@ module Shell =
     /// Replace all occurrences of the regex pattern with the given replacement in the specified files
     /// 
     /// ## Parameters
-    ///
     /// - `pattern` - The string to search for a match
     /// - `replacement` - The replacement string
     /// - `encoding` - The encoding to use when reading and writing the files
@@ -472,7 +442,6 @@ module Shell =
     /// Deletes a file if it exists
     /// 
     /// ## Parameters
-    ///
     /// - `fileName` - The file name to delete
     let rm fileName = File.delete fileName
 
@@ -488,7 +457,6 @@ module Shell =
     /// Creates a directory if it doesn't exist.
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to create directory in
     let mkdir path = Directory.create path
 
@@ -509,14 +477,12 @@ module Shell =
     /// Changes working directory
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to directory to change to
     let chdir path = Directory.SetCurrentDirectory path
 
     /// Changes working directory
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to directory to change to
     let cd path = chdir path
 
@@ -529,7 +495,6 @@ module Shell =
     /// Store the current directory in the directory stack before changing to a new one
     ///
     /// ## Parameters
-    ///
     /// - `path` - The path to directory to push
     let pushd path =
         dirStack.Push(pwd())

@@ -18,7 +18,6 @@ module Restore =
     /// 4. the PATH - returns the first path where NuGet.exe was found.
     ///
     /// ## Parameters
-    ///
     ///  - `defaultPath` - The default path to return when NuGet cannot be found by path specified above
     let findNuget defaultPath =
         try
@@ -203,7 +202,6 @@ module Restore =
     /// Restores the given package from NuGet
     ///
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `packageFile` - The package Id to restore
     let RestorePackageId setParams packageId =
@@ -220,12 +218,10 @@ module Restore =
     /// Restores the packages in the given packages.config file from NuGet.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `packageFile` - The packages.config file name.
     ///
     /// ## Sample
-    ///
     ///     Target "RestorePackages" (fun _ ->
     ///          "./src/ProjectA/packages.config"
     ///          |> RestorePackage (fun p ->
@@ -260,12 +256,10 @@ module Restore =
     /// Restores the packages in the given solution file file from NuGet.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default NuGet parameters.
     ///  - `solutionFile` - The microsoft sln file name.
     ///
     /// ## Sample
-    ///
     ///     Target "RestorePackages" (fun _ ->
     ///          "./src/Everything.sln"
     ///          |> RestoreMSSolutionPackages (fun p ->

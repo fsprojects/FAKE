@@ -148,6 +148,7 @@ module XUnit2 =
           Method = None }
 
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    ///
     /// ## Parameters
     ///  - `parameters` - XUnit parameters
     ///  - `assemblies` - List of assemblies to run tests in
@@ -223,6 +224,7 @@ module XUnit2 =
     /// Will fail if the runner terminates with non-zero exit code.
     /// The xUnit2 runner terminates with a non-zero exit code if any of the tests
     /// in the given assembly fail.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default `XUnit2Params` value.
     ///  - `assemblies` - Sequence of one or more assemblies containing xUnit unit tests.

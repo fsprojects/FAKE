@@ -12,7 +12,6 @@ module Glob =
     /// Normalizes path for different OS
     /// 
     /// ## Parameters
-    /// 
     ///  - `path:` - The path to normalize
     let inline normalizePath (path: string) =
         path
@@ -221,7 +220,6 @@ module Glob =
     /// Check if the given path follows the given pattern
     /// 
     /// ## Parameters
-    /// 
     ///  - `pattern` - The glob pattern to use
     ///  - `path` - The path to check
     let isMatch pattern path : bool =

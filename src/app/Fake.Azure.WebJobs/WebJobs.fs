@@ -61,6 +61,7 @@ module WebJobs =
 
     /// This task to can be used create a zip for each webjob to deploy to a website
     /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
+    ///
     /// ## Parameters
     ///  - `webSites` - The websites and webjobs to build zips from.
     let packageWebJobs webSites =

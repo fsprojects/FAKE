@@ -10,28 +10,24 @@ module DirectoryInfo =
     /// Creates a DirectoryInfo for the given path.
     /// 
     /// ## Parameters
-    /// 
     ///  - `path` - The path to use
     let inline ofPath path = DirectoryInfo(path)
 
     /// Gets all subdirectories of a given directory.
     /// 
     /// ## Parameters
-    /// 
     ///  - `dir` - The directory to use
     let inline getSubDirectories (dir : DirectoryInfo) = dir.GetDirectories()
 
     /// Gets all files in the directory.
     /// 
     /// ## Parameters
-    /// 
     ///  - `dir` - The directory to use
     let inline getFiles (dir : DirectoryInfo) = dir.GetFiles()
 
     /// Finds all the files in the directory matching the search pattern.
     /// 
     /// ## Parameters
-    /// 
     ///  - `pattern` - The glob pattern to use for search
     ///  - `dir` - The directory to use
     let getMatchingFiles pattern (dir : DirectoryInfo) = 
@@ -42,7 +38,6 @@ module DirectoryInfo =
     /// Finds all the files in the directory and in all subdirectories matching the search pattern.
     /// 
     /// ## Parameters
-    /// 
     ///  - `pattern` - The glob pattern to use for search
     ///  - `dir` - The directory to use
     let getMatchingFilesRecursive pattern (dir : DirectoryInfo) = 
@@ -52,7 +47,6 @@ module DirectoryInfo =
     /// Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.
     /// 
     /// ## Parameters
-    /// 
     ///  - `dir2` - The second directory to check for
     ///  - `dir1` - The first directory to check for
     let rec isSubfolderOf (dir2 : DirectoryInfo) (dir1 : DirectoryInfo) = 
@@ -63,7 +57,6 @@ module DirectoryInfo =
     /// Checks if the file is in a subfolder of the dir.
     /// 
     /// ## Parameters
-    /// 
     ///  - `fileInfo` - The file to check for
     ///  - `dir` - The directory to search in
     let containsFile (fileInfo : FileInfo) (dir : DirectoryInfo) = isSubfolderOf dir fileInfo.Directory
@@ -71,13 +64,11 @@ module DirectoryInfo =
     /// Checks if the directory exists on disk.
     /// 
     /// ## Parameters
-    /// 
     ///  - `dir` - The directory to check for
     let exists (dir : DirectoryInfo) = dir.Exists
     
     /// Ensure that directory chain exists. Create necessary directories if necessary.
     /// ## Parameters
-    /// 
     ///  - `dir` - The directory to check
     let inline ensure (dir : DirectoryInfo) =
         if not dir.Exists then dir.Create()
@@ -96,7 +87,6 @@ module DirectoryInfo =
     /// Sets the directory readonly
     /// 
     /// ## Parameters
-    /// 
     ///  - `readOnly` - Flag to set directory to readonly or not. 
     ///  - `dir` - The directory to set
     let setReadOnly readOnly (dir : DirectoryInfo) = 
@@ -108,7 +98,6 @@ module DirectoryInfo =
     /// Sets all files in the directory readonly recursively.
     /// 
     /// ## Parameters
-    /// 
     ///  - `readOnly` - Flag to set directory to readonly or not. 
     ///  - `dir` - The directory to set
     let setReadOnlyRecursive readOnly dir = 
@@ -117,7 +106,6 @@ module DirectoryInfo =
     /// Copies the file structure recursively, filtering files.
     /// 
     /// ## Parameters
-    /// 
     ///  - `overwrite` - Flag to overwrite same files in target dir
     ///  - `filter` - The filter to use to filter the list of files
     ///  - `outputDir` - The target directory to copy to
@@ -145,7 +133,6 @@ module DirectoryInfo =
     /// Copies the file structure recursively.
     /// 
     /// ## Parameters
-    /// 
     ///  - `overwrite` - Flag to overwrite same files in target dir
     ///  - `outputDir` - The target directory to copy to
     ///  - `dir` - The source directory to copy from

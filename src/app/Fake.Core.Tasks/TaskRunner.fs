@@ -6,6 +6,7 @@ open Fake.Core
 module TaskRunner =
 
     /// Waits until the given function returns true or the timeout is reached.
+    ///
     /// ## Parameters
     ///  - `f` - This function will be started.
     ///  - `timeout` - A System.TimeSpan representing the timeout.
@@ -24,6 +25,7 @@ module TaskRunner =
         watch.Elapsed
 
     /// Retries the given function until a retry limit is reached or the function succeeds without exception.
+    ///
     /// ## Parameters
     ///  - `f` - This function will be started.
     ///  - `retries` - A retry limit.

@@ -10,7 +10,6 @@ open System.IO
 /// Under windows you will need to add it yourself to your system or use something like cygwin/babun
 ///
 /// ## Sample
-///
 ///     let result =
 ///          Rsync.exec
 ///             (Rsync.Options.WithActions
@@ -404,7 +403,6 @@ module Rsync =
     ///  - `args` - String arguments to pass to rsync
     ///
     /// ## Sample
-    ///
     ///     let result =
     ///          Rsync.exec
     ///             (Rsync.Options.WithActions [ Rsync.Compress ]

@@ -7,6 +7,7 @@ open Fake.Core
 module Commit =
 
     /// Commits all files in the given repository with the given message
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `message` - The commit message text.
@@ -16,6 +17,7 @@ module Commit =
         |> Trace.trace
 
     /// Commits all files in the given repository with the given short message along with an extended message
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `shortMessage` - The commit short (title) message text.

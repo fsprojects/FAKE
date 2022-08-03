@@ -47,6 +47,7 @@ module CommandHelper =
             Arguments = command }
 
     /// Runs git.exe with the given command in the given repository directory.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -68,11 +69,13 @@ module CommandHelper =
         processResult.ExitCode = 0, messages |> List.ofSeq, String.toLines (errors |> List.ofSeq)
 
     /// Runs git.exe with the given formatted command
+    ///
     /// ## Parameters
     ///  - `fmt` - The formatted GIT command string to execute
     let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt
 
     /// Runs git.exe with the given command in the given repository directory and return results
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -81,6 +84,7 @@ module CommandHelper =
         msg
 
     /// Fires the given git command in the given repository directory and returns immediately.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -92,6 +96,7 @@ module CommandHelper =
 
 
     /// Runs the given git command, waits for its completion and returns whether it succeeded.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -104,6 +109,7 @@ module CommandHelper =
         processResult.ExitCode = 0
 
     /// Runs the given git command, waits for its completion and fails when it didn't succeeded.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -114,6 +120,7 @@ module CommandHelper =
                 failwith "Command failed."
 
     /// Runs the given git command, waits for its completion.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -126,6 +133,7 @@ module CommandHelper =
             msg |> Seq.iter (Trace.logfn "%s")
 
     /// Runs git.exe with the given formatted command
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -134,6 +142,7 @@ module CommandHelper =
 
     /// Runs the given git command, waits for its completion.
     /// This version doesn't throw an exception if an error occurs. It just traces the error.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute
@@ -145,6 +154,7 @@ module CommandHelper =
             Trace.traceError <| sprintf "Errors: %s" errors
 
     /// Runs the git command and returns the first line of the result.
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The repository directory to execute command in
     ///  - `command` - The GIT command to execute

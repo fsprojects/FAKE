@@ -231,7 +231,6 @@ module Paket =
     /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default parameters.
     let pack setParams =
         let parameters: PaketPackParams = PaketPackDefaults() |> setParams
@@ -248,7 +247,6 @@ module Paket =
     /// Pushes the given NuGet packages to the server by using Paket push.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default parameters.
     ///  - `files` - The files to be pushed to the server.
     let pushFiles setParams files =
@@ -305,7 +303,6 @@ module Paket =
     /// Pushes all NuGet packages in the working dir to the server by using Paket push.
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default parameters.
     let push setParams =
         let parameters: PaketPushParams = PaketPushDefaults() |> setParams
@@ -362,7 +359,6 @@ module Paket =
     /// Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket
     /// 
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default parameters.
     let restore setParams =
         let parameters: PaketRestoreParams = PaketRestoreDefaults() |> setParams

@@ -16,22 +16,22 @@ module Internals =
     type ResolveDependenciesResult (success: bool, stdOut: string array, stdError: string array, resolutions: string seq, sourceFiles: string seq, roots: string seq) =
 
         /// Succeeded?
-        member __.Success = success
+        member _.Success = success
 
         /// The resolution output log
-        member __.StdOut = stdOut
+        member _.StdOut = stdOut
 
         /// The resolution error log (* process stderror *)
-        member __.StdError = stdError
+        member _.StdError = stdError
 
         /// The resolution paths (will be treated as #r options)
-        member __.Resolutions = resolutions
+        member _.Resolutions = resolutions
 
         /// The source code file paths (will be treated as #load options)
-        member __.SourceFiles = sourceFiles
+        member _.SourceFiles = sourceFiles
 
         /// The roots to package directories (will be treated like #I options)
-        member __.Roots = roots
+        member _.Roots = roots
 
     type ScriptExtension = string
     type HashRLines = string seq

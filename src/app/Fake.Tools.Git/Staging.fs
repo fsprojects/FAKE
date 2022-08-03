@@ -7,6 +7,7 @@ open Fake.Core
 module Staging =
 
     /// Adds a file to the staging area
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     ///  - `file` - The file to stage
@@ -17,6 +18,7 @@ module Staging =
         |> CommandHelper.runGitCommand repositoryDir
 
     /// Adds all files to the staging area
+    ///
     /// ## Parameters
     ///  - `repositoryDir` - The git repository.
     let stageAll repositoryDir =

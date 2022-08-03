@@ -105,9 +105,13 @@ module Http =
                 Async.result (Error errs)
         
     /// Download file by the given file path and Uri
+    ///
     /// ## Parameters
     ///  - `localFilePath` - A local file path to download file
     ///  - `uri` - A Uri to download from
+    ///
+    /// ## Returns
+    ///  - `string` type. Contains a downloaded file path
     let downloadFile (localFilePath: string) (uri: string) : string =
         downloadFileAsync { Uri=uri;  Path=localFilePath }
         |> Async.RunSynchronously
@@ -115,8 +119,12 @@ module Http =
 
     /// Download list of Uri's in parallel
     /// DownloadParameters -> string list
+    ///
     /// ## Parameters
     ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
+    ///
+    /// ## Returns
+    ///  - `string list` type. Contains a list of downloaded file paths
     let downloadFiles (input: DownloadParameters list) : string list =
         input
         // DownloadParameters -> "Async<Result<FilePath, Err list>> list"
@@ -135,6 +143,7 @@ module Http =
 
     /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    ///
     /// ## Parameters
     ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `userName` - The username to use with the request.
@@ -169,6 +178,7 @@ module Http =
 
     /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    ///
     /// ## Parameters
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.
@@ -181,6 +191,7 @@ module Http =
     /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    ///
     /// ## Parameters
     ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `url` - The URL to perform the POST operation.
@@ -219,6 +230,7 @@ module Http =
     /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    ///
     /// ## Parameters
     ///  - `headerF` - A function which allows to manipulate the HTTP headers.
     ///  - `url` - The URL to perform the POST operation.
@@ -233,6 +245,7 @@ module Http =
 
     /// Executes an HTTP POST command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    ///
     /// ## Parameters
     ///  - `url` - The URL to perform the POST operation.
     ///  - `userName` - The username to use with the request.
@@ -256,12 +269,14 @@ module Http =
         response.EnsureSuccessStatusCode () |> ignore }
 
     /// Upload the given file to the given endpoint
+    ///
     /// ## Parameters
     ///  - `url` - The URL to perform the POST operation.
     ///  - `file` - The file to upload.
     let upload url file = uploadAsync url file |> Async.RunSynchronously
 
     /// Like 'get' but allow to set headers and returns the response headers.
+    ///
     /// ## Parameters
     ///  - `userName` - The username to use with the request.
     ///  - `password` - The password to use with the request.

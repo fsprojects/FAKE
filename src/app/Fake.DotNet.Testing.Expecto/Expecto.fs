@@ -141,6 +141,7 @@ module Expecto =
         testAssembly, processResult.ExitCode
 
     /// Call Expecto to run tests in the given assemblies list
+    ///
     /// ## Parameters
     ///  - `setParams` - Expecto parameters
     ///  - `assemblies` - The set of assemblies to run command on

@@ -185,6 +185,7 @@ module ILMerge =
         CreateProcess.fromRawCommand parameters.ToolPath args
 
     /// Uses ILMerge to merge .NET assemblies.
+    ///
     /// ## Parameters
     ///  - `parameters` - An ILMerge.Params value with your required settings.
     ///  - `outputFile` - Output file path for the merged assembly.

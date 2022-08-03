@@ -89,6 +89,7 @@ module MSpec =
         |> StringBuilder.toText
 
     /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the MSpec default parameters.
     ///  - `assemblies` - The file names of the test assemblies.
@@ -98,7 +99,6 @@ module MSpec =
     ///       |> MSpec (fun p -> {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
     ///
     /// ## Hint
-    ///
     /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
     let exec setParams assemblies =
         let details = String.separated ", " assemblies

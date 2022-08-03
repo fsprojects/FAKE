@@ -1,5 +1,9 @@
 ﻿namespace Fake.Core.CommandLineParsing
 
+open System
+open System.Collections.Generic
+
+[<RequireQualifiedAccess>]
 type Tag =
   | Eps = 0b00000000
   | Ano = 0b00000001

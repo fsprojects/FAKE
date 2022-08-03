@@ -231,7 +231,7 @@ module ReleaseNotes =
             failwithf
                 "The release notes document was not valid, see https://fake.build/apidocs/v5/fake-core-releasenotes.html for the allowed formats"
 
-    /// Parses a Release Notes text file and returns the lastest release notes.
+    /// Parses a Release Notes text file and returns the latest release notes.
     ///
     /// ## Parameters
     ///  - `fileName` - Release notes text file name

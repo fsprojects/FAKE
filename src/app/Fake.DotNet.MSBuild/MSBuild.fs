@@ -359,8 +359,6 @@ type MSBuildParams =
             |> Map.remove "MSBuildExtensionsPath"
             |> Map.remove "MSBuildLoadMicrosoftTargetsReadOnly"
             |> Map.remove "MSBuildSDKsPath" }
-    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module functions!")>]
-    static member Empty = MSBuildParams.Create()
 
     /// Sets the current environment variables.
     member x.WithEnvironment map =
@@ -881,12 +879,10 @@ module MSBuild =
   /// Runs a MSBuild project
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `project` - A string with the path to the project file to build.
   ///
   /// ## Sample
-  ///
   ///     open Fake.DotNet
   ///     let buildMode = Environment.environVarOrDefault "buildMode" "Release"
   ///     let setParams (defaults:MSBuildParams) =
@@ -928,7 +924,6 @@ module MSBuild =
   /// Builds the given project files and collects the output files.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
@@ -975,7 +970,6 @@ module MSBuild =
   /// Builds the given project files or solution files and collects the output files.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
@@ -986,7 +980,6 @@ module MSBuild =
   /// Builds the given project files or solution files and collects the output files.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
@@ -996,7 +989,6 @@ module MSBuild =
   /// Builds the given project files or solution files and collects the output files.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
@@ -1006,7 +998,6 @@ module MSBuild =
   /// Builds the given project files or solution files in release mode to the default outputs.
   /// 
   /// ## Parameters
-  /// 
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
   let runWithDefaults targets projects = run id null targets [ "Configuration", "Release" ] projects
@@ -1014,7 +1005,6 @@ module MSBuild =
   /// Builds the given project files or solution files in release mode and collects the output files.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `properties` - A list with tuples of property name and property values.
@@ -1027,7 +1017,6 @@ module MSBuild =
   /// Builds the given web project file in the specified configuration and copies it to the given outputPath.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
@@ -1061,7 +1050,6 @@ module MSBuild =
   /// Builds the given web project file with debug configuration and copies it to the given outputPath.
   /// 
   /// ## Parameters
-  /// 
   ///  - `outputPath` - The output path.
   ///  - `projectFile` - The project file path.
   let buildWebsite outputPath projectFile = buildWebsiteConfig id outputPath "Debug" projectFile
@@ -1069,7 +1057,6 @@ module MSBuild =
   /// Builds the given web project files in specified configuration and copies them to the given outputPath.
   /// 
   /// ## Parameters
-  /// 
   ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
@@ -1079,7 +1066,6 @@ module MSBuild =
   /// Builds the given web project files with debug configuration and copies them to the given websiteDir.
   /// 
   /// ## Parameters
-  /// 
   ///  - `outputPath` - The output path.
   ///  - `projectFiles` - The project file paths.
   let buildWebsites outputPath projectFiles = buildWebsitesConfig outputPath "Debug" projectFiles

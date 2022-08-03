@@ -96,11 +96,11 @@ module Npm =
 
   
     /// Run `npm install --force`
+    ///
     /// ## Parameters
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.installForced (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -108,11 +108,11 @@ module Npm =
     let installForced setParams = npm setParams <| Install Forced
 
     /// Run `npm install`
+    ///
     /// ## Parameters
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.install (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -120,12 +120,12 @@ module Npm =
     let install setParams = npm setParams <| Install Standard 
 
     /// Run `npm run <command>`
+    ///
     /// ## Parameters
     /// - 'command' - command to run
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.run "someCommand" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -133,12 +133,12 @@ module Npm =
     let run command setParams = npm setParams <| Run command
     
     /// Run `npm run --silent <command>`. Suppresses npm error output. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    ///
     /// ## Parameters
     /// - 'command' - command to run
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.runSilent "someCommand" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -146,12 +146,12 @@ module Npm =
     let runSilent command setParams = npm setParams <| RunSilent command
    
     /// Run `npm run --silent <command>`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    ///
     /// ## Parameters
     /// - 'command' - command to run
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.runTest "test" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -159,11 +159,11 @@ module Npm =
     let runTest command setParams = npm setParams <| RunTest command
    
     /// Run `npm test --silent`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    ///
     /// ## Parameters
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.test (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
@@ -171,12 +171,12 @@ module Npm =
     let test setParams = npm setParams Test
    
     /// Run `npm <command>`. Used to run any command.
+    ///
     /// ## Parameters
     /// - 'command' - command to run
     /// - 'setParams' - set command parameters
     ///
     /// ## Sample
-    ///
     ///     Npm.exec "--v" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"

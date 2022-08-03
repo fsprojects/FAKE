@@ -18,7 +18,6 @@ type FileChange =
 /// This module contains helpers to react to file system events.
 ///
 /// ## Sample
-///
 ///     Target.create "Watch" (fun _ ->
 ///         use watcher = !! "c:/projects/watchDir/*.txt" |> ChangeWatcher.run (fun changes ->
 ///             // do something
@@ -44,7 +43,6 @@ module ChangeWatcher =
     /// Returns an IDisposable which allows to dispose all internally used FileSystemWatchers.
     ///
     /// ## Parameters
-    /// 
     ///  - `fOptions` - `ChangeWatcher` options
     ///  - `onChange` - function to call when a change is detected.
     ///  - `fileIncludes` - The glob pattern for files to watch for changes.
@@ -122,7 +120,6 @@ module ChangeWatcher =
     /// Returns an IDisposable which allows to dispose all internally used FileSystemWatchers.
     ///
     /// ## Parameters
-    /// 
     ///  - `onChange` - function to call when a change is detected.
     ///  - `fileIncludes` - The glob pattern for files to watch for changes.
     let run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = runWithOptions id onChange fileIncludes

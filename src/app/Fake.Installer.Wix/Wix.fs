@@ -1072,6 +1072,7 @@ module Wix =
 
     /// Take a component string and set "neverOverwrite" Tag
     /// This is useful for config files, since they are not replaced on upgrade like that
+    ///
     /// ## Parameters
     ///  - `components` - the component string
     let setComponentsNeverOverwrite (components: string) =

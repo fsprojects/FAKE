@@ -116,11 +116,11 @@ module InnoSetup =
         |> StringBuilder.toText
 
     /// Builds the InnoSetup installer.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default build parameters. See `InnoSetupParams.Create()`
     ///
     /// ## Sample
-    ///
     ///        InnoSetup.build (fun p ->
     ///         { p with
     ///             OutputFolder = "build" @@ "installer"

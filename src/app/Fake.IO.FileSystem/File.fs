@@ -18,7 +18,6 @@ module File =
     /// Detect the encoding
     /// 
     /// ## Parameters
-    /// 
     ///  - `def` - The encoding to detect for
     ///  - `filename` - The file name to check
     let getEncoding def filename =
@@ -42,14 +41,12 @@ module File =
     /// Checks if the file exists on disk.
     /// 
     /// ## Parameters
-    /// 
     ///  - `fileName` - The file name to check
     let exists fileName = File.Exists fileName
 
     /// Gets the encoding from the file or the default of the file doesn't exist
     /// 
     /// ## Parameters
-    /// 
     ///  - `def` - The encoding to detect for
     ///  - `filename` - The file name to check
     let getEncodingOrDefault def filename =
@@ -62,7 +59,6 @@ module File =
     /// Raises an exception if the file doesn't exist on disk.
     /// 
     /// ## Parameters
-    /// 
     ///  - `filename` - The file name to check
     let checkExists fileName =
         if not <| exists fileName then
@@ -71,7 +67,6 @@ module File =
     /// Checks if all given files exist.
     /// 
     /// ## Parameters
-    /// 
     ///  - `files` - The files names to check
     let allExist files = Seq.forall File.Exists files
 
@@ -103,7 +98,6 @@ module File =
     /// Creates a file if it does not exist.
     /// 
     /// ## Parameters
-    ///
     ///  - 'fileName' - The name of the file to create
     let create fileName =
         let file = FileInfo.ofPath fileName
@@ -113,7 +107,6 @@ module File =
     /// Deletes a file if it exists.
     /// 
     /// ## Parameters
-    ///
     ///  - 'fileName' - The name of the file to delete
     let delete fileName =
         let file = FileInfo.ofPath fileName
@@ -123,14 +116,12 @@ module File =
     /// Deletes the given files.
     /// 
     /// ## Parameters
-    ///
     ///  - 'files' - The name of the files to delete
     let deleteAll files = Seq.iter delete files
 
     /// Active Pattern for determining file extension.
     /// 
     /// ## Parameters
-    ///
     ///  - 'extension' - The extension to look for
     ///  - 'file' - The file name to use
     let (|EndsWith|_|) (extension : string) (file : string) =
@@ -140,7 +131,6 @@ module File =
     /// Reads a file line by line
     /// 
     /// ## Parameters
-    ///
     ///  - 'encoding' - The encoding to use
     ///  - 'file' - The file name to use
     let readWithEncoding (encoding : Encoding) (file : string) =
@@ -155,7 +145,6 @@ module File =
     /// Reads the first line of a file. This can be helpful to read a password from file.
     /// 
     /// ## Parameters
-    ///
     ///  - 'encoding' - The encoding to use
     ///  - 'file' - The file name to use
     let readLineWithEncoding (encoding:Encoding) (file : string) =
@@ -166,14 +155,12 @@ module File =
     /// Reads the first line of a file. This can be helpful to read a password from file.
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     let readLine(file : string) = readLineWithEncoding (getEncodingOrUtf8WithoutBom file) file
 
     /// Writes a file line by line
     /// 
     /// ## Parameters
-    ///
     ///  - 'encoding' - The encoding to use
     ///  - 'append' - Flag to check if to append content or overwrite
     ///  - 'filename' - The file name to use
@@ -187,7 +174,6 @@ module File =
     /// Write the given sequence of lines to the file. Either append to the end of the file or overwrite
     /// 
     /// ## Parameters
-    ///
     ///  - 'append' - Flag to check if to append content or overwrite
     ///  - 'filename' - The file name to use
     ///  - 'lines' - The lines to write
@@ -196,7 +182,6 @@ module File =
     /// Writes a byte array to a file
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     ///  - 'bytes' - The bytes to write
     let writeBytes file bytes = File.WriteAllBytes(file, bytes)
@@ -204,7 +189,6 @@ module File =
     /// Writes a string to a file
     /// 
     /// ## Parameters
-    ///
     ///  - 'encoding' - The encoding to use
     ///  - 'append' - Flag to check if to append content or overwrite
     ///  - 'filename' - The file name to use
@@ -219,7 +203,6 @@ module File =
     /// Writes a string to a file
     /// 
     /// ## Parameters
-    ///
     ///  - 'append' - Flag to check if to append content or overwrite
     ///  - 'filename' - The file name to use
     ///  - 'text' - The string text to write
@@ -228,7 +211,6 @@ module File =
     /// Replaces the file with the given string
     /// 
     /// ## Parameters
-    ///
     ///  - 'filename' - The file name to use
     ///  - 'text' - The string text to write
     let replaceContent fileName text =
@@ -241,7 +223,6 @@ module File =
     /// Writes a file line by line
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     ///  - 'lines' - The lines to write
     let writeNew file lines = write false file lines
@@ -249,7 +230,6 @@ module File =
     /// Appends all lines to a file line by line
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     ///  - 'lines' - The lines to append
     let append file lines = write true file lines
@@ -257,7 +237,6 @@ module File =
     /// Reads a file as one text
     /// 
     /// ## Parameters
-    ///
     ///  - 'encoding' - The encoding to use
     ///  - 'file' - The file name to use
     let inline readAsStringWithEncoding encoding file = File.ReadAllText(file, encoding)
@@ -265,21 +244,18 @@ module File =
     /// Reads a file as one text
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     let inline readAsString file = File.ReadAllText(file, (getEncodingOrUtf8WithoutBom file))
 
     /// Reads a file as one array of bytes
     /// 
     /// ## Parameters
-    ///
     ///  - 'file' - The file name to use
     let readAsBytes file = File.ReadAllBytes file
 
     /// Replaces the text in the given file
     /// 
     /// ## Parameters
-    ///
     ///  - 'replaceF' - The callback to execute when replacing content
     ///  - 'fileName' - The file name to use
     let applyReplace replaceF fileName =

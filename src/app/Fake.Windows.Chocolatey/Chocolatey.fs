@@ -698,11 +698,13 @@ module Choco =
         callChoco parameters.ToolPath args parameters.Timeout
 
     /// True if choco is available (only on windows)
+    ///
     /// ## Sample
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
     let IsAvailable = not Environment.isUnix && findExe <> None
 
     /// Call choco to [install](https://docs.chocolatey.org/en-us/choco/commands/install) a package
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoInstallParams`
     ///  - `packages` - Names of packages, path to packages.config, .nuspec or .nupkg to install
@@ -736,6 +738,7 @@ module Choco =
         callChoco parameters.ToolPath args parameters.Timeout
 
     /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
 
@@ -763,6 +766,7 @@ module Choco =
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
     ///  - `nuspecPath` - path to the .nuspec to pack
@@ -803,6 +807,7 @@ module Choco =
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [push](https://docs.chocolatey.org/en-us/create/commands/push) a package
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPushParams`
     ///  - `nupkgPath` - path to the .nupkg to push
@@ -835,6 +840,7 @@ module Choco =
         tries 3         
                 
     /// Call custom choco command
+    ///
     /// ## Parameters
     ///  - `args` - string that will be appended to choco.exe call
     ///  - `timeout` - parent process maximum completion time

@@ -2,9 +2,8 @@ namespace Fake.Tools
 
 /// Contains tasks to run the [Pickles](http://www.picklesdoc.com/) living documentation generator
 ///
-/// ## Sample usage
+/// ## Sample
 ///
-/// ```
 /// open Fake.Tools
 ///
 /// Target.create "BuildDoc" (fun _ ->
@@ -13,8 +12,6 @@ namespace Fake.Tools
 ///                 OutputDirectory = currentDirectory </> "SpecDocs"
 ///                 OutputFileFormat = Pickles.DocumentationFormat.DHTML })
 /// )
-/// ```
-///
 [<RequireQualifiedAccess>]
 module Pickles =
 

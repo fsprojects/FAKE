@@ -87,11 +87,11 @@ module SonarQube =
         |> ignore
 
     /// This task can be used to run the begin command of [Sonar Qube](http://sonarqube.org/) on a project.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
     ///
     /// ## Sample
-    /// ```
     ///   open Fake.Testing
     ///
     ///   SonarQube.start (fun p ->
@@ -99,7 +99,6 @@ module SonarQube =
     ///           Key = "MyProject"
     ///           Name = "MainTool"
     ///           Version = "1.0 })
-    /// ```
     let start setParams =
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
@@ -107,11 +106,11 @@ module SonarQube =
         __.MarkSuccess()
 
     /// This task can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
     ///
     /// ## Sample
-    /// ```
     ///   open Fake.Testing
     ///
     ///   SonarQube.finish None
@@ -119,7 +118,6 @@ module SonarQube =
     ///   SonarQube.finish (Some (fun p ->
     ///    { p with
     ///         Settings = ["sonar.login=login"; "sonar.password=password"] }))
-    /// ```
     let finish setParams =
         use __ = Trace.traceTask "SonarQube" "End"
 

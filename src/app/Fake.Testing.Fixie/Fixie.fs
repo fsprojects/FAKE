@@ -85,6 +85,7 @@ module Fixie =
 
 
     /// This task to can be used to run [Fixie](https://fixie.github.io/) on test libraries.
+    ///
     /// ## Parameters
     ///  - `setParams` - Function used to overwrite the Fixie default parameters.
     ///

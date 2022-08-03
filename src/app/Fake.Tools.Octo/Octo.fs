@@ -308,6 +308,7 @@ module Octo =
             result
 
     /// Creates a release and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setParams` - The create release parameters
     let createReleaseWithExitCode setParams =
@@ -315,6 +316,7 @@ module Octo =
         exec (CreateRelease(options, None)) options.Common
 
     /// Creates a release, and optionally deploys it to one or more environments and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setReleaseParams` - The release parameters
     /// - `setDeployParams` - The deploy parameters
@@ -324,6 +326,7 @@ module Octo =
         exec (CreateRelease(releaseOptions, deployOptions)) releaseOptions.Common
 
     /// Deploys releases that have already been created and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setParams` - The release parameters
     let deployReleaseWithExitCode setParams =
@@ -331,6 +334,7 @@ module Octo =
         exec (DeployRelease options) options.Common
 
     /// Deletes a range of releases and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setParams` - The delete release parameters
     let deleteReleasesWithExitCode setParams =
@@ -338,6 +342,7 @@ module Octo =
         exec (DeleteReleases options) options.Common
 
     /// Lists all environments and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setParams` - The Octo tool parameters
     let listEnvironmentsWithExitCode setParams =
@@ -345,6 +350,7 @@ module Octo =
         exec ListEnvironments options
 
     /// Pushes one or more packages to the Octopus built-in repository and returns the exit code.
+    ///
     /// ## Parameters
     /// - `setParams` - The push parameters
     let pushWithExitCode setParams =
@@ -358,6 +364,7 @@ module Octo =
         | _ -> failwithf "Octo %s failed. Process finished with exit code %i" commandString result
 
     /// Creates a release.
+    ///
     /// ## Parameters
     /// - `setParams` - The create release parameters
     let createRelease setParams =
@@ -369,6 +376,7 @@ module Octo =
         |> (handleIgnoreExitCode <| commandLine)
 
     /// Creates a release, and optionally deploys it to one or more environments.
+    ///
     /// ## Parameters
     /// - `setReleaseParams` - The release parameters
     /// - `setDeployParams` - The deploy parameters
@@ -381,6 +389,7 @@ module Octo =
         |> (handleIgnoreExitCode <| commandLine)
 
     /// Deploys releases that have already been created.
+    ///
     /// ## Parameters
     /// - `setParams` - The release deployment parameters
     let deployRelease setParams =
@@ -392,6 +401,7 @@ module Octo =
         |> (handleIgnoreExitCode <| commandLine)
 
     /// Deletes a range of releases.
+    ///
     /// ## Parameters
     /// - `setParams` - The releases to delete parameters
     let deleteReleases setParams =
@@ -403,6 +413,7 @@ module Octo =
         |> (handleIgnoreExitCode <| commandLine)
 
     /// Lists all environments.
+    ///
     /// ## Parameters
     /// - `setParams` - The environments to list parameters
     let listEnvironments setParams =
@@ -412,6 +423,7 @@ module Octo =
         |> (handleIgnoreExitCode <| commandLine)
 
     /// Pushes one or more packages to the Octopus built-in repository.
+    ///
     /// ## Parameters
     /// - `setParams` - The push package parameters
     let push setParams =
