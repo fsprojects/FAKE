@@ -13,6 +13,12 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 
 See detailed instructions on [how to use](https://fake.build/fake-gettingstarted.html#Install-FAKE) the project.
 
+## Requirements
+
+Fake runner requires .Net v6 SDK to be installed on the machine to run it. .Net v6 was chosen since it is the current LTS release.
+
+Fake modules has target frameworks of `net6` and `netstandard2.0`. Please [see this link](https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0) which lists the supported .Net and .NET Framework versions by `netstandard2.0`
+
 ## Installation
 
 * Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
@@ -60,7 +66,7 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Deploy"
 ```
 
-This example pulls Fake's `Target` and `Trace` modules and define three targets: `Clean`, `Build`, and `Deploy`. By analogy with a DotNet project;
+This example pulls Fake's `Target` and `Trace` modules and define three targets: `Clean`, `Build`, and `Deploy`. By analogy with a .Net project;
 * the `Clean` target can be used to clean the project before a build,
 *  the `Build` target to call MSBuild or any build steps that are required for you application,
 *  the `Deploy` target can push your built project to a cloud service.
