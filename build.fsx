@@ -757,7 +757,13 @@ Target.create "GenerateDocs" (fun _ ->
         (apiDocsDir @@ "v4")
         "/apidocs/v4/"
         "/blob/hotfix_fake4"
-        "packages/docslegacyv4/FAKE/tools")
+        "packages/docslegacyv4/FAKE/tools"
+    
+    Directory.ensure "temp"
+    
+    !!(docsDir </> "**/*")
+    |> Zip.zip docsDir "temp/docs.zip"
+    publish "temp/docs.zip")
 
 Target.create "HostDocs" (fun _ ->
     startWebServer ()
