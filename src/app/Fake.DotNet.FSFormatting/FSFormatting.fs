@@ -1,4 +1,5 @@
 ﻿/// Contains tasks which allow to run FSharp.Formatting for generating documentation.
+[<System.Obsolete("This module is deprecated. Please use fsdocs module instead")>]
 module Fake.DotNet.FSFormatting
 
 open System
@@ -32,6 +33,7 @@ let private run (toolType:ToolType) toolPath (command:string) =
     |> Proc.run
     |> ignore
 
+/// [omit]
 type LiterateArguments =
     { ToolPath : string
       ToolType : ToolType
@@ -53,6 +55,8 @@ let private createDefaultLiterateArguments() =
       LayoutRoots = [] 
       FsiEval = false }
 
+/// [omit]
+[<Obsolete("This API is deprecated. Please use an alternative API from fsdocs module instead")>]
 let createDocs p =
     let arguments = (p:LiterateArguments->LiterateArguments) (createDefaultLiterateArguments())
     let layoutroots =
@@ -77,6 +81,7 @@ let createDocs p =
     run arguments.ToolType arguments.ToolPath command
     printfn "Successfully generated docs for %s" source
 
+/// [omit]
 type MetadataFormatArguments =
     { ToolPath : string
       ToolType : ToolType
@@ -100,6 +105,8 @@ let private createDefaultMetadataFormatArguments() =
       LayoutRoots = []
       LibDirs = [] }
 
+/// [omit]
+[<Obsolete("This API is deprecated. Please use an alternative API from fsdocs module instead")>]
 let createDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
     let arguments = p (createDefaultMetadataFormatArguments())
     let outputDir = arguments.OutputDirectory
