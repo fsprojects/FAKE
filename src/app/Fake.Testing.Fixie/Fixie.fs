@@ -90,8 +90,8 @@ module Fixie =
     ///  - `setParams` - Function used to overwrite the Fixie default parameters.
     ///
     /// ## Sample
-    ///   Fixie (fun p -> { p with Configuration = "Release"; CustomArguments = ["custom","1"; "test","2"] })
-    let Fixie setParams =
+    ///   Fixie.run (fun p -> { p with Configuration = "Release"; CustomArguments = ["custom","1"; "test","2"] })
+    let run setParams =
         let parameters = setParams FixieDefaults
 
         let arguments = formatFixieArguments parameters
