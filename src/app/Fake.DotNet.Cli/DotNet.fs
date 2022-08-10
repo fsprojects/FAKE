@@ -559,8 +559,6 @@ module DotNet =
                 |> Map.remove "MSBuildSDKsPath"
                 |> Map.remove "DOTNET_HOST_PATH"
         }
-        [<Obsolete("Use Options.Create instead")>]
-        static member Default = Options.Create()
 
         /// Sets the current environment variables.
         member x.WithEnvironment map =
