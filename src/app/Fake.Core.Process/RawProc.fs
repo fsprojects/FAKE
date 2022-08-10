@@ -38,11 +38,11 @@ module EnvMap =
     let create() =
         ofSeq (Environment.environVars ())
 
-    let replace (l) (e:EnvMap) : EnvMap=
+    let replace l (e:EnvMap) : EnvMap=
         e.SetItems(l)
         //|> IMap.add defaultEnvVar defaultEnvVar
 
-    let ofMap (l) : EnvMap =
+    let ofMap l : EnvMap =
         create()
         |> replace l
 
@@ -142,7 +142,7 @@ type internal RawCreateProcess =
             p.FileName <- filename
             p.Arguments <- args.ToStartInfo
         let setEnv key var =
-            p.Environment.[key] <- var
+            p.Environment[key] <- var
         x.Environment
             |> Option.iter (fun env ->
                 p.Environment.Clear()
@@ -171,10 +171,10 @@ module internal RawProc =
         if Environment.isMono then
             // See https://github.com/mono/mono/blob/master/mcs/class/corlib/System/ConsoleDriver.cs#L289
             let t =
-                match System.Type.GetType("System.ConsoleDriver") with
+                match Type.GetType("System.ConsoleDriver") with
                 | null -> null
                 | cd -> cd.GetTypeInfo()
-            let flags = System.Reflection.BindingFlags.Static ||| System.Reflection.BindingFlags.NonPublic
+            let flags = BindingFlags.Static ||| BindingFlags.NonPublic
             if isNull t then
                 Trace.traceFAKE "Expected to find System.ConsoleDriver type"
                 false
@@ -191,7 +191,7 @@ module internal RawProc =
     open System.IO
     let internal createProcessStarter startProcessRaw =
         { new IProcessStarter with
-            member __.Start c = async {
+            member _.Start c = async {
                 let p = c.ToStartInfo
                 let streamSpec = c.OutputHook.Prepare c.Streams
                 streamSpec.SetStartInfo p
@@ -212,7 +212,7 @@ module internal RawProc =
                             startProcessRaw c toolProcess
                         finally
                             setEcho false |> ignore
-                        c.OutputHook.OnStart (toolProcess)
+                        c.OutputHook.OnStart toolProcess
                         
                         let handleStream originalParameter parameter processStream isInputStream =
                             async {
@@ -229,7 +229,7 @@ module internal RawProc =
                                             |> Async.AwaitTaskWithoutAggregate
                                     return
                                         if shouldClose then stream else Stream.Null
-                                | CreatePipe (r) ->
+                                | CreatePipe r ->
                                     match originalParameter with
                                     | CreatePipe o ->
                                         // first set the "original" cell
@@ -308,18 +308,18 @@ module internal RawProc =
                                 Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                             allFinished <- ok
                         
-                        // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
+                        // wait for finish -> AwaitTask has a bug which makes it unusable for canceled tasks.
                         // workaround with continuewith
                         if allFinished || Environment.GetEnvironmentVariable("FAKE_DEBUG_PROCESS_HANG") = "true" then
                             if not allFinished && Environment.GetEnvironmentVariable("FAKE_ATTACH_DEBUGGER") = "true" then
-                                System.Diagnostics.Debugger.Launch() |> ignore
-                                System.Diagnostics.Debugger.Break() |> ignore
+                                Debugger.Launch() |> ignore
+                                Debugger.Break()
                             if not allFinished && Environment.GetEnvironmentVariable("FAKE_FAIL_PROCESS_HANG") = "true" then
                                 Environment.FailFast(sprintf "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status)
 
-                            // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
+                            // wait for finish -> AwaitTask has a bug which makes it unusable for canceled tasks.
                             // workaround with continuewith
-                            let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                            let! streams = all.ContinueWith (System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]>(fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
                             for s in streams do s.Dispose()
                         else
                             let msg = "We encountered https://github.com/fsharp/FAKE/issues/2401, please help to resolve this issue! You can set 'FAKE_IGNORE_PROCESS_HANG' to true to ignore this error. But please consider sending a full process dump or volunteer with debugging."
@@ -328,7 +328,7 @@ module internal RawProc =
                             else
                                 async {
                                     try
-                                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
+                                        let! streams = all.ContinueWith (System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]>(fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
                                         Trace.traceFAKE "The hanging redirect task has finished eventually! Disposing streams."
                                         for s in streams do s.Dispose()
                                     with e ->

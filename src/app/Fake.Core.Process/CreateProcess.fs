@@ -9,13 +9,13 @@ open Fake.Core.ProcessHelpers
 type internal IProcessHook<'TRes> =
     abstract member PrepareState : unit -> IDisposable
     abstract member PrepareStreams : IDisposable * StreamSpecs -> StreamSpecs
-    abstract member ProcessStarted : IDisposable * System.Diagnostics.Process -> unit
+    abstract member ProcessStarted : IDisposable * Process -> unit
     abstract member RetrieveResult : IDisposable * System.Threading.Tasks.Task<RawProcessResult> -> Async<'TRes>
 
 type internal IProcessHookImpl<'TState, 'TRes when 'TState :> IDisposable> =
     abstract member PrepareState : unit -> 'TState
     abstract member PrepareStreams : 'TState * StreamSpecs -> StreamSpecs
-    abstract member ProcessStarted : 'TState * System.Diagnostics.Process -> unit
+    abstract member ProcessStarted : 'TState * Process -> unit
     abstract member RetrieveResult : 'TState * System.Threading.Tasks.Task<RawProcessResult> -> Async<'TRes>
 
 module internal ProcessHook =
@@ -52,7 +52,7 @@ type CreateProcess<'TRes> =
     member x.WorkingDirectory = x.InternalWorkingDirectory
     member x.Environment = x.InternalEnvironment
 
-/// Some information regaring the started process
+/// Some information regarding the started process
 type StartedProcessInfo =
     internal {
         InternalProcess : Process
@@ -81,27 +81,15 @@ type StartedProcessInfo =
 module CreateProcess =
     let internal emptyHook =
         { new IProcessHook<ProcessResult<unit>> with
-            member __.PrepareState () = null
-            member __.PrepareStreams (_, specs) = specs
-            member __.ProcessStarted (_,_) = ()
-            member __.RetrieveResult (_, t) =
+            member _.PrepareState () = null
+            member _.PrepareStreams (_, specs) = specs
+            member _.ProcessStarted (_,_) = ()
+            member _.RetrieveResult (_, t) =
                 async {
                     let! raw = Async.AwaitTaskWithoutAggregate t
                     return { ExitCode = raw.RawExitCode; Result = () } 
                 } }
-
-    (*let internal ofProc (x:RawCreateProcess) =
-      { Command = x.Command
-        WorkingDirectory = x.WorkingDirectory
-        Environment = x.Environment
-        Streams = x.Streams
-        Hook =
-            { new IProcessHook<int> with
-                member __.PrepareStart specs = x.OutputHook.Prepare specs
-                member __.ProcessStarted (state, p) = x.OutputHook.OnStart(state, p)
-                member __.RetrieveResult (s, t) = 
-                    x.OutputHook.Retrieve(s, t) } }*)
-
+        
     /// Create a simple `CreateProcess<_>` instance from the given command.
     /// 
     /// ### Example
@@ -152,12 +140,6 @@ module CreateProcess =
     let fromRawCommandLine command windowsCommandLine =
         fromCommand <| RawCommand(command, Arguments.OfWindowsCommandLine windowsCommandLine)
 
-
-    /// Create a CreateProcess from the given file and arguments
-    [<Obsolete("Use fromRawCommandLine instead.")>]
-    let fromRawWindowsCommandLine command windowsCommandLine =
-        fromCommand <| RawCommand(command, Arguments.OfWindowsCommandLine windowsCommandLine)
-
     /// Create a CreateProcess from the given file and arguments
     /// 
     /// ### Example
@@ -169,10 +151,10 @@ module CreateProcess =
         fromCommand <| RawCommand(command, Arguments.OfArgs args)
 
     /// Create a CreateProcess from the given `ProcessStartInfo`
-    let ofStartInfo (p:System.Diagnostics.ProcessStartInfo) =
+    let ofStartInfo (p:ProcessStartInfo) =
         {   InternalCommand = if p.UseShellExecute then ShellCommand p.FileName else RawCommand(p.FileName, Arguments.OfStartInfo p.Arguments)
             TraceCommand = true
-            InternalWorkingDirectory = if System.String.IsNullOrWhiteSpace p.WorkingDirectory then None else Some p.WorkingDirectory
+            InternalWorkingDirectory = if String.IsNullOrWhiteSpace p.WorkingDirectory then None else Some p.WorkingDirectory
             InternalEnvironment = 
                 p.Environment
                 |> Seq.map (fun kv -> kv.Key, kv.Value)
@@ -205,10 +187,10 @@ module CreateProcess =
             Streams =
                 { c.Streams with
                     StandardOutput =
-                        let stdOut = System.Console.OpenStandardOutput()
+                        let stdOut = Console.OpenStandardOutput()
                         interceptStream stdOut c.Streams.StandardOutput
                     StandardError =
-                        let stdErr = System.Console.OpenStandardError()
+                        let stdErr = Console.OpenStandardError()
                         interceptStream stdErr c.Streams.StandardError } }
     
     /// Set the working directory of the new process.
@@ -231,13 +213,13 @@ module CreateProcess =
         { c with
             InternalCommand =
                 match c.Command with
-                | ShellCommand s -> failwith "Expected RawCommand"
+                | ShellCommand _s -> failwith "Expected RawCommand"
                 | RawCommand (_, c) -> RawCommand(newFilePath, c) }
 
     /// Map the file-path according to the given function.            
     let mapFilePath f (c:CreateProcess<_>)=
         c
-        |> replaceFilePath (f (match c.Command with ShellCommand s -> failwith "Expected RawCommand" | RawCommand (file, _) -> f file))
+        |> replaceFilePath (f (match c.Command with ShellCommand _s -> failwith "Expected RawCommand" | RawCommand (file, _) -> f file))
 
 
     let internal withHook h (c:CreateProcess<_>) =
@@ -254,13 +236,13 @@ module CreateProcess =
 
     let internal simpleHook prepareState prepareStreams onStart onResult =
         { new IProcessHookImpl<_, _> with
-            member __.PrepareState () =
+            member _.PrepareState () =
                 prepareState ()
-            member __.PrepareStreams (state, streams) =
+            member _.PrepareStreams (state, streams) =
                 prepareStreams state streams
-            member __.ProcessStarted (state, p) = 
+            member _.ProcessStarted (state, p) = 
                 onStart state p
-            member __.RetrieveResult (state, exitCode) = 
+            member _.RetrieveResult (state, exitCode) = 
                 onResult state exitCode }
 
     type internal CombinedState<'a when 'a :> IDisposable > =
@@ -273,18 +255,18 @@ module CreateProcess =
 
     let internal hookAppendFuncs prepareState prepareStreams onStart onResult (c:IProcessHook<'TRes>) =    
         { new IProcessHookImpl<_, _> with
-            member __.PrepareState () =
+            member _.PrepareState () =
                 let state1 = c.PrepareState ()
                 let state2 = prepareState ()
                 { State1 = state1; State2 = state2 }
-            member __.PrepareStreams (state, streams) =
+            member _.PrepareStreams (state, streams) =
                 let newStreams = c.PrepareStreams(state.State1, streams)
                 let finalStreams = prepareStreams state.State2 newStreams
                 finalStreams
-            member __.ProcessStarted (state, p) =
+            member _.ProcessStarted (state, p) =
                 c.ProcessStarted (state.State1, p)
                 onStart state.State2 p
-            member __.RetrieveResult (state, exitCode) = 
+            member _.RetrieveResult (state, exitCode) = 
                 async {
                     let d = c.RetrieveResult(state.State1, exitCode)
                     return! onResult d state.State2 exitCode
@@ -317,7 +299,7 @@ module CreateProcess =
         c
         |> appendFuncsDispose
             prepareState
-            (fun state streams -> streams)
+            (fun _state streams -> streams)
             onStart
             onResult
             onDispose                     
@@ -327,8 +309,8 @@ module CreateProcess =
         c
         |> appendSimpleFuncs
             (fun _ -> f())
-            (fun state p -> ())
-            (fun prev state exitCode -> prev)
+            (fun _state _p -> ())
+            (fun prev _state _exitCode -> prev)
             ignore
 
     /// Execute the given function when the process is cleaned up.        
@@ -336,16 +318,16 @@ module CreateProcess =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> ())
-            (fun prev state exitCode -> prev)
+            (fun _state _p -> ())
+            (fun prev _state _exitCode -> prev)
             (fun _ -> f ())
     /// Execute the given function right after the process is started.
     let addOnStarted f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> f ())
-            (fun prev state exitCode -> prev)
+            (fun _state _p -> f ())
+            (fun prev _state _exitCode -> prev)
             ignore
     
     /// Execute the given function right after the process is started.
@@ -354,8 +336,8 @@ module CreateProcess =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> f { InternalProcess = p })
-            (fun prev state exitCode -> prev)
+            (fun _state p -> f { InternalProcess = p })
+            (fun prev _state _exitCode -> prev)
             ignore
 
     /// Sets the given environment variables
@@ -406,8 +388,8 @@ module CreateProcess =
         c
         |> appendSimpleFuncs 
             ignore
-            (fun state p -> ())
-            (fun prev state exitCode -> 
+            (fun _state _p -> ())
+            (fun prev _state _exitCode -> 
                 async {
                     let! old = prev
                     return f old
@@ -424,7 +406,7 @@ module CreateProcess =
     let redirectOutput (c:CreateProcess<_>) =
         c
         |> appendFuncsDispose 
-            (fun streams ->
+            (fun _streams ->
                 let outMem = new MemoryStream()
                 let errMem = new MemoryStream()
                 outMem, errMem)
@@ -435,10 +417,10 @@ module CreateProcess =
                     StandardError =
                         interceptStreamFallback (fun _ -> UseStream (false, errMem)) errMem streams.StandardError
                 })
-            (fun (outMem, errMem) p -> ())
+            (fun (_outMem, _errMem) _p -> ())
             (fun prev (outMem, errMem) exitCode ->
                 async {
-                    let! prevResult = prev
+                    let! _prevResult = prev
                     let! exitCode = exitCode |> Async.AwaitTaskWithoutAggregate
                     outMem.Position <- 0L
                     errMem.Position <- 0L
@@ -492,9 +474,9 @@ module CreateProcess =
         }
         |> appendFuncsDispose 
             (fun () -> ())
-            (fun r streams -> streams)
-            (fun () p -> ())
-            (fun prev () exitCode ->
+            (fun _r streams -> streams)
+            (fun () _p -> ())
+            (fun prev () _exitCode ->
                 async {
                     // Make sure to read the streams
                     let outTask =
@@ -516,9 +498,9 @@ module CreateProcess =
         
     /// Calls the given functions whenever a new output-line is received.
     let withOutputEvents onStdOut onStdErr (c:CreateProcess<_>) =
-        let watchStream onF (stream:System.IO.Stream) =
+        let watchStream onF (stream:Stream) =
             async {
-                let reader = new System.IO.StreamReader(stream)
+                let reader = new StreamReader(stream)
                 let mutable finished = false
                 while not finished do
                     let! line = reader.ReadLineAsync()
@@ -537,7 +519,7 @@ module CreateProcess =
                 let tOut = watchStream onStdOut outMemS
                 let tErr = watchStream onStdErr errMemS
                 (closeOut, outMem, closeErr, errMem, tOut, tErr))
-            (fun (closeOut, outMem, closeErr, errMem, tOut, tErr) streams ->
+            (fun (closeOut, outMem, closeErr, errMem, _tOut, _tErr) streams ->
                 { streams with
                     StandardOutput =
                         outMem
@@ -550,8 +532,8 @@ module CreateProcess =
                         |> InternalStreams.StreamModule.fromInterface
                         |> fun s -> interceptStream s streams.StandardError 
                 })
-            (fun state p -> ())
-            (fun prev (closeOut, outMem, closeErr, errMem, tOut, tErr) exitCode ->
+            (fun _state _p -> ())
+            (fun prev (closeOut, _outMem, closeErr, _errMem, tOut, tErr) _exitCode ->
                 async {
                     let! prevResult = prev
                     do! closeOut()
@@ -560,7 +542,7 @@ module CreateProcess =
                     do! tErr
                     return prevResult
                 })
-            (fun (closeOut, outMem, closeErr, errMem, tOut, tErr) ->
+            (fun (_closeOut, outMem, _closeErr, errMem, _tOut, _tErr) ->
                 
                 outMem.Dispose()
                 errMem.Dispose())
@@ -576,8 +558,8 @@ module CreateProcess =
         c
         |> appendSimpleFuncs 
             (fun _ -> ())
-            (fun state p -> ())
-            (fun prev state exitCode -> 
+            (fun _state _p -> ())
+            (fun prev _state exitCode -> 
                 async {
                     let! prevResult = prev
                     let! e = exitCode
@@ -635,14 +617,14 @@ module CreateProcess =
             data)
 
     type internal TimeoutState =
-        { Stopwatch : System.Diagnostics.Stopwatch
+        { Stopwatch : Stopwatch
           mutable HasExited : bool }
     /// Set the given timeout, kills the process after the specified timespan
-    let withTimeout (timeout:System.TimeSpan) (c:CreateProcess<_>) =
+    let withTimeout (timeout:TimeSpan) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
             (fun _ -> 
-                { Stopwatch = System.Diagnostics.Stopwatch.StartNew()
+                { Stopwatch = Stopwatch.StartNew()
                   HasExited = false })
             (fun state proc -> 
                 state.Stopwatch.Restart()
@@ -685,4 +667,4 @@ module CreateProcess =
                 state.Process <- proc)
             (fun prev state exitCode -> 
                 async.Return (state.Process, prev, exitCode))
-            (fun state -> ())
+            (fun _state -> ())

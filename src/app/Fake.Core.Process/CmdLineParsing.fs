@@ -10,13 +10,13 @@ module internal CmdLineParsing =
         let escapeBackslashes (sb:System.Text.StringBuilder) (s:string) (lastSearchIndex:int) =
             // Backslashes must be escaped if and only if they precede a double quote.
             [ lastSearchIndex .. -1 .. 0]
-            |> Seq.takeWhile (fun i -> s.[i] = '\\')
+            |> Seq.takeWhile (fun i -> s[i] = '\\')
             //|> Seq.map (fun c -> )
             //|> fun c -> Seq.replicate c '\\'
-            |> Seq.iter (fun c -> sb.Append '\\' |> ignore)
+            |> Seq.iter (fun _ -> sb.Append '\\' |> ignore)
         
-        let sb = new System.Text.StringBuilder()
-        for (s:string) in args do
+        let sb = System.Text.StringBuilder()
+        for s:string in args do
             if isNull s then
                 invalidArg "args" "'args' cannot contain null"
             if shorten && s.Length > 0 && s.IndexOfAny([|' '; '\"'; '\\'; '\t'|]) < 0 then
@@ -50,7 +50,7 @@ module internal CmdLineParsing =
             invalidArg "arguments" (sprintf "tripple quotes are not allowed in the command line ('%s') as they behave different across programs, see https://github.com/vbfox/FoxSharp/issues/1 to escape a quote use backslash and the rules from https://docs.microsoft.com/en-US/cpp/cpp/parsing-cpp-command-line-arguments?view=vs-2017." arguments)
 
         // https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L443-L522
-        let currentArgument = new System.Text.StringBuilder()
+        let currentArgument = System.Text.StringBuilder()
         let mutable inQuotes = false
         let mutable atLeastEmpty = false
         let results = System.Collections.Generic.List<_>()
@@ -60,11 +60,11 @@ module internal CmdLineParsing =
         while i < arguments.Length do
             // From the current position, iterate through contiguous backslashes.
             let mutable backslashCount = 0
-            while i < arguments.Length && arguments.[i] = '\\' do
+            while i < arguments.Length && arguments[i] = '\\' do
                 i <- i + 1
                 backslashCount <- backslashCount + 1
             if backslashCount > 0 then
-                if i >= arguments.Length || arguments.[i] <> '"' then
+                if i >= arguments.Length || arguments[i] <> '"' then
                     // Backslashes not followed by a double quote:
                     // they should all be treated as literal backslashes.
                     currentArgument.Append('\\', backslashCount) |> ignore
@@ -79,7 +79,7 @@ module internal CmdLineParsing =
                     else
                         currentArgument.Append('"') |> ignore
             else
-                let c = arguments.[i]
+                let c = arguments[i]
                 
                 match c with
                 // If this is a double quote, track whether we're inside of quotes or not.

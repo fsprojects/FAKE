@@ -1,10 +1,9 @@
-/// Contains functions which can be used to start other tools.
-
 namespace Fake.Core
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
+/// Contains functions which can be used to start other tools.
 [<RequireQualifiedAccess>]
 module ProcessUtils =
 
@@ -67,7 +66,7 @@ module ProcessUtils =
         |> Seq.filter Path.isValidPath
         |> Seq.append [ "." ]
 
-    /// Searches the current directory and in PATH for the given file and returnes the result ordered by precendence. Considers PATHEXT on Windows.
+    /// Searches the current directory and in PATH for the given file and returns the result ordered by precedence. Considers PATHEXT on Windows.
     let findFilesOnPath (tool : string) : string seq =
         getCurrentAndPathDirs()
         |> fun dirs -> findFiles dirs tool
@@ -151,8 +150,3 @@ module ProcessUtils =
         match tryFindLocalTool envVar tool recursiveDirs with
         | Some p -> p
         | None -> tool
-
-    //let tryFindNuGetTool packageName envVar tool =
-    //    let packagesDir = "packages"
-    //    let nugetDirs =
-    //        [ System.IO.Path.Combine(Environment.getNuGetPackagesCacheFolder(), packageName); ]

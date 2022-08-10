@@ -2,7 +2,6 @@ namespace Fake.Core
 
 open System
 open System.IO
-open System.Diagnostics
 open Fake.Core.ProcessHelpers
 
 [<AutoOpen>]
@@ -12,14 +11,14 @@ module StreamExtensions =
         static member CombineWrite (target1:Stream, target2:Stream)=
             if not target1.CanWrite || not target2.CanWrite then 
                 raise <| ArgumentException("Streams need to be writeable to combine them.")
-            let notsupported () = raise <| InvalidOperationException("operation not suppotrted")
+            let notSupported () = raise <| InvalidOperationException("operation not supported")
             { new Stream() with
                 member _.CanRead = false
                 member _.CanSeek = false
                 member _.CanTimeout = target1.CanTimeout || target2.CanTimeout
                 member _.CanWrite = true
                 member _.Length = target1.Length
-                member _.Position with get () = target1.Position and set _ = notsupported()
+                member _.Position with get () = target1.Position and set _ = notSupported()
                 member _.Flush () = target1.Flush(); target2.Flush()
                 member _.FlushAsync tok = 
                     async {
@@ -28,9 +27,9 @@ module StreamExtensions =
                     }
                     |> Async.StartImmediateAsTask
                     :> System.Threading.Tasks.Task
-                member _.Seek (_, _) = notsupported()
-                member _.SetLength _ = notsupported()
-                member _.Read (_, _, _) = notsupported()
+                member _.Seek (_, _) = notSupported()
+                member _.SetLength _ = notSupported()
+                member _.Read (_, _, _) = notSupported()
                 member _.Write (buffer, offset, count)=
                     target1.Write(buffer, offset, count)
                     target2.Write(buffer, offset, count)
@@ -91,9 +90,7 @@ module StreamExtensions =
 
 
 module internal InternalStreams =
-    open System
     open System.Threading
-    open System.Collections
     open System.Collections.Generic
     module AsyncHelper = 
         let FromBeginEndCancel beginAction endAction cancelAction =
@@ -107,7 +104,6 @@ module internal InternalStreams =
                 cancelAction  = (fun () -> 
                     while asyncResult.Value = null do Thread.Sleep 20
                     cancelAction(asyncResult.Value)))
-    open AsyncHelper
 
     type ConcurrentQueueMessage<'a> =
         | Enqueue of 'a * AsyncReplyChannel<exn option>
@@ -282,7 +278,7 @@ module internal InternalStreams =
                 member x.Read () = raise <| NotSupportedException ""
                 member x.Write input = raise <| NotSupportedException "" }
 
-        type StreamHelper(istream:IStream<byte array>) =
+        type StreamHelper(iStream:IStream<byte array>) =
             inherit Stream()
             let mutable cache = [||]
             let mutable currentIndex = 0
@@ -294,7 +290,7 @@ module internal InternalStreams =
                     else
                       async {
                         currentIndex <- 0
-                        let! data = istream.Read()
+                        let! data = iStream.Read()
                         return
                             match data with
                             | Some d -> d
@@ -312,7 +308,7 @@ module internal InternalStreams =
                 if count > 0 then
                     let newDst =
                          Array.sub dst offset count
-                    return! istream.Write newDst }
+                    return! iStream.Write newDst }
             let readOne () = async {
                 let dst = Array.zeroCreate 1
                 let! result = read dst 0 1
@@ -321,10 +317,10 @@ module internal InternalStreams =
                         None
                     else Some dst[0] }
                 
-            let writeOne b = istream.Write [|b|]
-            let beginRead, endRead, cancelRead = 
+            let writeOne b = iStream.Write [|b|]
+            let _beginWrite, _endWrite, cancelRead = 
                 Async.AsBeginEnd(fun (dst, offset, count) -> read dst offset count)
-            let beginWrite, endWrite, cancelWrite = 
+            let _beginWrite, _endWrite, cancelWrite = 
                 Async.AsBeginEnd(fun (src, offset, count) -> write src offset count)
                 
             let checkDisposed() =
@@ -336,9 +332,9 @@ module internal InternalStreams =
                 Async.StartAsTask(write dst offset count, cancellationToken = tok)
                 :> System.Threading.Tasks.Task
             override x.Flush () = ()        
-            override x.Seek(offset:int64, origin:SeekOrigin) =
+            override x.Seek(_offset:int64, _origin:SeekOrigin) =
                 raise <| NotSupportedException()        
-            override x.SetLength(value:int64) =
+            override x.SetLength(_value:int64) =
                 raise <| NotSupportedException()        
             //override x.BeginRead(dst, offset, count, callback, state) =
             //    beginRead((dst, offset, count), callback, state)        
@@ -383,34 +379,19 @@ module internal InternalStreams =
             override x.Position
                 with get() =
                     raise <| NotSupportedException()
-                and set value =            
+                and set _value =            
                     raise <| NotSupportedException()             
             override x.Dispose disposing =
                 if not isDisposed then
                     isDisposed <- true
                     if disposing then
-                        istream.Dispose()
+                        iStream.Dispose()
                 base.Dispose disposing
                     
-        let fromInterface istream = new StreamHelper(istream) :> Stream
+        let fromInterface iStream = new StreamHelper(iStream) :> Stream
         [<AutoOpen>]
         module StreamExtensions = 
             type Stream with
-                //member s.MyReadAsync(buffer:byte array,offset,count) =   
-                //    match s with
-                //    | :? StreamHelper as helper -> helper.ReadAsync(buffer, offset, count)
-                //    | _ ->
-                //        Async.FromBeginEnd(
-                //            (fun (callback, state) -> s.BeginRead(buffer, offset, count, callback, state)),
-                //            (fun result -> s.EndRead result))
-            
-                //member s.MyWriteAsync(buffer:byte array,offset,count) =
-                //    match s with
-                //    | :? StreamHelper as helper -> helper.WriteAsync(buffer, offset, count)
-                //    | _ ->
-                //        Async.FromBeginEnd(
-                //            (fun (callback, state) -> s.BeginWrite(buffer, offset, count, callback, state)),
-                //            (fun result -> s.EndWrite result))
                 member s.AsyncRead c = AsyncStreamHelper<_>.FromAdvancedRead (s.ReadAsync >> Async.AwaitTask) c
                 member s.AsyncRead (buffer, offset, count) = Async.AwaitTask(s.ReadAsync(buffer, offset, count))
                 member s.AsyncWrite (buffer, offset, count) = Async.AwaitTask(s.WriteAsync(buffer, offset, count))
@@ -431,9 +412,8 @@ module internal InternalStreams =
               interface IDisposable with
                 member x.Dispose () = dis () } |> toCancelAbleStream
         let fromReadWrite read write = fromReadWriteDispose id read write
-        open StreamExtensions
-        let toInterface buffersize (stream:Stream) = 
-            let buffer = Array.zeroCreate buffersize
+        let toInterface bufferSize (stream:Stream) = 
+            let buffer = Array.zeroCreate bufferSize
             let read () = async {
                 let! read = stream.ReadAsync(buffer, 0, buffer.Length)
                 let readData =
@@ -495,7 +475,7 @@ module internal InternalStreams =
         let createWriteOnlyPart onDispose (s:IStream<'a>) =
             { new IStream<'a> with
                 member x.Dispose () = onDispose()
-                member x.Read () = raise <| System.NotSupportedException "Read is not supported"
+                member x.Read () = raise <| NotSupportedException "Read is not supported"
                 member x.Write input = s.Write input }
 
         let buffer (stream:IStream<_>) =        
@@ -503,7 +483,7 @@ module internal InternalStreams =
             let write item = async {            
                 do! queue.Write item
                 do! stream.Write item }
-            fromReadWrite queue.Read (fun item -> invalidOp "Write is not allowed"),
+            fromReadWrite queue.Read (fun _item -> invalidOp "Write is not allowed"),
             fromReadWriteDispose stream.Dispose stream.Read write
 
         let combineReadAndWrite (s1:IStream<_>) (s2:IStream<_>) = 
@@ -541,7 +521,7 @@ module internal InternalStreams =
         let filterWrite f (s:IStream<_>) = 
             let write item = 
                 if f item then
-                    s.Write (item)
+                    s.Write item
                 else async.Return ()
             fromReadWriteDispose s.Dispose s.Read write
 
@@ -591,20 +571,20 @@ module internal InternalStreams =
 
         let redirect bufferLen (toStream:IStream<_>) (fromStream:IStream<_>) = 
             let closeRead = ref false 
-            let cts = new System.Threading.CancellationTokenSource()
+            let cts = new CancellationTokenSource()
             let ev = new ManualResetEvent(false)
             let regularFinish = new ManualResetEvent(false)
             let redirectRun =
                 async {
                     do! Async.SwitchToThreadPool()
                     try
-                        let buffer = Array.zeroCreate bufferLen
+                        let _buffer = Array.zeroCreate bufferLen
                         let streamFinished = ref false
                         while not closeRead.Value do
                             let! (read:Option<_>) = fromStream.Read()
                             closeRead.Value <-
                                 match read with
-                                | Some s -> false
+                                | Some _s -> false
                                 | None -> 
                                     streamFinished.Value <- true
                                     true
@@ -646,8 +626,8 @@ module internal InternalStreams =
             fun () -> iStream
         
         let getStandardOutput = 
-            let istream = defaultOutput |> toInterface 1024
-            fun () -> istream
+            let iStream = defaultOutput |> toInterface 1024
+            fun () -> iStream
         let getStandardError = 
-            let istream = defaultError |> toInterface 1024
-            fun () -> istream
+            let iStream = defaultError |> toInterface 1024
+            fun () -> iStream
