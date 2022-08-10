@@ -8,7 +8,7 @@ open Fake.Core
 
 [<Tests>]
 let tests =
-    testList "Fake.IO.FileIntegrationTests" [
+    testList "Fake.IO.File.IntegrationTests" [
         testCase "File.getVersion throws InvalidOperationException #2378" <| fun _ ->
           if Environment.isWindows then // On non-windows the API returns managed assembly info, see https://github.com/dotnet/corefx/blob/5fb98a118bb19a91e8ffb5c17ff5e7c00a4c05ee/src/System.Diagnostics.FileVersionInfo/src/System/Diagnostics/FileVersionInfo.Unix.cs#L20-L28
             let testFile = getTestFile "NoVersionTestFile.dll"

@@ -4,17 +4,12 @@ open System.Text.RegularExpressions
 open Expecto
 open Expecto.Flip
 open System
-open System
 open System.IO
-open System.Diagnostics
-open Newtonsoft.Json
 open Newtonsoft.Json.Linq
 open Fake.Core
 
 let fail s = Expect.isTrue s false
-let ignProc = ignore<Fake.Core.ProcessResult>
-
-
+let ignProc = ignore<ProcessResult>
 
 type Declaration =
     { File : string
@@ -23,11 +18,14 @@ type Declaration =
       ErrorDetail : string }
     static member Empty =
         { File = ""; Line = 0; Column = 1; ErrorDetail = ""}
+        
 /// a target dependency, either a hard or a soft dependency.
 type Dependency =
     { Name : string
       Declaration : Declaration }
-/// a FAKE target, its description and its relations to other targets (dependencies), including the declaration lines of the target and the dependencies.
+    
+/// a FAKE target, its description and its relations to other targets (dependencies), including the
+/// declaration lines of the target and the dependencies.
 type Target =
     { Name : string
       HardDependencies : Dependency list
@@ -65,7 +63,6 @@ let tests =
         let ss = Regex.Match (output.Result.Error, "FAKE [0-9]+ \- F# Make *")
         ss.Success |> Expect.isTrue "Expected version in stderror string" 
         Expect.stringContains "Expected Fake.Runtime.dll in stderror string" "Fake.Runtime.dll" output.Result.Error
-
 
     testCase "no dependencies hello world and casing #2314" <| fun _ ->
         let result =
@@ -147,44 +144,44 @@ let tests =
             let scriptFile = Path.Combine(tmpPath, "reference_fake-targets.fsx")
             let otherScriptFile = Path.Combine(tmpPath, "otherscript.fsx")
             let otherFileFile = Path.Combine(tmpPath, "otherfile.fs")
-            handleAndFormat <| fun ctx ->
+            handleAndFormat <| fun _ctx ->
                 directFake (sprintf "run --fsiargs \"--debug:portable --optimize-\" reference_fake-targets.fsx -- --write-info \"%s\"" tempFile) "core-reference-fake-core-targets" |> ignProc
             let json = File.ReadAllText tempFile
             let obj = JObject.Parse json
-            let targets = obj.["targets"] :?> JArray
+            let targets = obj["targets"] :?> JArray
             let parseDecl (t:JToken) =
-                { File = string t.["file"]; Line = int t.["line"]; Column = int t.["column"]; ErrorDetail = string t.["errorDetail"] }
+                { File = string t["file"]; Line = int t["line"]; Column = int t["column"]; ErrorDetail = string t["errorDetail"] }
             let parseDep (t:JToken) =
-                { Name = string t.["name"]; Declaration = parseDecl t.["declaration"] }
+                { Name = string t["name"]; Declaration = parseDecl t["declaration"] }
             let parseArray parseItem (a:JToken) =
                 (a :?> JArray)
                 |> Seq.map parseItem
                 |> Seq.toList
             let parseTarget (t:JToken) =
-                { Name = string t.["name"]; Declaration = parseDecl t.["declaration"]
-                  HardDependencies = parseArray parseDep t.["hardDependencies"]
-                  SoftDependencies = parseArray parseDep t.["softDependencies"]
-                  Description = string t.["description"] }
+                { Name = string t["name"]; Declaration = parseDecl t["declaration"]
+                  HardDependencies = parseArray parseDep t["hardDependencies"]
+                  SoftDependencies = parseArray parseDep t["softDependencies"]
+                  Description = string t["description"] }
 
             let dict =
                 targets |> Seq.map (fun t -> let t = parseTarget t in t.Name, t) |> dict
 
             Expect.equal "Expected correct number of targets" 4 dict.Count
 
-            let startTarget = dict.["Start"]
+            let startTarget = dict["Start"]
             Expect.equal "Expected correct declaration of 'Start'" { Declaration.Empty with File = scriptFile; Line = 36 } startTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'Start'" [] startTarget.HardDependencies
             Expect.equal "Expected correct soft dependencies of 'Start'" [] startTarget.SoftDependencies
             Expect.equal "Expected correct description of 'Start'" "Test description" startTarget.Description
-            let testTarget = dict.["TestTarget"]
+            let testTarget = dict["TestTarget"]
             Expect.equal "Expected correct declaration of 'TestTarget'" { Declaration.Empty with File = scriptFile; Line = 38 } testTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'TestTarget'" [ { Name = "Start"; Declaration = { Declaration.Empty with File = scriptFile; Line = 45 } } ] testTarget.HardDependencies
             Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
-            let scriptTarget = dict.["OtherScriptTarget"]
+            let scriptTarget = dict["OtherScriptTarget"]
             Expect.equal "Expected correct declaration of 'OtherScriptTarget'" { Declaration.Empty with File = otherScriptFile; Line = 4 } scriptTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherScriptTarget'" [ ] scriptTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherScriptTarget'" "" scriptTarget.Description
-            let fileTarget = dict.["OtherFileTarget"]
+            let fileTarget = dict["OtherFileTarget"]
             Expect.equal "Expected correct declaration of 'OtherFileTarget'" { Declaration.Empty with File = otherFileFile; Line = 7; Column = 5; } fileTarget.Declaration
             Expect.equal "Expected correct hard dependencies of 'OtherFileTarget'" [ ] fileTarget.HardDependencies
             Expect.equal "Expected correct description of 'OtherFileTarget'" "" fileTarget.Description
@@ -203,16 +200,16 @@ let tests =
 
         // Should tell FAKE error story
         let result =     
-            expectFailure "Expected missing entrypoint error" <| fun ctx ->
-                directFake (sprintf "run build.fsx -t FailWithMissingEntry") "i002007-native-libs" |> ignProc
+            expectFailure "Expected missing entrypoint error" <| fun _ctx ->
+                directFake "run build.fsx -t FailWithMissingEntry" "i002007-native-libs" |> ignProc
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
         (stdErr.Contains "Fake_ShouldNotExistExtryPoint" && stdErr.Contains "EntryPointNotFoundException:")
             |> Expect.isTrue (sprintf "Standard Error Output should contain 'Fake_ShouldNotExistExtryPoint' and 'EntryPointNotFoundException:', but was: '%s', Out: '%s'" stdErr stdOut)
         
         let result =     
-            expectFailure "Expected missing entrypoint error" <| fun ctx  ->
-                directFake (sprintf "run build.fsx -t FailWithUnknown") "i002007-native-libs" |> ignProc
+            expectFailure "Expected missing entrypoint error" <| fun _ctx  ->
+                directFake "run build.fsx -t FailWithUnknown" "i002007-native-libs" |> ignProc
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
         (stdErr.Contains "unknown_dependency.dll" && stdErr.Contains "DllNotFoundException:")

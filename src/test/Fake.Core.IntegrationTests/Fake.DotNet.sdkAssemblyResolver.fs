@@ -1,6 +1,5 @@
 ﻿module Fake.DotNet.sdkAssemblyResolverTests
 
-open System.Text.RegularExpressions
 open Fake.IO
 open Fake.DotNet
 open System
@@ -151,7 +150,7 @@ let tests =
                   (sprintf "stdout should contain path like '%s', but was: '%s'" expectedNet6PathPortion stdOut)
                   |> Expect.isTrue (stdOut.Contains expectedNet6PathPortion)
 
-                  (sprintf "stdout should contain a message that cache file is used in runtime version resolution")
+                  "stdout should contain a message that cache file is used in runtime version resolution"
                   |> Expect.isTrue (stdOut.Contains expectedCacheFileResolutionMessage)
               finally
                   // clean up after the test run

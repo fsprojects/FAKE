@@ -5,8 +5,6 @@ open System
 
 open Fake.Core
 open Fake.Core.CommandLineParsing
-open System
-open System.Diagnostics
 open Expecto
 open Expecto.Flip
 
@@ -53,7 +51,7 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 let tests = 
   testList "Fake.Core.CommandLineParsing.Tests" [
 
-    testCase ("ArgumentPosition -> Next") <| fun _ ->
+    testCase "ArgumentPosition -> Next" <| fun _ ->
       let pos = ArgumentStreamPosition.ShortArgumentPartialPos(0, 1)
       
       pos.NextArg [|"-a"; "-r"; "-m"; "Hello"|]
@@ -122,7 +120,7 @@ Fake Build Options [build_opts]:
       "-vv run testbuild.fsx --fsiargs --define:BOOTSTRAP --target PrintColors"
         ->= ["-v", Flags 2; "--verbose", Flags 2;"run", Flag;"<script.fsx>", Argument "testbuild.fsx"; "<scriptargs>", Arguments ["--fsiargs";"--define:BOOTSTRAP";"--target"; "PrintColors"]]
     )
-    testCase ("Test option section parser fake-run (targets)") <| fun _ ->
+    testCase "Test option section parser fake-run (targets)" <| fun _ ->
       printfn "Starting test '%s'" "Test option section parser fake-run (targets)"
       let testString = """
 Usage:
@@ -139,7 +137,7 @@ Target Module Options [target_opts]:
     -s, --singletarget    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
           """
-      let usage, optSections = DocHelper.cut testString
+      let _usage, optSections = DocHelper.cut testString
 
       let titles = optSections |> Seq.map (fun s -> s.Title) |> Seq.toList
       Expect.equal "Titles" ["target_opts"] titles
@@ -148,14 +146,14 @@ Target Module Options [target_opts]:
         optSections
         |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
         |> dict
-      let section = sectionsParsers.["target_opts"]
+      let section = sectionsParsers["target_opts"]
       let envVar = section.Find('e')
       Expect.isSome "Expected to find -e" envVar
       Expect.isTrue "Expected to have allowMultiple" envVar.Value.AllowMultiple
       Expect.isFalse "Expected to be not required" envVar.Value.IsRequired
 
 
-    testCase ("Test option section parser fake") <| fun _ ->
+    testCase "Test option section parser fake" <| fun _ ->
       printfn "Starting test '%s'" "Test option section parser fake"
       let testString = """
 Usage:
@@ -183,7 +181,7 @@ Fake Build Options [build_opts]:
   -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
           """
-      let usage, optSections = DocHelper.cut testString
+      let _usage, optSections = DocHelper.cut testString
 
       let titles = optSections |> Seq.map (fun s -> s.Title) |> Seq.toList
       Expect.equal "Titles" ["fake_opts";"run_opts";"build_opts"] titles
@@ -192,13 +190,13 @@ Fake Build Options [build_opts]:
         optSections
         |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
         |> dict
-      let section = sectionsParsers.["fake_opts"]
+      let section = sectionsParsers["fake_opts"]
       let verbose = section.Find('v')
       Expect.isSome "Expected to find -v" verbose
       Expect.isTrue "Expected to have allowMultiple" verbose.Value.AllowMultiple
       Expect.isFalse "Expected to be not required" verbose.Value.IsRequired
       Expect.isFalse "Expected to have no argument" verbose.Value.HasArgument
-      let section = sectionsParsers.["run_opts"]
+      let section = sectionsParsers["run_opts"]
       let fsiArgs = section.Find("fsiargs")
       Expect.isSome "Expected to find --fsiargs" fsiArgs
       Expect.isTrue "Expected to have allowMultiple" fsiArgs.Value.AllowMultiple
@@ -234,7 +232,7 @@ Target Module Options [target_opts]:
         ->= ["-e", Arguments ["key=val"; "key2=val2"]; "--environmentvariable", Arguments ["key=val"; "key2=val2"]; "<targetargs>", Argument "--test"]
     )
 
-    testCase ("Test Option parser") <| fun _ ->
+    testCase "Test Option parser" <| fun _ ->
       printfn "Starting test '%s'" "Test Option parser"
       let testString = """
 Usage:
@@ -260,12 +258,12 @@ Fake Build Options [build_opts]:
   -f <script.fsx>, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
           """
-      let usage, optSections = DocHelper.cut testString
+      let _usage, optSections = DocHelper.cut testString
 
       let titles = optSections |> Seq.map (fun s -> s.Title) |> Seq.toList
       Expect.equal "Titles" ["fake_opts"; "run_opts"; "build_opts"] titles
 
-      let sectionsParsers =
+      let _sectionsParsers =
         optSections
         |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
         |> dict

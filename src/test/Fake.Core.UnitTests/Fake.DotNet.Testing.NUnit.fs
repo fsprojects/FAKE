@@ -48,7 +48,7 @@ let tests =
         |> ArgumentHelper.checkIfMono
       Expect.equal file "mynunit.exe" "Expected mynunit.exe"
       Expect.equal (args |> Arguments.toArray).Length 1 "expected a single argument"
-      Expect.equal (args |> Arguments.toArray).[0] "@some path/with spaces.txt"
+      Expect.equal (args |> Arguments.toArray).[0] "@some path/with spaces.txt" "expected to support file paths with spaces"
       let argFile = (args |> Arguments.toArray).[0].Substring(1)
       
       ( use state = cp.Hook.PrepareState()

@@ -187,10 +187,10 @@ let tests =
 
         Target.create "Default" DoNothing
 
-        "CleanUp"
-            ==> "RunUnitTests"
-            ==> "RunAlltests"
-            ==> "Default"
+        ("CleanUp"
+             ==> "RunUnitTests"
+             ==> "RunAlltests"
+             ==> "Default") |> ignore
 
         [ "CleanUp";
           "RunUnitTests";

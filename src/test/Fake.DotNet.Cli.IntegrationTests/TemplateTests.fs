@@ -34,7 +34,7 @@ let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
 let inline opts () = DotNet.Options.lift dotnetSdk.Value
 
-let inline dtntWorkDir wd =
+let inline dotnetWorkingDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
 
@@ -57,7 +57,7 @@ let runTemplate rootDir kind dependencies dsl =
     Directory.ensure rootDir
     try
         let result =
-            DotNet.exec (dtntWorkDir rootDir >> redirect()) "new" $"{templateName} --allow-scripts yes --bootstrap {string kind} --dependencies {string dependencies} --dsl {string dsl}"
+            DotNet.exec (dotnetWorkingDir rootDir >> redirect()) "new" $"{templateName} --allow-scripts yes --bootstrap {string kind} --dependencies {string dependencies} --dsl {string dsl}"
 
         let errors =
             result.Results
@@ -135,7 +135,7 @@ let setupTemplate() =
 [<Tests>]
 let tests =
     // we need to (uninstall) the template, install the packed version, and then execute that template
-    testList "Fake.DotNet.Cli.IntegrationTests.Template tests" [
+    testList "Fake.DotNet.Cli.IntegrationTests.TemplateTests" [
         testList "can install and run the template" [
             setupTemplate()
 
@@ -205,7 +205,7 @@ let tests =
                 invokeScript tempDir scriptFile "build -t All" |> isProcessSucceeded "should build successfully"
             }
 
-            /// ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
+            // ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
             yield ptest "can install a tool-style template" {
                 let tempDir = tempDir()
                 runTemplate tempDir Tool File Fake

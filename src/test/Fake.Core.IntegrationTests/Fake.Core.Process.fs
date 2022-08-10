@@ -2,13 +2,11 @@ module Fake.Core.ProcessIntegrationTests
 
 open Fake.IO
 open Fake.Core
-open Fake.DotNet
 open System.IO
 open Expecto
 open Fake.Core.IntegrationTests.TestHelpers
-open System.Diagnostics
 
-let dllPath = System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
+let dllPath = Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
 
 let runProjectRaw noBuild proj args =
     [
@@ -42,8 +40,6 @@ let runCmdOrShRaw cmdArgs shArgs =
     args
     |> Args.fromWindowsCommandLine |> Seq.toList
     |> CreateProcess.fromRawCommand shell
-    //|> CreateProcess.withEnvironment (options.Environment |> Map.toList)
-    //|> CreateProcess.withWorkingDirectory options.WorkingDirectory
 
 let runCmdOrSh f cmdArgs shArgs =
     runCmdOrShRaw cmdArgs shArgs
@@ -57,7 +53,7 @@ let runEcho f text = runEchoRaw text |> f |> Proc.run
 
 let redirectNormal = CreateProcess.redirectOutput
 let redirectAdvanced c =
-    let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
+    let results = System.Collections.Generic.List<ConsoleMessage>()
     let errorF msg =
         results.Add (ConsoleMessage.CreateError msg)
 
@@ -89,13 +85,13 @@ let runs = 10
 let tests =
     // warm-up and build
     runTestTool false redirectNormal "StandardOutputErrorTool" "" |> ignore
-    let mem = new System.IO.MemoryStream()
+    let mem = new MemoryStream()
     runTestToolRaw false "TeeTool" ""
         |> CreateProcess.withStandardInput (UseStream(false, mem)) 
         |> Proc.run
         |> ignore
 
-    testList "Fake.Core.ProcessIntegrationTests" [
+    testList "Fake.Core.Process.IntegrationTests" [
         redirectTestCases (runs / 10) "Make sure process with lots of output and error doesn't hang - #2401" <| fun run redirect ->
             
             let r = runTestTool true redirect "StandardOutputErrorTool" ""
@@ -126,7 +122,7 @@ let tests =
                 runTestToolRaw true "TeeTool" ""
                 |> CreateProcess.withStandardInput (CreatePipe input)
                 |> Proc.start
-            let p2 =
+            let _p2 =
                 runEchoRaw "can not pipe output"
                 |> CreateProcess.withStandardOutput (UseStream (true, input.Value))
                 |> Proc.run

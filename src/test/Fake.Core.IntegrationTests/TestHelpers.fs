@@ -15,7 +15,7 @@ open Microsoft.FSharp.Collections
 
 type TestDir =
     { Dir : string }
-    interface System.IDisposable with
+    interface IDisposable with
         member x.Dispose() =
             try
                 Directory.Delete(x.Dir, true)
@@ -26,9 +26,9 @@ type TestDir =
 let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
 let runDotNetRaw args =
-    let options = dotnetSdk.Value (Fake.DotNet.DotNet.Options.Create())
+    let options = dotnetSdk.Value (DotNet.Options.Create())
 
-    let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+    let dir = Path.GetDirectoryName options.DotNetCliPath
     let oldPath =
         options
         |> Process.getEnvironmentVariable "PATH"
@@ -38,7 +38,7 @@ let runDotNetRaw args =
     |> CreateProcess.withEnvironment (options.Environment |> Map.toList)
     |> CreateProcess.setEnvironmentVariable "PATH" (
         match oldPath with
-        | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+        | Some oldPath -> sprintf "%s%c%s" dir Path.PathSeparator oldPath
         | None -> dir)
     |> CreateProcess.withWorkingDirectory options.WorkingDirectory
 
@@ -48,10 +48,10 @@ let createTestDir () =
         |> ignore<DirectoryInfo>
     { Dir = testFile }
 
-let testDirLocation = System.IO.Path.GetDirectoryName (typeof<TestDir>.Assembly.Location)
+let testDirLocation = Path.GetDirectoryName (typeof<TestDir>.Assembly.Location)
 
 let createTestDirInCurrent () =
-    let folder = testDirLocation </> ((Guid.NewGuid ()).ToString())
+    let folder = testDirLocation </> (Guid.NewGuid ()).ToString()
     Directory.CreateDirectory folder 
         |> ignore<DirectoryInfo>
     { Dir = folder }

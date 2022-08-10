@@ -15,8 +15,6 @@ let main argv =
 
     Tests.runTestsInAssembly
         { config with
-              runInParallel = false
-              parallelWorkers = 0
               printer = ExpectoHelpers.fakeDefaultPrinter
               verbosity = LogLevel.Debug }
         argv

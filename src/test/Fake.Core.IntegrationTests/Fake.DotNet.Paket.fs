@@ -3,13 +3,12 @@
 open Fake.IO
 open Fake.Core
 open Fake.Core.IntegrationTests.TestHelpers
-open Fake.DotNet
 open System.IO
 open Expecto
 
 [<Tests>]
 let tests =
-    testList "Fake.DotNet.PaketIntegrationTests" [
+    testList "Fake.DotNet.Paket.IntegrationTests" [
         testCase "findPaketExecutable works for global tools - #2361" <| fun _ ->
             use dir = createTestDir()
             let folder = dir.Dir
@@ -23,7 +22,7 @@ let tests =
             File.WriteAllText(testFile, "test")
 
 
-            let result = Fake.DotNet.Paket.findPaketExecutable dir.Dir
+            let result = Paket.findPaketExecutable dir.Dir
             let expected = Path.combine folder (if Environment.isWindows then ".paket/paket.EXE" else ".paket/paket") |> Path.getFullName
             Expect.equal result expected "Expected proper file path"
     ]

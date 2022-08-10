@@ -10,7 +10,7 @@ let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
 let inline opts () = DotNet.Options.lift dotnetSdk.Value
 
-let inline dtntWorkDir wd =
+let inline dotnetWorkingDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
     >> DotNet.Options.withRedirectOutput true
@@ -29,20 +29,13 @@ let simplePropertyTest propValue =
         }
     let setParams (p:DotNet.MSBuildOptions) =
         p.WithMSBuildParams setMSBuildParams
-        |> dtntWorkDir dllPath
+        |> dotnetWorkingDir dllPath
 
 
     match DotNet.msbuildWithResult setParams "testdata/testProperty.proj" with
     | Choice1Of2 result ->
         let lines = String.Join("\n", result.Results |> Seq.map (fun r -> r.Message))
         Expect.stringContains lines (sprintf "$Property1: '%s'" propValue) "Expected to find property value in msbuild output"
-
-        // This happens on xbuild?
-        //if Environment.isWindows then
-        //else
-        //    // TODO: Report me as msbuild bug?
-        //    let fixedPropValue = propValue.Replace("\\", "/")
-        //    Expect.stringContains lines (sprintf "$Property1: '%s'" fixedPropValue) "Expected to find property value in msbuild output"
         Expect.stringContains lines "$Property2: ''" "Expected to find empty Property2"
     | Choice2Of2 (e, result) ->
         let lines = String.Join("\n", result.Results |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message))
@@ -62,7 +55,7 @@ let simplPathTest pathCased propValue =
         }
     let setParams (p:DotNet.MSBuildOptions) =
         p.WithMSBuildParams setMSBuildParams
-        |> dtntWorkDir dllPath
+        |> dotnetWorkingDir dllPath
         |> Process.setEnvironmentVariable pathCased propValue
 
     let expected propValue =
