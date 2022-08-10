@@ -3,19 +3,25 @@ namespace Fake.Net
 open System
 open Fake.Core
 
-[<RequireQualifiedAccess>]
 /// Contains a task which allows to perform SSH operations
+[<RequireQualifiedAccess>]
 module SSH = 
 
     /// The SSH parameter type.
     type SSHParams = 
         { /// Path of the scp.exe 
           ToolPath : string
+          
           /// Path of the private key file (optional)
-          PrivateKeyPath : string 
+          PrivateKeyPath : string
+          
           /// remote User
           RemoteUser : string
+          
+          /// The remote host
           RemoteHost : string
+          
+          /// The remote host port to use
           RemotePort : string
           }
 
@@ -43,7 +49,6 @@ module SSH =
 
     /// Performs a command via SSH.
     /// ## Parameters
-    ///
     ///  - `setParams` - Function used to manipulate the default SSHParams value.
     ///  - `command` - The target path. Can be something like user@host:directory/TargetFile or a local path.
     ///
