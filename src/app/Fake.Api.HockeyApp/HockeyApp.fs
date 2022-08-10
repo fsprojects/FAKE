@@ -1,7 +1,9 @@
 namespace Fake.Api
 
+open System.Collections.Generic
 open System.Net.Http
 
+open Microsoft.FSharp.Collections
 open Microsoft.FSharp.Core
 open System
 open System.IO
@@ -301,11 +303,20 @@ module HockeyApp =
         p
         |> toCurlArgs
         |> fun args ->
-            Process.execWithResult (fun p ->
-            { p with
-                FileName = "curl"
-                Arguments = (String.concat " " args)
-            }) p.UploadTimeout
+            let results = List<ConsoleMessage>()
+
+            let errorF msg = results.Add (ConsoleMessage.CreateError msg)
+
+            let messageF msg = results.Add (ConsoleMessage.CreateOut msg)
+
+            let processOutput =
+                CreateProcess.fromRawCommandLine "curl" (String.concat " " args)
+                |> CreateProcess.withTimeout p.UploadTimeout
+                |> CreateProcess.redirectOutput
+                |> CreateProcess.withOutputEventsNotNull messageF errorF
+                |> Proc.run
+            
+            ProcessResult.New processOutput.ExitCode (results |> List.ofSeq)
         |> fun response ->
             let error = sprintf "Error while posting to HockeyApp.%sMessages: %s%sErrors: %s%s" nl (String.concat "; " response.Messages) nl (String.concat "; " response.Errors) nl
             match response.ExitCode with
