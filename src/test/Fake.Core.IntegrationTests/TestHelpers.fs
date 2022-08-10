@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
 module Fake.Core.IntegrationTests.TestHelpers
 
+open System.Collections.Generic
 open Fake.Core
 open Fake.DotNet
 open Fake.IO
@@ -10,6 +11,7 @@ open System.Linq
 open Expecto
 open Expecto.Flip
 open System.IO
+open Microsoft.FSharp.Collections
 
 type TestDir =
     { Dir : string }
@@ -96,17 +98,27 @@ let prepare scenario =
         not isFakeTmp && not isLockFile)
 
 let directFakeInPath command workingDir target =
-    let result =
-        Process.execWithResult (fun (info:ProcStartInfo) ->
-          { info with
-                FileName = fakeToolPath
-                WorkingDirectory = workingDir
-                Arguments = command }
-          |> Process.setEnvironmentVariable "target" target
-          |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true") (System.TimeSpan.FromMinutes 15.)
-    if result.ExitCode <> 0 then
-        raise <| FakeExecutionFailed(result)
-    result
+    let results = List<ConsoleMessage>()
+
+    let errorF msg = results.Add (ConsoleMessage.CreateError msg)
+
+    let messageF msg = results.Add (ConsoleMessage.CreateOut msg)
+
+    let processOutput =
+        CreateProcess.fromRawCommandLine fakeToolPath command
+        |> CreateProcess.withTimeout (TimeSpan.FromMinutes 15.)
+        |> CreateProcess.withWorkingDirectory workingDir
+        |> CreateProcess.setEnvironmentVariable "target" target
+        |> CreateProcess.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
+        |> CreateProcess.redirectOutput
+        |> CreateProcess.withOutputEventsNotNull messageF errorF
+        |> Proc.run
+    
+    let processResult = ProcessResult.New processOutput.ExitCode (results |> List.ofSeq)
+    
+    if processOutput.ExitCode <> 0 then
+        raise <| FakeExecutionFailed(processResult)
+    processResult
 
 type Ctx = 
     { FakeFlags: string}

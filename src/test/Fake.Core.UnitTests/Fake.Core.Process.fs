@@ -22,7 +22,7 @@ let getRawCommandLine (c:CreateProcess<'a>) =
                     return System.Threading.Tasks.Task.FromResult { RawExitCode = 0 }
                 } }
         
-    Process.Proc.startRaw starter c
+    let startRaw = Process.Proc.startRaw starter c
     match result with
     | Some args -> args
     | None -> failwithf "Expected to retrieve arguments"
@@ -41,11 +41,9 @@ let tests =
 
     yield testCaseWithProcessTracing "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
         try
-            Process.start(fun proc ->
-                { proc with
-                    FileName = "FileDoesntExist.exe"
-                    Arguments = "arg1 arg2" })
-                |> ignore
+            CreateProcess.fromRawCommand "FileDoesntExist.exe" ["arg1"; "arg2"]
+            |> Proc.run
+            |> ignore
             Expect.isTrue false "Expected an exception"
         with e ->
             let s = e.Message.Contains "FileDoesntExist.exe"
@@ -71,15 +69,22 @@ let tests =
                 "cmd", "/C \"echo 1&& echo 2\""
             else
                 "sh", "-c \"echo '1'; echo '2'\""
-        let result =
-            Process.execWithResult(fun proc ->
-                    { proc with
-                        FileName = shell
-                        Arguments = command }) (TimeSpan.FromMinutes 1.)
+        
+        let results = System.Collections.Generic.List<string>()
+
+        let errorF _ = ignore ""
+
+        let messageF msg = results.Add msg
+
+        CreateProcess.fromRawCommandLine shell command
+        |> CreateProcess.withTimeout (TimeSpan.FromMinutes 1.)
+        |> CreateProcess.redirectOutput
+        |> CreateProcess.withOutputEventsNotNull messageF errorF
+        |> Proc.run
+        |> ignore
       
-        Expect.equal result.Messages ["1"; "2"] 
-            (sprintf "Messages are not read correctly.\n%s"
-                result.ReportString)
+        Expect.equal (results |> List.ofSeq) ["1"; "2"] 
+            (sprintf "Messages are not read correctly.\n%s" (String.Join(" ", results)))
 
     yield testCase "Test that Arguments.withPrefix works" <| fun _ ->
         let args = Arguments.ofList [ "Some" ]
