@@ -117,7 +117,7 @@ module Kudu =
             CreateProcess.fromRawCommandLine (Path.Combine(kuduPath.FullName, "kudusync.cmd")) args
             |> CreateProcess.withTimeout (TimeSpan.FromMinutes 5.)
             |> CreateProcess.redirectOutput
-            |> CreateProcess.withOutputEventsNotNull errorF messageF
+            |> CreateProcess.withOutputEventsNotNull messageF errorF
             |> Proc.run
 
         results

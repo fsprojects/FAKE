@@ -503,7 +503,7 @@ module NuGet =
                 |> CreateProcess.withFramework
                 |> CreateProcess.withWorkingDirectory (Path.getFullName parameters.WorkingDir)
                 |> CreateProcess.redirectOutput
-                |> CreateProcess.withOutputEventsNotNull errorF messageF
+                |> CreateProcess.withOutputEventsNotNull messageF errorF
                 |> Proc.run
 
             if processResult.ExitCode <> 0 || errorResults.Count > 0 then

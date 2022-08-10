@@ -29,7 +29,7 @@ module Xamarin =
             CreateProcess.fromRawCommandLine command args
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.redirectOutput
-            |> CreateProcess.withOutputEventsNotNull errorF messageF
+            |> CreateProcess.withOutputEventsNotNull messageF errorF
             |> Proc.run
 
         results

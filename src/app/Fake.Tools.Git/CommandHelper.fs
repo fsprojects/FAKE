@@ -62,7 +62,7 @@ module CommandHelper =
             CreateProcess.fromRawCommandLine gitPath command
             |> CreateProcess.withTimeout gitTimeOut
             |> CreateProcess.redirectOutput
-            |> CreateProcess.withOutputEventsNotNull errorF messageF
+            |> CreateProcess.withOutputEventsNotNull messageF errorF
             |> CreateProcess.withWorkingDirectory repositoryDir
             |> Proc.run
 

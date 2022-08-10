@@ -356,7 +356,7 @@ module Fsi =
                 |> CreateProcess.withWorkingDirectory parameters.WorkingDirectory
                 |> CreateProcess.withTimeout TimeSpan.MaxValue
                 |> CreateProcess.redirectOutput
-                |> CreateProcess.withOutputEventsNotNull errorF messageF
+                |> CreateProcess.withOutputEventsNotNull messageF errorF
                 |> Proc.run
 
             if processResult.ExitCode <> 0 then

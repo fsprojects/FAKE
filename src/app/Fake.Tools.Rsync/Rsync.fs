@@ -431,7 +431,7 @@ module Rsync =
             |> CreateProcess.withWorkingDirectory options.WorkingDirectory
             |> CreateProcess.withTimeout timeout
             |> CreateProcess.redirectOutput
-            |> CreateProcess.withOutputEventsNotNull errorF messageF
+            |> CreateProcess.withOutputEventsNotNull messageF errorF
             |> Proc.run
 
         ProcessResult.New processResult.ExitCode (results |> List.ofSeq)

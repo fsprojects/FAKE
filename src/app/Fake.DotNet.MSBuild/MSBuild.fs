@@ -827,7 +827,7 @@ module MSBuild =
         |> CreateProcess.withTimeout TimeSpan.MaxValue
         |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
         |> CreateProcess.redirectOutput
-        |> CreateProcess.withOutputEventsNotNull errorF messageF
+        |> CreateProcess.withOutputEventsNotNull messageF errorF
         |> Proc.run
 
     if processResult.ExitCode <> 0 then
@@ -868,7 +868,7 @@ module MSBuild =
         |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
         |> CreateProcess.withWorkingDirectory msBuildParams.WorkingDirectory
         |> CreateProcess.redirectOutput
-        |> CreateProcess.withOutputEventsNotNull errorF messageF
+        |> CreateProcess.withOutputEventsNotNull messageF errorF
         |> Proc.run
 
     try

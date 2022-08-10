@@ -63,7 +63,7 @@ module Parallel =
                 |> CreateProcess.withTimeout parameters.TimeOut
                 |> CreateProcess.withFramework
                 |> CreateProcess.redirectOutput
-                |> CreateProcess.withOutputEventsNotNull errorF messageF
+                |> CreateProcess.withOutputEventsNotNull messageF errorF
                 |> Proc.run
 
             stopwatch.Stop()
