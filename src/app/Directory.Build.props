@@ -13,7 +13,6 @@
         <PackageLicenseExpression>Apache-2.0 OR MS-PL</PackageLicenseExpression>
         <PackageTags>build;fake;f#</PackageTags>
         <Authors>Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich</Authors>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <SourceLinkCreate>false</SourceLinkCreate>
     </PropertyGroup>
 </Project>

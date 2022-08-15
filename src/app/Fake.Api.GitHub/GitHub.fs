@@ -7,11 +7,12 @@ open System.Net
 open System.Net.Http
 open System.IO
 
-/// Contains tasks to interact with [GitHub](https://github.com/) releases
-///
-/// ### Sample
-///
-///        Target.create "GitHubRelease" (fun _ ->
+/// <summary>
+/// Contains tasks to interact with GitHub releases
+/// </summary>
+/// <example>
+/// <code lang="fsharp">
+///         Target.create "GitHubRelease" (fun _ ->
 ///            let token =
 ///                match Environment.environVarOrDefault "github_token" "" with
 ///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
@@ -22,11 +23,12 @@ open System.IO
 ///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
 ///
 ///            GitHub.createClientWithToken token
-///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &lt;&gt; None) release.Notes
 ///            |> GitHub.uploadFiles files
 ///            |> GitHub.publishDraft
 ///            |> Async.RunSynchronously)
-///
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module GitHub =
 
@@ -103,11 +105,13 @@ module GitHub =
                 return captureAndReraise ex
         }
 
+    /// <summary>
     /// Creates a GitHub API v3 client using the specified credentials
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `user` - The user name
-    /// - `password` - The user password
+    /// <param name="user">The user name</param>
+    /// <param name="password">The user password</param>
+    /// <returns></returns>
     let createClient (user:string) (password:string) =
         async {
             let httpClient = createHttpClient()
@@ -118,10 +122,11 @@ module GitHub =
             return github
         }
 
+    /// <summary>
     /// Creates a GitHub API v3 client using the specified token
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `token` - The authentication token
+    /// <param name="token">The authentication token</param>
     let createClientWithToken (token:string) =
         async {
             let httpClient = createHttpClient()
@@ -132,11 +137,12 @@ module GitHub =
             return github
         }
 
+    /// <summary>
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials
-    ///
-    /// ## Parameters
-    /// - `user` - The user name
-    /// - `password` - The user password
+    /// </summary>
+    /// 
+    /// <param name="user">The user name</param>
+    /// <param name="password">The user password</param>
     let createGHEClient url (user:string) (password:string) =
         async {
             let credentials = Credentials(user, password)
@@ -148,11 +154,12 @@ module GitHub =
             return github
         }
 
+    /// <summary>
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `url` - The GitHub enterprise server URL
-    /// - `token` - The authentication token
+    /// <param name="url">The GitHub enterprise server URL</param>
+    /// <param name="token">The authentication token</param>
     let createGHEClientWithToken url (token:string) =
         async {
             let credentials = Credentials(token)
@@ -164,13 +171,15 @@ module GitHub =
             return github
         }
 
+    /// <summary>
     /// Creates a GitHub Release for the specified repository and tag name
-    /// ## Parameters
-    /// - `owner` - the repository's owner
-    /// - `repoName` - the repository's name
-    /// - `tagName` - the name of the tag to use for this release
-    /// - `setParams` - function used to override the default release parameters
-    /// - `client` - GitHub API v3 client
+    /// </summary>
+    ///
+    /// <param name="owner">The repository's owner</param>
+    /// <param name="repoName">The repository's name</param>
+    /// <param name="tagName">The name of the tag to use for this release</param>
+    /// <param name="setParams">Function used to override the default release parameters</param>
+    /// <param name="client">GitHub API v3 client</param>
     let createRelease owner repoName tagName setParams (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
             let p =
@@ -200,14 +209,16 @@ module GitHub =
                 Release = release }
         }
 
+    /// <summary>
     /// Creates a draft GitHub Release for the specified repository and tag name
-    /// ## Parameters
-    /// - `owner` - the repository's owner
-    /// - `repoName` - the repository's name
-    /// - `tagName` - the name of the tag to use for this release
-    /// - `prerelease` - indicates whether the release will be created as a prerelease
-    /// - `notes` - collection of release notes that will be inserted into the body of the release
-    /// - `client` - GitHub API v3 client
+    /// </summary>
+    ///
+    /// <param name="owner">The repository's owner</param>
+    /// <param name="repoName">The repository's name</param>
+    /// <param name="tagName">The name of the tag to use for this release</param>
+    /// <param name="prerelease">Indicates whether the release will be created as a prerelease</param>
+    /// <param name="notes">Collection of release notes that will be inserted into the body of the release</param>
+    /// <param name="client">GitHub API v3 client</param>
     let draftNewRelease owner repoName tagName prerelease (notes : seq<string>) client =
         let setParams p =
             { p with
@@ -215,11 +226,12 @@ module GitHub =
                 Prerelease = prerelease }
         createRelease owner repoName tagName setParams client
 
+    /// <summary>
     /// Uploads and attaches the specified file to the specified release
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `fileName` - The name of the file to upload
-    /// - `release` - The release to create
+    /// <param name="fileName">The name of the file to upload</param>
+    /// <param name="release">The release to create</param>
     let uploadFile fileName (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let fi = FileInfo(fileName)
@@ -240,11 +252,12 @@ module GitHub =
             return release'
         }
 
+    /// <summary>
     /// Uploads and attaches the specified files to the specified release
-    ///
-    /// ## Parameters
-    /// - `fileNames` - The list of files names to upload
-    /// - `release` - The release to create
+    /// </summary>
+    /// 
+    /// <param name="fileNames">The list of files names to upload</param>
+    /// <param name="release">The release to create</param>
     let uploadFiles fileNames (release : Async<Release>) = async {
         let! release' = release
         let releaseW = async { return release' }
@@ -252,10 +265,11 @@ module GitHub =
         return release'
     }
 
+    /// <summary>
     /// Publishes the specified release by removing its draft status
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `release` - The release to publish
+    /// <param name="release">The release to publish</param>
     let publishDraft (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let update = release'.Release.ToUpdate()
@@ -264,12 +278,13 @@ module GitHub =
             printfn "Published release %d on GitHub" released.Id
         }
 
+    /// <summary>
     /// Gets the latest release for the specified repository
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `owner` - The owner of the repository - GitHub handle
-    /// - `repoName` - The repository name
-    /// - `client` - The GitHub client to use for communication
+    /// <param name="owner">The owner of the repository - GitHub handle</param>
+    /// <param name="repoName">The repository name</param>
+    /// <param name="client">The GitHub client to use for communication</param>
     let getLastRelease owner repoName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
             let! release = Async.AwaitTask <| client'.Repository.Release.GetLatest(owner, repoName)
@@ -285,13 +300,14 @@ module GitHub =
                 Release = release }
         }
 
+    /// <summary>
     /// Gets release with the specified tag for the specified repository
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `owner` - The owner of the repository - GitHub handle
-    /// - `repoName` - The repository name
-    /// - `tagName` - The tag to retrieve release for
-    /// - `client` - The GitHub client to use for communication
+    /// <param name="owner">The owner of the repository - GitHub handle</param>
+    /// <param name="repoName">The repository name</param>
+    /// <param name="tagName">The tag to retrieve release for</param>
+    /// <param name="client">The GitHub client to use for communication</param>
     let getReleaseByTag (owner:string) repoName tagName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
             let! releases = client'.Repository.Release.GetAll(owner, repoName) |> Async.AwaitTask
@@ -313,12 +329,13 @@ module GitHub =
                 Release = release }
         }
 
+    /// <summary>
     /// Downloads the asset with the specified id to the specified destination
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `id` - The id of the asset to download
-    /// - `destination` - The download destination
-    /// - `release` - The release to act upon
+    /// <param name="id">The id of the asset to download</param>
+    /// <param name="destination">The download destination</param>
+    /// <param name="release">The release to act upon</param>
     let downloadAsset id destination (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let! asset = Async.AwaitTask <| release'.Client.Repository.Release.GetAsset(release'.Owner,release'.RepoName,id)
@@ -332,11 +349,12 @@ module GitHub =
             printfn "Downloaded %s" filename
         }
 
+    /// <summary>
     /// Downloads all assets for the specified release to the specified destination
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `destination` - The download destination
-    /// - `release` - The release to act upon
+    /// <param name="destination">The download destination</param>
+    /// <param name="release">The release to act upon</param>
     let downloadAssets destination (release : Async<Release>) = async {
         let! release' = release
         let releaseW = async { return release' }
