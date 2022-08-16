@@ -1,6 +1,7 @@
 # Sending Notifications to a Slack Webhook
 
-In this article you will learn how to create a [Slack](https://slack.com) webhook integration and send a notification to it. This article assumes that you already have a Slack team setup.
+In this article you will learn how to create a [Slack](https://slack.com) webhook integration and 
+send a notification to it. This article assumes that you already have a Slack team setup.
 
 [API-Reference](apidocs/v5/fake-api-slack.html)
 
