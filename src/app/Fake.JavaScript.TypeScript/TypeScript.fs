@@ -11,7 +11,7 @@ open System.Text
 /// ## Sample
 ///
 ///     !! "src/**/*.ts"
-///         |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+///         |> TypeScript.compile (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
 [<RequireQualifiedAccess>]
 module TypeScript =
     /// Generated ECMAScript version
