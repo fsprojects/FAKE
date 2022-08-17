@@ -49,6 +49,6 @@ Slack.sendNotification webhookUrl (fun p ->
 
 The result should look something like this:
 
-![alt text](pics/slacknotification/slacknotification.png "Slack Notification Result")
+![alt text]({{root}}content/img/slacknotification/slacknotification.png "Slack Notification Result")
 
 For additional information on the parameters, check out Slack's [Webhook Documentation](https://api.slack.com/incoming-webhooks)
