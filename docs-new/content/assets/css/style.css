@@ -29,15 +29,17 @@
 }
 
 nav::-webkit-scrollbar {
-    width: 2px;
+    width: 10px;
 }
 
 nav::-webkit-scrollbar-track {
     background-color: #e4e4e4;
+    border-radius: 100px;
 }
 
 nav::-webkit-scrollbar-thumb {
     background-color: #d4b43c80;
+    border-radius: 100px;
 }
 
 

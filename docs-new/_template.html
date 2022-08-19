@@ -32,7 +32,7 @@
       x-data="{open: false}"
       :class="{'bg-gray-100': open === true}">
 <header
-    class="sticky inset-0 flex lg:h-20 lg:px-8 bg-white justify-between items-center py-4 border-b border-[#d4b43c]/50 mx-4">
+    class="sticky inset-0 flex lg:h-20 lg:px-8 bg-white justify-between items-center py-4 border-b lg:border lg:border-t-0 lg:rounded-b-lg lg:shadow border-[#d4b43c]/50 mx-4">
     <div class="flex gap-2 items-center block">
         <a class="flex items-center gap-2" href="/">
             <img src="http://127.0.0.1:5500/content/assets/img/logo.svg"
@@ -40,7 +40,13 @@
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
         </a>
     </div>
-    <div class="flex">
+    <div class="flex items-center">
+        <div class="mr-5">
+            <ul class="flex space-x-4">
+                <li><a class="hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a></li>
+                <li><a class="hover:text-[#d4b43c]" href="{{root}}articles/index.html">Articles</a></li>
+            </ul>
+        </div>
         <div class="border border-l-2 border-l-[#d4b43c] mr-3 px-2 rounded-r">
             <span>{{fsdocs-fake-version}}</span>
         </div>
@@ -94,7 +100,7 @@
 
 <div class="lg:ml-[25rem] min-w-0 lg:px-16">
     <nav
-        class="fixed inset-0 transform lg:mt-20 pb-10 lg:pb-32 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] w-80 h-screen bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-12 lg:pr-8"
+        class="fixed inset-0 transform lg:mt-28 pb-10 lg:pb-32 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] w-80 h-screen bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none lg:border lg:rounded-lg pl-4 pr-4 lg:ml-4 lg:pl-8 lg:pr-8"
         role="navigation"
         aria-label="main navigation"
         :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
@@ -201,7 +207,7 @@
     </div>
 </div>
 
-<footer class="bg-[#f9f9f9] border-t flex lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+<footer class="bg-[#f9f9f9] lg:border flex lg:ml-[28rem] lg:mr-8 mt-40 pb-40 pt-10 px-10 rounded-lg lg:rounded-b-none">
     <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
         <div class="flex flex-col lg:w-2/3">
             <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
