@@ -100,7 +100,7 @@
 
 <div class="lg:ml-[25rem] min-w-0 lg:px-16">
     <nav
-        class="fixed inset-0 transform lg:mt-28 pb-10 lg:pb-32 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] w-80 h-screen bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none lg:border lg:rounded-lg pl-4 pr-4 lg:ml-4 lg:pl-8 lg:pr-8"
+        class="fixed inset-0 transform lg:mt-28 pb-10 lg:pb-32 lg:mb-8 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none lg:border lg:rounded-lg pl-4 pr-4 lg:ml-4 lg:pl-8 lg:pr-8"
         role="navigation"
         aria-label="main navigation"
         :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
@@ -165,6 +165,7 @@
                 </ul>
             </li>
         </ul>
+
         <ul
             x-data="{nav: []}"
             x-init="
@@ -202,12 +203,13 @@
         </ul>
     </nav>
     <div id="content"
-         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose md:prose-lg lg:prose-xl prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
         {{fsdocs-content}}
+        {{fsdocs-tooltips}}
     </div>
 </div>
 
-<footer class="bg-[#f9f9f9] lg:border flex lg:ml-[28rem] lg:mr-8 mt-40 pb-40 pt-10 px-10 rounded-lg lg:rounded-b-none">
+<footer class="bg-[#f9f9f9] lg:border flex lg:ml-[28rem] lg:mr-8 lg:mb-8 mt-40 pb-40 pt-10 px-10 rounded-lg">
     <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
         <div class="flex flex-col lg:w-2/3">
             <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">

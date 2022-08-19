@@ -22,7 +22,7 @@ nuget Fake.DotNet.MSBuild prerelease
 nuget Fake.DotNet.Cli prerelease
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Paket prerelease
-nuget Fake.DotNet.FSFormatting prerelease
+nuget Fake.DotNet.Fsdocs prerelease
 nuget Fake.DotNet.Testing.MSpec prerelease
 nuget Fake.DotNet.Testing.XUnit2 prerelease
 nuget Fake.DotNet.Testing.NUnit prerelease
@@ -66,12 +66,10 @@ let disableBootstrap = false
 // properties
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 let docsDir = "./docs"
-let apiDocsDir = "./docs/apidocs/"
 let releaseDir = "./release"
 let nugetDncDir = releaseDir </> "dotnetcore"
 let collectedArtifactsDir = releaseDir </> "artifacts"
 let chocoReleaseDir = nugetDncDir </> "chocolatey"
-let nugetLegacyDir = releaseDir </> "legacy"
 let root = __SOURCE_DIRECTORY__
 let srcDir = root </> "src"
 let appDir = srcDir </> "app"
@@ -125,9 +123,10 @@ let chocoSource =
     getVarOrDefaultFromVault "CHOCO_SOURCE" "https://push.chocolatey.org/"
 
 let artifactsDir = getVarOrDefaultFromVault "ARTIFACTS_DIRECTORY" ""
-let docsDomain = getVarOrDefaultFromVault "DOCS_DOMAIN" "fake.build"
-//TODO:: remove this once legacy FAKE is deleted from repository
-let buildLegacy = Boolean.Parse(getVarOrDefaultFromVault "BuildLegacy" "false")
+let docsDomain =
+    match BuildServer.isLocalBuild with
+    | true -> "http://127.0.0.1:8083/"
+    | false -> getVarOrDefaultFromVault "DOCS_DOMAIN" "fake.build"
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apiKey = releaseSecret "<nugetkey>" "NUGET_KEY"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
@@ -397,7 +396,7 @@ let startWebServer () =
 
     let serverConfig =
         { Suave.Web.defaultConfig with
-            homeFolder = Some(Path.GetFullPath docsDir)
+            homeFolder = Some(Path.GetFullPath "output")
             mimeTypesMap = mimeTypes
             bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ] }
 
@@ -562,11 +561,8 @@ Target.create "Clean" (fun _ ->
         callPaket "." "restore"
 
     Shell.cleanDirs
-        [ docsDir
-          apiDocsDir
-          nugetDncDir
-          collectedArtifactsDir
-          nugetLegacyDir ]
+        [ nugetDncDir
+          collectedArtifactsDir ]
 
     // Clean Data for tests
     cleanForTests ())
@@ -579,187 +575,31 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 // Documentation targets.
 
 Target.create "GenerateDocs" (fun _ ->
-    Shell.cleanDir docsDir
-    let source = "./help"
-    let docsTemplate = "docpage.cshtml"
-    let indexTemplate = "indexpage.cshtml"
-    let githubLink = sprintf "https://github.com/%s/%s" githubReleaseUser gitName
+    let source = "./docs"
 
     let projInfo =
-        [ "page-description", "FAKE - F# Make"
-          "github-link", githubLink
-          "version", simpleVersion
-          "project-github", sprintf "http://github.com/%s/%s" githubReleaseUser gitName
-          "project-nuget", "https://www.nuget.org/packages/FAKE"
-          "root", sprintf "https://%s" docsDomain
-          "project-name", "FAKE - F# Make" ]
+        seq {
+          ("root", docsDomain)
+          ("fsdocs-logo-src", docsDomain @@ "content/img/logo.svg")
+          ("fsdocs-fake-version", simpleVersion)
+        }
 
-    let layoutRoots = [ "./help/templates"; "./help/templates/reference" ]
-
-    let fake5LayoutRoots = "./help/templates/fake5" :: layoutRoots
-    let legacyLayoutRoots = "./help/templates/legacy" :: layoutRoots
-    let fake4LayoutRoots = "./help/templates/fake4" :: layoutRoots
-
-    Shell.copyDir docsDir "help/content" Fake.IO.FileFilter.allFiles
-    File.writeString false "./docs/.nojekyll" ""
-    File.writeString false "./docs/CNAME" docsDomain
-
-    Shell.copy (source @@ "markdown") [ "RELEASE_NOTES.md" ]
-
-    FSFormatting.createDocs (fun s ->
-        { s with
-            Source = source @@ "markdown"
-            OutputDirectory = docsDir
-            Template = docsTemplate
-            ProjectParameters = ("CurrentPage", "Modules") :: projInfo
-            LayoutRoots = layoutRoots })
-
-    FSFormatting.createDocs (fun s ->
-        { s with
-            Source = source @@ "redirects"
-            OutputDirectory = docsDir
-            Template = docsTemplate
-            ProjectParameters = ("CurrentPage", "FAKE-4") :: projInfo
-            LayoutRoots = layoutRoots })
-
-    FSFormatting.createDocs (fun s ->
-        { s with
-            Source = source @@ "startpage"
-            OutputDirectory = docsDir
-            Template = indexTemplate
-            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("CurrentPage", "Home") :: projInfo
-            LayoutRoots = layoutRoots })
-
-    Directory.ensure apiDocsDir
-
-    let baseDir = Path.GetFullPath "."
-
-    let dllsAndLibDirs (dllPattern: IGlobbingPattern) =
-        let dlls =
-            dllPattern
-            |> GlobbingPattern.setBaseDir baseDir
-            |> Seq.distinctBy Path.GetFileName
-            |> List.ofSeq
-
-        let libDirs = dlls |> Seq.map Path.GetDirectoryName |> Seq.distinct |> List.ofSeq
-
-        (dlls, libDirs)
-
-    // FAKE 5 module documentation
-    let fake5ApiDocsDir = apiDocsDir @@ "v5"
-    Directory.ensure fake5ApiDocsDir
-
-    let fake5Dlls, fake5LibDirs =
-        !! "src/app/Fake.*/bin/Release/**/Fake.*.dll" |> dllsAndLibDirs
-
-    fake5Dlls
-    |> FSFormatting.createDocsForDlls (fun s ->
-        { s with
-            OutputDirectory = fake5ApiDocsDir
-            LayoutRoots = fake5LayoutRoots
-            LibDirs = fake5LibDirs
-            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters =
-                ("api-docs-prefix", "/apidocs/v5/")
-                :: ("CurrentPage", "APIReference") :: projInfo
-            SourceRepository = githubLink + "/blob/master" })
-
-    // Compat urls
-    let redirectPage newPage =
-        sprintf
-            """
-<html>
-	<head>
-		<title>Redirecting</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
-    <body>
-        <p><a href="%s">This page has moved here...</a></p>
-        <script type="text/javascript">
-            var url = "%s";
-            window.location.replace(url);
-        </script>
-    </body>
-</html>"""
-            newPage
-            newPage
-
-    !!(fake5ApiDocsDir + "/*.html")
-    |> Seq.iter (fun v5File ->
-        let name = Path.GetFileName v5File
-
-        let v4Name = Path.GetDirectoryName(Path.GetDirectoryName v5File) @@ name
-        let link = sprintf "/apidocs/v5/%s" name
-        File.WriteAllText(v4Name, redirectPage link))
-
-    // Legacy v4 and v5 documentation
-    let buildLegacyFromDocsDir layoutRoots fakeLegacyApidocsDir prefix githubBranch toolsDir =
-        Directory.ensure fakeLegacyApidocsDir
-
-        let fakeLegacyDlls, fakeLegacyLibDirs =
-            !!(toolsDir + "/Fake.*.dll") ++ (toolsDir + "/FakeLib.dll")
-            -- (toolsDir + "/Fake.Experimental.dll")
-            -- (toolsDir + "/FSharp.Compiler.Service.dll")
-            -- (toolsDir + "/FAKE.FSharp.Compiler.Service.dll")
-            -- (toolsDir + "/Fake.IIS.dll")
-            |> dllsAndLibDirs
-
-        fakeLegacyDlls
-        |> FSFormatting.createDocsForDlls (fun s ->
-            { s with
-                OutputDirectory = fakeLegacyApidocsDir
-                LayoutRoots = layoutRoots
-                LibDirs = fakeLegacyLibDirs
-                // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-                ProjectParameters = ("api-docs-prefix", prefix) :: ("CurrentPage", "APIReference") :: projInfo
-                SourceRepository = githubLink + githubBranch })
-
-    // FAKE 5 legacy documentation
-    if buildLegacy then
-        let fake5LegacyApidocsDir = apiDocsDir @@ "v5/legacy"
-        Directory.ensure fake5LegacyApidocsDir
-
-        let fake5LegacyDlls, fake5LegacyLibDirs =
-            !! "build/**/Fake.*.dll" ++ "build/FakeLib.dll"
-            -- "build/**/Fake.Experimental.dll"
-            -- "build/**/FSharp.Compiler.Service.dll"
-            -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
-            -- "build/**/FAKE.FSharp.Compiler.Service.dll"
-            -- "build/**/Fake.IIS.dll"
-            |> dllsAndLibDirs
-
-        fake5LegacyDlls
-        |> FSFormatting.createDocsForDlls (fun s ->
-            { s with
-                OutputDirectory = fake5LegacyApidocsDir
-                LayoutRoots = legacyLayoutRoots
-                LibDirs = fake5LegacyLibDirs
-                // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-                ProjectParameters =
-                    ("api-docs-prefix", "/apidocs/v5/legacy/")
-                    :: ("CurrentPage", "APIReference") :: projInfo
-                SourceRepository = githubLink + "/blob/master" })
-    else
-        buildLegacyFromDocsDir
-            legacyLayoutRoots
-            (apiDocsDir @@ "v5/legacy")
-            "/apidocs/v5/legacy/"
-            "/blob/master"
-            ("packages/docslegacyv5/FAKE/tools")
-
-    // FAKE 4 legacy documentation
-    buildLegacyFromDocsDir
-        fake4LayoutRoots
-        (apiDocsDir @@ "v4")
-        "/apidocs/v4/"
-        "/blob/hotfix_fake4"
-        "packages/docslegacyv4/FAKE/tools"
+    File.writeString false "./output/.nojekyll" ""
+    File.writeString false "./output/CNAME" docsDomain
+    Shell.copy source [ "RELEASE_NOTES.md" ]
+    
+    Fsdocs.build (fun p -> { p with
+                                Input = Some(source)
+                                SaveImages = Some(true)
+                                Clean = Some(true)
+                                Parameters = Some projInfo
+                                Properties = Some "Configuration=Release"
+                                // Strict = Some(true)
+    })
     
     Directory.ensure "temp"
     
-    !!(docsDir </> "**/*")
+    !!("output" </> "**/*")
     |> Zip.zip docsDir "temp/docs.zip"
     publish "temp/docs.zip")
 
@@ -1118,7 +958,7 @@ Target.create "ReleaseDocs" (fun _ ->
 
     Git.Repository.fullclean "gh-pages"
 
-    Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
+    Shell.copyRecursive "output" "gh-pages" true |> printfn "%A"
 
     File.writeString false "./gh-pages/CNAME" docsDomain
     Git.Staging.stageAll "gh-pages"
@@ -1187,17 +1027,6 @@ Target.create "PrepareArtifacts" (fun _ ->
             Shell.copyFile (sprintf "%s/%s" chocoReleaseDir name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
             Zip.unzip "." (artifactsDir </> "chocolatey-requirements.zip")
-
-        if buildLegacy then
-            Directory.ensure nugetLegacyDir
-            Zip.unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
-
-            Directory.ensure "temp/build"
-
-            !!(nugetLegacyDir </> "*.nupkg")
-            |> Seq.iter (fun pack -> Zip.unzip "temp/build" pack)
-
-            Shell.copyDir "build" "temp/build" (fun _ -> true)
 
         let linuxRuntime = "linux-x64"
         let debFileName = sprintf "fake-cli.%s.%s.deb" simpleVersion linuxRuntime
