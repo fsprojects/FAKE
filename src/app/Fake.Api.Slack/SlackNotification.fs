@@ -4,7 +4,7 @@ open System.Net.Http
 open Newtonsoft.Json
 
 /// <summary>
-/// Contains a task to send notification messages to a <seealso href="https://slack.com/">Slack</seealso> webhook
+/// Contains a task to send notification messages to a <a href="https://slack.com/">Slack</a> webhook
 /// </summary>
 [<RequireQualifiedAccess>]
 module Slack =

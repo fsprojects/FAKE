@@ -1,8 +1,8 @@
 ﻿namespace Fake.Azure
 
 /// <summary>
-/// Contains tasks to package and deploy <seealso href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</seealso>
-/// via the <seealso href="https://github.com/projectkudu/kudu">Kudu</seealso> Zip controller
+/// Contains tasks to package and deploy <a href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</a>
+/// via the <a href="https://github.com/projectkudu/kudu">Kudu</a> Zip controller
 /// </summary>
 [<RequireQualifiedAccess>]
 module WebJobs =

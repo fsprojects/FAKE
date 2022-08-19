@@ -1,5 +1,11 @@
 ﻿namespace Fake.Azure
 
+/// <namespacedoc>
+/// <summary>
+/// FAKE Azure namespace contains tasks to interact with Azure Services
+/// </summary>
+/// </namespacedoc>
+/// 
 /// <summary>
 /// Contains tasks to package Azure Cloud Services.
 /// </summary>

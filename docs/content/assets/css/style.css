@@ -91,10 +91,16 @@ table * .fsdocs-summary {
     width: 100%;
 }
 
+.fsdocs-summary a,
 .fsdocs-entity-list a {
     color: #222;
     text-decoration: underline;
     font-weight: lighter;
+}
+
+.fsdocs-summary a:hover,
+.fsdocs-entity-list a:hover {
+    color: #d4b43c;
 }
 
 .fsdocs-entity-list .anchor {

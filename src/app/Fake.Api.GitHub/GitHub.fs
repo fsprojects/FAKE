@@ -8,10 +8,13 @@ open System.Net.Http
 open System.IO
 
 /// <namespacedoc>
-/// FAKE API namespace contains tasks to interact using API with different services
-/// </namespacedoc>
 /// <summary>
-/// Contains tasks to interact with <seealso href="https://github.com">GitHub</seealso> releases
+/// FAKE API namespace contains tasks to interact with a service using an API
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// Contains tasks to interact with <a href="https://github.com">GitHub</a> releases
 /// </summary>
 /// <example>
 /// <code lang="fsharp">
