@@ -1,6 +1,8 @@
 ﻿namespace Fake.Azure
 
+/// <summary>
 /// Contains tasks to stage and deploy Azure website and webjobs using source code deployment with Kudu Sync.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Kudu =
 
@@ -52,21 +54,23 @@ module Kudu =
           /// The path to the zip archive to upload
           PackageLocation: string }
 
+    /// <summary>
     /// Stages a folder and all subdirectories into the temp deployment area, ready for deployment into the website.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `source` - The source folder to copy.
-    ///  - `shouldInclude` - A predicate which includes files from the folder. If the entire directory should be copied, this predicate should always return true.
+    /// <param name="source">The source folder to copy.</param>
+    /// <param name="shouldInclude">A predicate which includes files from the folder. If the entire directory should be copied, this predicate should always return true.</param>
     let stageFolder source shouldInclude =
         Shell.copyRecursive source deploymentTemp true
         |> Seq.filter (not << shouldInclude)
         |> Seq.iter File.Delete
 
+    /// <summary>
     /// Gets the path for deploying a web job to.
-    ///
-    /// ## Parameters
-    ///  - `webJobType` - The web job type. Of type `WebJobType`
-    ///  - `webJobName` - The name of the web job
+    /// </summary>
+    /// 
+    /// <param name="webJobType">The web job type. Of type <c>WebJobType</c></param>
+    /// <param name="webJobName">The name of the web job</param>
     let getWebJobPath webJobType webJobName =
         let webJobType =
             match webJobType with
@@ -75,12 +79,13 @@ module Kudu =
 
         sprintf @"%s\app_data\jobs\%s\%s\" deploymentTemp webJobType webJobName
 
+    /// <summary>
     /// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
-    ///
-    /// ## Parameters
-    ///  - `webJobType` - The web job type. Of type `WebJobType`
-    ///  - `webJobName` - The name of the web job
-    ///  - `files` - Files to deploy
+    /// </summary>
+    /// 
+    /// <param name="webJobType">The web job type. Of type <c>WebJobType</c></param>
+    /// <param name="webJobName">The name of the web job</param>
+    /// <param name="files">Files to deploy</param>
     let stageWebJob webJobType webJobName files =
         let webJobPath = getWebJobPath webJobType webJobName
         Directory.ensure webJobPath |> ignore
@@ -126,10 +131,11 @@ module Kudu =
         if processResult.ExitCode <> 0 then
             failwith "Error occurred during Kudu Sync deployment."
 
+    /// <summary>
     /// Synchronizes contents of the zip package with the target web app using Kudu ZipDeploy.
-    ///
-    /// ## Parameters
-    ///  - `zipDeployParams` - The parameters for zip deploy command
+    /// </summary>
+    /// 
+    /// <param name="zipDeployParams">The parameters for zip deploy command</param>
     let zipDeploy (zipDeployParams: ZipDeployParams) =
         let authToken =
             Convert.ToBase64String(

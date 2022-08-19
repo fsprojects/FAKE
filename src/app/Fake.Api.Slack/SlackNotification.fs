@@ -3,7 +3,9 @@
 open System.Net.Http
 open Newtonsoft.Json
 
-/// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
+/// <summary>
+/// Contains a task to send notification messages to a <seealso href="https://slack.com/">Slack</seealso> webhook
+/// </summary>
 [<RequireQualifiedAccess>]
 module Slack =
     /// The Slack notification attachment field parameter type
@@ -108,10 +110,12 @@ module Slack =
     let private SerializeData data =
         JsonConvert.SerializeObject(data, Formatting.None, JsonSerializerSettings(NullValueHandling = NullValueHandling.Ignore, ContractResolver = lowerCaseContractResolver))
 
+    /// <summary>
     /// Sends a notification to a Slack Channel
-    /// ## Parameters
-    ///  - `webhookURL` - The Slack webhook URL
-    ///  - `setParams` - Function used to override the default notification parameters
+    /// </summary>
+    ///
+    /// <param name="webhookURL">The Slack webhook URL</param>
+    /// <param name="setParams">Function used to override the default notification parameters</param>
     let sendNotification (webhookURL : string) (setParams: NotificationParams -> NotificationParams) =
         let sendNotification param =
             use client = (new HttpClient())

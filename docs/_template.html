@@ -4,10 +4,10 @@
 <head>
     <title>{{fsdocs-page-title}}</title>
     <meta charset="utf-8"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{root}}content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{root}}content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{root}}content/favicon-16x16.png">
+    <link rel="manifest" href="{{root}}content/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
@@ -35,7 +35,7 @@
     <div class="sticky inset-0 flex lg:h-20 lg:px-8 bg-white justify-between items-center py-4 border-b lg:border lg:border-t-0 lg:rounded-b-lg lg:shadow border-[#d4b43c]/50 mx-4">
         <div class="flex gap-2 items-center block">
         <a class="flex items-center gap-2" href="/">
-            <img src="http://127.0.0.1:5500/content/assets/img/logo.svg"
+            <img src="{{root}}content/assets/img/logo.svg"
                  alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
         </a>
@@ -116,7 +116,7 @@
             class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
             <div class="flex gap-2 items-center">
                 <a class="flex items-center gap-2" href="/">
-                    <img src="http://127.0.0.1:5500/content/assets/img/logo.svg"
+                    <img src="{{root}}content/assets/img/logo.svg"
                          alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
                     <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
                 </a>
@@ -327,6 +327,6 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="http://127.0.0.1:5500/content/assets/js/prism.js"></script>
+<script type="text/javascript" src="{{root}}content/assets/js/prism.js"></script>
 </body>
 </html>

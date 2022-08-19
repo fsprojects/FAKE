@@ -1,6 +1,8 @@
 ﻿namespace Fake.Azure
 
+/// <summary>
 /// Contains tasks to control the local Azure Emulator
+/// </summary>
 [<RequireQualifiedAccess>]
 module Emulators =
 

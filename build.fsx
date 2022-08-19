@@ -576,6 +576,8 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 Target.create "GenerateDocs" (fun _ ->
     let source = "./docs"
+    
+    Directory.ensure "output"
 
     let projInfo =
         seq {

@@ -1,7 +1,9 @@
 ﻿namespace Fake.Azure
 
-/// Contains tasks to package and deploy [Azure Web Jobs](http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/)
-/// via the [Kudu](https://github.com/projectkudu/kudu) Zip controller
+/// <summary>
+/// Contains tasks to package and deploy <seealso href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</seealso>
+/// via the <seealso href="https://github.com/projectkudu/kudu">Kudu</seealso> Zip controller
+/// </summary>
 [<RequireQualifiedAccess>]
 module WebJobs =
 
@@ -59,11 +61,12 @@ module WebJobs =
         Trace.tracefn "Zipping %s webjob to %s" webJob.Project webJob.PackageLocation
         Zip.createZip webJob.DirectoryToPackage zipName "" 0 false filesToZip
 
+    /// <summary>
     /// This task to can be used create a zip for each webjob to deploy to a website
     /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
-    ///
-    /// ## Parameters
-    ///  - `webSites` - The websites and webjobs to build zips from.
+    /// </summary>
+    /// 
+    /// <param name="webSites">The websites and webjobs to build zips from.</param>
     let packageWebJobs webSites =
         webSites
         |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob webSite))
@@ -96,9 +99,10 @@ module WebJobs =
         webSite.WebJobs
         |> List.iter (deployWebJobToWebSite webSite)
 
+    /// <summary>
     /// This task to can be used deploy a prebuilt webjob zip to a website
-    /// ## Parameters
-    ///
-    ///  - `webSites` - The websites and webjobs to deploy.
+    /// </summary>
+    ///  
+    /// <param name="webSites">The websites and webjobs to deploy.</param>
     let deployWebJobs webSites =
         webSites |> List.iter deployWebJobsToWebSite

@@ -1,6 +1,8 @@
 ﻿namespace Fake.Azure
 
+/// <summary>
 /// Contains tasks to package Azure Cloud Services.
+/// </summary>
 [<RequireQualifiedAccess>]
 module CloudServices =
 
@@ -40,11 +42,12 @@ module CloudServices =
         let A8 = VmSize "A8"
         let A9 = VmSize "A9"
 
+    /// <summary>
     /// Modifies the size of the Worker Role in the csdef.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `vmSize` - The virtual machine size
-    ///  - `cloudService` - The cloud service instance to update
+    /// <param name="vmSize">The virtual machine size</param>
+    /// <param name="cloudService">The cloud service instance to update</param>
     let modifyVMSize (VmSizes.VmSize vmSize) cloudService =
         let csdefPath = sprintf @"%s\ServiceDefinition.csdef" cloudService
 
@@ -59,10 +62,11 @@ module CloudServices =
             use fileStream = new FileStream(csdefPath, FileMode.Create)
             doc.Save fileStream
 
-    /// Packages a cloud service role into a .cspkg, ready for deployment.
+    /// <summary>
+    /// Packages a cloud service role into a <c>.cspkg</c>, ready for deployment.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `packageCloudServiceParams` - Could service parameters of type `PackageCloudServiceParams`
+    /// <param name="packageCloudServiceParams">Could service parameters of type <c>PackageCloudServiceParams</c></param>
     let packageRole packageCloudServiceParams =
         let csPack =
             let sdkRoots =
