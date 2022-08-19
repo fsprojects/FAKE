@@ -72,6 +72,14 @@ table * .fsdocs-summary {
     margin-bottom: 2rem;
 }
 
+.fsdocs-summary ul {
+    list-style-type: disc;
+}
+
+.fsdocs-summary ol {
+    list-style-type: decimal;
+}
+
 .fsdocs-params,
 .fsdocs-returns {
     margin-top: 2rem;

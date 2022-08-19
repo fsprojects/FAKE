@@ -5,7 +5,15 @@ open System.IO
 open Fake.Core
 open Fake.IO.FileSystemOperators
 
+/// <namespacedoc>
+/// <summary>
+/// FAKE Build namespace contains tasks to interact with other Build Systems, like CMake
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
 /// Contains tasks which allow to use CMake to build CMakeLists files.
+/// </summary>
 [<RequireQualifiedAccess>]
 module CMake =
 
@@ -114,15 +122,23 @@ module CMake =
         AdditionalArgs = ""
     }
 
-    /// [omit]
+    /// <summary>
     /// Tries to find the specified CMake executable:
+    /// <list type="number">
+    /// <item>
+    /// Locally in <c>./&lt;tools|packages&lt;cmake.portable&gt;|&lt;cmake&gt;/bin</c>
+    /// </item>
+    /// <item>
+    /// In the <c>PATH</c> environment variable.
+    /// </item>
+    /// <item>
+    /// In the <c>&lt;ProgramFilesx86>\CMake\bin</c> directory.
+    /// </item>
+    /// </list>
+    /// </summary>
     ///
-    /// 1. Locally in `./<tools|packages>/<cmake.portable>|<cmake>/bin`
-    /// 3. In the `PATH` environment variable.
-    /// 4. In the `<ProgramFilesx86>\CMake\bin` directory.
-    /// ## Parameters
-    ///  - `exeName` - The name of the CMake executable (e.g. `cmake`, `ctest`, etc.) to find.
-    ///    The `.exe` suffix will be automatically appended on Windows.
+    /// <param name="exeName">The name of the CMake executable (e.g. `cmake`, `ctest`, etc.) to find.
+    ///    The `.exe` suffix will be automatically appended on Windows.</param>
     let FindExe exeName =
         let fullName = exeName + if Environment.isUnix then "" else ".exe"
         [
@@ -137,17 +153,21 @@ module CMake =
         |> Seq.map (fun directory -> directory @@ fullName)
         |> Seq.tryFind File.Exists
 
+    /// <summary>
     /// Converts a file path to a valid CMake format.
-    /// ## Parameters
-    ///  - `path` - The path to reformat.
+    /// </summary>
+    ///
+    /// <param name="path">The path to reformat.</param>
     let private FormatCMakePath (path:string) = path.Replace("\\", "/")
 
+    /// <summary>
     /// Invokes the CMake executable with the specified arguments.
-    /// ## Parameters
-    ///  - `toolPath` - The location of the executable. Automatically found if null or empty.
-    ///  - `binaryDir` - The location of the binary directory.
-    ///  - `args` - The arguments given to the executable.
-    ///  - `timeout` - The CMake execution timeout
+    /// </summary>
+    ///
+    /// <param name="toolPath">The location of the executable. Automatically found if null or empty.</param>
+    /// <param name="binaryDir">The location of the binary directory.</param>
+    /// <param name="args">The arguments given to the executable.</param>
+    /// <param name="timeout">The CMake execution timeout</param>
     let private CallCMake toolPath binaryDir args timeout =
         // CMake expects an existing binary directory.
         // Not defaulted because it would prevent building multiple CMake projects in the same FAKE script.
@@ -168,8 +188,7 @@ module CMake =
                     |> Proc.run
         if result.ExitCode <> 0 then failwithf $"CMake failed with exit code %i{result.ExitCode}."
 
-    /// [omit]
-    let getGenerateArguments parameters =
+    let internal getGenerateArguments parameters =
         // CMake expects an existing source directory.
         // Not defaulted because it would prevent building multiple CMake projects in the same FAKE script.
         if String.IsNullOrEmpty parameters.SourceDirectory then failwith "The CMake source directory is not set."
@@ -199,17 +218,21 @@ module CMake =
             ] |> List.concat |> String.concat " "
         args
 
-    /// Calls `cmake` to generate a project.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeGenerateParams`.
+    /// <summary>
+    /// Calls <c>cmake</c> to generate a project.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the default CMake parameters. See <c>CMakeGenerateParams</c>.</param>
     let Generate setParams =
         let parameters = setParams CMakeGenerateDefaults
         let args = getGenerateArguments parameters
         CallCMake parameters.ToolPath parameters.BinaryDirectory args parameters.Timeout
 
-    /// Calls `cmake --build` to build a project.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeBuildParams`.
+    /// <summary>
+    /// Calls <c>cmake --build</c> to build a project.
+    /// </summary>
+    ///
+    /// <param name="setParams">Function used to manipulate the default CMake parameters. See <c>CMakeBuildParams</c>.</param>
     let Build setParams =
         let parameters = setParams CMakeBuildDefaults
         let targetArgs =

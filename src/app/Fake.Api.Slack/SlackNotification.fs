@@ -86,13 +86,11 @@ module Slack =
         Short = false
     }
 
-    /// [omit]
     let private lowerCaseContractResolver = { new Newtonsoft.Json.Serialization.DefaultContractResolver() with
         override this.ResolvePropertyName (key : string) =
             key.ToLower()
     }
 
-    /// [omit]
     let private ValidateParams webhookURL (param : NotificationParams) =
         if webhookURL = "" then failwith "You must specify a webhook URL"
         if param.Text = "" && param.Attachments.Length = 0 then failwith "You must specify a message or include an attachment"
@@ -106,7 +104,6 @@ module Slack =
 
         param
 
-    /// [omit]
     let private SerializeData data =
         JsonConvert.SerializeObject(data, Formatting.None, JsonSerializerSettings(NullValueHandling = NullValueHandling.Ignore, ContractResolver = lowerCaseContractResolver))
 

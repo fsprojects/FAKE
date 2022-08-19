@@ -9,7 +9,7 @@ open System.IO
 
 /// <namespacedoc>
 /// <summary>
-/// FAKE API namespace contains tasks to interact with a service using an API
+/// FAKE API namespace contains tasks to interact with a service using an API, like GitHub and Slack
 /// </summary>
 /// </namespacedoc>
 /// 
