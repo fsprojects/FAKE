@@ -1,6 +1,8 @@
 ﻿namespace Fake.DotNet
 
+/// <summary>
 /// Contains tasks for building Xamarin.iOS and Xamarin.Android apps
+/// </summary>
 module Xamarin =
 
     open System
@@ -38,7 +40,9 @@ module Xamarin =
         if processResult.ExitCode <> 0 then
             failwithf "%s exited with error %d" command processResult.ExitCode
 
+    /// <summary>
     /// The package restore parameter type
+    /// </summary>
     type XamarinComponentRestoreParams =
         {
             /// Path to xamarin-component.exe, defaults to checking tools/xpkg
@@ -53,25 +57,30 @@ module Xamarin =
         | Some path -> path
         | None -> "xamarin-component.exe"
     
+    /// <summary>
     /// The default package restore parameters
+    /// </summary>
     let XamarinComponentRestoreDefaults =
         {
             // Xamarin component tool path
             ToolPath = toolPath
         }
 
+    /// <summary>
     /// Restores NuGet packages and Xamarin Components for a project or solution
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default package restore parameters
-    ///  - `projectFile` - The project file to use
+    /// <param name="setParams">Function used to override the default package restore parameters</param>
+    /// <param name="projectFile">The project file to use</param>
     let RestoreComponents setParams projectFile =
         let restoreComponents project param =
             executeCommand param.ToolPath ("restore " + project)
 
         XamarinComponentRestoreDefaults |> setParams |> restoreComponents projectFile
 
+    /// <summary>
     /// The iOS build parameter type
+    /// </summary>
     type iOSBuildParams =
         {
             /// (Required) Path to solution or project file
@@ -147,7 +156,9 @@ module Xamarin =
           DistributedLoggers = None }
 
 
+    /// <summary>
     /// The target config values for Android Abi
+    /// </summary>
     type AndroidAbiTargetConfig = { SuffixAndExtension: string }
 
     /// The different types of Android Abi targets supported
@@ -177,10 +188,11 @@ module Xamarin =
     /// The version incrementing type
     type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
 
+    /// <summary>
     /// Builds a project or solution using Xamarin's iOS build tools
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default build parameters
+    /// <param name="setParams">Function used to override the default build parameters</param>
     let iOSBuild setParams =
         let validateParams param =
             if param.ProjectPath = "" then
@@ -238,7 +250,9 @@ module Xamarin =
 
         iOSBuildDefaults |> setParams |> validateParams |> buildProject
 
+    /// <summary>
     /// The Android packaging parameter type
+    /// </summary>
     type AndroidPackageParams =
         {
             /// (Required) Path to the Android project file (not the solution file!)
@@ -309,10 +323,11 @@ module Xamarin =
           BinaryLoggers = None
           DistributedLoggers = None }
 
+    /// <summary>
     /// Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default build parameters
+    /// <param name="setParams">Function used to override the default build parameters</param>
     let AndroidBuildPackages setParams =
         let validateParams param =
             if param.ProjectPath = "" then
@@ -479,14 +494,17 @@ module Xamarin =
         | AndroidPackageAbiParam.SpecificAbis targets -> createPackageAbiSpecificApk param targets transformVersion
 
 
+    /// <summary>
     /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default build parameters
+    /// <param name="setParams">Function used to override the default build parameters</param>
     let AndroidPackage setParams =
         AndroidBuildPackages setParams |> Seq.exactlyOne
 
-    // Parameters for signing and aligning an Android package
+    /// <summary>
+    /// Parameters for signing and aligning an Android package
+    /// </summary>
     type AndroidSignAndAlignParams =
         {
             /// (Required) Path to keystore used to sign the app
@@ -521,11 +539,12 @@ module Xamarin =
           JarsignerPath = "jarsigner"
           ZipalignPath = "zipalign" }
 
+    /// <summary>
     /// Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default build parameters
-    ///  - `apkFile` - FileInfo object for an unsigned APK file to sign and align
+    /// <param name="setParams">Function used to override the default build parameters</param>
+    /// <param name="apkFile">FileInfo object for an unsigned APK file to sign and align</param>
     let AndroidSignAndAlign setParams apkFile =
         let validateParams param =
             if param.KeystorePath = "" then
@@ -581,15 +600,18 @@ module Xamarin =
         |> validateParams
         |> signAndAlign apkFile
 
+    /// <summary>
     /// Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default build parameters
-    ///  - `apkFiles` - FileInfo object for an unsigned APK file to sign and align
+    /// <param name="setParams">Function used to override the default build parameters</param>
+    /// <param name="apkFiles">FileInfo object for an unsigned APK file to sign and align</param>
     let AndroidSignAndAlignPackages setParams apkFiles =
         apkFiles |> Seq.map (fun f -> AndroidSignAndAlign setParams f)
 
-    /// The iOS archive paramater type
+    /// <summary>
+    /// The iOS archive parameter type
+    /// </summary>
     type iOSArchiveParams =
         {
             /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
@@ -613,10 +635,11 @@ module Xamarin =
           Configuration = "Debug|iPhoneSimulator"
           MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool" }
 
+    /// <summary>
     /// Archive a project using Xamarin's iOS archive tools
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to override the default archive parameters
+    /// <param name="setParams">Function used to override the default archive parameters</param>
     let iOSArchive setParams =
         let archiveProject param =
             let projectNameArg =

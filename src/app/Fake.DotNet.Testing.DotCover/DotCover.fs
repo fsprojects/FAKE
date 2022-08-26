@@ -1,6 +1,9 @@
 namespace Fake.DotNet.Testing
 
-/// Contains a task which can be used to run [DotCover](http://www.jetbrains.com/dotcover/) on .NET assemblies.
+/// <summary>
+/// Contains a task which can be used to run
+/// <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.
+/// </summary>
 [<RequireQualifiedAccess>]
 module DotCover =
 
@@ -24,7 +27,9 @@ module DotCover =
         | DetailedXml = 4
         | SummaryXml = 5
 
+    /// <summary>
     /// The dotCover parameter type for running coverage
+    /// </summary>
     type Params =
         { ToolPath: string
           WorkingDir: string
@@ -58,7 +63,9 @@ module DotCover =
           CustomParameters = ""
           ErrorLevel = ErrorLevel.Error }
 
+    /// <summary>
     /// The DotCover merge command parameters
+    /// </summary>
     type MergeParams =
         { ToolPath: string
           WorkingDir: string
@@ -75,7 +82,9 @@ module DotCover =
           TempDir = ""
           CustomParameters = "" }
 
+    /// <summary>
     /// The DotCover report command parameters
+    /// </summary>
     type ReportParams =
         { ToolPath: string
           WorkingDir: string
@@ -154,16 +163,21 @@ module DotCover =
         else
             Trace.trace (sprintf "DotCover exited successfully")
 
-    /// Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command, using a target executable (such as NUnit or MSpec) and generates
+    /// a snapshot file.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the dotCover default parameters.
+    /// <param name="setParams">Function used to overwrite the dotCover default parameters.</param>
     ///
-    /// ## Sample
-    ///     DotCover.run (fun p -> { p with
+    /// <example>
+    /// <code lang="fsharp">
+    /// DotCover.run (fun p -> { p with
     ///         TargetExecutable = "path to NUnit or MSpec"
     ///         WorkingDir ".
     ///         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" })
+    /// </code>
+    /// </example>  
     let run (setParams: Params -> Params) =
         let parameters = (Defaults |> setParams)
 
@@ -174,49 +188,62 @@ module DotCover =
             parameters.WorkingDir
             (parameters.ErrorLevel <> ErrorLevel.DontFailBuild)
 
-    /// Runs the dotCover "merge" command. This combines dotCover snaphots into a single
+    /// <summary>
+    /// Runs the dotCover <c>merge</c> command. This combines dotCover snapshots into a single
     /// snapshot, enabling you to merge test coverage from multiple test running frameworks
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the dotCover merge default parameters.
+    /// <param name="setParams">Function used to overwrite the dotCover merge default parameters.</param>
     ///
-    /// ## Sample
-    ///     DotCover.merge (fun p -> { p with
+    /// 
+    /// <example>
+    /// <code lang="fsharp">
+    /// DotCover.merge (fun p -> { p with
     ///         Source = [artifactsDir @@ "NUnitDotCoverSnapshot.dcvr"
     ///         artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
     ///         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" })
+    /// </code>
+    /// </example>    
     let merge (setParams: MergeParams -> MergeParams) =
         let parameters = (MergeDefaults |> setParams)
         buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir true
 
-    /// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
+    /// <summary>
+    /// Runs the dotCover <c>report</c> command. This generates a report from a dotCover snapshot
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the dotCover report default parameters.
+    /// <param name="setParams">Function used to overwrite the dotCover report default parameters.</param>
     ///
-    /// ## Sample
-    ///     DotCover.report (fun p -> { p with
+    /// <example>
+    /// <code lang="fsharp">
+    /// DotCover.report (fun p -> { p with
     ///         Source = artifactsDir @@ "dotCoverSnapshot.dcvr"
     ///         Output = artifactsDir @@ "dotCoverReport.xml"
     ///         ReportType = ReportType.Xml })
+    /// </code>
+    /// </example>
     let report (setParams: ReportParams -> ReportParams) =
         let parameters = (ReportDefaults |> setParams)
         buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir true
 
-    /// Runs the dotCover "cover" command against the NUnit test runner.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command against the NUnit test runner.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
-    ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setDotCoverParams">Function used to overwrite the dotCover report default parameters.</param>
+    /// <param name="setNUnitParams">Function used to overwrite the NUnit default parameters.</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> DotCover.runNUnit
     ///             (fun dotCoverOptions -> { dotCoverOptions with
     ///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" })
     ///             (fun nUnitOptions -> { nUnitOptions with
     ///                     DisableShadowCopy = true })
+    /// </code>
+    /// </example>
     let runNUnit
         (setDotCoverParams: Params -> Params)
         (setNUnitParams: NUnit.Common.NUnitParams -> NUnit.Common.NUnitParams)
@@ -235,20 +262,24 @@ module DotCover =
                 TargetArguments = args }
             |> setDotCoverParams)
 
-    /// Runs the dotCover "cover" command against the NUnit test runner.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command against the NUnit test runner.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
-    ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setDotCoverParams">Function used to overwrite the dotCover report default parameters.</param>
+    /// <param name="setNUnitParams">Function used to overwrite the NUnit default parameters.</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> DotCover.runNUnit3
     ///             (fun dotCoverOptions -> { dotCoverOptions with
     ///                     Output = artifactsDir @@ "NUnit3DotCoverSnapshot.dcvr" })
     ///             (fun nUnit3Options -> { nUnit3Options with
     ///                     DisableShadowCopy = true })
+    /// </code>
+    /// </example>
     let runNUnit3
         (setDotCoverParams: Params -> Params)
         (setNUnitParams: NUnit3Params -> NUnit3Params)
@@ -267,18 +298,22 @@ module DotCover =
                 TargetArguments = args }
             |> setDotCoverParams)
 
-    /// Runs the dotCover "cover" command against the XUnit2 test runner.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command against the XUnit2 test runner.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
-    ///  - `setXUnit2Params` - Function used to overwrite the XUnit2 default parameters.
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setDotCoverParams">Function used to overwrite the dotCover report default parameters.</param>
+    /// <param name="setXUnit2Params">Function used to overwrite the XUnit2 default parameters.</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> DotCover.runXUnit2
     ///             (fun  -> dotCoverOptions )
     ///             (fun nUnitOptions -> nUnitOptions)
+    /// </code>
+    /// </example>
     let runXUnit2
         (setDotCoverParams: Params -> Params)
         (setXUnit2Params: XUnit2Params -> XUnit2Params)
@@ -297,9 +332,10 @@ module DotCover =
                 TargetArguments = args }
             |> setDotCoverParams)
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
     /// Runs all test assemblies in the same run for easier coverage management.
-    /// [omit]
+    /// </summary>
     let internal buildMSTestArgsForDotCover parameters assemblies =
         let testContainers =
             assemblies
@@ -321,18 +357,22 @@ module DotCover =
         |> StringBuilder.appendIfTrueWithoutQuotes parameters.NoIsolation "/noisolation"
         |> StringBuilder.toText
 
-    /// Runs the dotCover "cover" command against the MSTest test runner.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command against the MSTest test runner.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
-    ///  - `setMSTestParams` - Function used to overwrite the MSTest default parameters.
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setDotCoverParams">Function used to overwrite the dotCover report default parameters.</param>
+    /// <param name="setMSTestParams">Function used to overwrite the MSTest default parameters.</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> DotCover.runMSTest
     ///             (fun  -> dotCoverOptions )
     ///             (fun MSTestOptions -> MSTestOptions)
+    /// </code>
+    /// </example> 
     let runMSTest
         (setDotCoverParams: Params -> Params)
         (setMSTestParams: MSTestParams -> MSTestParams)
@@ -351,20 +391,24 @@ module DotCover =
                 TargetArguments = args }
             |> setDotCoverParams)
 
-    /// Runs the dotCover "cover" command against the MSpec test runner.
+    /// <summary>
+    /// Runs the dotCover <c>cover</c> command against the MSpec test runner.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
-    ///  - `setMSpecParams` - Function used to overwrite the MSpec default parameters.
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setDotCoverParams">Function used to overwrite the dotCover report default parameters.</param>
+    /// <param name="setMSpecParams">Function used to overwrite the MSpec default parameters.</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> DotCover.runMSpec
     ///             (fun dotCoverOptions -> { dotCoverOptions with
     ///                     Output = artifactsDir @@ "MSpecDotCoverSnapshot.dcvr" })
     ///             (fun mSpecOptions -> { mSpecOptions with
     ///                     Silent = true })
+    /// </code>
+    /// </example>
     let runMSpec
         (setDotCoverParams: Params -> Params)
         (setMSpecParams: MSpecParams -> MSpecParams)

@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing
 
-/// Contains a task to run [machine.specifications](https://github.com/machine/machine.specifications) tests.
+/// <summary>
+/// Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.
+/// </summary>
 module MSpec =
 
     open Fake.Testing.Common
@@ -10,9 +12,12 @@ module MSpec =
     open System.IO
     open System.Text
 
+    /// <summary>
     /// Parameter type to configure the MSpec runner.
+    /// </summary>
     type MSpecParams =
-        { /// The path to the mspec console runner. Use `mspec-clr4.exe` if you are on .NET 4.0 or above.
+        {
+          /// The path to the mspec console runner. Use <c>mspec-clr4.exe</c> if you are on .NET 4.0 or above.
           ToolPath: string
           /// Output directory for html reports (optional).
           HtmlOutputDir: string
@@ -55,7 +60,9 @@ module MSpec =
           TimeOut = TimeSpan.FromMinutes 5.
           ErrorLevel = Error }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    /// </summary>
     let buildArgs (parameters: MSpecParams) (assemblies: string seq) =
         let html, htmlText =
             if String.isNotNullOrEmpty parameters.HtmlOutputDir then
@@ -88,18 +95,23 @@ module MSpec =
         |> StringBuilder.appendFileNamesIfNotNull assemblies
         |> StringBuilder.toText
 
-    /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
-    ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the MSpec default parameters.
-    ///  - `assemblies` - The file names of the test assemblies.
-    ///
-    /// ## Sample
-    ///     !! (testDir @@ "Test.*.dll")
-    ///       |> MSpec (fun p -> {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
-    ///
-    /// ## Hint
+    /// <summary>
+    /// This task to can be used to run
+    /// <a href="https://github.com/machine/machine.specifications">machine.specifications</a> on test libraries.
+    /// </summary>
+    /// <remarks>
     /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
+    /// </remarks>
+    ///
+    /// <param name="setParams">Function used to overwrite the MSpec default parameters.</param>
+    /// <param name="assemblies">The file names of the test assemblies.</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (testDir @@ "Test.*.dll")
+    ///       |> MSpec (fun p -> {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
+    /// </code>
+    /// </example>
     let exec setParams assemblies =
         let details = String.separated ", " assemblies
         use __ = Trace.traceTask "MSpec" details

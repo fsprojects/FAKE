@@ -1,6 +1,15 @@
 namespace Fake.DotNet.Testing
 
-/// Contains options to run [Coverlet](https://github.com/tonerdo/coverlet) as part of dotnet test.
+/// <namespacedoc>
+/// <summary>
+/// DotNet.Testing namespace contains tasks to interact with a test tools and runners for DotNet applications,
+/// like NUnit, Expecto and Coverlet
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// Contains options to run <a href="https://github.com/tonerdo/coverlet">Coverlet</a> as part of dotnet test.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Coverlet =
 
@@ -26,15 +35,20 @@ module Coverlet =
         | Total
         | Average
 
-    /// Coverlet MSBuild parameters. For more details see: [documentation](https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md)
+    /// <summary>
+    /// Coverlet MSBuild parameters. For more details
+    /// see: <a href="https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md">
+    /// documentation</a>
+    /// </summary>
     type CoverletParams =
-        { /// (Required) Format of the generated output.
+        {
+          /// (Required) Format of the generated output.
           OutputFormat: OutputFormat list
-          /// (Required) Path to the generated output file, or directory if it ends with a `/`.
+          /// (Required) Path to the generated output file, or directory if it ends with a <c>/</c>.
           Output: string
-          /// Namespaces to include, as (AssemblyName, Namespace) pairs. Supports `*` and `?` globbing.
+          /// Namespaces to include, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
           Include: (string * string) list
-          /// Namespaces to exclude, as (AssemblyName, Namespace) pairs. Supports `*` and `?` globbing.
+          /// Namespaces to exclude, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
           Exclude: (string * string) list
           /// Exclude methods, types and assemblies annotated with these attributes.
           ExcludeByAttribute: string list
@@ -92,11 +106,12 @@ module Coverlet =
         | ThresholdStat.Total -> "total"
         | ThresholdStat.Average -> "average"
 
+    /// <summary>
     /// Add Coverlet parameters to the MSBuild command.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `param` - The coverlet parameters
-    /// - `args` - MSBuild arguments
+    /// <param name="param">The coverlet parameters</param>
+    /// <param name="args">MSBuild arguments</param>
     let withMSBuildArguments (param: CoverletParams -> CoverletParams) (args: MSBuild.CliArguments) =
         let param = param defaults
 
@@ -126,10 +141,11 @@ module Coverlet =
 
         { args with Properties = args.Properties @ properties }
 
+    /// <summary>
     /// Add Coverlet parameters to the dotnet test command.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `param` - The coverlet parameters
-    /// - `options` - dotnet test cli command options
+    /// <param name="param">The coverlet parameters</param>
+    /// <param name="options">DotNet test cli command options</param>
     let withDotNetTestOptions (param: CoverletParams -> CoverletParams) (options: DotNet.TestOptions) =
         { options with MSBuildParams = withMSBuildArguments param options.MSBuildParams }

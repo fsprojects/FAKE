@@ -1,6 +1,9 @@
 namespace Fake.DotNet.Testing
 
-/// Contains a task which can be used to run [OpenCover](https://github.com/sawilde/opencover) on .NET assemblies.
+/// <summary>
+/// Contains a task which can be used to run
+/// <a href="https://github.com/sawilde/opencover">OpenCover</a> on .NET assemblies.
+/// </summary>
 module OpenCover =
 
     open System
@@ -26,7 +29,11 @@ module OpenCover =
  
     type ReturnTargetCodeType = No | Yes | Offset of int
 
-    /// OpenCover parameters, for more details see: https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.
+    /// <summary>
+    /// OpenCover parameters, for more details see
+    /// <a href="https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage">
+    /// console application usage</a>.
+    /// </summary>
     type OpenCoverParams = 
         { /// (Required) Path to the OpenCover console application
           ExePath : string
@@ -47,24 +54,29 @@ module OpenCover =
           /// This option is used to merge the coverage results for an assembly regardless of where it was loaded 
           /// assuming the assembly has the same file-hash in each location. 
           MergeByHash : bool
-          /// Exclude a class or method by filter(s) that match attributes that have been applied. An * can be used as a wildcard.
+          /// Exclude a class or method by filter(s) that match attributes that have been applied. An * can
+          /// be used as a wildcard.
           ExcludeByAttribute: string list
           /// Exclude a class (or methods) by filter(s) that match the filenames. An * can be used as a wildcard.
           ExcludeByFile : string list
           /// Assemblies being loaded from these locations will be ignored.
           ExcludeDirs : string list
-          /// Remove information from output file that relates to classes/modules that have been skipped (filtered) due to the use of the parameters ExcludeBy*, Filter or where the PDB is missing.
+          /// Remove information from output file that relates to classes/modules that have been skipped (filtered)
+          /// due to the use of the parameters ExcludeBy*, Filter or where the PDB is missing.
           HideSkipped : HideSkippedType list
-          /// Allow to merge the results with an existing file (specified by Output parameter). So the coverage from the output file will be loaded first (if exists).
+          /// Allow to merge the results with an existing file (specified by Output parameter). So the coverage
+          /// from the output file will be loaded first (if exists).
           MergeOutput : bool
-          /// Return the target process return code instead of the OpenCover console return code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.
+          /// Return the target process return code instead of the OpenCover console return code. Use the offset
+          /// to return the OpenCover console at a value outside the range returned by the target process.
           ReturnTargetCode : ReturnTargetCodeType
           /// Alternative locations to look for PDBs.
           SearchDirs : string list
           /// Neither track nor record auto-implemented properties.
           /// That is, skip getters and setters like these: public bool Service { get; set; }
           SkipAutoProps : bool
-          /// This options is used to add additional optional arguments, could be somthing like "-returntargetcode "
+          /// This options is used to add additional optional arguments, could be something like
+          /// <c>-returntargetcode </c>
           OptionalArguments : string }
 
     /// OpenCover default parameters
@@ -87,8 +99,9 @@ module OpenCover =
           SkipAutoProps = false
           OptionalArguments = String.Empty }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record
-    /// [omit]
+    /// </summary>
     let private buildOpenCoverArgs param targetArgs = 
             let quote arg = sprintf "\"%s\"" arg
             let printParam paramName = sprintf "-%s" paramName
@@ -126,16 +139,19 @@ module OpenCover =
             |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
             |> StringBuilder.toText
 
+    /// <summary>
     /// Runs OpenCover on a group of assemblies.
-    /// ## Parameters
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to overwrite the default OpenCover parameters.</param>
+    /// <param name="targetArgs">Test runner arguments.</param>
     ///
-    ///  - `setParams` - Function used to overwrite the default OpenCover parameters.
-    ///  - `targetArgs` - Test runner arguments.
-    ///
-    /// ## Sample
-    ///
-    ///      OpenCover.Run (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
+    /// <example>
+    /// <code lang="fsharp">
+    /// OpenCover.Run (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
     ///         "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
+    /// </code>
+    /// </example>   
     let run setParams targetArgs =
         use __ = Trace.traceTask "OpenCover" "Gathering coverage statistics"
         let param = setParams OpenCoverDefaults
@@ -153,15 +169,18 @@ module OpenCover =
         if processResult.ExitCode <> 0 then failwithf "OpenCover reported errors."
         __.MarkSuccess()
 
+    /// <summary>
     /// Show version OpenCover
-    /// ## Parameters
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to overwrite the default OpenCover parameters.</param>
     ///
-    ///  - `setParams` - Function used to overwrite the default OpenCover parameters.
-    ///
-    /// ## Sample
-    ///
-    ///      OpenCover.Version None
+    /// <example>
+    /// <code lang="fsharp">
+    /// OpenCover.Version None
     ///      OpenCover.Version (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" })
+    /// </code>
+    /// </example>  
     let getVersion setParams =
         use __ = Trace.traceTask "OpenCover" "Version"
         let param = match setParams with

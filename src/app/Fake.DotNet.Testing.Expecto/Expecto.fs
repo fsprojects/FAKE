@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing
 
-/// Contains tasks to run [Expecto](https://github.com/haf/expecto) unit tests.
+/// <summary>
+/// Contains tasks to run <a href="https://github.com/haf/expecto">Expecto</a> unit tests.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Expecto =
 
@@ -8,7 +10,9 @@ module Expecto =
     open Fake.Testing.Common
     open System
 
-    /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
+    /// <summary>
+    /// CLI parameters available if you use <c>Tests.runTestsInAssembly</c> defaultConfig argv in your code
+    /// </summary>
     type Params =
         {
           /// Extra verbose output for your tests.
@@ -140,15 +144,19 @@ module Expecto =
 
         testAssembly, processResult.ExitCode
 
+    /// <summary>
     /// Call Expecto to run tests in the given assemblies list
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Expecto parameters
-    ///  - `assemblies` - The set of assemblies to run command on
+    /// <param name="setParams">Expecto parameters</param>
+    /// <param name="assemblies">The set of assemblies to run command on</param>
     ///
-    /// ## Sample
-    ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll")
     ///         |> Expecto.run (fun  -> Params )
+    /// </code>
+    /// </example>
     let run (setParams: Params -> Params) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "Expecto" details

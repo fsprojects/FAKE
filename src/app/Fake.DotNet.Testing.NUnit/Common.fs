@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing.NUnit
 
-/// Contains types and utility functions related to running [NUnit](http://www.nunit.org/) unit tests.
+/// <summary>
+/// Contains types and utility functions related to running <a href="http://www.nunit.org/">NUnit</a> unit tests.
+/// </summary>
 module Common =
 
     open Fake.Testing.Common
@@ -13,7 +15,10 @@ module Common =
     /// Option which allows to specify if a NUnit error should break the build.
     type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
-    /// Process model for nunit to use, see [Project Editor](http://www.nunit.org/index.php?p=projectEditor&r=2.6.4)
+    /// <summary>
+    /// Process model for nunit to use, see
+    /// <a href="http://www.nunit.org/index.php?p=projectEditor&amp;r=2.6.4">Project Editor</a>
+    /// </summary>
     type NUnitProcessModel =
         | DefaultProcessModel
         | SingleProcessModel
@@ -27,8 +32,10 @@ module Common =
             | SeparateProcessModel -> "Separate"
             | MultipleProcessModel -> "Multiple"
 
-    /// The /domain option controls of the creation of AppDomains for running tests. See
-    /// [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+    /// <summary>
+    /// The <c>/domain</c> option controls of the creation of AppDomains for running tests. See
+    /// <a href="http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.6.4">NUnit-Console Command Line Options</a>
+    /// </summary>
     type NUnitDomainModel =
         /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a
         /// single domain is used.
@@ -48,24 +55,28 @@ module Common =
             | SingleDomainModel -> "Single"
             | MultipleDomainModel -> "Multiple"
 
-    /// The [NUnit](http://www.nunit.org/) Console Parameters type.
+    /// <summary>
+    /// The <a href="http://www.nunit.org/">NUnit</a> Console Parameters type.
     /// FAKE will use `NUnitDefaults` for values not provided.
-    ///
-    /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+    /// </summary>
+    /// <remarks>
+    /// For reference, see:
+    /// <a href="http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.6.4">NUnit-Console Command Line Options</a>
+    /// </remarks>
     type NUnitParams =
         {
-            /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run.
-            /// Multiple categories may be specified on either option, by using commas to separate them.
+            /// The <a href="http://www.nunit.org/index.php?p=category&amp;r=2.6.4">Categories</a> to be included in a
+            /// test run. Multiple categories may be specified on either option, by using commas to separate them.
             IncludeCategory: string
 
-            /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be excluded in a test run.
-            /// Multiple categories may be specified on either option, by using commas to separate them.
+            /// The <a href="http://www.nunit.org/index.php?p=category&amp;r=2.6.4">Categories</a> to be excluded in
+            /// a test run. Multiple categories may be specified on either option, by using commas to separate them.
             ExcludeCategory: string
 
             /// The path to the NUnit console runner: `nunit-console.exe`
             ToolPath: string
 
-            /// NUnit console runner name. ( `nunit-console.exe`)
+            /// NUnit console runner name. ( <c>nunit-console.exe</c>)
             ToolName: string
 
             /// Suppresses use of a separate thread for running the tests and uses the main thread instead.
@@ -83,13 +94,15 @@ module Common =
             /// Redirects output created by the tests from standard output (console) to the file specified as value.
             Out: string
 
-            /// Redirects error output created by the tests from standard error output (console) to the file specified as value.
+            /// Redirects error output created by the tests from standard error output (console) to the file specified
+            /// as value.
             ErrorOutputFile: string
 
             /// Allows you to specify the version of the runtime to be used in executing tests.
             Framework: string
 
-            /// Controls how NUnit loads tests in processes. See: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).
+            /// Controls how NUnit loads tests in processes.
+            /// See: <a href="/guide/fake-nunitcommon-nunitprocessmodel.html">NUnitProcessModel</a>.
             ProcessModel: NUnitProcessModel
 
             /// Causes an identifying label to be displayed at the start of each test case.
@@ -108,9 +121,9 @@ module Common =
             /// Disables shadow copying of the assembly in order to provide improved performance.
             DisableShadowCopy: bool
 
-            /// See `NUnitDomainModel` type
+            /// See <c>NUnitDomainModel</c> type
             Domain: NUnitDomainModel
-            /// Default: `TestRunnerErrorLevel.Error`
+            /// Default: <c>TestRunnerErrorLevel.Error</c>
             ErrorLevel: NUnitErrorLevel
             /// Default: ""
             Fixture: string
@@ -124,29 +137,65 @@ module Common =
         | Some path -> path
         | None -> toolName
 
-    /// The `NUnitParams` default parameters.
-    ///
-    /// ## Defaults
-    /// - `IncludeCategory` - `""`
-    /// - `ExcludeCategory` - `""`
-    /// - `ToolPath` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
-    /// - `ToolName` - `"nunit-console.exe"`
-    /// - `DontTestInNewThread`- `false`
-    /// - `StopOnError` - `false`
-    /// - `SkipNonTestAssemblies` - `false`
-    /// - `OutputFile` - `"TestResult.xml"`
-    /// - `Out` - `""`
-    /// - `ErrorOutputFile` - `""`
-    /// - `WorkingDir` - `""`
-    /// - `Framework` - `""`
-    /// - `ProcessModel` - `DefaultProcessModel`
-    /// - `ShowLabels` - `true`
-    /// - `XsltTransformFile` - `""`
-    /// - `TimeOut` - 5 minutes
-    /// - `DisableShadowCopy` - `false`
-    /// - `Domain` - `DefaultDomainModel`
-    /// - `ErrorLevel` - `Error`
-    /// - `Fixture` - `""`
+    /// <summary>
+    /// The <c>NUnitParams</c> default parameters.
+    /// </summary>
+    /// <list type="number">
+    /// <item>
+    /// <c>IncludeCategory</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ToolPath</c> - The <c>nunit-console.exe</c> path if it exists in a subdirectory of the current directory
+    /// </item>
+    /// <item>
+    /// <c>DontTestInNewThread</c>- <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>StopOnError</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>OutputFile</c> - <c>"TestResult.xml"</c>
+    /// </item>
+    /// <item>
+    /// <c>Out</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ErrorOutputFile</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>WorkingDir</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>Framework</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ProcessModel</c> - <c>DefaultProcessModel</c>
+    /// </item>
+    /// <item>
+    /// <c>ShowLabels</c> - <c>true</c>
+    /// </item>
+    /// <item>
+    /// <c>XsltTransformFile</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>TimeOut</c> - 5 minute
+    /// </item>
+    /// <item>
+    /// <c>DisableShadowCopy</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>Domain</c> - <c>DefaultDomainModel</c>
+    /// </item>
+    /// <item>
+    /// <c>SkipNonTestAssemblies</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>ErrorLevel</c> - <c>Error</c>
+    /// </item>
+    /// <item>
+    /// <c>Fixture</c> - <c>""</c>
+    /// </item>
+    /// </list>
     let NUnitDefaults =
         let toolName = "nunit-console.exe"
 
@@ -171,7 +220,9 @@ module Common =
           ErrorLevel = Error
           Fixture = "" }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    /// </summary>
     let buildArgs (parameters: NUnitParams) (assemblies: string seq) =
         StringBuilder()
         |> StringBuilder.append "-nologo"
@@ -193,7 +244,9 @@ module Common =
         |> StringBuilder.appendIfNotNullOrEmpty parameters.Fixture "-fixture:"
         |> StringBuilder.toText
 
+    /// <summary>
     /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
+    /// </summary>
     /// [omit]
     let getWorkingDir parameters =
         Seq.find
@@ -203,8 +256,10 @@ module Common =
               "." ]
         |> Path.GetFullPath
 
-    /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise.
-    /// Zero means that all tests passed.
+    /// <summary>
+    /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests
+    /// otherwise. Zero means that all tests passed.
+    /// </summary>
     let (|OK|TestsFailed|FatalError|) errorCode =
         match errorCode with
         | 0 -> OK

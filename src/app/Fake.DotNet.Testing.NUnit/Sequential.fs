@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing.NUnit
 
-/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
+/// <summary>
+/// Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.
+/// </summary>
 module Sequential =
 
     open Fake.Testing.Common
@@ -8,17 +10,21 @@ module Sequential =
     open Fake.Core
     open Fake.DotNet.Testing.NUnit.Common
 
+    /// <summary>
     /// Runs NUnit on a group of assemblies.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default `NUnitParams` value.
-    ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
-    ///
-    /// ## Sample
-    ///     Target "Test" (fun _ ->
+    /// <param name="setParams">Function used to manipulate the default <c>NUnitParams</c> value.</param>
+    /// <param name="assemblies">Sequence of one or more assemblies containing NUnit unit tests.</param>
+    /// 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "Test" (fun _ ->
     ///         !! (testDir + @"\Test.*.dll")
     ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
     ///     )
+    /// </code>
+    /// </example>    
     let run (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "NUnit" details

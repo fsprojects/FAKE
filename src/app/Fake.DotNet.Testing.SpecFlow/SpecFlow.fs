@@ -4,7 +4,9 @@ open Fake.Core
 open Fake.IO
 open System.IO
 
-/// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests with SpecFlow v2.4+.
+/// <summary>
+/// Contains a task which allows to run <a href="http://www.specflow.org/">SpecFlow</a> tests with SpecFlow v2.4+.
+/// </summary>
 [<RequireQualifiedAccess>]
 module SpecFlow =
 
@@ -22,10 +24,12 @@ module SpecFlow =
             | NUnitExecutionReport -> "NUnitExecutionReport"
             | MsTestExecutionReport -> "MsTestExecutionReport"
 
+    /// <summary>
     /// SpecFlow execution parameter type.
+    /// </summary>
     type SpecFlowParams =
         {
-            /// The subcommand to execute, see `SpecFlow.SubCommand` type
+            /// The subcommand to execute, see <c>SpecFlow.SubCommand</c> type
             SubCommand: SubCommand
 
             /// SpecFlow executable path
@@ -138,11 +142,12 @@ module SpecFlow =
             Trace.trace command.CommandLine
             command
 
-    // Runs SpecFlow on a project.
+    /// <summary>
+    /// Runs SpecFlow on a project.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
-    ///  - `projectFile` - The required project file.
+    /// <param name="setParams">Function used to manipulate the default SpecFlow parameter value.</param>
+    /// <param name="projectFile">The required project file.</param>
     let run setParams projectFile =
         let parameters, cp = projectFile |> createProcess setParams
         use __ = Trace.traceTask "SpecFlow " (parameters.SubCommand |> string)

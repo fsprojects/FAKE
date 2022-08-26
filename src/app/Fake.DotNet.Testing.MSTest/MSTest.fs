@@ -1,6 +1,9 @@
 ﻿namespace Fake.DotNet.Testing
 
-/// Contains tasks to run [MSTest](https://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework) unit tests.
+/// <summary>
+/// Contains tasks to run
+/// <a href="https://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework">MSTest</a> unit tests.
+/// </summary>
 module MSTest =
 
     open System
@@ -26,14 +29,20 @@ module MSTest =
         else
             failwith "MSTest is only supported on Windows platform"
 
+    /// <summary>
     /// Option which allow to specify if a MSTest error should break the build.
+    /// </summary>
     type ErrorLevel = TestRunnerErrorLevel
 
+    /// <summary>
     /// Parameter type to configure the MSTest.exe.
+    /// </summary>
     [<CLIMutable>]
     type MSTestParams =
         {
-            /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
+            /// Test category filter  (optional). The test category filter consists of one or more test category names
+            /// separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be
+            /// used together to create a test category filter.
             Category: string
             
             /// Test results directory (optional)
@@ -84,7 +93,9 @@ module MSTest =
           ErrorLevel = ErrorLevel.Error
           NoIsolation = true }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    /// </summary>
     let buildArgs (parameters: MSTestParams) (assembly: string) =
         let testResultsFile =
             if parameters.ResultsDir <> null then
@@ -103,17 +114,22 @@ module MSTest =
         |> StringBuilder.forEach parameters.Details StringBuilder.appendIfNotNullOrEmpty "/detail:"
         |> StringBuilder.toText
 
+    /// <summary>
     /// Runs MSTest command line tool on a group of assemblies.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default MSTestParams value.
-    ///  - `assemblies` - Sequence of one or more assemblies containing Microsoft Visual Studio Unit Test Framework unit tests.
+    /// <param name="setParams">Function used to manipulate the default MSTestParams value.</param>
+    /// <param name="assemblies">Sequence of one or more assemblies containing Microsoft Visual Studio Unit
+    /// Test Framework unit tests.</param>
     ///
-    /// ## Sample
-    ///     Target "Test" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "Test" (fun _ ->
     ///         !! (testDir + @"\*.Tests.dll")
     ///           |> MSTest (fun p -> { p with Category = "group1" })
     ///     )
+    /// </code>
+    /// </example>  
     let exec (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "MSTest" details

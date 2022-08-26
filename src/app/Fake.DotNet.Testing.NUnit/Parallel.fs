@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing.NUnit
 
-/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests in parallel.
+/// <summary>
+/// Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.
+/// </summary>
 module Parallel =
 
     open Fake.Testing.Common
@@ -29,17 +31,21 @@ module Parallel =
             { WorseReturnCode = Int32.MaxValue
               Messages = [] }
 
+    /// <summary>
     /// Runs NUnit in parallel on a group of assemblies.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default `NUnitParams` value.
-    ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
+    /// <param name="setParams">Function used to manipulate the default <c>NUnitParams</c> value.</param>
+    /// <param name="assemblies">Sequence of one or more assemblies containing NUnit unit tests.</param>
     ///
-    /// ## Sample
-    ///     Target "Test" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "Test" (fun _ ->
     ///         !! (testDir + @"\Test.*.dll")
     ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
     ///     )
+    /// </code>
+    /// </example>
     let run (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "NUnitParallel" details

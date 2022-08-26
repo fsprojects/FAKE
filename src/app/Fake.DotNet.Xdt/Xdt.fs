@@ -1,6 +1,8 @@
 ﻿namespace Fake.DotNet
 
+/// <summary>
 /// Contains functions used to transform config (or any XML) files using Microsoft's XML Document Transformations.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Xdt =
 
@@ -81,12 +83,13 @@ module Xdt =
                     Trace.openTagUnsafe xdtTag "StartSectionNormal"
                     Trace.log (String.Format(message, messageArgs))
 
+    /// <summary>
     /// Reads XML file (typically a config file), makes changes according to XDT transform syntax, saves result.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `inXmlFile` - The XML file to read
-    /// - `transformFile` - The XML transformation file
-    /// - `outXmlFile` - The output file
+    /// <param name="inXmlFile">The XML file to read</param>
+    /// <param name="transformFile">The XML transformation file</param>
+    /// <param name="outXmlFile">The output file</param>
     let transformFile (inXmlFile: string) (transformFile: string) (outXmlFile: string) =
         if not <| File.Exists inXmlFile then
             Trace.traceErrorfn "XML file %s does not exist." inXmlFile
@@ -108,11 +111,13 @@ module Xdt =
 
         xml.Save(outXmlFile)
 
-    /// Modifies an XML file in place using an XDT file named by inserting a .configName in between the filename and .extension.
+    /// <summary>
+    /// Modifies an XML file in place using an XDT file named by inserting a .configName in between
+    /// the filename and .extension.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `configName` - The config name to insert
-    /// - `xmlFile` - The XML file to transform
+    /// <param name="configName">The config name to insert</param>
+    /// <param name="xmlFile">The XML file to transform</param>
     let transformFileWithConfigName (configName: string) (xmlFile: string) =
         let xdt = Path.ChangeExtension(xmlFile, configName + (Path.GetExtension(xmlFile)))
 
@@ -121,10 +126,12 @@ module Xdt =
         else
             Trace.traceImportantfn "No %s config file found for '%s'. Skipping." configName xmlFile
 
-    /// Modifies XML files in place using an XDT file named by inserting a .configName in between each filename and .extension.
+    /// <summary>
+    /// Modifies XML files in place using an XDT file named by inserting a .configName in between each
+    /// filename and .extension.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `configName` - The config name to insert
-    /// - `files` - The set of XML files to transform
+    /// <param name="configName">The config name to insert</param>
+    /// <param name="files">The set of XML files to transform</param>
     let transformFilesWithConfigName (configName: string) (files: Fake.IO.IGlobbingPattern) =
         Seq.iter (transformFileWithConfigName configName) files

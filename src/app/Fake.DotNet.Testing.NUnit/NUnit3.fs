@@ -1,15 +1,19 @@
 namespace Fake.DotNet.Testing
 
-/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
+/// <summary>
+/// Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.
+/// </summary>
 ///
-/// ### Sample
-///        Target.create "Test" (fun _ ->
+/// <example>
+/// <code lang="fsharp">
+/// Target.create "Test" (fun _ ->
 ///            !! (testDir + "/NUnit.Test.*.dll")
 ///              |> NUnit3.run (fun p ->
 ///                  {p with
 ///                        ShadowCopy = false })
 ///        )
-///
+/// </code>
+/// </example>
 module NUnit3 =
 
     open Fake.Testing.Common
@@ -35,8 +39,10 @@ module NUnit3 =
             | SeparateProcessModel -> "Separate"
             | MultipleProcessModel -> "Multiple"
 
+    /// <summary>
     /// The --domain option controls of the creation of AppDomains for running tests.
-    /// See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+    /// See <a href="http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.6.4">NUnit-Console Command Line Options</a>
+    /// </summary>
     type NUnit3DomainModel =
         /// The default is to use multiple domains if multiple assemblies are listed on the command line.
         /// Otherwise a single domain is used.
@@ -56,9 +62,12 @@ module NUnit3 =
             | SingleDomainModel -> "Single"
             | MultipleDomainModel -> "Multiple"
 
-    /// The --framework option in running NUnit 3. There are three kinds - VXY, which means either .NET framework or
-    /// Mono, NetXY (use .NET framework with given version) and MonoXY (Mono framework with given version).
-    /// You can use Net or Mono to let NUnit select the version. You can pass any value using Other.
+    /// <summary>
+    /// The <c>--framework</c> option in running NUnit 3. There are three kinds - VXY, which means either
+    /// .NET framework or Mono, NetXY (use .NET framework with given version) and MonoXY
+    /// (Mono framework with given version). You can use Net or Mono to let NUnit select the version. You can
+    /// pass any value using Other.
+    /// </summary>
     type NUnit3Runtime =
         /// Uses the runtime under which the assembly was built.
         | Default
@@ -107,7 +116,7 @@ module NUnit3 =
     /// Option which allows to specify if a NUnit error should break the build.
     type NUnit3ErrorLevel = TestRunnerErrorLevel
 
-    /// The --trace option in NUnit3 console runner. Specifies the internal nunit runner log level.
+    /// The <c>--trace</c> option in NUnit3 console runner. Specifies the internal nunit runner log level.
     type NUnit3TraceLevel =
         | Default
         | Off
@@ -125,7 +134,7 @@ module NUnit3 =
             | Info -> "Info"
             | Verbose -> "Verbose"
 
-    /// The --labels option in NUnit3 console runner. Specify whether to write test case names to the output.
+    /// The <c>--labels</c> option in NUnit3 console runner. Specify whether to write test case names to the output.
     type LabelsLevel =
         | Default
         | Off
@@ -139,9 +148,15 @@ module NUnit3 =
             | On -> "On"
             | All -> "All"
 
-    /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
-    ///
-    /// For reference, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
+    /// <summary>
+    /// The NUnit 3 Console Parameters type. FAKE will use <a href="/guide/fake-testing-nunit3.html">
+    /// NUnit3Defaults</a> for values not provided.
+    /// </summary>
+    /// <remarks>
+    /// For reference, see:
+    /// <a href="https://github.com/nunit/docs/wiki/Console-Command-Line">NUnit3 command line options</a>
+    /// </remarks>
+    /// 
     type NUnit3Params =
         {
             /// The path to the NUnit3 console runner: `nunit3-console.exe`
@@ -151,9 +166,10 @@ module NUnit3 =
             Testlist: string
 
             /// An expression indicating which tests to run. It may specify test names, classes, methods,
-            /// categories or properties comparing them to actual values with the operators ==, !=, =~ and !~.
-            /// See [NUnit documentation](https://github.com/nunit/docs/wiki/Test-Selection-Language) for a full
-            /// description of the syntax.
+            /// categories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>,
+            /// <c>=~</c> and <c>!~</c>. See
+            /// <a href="https://github.com/nunit/docs/wiki/Test-Selection-Language">NUnit documentation</a>
+            /// for a full description of the syntax.
             Where: string
 
             /// Name of a project configuration to load (e.g.: Debug)
@@ -167,11 +183,11 @@ module NUnit3 =
             /// This setting is used to control running your assemblies in parallel.
             Agents: int option
 
-            /// Controls how NUnit loads tests in processes. See: `NUnit3ProcessModel`
+            /// Controls how NUnit loads tests in processes. See: <c>NUnit3ProcessModel</c>
             Domain: NUnit3DomainModel
 
             /// Allows you to specify the version of the runtime to be used in executing tests.
-            /// Default value is runtime under which the assembly was built. See: `NUnit3Runtime`
+            /// Default value is runtime under which the assembly was built. See: <c>NUnit3Runtime</c>
             Framework: NUnit3Runtime
 
             /// Run tests in a 32-bit process on 64-bit systems.
@@ -206,9 +222,9 @@ module NUnit3 =
             ErrorDir: string
 
             /// Output specs for saving the test results. Default value is TestResult.xml
-            /// Passing empty list does not save any result (--noresult option in NUnit)
+            /// Passing empty list does not save any result (<c>--noresult</c> option in NUnit)
             /// For more information,
-            /// see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
+            /// see: <a href="https://github.com/nunit/docs/wiki/Console-Command-Line">NUnit3 command line options</a>
             ResultSpecs: string list
 
             /// Tells .NET to copy loaded assemblies to the shadow-copy directory.
@@ -220,14 +236,14 @@ module NUnit3 =
             /// Specify whether to write test case names to the output.
             Labels: LabelsLevel
 
-            /// Default: `TestRunnerErrorLevel`
+            /// Default: <c>TestRunnerErrorLevel</c>
             ErrorLevel: NUnit3ErrorLevel
 
             /// Controls the trace logs NUnit3 will output, defaults to Off
             TraceLevel: NUnit3TraceLevel
 
             /// Skips assemblies that do not contain tests or assemblies that contain the
-            /// `NUnit.Framework.NonTestAssemblyAttribute` without raising an error
+            /// <c>NUnit.Framework.NonTestAssemblyAttribute</c> without raising an error
             SkipNonTestAssemblies: bool
 
             /// A test parameter specified in the form name=value. Multiple parameters may be specified,
@@ -249,34 +265,86 @@ module NUnit3 =
         | Some path -> path
         | None -> toolName
     
-    /// The `NUnit3Params` default parameters.
-    ///
-    /// - `ToolPath` - The `nunit-console.exe` path if it exists in `tools/Nunit/`.
-    /// - `Testlist` - `""`
-    /// - `Where` - `""`
-    /// - `Config` - `""`
-    /// - `ProcessModel` - `DefaultProcessModel`
-    /// - `Agents` - `None`
-    /// - `Domain` - `DefaultDomainModel`
-    /// - `Framework` - `""`
-    /// - `Force32bit` - `false`
-    /// - `DisposeRunners` - `false`
-    /// - `Timeout` - `2147483647 milliseconds`
-    /// - `Seed` - `-1` (negative seed is ignored by NUnit and is not sent to it)
-    /// - `Workers` - `None`
-    /// - `StopOnError` - `false`
-    /// - `WorkingDir` - `""`
-    /// - `OutputDir` - `""`
-    /// - `ErrorDir` - `""`
-    /// - `ResultSpecs` - `"TestResult.xml"`
-    /// - `ShadowCopy` - `false`
-    /// - `TeamCity` - `false`
-    /// - `ErrorLevel` - `Error`
-    /// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
-    /// - `SkipNonTestAssemblies` - `false`
-    /// - `Params` - `""`
-    /// - `EnvironmentVariables` - `[]`
-    /// ## Defaults
+    /// <summary>
+    /// The <c>NUnit3Params</c> default parameters.
+    /// </summary>
+    /// <list type="number">
+    /// <item>
+    /// <c>ToolPath</c> - The <c>nunit-console.exe</c> path if it exists in <c>tools/Nunit/</c>.
+    /// </item>
+    /// <item>
+    /// <c>Testlist</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>Where</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>Config</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ProcessModel</c> - <c>DefaultProcessModel</c>
+    /// </item>
+    /// <item>
+    /// <c>Agents</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>Domain</c> - <c>DefaultDomainModel</c>
+    /// </item>
+    /// <item>
+    /// <c>Framework</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>Force32bit</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>DisposeRunners</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>Timeout</c> - 2147483647 milliseconds
+    /// </item>
+    /// <item>
+    /// <c>Seed</c> - <c>-1</c> (negative seed is ignored by NUnit and is not sent to it)
+    /// </item>
+    /// <item>
+    /// <c>Workers</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>StopOnError</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>WorkingDir</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>OutputDir</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ErrorDir</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>ResultSpecs</c> - <c>"TestResult.xml"</c>
+    /// </item>
+    /// <item>
+    /// <c>ShadowCopy</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>TeamCity</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>ErrorLevel</c> - <c>Error</c>
+    /// </item>
+    /// <item>
+    /// <c>TraceLevel</c> - <c>Default</c> (By default NUnit3 sets this to off internally)
+    /// </item>
+    /// <item>
+    /// <c>SkipNonTestAssemblies</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>Params</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>EnvironmentVariables</c> - <c>[]</c>
+    /// </item>
+    /// </list>
     let NUnit3Defaults =
         { ToolPath = toolPath "nunit3-console.exe"
           Testlist = ""
@@ -305,7 +373,9 @@ module NUnit3 =
           Params = ""
           Environment = Map.empty<string, string> }
 
+    /// <summary>
     /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
+    /// </summary>
     /// [omit]
     let getWorkingDir parameters =
         Seq.find
@@ -315,7 +385,9 @@ module NUnit3 =
               "." ]
         |> Path.GetFullPath
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    /// </summary>
     let buildArgs (parameters: NUnit3Params) (assemblies: string seq) =
         let appendResultString results sb =
             match results, sb with
@@ -396,11 +468,12 @@ module NUnit3 =
                 | OK -> ()
                 | _ -> raise (FailedTestsException(errorDescription exitCode)))
 
+    /// <summary>
     /// Run NUnit3 with given configuration parameters on the list of assemblies
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - NUnit parameters
-    ///  - `assemblies` - test assemblies to run NUnit on
+    /// <param name="setParams">NUnit parameters</param>
+    /// <param name="assemblies">Test assemblies to run NUnit on</param>
     let run (setParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
         let assemblies = assemblies |> Seq.toArray
         let details = assemblies |> String.separated ", "

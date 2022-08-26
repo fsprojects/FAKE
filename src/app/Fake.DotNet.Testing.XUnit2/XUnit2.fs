@@ -7,7 +7,9 @@ open Fake.Core
 open System
 open System.Text
 
-/// Contains tasks to run [xUnit](https://github.com/xunit/xunit) v2 unit tests.
+/// <summary>
+/// Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.
+/// </summary>
 module XUnit2 =
 
     /// The parallelization mode of the xUnit2 runner.
@@ -43,7 +45,9 @@ module XUnit2 =
             | Unlimited -> Some 0
             | MaxThreads count -> Some count
 
+    /// <summary>
     /// The xUnit2 parameter type.
+    /// </summary>
     [<CLIMutable>]
     type XUnit2Params =
         {
@@ -147,11 +151,12 @@ module XUnit2 =
           Class = None
           Method = None }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `parameters` - XUnit parameters
-    ///  - `assemblies` - List of assemblies to run tests in
+    /// <param name="parameters">XUnit parameters</param>
+    /// <param name="assemblies">List of assemblies to run tests in</param>
     let buildArgs (parameters: XUnit2Params) (assemblies: string seq) =
         let formatTrait traitFlag (name, value) =
             sprintf @"%s ""%s=%s""" traitFlag name value
@@ -186,9 +191,11 @@ module XUnit2 =
         |> StringBuilder.appendIfSome parameters.Method (sprintf @"-method ""%s""")
         |> StringBuilder.toText
 
-    /// Helper method to detect if the xunit console runner supports the -noappdomain flag.
+    /// <summary>
+    /// Helper method to detect if the xunit console runner supports the <c>-noappdomain</c> flag.
     /// If the xunit console runner does not support this flag, it will change the value to false
     /// so it does not interfere with older versions.
+    /// </summary>
     let internal discoverNoAppDomainExists parameters =                
         let helpText =
             CreateProcess.fromRawCommandLine parameters.ToolPath ""
@@ -220,22 +227,26 @@ module XUnit2 =
         let failBuildIfXUnitReportedError errorLevel =
             buildErrorMessage >> Option.iter (failBuildWithMessage errorLevel)
 
+    /// <summary>
     /// Runs xUnit v2 unit tests in the given assemblies via the given xUnit2 runner.
     /// Will fail if the runner terminates with non-zero exit code.
     /// The xUnit2 runner terminates with a non-zero exit code if any of the tests
     /// in the given assembly fail.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default `XUnit2Params` value.
-    ///  - `assemblies` - Sequence of one or more assemblies containing xUnit unit tests.
+    /// <param name="setParams">Function used to manipulate the default <c>XUnit2Params</c> value.</param>
+    /// <param name="assemblies">Sequence of one or more assemblies containing xUnit unit tests.</param>
     ///
-    /// ## Sample
-    ///     open Fake.DotNet.Testing
+    /// <example>
+    /// <code lang="fsharp">
+    /// open Fake.DotNet.Testing
     ///     open Fake.IO.Globbing.Operators
     ///     Target.create "Test" (fun _ ->
     ///         !! (testDir @@ "xUnit.Test.*.dll")
     ///         |> XUnit2.run (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
     ///     )
+    /// </code>
+    /// </example>
     let run setParams assemblies =
         let details = String.separated ", " assemblies
         use __ = Trace.traceTask "xUnit2" details

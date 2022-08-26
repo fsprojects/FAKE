@@ -1,6 +1,8 @@
 namespace Fake.DotNet.Testing.NUnit
 
-/// Contains types and functions for working with [NUnit](http://www.nunit.org/) unit tests result xml.
+/// <summary>
+/// Contains types and functions for working with <a href="http://www.nunit.org/">NUnit</a> unit tests result xml.
+/// </summary>
 module Xml =
 
     open Fake.IO
@@ -29,7 +31,11 @@ module Xml =
                 || el.Attribute(imp "type").Value = "SetUpFixture"))
         |> Seq.toList
 
+    /// <summary>
     /// Returns whether all tests in the given test result have succeeded
+    /// </summary>
+    ///
+    /// <param name="xDocs">A sequence of XML documents</param>
     let AllSucceeded xDocs =
         xDocs
         |> Seq.map GetTestAssemblies

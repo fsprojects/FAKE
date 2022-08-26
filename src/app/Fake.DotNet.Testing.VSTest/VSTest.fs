@@ -6,18 +6,18 @@ open System
 open System.IO
 open System.Text
 
-/// Contains tasks to run [VSTest](https://msdn.microsoft.com/en-us/library/ms182486.aspx) unit tests.
+/// <summary>
+/// Contains tasks to run <a href="https://msdn.microsoft.com/en-us/library/ms182486.aspx">VSTest</a> unit tests.
+/// </summary>
 [<RequireQualifiedAccess>]
 module VSTest =
 
-    /// [omit]
     let private vsTestPaths =
         [| @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
            @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
            @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
            @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow" |]
 
-    /// [omit]
     let private vsTestExe =
         if Environment.isMono then
             failwith "VSTest is not supported on the mono platform"
@@ -27,7 +27,10 @@ module VSTest =
     /// Option which allow to specify if a VSTest error should break the build.
     type ErrorLevel = TestRunnerErrorLevel
 
-    /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
+    /// <summary>
+    /// Parameter type to configure
+    /// <a href="https://msdn.microsoft.com/en-us/library/jj155800.aspx">VSTest.Console.exe</a>
+    /// </summary>
     type VSTestParams =
         {
             /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
@@ -117,8 +120,10 @@ module VSTest =
           ErrorLevel = ErrorLevel.Error
           TestAdapterPath = null }
 
+    /// <summary>
     /// Builds the command line arguments from the given parameter record and the given assemblies.
-    let buildArgs (parameters: VSTestParams) (assemblies: string seq) =
+    /// </summary>
+    let internal buildArgs (parameters: VSTestParams) (assemblies: string seq) =
         let testsToRun =
             if not (Seq.isEmpty parameters.Tests) then
                 sprintf @"/Tests:%s" (parameters.Tests |> String.separated ",")
@@ -172,16 +177,22 @@ module VSTest =
                 Trace.traceError message
                 failwith message)
 
+    /// <summary>
     /// Runs the VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default VSTestParams values.
-    ///  - `assemblies` - Sequence of one or more assemblies containing Microsoft Visual Studio Unit Test Framework unit tests.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the default VSTestParams values.</param>
+    /// <param name="assemblies">Sequence of one or more assemblies containing Microsoft Visual Studio Unit
+    /// Test Framework unit tests.</param>
     ///
-    /// ## Sample usage
-    ///     Target.create "Test" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target.create "Test" (fun _ ->
     ///         !! (testDir + @"\*.Tests.dll")
     ///           |> VSTest.run (fun p -> { p with SettingsPath = "Local.RunSettings" })
     ///     )
+    /// </code>
+    /// </example>
     let run (setParams: VSTestParams -> VSTestParams) (assemblies: string seq) =
         let assemblies = assemblies |> Seq.toArray
         let details = assemblies |> String.separated ", "
