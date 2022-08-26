@@ -3,7 +3,9 @@
 open Fake.Tools.Git
 open System.IO
 
+/// <summary>
 /// Contains helper functions which can be used to retrieve file status information from git.
+/// </summary>
 [<RequireQualifiedAccess>]
 module FileStatus =
 
@@ -26,12 +28,13 @@ module FileStatus =
             | "T" -> TypeChange
             | _ -> Modified
 
+    /// <summary>
     /// Gets the changed files between the given revisions
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
-    ///  - `revision1` - The first revision to use.
-    ///  - `revision2` - The second revision to use.
+    /// <param name="repositoryDir">The git repository.</param>
+    /// <param name="revision1">The first revision to use.</param>
+    /// <param name="revision2">The second revision to use.</param>
     let getChangedFiles repositoryDir revision1 revision2 =
         SanityChecks.checkRevisionExists repositoryDir revision1
 
@@ -47,26 +50,29 @@ module FileStatus =
             let a = line.Split('\t')
             FileStatus.Parse a[0], a[1])
 
+    /// <summary>
     /// Gets all changed files in the current revision
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getAllFiles repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir <| sprintf "ls-files"
         msg |> Seq.map (fun line -> Added, line)
 
+    /// <summary>
     /// Gets the changed files since the given revision incl. changes in the working copy
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
-    ///  - `revision` - The revision to use.
+    /// <param name="repositoryDir">The git repository.</param>
+    /// <param name="revision">The revision to use.</param>
     let getChangedFilesInWorkingCopy repositoryDir revision =
         getChangedFiles repositoryDir revision ""
 
+    /// <summary>
     /// Gets all conflicted files
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getConflictedFiles repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir "ls-files --unmerged"
 
@@ -76,16 +82,18 @@ module FileStatus =
         |> Seq.map (fun (index, file) -> file.Substring(index + 1))
         |> Seq.toList
 
+    /// <summary>
     /// Returns true if the working copy is in a conflicted merge otherwise false
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let isInTheMiddleOfConflictedMerge repositoryDir = [] <> getConflictedFiles repositoryDir
 
+    /// <summary>
     /// Returns the current rebase directory for the given repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getRebaseDir (repositoryDir: string) =
         if Directory.Exists(repositoryDir + ".git\\rebase-apply\\") then
             repositoryDir + ".git\\rebase-apply\\"
@@ -94,26 +102,29 @@ module FileStatus =
         else
             ""
 
+    /// <summary>
     /// Returns true if the given repository is in the middle of a rebase process.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let isInTheMiddleOfRebase repositoryDir =
         let rebaseDir = getRebaseDir repositoryDir
         Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "applying"))
 
+    /// <summary>
     /// Returns true if the given repository is in the middle of a patch process.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let isInTheMiddleOfPatch repositoryDir =
         let rebaseDir = getRebaseDir repositoryDir
         Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "rebasing"))
 
+    /// <summary>
     /// Cleans the working copy by doing a git reset --hard and a clean -f.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let cleanWorkingCopy repositoryDir =
         Reset.ResetHard repositoryDir
         CommandHelper.showGitCommand repositoryDir "clean -f"

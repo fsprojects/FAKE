@@ -1,6 +1,8 @@
 namespace Fake.Testing
 
-/// Contains tasks to run [Fixie](https://fixie.github.io/) unit tests.
+/// <summary>
+/// Contains tasks to run <a href="https://fixie.github.io/">Fixie</a> unit tests.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Fixie =
 
@@ -8,7 +10,9 @@ module Fixie =
     open Fake.Core
     open Fake.DotNet
 
+    /// <summary>
     /// Args type to configure the Fixie runner
+    /// </summary>
     type FixieArgs =
         {
           /// The configuration under which to build
@@ -55,7 +59,7 @@ module Fixie =
                     |> StringBuilder.appendWithoutQuotes value
                 ) builder
 
-        new StringBuilder()
+        StringBuilder()
         |> appendCustomOptions customArguments
         |> StringBuilder.toText
 
@@ -68,8 +72,7 @@ module Fixie =
         | CustomArguments when fixieArgs.CustomArguments.Length > 0 -> sprintf "-- %s" (formatCustomArguments fixieArgs.CustomArguments)
         | _ -> ""
 
-    /// [omit]
-    let formatFixieArguments (fixieArgs:FixieArgs) =
+    let internal formatFixieArguments (fixieArgs:FixieArgs) =
         let format = formatArgument fixieArgs
 
         let configuration = format Configuration 
@@ -84,13 +87,17 @@ module Fixie =
         |> String.trim
 
 
-    /// This task to can be used to run [Fixie](https://fixie.github.io/) on test libraries.
+    /// <summary>
+    /// This task to can be used to run <a href="https://fixie.github.io/">Fixie</a> on test libraries.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the Fixie default parameters.
+    /// <param name="setParams">Function used to overwrite the Fixie default parameters.</param>
     ///
-    /// ## Sample
-    ///   Fixie.run (fun p -> { p with Configuration = "Release"; CustomArguments = ["custom","1"; "test","2"] })
+    /// <example>
+    /// <code lang="fsharp">
+    /// Fixie.run (fun p -> { p with Configuration = "Release"; CustomArguments = ["custom","1"; "test","2"] })
+    /// </code>
+    /// </example>
     let run setParams =
         let parameters = setParams FixieDefaults
 

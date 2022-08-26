@@ -6,14 +6,24 @@ open Fake.Testing.Common
 open System
 open System.IO
 
-/// Helpers to run the npm tool.
+/// <namespacedoc>
+/// <summary>
+/// JavaScript namespace contains tasks to interact with JavaScript tools, like NPM, Yarn and TypeScript compiler
+/// </summary>
+/// </namespacedoc>
 /// 
-/// ## Sample
-///
-///     Npm.install (fun o -> 
+/// <summary>
+/// Helpers to run the npm tool.
+/// </summary>
+/// 
+/// <example>
+/// <code lang="fsharp">
+/// Npm.install (fun o -> 
 ///         { o with
 ///             WorkingDirectory = "./src/FAKESimple.Web/"
 ///         })
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module Npm =
 
@@ -48,7 +58,9 @@ module Npm =
           WorkingDirectory: string
           Timeout: TimeSpan }
 
+    /// <summary>
     /// Npm default parameters
+    /// </summary>
     let defaultNpmParams = 
         { Src = ""
           NpmFilePath = npmFileName
@@ -95,90 +107,123 @@ module Npm =
     let private npm setParams = defaultNpmParams |> setParams |> execute
 
   
-    /// Run `npm install --force`
+    /// <summary>
+    /// Run <c>npm install --force</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.installForced (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.installForced (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example>
     let installForced setParams = npm setParams <| Install Forced
 
-    /// Run `npm install`
+    /// <summary>
+    /// Run <c>npm install</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.install (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.install (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example>
     let install setParams = npm setParams <| Install Standard 
 
-    /// Run `npm run <command>`
+    /// <summary>
+    /// Run <c>npm run &lt;command&gt;</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'command' - command to run
-    /// - 'setParams' - set command parameters
+    /// <param name="command">Command to run</param>
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.run "someCommand" (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.run "someCommand" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example> 
     let run command setParams = npm setParams <| Run command
     
-    /// Run `npm run --silent <command>`. Suppresses npm error output. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    /// <summary>
+    /// Run <c>npm run --silent &lt;command&gt;</c>. Suppresses npm error output.
+    /// See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'command' - command to run
-    /// - 'setParams' - set command parameters
+    /// <param name="command">Command to run</param>
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.runSilent "someCommand" (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.runSilent "someCommand" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example>
     let runSilent command setParams = npm setParams <| RunSilent command
    
-    /// Run `npm run --silent <command>`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    /// <summary>
+    /// Run <c>npm run --silent &lt;command&gt;</c>. Suppresses npm error output and will raise an
+    /// <c>FailedTestsException</c> exception after the script execution instead of failing, useful for CI.
+    /// See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'command' - command to run
-    /// - 'setParams' - set command parameters
+    /// <param name="command">Command to run</param>
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.runTest "test" (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.runTest "test" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example>
     let runTest command setParams = npm setParams <| RunTest command
    
-    /// Run `npm test --silent`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
+    /// <summary>
+    /// Run <c>npm test --silent</c>. Suppresses npm error output and will raise an <c>FailedTestsException</c>
+    /// exception after the script execution instead of failing, useful for CI.
+    /// See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.test (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.test (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example>
     let test setParams = npm setParams Test
    
-    /// Run `npm <command>`. Used to run any command.
+    /// <summary>
+    /// Run <c>npm &lt;command&gt;</c>. Used to run any command.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - 'command' - command to run
-    /// - 'setParams' - set command parameters
+    /// <param name="command">Command to run</param>
+    /// <param name="setParams">Set command parameters</param>
     ///
-    /// ## Sample
-    ///     Npm.exec "--v" (fun o -> 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.exec "--v" (fun o -> 
     ///         { o with
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
+    /// </code>
+    /// </example> 
     let exec command setParams = npm setParams <| Custom command

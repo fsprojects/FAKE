@@ -5,20 +5,29 @@ open Fake.IO
 open System.Threading
 open System
 
+/// <summary>
+/// The state of the file
+/// </summary>
 type FileStatus =
     | Deleted
     | Created
     | Changed
 
+/// <summary>
+/// Capture file change operation, see <c>FileStatus</c>
+/// </summary>
 type FileChange =
     { FullPath : string
       Name : string
       Status : FileStatus }
 
+/// <summary>
 /// This module contains helpers to react to file system events.
+/// </summary>
 ///
-/// ## Sample
-///     Target.create "Watch" (fun _ ->
+/// <example>
+/// <code lang="fsharp">
+/// Target.create "Watch" (fun _ ->
 ///         use watcher = !! "c:/projects/watchDir/*.txt" |> ChangeWatcher.run (fun changes ->
 ///             // do something
 ///         )
@@ -27,10 +36,11 @@ type FileChange =
 ///
 ///         watcher.Dispose() // if you need to cleanup the watcher.
 ///     )
-///
+/// </code>
+/// </example>
 module ChangeWatcher =
 
-    /// The `ChangeWatcher` options
+    /// The <c>ChangeWatcher</c> options
     type Options =
         { IncludeSubdirectories: bool }
 
@@ -39,13 +49,14 @@ module ChangeWatcher =
                    Name = e.Name
                    Status = status }
 
+    /// <summary>
     /// Watches for changes in the matching files.
     /// Returns an IDisposable which allows to dispose all internally used FileSystemWatchers.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fOptions` - `ChangeWatcher` options
-    ///  - `onChange` - function to call when a change is detected.
-    ///  - `fileIncludes` - The glob pattern for files to watch for changes.
+    /// <param name="fOptions"><c>ChangeWatcher</c> options</param>
+    /// <param name="onChange">Function to call when a change is detected.</param>
+    /// <param name="fileIncludes">The glob pattern for files to watch for changes.</param>
     let runWithOptions (fOptions:Options -> Options) (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
         let options = fOptions { IncludeSubdirectories = true }
         let dirsToWatch = fileIncludes |> GlobbingPattern.getBaseDirectoryIncludes
@@ -116,10 +127,11 @@ module ChangeWatcher =
                   if timer.IsValueCreated then timer.Value.Dispose() }
 
 
+    /// <summary>
     /// Watches for changes in the matching files with the default options
     /// Returns an IDisposable which allows to dispose all internally used FileSystemWatchers.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `onChange` - function to call when a change is detected.
-    ///  - `fileIncludes` - The glob pattern for files to watch for changes.
+    /// <param name="onChange">Function to call when a change is detected.</param>
+    /// <param name="fileIncludes">The glob pattern for files to watch for changes.</param>
     let run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = runWithOptions id onChange fileIncludes

@@ -1,7 +1,9 @@
 namespace Fake.IO
 open System.Collections.Generic
 
+/// <summary>
 /// The glob pattern type
+/// </summary>
 type IGlobbingPattern =
     inherit IEnumerable<string>
     abstract BaseDirectory : string
@@ -12,7 +14,9 @@ namespace Fake.IO.Globbing
 open Fake.IO
 open System.Collections.Generic
 
+/// <summary>
 /// The lazy glob pattern type
+/// </summary>
 type LazyGlobbingPattern =
     { BaseDirectory : string
       Includes : string list
@@ -47,6 +51,9 @@ type LazyGlobbingPattern =
         
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
+/// <summary>
+/// Holds globbing patterns for backward compatability, see <c>GlobbingPatternExtensions</c>
+/// </summary>
 type ResolvedGlobbingPattern =
     { BaseDirectory : string
       Includes : string list
@@ -66,6 +73,9 @@ namespace Fake.IO
 open System.IO
 open Fake.IO.Globbing
 
+/// <summary>
+/// Contains extensions for glob pattern module.
+/// </summary>
 [<AutoOpen>] // A bit of a hack but we need those extensions for backwards compat.
 module GlobbingPatternExtensions =
     type IGlobbingPattern with
@@ -118,6 +128,9 @@ module GlobbingPatternExtensions =
             included && not excluded
 
 
+/// <summary>
+/// Contains tasks to interact with file system using glob patterns
+/// </summary>
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module GlobbingPattern =
     let private defaultBaseDir = Path.GetFullPath "."
@@ -153,21 +166,27 @@ namespace Fake.IO.Globbing
 
 open Fake.IO
 
+/// <summary>
 /// Contains operators to find and process files.
-/// This module is part of the `Fake.IO.FileSystem` package
+/// This module is part of the <c>Fake.IO.FileSystem</c> package
+/// </summary>
 ///
-/// ### Simple glob using as list
-///
-///     #r "paket: nuget Fake.IO.FileSystem //"
+/// <example>
+/// Simple glob using as list
+/// <code lang="fsharp">
+/// #r "paket: nuget Fake.IO.FileSystem //"
 ///     open Fake.IO.Globbing.Operators
 ///     let csProjectFiles = !! "src/*.csproj"
 ///     
 ///     for projectFile in csProjectFiles do
 ///         printf "F# ProjectFile: %s" projectFile
+/// </code>
+/// </example>  
 ///
-/// ### Combine globs
-///
-///     #r "paket: nuget Fake.IO.FileSystem //"
+/// <example>
+/// Combine globs
+/// <code lang="fsharp">
+/// #r "paket: nuget Fake.IO.FileSystem //"
 ///     open Fake.IO.Globbing.Operators
 ///     let projectFiles =
 ///         !! "src/*/*.*proj"
@@ -176,10 +195,13 @@ open Fake.IO
 ///     
 ///     for projectFile in projectFiles do
 ///         printf "ProjectFile: %s" projectFile
+/// </code>
+/// </example>
 ///
-/// ### Forward globs to tasks
-///
-///     #r "paket:
+/// <example>
+/// Forward globs to tasks
+/// <code lang="fsharp">
+/// #r "paket:
 ///     nuget Fake.Core.Target
 ///     nuget Fake.IO.FileSystem //"
 ///     open Fake.Core
@@ -189,22 +211,27 @@ open Fake.IO
 ///        !! "src/*/*/obj/**/*.nuspec"
 ///        |> File.deleteAll
 ///     )
-///
+/// </code>
+/// </example>
 module Operators =
+    /// <summary>
     /// Add Include operator
+    /// </summary>
     ///
-    /// ## Parameters
+    /// <param name="x">The pattern to include</param>
     ///  - `x` - The pattern to include
     let inline (++) (x : IGlobbingPattern) pattern = x.And pattern
 
+    /// <summary>
     /// Exclude operator
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `x` - The pattern to exclude
+    /// <param name="x">The pattern to include</param>
     let inline (--) (x : IGlobbingPattern) pattern = x.ButNot pattern
 
-    /// Includes a single pattern and scans the files - `!! x = AllFilesMatching x`
+    /// <summary>
+    /// Includes a single pattern and scans the files - <c>!! x = AllFilesMatching x</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `x` - The pattern to create globbing from
+    /// <param name="x">The pattern to create globbing from</param>
     let inline (!!) x = GlobbingPattern.create x

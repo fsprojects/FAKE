@@ -5,7 +5,15 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
-/// Contains helper functions to use [DocFx](https://dotnet.github.io/docfx/)
+/// <namespacedoc>
+/// <summary>
+/// Documentation namespace contains tasks to generate documentation for source code, like DocFx
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// Contains helper functions to use <a href="https://dotnet.github.io/docfx/">DocFx</a>
+/// </summary>
 [<RequireQualifiedAccess>]
 module DocFx =
 
@@ -19,7 +27,9 @@ module DocFx =
         | Some path -> path
         | None -> docFxExe
 
+    /// <summary>
     /// Common parameters for DocFx executable
+    /// </summary>
     type CommonParams =
         {
             /// The tool path - FAKE tries to find docfx.exe automatically in any sub folder.
@@ -38,14 +48,18 @@ module DocFx =
               WorkingDirectory = ""
               Timeout = TimeSpan.FromMinutes 5. }
 
+    /// <summary>
     /// Execute the given DocFx command
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `command` - The command to execute
-    ///  - `args` - The arguments list to give to the command
+    /// <param name="command">The command to execute</param>
+    /// <param name="args">The arguments list to give to the command</param>
     /// 
-    /// ## Sample
-    ///     DocFx.exec docfx_project\docfx.json --serve
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.exec docfx_project\docfx.json --serve
+    /// </code>
+    /// </example>
     let exec setParams command args =
         let commandArgs = sprintf "%s %s" command args
         use __ = Trace.traceTask "DocFx" commandArgs
@@ -61,7 +75,9 @@ module DocFx =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Init-Command parameters
+    /// </summary>
     type InitParams =
         {
             /// Specify common docFx options
@@ -128,16 +144,20 @@ module DocFx =
         stringifyParams parameters
 
 
+    /// <summary>
     /// Initialize a DocFx documentation.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default Init parameters. See `InitParams.Create()`
-    /// ## Sample
-    ///
-    ///         DocFx.init (fun p ->
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the default Init parameters. See <c>InitParams.Create()</c></param>
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.init (fun p ->
     ///          { p with
     ///              Overwrite = true
     ///              Timeout = TimeSpan.FromMinutes 10.
     ///          })
+    /// </code>
+    /// </example>      
     let init setParams =
         let p = InitParams.Create() |> setParams
         p |> serializeInitParams |> exec (fun _ -> p.Common) "init"
@@ -151,7 +171,9 @@ module DocFx =
         | Warning
         | Error
 
+    /// <summary>
     /// Parameters for logging
+    /// </summary>
     type LogParams =
         {
             /// Specify the file name to save processing log.
@@ -190,7 +212,9 @@ module DocFx =
           ("repositoryRoot", p.RepoRoot)
           ("correlationId", p.CorrelationId) ]
 
+    /// <summary>
     /// Build-Command parameters
+    /// </summary>
     type BuildParams =
         {
             /// Specify common docFx options
@@ -401,22 +425,27 @@ module DocFx =
         p |> parseBuildParams |> stringifyParams |> sprintf "%s %s" p.ConfigFile
 
 
+    /// <summary>
     /// Builds a DocFx documentation.
-    ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default build parameters. See `BuildParams.Create()`
+    /// </summary>
     /// 
-    /// ## Sample
-    ///        DocFx.build (fun p ->
+    /// <param name="setParams">Function used to manipulate the default build parameters. See <c>BuildParams.Create()</c></param>
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.build (fun p ->
     ///         { p with
     ///             OutputFolder = "build" @@ "docs"
     ///             ConfigFile = "docs" @@ "docfx.json"
     ///         })
+    /// </code>
+    /// </example>
     let build setParams =
         let p = BuildParams.Create() |> setParams
         p |> serializeBuildParams |> exec (fun _ -> p.Common) "build"
 
+    /// <summary>
     /// Pdf-Command parameters
+    /// </summary>
     type PdfParams =
         {
             /// Specify build parameters.
@@ -507,14 +536,14 @@ module DocFx =
         |> stringifyParams
         |> sprintf "%s %s" p.BuildParams.ConfigFile
 
+    /// <summary>
     /// Builds a Pdf-File from a DocFx documentation.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default pdf parameters. See `PdfParams.Create()`
-    /// 
-    /// ## Sample
-    ///
-    ///        DocFx.pdf (fun p ->
+    /// <param name="setParams">Function used to manipulate the default pdf parameters. See <c>PdfParams.Create()</c></param>
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.pdf (fun p ->
     ///            { p with
     ///                    Name = "Docs.pdf" }
     ///              .WithBuildParams (fun b ->
@@ -522,12 +551,16 @@ module DocFx =
     ///                       OutputFolder = "build" @@ "docs"
     ///                       ConfigFile = "docs" @@ "docfx.json"})
     ///                    )
+    /// </code>
+    /// </example>
     let pdf setParams =
         let p = PdfParams.Create() |> setParams
         p |> serializePdfParams |> exec (fun _ -> p.BuildParams.Common) "pdf"
 
 
+    /// <summary>
     /// ExportTemplate-Command parameters
+    /// </summary>
     type ExportTemplateParams =
         {
             /// Specify common docFx options
@@ -558,23 +591,28 @@ module DocFx =
         |> stringifyParams
         |> sprintf "export %s %s" (p.Templates |> seperated)
 
+    /// <summary>
     /// Exports template files.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default exportTemplate parameters. See `ExportTemplateParams.Create()`
+    /// <param name="setParams">Function used to manipulate the default exportTemplate parameters. See <c>ExportTemplateParams.Create()</c></param>
     /// 
-    /// ## Sample
-    ///
-    ///         DocFx.exportTemplate (fun p ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.exportTemplate (fun p ->
     ///             { p with
     ///                     All = true
     ///                     OutputFolder = "templates"
     ///             })
+    /// </code>
+    /// </example>    
     let exportTemplate setParams =
         let p = ExportTemplateParams.Create() |> setParams
         p |> serializeExportTemplateParams |> exec (fun _ -> p.Common) "template"
 
+    /// <summary>
     /// Download-Command parameters
+    /// </summary>
     type DownloadParams =
         {
             /// Specify common docFx options
@@ -598,23 +636,28 @@ module DocFx =
     let private serializeDownloadParams p =
         [ ("xref", p.Uri) ] |> stringifyParams |> sprintf "%s %s" p.ArchiveFile
 
+    /// <summary>
     /// Download xref archive.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default download parameters. See `DownloadParams.Create()`
+    /// <param name="setParams">Function used to manipulate the default download parameters. See <c>DownloadParams.Create()</c></param>
     /// 
-    /// ## Sample
-    ///
-    ///         DocFx.download (fun p ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.download (fun p ->
     ///             { p with
     ///                     ArchiveFile = "archive"
     ///                     Uri = "uri"
     ///             })
+    /// </code>
+    /// </example>     
     let download setParams =
         let p = DownloadParams.Create() |> setParams
         p |> serializeDownloadParams |> exec (fun _ -> p.Common) "download"
 
+    /// <summary>
     /// Serve-Command parameters
+    /// </summary>
     type ServeParams =
         {
             /// Specify common docFx options
@@ -646,25 +689,29 @@ module DocFx =
         |> stringifyParams
         |> sprintf "%s %s" p.Folder
 
+    /// <summary>
     /// Serves a DocFx documentation.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default serve parameters. See `ServeParams.Create()`
+    /// <param name="setParams">Function used to manipulate the default serve parameters. See <c>ServeParams.Create()</c></param>
     /// 
-    /// ## Sample
-    ///
-    ///         DocFx.serve (fun p ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.serve (fun p ->
     ///             { p with
     ///                     Host = "localhost"
     ///                     Port = Some 80
     ///                     Folder = "docs"
     ///             })
-
+    /// </code>
+    /// </example>
     let serve setParams =
         let p = ServeParams.Create() |> setParams
         p |> serializeServeParams |> exec (fun _ -> p.Common) "serve"
 
+    /// <summary>
     /// Metadata-Command parameters
+    /// </summary>
     type MetadataParams =
         {
             /// Specify common docFx options
@@ -742,19 +789,21 @@ module DocFx =
         |> stringifyParams
         |> sprintf "%s %s %s" p.ConfigFile (seperated p.Projects)
 
+    /// <summary>
     /// Serves a DocFx documentation.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default serve parameters. See `MetadataParams.Create()`
+    /// <param name="setParams">Function used to manipulate the default serve parameters. See <c>MetadataParams.Create()</c></param>
     /// 
-    /// ## Sample
-    ///
-    ///         DocFx.metadata (fun p ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// DocFx.metadata (fun p ->
     ///             { p with
     ///                     ConfigFile = "docs" @@ "docfx.json"
     ///                     DisableGitFeatures = true
     ///             })
-
+    /// </code>
+    /// </example>
     let metadata setParams =
         let p = MetadataParams.Create() |> setParams
         p |> serializeMetadataParams |> exec (fun _ -> p.Common) "metadata"

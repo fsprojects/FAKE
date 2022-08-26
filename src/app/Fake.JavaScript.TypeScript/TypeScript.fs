@@ -6,12 +6,16 @@ open System
 open System.IO
 open System.Text
 
+/// <summary>
 /// Helpers to run the typeScript compiler.
+/// </summary>
 /// 
-/// ## Sample
-///
-///     !! "src/**/*.ts"
-///         |> TypeScript.compile (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+/// <example>
+/// <code lang="fsharp">
+/// !! "src/**/*.ts"
+///         |> TypeScript.compile (fun p -> { p with TimeOut = TimeSpan.MaxValue })
+/// </code>
+/// </example>   
 [<RequireQualifiedAccess>]
 module TypeScript =
     /// Generated ECMAScript version
@@ -105,7 +109,7 @@ module TypeScript =
           TimeOut = TimeSpan.FromMinutes 5. }
 
     /// [omit]
-    let buildArguments parameters file = 
+    let internal buildArguments parameters file = 
         let version = 
             match parameters.ECMAScript with
             | ECMAScript.ES3 -> "ES3"
@@ -130,7 +134,7 @@ module TypeScript =
             | ModuleGeneration.ESNext -> "ESNext"
         
         let args = 
-            new StringBuilder()
+            StringBuilder()
             |> StringBuilder.appendWithoutQuotes (" --target " + version)
             |> StringBuilder.appendIfSome parameters.OutputSingleFile (fun s -> sprintf " --outFile %s" s)
             |> StringBuilder.appendQuotedIfNotNull parameters.OutputPath " --outDir "
@@ -144,16 +148,19 @@ module TypeScript =
         
         args.ToString()
 
-    /// Run `tsc --declaration src/app/index.ts`
-    /// ## Parameters
+    /// <summary>
+    /// Run <c>tsc --declaration src/app/index.ts</c>
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to overwrite the TypeScript compiler flags.</param>
+    /// <param name="files">The type script files to compile.</param>
     ///
-    ///  - `setParams` - Function used to overwrite the TypeScript compiler flags.
-    ///  - `files` - The type script files to compile.
-    ///
-    /// ## Sample
-    ///
-    ///         !! "src/**/*.ts"
+    /// <example>
+    /// <code lang="fsharp">
+    /// !! "src/**/*.ts"
     ///             |> TypeScript.compile (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+    /// </code>
+    /// </example>
     let compile setParams files = 
         use __ = Trace.traceTask "TypeScript" ""
         let parameters = setParams TypeScriptDefaultParams

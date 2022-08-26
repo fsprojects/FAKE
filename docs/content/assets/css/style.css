@@ -6,6 +6,7 @@
     margin-left: auto;
     margin-right: auto;
     overflow-x: auto;
+    min-height: inherit;
 }
 
 #content div:empty {
@@ -29,17 +30,17 @@
 }
 
 nav::-webkit-scrollbar {
-    width: 10px;
+    width: 2px;
 }
 
 nav::-webkit-scrollbar-track {
     background-color: #e4e4e4;
-    border-radius: 100px;
+    /*border-radius: 100px 100px 0px 0px;*/
 }
 
 nav::-webkit-scrollbar-thumb {
     background-color: #d4b43c80;
-    border-radius: 100px;
+    /*border-radius: 100px 100px 0px 0px;*/
 }
 
 
@@ -100,6 +101,7 @@ table * .fsdocs-summary {
 }
 
 .fsdocs-summary a,
+.fsdocs-remarks a,
 .fsdocs-entity-list a {
     color: #222;
     text-decoration: underline;
@@ -107,6 +109,7 @@ table * .fsdocs-summary {
 }
 
 .fsdocs-summary a:hover,
+.fsdocs-remarks a:hover,
 .fsdocs-entity-list a:hover {
     color: #d4b43c;
 }

@@ -4,6 +4,7 @@ open System
 open System.IO
 open Fake.Core
 
+/// [omit]
 module internal TeamCityWriter =
 
     /// Encapsulates special chars

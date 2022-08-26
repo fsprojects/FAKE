@@ -3,6 +3,7 @@
     <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <AssemblyName>Fake.Tools.Rsync</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Rsync.fs" />

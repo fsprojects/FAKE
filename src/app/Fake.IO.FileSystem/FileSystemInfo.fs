@@ -2,25 +2,27 @@ namespace Fake.IO
 
 open System.IO
 
-/// Contains tasks to interact with `FileSystemInfo`
+/// <summary>
+/// Contains tasks to interact with <c>FileSystemInfo</c>
+/// </summary>
 [<RequireQualifiedAccess>]
 module FileSystemInfo =
     
+    /// <summary>
     /// Creates a FileInfo or a DirectoryInfo for the given path
+    /// </summary>
     ///
-    /// ## Parameters
-    ///
-    /// - `path` - The path to create `FileSystemInfo` from
+    /// <param name="path">The path to create <c>FileSystemInfo</c> from</param>
     let inline ofPath path : FileSystemInfo = 
         if Directory.Exists path then upcast DirectoryInfo.ofPath path
         else upcast FileInfo.ofPath path
     
+    /// <summary>
     /// Sets all given files or directories readonly.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///
-    /// - `readOnly` - The readonly flag
-    /// - `items` - The list of files to set readonly flag on
+    /// <param name="readOnly">The readonly flag</param>
+    /// <param name="items">The list of files to set readonly flag on</param>
     let setReadOnly readOnly (items : string seq) = 
         items |> Seq.iter (fun item ->
             let fi = FileInfo.ofPath item
@@ -30,11 +32,11 @@ module FileSystemInfo =
                 |> DirectoryInfo.ofPath
                 |> DirectoryInfo.setReadOnly readOnly)
 
+    /// <summary>
     /// Active pattern which discriminates between files and directories.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///
-    /// - `fileSysInfo` - The `FileSystemInfo` to check
+    /// <param name="fileSysInfo">The <c>FileSystemInfo</c> to check</param>
     let (|File|Directory|) (fileSysInfo : FileSystemInfo) = 
         match fileSysInfo with
         | :? FileInfo as file -> File(file)

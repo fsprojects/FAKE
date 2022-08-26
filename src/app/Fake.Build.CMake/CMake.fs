@@ -7,7 +7,7 @@ open Fake.IO.FileSystemOperators
 
 /// <namespacedoc>
 /// <summary>
-/// FAKE Build namespace contains tasks to interact with other Build Systems, like CMake
+/// Build namespace contains tasks to interact with other Build Systems, like CMake
 /// </summary>
 /// </namespacedoc>
 /// 

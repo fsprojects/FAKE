@@ -2,11 +2,15 @@
 
 open Fake.Core
 
+/// <summary>
 /// Contains helper functions which allow to deal with git submodules.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Submodule =
 
+    /// <summary>
     /// This record represents a git submodule binding.
+    /// </summary>
     type Submodule =
         { Name: string
           Branch: string
@@ -35,10 +39,11 @@ module Submodule =
 
     let internal trimChars (s: string) = s.Trim [| '('; ')'; ' ' |]
 
+    /// <summary>
     /// Gets all submodules from the given repository directory.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The path of the target directory.
+    /// <param name="repositoryDir">The path of the target directory.</param>
     let getSubModules repositoryDir =
         let _, submodules, _ = CommandHelper.runGitCommand repositoryDir "submodule status"
 
@@ -61,11 +66,12 @@ module Submodule =
               SuperRepositoryDir = repositoryDir
               UpToDate = submodule[0] <> '+' })
 
+    /// <summary>
     /// Inits a submodule with the given name in a subfolder of the given super repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `superRepositoryDir` - The super repository.
-    ///  - `name` - The name of the new repository.
+    /// <param name="superRepositoryDir">The super repository.</param>
+    /// <param name="name">The name of the new repository.</param>
     let init superRepositoryDir name =
         if String.isNullOrEmpty name then
             "submodule update --init"
@@ -73,13 +79,14 @@ module Submodule =
             "submodule update --init \"" + name.Trim() + "\""
         |> CommandHelper.gitCommand superRepositoryDir
 
+    /// <summary>
     /// Adds a submodule to the given super repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `superRepositoryDir` - The super repository.
-    ///  - `remotePath` - The path to the remote repository of the submodule.
-    ///  - `localPath` - The local path to the submodule.
-    ///  - `branch` - The branch to  clone. (can be null)
+    /// <param name="superRepositoryDir">The super repository.</param>
+    /// <param name="remotePath">The path to the remote repository of the submodule.</param>
+    /// <param name="localPath">The local path to the submodule.</param>
+    /// <param name="branch">The branch to  clone. (can be null)</param>
     let add superRepositoryDir remotePath localPath branch =
         sprintf
             "submodule add \"%s\" \"%s\" %s"

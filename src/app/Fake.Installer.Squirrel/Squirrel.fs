@@ -1,6 +1,9 @@
 namespace Fake.Installer
 
-/// Contains types and utility functions related to creating [Squirrel](https://github.com/Squirrel/Squirrel.Windows) installer.
+/// <summary>
+/// Contains types and utility functions related to creating <a href="https://github.com/Squirrel/Squirrel.Windows">
+/// Squirrel</a> installer.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Squirrel =
 
@@ -10,9 +13,11 @@ module Squirrel =
     open System.IO
     open System.Text
 
-    /// The [Squirrel](https://github.com/Squirrel/Squirrel.Windows) Console Parameters type.
-    ///
-    /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/using/squirrel-command-line.md)
+    /// <summary>
+    /// The <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> Console Parameters type.
+    /// For reference, see: <a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/using/squirrel-command-line.md">
+    /// Squirrel Command Line Options</a>
+    /// </summary>
     type ReleasifyParams =
         {
           /// Path to a release directory to use with Releasify
@@ -45,7 +50,7 @@ module Squirrel =
           /// Maximum time to allow Squirrel to run before being killed.
           TimeOut: TimeSpan
 
-          /// Sign the installer with signtool.exe
+          /// Sign the installer with <c>signtool.exe</c>
           SignExecutable: bool option
 
           /// The code signing certificate to be used for signing
@@ -145,34 +150,68 @@ module Squirrel =
 
         let failBuildIfSquirrelReportedError = buildErrorMessage >> Option.iter failwith
 
+    /// <summary>
     /// Creates a Squirrel installer for given NuGet package. Will fail if Squirrel terminates with non-zero exit code.
+    /// <br/><br/>Defaults for setParams:
+    /// <list type="number">
+    /// <item>
+    /// <c>ReleaseDir</c> - <c>""</c>
+    /// </item>
+    /// <item>
+    /// <c>WorkingDir</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>BootstrapperExe</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>LoadingGif</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>SetupIcon</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>NoDelta</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>NoMsi</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>MsiWin64</c> - <c>false</c>
+    /// </item>
+    /// <item>
+    /// <c>ToolPath</c> - The <c>squirrel.exe</c> path if it exists in a subdirectory of the current directory.
+    /// </item>
+    /// <item>
+    /// <c>TimeOut</c> - <c>0</c> minutes
+    /// </item>
+    /// <item>
+    /// <c>SignExecutable</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>SigningKeyFile</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>SigningSecret</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>FrameworkVersion</c> - <c>None</c>
+    /// </item>
+    /// <item>
+    /// <c>AdditionalArguments</c> - <c>None</c> A string with additional arguments that will be added to the command line
+    /// </item>
+    /// </list>
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `nugetPackage` - The package to create an installer for
-    ///  - `setParams` - Function used to manipulate the default `SquirrelParams` value.
+    /// <param name="nugetPackage">The package to create an installer for</param>
+    /// <param name="setParams">Function used to manipulate the default <c>SquirrelParams</c> value.</param>
     ///
-    /// ## Sample
-    ///     Target.create "CreatePackage" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target.create "CreatePackage" (fun _ ->
     ///         Squirrel.releasify "./my.nupkg" (fun p -> { p with ReleaseDir = "./squirrel_release")
     ///     )
-    ///
-    /// ## Defaults for setParams
-    ///
-    /// - `ReleaseDir` - `""`
-    /// - `WorkingDir` - `None`
-    /// - `BootstrapperExe` - `None`
-    /// - `LoadingGif` - `None`
-    /// - `SetupIcon` - `None`
-    /// - `NoDelta` - `false`
-    /// - `NoMsi` - `false`
-    /// - `MsiWin64` - `false`
-    /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
-    /// - `TimeOut` - 10 minutes
-    /// - `SignExecutable` - `None`
-    /// - `SigningKeyFile` - `None`
-    /// - `SigningSecret` - `None`
-    /// - `FrameworkVersion` - `None`
-    /// - `AdditionalArguments` - `None` A string with additional arguments that will be added to the command line
+    /// </code>
+    /// </example>
     let releasify (nugetPackage: string) (setParams: ReleasifyParams -> ReleasifyParams) : unit =
         use __ = Trace.traceTask "Squirrel" nugetPackage
         let parameters = defaultParams.Value |> setParams

@@ -5,12 +5,16 @@ open Fake.IO
 open System
 open System.IO
 
-/// Helpers for running [rsync tool](https://rsync.samba.org/)
-///
+/// <summary>
+/// Helpers for running <a href="https://rsync.samba.org/">rsync tool</a>
+/// </summary>
+/// <remarks>
 /// Under windows you will need to add it yourself to your system or use something like cygwin/babun
-///
-/// ## Sample
-///     let result =
+/// </remarks>
+/// 
+/// <example>
+/// <code lang="fsharp">
+/// let result =
 ///          Rsync.exec
 ///             (Rsync.Options.WithActions
 ///                  [
@@ -21,13 +25,15 @@ open System.IO
 ///                      Rsync.Delete
 ///                      Rsync.Exclude ".keep"
 ///                  ]
-///              >> Rsync.Options.WithSources
-///                  [ FleetMapping.server </> "build"
-///                    FleetMapping.server </> "package.json"
-///                    FleetMapping.server </> "yarn.lock" ]
-///              >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
+///              &gt;&gt; Rsync.Options.WithSources
+///                  [ FleetMapping.server &lt;/&gt; "build"
+///                    FleetMapping.server &lt;/&gt; "package.json"
+///                    FleetMapping.server &lt;/&gt; "yarn.lock" ]
+///              &gt;&gt; Rsync.Options.WithDestination "remote@myserver.com:deploy")
 ///              ""
 ///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+/// </code>
+/// </example> 
 [<RequireQualifiedAccess>]
 module Rsync =
 
@@ -247,7 +253,9 @@ module Rsync =
         /// Show this help (-h works with no other options)
         | Help
 
+    /// <summary>
     /// The rsync command options
+    /// </summary>
     type Options =
         {
           /// Command working directory
@@ -395,21 +403,25 @@ module Rsync =
         @ [ param.Destination ]
         |> String.concat " "
 
+    /// <summary>
     /// Run rsync tool with the provided actions/options list of directories/files sources to
     /// given the destination.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `buildOptions` - A function to configure actions/options, sources, and destination.
-    ///  - `args` - String arguments to pass to rsync
+    /// <param name="buildOptions">A function to configure actions/options, sources, and destination.</param>
+    /// <param name="args">String arguments to pass to rsync</param>
     ///
-    /// ## Sample
-    ///     let result =
+    /// <example>
+    /// <code lang="fsharp">
+    /// let result =
     ///          Rsync.exec
     ///             (Rsync.Options.WithActions [ Rsync.Compress ]
-    ///              >> Rsync.Options.WithSources [ FleetMapping.server </> "build" ]
-    ///              >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
+    ///              &gt;&gt; Rsync.Options.WithSources [ FleetMapping.server &lt;/&gt; "build" ]
+    ///              &gt;&gt; Rsync.Options.WithDestination "remote@myserver.com:deploy")
     ///              ""
     ///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+    /// </code>
+    /// </example>
     let exec (buildOptions: Options -> Options) args =
         let results = System.Collections.Generic.List<ConsoleMessage>()
         let timeout = TimeSpan.MaxValue

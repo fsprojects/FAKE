@@ -3,6 +3,7 @@ namespace Fake.BuildServer
 open System
 open Fake.Core
 
+/// [omit]
 [<AutoOpen>]
 module TeamCityImportExtensions =
     type DotNetCoverageTool with
@@ -34,17 +35,22 @@ module TeamCityImportExtensions =
             | ImportData.Nunit _ -> "nunit"
             | ImportData.Xunit _ -> "nunit"
 
-/// native support for TeamCity specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+///<summary>
+/// Native support for TeamCity specific APIs.
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
-/// For more information on TeamCity interaction from build scripts [see here](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity)
+/// For more information on TeamCity interaction from build scripts
+/// <a href="https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity">see here</a>
+/// </remarks>
 [<RequireQualifiedAccess>]
 module TeamCity =
     open Fake.IO
 
     /// Open Named Block that will be closed when the block is disposed
-    /// Usage: `use __ = TeamCity.block "My Block"`
+    /// Usage: <c>use __ = TeamCity.block "My Block"</c>
     let block name description =
         TeamCityWriter.sendOpenBlock name description
         { new IDisposable
@@ -93,7 +99,7 @@ module TeamCity =
         /// Sends an PMD Copy/Paste Detector results filename to TeamCity
         let sendPmdCpd path = TeamCityWriter.sendImportData "pmdCpd" path
 
-        /// Sends an ReSharper dupfinder.exe results filename to TeamCity
+        /// Sends an ReSharper <c>dupfinder.exe</c> results filename to TeamCity
         let sendDotNetDupFinder path = TeamCityWriter.sendImportData "DotNetDupFinder" path
 
         /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
@@ -167,10 +173,10 @@ module TeamCity =
     /// Reports the build status.
     let reportBuildStatus status message = TeamCityWriter.sendBuildStatus status message
 
-    /// Publishes an artifact on the TeamcCity build server.
+    /// Publishes an artifact on the TeamCity build server.
     let internal publishArtifact path = TeamCityWriter.sendPublishArtifact path
 
-    /// Publishes an artifact on the TeamcCity build server with a name.
+    /// Publishes an artifact on the TeamCity build server with a name.
     let internal publishNamedArtifact name path = TeamCityWriter.sendPublishNamedArtifact name path
 
     /// Sets the TeamCity build number.
@@ -195,7 +201,8 @@ module TeamCity =
     let internal error message = TeamCityWriter.sendMessage "ERROR" message
 
     /// TeamCity build parameters
-    /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
+    /// See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters">
+    /// Predefined Build Parameters documentation</a> for more information
     type BuildParameters =
         /// Get all system build parameters (Without the 'system.' prefix)
         static member System
@@ -227,11 +234,13 @@ module TeamCity =
 
     /// Describe a change between builds
     type FileChange = {
-        /// Path of the file that changed, relative to the current checkout directory (TemaCity.Environment.CheckoutDirectory)
+        /// Path of the file that changed, relative to the current checkout directory
+        /// <c>TeamCity.Environment.CheckoutDirectory</c>
         FilePath: string
         /// Type of modification for the file
         ModificationType: FileChangeType
-        /// File revision in the repository. If the file is a part of change list started via the remote run, then the value will be None
+        /// File revision in the repository. If the file is a part of change list started via the remote run,
+        /// then the value will be None
         Revision: string option }
 
     module private ChangedFiles =
@@ -275,7 +284,8 @@ module TeamCity =
         let cache = lazy (get ())
 
     /// Exported environment variables during build.
-    /// See the [official documentation](https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#Predefined+Server+Build+Parameters) for details.
+    /// See the <a href="https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#Predefined+Server+Build+Parameters">
+    /// official documentation</a> for details.
     type Environment =
         /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
         static member Version = Environment.environVarOrNone "TEAMCITY_VERSION"
@@ -300,8 +310,8 @@ module TeamCity =
             with get() = BuildParameters.Configuration |> Map.tryFind "vcsroot.branch"
 
         /// Get the display name of the branch of the main VCS root as shown in TeamCity
-        ///
-        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
+        /// See <a href="https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">
+        /// the documentation</a> for more information
         static member BranchDisplayName
             with get() = 
                 match BuildParameters.Configuration |> Map.tryFind "teamcity.build.branch" with
@@ -326,19 +336,23 @@ module TeamCity =
             with get() = BuildParameters.System |> Map.tryFind "teamcity.build.checkoutDir"
 
         /// Changed files (since previous build) that are included in this build
-        ///
-        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+        /// See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">
+        /// the documentation</a> for more information
         static member ChangedFiles
             with get() = ChangedFiles.cache.Value
 
         /// Name of recently failing tests
-        ///
-        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+        /// See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">
+        /// the documentation</a> for more information
         static member RecentlyFailedTests
             with get() = RecentlyFailedTests.cache.Value
 
+    /// <summary>
     /// Implements a TraceListener for TeamCity build servers.
-    /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity) for more information
+    /// See <a href="https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity">the
+    /// documentation</a> for more information
+    /// </summary>
+    /// [omit]
     type internal TeamCityTraceListener() =
 
         interface ITraceListener with

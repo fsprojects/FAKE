@@ -6,14 +6,24 @@ open System.Net
 open System.Text.RegularExpressions
 open Fake.Core
 
+/// <namespacedoc>
+/// <summary>
+/// Net namespace contains tasks to interact with network, like FTP and SSH
+/// </summary>
+/// </namespacedoc>
+///
+/// <summary>
 /// Contains helpers which allow to upload a whole folder/specific file into a FTP Server. 
-/// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
+/// Uses <c>Passive Mode</c> FTP and handles all files as binary (and not ASCII).
 /// Assumes direct network connectivity to destination FTP server (not via a proxy).
 /// Does not support FTPS and SFTP.
+/// </summary>
 [<RequireQualifiedAccess>]
 module FTP = 
 
+    /// <summary>
     /// Server information
+    /// </summary>
     type FtpServerInfo = 
         {
           /// Server name
@@ -23,14 +33,14 @@ module FTP =
           Request : FtpWebRequest
         }
 
+    /// <summary>
     /// Gets a connection to the FTP server
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `serverNameIp` - The server IP address
-    ///  - `user` - The user name to use in login credentials
-    ///  - `password` - FTP Server login name
-    ///  - `password` - FTP Server login password
-    ///  - `ftpMethod` - Command to send to FTP server
+    /// <param name="serverNameIp">The server IP address</param>
+    /// <param name="user">The user name to use in login credentials</param>
+    /// <param name="password">FTP Server login password</param>
+    /// <param name="ftpMethod">Command to send to FTP server</param>
     let getServerInfo (serverNameIp : string) (user : string) (password : string) ftpMethod = 
         let ftpRequest = (WebRequest.Create serverNameIp) :?> FtpWebRequest
         ftpRequest.Credentials <- NetworkCredential(user, password)
@@ -62,9 +72,8 @@ module FTP =
         not (directoryName.EndsWith(" ")) &&
         not (directoryName.EndsWith("."))
         
-    /// [omit]
     /// Partial validation for folder name, based on http://msdn.microsoft.com/en-us/library/aa365247.aspx
-    let isValidDirectoryName (directoryName : string) =
+    let internal isValidDirectoryName (directoryName : string) =
         let validators = [
             charactersValidator
             namesValidator
@@ -75,12 +84,14 @@ module FTP =
     /// Checks to see if the `ftp content` string contains the string `Given_Folder_Name`
     let inline regexCheck folderName ftpContents = Regex.IsMatch(ftpContents, $@"\s+%s{folderName}\s+")
 
+    /// <summary>
     /// Gets the contents/listing of files and folders in a given FTP server folder
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `dirPath` - The full name of folder whose content need to be listed
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="dirPath">The full name of folder whose content need to be listed</param>
     let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
         Trace.logfn $"Getting FTP dir contents for %s{dirPath}"
         dirPath
@@ -91,13 +102,15 @@ module FTP =
             use reader = new StreamReader(responseStream)
             reader.ReadToEnd()
 
+    /// <summary>
     /// Uploads a single file from local directory into remote FTP folder.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `destPath` - The full local file path that needs to be uploaded
-    ///  - `srcPath` - The full path to file which needs to be created, including all its parent folders
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="destPath">The full local file path that needs to be uploaded</param>
+    /// <param name="srcPath">The full path to file which needs to be created, including all its parent folders</param>
     let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
         Trace.logfn $"Uploading %s{srcPath} to %s{destPath}"
         let fl = FileInfo(srcPath)
@@ -110,11 +123,13 @@ module FTP =
                 use requestStream = si.Request.GetRequestStream()
                 writeChunkToReqStream (br.ReadBytes 1024) requestStream br
 
+    /// <summary>
     /// Given a folder name, will check if that folder is present at a given root directory of a FTP server.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
     let private isFolderInDirectoryList server user pwd destPath folderName = 
         destPath
         |> getLastSlashPosition
@@ -122,24 +137,30 @@ module FTP =
         |> getFtpDirContents server user pwd
         |> regexCheck folderName
 
+    /// <summary>
     /// Given a folder path, will check if that folder is present at a given root directory of a FTP server.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `destPath` - The full name of folder which needs to be checked for existence, including all its parent folders
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="destPath">The full name of folder which needs to be checked for existence, including all its
+    /// parent folders</param>
     let isFolderPresent server user pwd (destPath : string) = 
         destPath
         |> getLastSlashPosition
         |> destPath.Substring
         |> isFolderInDirectoryList server user pwd destPath
 
+    /// <summary>
     /// Creates a matching folder in FTP folder, if not already present.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `destPath` - The full name of folder which needs to be created, including all its parent folders
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="destPath">The full name of folder which needs to be checked for existence, including all its
+    /// parent folders</param>
     let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Creating folder %s{destPath}"
         if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
@@ -149,13 +170,16 @@ module FTP =
                 use response = (si.Request.GetResponse() :?> FtpWebResponse)
                 Trace.logfn $"Create folder status: %s{response.StatusDescription}"
 
+    /// <summary>
     /// Uploads a given local folder to a given root dir on a FTP server.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `srcPath` - The local server path from which files need to be uploaded
-    ///  - `rootDir` - The remote root dir where files need to be uploaded, leave this as empty, if files need to be uploaded to root dir of FTP server
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="srcPath">The local server path from which files need to be uploaded</param>
+    /// <param name="rootDir">The remote root dir where files need to be uploaded, leave this as empty, if files need
+    /// to be uploaded to root dir of FTP server</param>
     let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
         Trace.logfn $"Uploading folder %s{srcPath}"
         let dirInfo = DirectoryInfo(srcPath)
@@ -171,12 +195,15 @@ module FTP =
         | "System.IO.FileInfo" -> uploadAFile server user pwd $"%s{rootDir}/%s{fsi.Name}" fsi.FullName
         | _ -> Trace.logfn $"Unknown object found at %A{fsi}"
 
+    /// <summary>
     /// Deletes a single file from remote FTP folder.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `destPath` - The full path to the file which needs to be deleted, including all its parent folders
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="destPath">The full path to the file which needs to be deleted, including all its parent
+    /// folders</param>
     let deleteAFile (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Deleting %s{destPath}"
         destPath
@@ -200,12 +227,15 @@ module FTP =
             use response = (si.Request.GetResponse() :?> FtpWebResponse)
             Trace.logfn $"Delete folder %s{destPath} status: %s{response.StatusDescription}"
 
+    /// <summary>
     /// Deletes a single folder from remote FTP folder.
-    /// ## Parameters
-    ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
-    ///  - `user` - FTP Server login name (ex: "joebloggs")
-    ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-    ///  - `destPath` - The full path to the folder which needs to be deleted, including all its parent folders
+    /// </summary>
+    /// 
+    /// <param name="server">FTP Server name (ex: "ftp://10.100.200.300:21/")</param>
+    /// <param name="user">FTP Server login name (ex: "joebloggs")</param>
+    /// <param name="pwd">FTP Server login password (ex: "J0Eblogg5")</param>
+    /// <param name="destPath">The full path to the folder which needs to be deleted, including all its parent
+    /// folders</param>
     let rec deleteAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
         Trace.logfn $"Deleting %s{destPath}"
         let folderContents = getFolderContents server user pwd destPath

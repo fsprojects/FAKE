@@ -6,14 +6,15 @@ open Fake.IO.FileSystemOperators
 open System.Text
 open System.IO
 
+/// <summary>
 /// Contains helper functions which allow to get and set the git commit message.
+/// </summary>
 [<RequireQualifiedAccess>]
 module CommitMessage =
 
     /// Returns the commit message file.
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getCommitMessageFileInfos repositoryDir =
         let gitDir = CommandHelper.findGitDir repositoryDir
 
@@ -22,8 +23,7 @@ module CommitMessage =
 
     /// Gets the commit message
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getCommitMessage repositoryDir =
         match getCommitMessageFileInfos repositoryDir |> List.filter (fun fi -> fi.Exists) with
         | fi :: _ -> File.readAsString fi.FullName
@@ -31,9 +31,8 @@ module CommitMessage =
 
     /// Sets the commit message
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
-    ///  - `text` - The commit message text.
+    /// <param name="repositoryDir">The git repository.</param>
+    /// <param name="text">The commit message text.</param>
     let setMessage repositoryDir text =
         for messageFile in getCommitMessageFileInfos repositoryDir do
             if String.isNullOrEmpty text then

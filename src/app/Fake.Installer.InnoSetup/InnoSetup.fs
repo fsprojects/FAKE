@@ -1,6 +1,15 @@
 namespace Fake.Installer
 
-/// This module contains helper functions to create [Inno Setup](http://www.jrsoftware.org/isinfo.php) installers.
+/// <namespacedoc>
+/// <summary>
+/// Installer namespace contains tasks to interact with install and setup tools for applications, like InnoSetup and Wix
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// This module contains helper functions to create <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a>
+/// installers.
+/// </summary>
 [<RequireQualifiedAccess>]
 module InnoSetup =
 
@@ -28,11 +37,13 @@ module InnoSetup =
 
     /// Output verbosity
     type QuietMode =
-        | Default /// Default output when compiling
-        | Quiet /// Quiet compile (print error messages only)
-        | QuietAndProgress /// Enable quiet compile while still displaying progress
+        | Default // Default output when compiling
+        | Quiet // Quiet compile (print error messages only)
+        | QuietAndProgress // Enable quiet compile while still displaying progress
 
+    /// <summary>
     /// InnoSetup build parameters
+    /// </summary>
     type InnoSetupParams =
         {
           /// The tool path - FAKE tries to find ISCC.exe automatically in any sub folder.
@@ -115,17 +126,21 @@ module InnoSetup =
         |> StringBuilder.append p.ScriptFile
         |> StringBuilder.toText
 
+    /// <summary>
     /// Builds the InnoSetup installer.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default build parameters. See `InnoSetupParams.Create()`
+    /// <param name="setParams">Function used to manipulate the default build parameters. See <c>InnoSetupParams.Create()</c></param>
     ///
-    /// ## Sample
-    ///        InnoSetup.build (fun p ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// InnoSetup.build (fun p ->
     ///         { p with
     ///             OutputFolder = "build" @@ "installer"
     ///             ScriptFile = "installer" @@ "setup.iss"
     ///         })
+    /// </code>
+    /// </example>
     let build setParams =
         let p = InnoSetupParams.Create() |> setParams
 

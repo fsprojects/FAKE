@@ -2,31 +2,38 @@ namespace Fake.IO
 
 open System.IO
 
+/// <summary>
+/// Contains tasks to interact with <c>FileInfo</c>
+/// </summary>
 [<RequireQualifiedAccess>]
 module FileInfo =
+    /// <summary>
     /// Creates a FileInfo for the given path.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `path` - Create an instance of `FileInfo` from given path
+    /// <param name="path">Create an instance of `FileInfo` from given path</param>
     let inline ofPath path = FileInfo(path)
     
+    /// <summary>
     /// Active Pattern for determining file name.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `f` - `FileInfo` to operate on
+    /// <param name="f"><c>FileInfo</c> to operate on</param>
     let (|FullName|) (f : FileInfo) = f.FullName
 
+    /// <summary>
     /// Active Pattern for determining FileInfoNameSections.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `f` - `FileInfo` to operate on
+    /// <param name="f"><c>FileInfo</c> to operate on</param>
     let (|NameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
     
+    /// <summary>
     /// Checks if the two files are byte-to-byte equal.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `first` - First `FileInfo` to operate on
-    ///  - `second` - Second `FileInfo` to operate on
+    /// <param name="first">First <c>FileInfo</c> to operate on</param>
+    /// <param name="second">Second <c>FileInfo</c> to operate on</param>
     let contentIsEqualTo (first : FileInfo) (second : FileInfo) = 
         if first.Length <> second.Length then false
         else 

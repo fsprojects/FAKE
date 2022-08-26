@@ -1,8 +1,13 @@
 namespace Fake.Tools
 
-/// The [SignTool](https://docs.microsoft.com/en-gb/windows/win32/seccrypto/signtool) tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
-///
-/// [Documentation & samples](/fake-tools-signtool.html)
+/// <summary>
+/// The <a href="https://docs.microsoft.com/en-gb/windows/win32/seccrypto/signtool">SignTool</a> tool is a
+/// command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
+/// </summary>
+/// <remarks>
+/// <a href="/fake-tools-signtool.html">Documentation &amp; samples</a>
+/// </remarks>
+/// 
 ///
 [<RequireQualifiedAccess>]
 module SignTool =
@@ -27,7 +32,9 @@ module SignTool =
         | SHA1
         | SHA256
 
+    /// <summary>
     /// Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.
+    /// </summary>
     type TimeStampOption =
         {
           /// Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)
@@ -40,14 +47,19 @@ module SignTool =
             { ServerUrl = serverUrl
               Algorithm = None }
 
+    /// <summary>
     /// Specifies parameters to use when using a certificate from a file.
+    /// </summary>
     type CertificateFromFile =
         {
-          /// Specifies the signing certificate in a file. Only the Personal Information Exchange (PFX) file format is supported. If the file is in PFX format protected by a password, use the /p option to specify the password. If the file does not contain private keys, use the /csp and /k options to specify the CSP and private key container name, respectively. (signtool option: /f SignCertFile)
+          /// Specifies the signing certificate in a file. Only the Personal Information Exchange (PFX) file format is
+          /// supported. If the file is in PFX format protected by a password, use the /p option to specify the password. If the file does not contain private keys, use the /csp and /k options to specify the CSP and private key container name, respectively. (signtool option: /f SignCertFile)
           Path: string
-          /// Specifies the password to use when opening a PFX file. A PFX file can be specified by using the /f option. (signtool option: /p Password)
+          /// Specifies the password to use when opening a PFX file. A PFX file can be specified by using the /f option.
+          /// (signtool option: /p Password)
           Password: string option
-          /// Specifies the cryptographic service provider (CSP) that contains the private key container. (signtool option: /csp CSPName)
+          /// Specifies the cryptographic service provider (CSP) that contains the private key container. (signtool
+          /// option: /csp CSPName)
           CspName: string option
           /// Specifies the key that contains the name of the private key. (signtool option: /kc Name)
           PrivateKeyKey: string option }
@@ -59,22 +71,34 @@ module SignTool =
               CspName = None
               PrivateKeyKey = None }
 
+    /// <summary>
     /// Specifies parameters to use when using a certificate from a certificate store.
+    /// </summary>
     type CertificateFromStore =
         {
-          /// Selects the best signing certificate automatically. If this option is not present, SignTool expects to find only one valid signing certificate. (signtool option: /a)
+          /// Selects the best signing certificate automatically. If this option is not present, SignTool expects
+          /// to find only one valid signing certificate. (signtool option: /a)
           AutomaticallySelectCertificate: bool option
-          /// Specifies the name of the issuer of the signing certificate. This value can be a substring of the entire issuer name. (signtool option: /i IssuerName)
+          /// Specifies the name of the issuer of the signing certificate. This value can be a substring of the
+          /// entire issuer name. (signtool option: /i IssuerName)
           IssuerName: string option
-          /// Specifies the name of the subject of the signing certificate. This value can be a substring of the entire subject name. (signtool option: /n SubjectName)
+          /// Specifies the name of the subject of the signing certificate. This value can be a substring of the
+          /// entire subject name. (signtool option: /n SubjectName)
           SubjectName: string option
-          /// Specifies the name of the subject of the root certificate that the signing certificate must chain to. This value can be a substring of the entire subject name of the root certificate. (signtool option: /r RootSubjectName)
+          /// Specifies the name of the subject of the root certificate that the signing certificate must chain to.
+          /// This value can be a substring of the entire subject name of the root certificate. (signtool option:
+          /// /r RootSubjectName)
           RootSubjectName: string option
-          /// Specifies the store to open when searching for the certificate. If this option is not specified, the My store is opened. If the store does not exist, signtool will wail with a "File not found" error. (signtool option: /s StoreName)
+          /// Specifies the store to open when searching for the certificate. If this option is not specified,
+          /// the My store is opened. If the store does not exist, signtool will wail with a "File not found" error.
+          /// (signtool option: /s StoreName)
           StoreName: string option
-          /// Specifies the SHA1 hash of the signing certificate. When viewing a certificate, this is the value of the Thumbprint field. (signtool option: /sha1 Hash)
+          /// Specifies the SHA1 hash of the signing certificate. When viewing a certificate, this is the value of
+          /// the Thumbprint field. (signtool option: /sha1 Hash)
           Hash: string option
-          /// Specifies that a computer store, instead of a user store, be used. Accessing the computer store requires admin rights. If the process does not have admin rights, no certificates will be found. (signtool option: /sm)
+          /// Specifies that a computer store, instead of a user store, be used. Accessing the computer store
+          /// requires admin rights. If the process does not have admin rights, no certificates will be found.
+          /// (signtool option: /sm)
           UseComputerStore: bool option }
 
         /// Options default values.
@@ -103,22 +127,31 @@ module SignTool =
             let options = setOptions (CertificateFromStore.Create())
             Store options
 
+    /// <summary>
     /// Sign command options
+    /// </summary>
     type SignOptions =
         {
-          /// Specifies the certificate to use for signing. (signtool options: /a, /f, /p, /csp, /kc, /i, /n, /r, /s, /sha1, /sm)
+          /// Specifies the certificate to use for signing. (signtool options: /a, /f, /p, /csp, /kc, /i, /n, /r,
+          /// /s, /sha1, /sm)
           Certificate: SignCertificate
-          /// Specifies the file digest algorithm to use to create file signatures. The default algorithm is Secure Hash Algorithm (SHA-1). (signtool option: /fd)
+          /// Specifies the file digest algorithm to use to create file signatures. The default algorithm is Secure
+          /// Hash Algorithm (SHA-1). (signtool option: /fd)
           DigestAlgorithm: DigestAlgorithm option
-          /// Specifies a file that contains an additional certificate to add to the signature block. (signtool option: /ac FileName)
+          /// Specifies a file that contains an additional certificate to add to the signature block.
+          /// (signtool option: /ac FileName)
           AdditionalCertificate: string option
-          /// Appends this signature. If no primary signature is present, this signature is made the primary signature. (signtool option: /as)
+          /// Appends this signature. If no primary signature is present, this signature is made the primary signature.
+          /// (signtool option: /as)
           AppendSignature: bool option
-          /// Specifies the Certificate Template Name (a Microsoft extension) for the signing certificate. (signtool option: /c CertTemplateName)
+          /// Specifies the Certificate Template Name (a Microsoft extension) for the signing certificate.
+          /// (signtool option: /c CertTemplateName)
           CertificateTemplateName: string option
           /// Specifies a description of the signed content. (signtool option: /d Desc)
           Description: string option
-          /// Specifies the enhanced key usage (EKU) that must be present in the signing certificate. The usage value can be specified by OID or string. The default usage is "Code Signing" (1.3.6.1.5.5.7.3.3). (signtool option: /u Usage)
+          /// Specifies the enhanced key usage (EKU) that must be present in the signing certificate.
+          /// The usage value can be specified by OID or string. The default usage is "Code Signing"
+          /// (1.3.6.1.5.5.7.3.3). (signtool option: /u Usage)
           EnhancedKeyUsage: string option
           /// Specifies using "Windows System Component Verification" (1.3.6.1.4.1.311.10.3.6). (signtool option: /uw)
           WindowsSystemComponentVerification: bool option
@@ -151,7 +184,9 @@ module SignTool =
               Timeout = None
               WorkingDir = None }
 
+    /// <summary>
     /// Timestamp command options
+    /// </summary>
     type TimeStampOptions =
         {
           /// Specifies the URL of the time stamp server. (signtool options: /t URL, /tr URL)
@@ -184,10 +219,16 @@ module SignTool =
               Timeout = None
               WorkingDir = None }
 
+    /// <summary>
     /// Verify command options
+    /// </summary>
     type VerifyOptions =
         {
-          /// Specifies that all methods can be used to verify the file. First, the catalog databases are searched to determine whether the file is signed in a catalog. If the file is not signed in any catalog, SignTool attempts to verify the file's embedded signature. This option is recommended when verifying files that may or may not be signed in a catalog. Examples of files that may or may not be signed include Windows files or drivers. (signtool option: /a)
+          /// Specifies that all methods can be used to verify the file. First, the catalog databases are
+          /// searched to determine whether the file is signed in a catalog. If the file is not signed in any
+          /// catalog, SignTool attempts to verify the file's embedded signature. This option is recommended
+          /// when verifying files that may or may not be signed in a catalog. Examples of files that may or
+          /// may not be signed include Windows files or drivers. (signtool option: /a)
           AllMethods: bool option
           /// Verifies all signatures in a file with multiple signatures. (signtool option: /all)
           AllSignatures: bool option
@@ -197,13 +238,22 @@ module SignTool =
           VerifyIndex: int option
           /// Performs the verification by using the x64 kernel-mode driver signing policy. (signtool option: /kp)
           UseX64KernelModeDriverSigningPolicy: bool option
-          /// Uses multiple verification semantics. This is the default behavior of a WinVerifyTrust call. (signtool option: /ms)
+          /// Uses multiple verification semantics. This is the default behavior of a WinVerifyTrust call.
+          /// (signtool option: /ms)
           UseMultipleVerificationSemantics: bool option
-          /// Verifies the file by operating system version. The version parameter is of the form: PlatformID&ast;&ast;:VerMajor.VerMinor.&ast;&ast;BuildNumber. The use of the /o switch is recommended. If /o is not specified SignTool may return unexpected results. For example, if you do not include the /o switch, then system catalogs that validate correctly on an older OS may not validate correctly on a newer OS. (signtool option: /o Version)
+          /// Verifies the file by operating system version. The version parameter is of the form:
+          /// PlatformID&ast;&ast;:VerMajor.VerMinor.&ast;&ast;BuildNumber. The use of the /o switch is recommended.
+          /// If /o is not specified SignTool may return unexpected results. For example, if you do not include
+          /// the /o switch, then system catalogs that validate correctly on an older OS may not validate
+          /// correctly on a newer OS. (signtool option: /o Version)
           VerifyByOperatingSystemVersion: string option
-          /// Specifies that the Default Authentication Verification Policy is used. If the /pa option is not specified, SignTool uses the Windows Driver Verification Policy. This option cannot be used with the catdb options. (signtool option: /pa)
+          /// Specifies that the Default Authentication Verification Policy is used. If the /pa option is not
+          /// specified, SignTool uses the Windows Driver Verification Policy. This option cannot be used with
+          /// the catdb options. (signtool option: /pa)
           UseDefaultAuthenticationVerificationPolicy: bool option
-          /// Specifies the name of the subject of the root certificate that the signing certificate must chain to. This value can be a substring of the entire subject name of the root certificate. (signtool option: /r RootSubjectName)
+          /// Specifies the name of the subject of the root certificate that the signing certificate must chain to.
+          /// This value can be a substring of the entire subject name of the root certificate.
+          /// (signtool option: /r RootSubjectName)
           RootSubjectName: string option
           /// Specifies that a warning is generated if the signature is not time stamped. (signtool option: /tw)
           WarnIfNotTimeStamped: bool option
@@ -466,24 +516,26 @@ module SignTool =
         signTool runner signToolExeLocator signToolArgs options.ToolPath options.Timeout options.WorkingDir
 
 
+    /// <summary>
     /// Signs files according to the options specified.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `certificate` - The signing certificate
-    /// - `setOptions` - The sign tool options
-    /// - `files` - The files list to sign
+    /// <param name="certificate">The signing certificate</param>
+    /// <param name="setOptions">The sign tool options</param>
+    /// <param name="files">The files list to sign</param>
     let sign (certificate: SignCertificate) (setOptions: SignOptions -> SignOptions) (files: seq<string>) =
         let options = setOptions (SignOptions.Create(certificate))
         signInternal defaultRunner defaultSignToolExeLocator options files
 
+    /// <summary>
     /// Signs and time stamps files according to the options specified.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `certificate` - The signing certificate
-    /// - `setSignOptions` - The sign tool options
-    /// - `serverUrl` - The timestamp server URL
-    /// - `setTimeStampOptions` - The signing timestamp options
-    /// - `files` - The files list to sign
+    /// <param name="certificate">The signing certificate</param>
+    /// <param name="setSignOptions">The sign tool options</param>
+    /// <param name="serverUrl">The timestamp server URL</param>
+    /// <param name="setTimeStampOptions">The signing timestamp options</param>
+    /// <param name="files">The files list to sign</param>
     let signWithTimeStamp
         (certificate: SignCertificate)
         (setSignOptions: SignOptions -> SignOptions)
@@ -495,22 +547,27 @@ module SignTool =
         let timeStampOptions = setTimeStampOptions (TimeStampOption.Create(serverUrl))
         signWithTimeStampInternal defaultRunner defaultSignToolExeLocator signOptions timeStampOptions files
 
-    /// Time stamps files according to the options specified. The files being time stamped must have previously been signed.
+    /// <summary>
+    /// Time stamps files according to the options specified. The files being time stamped must
+    /// have previously been signed.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `serverUrl` - The timestamp server URL
-    /// - `setOptions` - The signing timestamp options
-    /// - `files` - The files list to sign
+    /// <param name="serverUrl">The timestamp server URL</param>
+    /// <param name="setOptions">The signing timestamp options</param>
+    /// <param name="files">The files list to sign</param>
     let timeStamp (serverUrl: string) (setOptions: TimeStampOptions -> TimeStampOptions) (files: seq<string>) =
         let options = setOptions (TimeStampOptions.Create(serverUrl))
         timeStampInternal defaultRunner defaultSignToolExeLocator options files
 
+    /// <summary>
     /// Verifies files according to the options specified.
-    /// The SignTool verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate has been revoked, and, optionally, whether the signing certificate is valid for a specific policy.
+    /// The SignTool verify command determines whether the signing certificate was issued by a trusted authority,
+    /// whether the signing certificate has been revoked, and, optionally, whether the signing certificate is
+    /// valid for a specific policy.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setOptions` - The verifying options
-    /// - `files` - The files list to verify the signing
+    /// <param name="setOptions">The verifying options</param>
+    /// <param name="files">The files list to verify the signing</param>
     let verify (setOptions: VerifyOptions -> VerifyOptions) (files: seq<string>) =
         let options = setOptions (VerifyOptions.Create())
         verifyInternal defaultRunner defaultSignToolExeLocator options files

@@ -1,6 +1,8 @@
 ﻿namespace Fake.Installer
 
-/// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
+/// <summary>
+/// Contains tasks to create msi installers using the <a href="http://wixtoolset.org/">WiX toolset</a>
+/// </summary>
 [<RequireQualifiedAccess>]
 module Wix =
 
@@ -53,7 +55,11 @@ module Wix =
         fileCount <- fileCount + 1
         sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fileInfo.Name fileInfo.FullName
 
+    /// <summary>
     /// Creates WiX File tags from the given files
+    /// </summary>
+    /// 
+    /// <param name="files">The files to get</param>
     let getFilesAsWiXString files =
         files
         |> Seq.map (Fake.IO.FileInfo.ofPath >> getWixFileTag)
@@ -68,7 +74,9 @@ module Wix =
             | X64 -> "x64"
             | X86 -> "x86"
 
+    /// <summary>
     /// WiX File Element
+    /// </summary>
     type File =
         {
           /// File Id in WiX definition
@@ -116,7 +124,9 @@ module Wix =
             | Yes -> "yes"
             | No -> "no"
 
+    /// <summary>
     /// Service Control Element. Can Start, Stop and Remove services
+    /// </summary>
     type ServiceControl =
         { Id: string
           Name: string
@@ -158,7 +168,11 @@ module Wix =
           Stop = Both
           Wait = Yes }
 
+    /// <summary>
     /// Use this for generating service controls
+    /// </summary>
+    ///
+    /// <param name="setParams">Function to override the default service control parameters</param>
     let generateServiceControl (setParams: ServiceControl -> ServiceControl) =
         let parameters = ServiceControlDefaults |> setParams
 
@@ -231,7 +245,9 @@ module Wix =
             | Restart -> "restart"
             | RunCommand -> "runCommand"
 
+    /// <summary>
     /// Service configuration information for failure actions.
+    /// </summary>
     type ServiceConfig =
         {
           /// [Required] Determines the type of the service failure action.
@@ -290,7 +306,9 @@ module Wix =
         let parameters = ServiceConfigDefaults |> setParams
         parameters
 
+    /// <summary>
     /// Service or group of services that must start before the parent service.
+    /// </summary>
     type ServiceDependency =
         {
           /// [Required] The value of this attribute should be one of the following:
@@ -323,7 +341,9 @@ module Wix =
 
         parameters
 
+    /// <summary>
     /// Adds services for parent Component. Use the ServiceControl element to remove services.
+    /// </summary>
     type ServiceInstall =
         {
           /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
@@ -422,7 +442,11 @@ module Wix =
           ServiceDependencies = []
           ServiceConfig = [] }
 
+    /// <summary>
     /// Use this for generating service installs
+    /// </summary>
+    ///
+    /// <param name="setParams">Function to override the default service install parameters</param>
     let generateServiceInstall (setParams: ServiceInstall -> ServiceInstall) =
         let parameters = ServiceInstallDefaults |> setParams
 
@@ -485,7 +509,9 @@ module Wix =
             | Expandable -> "expandable"
             | MultiString -> "multistring"
 
+    /// <summary>
     /// Parameters for WiX RegistryValue
+    /// </summary>
     type RegistryValue =
         {
           /// The Id of this value
@@ -539,12 +565,15 @@ module Wix =
           KeyPath = YesOrNo.No
           Root = None }
 
+    /// <summary>
     /// Generates a registry value based on the given parameters, use toString on it when embedding it
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let registryValue = generateRegistryValue(fun v ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let registryValue = generateRegistryValue(fun v ->
     ///         {v with
     ///             Id = "asdasd"
     ///             Name = "Something"
@@ -554,11 +583,15 @@ module Wix =
     ///             KeyPath = YesOrNo.No
     ///             Value = "2"
     ///         })
+    /// </code>
+    /// </example>   
     let generateRegistryValue (setParams: RegistryValue -> RegistryValue) =
         let parameters = RegistryValueDefaults |> setParams
         parameters
 
+    /// <summary>
     /// Parameters for WiX RegistryKey
+    /// </summary>
     type RegistryKey =
         {
           /// Primary key used to identify this particular entry
@@ -611,13 +644,16 @@ module Wix =
           Keys = Seq.empty
           Values = Seq.empty }
 
+    /// <summary>
     /// Generates a registry key based on the given parameters, use toString on it when embedding it
     /// You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let key = generateRegistryKey(fun k ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let key = generateRegistryKey(fun k ->
     ///         {k with
     ///           Id = "KeyId"
     ///           Key = "SomeKey"
@@ -627,6 +663,8 @@ module Wix =
     ///           Keys = someChildKeys
     ///           Values = someChildValues
     ///         })
+    /// </code>
+    /// </example>
     let generateRegistryKey (setParams: RegistryKey -> RegistryKey) =
         let parameters = RegistryKeyDefaults |> setParams
         parameters
@@ -640,7 +678,11 @@ module Wix =
     /// Defaults for component ref
     let internal ComponentRefDefaults = { Id = "" }
 
+    /// <summary>
     /// Use this for generating component refs
+    /// </summary>
+    ///
+    /// <param name="setParams">Function to override the default component ref parameters</param>
     let generateComponentRef (setParams: ComponentRef -> ComponentRef) =
         let parameters = ComponentRefDefaults |> setParams
 
@@ -709,7 +751,9 @@ module Wix =
                     ""
                     d.Components)
 
+    /// <summary>
     /// Reference to a component for including it in a feature
+    /// </summary>
     type DirectoryRef =
         { Id: string
           Components: DirectoryComponent seq }
@@ -731,7 +775,11 @@ module Wix =
 
         parameters
 
-    ///get component refs from a directory component hierarchy
+    /// <summary>
+    /// Get component refs from a directory component hierarchy
+    /// </summary>
+    ///
+    /// <param name="elements">Sequence of directory component elements</param>
     let rec getComponentRefs (elements: DirectoryComponent seq) =
         let refs =
             elements
@@ -836,12 +884,21 @@ module Wix =
                   RegistryKeys = []
                   RegistryValues = [] })
 
+    /// <summary>
     /// Creates a WiX directory and component hierarchy from the given DirectoryInfo
-    /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
-    /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
-    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+    /// The function will create one component for each file
+    /// <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a> and set the GUID to "*",
+    /// which will make WiX produce consistent Component Guids if the Component's target path doesn't change. This is
+    /// vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
     /// You can use the getComponentRefs function for getting all created component refs and adding them to features.
-    /// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
+    /// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or
+    /// ServiceInstall to the directory component hierarchy
+    /// </summary>
+    ///
+    /// <param name="fileFilter">The files to filter</param>
+    /// <param name="directoryFilter">The directories to filter</param>
+    /// <param name="directoryInfo">The directory information</param>
+    /// <param name="architecture">The platform architecture</param>
     let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo architecture =
         let directoryName = ""
 
@@ -882,11 +939,19 @@ module Wix =
 
         currentDirectory
 
+    /// <summary>
     /// Creates WiX component with directories and files from the given DirectoryInfo
-    /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
-    /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
-    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
-    /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
+    /// The function will create one component for each file
+    /// <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a> and set the GUID to "*",
+    /// which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each
+    /// of them. You can use the getComponentIdsFromWiXString function for getting all created component refs and
+    /// adding them to features.
+    /// </summary>
+    ///
+    /// <param name="fileFilter">The files to filter</param>
+    /// <param name="directoryFilter">The directories to filter</param>
+    /// <param name="architecture">The platform architecture</param>
     let bulkComponentCreation fileFilter directoryInfo architecture =
         directoryInfo
         |> Fake.IO.DirectoryInfo.getFiles
@@ -907,18 +972,31 @@ module Wix =
                   RegistryKeys = []
                   RegistryValues = [] })
 
+    /// <summary>
     /// Creates WiX component with directories and files from the given DirectoryInfo
-    /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
-    /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
-    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
-    /// The components are embedded into the passed in root directory.
+    /// The function will create one component for each file
+    /// <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a> and set the GUID to "*",
+    /// which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking
+    /// each of them. The components are embedded into the passed in root directory.
+    /// </summary>
+    ///
+    /// <param name="fileFilter">The files to filter</param>
+    /// <param name="directoryInfo">The directory information</param>
+    /// <param name="architecture">The platform architecture</param>
     let bulkComponentCreationAsSubDir fileFilter (directoryInfo: DirectoryInfo) architecture =
         { Id = getDirectoryId directoryInfo.FullName
           Name = directoryInfo.Name
           Files = []
           Components = bulkComponentCreation fileFilter directoryInfo architecture }
 
-    ///// Use this to attach service controls to your components.
+    /// <summary>
+    /// Use this to attach service controls to your components.
+    /// </summary>
+    ///
+    /// <param name="comp">The directory component instance</param>
+    /// <param name="fileFilter">The file filter</param>
+    /// <param name="serviceControls">The service controls instance</param>
     let rec attachServiceControlToComponent (comp: DirectoryComponent) fileFilter serviceControls =
         match comp with
         | C c ->
@@ -947,7 +1025,13 @@ module Wix =
         components
         |> Seq.map (fun c -> attachServiceControlToComponent c fileFilter serviceControls)
 
+    /// <summary>
     /// Use this to attach service installs to your components.
+    /// </summary>
+    ///
+    /// <param name="comp">The directory component instance</param>
+    /// <param name="fileFilter">The file filter</param>
+    /// <param name="serviceInstalls">The service installs instance to attach</param>
     let rec attachServiceInstallToComponent (comp: DirectoryComponent) fileFilter serviceInstalls =
         match comp with
         | C c ->
@@ -976,11 +1060,19 @@ module Wix =
         components
         |> Seq.map (fun c -> attachServiceInstallToComponent c fileFilter serviceInstalls)
 
+    /// <summary>
     /// Creates recursive WiX directory and file tags from the given DirectoryInfo
-    /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
-    /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
-    /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
-    /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
+    /// The function will create one component for each file
+    /// <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a> and set the GUID to "*",
+    /// which will make WiX produce consistent Component Guids if the Component's target path doesn't change. This is
+    /// vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+    /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to
+    /// features.
+    /// </summary>
+    ///
+    /// <param name="fileFilter">The file filter</param>
+    /// <param name="asSubDir">The sub directory</param>
+    /// <param name="directoryInfo">The directory information</param>
     let rec getWixDirTag fileFilter asSubDir (directoryInfo: DirectoryInfo) =
         let dirs =
             directoryInfo
@@ -1018,14 +1110,19 @@ module Wix =
         else
             sprintf "%s%s" dirs compo
 
+    /// <summary>
     /// Retrieves the file id of the first file in WiXString, which name matches fileRegex
-    /// ## Parameters
-    ///  - `wiXString` - The directory string which was generated by getWixDirTag
-    ///  - `fileRegex` - Regex which matches the file name
+    /// </summary>
     ///
-    /// ## Sample
-    ///     let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
-    ///     let executableFileId = getFileIdFromWiXString directoryString "\S*.exe"
+    /// <param name="wiXString">The directory string which was generated by getWixDirTag</param>
+    /// <param name="fileRegex">Regex which matches the file name</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
+    /// let executableFileId = getFileIdFromWiXString directoryString "\S*.exe"
+    /// </code>
+    /// </example>
     let getFileIdFromWiXString wiXString fileRegex =
         let lines = Fake.Core.String.split '\n' wiXString
 
@@ -1037,13 +1134,19 @@ module Wix =
         |> fun f -> f.Substring(f.IndexOf("Id=") + 4, Regex.Match(f, "Id=\"[^\"]*\"").Length - 5)
 
 
+    /// <summary>
     /// Retrieves all component ids from given WiX directory string
-    /// ## Parameters
-    ///  - `wiXString` - The directory string which was generated by getWixDirTag
+    /// </summary>
+    /// 
+    /// <param name="wiXString">The directory string which was generated by getWixDirTag</param>
     ///
-    /// ## Sample
-    ///     let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
-    ///     let componentIds = getComponentIdsFromWiXString directoryString
+    /// <example>
+    /// <code lang="fsharp">
+    /// let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
+    /// let componentIds = getComponentIdsFromWiXString directoryString
+    /// </code>
+    /// </example>
+    ///     
     let getComponentIdsFromWiXString wiXString =
         let lines = Fake.Core.String.split '\n' wiXString
 
@@ -1070,17 +1173,20 @@ module Wix =
         else
             compos
 
+    /// <summary>
     /// Take a component string and set "neverOverwrite" Tag
     /// This is useful for config files, since they are not replaced on upgrade like that
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `components` - the component string
+    /// <param name="components">The component string</param>
     let setComponentsNeverOverwrite (components: string) =
         components.Replace("<Component", "<Component NeverOverwrite=\"yes\"")
 
     open Fake.Core
 
+    /// <summary>
     /// WiX parameter type
+    /// </summary>
     [<CLIMutable>]
     type Params =
         { ToolDirectory: string
@@ -1098,7 +1204,7 @@ module Wix =
               "-ext WixUIExtension.dll"
               "-ext WixUtilExtension.dll" ] }
 
-    /// Used for determing whether the feature should be visible in the select features installer pane or not
+    /// Used for determining whether the feature should be visible in the select features installer pane or not
     type FeatureDisplay =
         /// Initially shows the feature collapsed. This is the default value.
         | Collapse
@@ -1112,7 +1218,9 @@ module Wix =
             | Expand -> "expand"
             | Hidden -> "hidden"
 
+    /// <summary>
     /// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
+    /// </summary>
     type Feature =
         {
           /// Unique identifier of the feature.
@@ -1130,15 +1238,16 @@ module Wix =
           /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog.
           Description: string
 
-          ///Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
-          ///collapse
+          /// Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
+          /// collapse
           ///    Initially shows the feature collapsed. This is the default value.
-          ///expand
+          /// expand
           ///    Initially shows the feature expanded.
-          ///hidden
+          /// hidden
           ///    Prevents the feature from displaying in the user interface.
-          ///<an explicit integer value>
-          ///    For advanced users only, it is possible to directly set the integer value of the display value that will appear in the Feature row.
+          /// <an explicit integer value>
+          ///    For advanced users only, it is possible to directly set the integer value of the display value that will
+          /// appear in the Feature row.
           Display: FeatureDisplay
 
           /// Nest sub features
@@ -1201,7 +1310,8 @@ module Wix =
           NestedFeatures = Seq.empty<Feature>
           Components = [] }
 
-    /// Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'
+    /// Type for defining, which program directory should be used for installation. ProgramFiles32 refers to
+    /// 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'
     type ProgramFilesFolder =
         | ProgramFiles32
         | ProgramFiles64
@@ -1212,7 +1322,8 @@ module Wix =
 
     /// Used in CustomAction for determing when to run the custom action
     type CustomActionExecute =
-        /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation).
+        /// Indicates that the custom action will run after successful completion of the installation script
+        /// (at the end of the installation).
         | Commit
         /// Indicates that the custom action runs in-script (possibly with elevated privileges).
         | Deferred
@@ -1222,7 +1333,8 @@ module Wix =
         | Immediate
         /// Indicates that the custom action will only run in the first sequence that runs it in the same process.
         | OncePerProcess
-        /// Indicates that a custom action will run in the rollback sequence when a failure occurs during installation, usually to undo changes made by a deferred custom action.
+        /// Indicates that a custom action will run in the rollback sequence when a failure occurs during installation,
+        /// usually to undo changes made by a deferred custom action.
         | Rollback
         /// Indicates that a custom action should be run a second time if it was previously run in an earlier sequence.
         | SecondSequence
@@ -1236,9 +1348,9 @@ module Wix =
             | Rollback -> "rollback"
             | SecondSequence -> "secondSequence"
 
-    /// Used in CustomAction for determing the return type
+    /// Used in CustomAction for determining the return type
     type CustomActionReturn =
-        /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates.
+        /// Indicates that the custom action will run asynchronously and execution may continue after the installer terminates.
         | AsyncNoWait
         /// Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end.
         | AsyncWait
@@ -1412,14 +1524,14 @@ module Wix =
           IncludeMinimum = YesOrNo.Yes
           IncludeMaximum = YesOrNo.No }
 
-    /// Used for determing when to run RemoveExistingProducts on major upgrade
+    /// Used for determining when to run RemoveExistingProducts on major upgrade
     type MajorUpgradeSchedule =
         /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product.
         /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails,
         /// the machine will have neither version installed.
         | AfterInstallValidate
         /// Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the afterInstallValidate scheduling, but if the installation of the upgrade product fails,
-        /// Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it.
+        /// Windows Installer also rolls back the removal of the installed product -- in other words, reinstall it.
         | AfterInstallInitialize
         /// Schedules RemoveExistingProducts between the InstallExecute and InstallFinalize standard actions. This scheduling installs the upgrade product "on top of" the installed product then lets
         /// RemoveExistingProducts uninstall any components that don't also exist in the upgrade product. Note that this scheduling requires strict adherence to the component rules because it relies
@@ -1590,13 +1702,18 @@ module Wix =
           CustomReplacements = []
           Platform = Architecture.X64 }
 
+    /// <summary>
     /// Generates WiX Template with specified file name (you can prepend location too)
     /// You need to run this once every build an then use fillInWiXScript to replace placeholders
-    /// ## Parameters
-    ///  - `fileName` - Pass desired fileName for your wiXScript file
+    /// </summary>
+    /// 
+    /// <param name="fileName">Pass desired fileName for your wiXScript file</param>
     ///
-    /// ## Sample
-    ///     generateWiXScript "Setup.wxs"
+    /// <example>
+    /// <code lang="fsharp">
+    /// generateWiXScript "Setup.wxs"
+    /// </code>
+    /// </example>
     let generateWiXScript fileName =
         let scriptTemplate =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1661,13 +1778,17 @@ module Wix =
 
         Fake.IO.File.writeString false fileName scriptTemplate
 
+    /// <summary>
     /// Takes path where script files reside and sets all parameters as defined
-    /// ## Parameters
-    ///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="wiXPath">Pass path where your script is located at. Function will search for all Scripts in
+    /// that location and fill in parameters</param>
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     fillInWiXTemplate "" (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// fillInWiXTemplate "" (fun f ->
     ///     {f with
     ///         ProductCode = WiXProductCode
     ///         ProductName = WiXProductName
@@ -1685,6 +1806,8 @@ module Wix =
     ///         CustomActions = action1.ToString() + action2.ToString()
     ///         ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
     ///     })
+    /// </code>
+    /// </example> 
     let fillInWiXTemplate wiXPath setParams =
         let parameters = ScriptDefaults |> setParams
         let wixScript = !!(wiXPath @@ "*.wxs")
@@ -1720,13 +1843,16 @@ module Wix =
         let replacements = replacements @ customReplacements
         Templates.replaceInFiles replacements wixScript
 
+    /// <summary>
     /// Generates a feature based on the given parameters, use toString on it when embedding it
     /// You can pass other features into InnerContent for making a hierarchy
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let feature = generateFeatureElement (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let feature = generateFeatureElement (fun f ->
     ///         {f with
     ///             Id = "UniqueName"
     ///             Title = "Title which is shown"
@@ -1735,6 +1861,8 @@ module Wix =
     ///             Display = "expand"
     ///             InnerContent = [otherFeature1; otherFeature2]
     ///         })
+    /// </code>
+    /// </example>
     let generateFeatureElement setParams =
         let parameters: Feature = FeatureDefaults |> setParams
 
@@ -1743,15 +1871,18 @@ module Wix =
 
         parameters
 
+    /// <summary>
     /// Generates a customAction based on the given parameters, use toString on it when embedding it
     /// Be careful to make Id unique. FileKey is a reference to a file Id which you added by using getWixDirTag or getWixFileTag
     /// Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
     /// ExeCommand are the parameters passed to your executable
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let action = generateCustomAction (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let action = generateCustomAction (fun f ->
     ///         {f with
     ///             Id = "UniqueActionId"
     ///             FileKey = "fi_5"
@@ -1760,6 +1891,8 @@ module Wix =
     ///             ExeCommand = "install"
     ///             Return = "check"
     ///         })
+    /// </code>
+    /// </example>   
     let generateCustomAction setParams =
         let parameters: CustomAction = CustomActionDefaults |> setParams
 
@@ -1768,19 +1901,24 @@ module Wix =
 
         parameters
 
+    /// <summary>
     /// Generates a custom action execution based on the given parameters, use toString on it when embedding it
     /// Condition in sample makes execute only on install
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let actionExecution = generateCustomActionExecution (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let actionExecution = generateCustomActionExecution (fun f ->
     ///         {f with
     ///             ActionId = action.Id
     ///             Verb = "After"
     ///             Target = "InstallFiles"
     ///             Condition = "<![CDATA[(&" + feature.Id + " = 3) AND NOT (!" + feature.Id + " = 3)]]>"
     ///         })
+    /// </code>
+    /// </example>
     let generateCustomActionExecution setParams =
         let parameters: CustomActionExecution = CustomActionExecutionDefaults |> setParams
 
@@ -1789,15 +1927,20 @@ module Wix =
 
         parameters
 
+    /// <summary>
     /// Generates a ui ref based on the given parameters, use toString on it when embedding it
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let UIRef = generateUIRef (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let UIRef = generateUIRef (fun f ->
     ///         {f with
     ///             Id = "WixUI_Mondo"
     ///         })
+    /// </code>
+    /// </example>   
     let generateUIRef setParams =
         let parameters: UIRef = UIRefDefaults |> setParams
 
@@ -1807,15 +1950,20 @@ module Wix =
         parameters
 
 
+    /// <summary>
     /// Generates an upgrade based on the given parameters, use toString on it when embedding it
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let upgrade = generateUpgrade (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let upgrade = generateUpgrade (fun f ->
     ///         {f with
     ///            Id = productUpgradeCode
     ///         })
+    /// </code>
+    /// </example>
     let generateUpgrade setParams =
         let parameters: Upgrade = UpgradeDefaults |> setParams
 
@@ -1824,35 +1972,51 @@ module Wix =
 
         parameters
 
+    /// <summary>
     /// Generates an upgrade version based on the given parameters, use toString on it when embedding it
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let upgradeVersion = generateUpgradeVersion (fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let upgradeVersion = generateUpgradeVersion (fun f ->
     ///         {f with
     ///            Minimum = productVersion
     ///            OnlyDetect = "yes"
     ///         })
+    /// </code>
+    /// </example>
     let generateUpgradeVersion setParams =
         let parameters: UpgradeVersion = UpgradeVersionDefaults |> setParams
         parameters
 
 
+    /// <summary>
     /// Generates a major upgrade based on the given parameters, use toString on it when embedding it
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
-    /// ## Sample
-    ///     let majorUpgradeVersion = generateMajorUpgradeVersion(fun f ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// let majorUpgradeVersion = generateMajorUpgradeVersion(fun f ->
     ///         {f with
     ///             DowngradeErrorMessage = "A later version is already installed, exiting."
     ///         })
+    /// </code>
+    /// </example>    
     let generateMajorUpgradeVersion setParams =
         let parameters: MajorUpgrade = MajorUpgradeDefaults |> setParams
         parameters
 
-    /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
+    /// <summary>
+    /// Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a>)
+    /// on the given WiX script with the given parameters
+    /// </summary>
+    ///
+    /// <param name="parameters">Function used to override parameters for candle tool</param>
+    /// <param name="wixScript">The Wix setup script path</param>
     let Candle (parameters: Params) wixScript =
         use __ = Trace.traceTask "Candle" wixScript
         let fi = Fake.IO.FileInfo.ofPath wixScript
@@ -1882,7 +2046,14 @@ module Wix =
 
         wixObj
 
-    /// Runs the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) on the given WiX script with the given parameters
+    /// <summary>
+    /// Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a>
+    /// on the given WiX script with the given parameters
+    /// </summary>
+    ///
+    /// <param name="parameters">Function used to override parameters for light tool</param>
+    /// <param name="outputFile">The output file path</param>
+    /// <param name="wixScript">The Wix setup script path</param>
     let Light (parameters: Params) outputFile wixObj =
         use __ = Trace.traceTask "Light" wixObj
         let tool = parameters.ToolDirectory @@ "light.exe"
@@ -1905,14 +2076,18 @@ module Wix =
             failwithf "Light %s failed." args
 
 
-    /// Uses the WiX tools [Candle](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) and [Light](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to create an msi.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the WiX default parameters.
-    ///  - `outputFile` - The msi output file path (given to Light).
-    ///  - `wixScript` - The path to a WiX script that will be used with Candle.
+    /// <summary>
+    /// Uses the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a>
+    /// and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.
+    /// </summary>
     ///
-    /// ## Sample
-    ///     Target "BuildSetup" (fun _ ->
+    /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
+    /// <param name="outputFile">The msi output file path (given to Light).</param>
+    /// <param name="wixScript">The path to a WiX script that will be used with Candle.</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "BuildSetup" (fun _ ->
     ///         // Copy all important files to the deploy directory
     ///         !! (buildDir + "/**/*.dll")
     ///           ++ (buildDir + "/**/*.exe")
@@ -1936,6 +2111,8 @@ module Wix =
     ///             setupFileName
     ///             (setupBuildDir + "Setup.wxs.template")
     ///     )
+    /// </code>
+    /// </example>
     let WiX setParams outputFile wixScript =
         let parameters = setParams Defaults
 
@@ -1988,12 +2165,14 @@ module Wix =
           VariableName = "var.SourceDir"
           AdditionalHeatArgs = [] }
 
-    /// Harvests the contents of a Directory for use with Wix using the [Heat](http://wixtoolset.org/documentation/manual/v3/overview/heat.html) tool.
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the Heat default parameters.
-    ///  - `directory` - The path to the directory that will be harvested by Heat.
-    ///  - `outputFile` - The output file path given to Heat.
-    ///
+    /// <summary>
+    /// Harvests the contents of a Directory for use with Wix using the
+    /// <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.
+    /// </summary>
+    /// 
+    /// <param name="setParams">Function used to manipulate the Heat default parameters.</param>
+    /// <param name="directory">The path to the directory that will be harvested by Heat.</param>
+    /// <param name="outputFile">The output file path given to Heat.</param>
     let HarvestDirectory (setParams: HeatParams -> HeatParams) directory outputFile =
         use __ = Trace.traceTask "Heat" directory
 

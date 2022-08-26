@@ -10,10 +10,14 @@ open Fake.Net.Result
 open Fake.Net.List
 open System.Net.Http.Headers
 
+/// <summary>
 /// HTTP Client for downloading files
+/// </summary>
 module Http = 
 
+    /// <summary>
     /// Input parameter type
+    /// </summary>
     type DownloadParameters = {
         /// The URI from which to download data
         Uri: string
@@ -104,27 +108,25 @@ module Http =
             | Error errs ->
                 Async.result (Error errs)
         
+    /// <summary>
     /// Download file by the given file path and Uri
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `localFilePath` - A local file path to download file
-    ///  - `uri` - A Uri to download from
-    ///
-    /// ## Returns
-    ///  - `string` type. Contains a downloaded file path
+    /// <param name="localFilePath">A local file path to download file</param>
+    /// <param name="uri">A Uri to download from</param>
+    /// <returns>String value contains a downloaded file path</returns>
     let downloadFile (localFilePath: string) (uri: string) : string =
         downloadFileAsync { Uri=uri;  Path=localFilePath }
         |> Async.RunSynchronously
         |> processResults
 
+    /// <summary>
     /// Download list of Uri's in parallel
-    /// DownloadParameters -> string list
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
-    ///
-    /// ## Returns
-    ///  - `string list` type. Contains a list of downloaded file paths
+    /// <param name="input">List of <c>Http.DownloadParameters</c>. Each Http.DownloadParameters record type contains
+    /// Uri and file path</param>
+    /// <returns>List of string values contains a list of downloaded files paths</returns>
     let downloadFiles (input: DownloadParameters list) : string list =
         input
         // DownloadParameters -> "Async<Result<FilePath, Err list>> list"
@@ -136,19 +138,22 @@ module Http =
         |> Async.RunSynchronously
         |> processResults
 
+    /// <summary>
     /// Option type for the HTTP verb
+    /// </summary>
     type PostMethod = 
         | GET
         | POST
 
+    /// <summary>
     /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `url` - The URL to perform the GET operation.
+    /// <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="url">The URL to perform the GET operation.</param>
     let private getAsync headerF (userName : string) (password : string) (url : string) = async {
         use client = new HttpClient()
         if not (isNull userName) || not (isNull password) then
@@ -176,28 +181,30 @@ module Http =
             return headers, reader.ReadToEnd()
     }
 
+    /// <summary>
     /// Executes an HTTP GET command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `url` - The URL to perform the GET operation.
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="url">The URL to perform the GET operation.</param>
     let get userName password url : string =
         getAsync ignore userName password url
         |> Async.RunSynchronously
         |> snd
 
+    /// <summary>
     /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
-    ///  - `url` - The URL to perform the POST operation.
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `data` - The data to post.
+    /// <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+    /// <param name="url">The URL to perform the POST operation.</param>
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="data">The data to post.</param>
     let internal postCommandAsync headerF (url : string) userName password (data : string) = async {
         let client = new HttpClient()
         if not (String.IsNullOrEmpty userName) || not (String.IsNullOrEmpty password) then
@@ -227,30 +234,32 @@ module Http =
         return headers, reader.ReadToEnd() }
 
 
+    /// <summary>
     /// Executes an HTTP POST command and retrieves the information.    
     /// This function will automatically include a "source" parameter if the "Source" property is set.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
-    ///  - `url` - The URL to perform the POST operation.
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `data` - The data to post.
+    /// <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+    /// <param name="url">The URL to perform the POST operation.</param>
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="data">The data to post.</param>
     let postCommand headerF url userName password data : string =
         postCommandAsync headerF url userName password data
         |> Async.RunSynchronously
         |> snd
 
 
+    /// <summary>
     /// Executes an HTTP POST command and retrieves the information.
     /// It returns the response of the request, or null if we got 404 or nothing.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `url` - The URL to perform the POST operation.
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `data` - The data to post.
+    /// <param name="url">The URL to perform the POST operation.</param>
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="data">The data to post.</param>
     let post url userName password data = postCommand ignore url userName password data
 
     let internal uploadAsync (url:string) file = async {
@@ -268,20 +277,20 @@ module Http =
 
         response.EnsureSuccessStatusCode () |> ignore }
 
+    /// <summary>
     /// Upload the given file to the given endpoint
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `url` - The URL to perform the POST operation.
-    ///  - `file` - The file to upload.
+    /// <param name="url">The URL to perform the POST operation.</param>
+    /// <param name="file">The file to upload.</param>
     let upload url file = uploadAsync url file |> Async.RunSynchronously
 
     /// Like 'get' but allow to set headers and returns the response headers.
     ///
-    /// ## Parameters
-    ///  - `userName` - The username to use with the request.
-    ///  - `password` - The password to use with the request.
-    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
-    ///  - `url` - The URL to perform the POST operation.
+    /// <param name="userName">The username to use with the request.</param>
+    /// <param name="password">The password to use with the request.</param>
+    /// <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+    /// <param name="url">The URL to perform the POST operation.</param>
     let getWithHeaders userName password headerF (url:string) : Map<string, string list> * string =
         getAsync headerF userName password url
         |> Async.RunSynchronously

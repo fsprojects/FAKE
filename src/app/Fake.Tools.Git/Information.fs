@@ -4,16 +4,19 @@ open Fake.Core
 open Fake.Core.String.Operators
 open System.Text.RegularExpressions
 
+/// <summary>
 /// Contains helper functions which can be used to retrieve status information from git.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Information =
 
     let internal versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
 
+    /// <summary>
     /// Gets the git version
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getVersion repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir "--version"
         msg |> String.separated ""
@@ -27,19 +30,21 @@ module Information =
         else
             failwith "unable to find git version"
 
+    /// <summary>
     /// Check if the given reference version is higher or equal to found git version
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `referenceVersion` - The version to compare with
+    /// <param name="referenceVersion">The version to compare with</param>
     let isGitVersionHigherOrEqual referenceVersion =
         let versionParts = getVersion "." |> extractGitVersion
 
         versionParts > SemVer.parse referenceVersion
 
+    /// <summary>
     /// Gets the git branch name
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getBranchName repositoryDir =
         try
             let _, msg, _ = CommandHelper.runGitCommand repositoryDir "status -s -b"
@@ -61,10 +66,11 @@ module Information =
             | None -> reraise ()
             | Some s -> s
 
-    /// Returns the SHA1 of the current HEAD
+    /// <summary>
+    /// Returns the SHA1 of the current <c>HEAD</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let getCurrentSHA1 repositoryDir =
         try
             Branches.getSHA1 repositoryDir "HEAD"
@@ -75,45 +81,50 @@ module Information =
             | None -> reraise ()
             | Some s -> s
 
+    /// <summary>
     /// Shows the git status
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let showStatus repositoryDir = CommandHelper.showGitCommand repositoryDir "status"
 
+    /// <summary>
     /// Checks if the working copy is clean
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let isCleanWorkingCopy repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir "status"
         msg |> Seq.fold (fun acc s -> acc || "nothing to commit" <* s) false
 
+    /// <summary>
     /// Returns a friendly name from a SHA1
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
-    ///  - `sha1` - The sha1 to use
+    /// <param name="repositoryDir">The git repository.</param>
+    /// <param name="sha1">The sha1 to use</param>
     let showName repositoryDir sha1 =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir <| sprintf "name-rev %s" sha1
         if msg.Length = 0 then sha1 else msg[0]
 
+    /// <summary>
     /// Returns true if rev1 is ahead of rev2
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
-    ///  - `rev1` - The first revision to use
-    ///  - `rev2` - The second revision to use
+    /// <param name="repositoryDir">The git repository.</param>
+    /// <param name="rev1">The first revision to use</param>
+    /// <param name="rev2">The second revision to use</param>
     let isAheadOf repositoryDir rev1 rev2 =
         if rev1 = rev2 then
             false
         else
             Branches.findMergeBase repositoryDir rev1 rev2 = rev2
 
+    /// <summary>
     /// Gets the last git tag by calling git describe
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let describe repositoryDir =
         let _, msg, error = CommandHelper.runGitCommand repositoryDir "describe"
 
@@ -122,10 +133,11 @@ module Information =
 
         msg |> Seq.head
 
+    /// <summary>
     /// Gets the git log in one line
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The git repository.
+    /// <param name="repositoryDir">The git repository.</param>
     let shortlog repositoryDir =
         let _, msg, error = CommandHelper.runGitCommand repositoryDir "log --oneline -1"
 
@@ -134,13 +146,17 @@ module Information =
 
         msg |> Seq.head
 
+    /// <summary>
     /// Gets the last git tag of the current repository by calling git describe
+    /// </summary>
     let getLastTag () =
         let _,msg,error = CommandHelper.runGitCommand "" "describe --tags --abbrev=0"
         if error <> "" then failwithf "git describe --tags failed: %s" error
         msg |> Seq.head
 
+    /// <summary>
     /// Gets the current hash of the current repository
+    /// </summary>
     let getCurrentHash () =
         try
             let tmp = (shortlog "").Split(' ') |> Seq.head |> (fun s -> s.Split('m'))

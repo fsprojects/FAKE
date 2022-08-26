@@ -2,15 +2,20 @@ namespace Fake.BuildServer
 
 open Fake.Core
 
+/// <summary>
 /// Native support for GitHub Actions specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module GitHubActions =
 
     /// Exported environment variables during build.
-    /// See the [official documentation](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) for details.
+    /// See the <a href="https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables">
+    /// official documentation</a> for details.
     type Environment =
 
         /// Always set to true, if present.
@@ -73,7 +78,10 @@ module GitHubActions =
         /// Only set for forked repositories. The branch of the base repository.
         static member BaseRef = Environment.environVar "GITHUB_BASE_REF"
 
+    /// <summary>
     /// Implements a TraceListener for GitHub Actions.
+    /// </summary>
+    /// [omit]
     type internal GitHubActionsTraceListener() =
         interface ITraceListener with
             /// Writes the given message to the Console.

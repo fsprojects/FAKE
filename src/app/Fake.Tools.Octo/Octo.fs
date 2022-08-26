@@ -1,5 +1,8 @@
 namespace Fake.Tools
 
+/// <summary>
+/// Octo module contains tasks to interact with <c>Octo.exe</c> tool
+/// </summary>
 [<RequireQualifiedAccess>]
 module Octo =
 
@@ -10,7 +13,9 @@ module Octo =
     open System
     open System.IO
 
-    /// Octo.exe server options
+    /// <summary>
+    /// <c>Octo.exe</c> server options
+    /// </summary>
     type ServerOptions =
         {
           /// The base URL for your Octopus server
@@ -18,7 +23,9 @@ module Octo =
           /// Your API key; retrieved from the user profile page.
           ApiKey: string }
 
-    /// Common Octo.exe CLI params
+    /// <summary>
+    /// Common <c>Octo.exe</c> CLI params
+    /// </summary>
     type Options =
         { ToolType: ToolType
           ToolName: string
@@ -27,7 +34,9 @@ module Octo =
           Server: ServerOptions
           Timeout: TimeSpan }
 
+    /// <summary>
     /// Options for creating a new release
+    /// </summary>
     type CreateReleaseOptions =
         {
           /// Name of the project
@@ -53,7 +62,9 @@ module Octo =
           ///common parameters
           Common: Options }
 
+    /// <summary>
     /// Options for deploying a release to an environment
+    /// </summary>
     type DeployReleaseOptions =
         {
           /// Name of the project
@@ -88,7 +99,9 @@ module Octo =
           /// Common parameters
           Common: Options }
 
+    /// <summary>
     /// Options for deleting a range of releases in a project
+    /// </summary>
     type DeleteReleasesOptions =
         {
           /// Name of the project
@@ -105,7 +118,9 @@ module Octo =
           /// Common parameters
           Common: Options }
 
+    /// <summary>
     /// Option type for pushing packages
+    /// </summary>
     type PushOptions =
         {
           // paths to one or more packages to push to the server
@@ -140,7 +155,7 @@ module Octo =
         | Some path -> path
         | None -> toolName
 
-    /// Default parameters to call octo.exe.
+    /// Default parameters to call <c>Octo.exe</c>.
     let internal commonOptions =
         let toolName = "Octo.exe"
 
@@ -307,52 +322,58 @@ module Octo =
             __.MarkFailed()
             result
 
+    /// <summary>
     /// Creates a release and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The create release parameters
+    /// <param name="setParams">The create release parameters</param>
     let createReleaseWithExitCode setParams =
         let options = setParams releaseOptions
         exec (CreateRelease(options, None)) options.Common
 
+    /// <summary>
     /// Creates a release, and optionally deploys it to one or more environments and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setReleaseParams` - The release parameters
-    /// - `setDeployParams` - The deploy parameters
+    /// <param name="setReleaseParams">The release parameters</param>
+    /// <param name="setDeployParams">The deploy parameters</param>
     let createReleaseAndDeployWithExitCode setReleaseParams setDeployParams =
         let releaseOptions = setReleaseParams releaseOptions
         let deployOptions = setDeployParams deployOptions
         exec (CreateRelease(releaseOptions, deployOptions)) releaseOptions.Common
 
+    /// <summary>
     /// Deploys releases that have already been created and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The release parameters
+    /// <param name="setParams">The release parameters</param>
     let deployReleaseWithExitCode setParams =
         let options = setParams deployOptions
         exec (DeployRelease options) options.Common
 
+    /// <summary>
     /// Deletes a range of releases and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The delete release parameters
+    /// <param name="setParams">The delete release parameters</param>
     let deleteReleasesWithExitCode setParams =
         let options = setParams deleteOptions
         exec (DeleteReleases options) options.Common
 
+    /// <summary>
     /// Lists all environments and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The Octo tool parameters
+    /// <param name="setParams">The Octo tool parameters</param>
     let listEnvironmentsWithExitCode setParams =
         let options = setParams commonOptions
         exec ListEnvironments options
 
+    /// <summary>
     /// Pushes one or more packages to the Octopus built-in repository and returns the exit code.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The push parameters
+    /// <param name="setParams">The push parameters</param>
     let pushWithExitCode setParams =
         let options = setParams pushOptions
         exec (Push options) options.Common
@@ -363,10 +384,11 @@ module Octo =
         | 0 -> ()
         | _ -> failwithf "Octo %s failed. Process finished with exit code %i" commandString result
 
+    /// <summary>
     /// Creates a release.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The create release parameters
+    /// <param name="setParams">The create release parameters</param>
     let createRelease setParams =
         let commandLine =
             (CreateRelease((setParams releaseOptions), None))
@@ -375,11 +397,12 @@ module Octo =
         createReleaseWithExitCode setParams
         |> (handleIgnoreExitCode <| commandLine)
 
+    /// <summary>
     /// Creates a release, and optionally deploys it to one or more environments.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setReleaseParams` - The release parameters
-    /// - `setDeployParams` - The deploy parameters
+    /// <param name="setReleaseParams">The release parameters</param>
+    /// <param name="setDeployParams">The deploy parameters</param>
     let createReleaseAndDeploy setReleaseParams setDeployParams =
         let commandLine =
             (CreateRelease((setReleaseParams releaseOptions), (setDeployParams deployOptions)))
@@ -388,10 +411,11 @@ module Octo =
         createReleaseAndDeployWithExitCode setReleaseParams setDeployParams
         |> (handleIgnoreExitCode <| commandLine)
 
+    /// <summary>
     /// Deploys releases that have already been created.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The release deployment parameters
+    /// <param name="setParams">The release deployment parameters</param>
     let deployRelease setParams =
         let commandLine =
             (DeployRelease(setParams deployOptions))
@@ -400,10 +424,11 @@ module Octo =
         deployReleaseWithExitCode setParams
         |> (handleIgnoreExitCode <| commandLine)
 
+    /// <summary>
     /// Deletes a range of releases.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The releases to delete parameters
+    /// <param name="setParams">The releases to delete parameters</param>
     let deleteReleases setParams =
         let commandLine =
             (DeleteReleases(setParams deleteOptions))
@@ -412,20 +437,22 @@ module Octo =
         deleteReleasesWithExitCode setParams
         |> (handleIgnoreExitCode <| commandLine)
 
+    /// <summary>
     /// Lists all environments.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The environments to list parameters
+    /// <param name="setParams">The environments to list parameters</param>
     let listEnvironments setParams =
         let commandLine = ListEnvironments.ToString()
 
         listEnvironmentsWithExitCode setParams
         |> (handleIgnoreExitCode <| commandLine)
 
+    /// <summary>
     /// Pushes one or more packages to the Octopus built-in repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The push package parameters
+    /// <param name="setParams">The push package parameters</param>
     let push setParams =
         let commandLine = (Push(setParams pushOptions)).ToString()
 

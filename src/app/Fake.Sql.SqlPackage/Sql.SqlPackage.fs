@@ -1,6 +1,14 @@
 ﻿namespace Fake.Sql
 
+/// <namespacedoc>
+/// <summary>
+/// SQL namespace contains tasks to interact with SQL databases, like SqlPackage
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
 /// Contains helpers around deploying databases.
+/// </summary>
 [<RequireQualifiedAccess>]
 module SqlPackage =
 
@@ -19,7 +27,9 @@ module SqlPackage =
         /// Generate an XML report for the differences between two databases.
         | Report of OutputPath:string
 
+    /// <summary>
     /// Configuration arguments for DacPac deploy
+    /// </summary>
     type DeployDbArgs = {
         /// The path to SqlPackage.exe.
         SqlPackageToolPath : string
@@ -177,17 +187,21 @@ module SqlPackage =
         |> List.filter ((<>) "")
         |> String.concat " "
 
+    /// <summary>
     /// Deploys a SQL DacPac or database to another database or DacPac.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `setParams` - The SQL deployment parameters
+    /// <param name="setParams">The SQL deployment parameters</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// Target.create "DeployLocalDb" (fun _ ->
     ///     let connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False"
     ///     let dacPacPath = "path/to/dbProject.dacpac"
     ///     SqlPackage.deployDb (fun args -> { args with Source = dacPacPath; Destination = connectionString }) |> ignore
     /// )
+    /// </code>
+    /// </example>
     let deployDb setParams =
         let args = setParams DefaultDeploymentArgs
         let action, outputPath = generateCommandLine args.Action

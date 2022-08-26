@@ -2,14 +2,19 @@ namespace Fake.BuildServer
 
 open Fake.Core
 
+/// <summary>
 /// Native support for Bitbucket Pipelines specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module BitbucketPipelines =
     /// Contains references to Bitbucket Pipeline environment variables
-    /// See the [official documentation](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/) for details. 
+    /// See the <a href="https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/">
+    /// official documentation</a> for details. 
     type BitbucketPipelinesEnvironment =
         
         /// The commit hash of a commit that kicked off the build

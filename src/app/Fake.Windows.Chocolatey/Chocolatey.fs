@@ -1,6 +1,14 @@
 namespace Fake.Windows
 
-/// Contains tasks which allow to call [Chocolatey](https://chocolatey.org)
+/// <namespacedoc>
+/// <summary>
+/// Windows namespace contains tasks to interact with Windows specific tools, like Chocolatey and Registery
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// Contains tasks which allow to call <a href="https://chocolatey.org">Chocolatey</a>
+/// </summary>
 [<RequireQualifiedAccess>]
 module Choco =
 
@@ -27,38 +35,41 @@ module Choco =
     | Sha256
     | Sha512
 
+    /// <summary>
     /// The choco install parameter type.
+    /// </summary>
     type ChocoInstallParams = {
         /// Version of the package
-        /// Equivalent to the `--version <version>` option.
+        /// Equivalent to the <c>--version <version></c> option.
         Version: string
-        /// Include prerelease. Default `false`.
-        /// Equivalent to the `--pre` option.
+        /// Include prerelease. Default <c>false</c>.
+        /// Equivalent to the <c>--pre</c> option.
         Prerelease: bool
         /// Parameters to pass to the package.
-        /// Equivalent to the `--params <params>` option.
+        /// Equivalent to the <c>--params <params></c> option.
         PackageParameters: string
         /// The source to find the package(s) to install.
         /// Special sources  include: ruby, webpi, cygwin, windowsfeatures, and python.
-        /// Equivalent to the `--source <source>` option.
+        /// Equivalent to the <c>--source <source></c> option.
         Source: string
-        /// Force x86 (32bit) installation on 64 bit systems. Default `false`.
-        /// Equivalent to the `--forcex86` option.
+        /// Force x86 (32bit) installation on 64 bit systems. Default <c>false</c>.
+        /// Equivalent to the <c>--forcex86</c> option.
         ForceX86: bool
         /// Install Arguments to pass to the native installer in the package.
-        /// Equivalent to the `--installargs <args>` option.
+        /// Equivalent to the <c>--installargs <args></c> option.
         InstallArgs: string
-        /// Should install arguments be used exclusively without appending to current package passed arguments? Default `false`.
-        /// Equivalent to the `--overrideargs` option.
+        /// Should install arguments be used exclusively without appending to current package passed arguments?
+        /// Default <c>false</c>.
+        /// Equivalent to the <c>--overrideargs</c> option.
         OverrideArgs: bool
-        /// Skip Powershell - Do not run chocolateyInstall.ps1. Default `false`.
-        /// Equivalent to the `--skippowershell` option.
+        /// Skip Powershell - Do not run chocolateyInstall.ps1. Default <c>false</c>.
+        /// Equivalent to the <c>--skippowershell</c> option.
         SkipPowershell: bool
         /// User - used with authenticated feeds.
-        /// Equivalent to the `--user <user>` option.
+        /// Equivalent to the <c>--user <user></c> option.
         User: string
         /// Password - the user's password to the source.
-        /// Equivalent to the `--password <password>` option.
+        /// Equivalent to the <c>--password <password></c> option.
         Password: string
         /// The choco execution timeout.
         Timeout:TimeSpan
@@ -66,15 +77,17 @@ module Choco =
         ToolPath: string
         /// A character string containing additional arguments to give to choco.
         AdditionalArgs: string
-        /// Do not prompt for user input or confirmations. Default `true`.
-        /// Equivalent to the `-y` option.
+        /// Do not prompt for user input or confirmations. Default <c>true</c>.
+        /// Equivalent to the <c>-y</c> option.
         NonInteractive: bool
     }
 
+    /// <summary>
     /// The choco pack parameter type.
+    /// </summary>
     type ChocoPackParams = {
         /// The version you would like to insert into the package.
-        /// Equivalent to the `--version <version>` option.
+        /// Equivalent to the <c>--version <version></c> option.
         Version: string
         /// The choco execution timeout.
         Timeout:TimeSpan
@@ -82,8 +95,8 @@ module Choco =
         ToolPath: string
         /// A character string containing additional arguments to give to choco.
         AdditionalArgs: string
-        /// Do not prompt for user input or confirmations. Default `true`.
-        /// Equivalent to the `-y` option.
+        /// Do not prompt for user input or confirmations. Default <c>true</c>.
+        /// Equivalent to the <c>-y</c> option.
         NonInteractive: bool
         /// Authors of the package.
         /// Used for the nuspec creation.
@@ -98,7 +111,7 @@ module Choco =
         /// Used for the nuspec creation.
         Title: string
         /// Summary of the package.
-        /// Used for the nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 creation.
+        /// Used for the nuspec, <c>chocolateyInstall.ps1</c> and <c>chocolateyUninstall.ps1</c> creation.
         Summary: string
         /// Description of the package.
         /// Used for the nuspec creation.
@@ -112,7 +125,8 @@ module Choco =
         /// Copyright of the package.
         /// Used for the nuspec creation.
         Copyright: string
-        /// Output directory for the files (nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1) creation.
+        /// Output directory for the files (nuspec, <c>chocolateyInstall.ps1</c> and <c>chocolateyUninstall.ps1</c>)
+        /// creation.
         OutputDir: string
         /// Dependencies of the package.
         /// Used for the nuspec creation.
@@ -159,7 +173,9 @@ module Choco =
         /// Url pointing to the location of the underlying software source.
         /// Used for the nuspec creation.
         ProjectSourceUrl: string
-        /// Boolean specifying whether the package will be marked as a [development-only dependency](https://docs.nuget.org/Release-Notes/NuGet-2.7#development-only-dependencies). Default: false.
+        /// Boolean specifying whether the package will be marked as a
+        /// <a href="https://docs.nuget.org/Release-Notes/NuGet-2.7#development-only-dependencies">
+        /// development-only dependency</a>. Default: false.
         /// Used for the nuspec creation.
         DevelopmentDependency: bool
         /// Url pointing to the installer (exe, msi, zip) of the package.
@@ -169,44 +185,48 @@ module Choco =
         /// Used to create chocolateyInstall.ps1 if it doesn't exists.
         PackageDownload64Url: string
         /// Silent args for the installer.
-        /// Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.
+        /// Used to create <c>chocolateyInstall.ps1</c> and/or <c>chocolateyUninstall.ps1</c> if it doesn't exists.
         SilentArgs: string
         /// Unzip location for zip package. Default: Chocolatey install folder.
-        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        /// Used to create <c>chocolateyInstall.ps1</c> if it doesn't exists.
         UnzipLocation: string
         /// Installer type. Default: Zip.
-        /// Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.
+        /// Used to create <c>chocolateyInstall.ps1</c> and/or <c>chocolateyUninstall.ps1</c> if it doesn't exists.
         InstallerType: ChocolateyInstallerType
         /// Either:
         /// - For zip: the zip filename originally installed
         /// - For exe or msi: the full path to the native uninstaller to run
         UninstallPath: string
         /// The checksum hash value of the PackageDownloadUrl resource
-        /// This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType.
-        /// Equivalent to the `--checksum <string>` option of Install-Chocolatey[Zip]Package functions.
-        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        /// This allows a checksum to be validated for files that are not local. The checksum type is
+        /// covered by ChecksumType. Equivalent to the <c>--checksum <string></c> option of
+        /// <c>Install-Chocolatey[Zip]Package</c> functions. Used to create <c>chocolateyInstall.ps1</c>
+        /// if it doesn't exists.
         Checksum: string
         /// The checksum hash value of the PackageDownload64Url resource
-        /// This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType64.
-        /// Equivalent to the `--checksum <string>` option of Install-Chocolatey[Zip]Package functions.
-        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        /// This allows a checksum to be validated for files that are not local. The checksum type is covered by
+        /// ChecksumType64. Equivalent to the <c>--checksum <string></c> option of
+        /// <c>Install-Chocolatey[Zip]Package</c> functions. Used to create <c>chocolateyInstall.ps1</c> if
+        /// it doesn't exists.
         Checksum64: string
         /// The type of checksum that the file is validated with. Default: Sha256
-        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        /// Used to create <c>chocolateyInstall.ps1</c> if it doesn't exists.
         ChecksumType : ChocolateyChecksumType
         /// The type of checksum that the file is validated with. Default: Sha256
-        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        /// Used to create <c>chocolateyInstall.ps1</c> if it doesn't exists.
         Checksum64Type : ChocolateyChecksumType
     }
 
+    /// <summary>
     /// The choco push parameter type.
+    /// </summary>
     type ChocoPushParams = {
         /// The source we are pushing the package to. Default: "https://chocolatey.org/"
-        /// Equivalent to the `--source <source>` option.
+        /// Equivalent to the <c>--source <source></c> option.
         Source: string
         /// The api key for the source. If not specified (and not local file source), does a lookup.
         /// If not specified and one is not found for an https source, push will fail.
-        /// Equivalent to the `--apikey <apikey>` option.
+        /// Equivalent to the <c>--apikey <apikey></c> option.
         ApiKey: string
         /// The choco execution timeout.
         Timeout:TimeSpan
@@ -214,13 +234,13 @@ module Choco =
         ToolPath: string
         /// A character string containing additional arguments to give to choco.
         AdditionalArgs: string
-        /// Do not prompt for user input or confirmations. Default `true`.
-        /// Equivalent to the `-y` option.
+        /// Do not prompt for user input or confirmations. Default <c>true</c>.
+        /// Equivalent to the <c>-y</c> option.
         NonInteractive: bool
         /// Force - force the behavior. Do not use force during normal operation - 
         /// it subverts some of the smart behavior for commands. Maybe used for pushing
-        /// packages ot insecure private feeds. Default `false`.
-        /// Equivalent to the `--force` option.
+        /// packages ot insecure private feeds. Default <c>false</c>.
+        /// Equivalent to the <c>--force</c> option.
         Force: bool
     }
 
@@ -339,22 +359,25 @@ module Choco =
                 Environment.pathDirectories
             ]
 
-    /// [omit]
+    /// <summary>
     /// Tries to find the specified choco executable:
-    ///
-    /// 1. In the `<ProgramData>\chocolatey\bin` directory
-    /// 2. In the `PATH` environment variable.
+    /// 1. In the <c>&lt;ProgramData&gt;\chocolatey\bin</c> directory
+    /// 2. In the <c>PATH</c> environment variable.
+    /// </summary>
+    /// [omit]
     let findExe =
         getPaths |> Seq.concat
             |> Seq.map (fun directory -> directory @@ "choco.exe")
             |> Seq.tryFind File.Exists
 
-    /// [omit]
+    /// <summary>
     /// Invokes chocolatey with the specified arguments
-    /// ## Parameters
-    ///  - `exePath` - The location of choco executable. Automatically found if null or empty.
-    ///  - `args` - The arguments given to the executable.
-    ///  - `timeout` - The choco execution timeout
+    /// </summary>
+    /// 
+    /// <param name="exePath">The location of choco executable. Automatically found if null or empty.</param>
+    /// <param name="args">The arguments given to the executable.</param>
+    /// <param name="timeout">The choco execution timeout</param>
+    /// [omit]
     let private callChoco exePath args timeout =
         // Try to find the choco executable if not specified by the user.
         let chocoExe =
@@ -496,8 +519,10 @@ module Choco =
           FrameworkAssembliesXml = frameworkAssembliesXml
           FilesXml = filesXml }
 
-    /// [omit]
+    /// <summary>
     /// Create nuspec from template
+    /// </summary>
+    /// [omit]
     let private createNuSpecFromTemplate (parameters:ChocoPackParams) (templateNuSpec:FileInfo) outputDir =
         let specFile = outputDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                         |> Path.getFullName
@@ -537,8 +562,10 @@ module Choco =
         Trace.tracefn "Created nuspec file %s" specFile
         specFile
 
-    /// [omit]
+    /// <summary>
     /// Create nuspec from data
+    /// </summary>
+    /// [omit]
     let private createNuSpec (parameters:ChocoPackParams) outputDir =
         let specFile = outputDir @@ parameters.PackageId + "." + parameters.Version + ".nuspec"
                         |> Path.getFullName
@@ -697,22 +724,32 @@ module Choco =
 
         callChoco parameters.ToolPath args parameters.Timeout
 
+    /// <summary>
     /// True if choco is available (only on windows)
+    /// </summary>
     ///
-    /// ## Sample
-    ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
+    /// <example>
+    /// <code lang="fsharp">
+    /// "Build" =?> ("ChocoInstall", Choco.IsAvailable)
+    /// </code>
+    /// </example>
     let IsAvailable = not Environment.isUnix && findExe <> None
 
-    /// Call choco to [install](https://docs.chocolatey.org/en-us/choco/commands/install) a package
+    /// <summary>
+    /// Call choco to <a href="https://docs.chocolatey.org/en-us/choco/commands/install">install</a> a package
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoInstallParams`
-    ///  - `packages` - Names of packages, path to packages.config, .nuspec or .nupkg to install
+    /// <param name="setParams">Function used to manipulate the default choco parameters.
+    /// See <c>ChocoInstallParams</c></param>
+    /// <param name="packages">Names of packages, path to packages.config, .nuspec or .nupkg to install</param>
     ///
-    /// ## Sample
-    ///     Target "ChocoInstall" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "ChocoInstall" (fun _ ->
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
+    /// </code>
+    /// </example>
     let install (setParams: ChocoInstallParams -> ChocoInstallParams) (packages: string) =
         if packages |> String.isNullOrEmpty then failwith "'packages' must not be empty."
 
@@ -737,15 +774,21 @@ module Choco =
 
         callChoco parameters.ToolPath args parameters.Timeout
 
-    /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package and create .nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 if informations are specified
+    /// <summary>
+    /// Call choco to <a href="https://docs.chocolatey.org/en-us/create/commands/pack">pack</a> a package and
+    /// create <c>.nuspec</c>, <c>chocolateyInstall.ps1</c> and <c>chocolateyUninstall.ps1</c> if information are specified
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
-
-    /// ## Sample
-    ///     Target "ChocoPack" (fun _ ->
+    /// <param name="setParams">Function used to manipulate the default choco parameters.
+    /// See <c>ChocoPackParams</c></param>
+    /// 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "ChocoPack" (fun _ ->
     ///         Choco.Pack (fun p -> { p with Version = "0.5.0"; ... })
     ///     )
+    /// </code>
+    /// </example>
     let pack setParams =
 
         let parameters = setParams ChocoPackDefaults
@@ -765,16 +808,21 @@ module Choco =
 
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
-    /// Call choco to [pack](https://docs.chocolatey.org/en-us/create/commands/pack) a package
+    /// <summary>
+    /// Call choco to <a href="https://docs.chocolatey.org/en-us/create/commands/pack">pack</a> a package
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
-    ///  - `nuspecPath` - path to the .nuspec to pack
-
-    /// ## Sample
-    ///     Target "ChocoPack" (fun _ ->
+    /// <param name="setParams">Function used to manipulate the default choco parameters.
+    /// See <c>ChocoPackParams</c></param>
+    /// <param name="nuspecPath">path to the .nuspec to pack</param>
+    /// 
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "ChocoPack" (fun _ ->
     ///         "pretzel.nuspec" |> Choco.Pack (fun p -> { p with Version = "0.5.0" })
     ///     )
+    /// </code>
+    /// </example>
     let packFromTemplate setParams nuspecPath =
 
         if nuspecPath |> String.isNullOrEmpty then failwith "'nuspecPath' must not be empty."
@@ -806,16 +854,21 @@ module Choco =
 
         parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
-    /// Call choco to [push](https://docs.chocolatey.org/en-us/create/commands/push) a package
+    /// <summary>
+    /// Call choco to <a href="https://docs.chocolatey.org/en-us/create/commands/push">push</a> a package
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPushParams`
-    ///  - `nupkgPath` - path to the .nupkg to push
+    /// <param name="setParams">Function used to manipulate the default choco parameters.
+    /// See <c>ChocoPushParams</c></param>
+    /// <param name="nupkgPath">path to the <c>.nupkg</c> to push</param>
     ///
-    /// ## Sample
-    ///     Target "ChocoPush" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "ChocoPush" (fun _ ->
     ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
     ///     )
+    /// </code>
+    /// </example>
     let push setParams nupkgPath =
         if nupkgPath |> String.isNullOrEmpty then failwith "'nupkgPath' must not be empty."
 
@@ -839,14 +892,16 @@ module Choco =
                 tries (n - 1)
         tries 3         
                 
+    /// <summary>
     /// Call custom choco command
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `args` - string that will be appended to choco.exe call
-    ///  - `timeout` - parent process maximum completion time
+    /// <param name="args">string that will be appended to choco.exe call</param>
+    /// <param name="timeout">parent process maximum completion time</param>
     ///
-    /// ## Sample
-    ///     Target "ChocoPush" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "ChocoPush" (fun _ ->
     ///
     ///          let newSpecFile = ...
     ///          let args = 
@@ -858,6 +913,8 @@ module Choco =
     ///        
     ///         args |> Choco.CallChoco TimeSpan.FromMinutes 1.
     ///     )
+    /// </code>
+    /// </example>
     let exec args timeout =
         if args |> String.isNullOrEmpty then failwith "'args' must not be empty."
 

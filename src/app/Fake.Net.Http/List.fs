@@ -3,15 +3,19 @@
 open Fake.Net.Async
 open Fake.Net.Result
 
-// List extensions for traversing Result and Async types
-// Functions from fsharpforfunandprofit.com, please see details here:
-// https://fsharpforfunandprofit.com/posts/elevated-world-5/
+/// <summary>
+/// List extensions for traversing Result and Async types
+/// Functions from <a href="fsharpforfunandprofit.com">fsharpforfunandprofit.com</a>, please see details
+/// <a href="https://fsharpforfunandprofit.com/posts/elevated-world-5/">here</a> 
+/// </summary>
 module internal List =
 
-    /// [omit]
+    /// <summary>
     /// Map a Async producing function over a list to get a new Async 
     /// using applicative style
-    /// ('a -> Async<'b>) -> 'a list -> Async<'b list>
+    /// <c>('a -&gt; Async&lt;&apos;b&gt;) -> &apos;a list -&gt; Async&lt;&apos;b list&gt;</c>
+    /// </summary>
+    /// [omit]
     let rec traverseAsyncA f list =
 
         // define the applicative functions
@@ -28,15 +32,19 @@ module internal List =
 
         List.foldBack folder list initState 
 
-    /// [omit]
-    /// Transform a "list<Async>" into a "Async<list>" 
+    /// <summary>
+    /// Transform a <c>list&lt;Async&gt;</c> into a <c>Async&lt;list&gt;</c> 
     /// and collect the results using apply.
+    /// </summary>
+    /// [omit]
     let sequenceAsyncA x = traverseAsyncA id x
 
-    /// [omit]
+    /// <summary>
     /// Map a Result producing function over a list to get a new Result 
     /// using applicative style
-    /// ('a -> Result<'b>) -> 'a list -> Result<'b list>
+    /// <c>('a -&gt; Result&lt;&apos;b&gt;) -> &apos;a list -&gt; Result&lt;&apos;b list&gt;</c>
+    /// </summary>
+    /// [omit]
     let rec traverseResultA f list =
 
         // define the applicative functions
@@ -53,8 +61,10 @@ module internal List =
 
         List.foldBack folder list initState 
 
-    /// [omit]
-    /// Transform a "list<Result>" into a "Result<list>" 
+    /// <summary>
+    /// Transform a <c>list&lt;Result&gt;</c> into a <c>Result&lt;list&gt;</c> 
     /// and collect the results using apply.
+    /// </summary>
+    /// [omit]
     let sequenceResultA x = traverseResultA id x
 

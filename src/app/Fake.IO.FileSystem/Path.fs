@@ -1,6 +1,8 @@
 ﻿namespace Fake.IO
 
+/// <summary>
 /// Contains helper function which allow to deal with files and directories.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Path =
 
@@ -10,40 +12,45 @@ module Path =
     open System.IO
     open System.Collections.Concurrent
 
+    /// <summary>
     /// Combines two path strings using Path.Combine. Trims leading slashes of path2.
-    /// This makes `combineTrimEnd "/test" "/sub"` return `/test/sub`
+    /// This makes <c>combineTrimEnd "/test" "/sub"</c> return <c>/test/sub</c>
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `path1` - The first path to combine
-    /// - `path2` - The second path to combine
+    /// <param name="path1">The first path to combine</param>
+    /// <param name="path2">The second path to combine</param>
     let inline combineTrimEnd path1 (path2: string) =
         Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
 
+    /// <summary>
     /// Combines two path strings using Path.Combine
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `path1` - The first path to combine
-    /// - `path2` - The second path to combine
+    /// <param name="path1">The first path to combine</param>
+    /// <param name="path2">The second path to combine</param>
     let inline combine path1 path2 = Path.Combine(path1, path2)
 
+    /// <summary>
     /// Detects whether the given path is a directory.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `path` - The path to check
+    /// <param name="path">The path to check</param>
     let isDirectory path =
         let attr = File.GetAttributes path
         attr &&& FileAttributes.Directory = FileAttributes.Directory
 
+    /// <summary>
     /// Detects whether the given path is a file.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `path` - The path to check
+    /// <param name="path">The path to check</param>
     let isFile path = isDirectory path |> not
 
+    /// <summary>
     /// Normalizes a filename.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `fileName` - The file name to normalize
+    /// <param name="fileName">The file name to normalize</param>
     let normalizeFileName (fileName: string) =
         let dirSepChar = Path.DirectorySeparatorChar
         let dirSep = dirSepChar.ToString()
@@ -54,55 +61,67 @@ module Path =
             .TrimEnd(dirSepChar)
             .ToLower()
 
+    /// <summary>
     /// Detects whether the given path does not contains invalid characters.
+    /// </summary>Detects whether the given path does not contains invalid characters.
     ///
-    /// ## Parameters
-    /// - `fileName` - The path to operate on
+    /// <param name="fileName">The path to operate on</param>
     let isValidPath (path: string) =
         Path.GetInvalidPathChars()
         |> Array.exists (fun char -> path.Contains(char.ToString()))
         |> not
 
+    /// <summary>
     /// Change the extension of the file.
+    /// </summary>
     /// 
-    /// ## Parameters
-    /// - `extension` - The new extension containing the leading '.'.
-    /// - `fileName` - Name of the file from which the extension is retrieved.
+    /// <param name="extension">The new extension containing the leading '.'.</param>
+    /// <param name="fileName">Name of the file from which the extension is retrieved.</param>
     let changeExtension extension fileName =
         Path.ChangeExtension(fileName, extension)
 
+    /// <summary>
     /// Tests whether the file has specified extensions (containing the leading '.')
+    /// </summary>
     /// 
-    /// ## Parameters
-    /// - `extension` - The extension to fine containing the leading '.'.
-    /// - `fileName` - Name of the file from which the extension is retrieved.
+    /// <param name="extension">The extension to fine containing the leading '.'.</param>
+    /// <param name="fileName">Name of the file from which the extension is retrieved.</param>
     let hasExtension extension (fileName: string) =
         String.Equals(Path.GetExtension fileName, extension, StringComparison.OrdinalIgnoreCase)
 
+    /// <summary>
     /// Get the directory of the specified path
+    /// </summary>
     /// 
-    /// ## Parameters
-    /// - `path` - The path from which the directory is retrieved.
+    /// <param name="path">The path from which the directory is retrieved.</param>
     let getDirectory (path: string) = Path.GetDirectoryName path
 
-    /// The directory separator string. On most systems `/` or `\`
+    /// <summary>
+    /// The directory separator string. On most systems <c>/</c> or <c>\</c>
+    /// </summary>
     let directorySeparator =
         let dirSepChar = Path.DirectorySeparatorChar
         dirSepChar.ToString()
 
+    /// <summary>
     /// Gets the absolute path for the given path
-    /// ## Parameters
-    /// - `p` - The path to get its absolute path
+    /// </summary>
+    /// 
+    /// <param name="p">The path to get its absolute path</param>
     let getFullName p = Path.GetFullPath p
 
+    /// <summary>
     /// Replaces any occurence of the currentDirectory with "."
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `path` - The path to operate on
+    /// <param name="path">The path to operate on</param>
     let inline shortenCurrentDirectory path =
         String.replace (Directory.GetCurrentDirectory()) "." path
 
-    /// <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
+    /// <summary>
+    /// Produces relative path when possible to go from baseLocation to targetLocation.
+    /// </summary>
+    /// 
     /// <param name="baseLocation">The root folder</param>
     /// <param name="targetLocation">The target folder</param>
     /// <returns>The relative path relative to baseLocation</returns>
@@ -156,7 +175,9 @@ module Path =
             else
                 resultPath.Value.Substring(0, resultPath.Value.Length - 1)
 
+    /// <summary>
     /// Replaces the absolute path with a relative path
+    /// </summary>
     let toRelativeFrom =
         /// A cache of relative path names.
         /// [omit]
@@ -169,18 +190,20 @@ module Path =
 
         toRelativePath
 
+    /// <summary>
     /// Replaces the absolute path with a relative path
+    /// </summary>
     /// 
-    /// ## Parameters
-    /// - `path` - The path to operate on
+    /// <param name="path">The path to operate on</param>
     let toRelativeFromCurrent path =
         let currentDir = normalizeFileName <| Directory.GetCurrentDirectory()
         toRelativeFrom currentDir path
 
+    /// <summary>
     /// Convert the given windows path to a path in the current system
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `windowsPath` - The path to operate on
+    /// <param name="windowsPath">The path to operate on</param>
     let convertWindowsToCurrentPath (windowsPath: string) =
         if (windowsPath.Length > 2 && windowsPath[1] = ':' && windowsPath[2] = '\\') then
             windowsPath

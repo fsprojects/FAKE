@@ -5,6 +5,7 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+/// [omit]
 [<AutoOpen>]
 module AppVeyorImportExtensions =
     type DotNetCoverageTool with
@@ -37,15 +38,27 @@ module AppVeyorImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.Xunit -> "xunit"
 
-/// native support for AppVeyor specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// <namespacedoc>
+/// <summary>
+/// BuildServer namespace contains tasks to interact with CI/CD build server, like GitHub Actions and
+/// Azure DevOps
+/// </summary>
+/// </namespacedoc>
+///
+/// <summary>
+/// Native support for AppVeyor specific APIs.
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
-/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module AppVeyor =
     // See https://www.appveyor.com/docs/build-worker-api/#update-tests
 
-    /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
+    /// AppVeyor parameters for update build as
+    /// <a href="https://www.appveyor.com/docs/build-worker-api/#update-build-details">described here</a>
     type UpdateBuildParams =
         { /// Build version; must be unique for the current project
           Version : string
@@ -76,7 +89,11 @@ module AppVeyor =
         
     let private appendArgIfNotNullOrEmpty = AppVeyorInternal.appendArgIfNotNullOrEmpty
     
+    /// <summary>
     /// Update build details
+    /// </summary>
+    ///
+    /// <param name="setParams">Override default update build parameters, see <c>UpdateBuildParams</c></param>
     let updateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
         let parameters = setParams defaultUpdateBuildParams
 
@@ -102,14 +119,19 @@ module AppVeyor =
     let private updateBuildVersion version =
         updateBuild (fun p -> { p with Version = version })
         
+    /// <summary>
     /// set given variable name to given value
+    /// </summary>
+    ///
+    /// <param name="name">The environment variable name</param>
+    /// <param name="value">The environment variable value</param>
     let setVariable name value =
         AppVeyorInternal.sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
         
     let private environVar = Environment.environVar
 
     /// Exported environment variables during build.
-    /// See the [official documentation](http://www.appveyor.com/docs/environment-variables) for details.
+    /// See the <a href="http://www.appveyor.com/docs/environment-variables">official documentation</a> for details.
     type Environment =
 
         /// AppVeyor Build Agent API URL
@@ -233,7 +255,10 @@ module AppVeyor =
         static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
         
 
-    /// Implements a TraceListener for TeamCity build servers.
+    /// <summary>
+    /// Implements a TraceListener for AppVeyor build servers.
+    /// </summary>
+    /// [omit]
     type internal AppVeyorTraceListener() =
         let mutable currentTestSuite = None
         let getCurrentTestSuite() =

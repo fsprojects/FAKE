@@ -1,5 +1,14 @@
 namespace Fake.Tools
 
+/// <namespacedoc>
+/// <summary>
+/// Tools namespace contains tasks to interact other tools, like Git and Rsync
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// The GitVersion module contains tasks to interact with GitVersion tool 
+/// </summary>
 [<RequireQualifiedAccess>]
 module GitVersion =
 
@@ -9,7 +18,9 @@ module GitVersion =
     open Fake.Core
     open Fake.DotNet
 
+    /// <summary>
     /// The parameters for GitVersion tool
+    /// </summary>
     type GitVersionParams =
         {
           /// Tool type
@@ -35,7 +46,9 @@ module GitVersion =
           ToolPath = toolPath "GitVersion.exe"
           TimeOut = TimeSpan.FromMinutes 1. }
 
+    /// <summary>
     /// The arguments to pass to GitVersion tool
+    /// </summary>
     type GitVersionProperties =
         { Major: int
           Minor: int
@@ -74,14 +87,18 @@ module GitVersion =
             Trace.trace command.CommandLine
             command
 
-    /// Runs [GitVersion](https://gitversion.net/docs/) on a .NET project file.
+    /// <summary>
+    /// Runs <a href="https://gitversion.net/docs/">GitVersion</a> on a .NET project file.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the GitVersionDefaults value.
+    /// <param name="setParams">Function used to manipulate the GitVersionDefaults value.</param>
     ///
-    /// ## Sample
-    ///      generateProperties id // Use Defaults
-    ///      generateProperties (fun p -> { p with ToolPath = "/path/to/directory" }
+    /// <example>
+    /// <code lang="fsharp">
+    /// generateProperties id // Use Defaults
+    /// generateProperties (fun p -> { p with ToolPath = "/path/to/directory" }
+    /// </code>
+    /// </example>     
     let generateProperties setParams =
         let result = createProcess setParams |> Proc.run
 

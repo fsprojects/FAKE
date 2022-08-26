@@ -178,7 +178,7 @@ module Fsdocs =
     ///   Fsdocs.watch (fun p -> { p with Port = Some(3005) })
     let watch setWatchParams =
         let watchParams = setWatchParams WatchCommandParams.Default
-        let formattedParameters = buildBuildCommandParams watchParams
+        let formattedParameters = buildWatchCommandParams watchParams
         
         let dotnetOptions = (fun (buildOptions:DotNet.Options) -> buildOptions);
         let result = DotNet.exec dotnetOptions "fsdocs watch" formattedParameters

@@ -4,6 +4,7 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+/// [omit]
 [<AutoOpen>]
 module GitLabImportExtensions =
     type DotNetCoverageTool with
@@ -36,21 +37,25 @@ module GitLabImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.Xunit -> "xunit"
 
+/// <summary>
 /// Native support for GitLab specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
-/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module GitLab =
 
     /// Exported environment variables during build.
-    /// See the [official documentation](https://docs.gitlab.com/ee/ci/variables/) for details.
+    /// See the <a href="https://docs.gitlab.com/ee/ci/variables/">official documentation</a> for details.
     type Environment =
 
         /// The branch or tag name for which project is built
         static member CommitRefName = Environment.environVar "CI_COMMIT_REF_NAME"
         
-        /// $CI_COMMIT_REF_NAME lowercased, shortened to 63 bytes, and with everything except 0-9 and a-z replaced with -.
+        /// <c>$CI_COMMIT_REF_NAME</c> lowercased, shortened to 63 bytes, and with everything except 0-9 and a-z replaced with -.
         /// No leading / trailing -.
         /// Use in URLs, host names and domain names.
         static member CommitRefSlug = Environment.environVar "CI_COMMIT_REF_SLUG"
@@ -103,13 +108,14 @@ module GitLab =
         /// The flag to indicate that job was manually started
         static member JobManual = Environment.environVar "CI_JOB_MANUAL"
         
-        /// The name of the job as defined in .gitlab-ci.yml
+        /// The name of the job as defined in <c>.gitlab-ci.yml</c>
         static member JobName = Environment.environVar "CI_JOB_NAME"
         
-        /// The name of the stage as defined in .gitlab-ci.yml
+        /// The name of the stage as defined in <c>.gitlab-ci.yml</c>
         static member JobStage = Environment.environVar "CI_JOB_STAGE"
         
-        /// Token used for authenticating with GitLab Container Registry, downloading dependent repositories, authenticate with multi-project pipelines when triggers are involved, and for downloading job artifacts
+        /// Token used for authenticating with GitLab Container Registry, downloading dependent repositories,
+        /// authenticate with multi-project pipelines when triggers are involved, and for downloading job artifacts
         static member JobToken = Environment.environVar "CI_JOB_TOKEN"
         
         /// Job details URL
@@ -133,7 +139,8 @@ module GitLab =
         /// GitLab Runner revision that is executing the current job
         static member RunnerRevision = Environment.environVar "CI_RUNNER_REVISION"
         
-        /// The OS/architecture of the GitLab Runner executable (note that this is not necessarily the same as the environment of the executor)
+        /// The OS/architecture of the GitLab Runner executable (note that this is not necessarily the same as the
+        /// environment of the executor)
         static member RunnerExecutableArch = Environment.environVar "CI_RUNNER_EXECUTABLE_ARCH"
         
         /// The unique id of the current pipeline that GitLab CI uses internally
@@ -145,7 +152,8 @@ module GitLab =
         /// The flag to indicate that job was triggered
         static member PipelineTriggered = Environment.hasEnvironVar "CI_PIPELINE_TRIGGERED"
         
-        /// Indicates how the pipeline was triggered. Possible options are: push, web, trigger, schedule, api, and pipeline. For pipelines created before GitLab 9.5, this will show as unknown
+        /// Indicates how the pipeline was triggered. Possible options are: push, web, trigger, schedule,
+        /// api, and pipeline. For pipelines created before GitLab 9.5, this will show as unknown
         static member PipelineSource = Environment.environVar "CI_PIPELINE_SOURCE"
         
         /// The full path where the repository is cloned and where the job is run
@@ -162,7 +170,8 @@ module GitLab =
         
         /// The namespace with project name
         static member ProjectPath = Environment.environVar "CI_PROJECT_PATH"
-        ///  $CI_PROJECT_PATH lowercased and with everything except 0-9 and a-z replaced with -. Use in URLs and domain names.
+        /// <c>$CI_PROJECT_PATH</c> lowercased and with everything except 0-9 and a-z replaced with -. Use in
+        /// URLs and domain names.
         static member ProjectPathSlug = Environment.environVar "CI_PROJECT_PATH_SLUG"
         
         /// Pipeline details URL
@@ -177,7 +186,8 @@ module GitLab =
         /// If the Container Registry is enabled it returns the address of GitLab's Container Registry
         static member Registry = Environment.environVar "CI_REGISTRY"
         
-        /// If the Container Registry is enabled for the project it returns the address of the registry tied to the specific project
+        /// If the Container Registry is enabled for the project it returns the address of the registry tied to the
+        /// specific project
         static member RegistryImage = Environment.environVar "CI_REGISTRY_IMAGE"
         
         /// The password to use to push containers to the GitLab Container Registry
@@ -198,7 +208,9 @@ module GitLab =
         /// GitLab version that is used to schedule jobs
         static member ServerVersion = Environment.environVar "CI_SERVER_VERSION"
         
-        /// Marks that the job is executed in a shared environment (something that is persisted across CI invocations like shell or ssh executor). If the environment is shared, it is set to true, otherwise it is not defined at all.
+        /// Marks that the job is executed in a shared environment (something that is persisted across CI
+        /// invocations like shell or ssh executor). If the environment is shared, it is set to true,
+        /// otherwise it is not defined at all.
         static member SharedEnvironment = Environment.hasEnvironVar "CI_SHARED_ENVIRONMENT"
         
         /// Number of attempts to fetch sources running a job
@@ -224,7 +236,10 @@ module GitLab =
         /// Number of attempts to restore the cache running a job
         static member RestoreCacheAttempts = Environment.environVar "RESTORE_CACHE_ATTEMPTS"
 
+    /// <summary>
     /// Implements a TraceListener for GitLab build servers.
+    /// </summary>
+    /// [omit]
     type internal GitLabTraceListener() =
 
         interface ITraceListener with

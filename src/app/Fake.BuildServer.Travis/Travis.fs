@@ -2,13 +2,20 @@ namespace Fake.BuildServer
 
 open Fake.Core
 
+/// <summary>
 /// Native support for Travis specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module Travis =
+    /// <summary>
     /// Implements a TraceListener for Travis build servers.
+    /// </summary>
+    /// [omit]
     type internal TravisTraceListener() =
         interface ITraceListener with
             /// Writes the given message to the Console.

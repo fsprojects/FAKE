@@ -4,6 +4,7 @@ Thumbs.db
 #Ignore files build by Visual Studio
 .fsdocs/
 output/
+tmp/watch
 docs/.nojekyll
 docs/CNAME
 docsBuild/

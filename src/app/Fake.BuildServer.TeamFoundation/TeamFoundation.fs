@@ -5,18 +5,23 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+/// <summary>
 /// Native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
-/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// </summary>
+/// <remarks>
+/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue.
-///
-/// ### Secret Variables
-///
-/// This CI server supports the concept of secret variables and uses the [Vault](/core-vault.html) to store them.
-/// In order to access secret variables you need to use one of the fake 5 tasks from [vsts-fsharp](https://github.com/isaacabraham/vsts-fsharp).
-///
-/// #### Example implementation (supports runner and vault tasks)
-///
+/// <br/><br/>Secret Variables:
+/// <br/>This CI server supports the concept of secret variables and uses the <a href="/articles/core-vault.html">Vault</a> to store them.
+/// In order to access secret variables you need to use one of the fake 5 tasks from
+/// <a href="https://github.com/isaacabraham/vsts-fsharp">vsts-fsharp</a>.
+/// <br/>
+/// <br/>
+/// </remarks>
+/// <example>
+/// Example implementation (supports runner and vault tasks)
+/// <code lang="fsharp">
 ///        // Either use a local vault filled by the 'FAKE_VAULT_VARIABLES' environment variable
 ///        // or fall back to the build process if none is given
 ///        let vault =
@@ -37,7 +42,8 @@ open Fake.IO
 ///            // Use apiKey to deploy to nuget
 ///            ()
 ///        )
-///
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module TeamFoundation =
     // See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
@@ -72,11 +78,12 @@ module TeamFoundation =
 
     let private seqToPropValue (args: _ seq) = String.Join(",", args)
 
-    /// Set `task.setvariable` with given name and value
-    ///
-    /// ## Parameters
-    /// `variableName` - The name of the variable to set
-    /// `value` - The value of the variable to set
+    /// <summary>
+    /// Set <c>task.setvariable</c> with given name and value
+    /// </summary>
+    /// 
+    /// <param name="variableName">The name of the variable to set</param>
+    /// <param name="value">The value of the variable to set</param>
     let setVariable variableName value =
         write "task.setvariable" [ "variable", variableName ] value
 
@@ -84,7 +91,9 @@ module TeamFoundation =
     
     let private toList t o = o |> toType t |> Option.toList
 
-    /// Set the `task.logissue` with given data
+    /// <summary>
+    /// Set the <c>task.logissue</c> with given data
+    /// </summary>
     let logIssue isWarning sourcePath lineNumber columnNumber code message =
 
         let typ = if isWarning then "warning" else "error"
@@ -108,11 +117,10 @@ module TeamFoundation =
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
 
-    /// Set the `task.complete` to given state and message
+    /// Set the <c>task.complete</c> to given state and message
     ///
-    /// ## Parameters
-    /// `state` - The build state
-    /// `message` - The build state resulting message
+    /// <param name="state">The build state</param>
+    /// <param name="message">The build state resulting message</param>
     let setBuildState state message =
         write "task.complete" [ "result", state ] message
 
@@ -199,7 +207,9 @@ module TeamFoundation =
               result = None
               message = message }
 
+    /// <summary>
     /// Log a message with in progress details
+    /// </summary>
     let setLogDetailProgress id progress =
         logDetailRaw
             { id = id
@@ -229,10 +239,14 @@ module TeamFoundation =
               result = (Some result)
               message = "Setting logdetail to finished." }
 
+    /// <summary>
     /// Access (secret) build variables
+    /// </summary>
     let variables = Vault.fromEnvironmentVariable "FAKE_VSTS_VAULT_VARIABLES"
 
+    /// <summary>
     /// Defined the supported build reasons that cause the build to run.
+    /// </summary>
     type BuildReason =
         /// A user manually queued the build.
         | Manual
@@ -253,11 +267,14 @@ module TeamFoundation =
         /// Covers any other cases not included in type.
         | Other of string
 
+    /// <summary>
     /// Exported environment variables during build.
-    /// See the [official documentation](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) for details.
+    /// See the <a href="https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables">
+    /// official documentation</a> for details.
+    /// </summary>
     type Environment =
 
-        /// 	The branch of the triggering repo the build was queued for
+        /// The branch of the triggering repo the build was queued for
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
 
         /// The name of the branch in the triggering repo the build was queued for
@@ -266,7 +283,7 @@ module TeamFoundation =
         /// The latest version control change of the triggering repo that is included in this build.
         static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
 
-        /// 	The ID of the record for the completed build.
+        /// The ID of the record for the completed build.
         static member BuildId = Environment.environVar "BUILD_BUILDID"
 
         /// The event that caused the build to run. See BuildReason type for supported build reasons
@@ -322,7 +339,10 @@ module TeamFoundation =
                 (sprintf "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
                     path)
 
+    /// <summary>
     /// Implements a TraceListener for Azure DevOps (previously VSTS) / Team Foundation build servers.
+    /// </summary>
+    /// [omit]
     type internal TeamFoundationTraceListener() =
         let mutable openTags = System.Threading.AsyncLocal<_>()
         do openTags.Value <- []
@@ -413,5 +433,5 @@ module TeamFoundation =
     /// [omit]
     let Installer =
         { new BuildServerInstaller() with
-            member __.Install() = install (false)
+            member __.Install() = install false
             member __.Detect() = detect () }

@@ -1,7 +1,15 @@
 namespace Fake.IO.Globbing
 
+/// <namespacedoc>
+/// <summary>
+/// Globbing namespace contains tasks for crawling directories and files in a file system
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
 /// This module contains a file pattern globbing implementation.
-/// This module is part of the `Fake.IO.FileSystem` package
+/// This module is part of the <c>Fake.IO.FileSystem</c> package
+/// </summary>
 [<RequireQualifiedAccess>]
 module Glob =
 
@@ -9,10 +17,11 @@ module Glob =
     open System.IO
     open System.Text.RegularExpressions
 
+    /// <summary>
     /// Normalizes path for different OS
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `path:` - The path to normalize
+    /// <param name="path">The path to normalize</param>
     let inline normalizePath (path: string) =
         path
             .Replace('\\', Path.DirectorySeparatorChar)
@@ -217,11 +226,12 @@ module Glob =
     let private globRegexCache =
         System.Collections.Concurrent.ConcurrentDictionary<string, Regex>()
 
+    /// <summary>
     /// Check if the given path follows the given pattern
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `pattern` - The glob pattern to use
-    ///  - `path` - The path to check
+    /// <param name="pattern">The glob pattern to use</param>
+    /// <param name="path">The path to check</param>
     let isMatch pattern path : bool =
         let path = normalizePath path
 

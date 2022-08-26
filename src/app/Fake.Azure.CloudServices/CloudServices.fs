@@ -2,7 +2,7 @@
 
 /// <namespacedoc>
 /// <summary>
-/// FAKE Azure namespace contains tasks to interact with Azure Services, like CloudServices and Kudu
+/// Azure namespace contains tasks to interact with Azure Services, like CloudServices and Kudu
 /// </summary>
 /// </namespacedoc>
 /// 

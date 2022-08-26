@@ -3,12 +3,12 @@ namespace Fake.Net.Result
 module internal Result =
 
     type ResultBuilder() =
-        member __.Bind(m, f) = 
+        member _.Bind(m, f) = 
             match m with
             | Error e -> Error e
             | Ok a -> f a
 
-        member __.Return(x) = 
+        member _.Return(x) = 
             Ok x
     
     let apply fResult xResult = 

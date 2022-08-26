@@ -1,17 +1,21 @@
 namespace Fake.Tools
 
-/// Contains tasks to run the [Pickles](http://www.picklesdoc.com/) living documentation generator
+/// <summary>
+/// Contains tasks to run the <a href="http://www.picklesdoc.com/">Pickles</a> living documentation generator
+/// </summary>
 ///
-/// ## Sample
-///
+/// <example>
+/// <code lang="fsharp">
 /// open Fake.Tools
 ///
 /// Target.create "BuildDoc" (fun _ ->
 ///    Pickles.convert (fun p ->
-///        { p with FeatureDirectory = currentDirectory </> "Specs"
-///                 OutputDirectory = currentDirectory </> "SpecDocs"
+///        { p with FeatureDirectory = currentDirectory &lt;/&gt; "Specs"
+///                 OutputDirectory = currentDirectory &lt;/&gt; "SpecDocs"
 ///                 OutputFileFormat = Pickles.DocumentationFormat.DHTML })
 /// )
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module Pickles =
 
@@ -48,7 +52,9 @@ module Pickles =
         | Excel
         | CucumberJSON
 
+    /// <summary>
     /// The Pickles parameter type
+    /// </summary>
     type PicklesParams =
         { /// The path to the Pickles console tool: 'pickles.exe'
           ToolPath: string
@@ -80,7 +86,7 @@ module Pickles =
           EnableComments: bool option
           /// exclude scenarios that match this tags
           ExcludeTags: string list
-          /// Technical tags that shouldn't be displayed
+          /// Technical tags that shouldn&apos;t be displayed
           HideTags: string list }
 
     let private currentDirectory = Directory.GetCurrentDirectory()
@@ -97,25 +103,9 @@ module Pickles =
         | Some path -> path
         | None -> toolName
 
+    /// <summary>
     /// The Pickles default parameters
-    ///
-    /// ## Defaults
-    ///
-    /// - `ToolPath` - The `pickles.exe` if it exists in a subdirectory of the current directory
-    /// - `FeatureDirectory` - 'currentDirectory'
-    /// - `FeatureFileLanguage` - 'None' (defaults to `en`)
-    /// - `OutputDirectory` - `currentDirectory @@ "Documentation"`
-    /// - `OutputFileFormat` - `DHTML`
-    /// - `TestResultsFormat` - `Nunit`
-    /// - `LinkedTestResultFiles` - []
-    /// - `SystemUnderTestName` - `None`
-    /// - `SystemUnderTestVersion` - `None`
-    /// - `TimeOut` - 5 minutes
-    /// - `ErrorLevel` - `Error`
-    /// - `IncludeExperimentalFeatures` - `None`
-    /// - `EnableComments` - true
-    /// - `ExcludeTags` - []
-    /// - `HideTags` - []
+    /// </summary>
     let private PicklesDefaults =
         { ToolPath = toolPath "pickles.exe"
           WorkingDir = currentDirectory
@@ -240,8 +230,9 @@ module Pickles =
             >> Option.iter (failBuildWithMessage errorLevel)
 
 
+    /// <summary>
     /// Builds the report generator command line arguments and process from the given parameters and reports
-    /// [omit]
+    /// </summary>
     let internal createProcess setParams =
         let parameters = setParams PicklesDefaults
         let args = buildPicklesArgs parameters
@@ -259,14 +250,17 @@ module Pickles =
             command
 
 
+    /// <summary>
     /// Runs pickles living documentation generator via the given tool
     /// Will fail if the pickles command line tool terminates with a non zero exit code.
-    ///
+    /// </summary>
+    /// <remarks>
     /// The pickles command line tool terminates with a non-zero exit code if there
     /// is any error.
+    /// </remarks>
+    /// 
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default `PicklesParams` value
+    /// <param name="setParams">Function used to manipulate the default <c>PicklesParams</c> value</param>
     let convert setParams =
         use __ = Trace.traceTask "Pickles" "Generating documentations"
 

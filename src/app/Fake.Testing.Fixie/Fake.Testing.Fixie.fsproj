@@ -4,6 +4,7 @@
     <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <AssemblyName>Fake.Testing.Fixie</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
@@ -13,6 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Fixie.fs" />
+    <Compile Include="VisibleTo.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />

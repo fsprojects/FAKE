@@ -5,38 +5,44 @@ open Fake.Core
 open System.IO
 open Fake.IO
 
+/// <summary>
 /// Contains functions which allow basic operations on git repositories.
-/// All operations assume that the CommandHelper can find git.exe.
+/// All operations assume that the CommandHelper can find <c>git.exe</c>.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Repository =
 
+    /// <summary>
     /// Clones a git repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `workingDir` - The working directory.
-    ///  - `repoUrl` - The URL to the origin.
-    ///  - `toPath` - Specifies the new target subfolder.
+    /// <param name="workingDir">The working directory.</param>
+    /// <param name="repoUrl">The URL to the origin.</param>
+    /// <param name="toPath">Specifies the new target subfolder.</param>
     let clone workingDir repoUrl toPath =
         CommandHelper.gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
+    /// <summary>
     /// Clones a single branch of a git repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `workingDir` - The working directory.
-    ///  - `repoUrl` - The URL to the origin.
-    ///  - `branchName` - Specifies the target branch.
-    ///  - `toPath` - Specifies the new target subfolder.
+    /// <param name="workingDir">The working directory.</param>
+    /// <param name="repoUrl">The URL to the origin.</param>
+    /// <param name="branchName">Specifies the target branch.</param>
+    /// <param name="toPath">Specifies the new target subfolder.</param>
     let cloneSingleBranch workingDir repoUrl branchName toPath =
         sprintf "clone -b %s --single-branch %s %s" branchName repoUrl toPath
         |> CommandHelper.runSimpleGitCommand workingDir
         |> Trace.trace
 
+    /// <summary>
     /// Inits a git repository.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The path of the target directory.
-    ///  - `bare` - If the new directory is a bare directory.
-    ///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository.
+    /// <param name="repositoryDir">The path of the target directory.</param>
+    /// <param name="bare">If the new directory is a bare directory.</param>
+    /// <param name="shared">Specifies that the git repository is to be shared amongst several users.
+    /// This allows users belonging to the same group to push into that repository.</param>
     let init repositoryDir bare shared =
         match bare, shared with
         | true, true -> CommandHelper.gitCommand repositoryDir "init --bare --shared=all"
@@ -44,10 +50,11 @@ module Repository =
         | false, true -> CommandHelper.gitCommand repositoryDir "init --shared=all"
         | _ -> CommandHelper.gitCommand repositoryDir "init"
 
+    /// <summary>
     /// Cleans a directory by removing all files and sub-directories.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The path of the directory to clean.
+    /// <param name="repositoryDir">The path of the directory to clean.</param>
     let fullClean repositoryDir =
         let di = DirectoryInfo.ofPath repositoryDir
 
@@ -80,11 +87,11 @@ module Repository =
         // set writeable
         File.SetAttributes(repositoryDir, FileAttributes.Normal)
 
+    /// <summary>
     /// Cleans a directory by removing all files and sub-directories.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///
-    ///  - `repositoryDir` - The path of the directory to clean.
+    /// <param name="repositoryDir">The path of the directory to clean.</param>
     [<Obsolete("Please use fullClean instead. This method will be removed in FAKE next major release")>]
     let fullclean repositoryDir =
         fullClean repositoryDir

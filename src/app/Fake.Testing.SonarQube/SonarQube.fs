@@ -1,20 +1,24 @@
 namespace Fake.Testing
 
-/// Contains a task to run the [SonarQube](http://sonarqube.org) static code analyzer.
-/// It uses the [SonarScanner for MSBuild](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/)
+/// <summary>
+/// Contains a task to run the <a href="http://sonarqube.org">SonarQube</a> static code analyzer.
+/// It uses the <a href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/">
+/// SonarScanner for MSBuild</a>
+/// </summary>
 module SonarQube =
 
     open System.IO
     open Fake.Core
     open Fake.DotNet
 
-    /// [omit]
     /// The supported commands of SonarQube. It is called with Begin before compilation, and End after compilation.
     type internal SonarQubeCall =
         | Begin
         | End
 
+    /// <summary>
     /// Parameter type to configure the SonarQube runner.
+    /// </summary>
     type SonarQubeParams =
         { /// The directory where the SonarQube scanner process will be started.
           WorkingDirectory: string
@@ -47,7 +51,6 @@ module SonarQube =
           Settings = []
           Config = None }
 
-    /// [omit]
     /// Execute the external msbuild runner of SonarQube. Parameters are given to the command line tool as required.
     let internal getSonarQubeCallParams (call: SonarQubeCall) (parameters: SonarQubeParams) =
         let beginInitialArguments =
@@ -86,38 +89,46 @@ module SonarQube =
         |> Proc.run
         |> ignore
 
-    /// This task can be used to run the begin command of [Sonar Qube](http://sonarqube.org/) on a project.
+    /// <summary>
+    /// This task can be used to run the begin command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
+    /// <param name="setParams">Function used to overwrite the SonarQube default parameters.</param>
     ///
-    /// ## Sample
-    ///   open Fake.Testing
+    /// <example>
+    /// <code lang="fsharp">
+    /// open Fake.Testing
     ///
     ///   SonarQube.start (fun p ->
     ///     { p with
     ///           Key = "MyProject"
     ///           Name = "MainTool"
     ///           Version = "1.0 })
+    /// </code>
+    /// </example> 
     let start setParams =
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
         sonarQubeCall Begin parameters
         __.MarkSuccess()
 
-    /// This task can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
+    /// <summary>
+    /// This task can be used to run the end command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
+    /// <param name="setParams">Function used to overwrite the SonarQube default parameters.</param>
     ///
-    /// ## Sample
-    ///   open Fake.Testing
+    /// <example>
+    /// <code lang="fsharp">
+    /// open Fake.Testing
     ///
     ///   SonarQube.finish None
     ///
     ///   SonarQube.finish (Some (fun p ->
     ///    { p with
     ///         Settings = ["sonar.login=login"; "sonar.password=password"] }))
+    /// </code>
+    /// </example>
     let finish setParams =
         use __ = Trace.traceTask "SonarQube" "End"
 
@@ -129,17 +140,17 @@ module SonarQube =
         sonarQubeCall End parameters
         __.MarkSuccess()
 
+    /// <summary>
     /// This task can be used to execute some code between
     /// the `begin` and `end` [Sonar Qube](http://sonarqube.org/) on a project.
+    /// </summary>
     ///
-    /// ## Parameters
+    /// <param name="setParams">Function used to overwrite the SonarQube default parameters.</param>
+    /// <param name="doBetween">Function executed between <c>begin</c> and <c>end</c>
+    /// <a href="http://sonarqube.org/">Sonar Qube</a> commands.</param>
     ///
-    ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
-    ///  - `doBetween` - Function executed between `begin` and `end` [Sonar Qube](http://sonarqube.org/) commands.
-    ///
-    /// ## Sample
-    ///
-    /// ```
+    /// <example>
+    /// <code lang="fsharp">
     /// open Fake.Testing
     ///
     /// Target.create "StaticAnalysis" (fun _ ->
@@ -162,7 +173,8 @@ module SonarQube =
     ///         DotNet.test id
     ///   )
     /// )
-    /// ```
+    /// </code>
+    /// </example>
     let scan setParams doBetween =
         start setParams
         doBetween ()

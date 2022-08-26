@@ -6,6 +6,7 @@ open Fake.Core
 open Fake.IO
 open Fake.Net
 
+/// [omit]
 module internal AppVeyorInternal =
     
     let environVar = Environment.environVar

@@ -7,11 +7,15 @@ open Fake.Core.String.Operators
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
+/// <summary>
 /// Contains helpers which allow to interact with [git](http://git-scm.com/) via the command line.
+/// </summary>
 [<RequireQualifiedAccess>]
 module CommandHelper =
 
-    /// Specifies a global timeout for git.exe - default is *no timeout*
+    /// <summary>
+    /// Specifies a global timeout for <c>git.exe</c> - default is <ins>no timeout</ins>
+    /// </summary>
     let mutable gitTimeOut = TimeSpan.MaxValue
 
     let private GitPath =
@@ -28,7 +32,7 @@ module CommandHelper =
           </> "Git"
           </> "bin" ]
 
-    /// Tries to locate the git.exe via the environment variable "GIT".
+    /// Tries to locate the <c>git.exe</c> via the environment variable "GIT".
     let gitPath =
         if Environment.isUnix then
             "git"
@@ -46,11 +50,12 @@ module CommandHelper =
             WorkingDirectory = repositoryDir
             Arguments = command }
 
-    /// Runs git.exe with the given command in the given repository directory.
+    /// <summary>
+    /// Runs <c>git.exe</c> with the given command in the given repository directory.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let runGitCommand repositoryDir command =
         let messages = System.Collections.Generic.List<string>()
         let errors = System.Collections.Generic.List<string>()
@@ -68,26 +73,29 @@ module CommandHelper =
 
         processResult.ExitCode = 0, messages |> List.ofSeq, String.toLines (errors |> List.ofSeq)
 
-    /// Runs git.exe with the given formatted command
+    /// <summary>
+    /// Runs <c>git.exe</c> with the given formatted command
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fmt` - The formatted GIT command string to execute
+    /// <param name="fmt">The formatted GIT command string to execute</param>
     let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt
 
-    /// Runs git.exe with the given command in the given repository directory and return results
+    /// <summary>
+    /// Runs <c>git.exe</c> with the given command in the given repository directory and return results
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let getGitResult repositoryDir command =
         let _, msg, _ = runGitCommand repositoryDir command
         msg
 
+    /// <summary>
     /// Fires the given git command in the given repository directory and returns immediately.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let fireAndForgetGitCommand repositoryDir command =
         CreateProcess.fromRawCommandLine gitPath command
         |> CreateProcess.withWorkingDirectory repositoryDir
@@ -95,11 +103,12 @@ module CommandHelper =
         |> ignore
 
 
+    /// <summary>
     /// Runs the given git command, waits for its completion and returns whether it succeeded.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let directRunGitCommand repositoryDir command =
         let processResult =
             CreateProcess.fromRawCommandLine gitPath command
@@ -108,11 +117,12 @@ module CommandHelper =
 
         processResult.ExitCode = 0
 
+    /// <summary>
     /// Runs the given git command, waits for its completion and fails when it didn't succeeded.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let directRunGitCommandAndFail repositoryDir command =
         directRunGitCommand repositoryDir command
         |> fun ok ->
@@ -121,9 +131,8 @@ module CommandHelper =
 
     /// Runs the given git command, waits for its completion.
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let gitCommand repositoryDir command =
         let ok, msg, error = runGitCommand repositoryDir command
 
@@ -134,18 +143,16 @@ module CommandHelper =
 
     /// Runs git.exe with the given formatted command
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let gitCommandf repositoryDir fmt =
         Printf.ksprintf (gitCommand repositoryDir) fmt
 
     /// Runs the given git command, waits for its completion.
     /// This version doesn't throw an exception if an error occurs. It just traces the error.
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let showGitCommand repositoryDir command =
         let _, msg, errors = runGitCommand repositoryDir command
         msg |> Seq.iter (Trace.logfn "%s")
@@ -155,9 +162,8 @@ module CommandHelper =
 
     /// Runs the git command and returns the first line of the result.
     ///
-    /// ## Parameters
-    ///  - `repositoryDir` - The repository directory to execute command in
-    ///  - `command` - The GIT command to execute
+    /// <param name="repositoryDir">The repository directory to execute command in</param>
+    /// <param name="command">The GIT command to execute</param>
     let runSimpleGitCommand repositoryDir command =
         try
             let _, msg, errors = runGitCommand repositoryDir command
@@ -175,8 +181,10 @@ module CommandHelper =
         with exn ->
             failwithf "Could not run \"git %s\".\r\nError: %s" command exn.Message
 
-    /// [omit]
+    /// <summary>
     /// Fixes the given path by escaping backslashes
+    /// </summary>
+    /// [omit]
     let fixPath (path: string) =
         let path = path.Trim()
 
@@ -185,7 +193,9 @@ module CommandHelper =
         else
             path.Replace('\\', '/').Trim()
 
+    /// <summary>
     /// Searches for a .git directory in the specified directory or any parent directory.
+    /// </summary>
     /// <exception href="System.InvalidOperationException">Thrown when no .git directory is found.</exception>
     let findGitDir repositoryDir =
         let rec findGitDir (dirInfo: DirectoryInfo) =

@@ -3,6 +3,7 @@
     <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <AssemblyName>Fake.Net.FTP</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants)</DefineConstants>
@@ -12,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FTP.fs" />
+    <Compile Include="VisibleTo.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />

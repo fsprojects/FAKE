@@ -1,6 +1,8 @@
 ﻿namespace Fake.Windows
 
+/// <summary>
 /// Contains functions which allow to read and write information from/to the registry.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Registry =
 
@@ -15,7 +17,9 @@ module Registry =
         | HKEYCurrentConfig
         | HKEYPerformanceData
 
+    /// <summary>
     /// Maps the RegistryBaseKey to a RegistryKey
+    /// </summary>
     /// [omit]
     let getKey name =
         match name with
@@ -26,7 +30,9 @@ module Registry =
         | HKEYCurrentConfig -> Registry.CurrentConfig
         | HKEYPerformanceData -> Registry.PerformanceData
 
+    /// <summary>
     /// Maps the RegistryBaseKey to a RegistryKey for a 64bit System
+    /// </summary>
     /// [omit]
     let get64BitKey name =
         match name with
@@ -37,7 +43,9 @@ module Registry =
         | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry64)
         | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry64)
 
+    /// <summary>
     /// Maps the RegistryBaseKey to a RegistryKey for a 32bit System
+    /// </summary>
     /// [omit]
     let get32BitKey name =
         match name with
@@ -48,22 +56,24 @@ module Registry =
         | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
         | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)
 
+    /// <summary>
     /// Gets a 64-bit registry key
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `writePermission` - The write permissions on registery entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="writePermission">The write permissions on registry entry</param>
     let getRegistryKey64 baseKey subKey (writePermission: bool) =
         (get64BitKey baseKey)
             .OpenSubKey(subKey, writePermission)
 
+    /// <summary>
     /// Gets a registry key and falls back to 32 bit if the 64bit key is not there
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `writePermission` - The write permissions on registery entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="writePermission">The write permissions on registry entry</param>
     let getRegistryKey baseKey subKey (writePermission: bool) =
         let x64BitKey =
             (getKey baseKey)
@@ -75,16 +85,20 @@ module Registry =
             (get32BitKey baseKey)
                 .OpenSubKey(subKey, writePermission) // fall back to 32 bit
 
+    /// <summary>
     /// Gets a registry value as string
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `name` - The name of the registry entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="name">The name of the registry entry</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// let AppType = Registry.getRegistryValue Registry.HKEYCurrentUser subkey values.[0]
     /// Trace.trace (sprintf "You are running the %s version" AppType)
+    /// </code>
+    /// </example>
     let getRegistryValue baseKey subKey name =
         use key = getRegistryKey baseKey subKey false
 
@@ -98,12 +112,13 @@ module Registry =
 
         value.ToString()
 
+    /// <summary>
     /// Gets a registry value as string
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `name` - The name of the registry entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="name">The name of the registry entry</param>
     let getRegistryValue64 baseKey subKey name =
         use key = getRegistryKey64 baseKey subKey false
 
@@ -117,95 +132,118 @@ module Registry =
 
         value.ToString()
 
+    /// <summary>
     /// Sets a registry value
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `name` - The name of the registry entry
-    /// - `value` - The registry entry new value
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="name">The name of the registry entry</param>
+    /// <param name="value">The registry entry new value</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// Registry.setRegistryValue Registry.HKEYCurrentUser subkey "AppType" "Premium"
     /// Registry.setRegistryValue Registry.HKEYCurrentUser subkey "Version" "1.0.4"
+    /// </code>
+    /// </example>
     let setRegistryValue<'T> baseKey subKey name (value: 'T) =
         use key = getRegistryKey baseKey subKey true
         key.SetValue(name, value)
 
+    /// <summary>
     /// Deletes the registry value from its key
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `name` - The name of the registry entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="name">The name of the registry entry</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// Registry.deleteRegistryValue Registry.HKEYCurrentUser subkey "AppType"
+    /// </code>
+    /// </example>
     let deleteRegistryValue baseKey subKey name =
         use key = getRegistryKey baseKey subKey true
         key.DeleteValue name
 
+    /// <summary>
     /// Returns all the value names of a registry key
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// let values = Registry.getRegistryValueNames Registry.HKEYCurrentUser subkey
-    /// values |> Array.iter (Trace.trace << (sprintf "Found value name: %s!"))
+    /// values |> Array.iter (Trace.trace &lt;&lt; (sprintf "Found value name: %s!"))
+    /// </code>
+    /// </example>
     let getRegistryValueNames baseKey subKey =
         use key = getRegistryKey baseKey subKey false
         key.GetValueNames()
 
+    /// <summary>
     /// Returns whether or not a registry value name exists for a key
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    /// - `name` - The name of the registry entry
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
+    /// <param name="name">The name of the registry entry</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// let exists b = if b then Trace.trace "It exists!" else Trace.trace "It doesn't exist!"
-    /// exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "DateCreated"
-    /// exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "Version"
+    /// exists &lt;| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "DateCreated"
+    /// exists &lt;| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "Version"
+    /// </code>
+    /// </example>
     let valueExistsForKey =
         fun baseKey subKey name ->
             getRegistryValueNames baseKey subKey
             |> Seq.exists (fun n -> n = name)
 
+    /// <summary>
     /// Create a registry subKey
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// let subkey = "Company/MyApp"
     /// Registry.createRegistrySubKey Registry.HKEYCurrentUser subkey
+    /// </code>
+    /// </example>
     let createRegistrySubKey baseKey subKey =
         use key = getKey baseKey
         key.CreateSubKey subKey |> ignore
 
+    /// <summary>
     /// Deletes a registry subKey
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
     ///
-    /// ### Sample
+    /// <example>
+    /// <code lang="fsharp">
     /// Registry.deleteRegistrySubKey Registry.HKEYCurrentUser subkey
+    /// </code>
+    /// </example>
     let deleteRegistrySubKey baseKey subKey =
         use key = getKey baseKey
         key.DeleteSubKey subKey
 
+    /// <summary>
     /// Returns all the subKey names of a registry key
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `baseKey` - The registry value base key
-    /// - `subKey` - The sub key
-    ///
-    /// ### Sample
+    /// <param name="baseKey">The registry value base key</param>
+    /// <param name="subKey">The sub key</param>
     let getRegistrySubKeyNames baseKey subKey =
         use key = getRegistryKey baseKey subKey false
         key.GetSubKeyNames()
