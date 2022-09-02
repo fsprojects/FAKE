@@ -1,13 +1,19 @@
 namespace Fake.DotNet
 
-/// Contains helper functions which allow FAKE to call the [Manifest Generation and Editing Tool](http://msdn.microsoft.com/en-us/library/acz3y3te.aspx), in short 'MAGE'.
-/// The intentional use is the creation of a clickonce application.
+/// <summary>
+/// Contains helper functions which allow FAKE to call the
+/// <a href="http://msdn.microsoft.com/en-us/library/acz3y3te.aspx">Manifest Generation and Editing Tool</a>,
+/// in short <c>MAGE</c>. The intentional use is the creation of a clickonce application.
+/// </summary>
 ///
-/// ## Certificates
-/// The MAGE tool wants to sign the manifest using a certificate. It should be clear, that this file is not under source control.
-/// On the other hand - you want to be able to run the compile batch on each developer machine. How can we achieve that?
-/// In the parameter structure, we use a CertFile property and a TmpCertFile property. Whenever the CertFile was not found, the manifest is signed with
+/// <remarks>
+/// Certificates
+/// <br/>The MAGE tool wants to sign the manifest using a certificate. It should be clear, that this file is not
+/// under source control. On the other hand - you want to be able to run the compile batch on each developer machine.
+/// How can we achieve that? In the parameter structure, we use a CertFile property and a TmpCertFile property.
+/// Whenever the CertFile was not found, the manifest is signed with
 /// a temporary certificate. And the latter one can be shared in the source control.
+/// </remarks>
 [<RequireQualifiedAccess>]
 module Mage =
 
@@ -37,7 +43,9 @@ module Mage =
         | LocalIntranet
         | FullTrust
 
+    /// <summary>
     /// Needed information to call MAGE
+    /// </summary>
     type MageParams =
         { ToolsPath: string
           ProjectFiles: seq<string>
@@ -229,7 +237,9 @@ module Mage =
 
         allParameters |> String.separated " "
 
+    /// <summary>
     /// Execute the MAGE tool. Adds some parameters, dependent on the MAGE command.
+    /// </summary>
     let internal call (action: MageCall) (mp: MageParams) =
         let magePath = mp.ToolsPath </> "mage.exe"
 
@@ -252,28 +262,42 @@ module Mage =
         if processResult.ExitCode <> 0 then
             failwithf "Error during mage call with exit code %i." processResult.ExitCode
 
+    /// <summary>
     /// Encapsulates the MAGE call to create a new application's manifest
+    /// </summary>
     let createApp = call NewApp
 
+    /// <summary>
     /// Encapsulates the MAGE call to update an existing application's manifest
+    /// </summary>
     let updateApp = call UpdateApp
 
+    /// <summary>
     /// Encapsulates the MAGE call to sign an application's manifest
+    /// </summary>
     let signManifest = call Sign
 
+    /// <summary>
     /// Encapsulates the MAGE call to deploy an application
+    /// </summary>
     let deployApp = call Deploy
 
+    /// <summary>
     /// Encapsulates the MAGE call to update the deployment of an application
+    /// </summary>
     let updateDeploy = call UpdateDeploy
 
+    /// <summary>
     /// Encapsulates the MAGE call to sign the deployment of an application
+    /// </summary>
     let signDeploy = call SignDeploy
 
-    /// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.
+    /// <summary>
+    /// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest,
+    /// deploys the application and finally signs the deployment.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `mp` - Mage parameters
+    /// <param name="mp">Mage parameters</param>
     let run (mp: MageParams) =
         Trace.traceStartTaskUnsafe "Fake.Tools.Mage" mp.ApplicationFile
         createApp mp

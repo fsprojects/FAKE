@@ -2,11 +2,14 @@ namespace Fake.DotNet
 
 open System.IO
 
-/// Contains task a task which allows to merge .NET assemblies with [ILMerge](https://github.com/dotnet/ILMerge).
+/// <summary>
+/// Contains task a task which allows to merge .NET assemblies with
+/// <a href="https://github.com/dotnet/ILMerge">ILMerge</a>.
+/// </summary>
 ///
-/// ### Sample
-///
-///        Target.create "ILMerge" (fun _ ->
+/// <example>
+/// <code lang="fsharp">
+/// Target.create "ILMerge" (fun _ ->
 ///             let target = !!"./bin/Release/*.exe" |> Seq.head
 ///             let out = "./bin" @@ (Path.GetFileName target)
 ///             ILMerge.run
@@ -18,7 +21,8 @@ open System.IO
 ///                                                   [ !!"./bin/Release/Mono.C*.dll"
 ///                                                     !!"./bin/Release/Newton*.dll" ]
 ///                                              AttributeFile = target } out target)
-///
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module ILMerge =
 
@@ -59,7 +63,9 @@ module ILMerge =
         | Some path -> path
         | None -> toolName
 
+    /// <summary>
     /// Parameter type for ILMerge
+    /// </summary>
     [<NoComparison>]
     type Params =
         { /// Path to ILMerge.exe
@@ -80,7 +86,8 @@ module ILMerge =
           /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
           Closed: bool
           CopyAttributes: bool
-          /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
+          /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found
+          /// for input assemblies.
           DebugInfo: bool
           Internalize: InternalizeTypes
           FileAlignment: int option
@@ -121,8 +128,9 @@ module ILMerge =
               UnionMerge = false
               XmlDocs = false }
 
+    /// <summary>
     /// Builds the arguments for the ILMerge task
-    /// [omit]
+    /// </summary>
     let internal getArguments outputFile primaryAssembly parameters =
         let Item a x =
             if x |> String.IsNullOrWhiteSpace then
@@ -178,18 +186,20 @@ module ILMerge =
            :: (parameters.Libraries |> Seq.toList)) ]
         |> List.concat
 
+    /// <summary>
     /// Builds the process to run for the ILMerge task
-    /// [omit]
+    /// </summary>
     let internal createProcess parameters outputFile primaryAssembly =
         let args = getArguments outputFile primaryAssembly parameters
         CreateProcess.fromRawCommand parameters.ToolPath args
 
+    /// <summary>
     /// Uses ILMerge to merge .NET assemblies.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `parameters` - An ILMerge.Params value with your required settings.
-    ///  - `outputFile` - Output file path for the merged assembly.
-    ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
+    /// <param name="parameters">An ILMerge.Params value with your required settings.</param>
+    /// <param name="outputFile">Output file path for the merged assembly.</param>
+    /// <param name="primaryAssembly">The assembly you want ILMerge to consider as the primary.</param>
     let run parameters outputFile primaryAssembly =
         // The type initializer for 'System.Compiler.CoreSystemTypes' throws on Mono.
         // So let task be a no-op on non-Windows platforms

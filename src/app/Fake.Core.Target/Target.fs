@@ -102,7 +102,9 @@ type [<NoComparison>] [<NoEquality>] internal InternalTarget =
           Description = x.Description
           Function = x.Function }
 
+/// <summary>
 /// Exception for request errors
+/// </summary>
 #if !NETSTANDARD1_6
 [<Serializable>]
 #endif
@@ -129,6 +131,15 @@ type BuildFailedException =
         | None ->
             BuildFailedException(x.Message, x:>exn)
 
+/// <namespacedoc>
+/// <summary>
+/// Core namespace contains FAKE's core tasks, like Target, Process, BuildeServer, etc.. modules.
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
+/// FAKE Target module contains tasks to define and run targets.
+/// </summary> 
 [<RequireQualifiedAccess>]
 module Target =
 
@@ -136,20 +147,14 @@ module Target =
         | Hard = 1
         | Soft = 2
 
-    /// [omit]
-    //let mutable PrintStackTraceOnError = false
     let private printStackTraceOnErrorVar = "Fake.Core.Target.PrintStackTraceOnError"
     let private getPrintStackTraceOnError, _, (setPrintStackTraceOnError:bool -> unit) =
         FakeVar.define printStackTraceOnErrorVar
 
-    /// [omit]
-    //let mutable LastDescription = null
     let private lastDescriptionVar = "Fake.Core.Target.LastDescription"
     let private getLastDescription, removeLastDescription, setLastDescription =
         FakeVar.define lastDescriptionVar
     
-    /// [omit]
-    //let mutable LastDescription = null
     let private collectStackVar = "Fake.Core.Target.CollectStack"
     let private getCollectStack, removeCollectStack, (setCollectStack : bool -> unit) =
         FakeVar.define collectStackVar
@@ -222,10 +227,11 @@ module Target =
                 { File = null; Line = 0; Column = 0; ErrorDetail = sprintf "stackframe not found, available:%s" framesString })
         else { File = null; Line = 0; Column = 0; ErrorDetail = "not requested" }
 
+    /// <summary>
     /// Sets the Description for the next target.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `text` - The description of the next target
+    /// <param name="text">The description of the next target</param>
     let description text =
         match getLastDescription() with
         | Some (v:string) ->
@@ -233,8 +239,6 @@ module Target =
         | None ->
            setLastDescription text
 
-    /// TargetDictionary
-    /// [omit]
     let internal getVarWithInit name f =
         let varName = sprintf "Fake.Core.Target.%s" name
         let getVar, _, setVar =
@@ -250,26 +254,35 @@ module Target =
     let internal getTargetDict =
         getVarWithInit "TargetDict" (fun () -> Dictionary<string,InternalTarget>(StringComparer.OrdinalIgnoreCase))
 
+    /// <summary>
     /// Final Targets - stores final targets and if they are activated.
+    /// </summary>
     let internal getFinalTargets =
         getVarWithInit "FinalTargets" (fun () -> Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
+    /// <summary>
     /// BuildFailureTargets - stores build failure targets and if they are activated.
+    /// </summary>
     let internal getBuildFailureTargets =
         getVarWithInit "BuildFailureTargets" (fun () -> Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
 
+    /// <summary>
     /// Resets the state so that a deployment can be invoked multiple times
-    /// [omit]
+    /// </summary>
     let internal reset() =
         getTargetDict().Clear()
         getBuildFailureTargets().Clear()
         getFinalTargets().Clear()
 
+    /// <summary>
     /// Returns a list with all target names.
+    /// </summary>
     let internal getAllTargetsNames() = getTargetDict() |> Seq.map (fun t -> t.Key) |> Seq.toList
 
+    /// <summary>
     /// Gets a target with the given name from the target dictionary.
+    /// </summary>
     let internal getInternal name : InternalTarget =
         let d = getTargetDict()
         match d.TryGetValue name with
@@ -282,7 +295,9 @@ module Target =
     let get name : Target =
         (getInternal name).AsTarget
 
+    /// <summary>
     /// Returns the DependencyString for the given target.
+    /// </summary>
     let internal dependencyString (target :Target) =
         if target.Dependencies.IsEmpty then String.Empty else
         target.Dependencies
@@ -311,21 +326,33 @@ module Target =
             t.MarkSuccess()
         { context with PreviousTargets = context.PreviousTargets @ [result] }
 
+    /// <summary>
     /// This simply runs the function of a target without doing anything (like tracing, stop watching or adding
     /// it to the results at the end)
+    /// </summary>
+    ///
+    /// <param name="name">The final target name</param>
+    /// <param name="args">The target arguments</param>
     let runSimple name args =
         let target = get name
         target
         |> runSimpleInternal (TargetContext.Create name [target] args CancellationToken.None)
 
+    /// <summary>
     /// This simply runs the function of a target without doing anything (like tracing, stop watching or
     /// adding it to the results at the end)
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
+    /// <param name="ctx">The context object</param>
     let runSimpleWithContext name ctx =
         let target = get name
         target
         |> runSimpleInternal ctx
 
+    /// <summary>
     /// Returns the soft  DependencyString for the given target.
+    /// </summary>
     let internal softDependencyString target =
         if target.SoftDependencies.IsEmpty then String.Empty else
         target.SoftDependencies
@@ -333,8 +360,9 @@ module Target =
           |> String.separated ", "
           |> sprintf "(?=> %s)"
 
+    /// <summary>
     /// Checks whether the dependency (soft or normal) can be added.
-    /// [omit]
+    /// </summary>
     let internal checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetName =
         let target = getInternal targetName
         let dependentTarget = getInternal dependentTargetName
@@ -351,18 +379,21 @@ module Target =
         checkDependencies dependentTarget
         target,dependentTarget
 
+    /// <summary>
     /// Checks whether the dependency can be added.
-    /// [omit]
+    /// </summary>
     let internal checkIfDependencyCanBeAdded targetName dependentTargetName =
        checkIfDependencyCanBeAddedCore (fun target -> target.Dependencies) targetName dependentTargetName
 
+    /// <summary>
     /// Checks whether the soft dependency can be added.
-    /// [omit]
+    /// </summary>
     let internal checkIfSoftDependencyCanBeAdded targetName dependentTargetName =
        checkIfDependencyCanBeAddedCore (fun target -> target.SoftDependencies) targetName dependentTargetName
 
+    /// <summary>
     /// Adds the dependency to the front of the list of dependencies.
-    /// [omit]
+    /// </summary>
     let internal dependencyAtFront targetName dependentTargetName =
         let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
@@ -379,8 +410,9 @@ module Target =
                         |> List.filter (fun d -> not (String.Equals(d.Name, dependentTargetName, StringComparison.OrdinalIgnoreCase)))
                 }
 
+    /// <summary>
     /// Appends the dependency to the list of soft dependencies.
-    /// [omit]
+    /// </summary>
     let internal softDependencyAtFront targetName dependentTargetName =
         let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
@@ -397,34 +429,42 @@ module Target =
             let decl = getDeclaration()
             getTargetDict().[targetName] <- { target with SoftDependencies = { Name = dependentTargetName; Declaration = decl } :: target.SoftDependencies }
 
+    /// <summary>
     /// Adds the dependency to the list of dependencies.
-    /// [omit]
+    /// </summary>
     let internal dependency targetName dependentTargetName = dependencyAtFront targetName dependentTargetName
 
+    /// <summary>
     /// Adds the dependency to the list of soft dependencies.
-    /// [omit]
+    /// </summary>
     let internal softDependency targetName dependentTargetName = softDependencyAtFront targetName dependentTargetName
 
+    /// <summary>
     /// Adds the dependencies to the list of dependencies.
-    /// [omit]
+    /// </summary>
     let internal Dependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (dependency targetName)
 
+    /// <summary>
     /// Adds the dependencies to the list of soft dependencies.
-    /// [omit]
+    /// </summary>
     let internal SoftDependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (softDependency targetName)
 
+    /// <summary>
     /// Backwards dependencies operator - x is dependent on ys.
+    /// </summary>
     let inline internal (<==) x ys = Dependencies x ys
 
+    /// <summary>
     /// Creates a target from template.
-    /// [omit]
+    /// </summary>
     let internal addTarget target name =
         getTargetDict().Add(name, target)
         name <== (target.Dependencies |> List.map (fun d -> d.Name))
         removeLastDescription()
 
-    /// add a target with dependencies
-    /// [omit]
+    /// <summary>
+    /// Add a target with dependencies
+    /// </summary>
     let internal addTargetWithDependencies dependencies body name =
         let template =
             { Name = name
@@ -436,32 +476,40 @@ module Target =
               Function = body }
         addTarget template name
 
+    /// <summary>
     /// Creates a Target.
+    /// </summary>
     let create name body = addTargetWithDependencies [] body name
 
+    /// <summary>
     /// Runs all activated final targets (in alphabetically order).
-    /// [omit]
+    /// </summary>
     let internal runFinalTargets context =
         getFinalTargets()
         |> Seq.filter (fun kv -> kv.Value)     // only if activated
         |> Seq.map (fun kv -> get kv.Key)
         |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFinalTarget context target) context                
 
+    /// <summary>
     /// Runs all build failure targets.
-    /// [omit]
+    /// </summary>
     let internal runBuildFailureTargets context =
         getBuildFailureTargets()
         |> Seq.filter (fun kv -> kv.Value)     // only if activated
         |> Seq.map (fun kv -> get kv.Key)
         |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFailureTarget context target) context     
 
+    /// <summary>
     /// List all targets available.
+    /// </summary>
     let listAvailable() =
         Trace.log "The following targets are available:"
         for t in getTargetDict().Values |> Seq.sortBy (fun t -> t.Name) do
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
 
+    /// <summary>
     /// List all targets available.
+    /// </summary>
     let internal writeInfoFile file =
         let escapeJson (s:string) =
             let sb = System.Text.StringBuilder(s.Length)
@@ -511,13 +559,17 @@ module Target =
         |> fun targets ->
             System.IO.File.WriteAllText(file, sprintf "{ \"targets\": %s }" targets)
 
-    // Maps the specified dependency type into the list of targets
+    // <summary>
+    /// Maps the specified dependency type into the list of targets
+    /// </summary>
     let private withDependencyType (depType:DependencyType) targets =
         targets |> List.map (fun t -> depType, t)
 
-    // Helper function for visiting targets in a dependency tree. Returns a set containing the names of the all the
-    // visited targets, and a list containing the targets visited ordered such that dependencies of a target appear earlier
-    // in the list than the target.
+    /// <summary>
+    /// Helper function for visiting targets in a dependency tree. Returns a set containing the names of the all the
+    /// visited targets, and a list containing the targets visited ordered such that dependencies of a target appear
+    /// earlier in the list than the target.
+    /// </summary>
     let private visitDependencies repeatVisit fVisit targetName =
         let visit fGetDependencies fVisit targetName =
             let visited = HashSet<_>(StringComparer.OrdinalIgnoreCase)
@@ -549,7 +601,10 @@ module Target =
         // Now make second pass, adding in soft dependencies if appropriate
         visit getAllDependencies fVisit targetName
 
-    /// <summary>Writes a dependency graph.</summary>
+    /// <summary>
+    /// Writes a dependency graph.
+    /// </summary>
+    ///
     /// <param name="verbose">Whether to print verbose output or not.</param>
     /// <param name="target">The target for which the dependencies should be printed.</param>
     let printDependencyGraph verbose target =
@@ -585,7 +640,10 @@ module Target =
         sb.Length <- sb.Length - Environment.NewLine.Length
         Trace.log <| sb.ToString()
 
-    /// <summary>Writes a build time report.</summary>
+    /// <summary>
+    /// Writes a build time report.
+    /// </summary>
+    /// 
     /// <param name="total">The total runtime.</param>
     let internal writeTaskTimeSummary total context =
         Trace.traceHeader "Build Time Report"
@@ -627,7 +685,9 @@ module Target =
 
         Trace.traceLine()
 
+    /// <summary>
     /// Determines a parallel build order for the given set of targets
+    /// </summary>
     let internal determineBuildOrder (target : string) =
         let visited = HashSet<string>(StringComparer.OrdinalIgnoreCase)
         let visitedTargets = List<Target>()
@@ -680,7 +740,9 @@ module Target =
                 findOrder (List.toArray execute :: progress) left      
         findOrder [] targets
 
+    /// <summary>
     /// Runs a single target without its dependencies... only when no error has been detected yet.
+    /// </summary>
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
             runSimpleContextInternal Trace.traceTarget context target
@@ -858,7 +920,9 @@ module Target =
         Process.killAllCreatedProcesses()
         cts.Cancel()
     
-    /// Optional `TargetContext`
+    /// <summary>
+    /// Optional <c>TargetContext</c>
+    /// </summary>
     type OptionalTargetContext = 
         private
             | Set of TargetContext
@@ -868,7 +932,9 @@ module Target =
             | Set t -> Some t
             | MaybeSet o -> o
 
+    /// <summary>
     /// Runs a target and its dependencies.
+    /// </summary>
     let internal runInternal singleTarget parallelJobs targetName args =
         match getLastDescription() with
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
@@ -927,32 +993,58 @@ module Target =
         writeTaskTimeSummary watch.Elapsed context
         context           
 
+    /// <summary>
     /// Creates a target in case of build failure (not activated).
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
+    /// <param name="body">The target body</param>
     let createBuildFailure name body =
         create name body
         getBuildFailureTargets().Add(name,false)
 
+    /// <summary>
     /// Activates the build failure target.
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
     let activateBuildFailure name =
         let _ = get name // test if target is defined
         getBuildFailureTargets().[name] <- true
 
+    /// <summary>
     /// Deactivates the build failure target.
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
     let deactivateBuildFailure name =
         let t = get name // test if target is defined
         getBuildFailureTargets().[name] <- false
 
+    /// <summary>
     /// Creates a final target (not activated).
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
+    /// <param name="body">The target body</param>
     let createFinal name body =
         create name body
         getFinalTargets().Add(name,false)
 
+    /// <summary>
     /// Activates the final target.
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
     let activateFinal name =
         let _ = get name // test if target is defined
         getFinalTargets().[name] <- true
 
-    /// deactivates the final target.
+    /// <summary>
+    /// Deactivates the final target.
+    /// </summary>
+    ///
+    /// <param name="name">The target name</param>
     let deactivateFinal name =
         let t = get name // test if target is defined
         getFinalTargets().[name] <- false
@@ -968,8 +1060,12 @@ module Target =
         let inner = AggregateException(AggregateException().Message, context.ErrorTargets |> Seq.map fst)
         BuildFailedException(context, errorMsg, inner)
 
-    /// Updates build status based on `OptionalTargetContext`
-    /// Will not update status if `OptionalTargetContext` is `MaybeSet` with value `None`
+    /// <summary>
+    /// Updates build status based on <c>OptionalTargetContext</c>
+    /// Will not update status if <c>OptionalTargetContext</c> is <c>MaybeSet</c> with value <c>None</c>
+    /// </summary>
+    ///
+    /// <param name="context">The target context</param>
     let updateBuildStatus (context:OptionalTargetContext) =
         match context.Context with
         | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
@@ -982,7 +1078,11 @@ module Target =
         | Some _ -> Trace.setBuildState TagStatus.Success
         | _ -> ()
 
+    /// <summary>
     /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
+    /// </summary>
+    ///
+    /// <param name="context">The target context</param>
     let raiseIfError (context:OptionalTargetContext) =
         let c = context.Context
         if c.IsSome && c.Value.HasError && not c.Value.CancellationToken.IsCancellationRequested then
@@ -995,9 +1095,8 @@ module Target =
         | NoAction
         | ExecuteTarget of target:string option * arguments:string list * parallelJobs:int * singleTarget:bool
     
-    /// [omit]
     let private argResultsVar = "Fake.Core.Target.ArgResults"
-    /// [omit]
+
     let private privGetArgResults, private removeArgResults, private setArgResults =
         FakeVar.define argResultsVar
 
@@ -1111,7 +1210,9 @@ module Target =
         | Some f -> OptionalTargetContext.MaybeSet(f())
         | _ -> OptionalTargetContext.MaybeSet(None)
         
-    /// allows to initialize FAKE, see initEnvironment and getArguments
+    /// <summary>
+    /// Allows to initialize FAKE, see initEnvironment and getArguments
+    /// </summary>
     let internal initAndProcess proc =
         match privGetArgResults () with
         | Some args -> proc args
@@ -1121,9 +1222,11 @@ module Target =
             proc res
 
 
+    /// <summary>
     /// Run functions which don't throw and return the context after all targets have been executed.
+    /// </summary>
     module WithContext =
-        /// Runs a target and its dependencies and returns an `OptionalTargetContext`
+        /// Runs a target and its dependencies and returns an <c>OptionalTargetContext</c>
         let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> OptionalTargetContext.Set
 
         /// Runs the command given on the command line or the given target when no target is given & get context
@@ -1138,38 +1241,62 @@ module Target =
         let runOrList() =
             getRunFunction false None |> runFunction
 
-    /// allows to initialize the environment before defining targets
+    /// <summary>
+    /// Allows to initialize the environment before defining targets
+    /// </summary>
+    /// <remarks>
     /// This function should be used at the start of your fake script
-    /// see https://github.com/fsharp/FAKE/issues/2283
-    /// Alternatively, you can use Target.getArguments() instead
+    /// see <a href="https://github.com/fsharp/FAKE/issues/2283">issues #2283</a>
+    /// Alternatively, you can use <c>Target.getArguments()</c> instead
+    /// </remarks>
     let initEnvironment () =
         initAndProcess ignore
 
-    /// allows to retrieve the arguments passed into the current execution, 
-    /// when `Target.run*withArguments` overloads are used, see https://fake.build/core-targets.html#Targets-with-arguments
+    /// <summary>
+    /// Allows to retrieve the arguments passed into the current execution, 
+    /// when <c>Target.run*withArguments</c> overloads are used, see
+    /// <a href="guide/core-targets.html#Targets-with-arguments">Targets with arguments</a> 
+    /// </summary>
+    /// <remarks>
     /// This function should be used at the start of your fake script
-    /// Alternatively, you can use Target.initEnvironment() instead,
-    /// Note: This function usually returns `Some [||]`, it will return `None` when 
-    /// No actual execution was requested (for example because of `--list`),
-    /// you shouldn't execute any side effects when `None` is returned 
+    /// Alternatively, you can use <c>Target.initEnvironment()</c> instead,
+    /// Note: This function usually returns <c>Some [||]</c>, it will return <c>None</c> when 
+    /// No actual execution was requested (for example because of <c>--list</c>),
+    /// you shouldn't execute any side effects when <c>None</c> is returned 
     /// (you should never execute side effects but you can use this flag to check if needed)
+    /// </remarks>
     let getArguments () =
         initAndProcess (function 
             | ExecuteTarget (_, args, _, _) -> args |> List.toArray |> Some
             | _ -> None)
 
+    /// <summary>
     /// Runs a target and its dependencies
+    /// </summary>
+    ///
+    /// <param name="targetName">The target name</param>
+    /// <param name="args">The arguments list</param>
     let run parallelJobs targetName args : unit =
         WithContext.run parallelJobs targetName args |> raiseIfError
 
+    /// <summary>
     /// Runs the command given on the command line or the given target when no target is given
+    /// </summary>
+    ///
+    /// <param name="targetName">The default target name</param>
     let runOrDefault (defaultTarget:string) : unit =
         WithContext.runOrDefault defaultTarget |> raiseIfError
 
+    /// <summary>
     /// Runs the command given on the command line or the given target when no target is given
+    /// </summary>
+    ///
+    /// <param name="targetName">The default target name</param>
     let runOrDefaultWithArguments (defaultTarget:string) : unit =
         WithContext.runOrDefaultWithArguments defaultTarget |> raiseIfError
 
+    /// <summary>
     /// Runs the target given by the target parameter or lists the available targets
+    /// </summary>
     let runOrList() : unit =
         WithContext.runOrList() |> raiseIfError

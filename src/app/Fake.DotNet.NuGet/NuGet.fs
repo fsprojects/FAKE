@@ -1,7 +1,10 @@
 namespace Fake.DotNet.NuGet
 
-/// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
-/// There is also a tutorial about [nuget package creating](/dotnet-nuget.html) available.
+/// <summary>
+/// Contains helper functions and task which allow to inspect, create and publish
+/// <a href="https://www.nuget.org/">NuGet</a> packages.
+/// There is also a tutorial about <a href="/dotnet-nuget.html">nuget package creating</a> available.
+/// </summary>
 module NuGet =
 
     open Fake.IO
@@ -58,7 +61,9 @@ module NuGet =
               WorkingDir = workingDir
               IsFullFramework = isFullFramework }
 
+    /// <summary>
     /// Nuget base parameter type
+    /// </summary>
     type NuGetParams =
         {
           /// The path to the NuGet executable
@@ -118,7 +123,7 @@ module NuGet =
           SymbolAccessKey: string
           
           /// Prevents default exclusion of NuGet package files and files and folders starting with a dot,
-          /// such as `.svn` and `.gitignore`.
+          /// such as <c>.svn</c> and <c>.gitignore</c>.
           NoDefaultExcludes: bool
           
           /// Specifies that pack should not run package analysis after building the package.
@@ -127,19 +132,19 @@ module NuGet =
           /// The project file to use
           ProjectFile: string
           
-          /// The list of dependencies of the package. `dependencies`
+          /// The list of dependencies of the package. <c>dependencies</c>
           Dependencies: NugetDependencies
           
-          /// The list of dependencies of the package grouped by Framework. `dependencies`
+          /// The list of dependencies of the package grouped by Framework. <c>dependencies</c>
           DependenciesByFramework: NugetFrameworkDependencies list
           
-          /// The list of packages that reference the package. `references`
+          /// The list of packages that reference the package. <c>references</c>
           References: NugetReferences
           
-          /// The list of packages that reference the package grouped by Framework. `references`
+          /// The list of packages that reference the package grouped by Framework. <c>references</c>
           ReferencesByFramework: NugetFrameworkReferences list
           
-          /// The list of `frameworkAssemblies`
+          /// The list of <c>frameworkAssemblies</c>
           FrameworkAssemblies: NugetFrameworkAssemblyReferences list
           
           /// Mark if to include list of projects that reference the package
@@ -158,13 +163,13 @@ module NuGet =
           /// that override values in the project file
           Properties: list<string * string>
           
-          /// The list of files to include or exclude. `files`
+          /// The list of files to include or exclude. <c>files</c>
           Files: list<string * string option * string option>
           
-          /// The list of content files to include or exclude. `contentFiles`
+          /// The list of content files to include or exclude. <c>contentFiles</c>
           ContentFiles: list<string * string option * string option * bool option * bool option>
           
-          /// The package language. `language`
+          /// The package language. <c>language</c>
           Language: string }
 
     /// NuGet default parameters
@@ -208,10 +213,11 @@ module NuGet =
           ContentFiles = []
           Language = null }
 
+    /// <summary>
     /// Creates a string which tells NuGet that you require exactly this package version.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `version` - The exact version to require
+    /// <param name="version">The exact version to require</param>
     let RequireExactly version = sprintf "[%s]" version
 
     /// NuGet package versioning breaking changes point
@@ -223,12 +229,13 @@ module NuGet =
         /// Breaking on patch component of SemVer
         | Patch
 
+    /// <summary>
     /// Require a version by given breaking point and version
-    /// See https://docs.nuget.org/create/versioning
+    /// See <a href="https://docs.nuget.org/create/versioning">NuGet Versioning</a>
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `breakingPoint` - The breaking point for version range. See `BreakingPoint` type
-    ///  - `version` - The version to use to find the range
+    /// <param name="breakingPoint">The breaking point for version range. See <c>BreakingPoint</c> type</param>
+    /// <param name="version">The version to use to find the range</param>
     let RequireRange breakingPoint version =
         let v = SemVer.parse version
 
@@ -242,11 +249,12 @@ module NuGet =
     let private packageFileName parameters =
         sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
+    /// <summary>
     /// Gets the version no. for a given package in the deployments folder
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `deploymentsDir` -The deployment directory to look into
-    ///  - `package` - The package id to look for
+    /// <param name="deploymentsDir">The deployment directory to look into</param>
+    /// <param name="package">The package id to look for</param>
     let GetPackageVersion deploymentsDir package =
         try
             if Directory.Exists deploymentsDir |> not then
@@ -564,7 +572,9 @@ module NuGet =
                 basePath
             |> execute
 
+    /// <summary>
     /// dotnet nuget push command options
+    /// </summary>
     type NuGetPushParams =
         {
             /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
@@ -727,12 +737,13 @@ module NuGet =
         with _ when parameters.PublishTrials > 0 ->
             publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
 
+    /// <summary>
     /// Creates a new NuGet package based on the given .nuspec or project file.
     /// The .nuspec / projectfile is passed as-is (no templating is performed)
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="nuspecOrProjectFile">The .nuspec or project file name.</param>
     let NuGetPackDirectly setParams nuspecOrProjectFile =
         use __ = Trace.traceTask "NuGetPackDirectly" nuspecOrProjectFile
         let parameters = NuGetDefaults() |> setParams
@@ -749,12 +760,13 @@ module NuGet =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Creates a new NuGet package based on the given .nuspec or project file.
     /// Template parameter substitution is performed when passing a .nuspec
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="nuspecOrProjectFile">The .nuspec or project file name.</param>
     let NuGetPack setParams nuspecOrProjectFile =
         use __ = Trace.traceTask "NuGetPack" nuspecOrProjectFile
         let parameters = NuGetDefaults() |> setParams
@@ -775,10 +787,11 @@ module NuGet =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Publishes a NuGet package to the nuget server.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     let NuGetPublish setParams =
         let parameters = NuGetDefaults() |> setParams
         use __ = Trace.traceTask "NuGet-Push" (packageFileName parameters)
@@ -795,12 +808,13 @@ module NuGet =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Creates a new NuGet package, and optionally publishes it.
     /// Template parameter substitution is performed when passing a .nuspec
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `nuspecOrProjectFile` - The .nuspec file name.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="nuspecOrProjectFile">The .nuspec file name.</param>
     let NuGet setParams nuspecOrProjectFile =
         use __ = Trace.traceTask "NuGet" nuspecOrProjectFile
         let parameters = NuGetDefaults() |> setParams
@@ -827,7 +841,10 @@ module NuGet =
 
         __.MarkSuccess()
 
-    /// NuSpec metadata type Please see [NuSpec reference](https://docs.microsoft.com/en-us/nuget/reference/nuspec)
+    /// <summary>
+    /// NuSpec metadata type Please see
+    /// <a href="https://docs.microsoft.com/en-us/nuget/reference/nuspec">NuSpec reference</a>
+    /// </summary>
     type NuSpecPackage =
         {
           /// The case-insensitive package identifier
@@ -887,10 +904,11 @@ module NuGet =
         member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
         member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
 
+    /// <summary>
     /// Parses nuspec metadata from a nuspec file.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `nuspec` - The .nuspec file content.
+    /// <param name="nuspec">The .nuspec file content.</param>
     let getNuspecProperties (nuspec: string) =
         let doc = Xml.createDoc nuspec
 
@@ -932,6 +950,9 @@ module NuGet =
           PackageHash = String.Empty
           PackageHashAlgorithm = String.Empty }
 
+    /// <summary>
+    /// NuGet package information
+    /// </summary>
     type NugetPackageInfo =
         {
           /// The case-insensitive package identifier
@@ -968,14 +989,13 @@ module NuGet =
           /// The package title
           Title: string }
 
-    /// Default NuGet feed. Using V3 feed: `https://api.nuget.org/v3/index.json`
+    /// Default NuGet feed. Using V3 feed: <c>https://api.nuget.org/v3/index.json</c>
     let galleryV3 = "https://api.nuget.org/v3/index.json"
 
 #if NETSTANDARD
     open System.Net.Http
     open Newtonsoft.Json.Linq
 
-    /// [omit]
     type WebClient = HttpClient
 
     type HttpClient with
@@ -1165,12 +1185,13 @@ module NuGet =
           LicenseUrl = data["licenseUrl"].ToString()
           Title = data["title"].ToString() }
 
+    /// <summary>
     /// Gets a Package information from NuGet feed by package id.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `repoUrl` - Query endpoint of NuGet search service
-    ///  - `packageName` - The package to get
-    ///  - `version` - The specific version to get
+    /// <param name="repoUrl">Query endpoint of NuGet search service</param>
+    /// <param name="packageName">The package to get</param>
+    /// <param name="version">The specific version to get</param>
     let getPackage (repoUrl: string) (packageName: string) (version: string) =
         let url: string = repoUrl.TrimEnd('/') + "?q=packageid:" + packageName + "&take=1"
         let resp = webClient.DownloadString(url)
@@ -1190,11 +1211,12 @@ module NuGet =
         data["version"] <- JValue version
         extractFeedPackageFromJson data isLatest
 
+    /// <summary>
     /// Gets the latest published package from NuGet feed by package id.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `repoUrl` - Query endpoint of NuGet search service
-    ///  - `packageName` - The package to get
+    /// <param name="repoUrl">Query endpoint of NuGet search service</param>
+    /// <param name="packageName">The package to get</param>
     let getLatestPackage (repoUrl: string) packageName =
         let url: string = repoUrl.TrimEnd('/') + "?q=packageid:" + packageName + "&take=1"
         let resp = webClient.DownloadString(url)
@@ -1202,11 +1224,12 @@ module NuGet =
         let data = (json["data"] :?> JArray)[0] :?> JObject
         extractFeedPackageFromJson data true
 
+    /// <summary>
     /// Search NuGet query endpoint for packages matching given name by title
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `repoUrl` - Query endpoint of NuGet search service
-    ///  - `packageName` - The package to search for
+    /// <param name="repoUrl">Query endpoint of NuGet search service</param>
+    /// <param name="packageName">The package to search for</param>
     let searchByTitle (repoUrl: string) (packageName: string) =
         let url: string = repoUrl.TrimEnd('/') + "?q=title:" + packageName
         let resp = webClient.DownloadString(url)
@@ -1235,7 +1258,9 @@ module NuGet =
         |> Seq.collect (fun v -> [ "-" + name; sprintf @"""%s""" v ])
         |> String.concat " "
 
+    /// <summary>
     /// Holds data for NuGet dependencies of a package
+    /// </summary>
     type NuGetDependency =
         {
           /// The package Id
@@ -1247,10 +1272,11 @@ module NuGet =
           /// Mark if the dependency is a development (dev) dependency or not
           IsDevelopmentDependency: bool }
 
+    /// <summary>
     /// Returns the dependencies from specified packages.config file
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `packagesFile` - The packages file to use
+    /// <param name="packagesFile">The packages file to use</param>
     let getDependencies (packagesFile: string) =
         let xName = XName.op_Implicit
 

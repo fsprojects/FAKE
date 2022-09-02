@@ -6,7 +6,9 @@ open System
 open System.Globalization
 open System.Text.RegularExpressions
 
-/// Contains active patterns which allow to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+/// <summary>
+/// Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+/// </summary>
 module SemVerActivePattern =
     let (|ParseRegex|_|) pattern input  =
         let m = Regex.Match(input, pattern, RegexOptions.ExplicitCapture)
@@ -71,7 +73,9 @@ type PreReleaseSegment =
         | :? PreReleaseSegment as y -> x.Equals(y)
         | _ -> false
 
+/// <summary>
 /// Information about PreRelease packages.
+/// </summary>
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin : string
@@ -144,14 +148,21 @@ type PreRelease =
             | _ -> invalidArg "yobj" "PreRelease: cannot compare to values of different types"
 
 
-/// Contains the version information. For parsing use [SemVer.parse](fake-core-semver.html)
-/// 
-/// > Note: If you use `{ version with Patch = myPath; Original = None }` to overwrite some parts of this string make sure to overwrite `Original` to `None` in order to recalculate the version string.
-/// 
-/// > Note: For overwriting the `PreRelease` part use: `{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }`
+/// <summary>
+/// Contains the version information. For parsing use <a href="guide/fake-core-semver.html"><c>SemVer.parse</c></a>
+/// </summary>
+/// <remarks>
+/// Note: If you use <c>{ version with Patch = myPath; Original = None }</c> to overwrite some parts of this
+/// string make sure to overwrite <c>Original</c> to <c>None</c> in order to recalculate the version string.
+/// </remarks>
+/// <remarks>
+/// For overwriting the <c>PreRelease</c> part use:
+/// <c>{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }</c>
+/// </remarks>
 [<CustomEquality; CustomComparison; StructuredFormatDisplay("{AsString}")>]
 type SemVerInfo = 
-    { /// MAJOR version when you make incompatible API changes.
+    {
+      /// MAJOR version when you make incompatible API changes.
       Major : uint32
       /// MINOR version when you add functionality in a backwards-compatible manner.
       Minor : uint32
@@ -229,14 +240,21 @@ type SemVerInfo =
             | :? SemVerInfo as y -> x.CompareTo(y)
             | _ -> invalidArg "yobj" "SemVerInfo: cannot compare to values of different types"
 
-///  Parser which allows to deal with [Semantic Versioning](http://semver.org/) (SemVer).
-///  Make sure to read the documentation in the [SemVerInfo](fake-core-semverinfo.html) record as well if you manually create versions.
+/// <summary>
+/// Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+/// Make sure to read the documentation in the <a href="guide/fake-core-semverinfo.html">SemVerInfo</a>
+/// record as well if you manually create versions.
+/// </summary>
 [<RequireQualifiedAccess>]
 module SemVer =
     open System.Numerics
     open SemVerActivePattern
   
+    /// <summary>
     /// Returns true if input appears to be a parsable semver string
+    /// </summary>
+    ///
+    /// <param name="version">The string version to check</param>
     let isValid version =
         match version with
         | SemVer [ValidVersion major; ValidVersion minor; ValidVersion patch; pre; build] ->
@@ -244,19 +262,25 @@ module SemVer =
         | _ ->
             false
 
+    /// <summary>
     /// Matches if str is convertible to Int and not less than zero, and returns the value as UInt.
+    /// </summary>
     let inline private (|Int|_|) (str: string) =
         match Int32.TryParse (str, NumberStyles.Integer, null) with
         | true, num when num > -1 -> Some num
         | _ -> None
         
+    /// <summary>
     /// Matches if str is convertible to big int and not less than zero, and returns the bigint value.
+    /// </summary>
     let inline private (|Big|_|) (str: string) =
         match BigInteger.TryParse (str, NumberStyles.Integer, null) with
         | true, big when big > -1I -> Some big
         | _ -> None
 
+    /// <summary>
     /// Splits the given version string by possible delimiters but keeps them as parts of resulting list.
+    /// </summary>
     let private expand delimiter (text : string) =
         let sb = Text.StringBuilder()
         let res = seq {
@@ -276,15 +300,20 @@ module SemVer =
         
     let private validContent = Regex(@"(?in)^[a-z0-9-]+(\.[a-z0-9-]+)*")
 
+    /// <summary>
     /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
-    /// according to the rules described in the [SemVer docs](http://semver.org/).
+    /// according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.
+    /// </summary>
     ///
-    /// ## Sample
-    ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
-    ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
-    ///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
-    ///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // false
-    ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
+    /// <example>
+    /// <code lang="fsharp">
+    /// parse "1.0.0-rc.1"     &lt; parse "1.0.0"          // true
+    /// parse "1.2.3-alpha"    &gt; parse "1.2.2"          // true
+    /// parse "1.2.3-alpha2"   &gt; parse "1.2.3-alpha"    // true
+    /// parse "1.2.3-alpha002" &gt; parse "1.2.3-alpha1"   // false
+    /// parse "1.5.0-beta.2"   &gt; parse "1.5.0-rc.1"     // false
+    /// </code>
+    /// </example>
     let parse (version : string) = 
         try
             // sanity check to make sure that all of the integers in the string are positive.

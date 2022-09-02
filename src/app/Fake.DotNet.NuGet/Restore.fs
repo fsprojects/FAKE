@@ -1,8 +1,12 @@
 namespace Fake.DotNet.NuGet
 
-/// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org)
-/// using the [nuget.exe restore command](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-restore).
-/// There is also a tutorial about [nuget package restore](/dotnet-nuget.html) available.
+/// <summary>
+/// Contains tasks which allow to restore NuGet packages from a NuGet package feed like
+/// <a href="http://www.nuget.org">nuget.org</a> using the
+/// <a href="https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-restore">
+/// nuget.exe restore command</a>. There is also a tutorial about
+/// <a href="/dotnet-nuget.html">nuget package restore</a> available.
+/// </summary>
 module Restore =
 
     open Fake.IO
@@ -11,14 +15,25 @@ module Restore =
     open Fake.Core
     open System
 
+    /// <summary>
     /// Looks for NuGet.exe in
-    /// 1. the specified defaultPath,
-    /// 2. a list of standard tool folders,
-    /// 3. any subfolder in the current directory,
-    /// 4. the PATH - returns the first path where NuGet.exe was found.
-    ///
-    /// ## Parameters
-    ///  - `defaultPath` - The default path to return when NuGet cannot be found by path specified above
+    /// <list type="number">
+    /// <item>
+    /// the specified defaultPath
+    /// </item>
+    /// <item>
+    /// a list of standard tool folders
+    /// </item>
+    /// <item>
+    /// any subfolder in the current directory
+    /// </item>
+    /// <item>
+    /// the PATH - returns the first path where NuGet.exe was found.
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// 
+    /// <param name="defaultPath">The default path to return when NuGet cannot be found by path specified above</param>
     let findNuget defaultPath =
         try
             let priorityList =
@@ -78,7 +93,9 @@ module Restore =
         /// Verbose/detailed verbosity level
         | Detailed
 
+    /// <summary>
     /// RestorePackages parameter path
+    /// </summary>
     type RestorePackageParams =
         {
             /// The path to the NuGet program
@@ -109,7 +126,9 @@ module Restore =
           OutputPath = "./packages"
           Verbosity = Normal }
 
+    /// <summary>
     /// RestorePackages parameter path for single packages
+    /// </summary>
     type RestoreSinglePackageParams =
         {
             /// The path to the NuGet program
@@ -127,7 +146,7 @@ module Restore =
             /// The version to use in restoring the package
             Version: Version option
             
-            /// Mark a version to be excluded, the version is specified in `Version` property 
+            /// Mark a version to be excluded, the version is specified in <c>Version</c> property 
             ExcludeVersion: bool
             
             /// Specifies how often nuget should try to restore the packages - default is 5
@@ -199,11 +218,12 @@ module Restore =
         | false, true, _ -> args + " \"-PreRelease\""
         | true, true, _ -> args + " \"-ExcludeVersion\" \"-PreRelease\""
 
+    /// <summary>
     /// Restores the given package from NuGet
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `packageFile` - The package Id to restore
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="packageFile">The package Id to restore</param>
     let RestorePackageId setParams packageId =
         use __ = Trace.traceTask "RestorePackageId" packageId
         let parameters = RestoreSinglePackageDefaults |> setParams
@@ -215,14 +235,16 @@ module Restore =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Restores the packages in the given packages.config file from NuGet.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `packageFile` - The packages.config file name.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="packageFile">The packages.config file name.</param>
     ///
-    /// ## Sample
-    ///     Target "RestorePackages" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "RestorePackages" (fun _ ->
     ///          "./src/ProjectA/packages.config"
     ///          |> RestorePackage (fun p ->
     ///              { p with
@@ -230,6 +252,8 @@ module Restore =
     ///                  OutputPath = outputDir
     ///                  Retries = 4 })
     ///      )
+    /// </code>
+    /// </example>
     let RestorePackage setParams packageFile =
         use __ = Trace.traceTask "RestorePackage" packageFile
         let (parameters: RestorePackageParams) = RestorePackageDefaults |> setParams
@@ -248,19 +272,23 @@ module Restore =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Restores all packages from NuGet to the default directories by scanning for packages.config files
     /// in any subdirectory.
+    /// </summary>
     let RestorePackages () =
         !! "./**/packages.config" |> Seq.iter (RestorePackage id)
 
+    /// <summary>
     /// Restores the packages in the given solution file file from NuGet.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-    ///  - `solutionFile` - The microsoft sln file name.
+    /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
+    /// <param name="solutionFile">The microsoft sln file name.</param>
     ///
-    /// ## Sample
-    ///     Target "RestorePackages" (fun _ ->
+    /// <example>
+    /// <code lang="fsharp">
+    /// Target "RestorePackages" (fun _ ->
     ///          "./src/Everything.sln"
     ///          |> RestoreMSSolutionPackages (fun p ->
     ///              { p with
@@ -268,6 +296,8 @@ module Restore =
     ///                  OutputPath = outputDir
     ///                  Retries = 4 })
     ///      )
+    /// </code>
+    /// </example>
     let RestoreMSSolutionPackages setParams solutionFile =
         use __ = Trace.traceTask "RestoreSolutionPackages" solutionFile
         let (parameters: RestorePackageParams) = RestorePackageDefaults |> setParams

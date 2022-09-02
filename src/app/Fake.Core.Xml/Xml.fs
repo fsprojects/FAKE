@@ -2,7 +2,9 @@ namespace Fake.Core
 
 open System.Text
 
+/// <summary>
 /// Contains functions to read and write XML files.
+/// </summary>
 module Xml =
 
     open Fake.Core
@@ -13,14 +15,15 @@ module Xml =
     open System.Xml.XPath
     open System.Xml.Xsl
 
+    /// <summary>
     /// Reads a value from a XML document using a XPath
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `failOnError` - Flag to fail the operation when an error happens
-    ///  - `xmlFileName` - The XML file name
-    ///  - `nameSpace` - The XML name specification
-    ///  - `prefix` - The XML name specification prefix
-    ///  - `xPath` - X Path expression
+    /// <param name="failOnError">Flag to fail the operation when an error happens</param>
+    /// <param name="xmlFileName">The XML file name</param>
+    /// <param name="nameSpace">The XML name specification</param>
+    /// <param name="prefix">The XML name specification prefix</param>
+    /// <param name="xPath">X Path expression</param>
     let read failOnError (xmlFileName: string) nameSpace prefix xPath =
         try
             let document = XPathDocument(xmlFileName)
@@ -52,15 +55,16 @@ module Xml =
             else
                 Seq.empty
 
+    /// <summary>
     /// Reads a value from a XML document using a XPath
     /// Returns if the value is an int and the value
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `failOnError` - Flag to fail the operation when an error happens
-    ///  - `xmlFileName` - The XML file name
-    ///  - `nameSpace` - The XML name specification
-    ///  - `prefix` - The XML name specification prefix
-    ///  - `xPath` - X Path expression
+    /// <param name="failOnError">Flag to fail the operation when an error happens</param>
+    /// <param name="xmlFileName">The XML file name</param>
+    /// <param name="nameSpace">The XML name specification</param>
+    /// <param name="prefix">The XML name specification prefix</param>
+    /// <param name="xPath">X Path expression</param>
     let read_Int failOnError xmlFileName nameSpace prefix xPath =
         let headOrDefault def seq =
             if Seq.isEmpty seq then def else Seq.head seq
@@ -73,108 +77,120 @@ module Xml =
             else
                 headOrDefault (false, 0) seq)
 
+    /// <summary>
     /// Creates a XmlWriter which writes to the given file name
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The XML file name
+    /// <param name="fileName">The XML file name</param>
     let getWriter (fileName: string) =
         let writer = XmlWriter.Create(File.OpenWrite(fileName), null)
         writer.WriteStartDocument()
         writer
 
+    /// <summary>
     /// Writes an XML comment to the given XmlTextWriter
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `comment` - The comment to write
-    ///  - `writer` - The XML writer to use
+    /// <param name="comment">The comment to write</param>
+    /// <param name="writer">The XML writer to use</param>
     let writeComment comment (writer: XmlWriter) =
         writer.WriteComment comment
         writer
 
+    /// <summary>
     /// Writes an XML start element to the given XmlTextWriter
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The element name to start
-    ///  - `writer` - The XML writer to use
+    /// <param name="name">The element name to start</param>
+    /// <param name="writer">The XML writer to use</param>
     let startElement name (writer: XmlWriter) =
         writer.WriteStartElement name
         writer
 
+    /// <summary>
     /// Writes an XML end element to the given XmlTextWriter
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `writer` - The XML writer to use
+    /// <param name="writer">The XML writer to use</param>
     let endElement (writer: XmlWriter) =
         writer.WriteEndElement()
         writer
 
+    /// <summary>
     /// Writes an XML attribute to current element of the given XmlTextWriter
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The attribute name
-    ///  - `value` - The attribute value
-    ///  - `writer` - The XML writer to use
+    /// <param name="name">The attribute name</param>
+    /// <param name="value">The attribute value</param>
+    /// <param name="writer">The XML writer to use</param>
     let writeAttribute name value (writer: XmlWriter) =
         writer.WriteAttributeString(name, value.ToString())
         writer
 
+    /// <summary>
     /// Writes an CData element to the given XmlTextWriter
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `elementName` - The element name
-    ///  - `data` - The CData to write
-    ///  - `writer` - The XML writer to use
+    /// <param name="elementName">The element name</param>
+    /// <param name="data">The CData to write</param>
+    /// <param name="writer">The XML writer to use</param>
     let writeCDataElement elementName data (writer: XmlWriter) =
         startElement elementName writer |> ignore
         writer.WriteCData data
         endElement writer
 
+    /// <summary>
     /// Gets the attribute with the given name from the given XmlNode
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The attribute name to get
-    ///  - `node` - The XML node to get attribute on
+    /// <param name="name">The attribute name to get</param>
+    /// <param name="node">The XML node to get attribute on</param>
     let getAttribute (name: string) (node: #XmlNode) =
         let attribute = node.Attributes[name]
         if not (isNull attribute) then attribute.Value else null
 
+    /// <summary>
     /// Gets a sequence of all sub nodes for the given XmlNode
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `node` - The XML node to get sub nodes for
+    /// <param name="node">The XML node to get sub nodes for</param>
     let getSubNodes (node: #XmlNode) = seq { for x in node.ChildNodes -> x }
 
+    /// <summary>
     /// Gets the first sub node with the given name from the given XmlNode
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The sub node name
-    ///  - `node` - The XML node to get sub node for
+    /// <param name="name">The sub node name</param>
+    /// <param name="node">The XML node to get sub node for</param>
     let getSubNode name node =
         getSubNodes node |> Seq.filter (fun x -> x.Name = name) |> Seq.head
 
+    /// <summary>
     /// Parses a XmlNode
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The node name
-    ///  - `f` - The parser function to use
-    ///  - `node` - The XML node to parse
+    /// <param name="name">The node name</param>
+    /// <param name="f">The parser function to use</param>
+    /// <param name="node">The XML node to parse</param>
     let parse name f (node: #XmlNode) =
         if node.Name = name then
             f node
         else
             failwithf "Could not parse %s - Node was %s" name node.Name
 
+    /// <summary>
     /// Parses a XML sub node
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The sub node name
-    ///  - `f` - The parser function to use
+    /// <param name="name">The sub node name</param>
+    /// <param name="f">The parser function to use</param>
     let parseSubNode name f = getSubNode name >> parse name f
 
+    /// <summary>
     /// Loads the given text into a XmlDocument
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `text` - The XML text
+    /// <param name="text">The XML text</param>
     let createDoc text =
         if String.isNullOrEmpty text then
             null
@@ -183,18 +199,20 @@ module Xml =
             xmlDocument.LoadXml text
             xmlDocument
 
+    /// <summary>
     /// Gets the DocumentElement of the XmlDocument
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `doc` - The XmlDocument object
+    /// <param name="doc">The XmlDocument object</param>
     let getDocElement (doc: XmlDocument) = doc.DocumentElement
 
+    /// <summary>
     /// Replaces text in the XML document specified by a XPath expression.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `value` - The new value
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="value">The new value</param>
+    /// <param name="doc">The XML document to search on</param>
     let replaceXPath xpath value (doc: XmlDocument) =
         let node = doc.SelectSingleNode xpath
 
@@ -204,12 +222,13 @@ module Xml =
             node.Value <- value
             doc
 
+    /// <summary>
     /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `innerTextValue` - The new value
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="innerTextValue">The new value</param>
+    /// <param name="doc">The XML document to search on</param>
     let replaceXPathInnerText xpath innerTextValue (doc: XmlDocument) =
         let node = doc.SelectSingleNode xpath
 
@@ -219,13 +238,14 @@ module Xml =
             node.InnerText <- innerTextValue
             doc
 
+    /// <summary>
     /// Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `attribute` - The attribute name
-    ///  - `innerTextValue` - The new attribute value
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="attribute">The attribute name</param>
+    /// <param name="innerTextValue">The new attribute value</param>
+    /// <param name="doc">The XML document to search on</param>
     let replaceXPathAttribute xpath (attribute: string) value (doc: XmlDocument) =
         let node = doc.SelectSingleNode xpath
 
@@ -240,12 +260,13 @@ module Xml =
                 attributeValue.Value <- value
                 doc
 
+    /// <summary>
     /// Selects a xml node value via XPath from the given document
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `namespaces` - The namespaces list
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="doc">The XML document to search on</param>
     let selectXPathValue xpath (namespaces: #seq<string * string>) (doc: XmlDocument) =
         let nsmgr = XmlNamespaceManager(doc.NameTable)
         namespaces |> Seq.iter nsmgr.AddNamespace
@@ -256,13 +277,14 @@ module Xml =
         else
             node.InnerText
 
+    /// <summary>
     /// Selects a xml node attribute value via XPath from the given document
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `attribute` - The attribute name
-    ///  - `namespaces` - The namespaces list
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="attribute">The attribute name</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="doc">The XML document to search on</param>
     let selectXPathAttributeValue xpath (attribute: string) (namespaces: #seq<string * string>) (doc: XmlDocument) =
         let nsmgr = XmlNamespaceManager(doc.NameTable)
         namespaces |> Seq.iter nsmgr.AddNamespace
@@ -278,12 +300,13 @@ module Xml =
             else
                 attributeValue.Value
 
+    /// <summary>
     /// Selects a xml node via XPath from the given document
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression to use to select node
-    ///  - `namespaces` - The namespaces list
-    ///  - `doc` - The XML document to search on
+    /// <param name="xpath">The XPath expression to use to select node</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="doc">The XML document to search on</param>
     let selectXPathNode xpath (namespaces: #seq<string * string>) (doc: XmlDocument) =
         let nsmgr = XmlNamespaceManager(doc.NameTable)
         namespaces |> Seq.iter nsmgr.AddNamespace
@@ -298,11 +321,12 @@ module Xml =
         use fs = File.OpenRead(fileName)
         doc.Load fs
 
+    /// <summary>
     /// Save the given XmlDocument to file path
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The output file name
-    ///  - `doc` - The XML document to save
+    /// <param name="fileName">The output file name</param>
+    /// <param name="doc">The XML document to save</param>
     let saveDoc (fileName: string) (doc: XmlDocument) =
         // https://stackoverflow.com/questions/284394/net-xmldocument-why-doctype-changes-after-save
         // https://stackoverflow.com/a/16451790
@@ -321,10 +345,11 @@ module Xml =
         use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
         doc.Save fs
 
+    /// <summary>
     /// Loads the given file path into a XmlDocument
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `path` - The file path to load an XmlDocument from
+    /// <param name="path">The file path to load an XmlDocument from</param>
     let loadDoc (path: string) =
         if String.isNullOrEmpty path then
             null
@@ -333,36 +358,39 @@ module Xml =
             load path xmlDocument
             xmlDocument
 
+    /// <summary>
     /// Replaces text in a XML file at the location specified by a XPath expression.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The file name to use
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `value` - The new value
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="value">The new value</param>
     let poke (fileName: string) xpath value =
         let doc = XmlDocument()
         load fileName doc
         replaceXPath xpath value doc |> saveDoc fileName
 
+    /// <summary>
     /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The file name to use
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `innerTextValue` - The new value
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="innerTextValue">The new value</param>
     let pokeInnerText (fileName: string) xpath innerTextValue =
         let doc = XmlDocument()
         load fileName doc
         replaceXPathInnerText xpath innerTextValue doc |> saveDoc fileName
 
+    /// <summary>
     /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `value` - The new value
-    ///  - `fileName` - The file name to use
-    ///  - `namespaces` - The namespaces list
-    ///  - `doc` - The XmlDocument object
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="value">The new value</param>
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="doc">The XmlDocument object</param>
     let replaceXPathNS xpath value (namespaces: #seq<string * string>) (doc: XmlDocument) =
         let nsmgr = XmlNamespaceManager(doc.NameTable)
         namespaces |> Seq.iter nsmgr.AddNamespace
@@ -374,14 +402,15 @@ module Xml =
             node.Value <- value
             doc
 
+    /// <summary>
     /// Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `innerTextValue` - The new value
-    ///  - `fileName` - The file name to use
-    ///  - `namespaces` - The namespaces list
-    ///  - `doc` - The XmlDocument object
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="innerTextValue">The new value</param>
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="doc">The XmlDocument object</param>
     let replaceXPathInnerTextNS xpath innerTextValue (namespaces: #seq<string * string>) (doc: XmlDocument) =
         let nsmgr = XmlNamespaceManager(doc.NameTable)
         namespaces |> Seq.iter nsmgr.AddNamespace
@@ -393,34 +422,38 @@ module Xml =
             node.InnerText <- innerTextValue
             doc
 
+    /// <summary>
     /// Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The file name to use
-    ///  - `namespaces` - The namespaces list
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `value` - The new value
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="value">The new value</param>
     let pokeNS (fileName: string) namespaces xpath value =
         let doc = XmlDocument()
         load fileName doc
         replaceXPathNS xpath value namespaces doc |> saveDoc fileName
 
-    /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
+    /// <summary>
+    /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression,
+    /// with support for namespaces.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - The file name to use
-    ///  - `namespaces` - The namespaces list
-    ///  - `xpath` - The XPath expression used to select text
-    ///  - `innerTextValue` - The new value
+    /// <param name="fileName">The file name to use</param>
+    /// <param name="namespaces">The namespaces list</param>
+    /// <param name="xpath">The XPath expression used to select text</param>
+    /// <param name="innerTextValue">The new value</param>
     let pokeInnerTextNS (fileName: string) namespaces xpath innerTextValue =
         let doc = XmlDocument()
         load fileName doc
         replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> saveDoc fileName
 
+    /// <summary>
     /// Loads the given text into a XslCompiledTransform.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `text` - The text to use
+    /// <param name="text">The text to use</param>
     let XslTransformer text =
         if String.isNullOrEmpty text then
             null
@@ -429,11 +462,12 @@ module Xml =
             createDoc text |> xslCompiledTransform.Load
             xslCompiledTransform
 
+    /// <summary>
     /// Transforms a XmlDocument using a XslCompiledTransform.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `xsl` - The XslCompiledTransform which should be applied.
-    ///  - `doc` - The XmlDocument to transform.
+    /// <param name="xsl">The XslCompiledTransform which should be applied.</param>
+    /// <param name="doc">The XmlDocument to transform.</param>
     let XslTransform (xsl: XslCompiledTransform) (doc: XmlDocument) =
         use memoryStream = new MemoryStream()
         use textWriter = XmlWriter.Create(memoryStream) // , new UTF8Encoding(false)
@@ -445,11 +479,12 @@ module Xml =
         memoryStream.ToArray() |> encoding.GetString |> outputDoc.LoadXml
         outputDoc
 
+    /// <summary>
     /// Transforms a XML file using a XSL stylesheet file.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `stylesheetUri` - The Uri for the XSL stylesheet file.
-    ///  - `fileName` - The XML file to transform.
+    /// <param name="stylesheetUri">The Uri for the XSL stylesheet file.</param>
+    /// <param name="fileName">The XML file to transform.</param>
     let XmlTransform (stylesheetUri: string) (fileName: string) =
         let doc = XmlDocument()
         doc.Load fileName

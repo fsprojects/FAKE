@@ -3,6 +3,12 @@
 open System
 open System.Collections.Generic
 
+/// <namespacedoc>
+/// <summary>
+/// Command Line Parsing namespace contains tasks to help in parsing FAKE runner command line arguments and script
+/// arguments
+/// </summary>
+/// </namespacedoc>
 [<RequireQualifiedAccess>]
 type Tag =
   | Eps = 0b00000000

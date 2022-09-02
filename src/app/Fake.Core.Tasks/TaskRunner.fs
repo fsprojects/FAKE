@@ -2,16 +2,19 @@ namespace Fake.Core
 
 open Fake.Core
 
+/// <summary>
 /// Contains a helper which can be used to implement timeouts and retries.
+/// </summary>
 module TaskRunner =
 
+    /// <summary>
     /// Waits until the given function returns true or the timeout is reached.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `f` - This function will be started.
-    ///  - `timeout` - A System.TimeSpan representing the timeout.
-    ///  - `testMS` - An interval at which FAKE checks if the function has succeeded.
-    ///  - `timeoutF` - This function will be run if the timeout has been reached.
+    /// <param name="f">This function will be started.</param>
+    /// <param name="timeout">A System.TimeSpan representing the timeout.</param>
+    /// <param name="testMS">An interval at which FAKE checks if the function has succeeded.</param>
+    /// <param name="timeoutF">This function will be run if the timeout has been reached.</param>
     let waitFor f timeout (testMS: int) timeoutF =
         let watch = System.Diagnostics.Stopwatch()
         watch.Start()
@@ -24,11 +27,12 @@ module TaskRunner =
 
         watch.Elapsed
 
+    /// <summary>
     /// Retries the given function until a retry limit is reached or the function succeeds without exception.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `f` - This function will be started.
-    ///  - `retries` - A retry limit.
+    /// <param name="f">This function will be started.</param>
+    /// <param name="retries">A retry limit.</param>
     let rec runWithRetries f retries =
         if retries <= 0 then
             f ()

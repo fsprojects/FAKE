@@ -5,8 +5,10 @@
 open System
 open System.Threading
 
+/// <summary>
 /// Helper that can be used for writing CPS-style code that resumes
 /// on the same thread where the operation was started.
+/// </summary>
 let private synchronize f = 
     let ctx = SynchronizationContext.Current
     f (fun g -> 

@@ -1,7 +1,9 @@
 namespace Fake.DotNet.NuGet
 
+/// <summary>
 /// Contains tasks for updating NuGet packages including assembly hint paths in the project files using
-/// the [nuget.exe update command](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-update).
+/// the <a href="https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-update">nuget.exe update command</a>.
+/// </summary>
 module Update =
 
     open Fake.IO
@@ -11,7 +13,9 @@ module Update =
     open System
     open Fake.DotNet.NuGet.Restore
 
+    /// <summary>
     /// Nuget update parameters.
+    /// </summary>
     [<CLIMutable>]
     type NugetUpdateParams =
         {
@@ -30,26 +34,26 @@ module Update =
             /// Packages to update. Update all if empty.
             Ids: string list
             
-            /// Version to update to. Default `None`. Used to upgrade/downgrade to a explicit version of a package.
+            /// Version to update to. Default <c>None</c>. Used to upgrade/downgrade to a explicit version of a package.
             Version: string option
             
-            /// Folder to store packages in. Default `./packages`.
+            /// Folder to store packages in. Default <c>./packages</c>.
             RepositoryPath: string
             
             /// Looks for updates with the highest version available within the same major and minor version as
-            /// the installed package. Default `false`.
+            /// the installed package. Default <c>false</c>.
             Safe: bool
             
-            /// Show verbose output while updating. Default `false`.
+            /// Show verbose output while updating. Default <c>false</c>.
             Verbose: bool
             
-            /// Allows updating to prerelease versions. Default `false`.
+            /// Allows updating to prerelease versions. Default <c>false</c>.
             Prerelease: bool
             
-            /// Do not prompt for user input or confirmations. Default `true`.
+            /// Do not prompt for user input or confirmations. Default <c>true</c>.
             NonInteractive: bool
             
-            /// NuGet configuration file. Default `None`.
+            /// NuGet configuration file. Default <c>None</c>.
             ConfigFile: string option
         }
 
@@ -82,14 +86,17 @@ module Update =
         |> Seq.filter (not << String.IsNullOrEmpty)
         |> String.concat " "
 
+    /// <summary>
     /// Update packages specified in the package file.
-    ///
-    /// Fails if packages are not installed; see [nuget bug](https://nuget.codeplex.com/workitem/3874).
-    /// Fails if packages file has no corresponding VS project; see [nuget bug](https://nuget.codeplex.com/workitem/3875).
+    /// </summary>
+    /// <remarks>
+    /// Fails if packages are not installed; see <a href="https://nuget.codeplex.com/workitem/3874">nuget bug</a>.
+    /// Fails if packages file has no corresponding VS project; see
+    /// <a href="https://nuget.codeplex.com/workitem/3875">nuget bug</a>.
+    /// </remarks>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default parameters.
-    ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file.
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
+    /// <param name="packagesFile">Path to the <c>*.sln</c>, <c>*.*proj</c> or <c>packages.config</c> file.</param>
     let NugetUpdate setParams packagesFile =
         use __ = Trace.traceTask "NugetUpdate" packagesFile
         let param = NugetUpdateDefaults |> setParams

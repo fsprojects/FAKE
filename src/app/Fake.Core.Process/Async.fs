@@ -101,12 +101,16 @@ module internal AsyncExtensions =
                 task.ContinueWith(Action<Task>(continuation)) |> ignore)
 
     type Microsoft.FSharp.Control.AsyncBuilder with
-      /// An extension method that overloads the standard 'Bind' of the 'async' builder. The new overload awaits on
-      /// a standard .NET task
+      /// <summary>
+      /// An extension method that overloads the standard <c>Bind</c> of the <c>async</c> builder. 
+      /// The new overload awaits on a standard .NET task
+      /// </summary>
       member x.Bind(t : Task<'T>, f:'T -> Async<'R>) : Async<'R> =
         async.Bind(Async.AwaitTaskWithoutAggregate t, f)
 
-      /// An extension method that overloads the standard 'Bind' of the 'async' builder. The new overload awaits on
-      /// a standard .NET task which does not commpute a value
+      /// <summary>
+      /// An extension method that overloads the standard <c>Bind</c> of the <c>async</c> builder. 
+      /// The new overload awaits on a standard .NET task which does not commpute a value
+      /// </summary>
       member x.Bind(t : Task, f : unit -> Async<'R>) : Async<'R> =
         async.Bind(Async.AwaitTaskWithoutAggregate t, f)

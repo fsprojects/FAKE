@@ -5,6 +5,7 @@
     <AssemblyName>Fake.Core.String</AssemblyName>
     <OutputType>Library</OutputType>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="String.fs" />

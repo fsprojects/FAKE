@@ -3,12 +3,15 @@ namespace Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
+/// <summary>
 /// Contains functions which can be used to start other tools.
+/// </summary>
 [<RequireQualifiedAccess>]
 module ProcessUtils =
 
+    /// <summary>
     /// Searches the given directories for all occurrences of the given file name
-    /// [omit]
+    /// </summary>
     let private findFilesInternal dirs file =
         let files =
             dirs
@@ -31,7 +34,13 @@ module ProcessUtils =
             |> Seq.cache
         files
 
-    /// Searches the given directories for all occurrences of the given file name, on windows PATHEXT is considered (and preferred when searching)
+    /// <summary>
+    /// Searches the given directories for all occurrences of the given file name, on windows PATHEXT is considered
+    /// (and preferred when searching)
+    /// </summary>
+    ///
+    /// <param name="dirs">The directories list</param>
+    /// <param name="tool">The file name (tool) to search for</param>
     let findFiles dirs tool =
         // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
         if Environment.isWindows then
@@ -49,13 +58,23 @@ module ProcessUtils =
             |> Seq.collect (fun postFix -> findFilesInternal dirs (tool + postFix))
             |> fun findings -> Seq.append (findFilesInternal dirs tool) findings
 
+    /// <summary>
     /// Searches the given directories for all occurrences of the given file name. Considers PATHEXT on Windows.
+    /// </summary>
+    ///
+    /// <param name="dirs">The directories list</param>
+    /// <param name="tool">The file name (tool) to search for</param>
     let tryFindFile dirs tool =
         let files = findFiles dirs tool
         if not (Seq.isEmpty files) then Some(Seq.head files)
         else None
 
+    /// <summary>
     /// Searches the given directories for the given file, failing if not found. Considers PATHEXT on Windows.
+    /// </summary>
+    ///
+    /// <param name="dirs">The directories list</param>
+    /// <param name="tool">The file name (tool) to search for</param>
     let findFile dirs tool =
         match tryFindFile dirs tool with
         | Some found -> found
@@ -66,39 +85,63 @@ module ProcessUtils =
         |> Seq.filter Path.isValidPath
         |> Seq.append [ "." ]
 
-    /// Searches the current directory and in PATH for the given file and returns the result ordered by precedence. Considers PATHEXT on Windows.
+    /// <summary>
+    /// Searches the current directory and in PATH for the given file and returns the result ordered by precedence.
+    /// Considers PATHEXT on Windows.
+    /// </summary>
+    ///
+    /// <param name="tool">The file name (tool) to search for</param>
     let findFilesOnPath (tool : string) : string seq =
         getCurrentAndPathDirs()
         |> fun dirs -> findFiles dirs tool
 
+    /// <summary>
     /// Searches the current directory and the directories within the PATH
     /// environment variable for the given file. If successful returns the full
     /// path to the file. Considers PATHEXT on Windows.
-    /// ## Parameters
-    ///  - `file` - The file to locate
+    /// </summary>
+    ///
+    /// <param name="file">The file to search for</param>
     let tryFindFileOnPath (tool : string) : string option =
         findFilesOnPath tool |> Seq.tryHead
 
-    /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.  Considers PATHEXT on Windows.
+    /// <summary>
+    /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.
+    /// Considers PATHEXT on Windows.
+    /// </summary>
+    ///
+    /// <param name="envVar">The environment variable name</param>
+    /// <param name="tool">The file name (tool) to search for</param>
     let tryFindTool envVar tool =
         match Environment.environVarOrNone envVar with
         | Some path -> Some path
         | None -> tryFindFileOnPath tool
 
-    /// Tries to find the tool via given directories. If no path has the right tool we are trying the current directory and the PATH system variable. Considers PATHEXT on Windows.
+    /// <summary>
+    /// Tries to find the tool via given directories. If no path has the right tool we are trying the current
+    /// directory and the PATH system variable. Considers PATHEXT on Windows.
+    /// </summary>
+    ///
+    /// <param name="additionalDirs">The list of directories to consider in search</param>
+    /// <param name="tool">The file name (tool) to search for</param>
     let tryFindPath additionalDirs tool =
         Seq.append additionalDirs (getCurrentAndPathDirs())
         |> fun dirs -> findFiles dirs tool
         |> Seq.tryHead
 
-    /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable. Considers PATHEXT on Windows.
+    /// <summary>
+    /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.
+    /// Considers PATHEXT on Windows.
+    /// </summary>
     /// [omit]
     let findPath fallbackValue tool =
         match tryFindPath fallbackValue tool with
         | Some file -> file
         | None -> tool
 
+    /// <summary>
     /// Walks directories via breadth first search (BFS)
+    /// </summary>
     let private walkDirectories dirs =
         let rec enumerateDirs dirs =
             let subDirs =
@@ -130,8 +173,14 @@ module ProcessUtils =
             yield! enumerateDirs dirs
         }
 
+    /// <summary>
     /// Find a local tool in the given envar the given directories, the current directory or PATH (in this order)
-    /// Recommended usage `tryFindLocalTool "TOOL" "tool" [ "." ]`
+    /// Recommended usage <c>tryFindLocalTool "TOOL" "tool" [ "." ]</c>
+    /// </summary>
+    ///
+    /// <param name="envVar">The environment variable name</param>
+    /// <param name="tool">The file name (tool) to search for</param>
+    /// <param name="recursiveDirs">The list of directories to use</param>
     let tryFindLocalTool envVar tool recursiveDirs =
         let envDir =
             match Environment.environVarOrNone envVar with
@@ -145,7 +194,14 @@ module ProcessUtils =
         findFiles dirs tool
         |> Seq.tryHead
 
-    /// Like tryFindLocalTool but returns the `tool` string if nothing is found (will probably error later, but this function is OK to be used for fake default values.
+    /// <summary>
+    /// Like <c>tryFindLocalTool</c> but returns the <c>tool</c> string if nothing is found (will probably error
+    /// later, but this function is OK to be used for fake default values.
+    /// </summary>
+    ///
+    /// <param name="envVar">The environment variable name</param>
+    /// <param name="tool">The file name (tool) to search for</param>
+    /// <param name="recursiveDirs">The list of directories to use</param>
     let findLocalTool envVar tool recursiveDirs =
         match tryFindLocalTool envVar tool recursiveDirs with
         | Some p -> p

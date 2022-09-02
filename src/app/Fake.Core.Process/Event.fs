@@ -1,7 +1,9 @@
 namespace Fake.Core.ProcessHelpers
 
 module internal Event =
+    /// <summary>
     /// Executes f just after adding the event-handler
+    /// </summary>
     let guard f (e:IEvent<'Del, 'Args>) = 
         let e = Event.map id e
         { new IEvent<'Args> with 

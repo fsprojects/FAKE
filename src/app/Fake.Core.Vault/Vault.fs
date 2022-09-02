@@ -2,8 +2,10 @@ namespace Fake.Core
 
 #nowarn "44"
 
+/// <summary>
 /// Provides a encrypted store of variables to prevent accidental leakage 
-/// Please read the [documentation](/core-vault.html)
+/// Please read the <a href="guide/core-vault.html">documentation</a>
+/// </summary>
 [<RequireQualifiedAccess>]
 module Vault =
     open System
@@ -61,36 +63,42 @@ module Vault =
         aesCtrTransform(key, iv, mem1, mem2)
         mem2.ToArray()
 
+    /// <summary>
     /// The key used to decrypt/encrypt variables
+    /// </summary>
     type KeyInfo =
         { /// The file with the key (32 byte as base64 encoded string saved in utf-8)
           KeyFile : string
           /// The IV-Bytes (16 byte as base64 encoded string)
           Iv : string }
 
-    /// decrypt a given base64 encoded string and return the utf-8 string of the result
+    /// <summary>
+    /// Decrypt a given base64 encoded string and return the utf-8 string of the result
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `key` - The file with the key
-    ///  - `base64Val` - The base64 encoded value to decrypt 
+    /// <param name="key">The file with the key</param>
+    /// <param name="base64Val">The base64 encoded value to decrypt </param>
     let decryptVariable (key:KeyInfo) (base64Val:string) =
         let keyBytes = Convert.FromBase64String(File.ReadAllText(key.KeyFile))
         let ivBytes = Convert.FromBase64String(key.Iv)
         let exampleBytes = Convert.FromBase64String(base64Val)
         System.Text.Encoding.UTF8.GetString(aesCtrTransformBytes(keyBytes, ivBytes, exampleBytes))
 
-    /// encrypt the given utf-8 string and return the base64 encoded result
+    /// <summary>
+    /// Encrypt the given utf-8 string and return the base64 encoded result
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `key` - The file with the key
-    ///  - `value` - The utf-8 value to encrypt 
+    /// <param name="key">The file with the key</param>
+    /// <param name="value">The utf-8 value to encrypt </param>
     let encryptVariable (key:KeyInfo) (value:string) =
         let keyBytes = Convert.FromBase64String(File.ReadAllText(key.KeyFile))
         let ivBytes = Convert.FromBase64String(key.Iv)
         let exampleBytes = System.Text.Encoding.UTF8.GetBytes(value)
         Convert.ToBase64String(aesCtrTransformBytes(keyBytes, ivBytes, exampleBytes))
 
+    /// <summary>
     /// The vault variable type
+    /// </summary>
     type Variable = 
         {
           /// Mark variable as being a secret or not
@@ -102,7 +110,9 @@ module Vault =
           /// The variable name
           Name : string }
 
+    /// <summary>
     /// Variable group type
+    /// </summary>
     [<Obsolete "Need to be public because of Newtonsoft.Json, don't use">]
     type Variables =
         {
@@ -115,17 +125,20 @@ module Vault =
           /// The variables info in variable group
           values : Variable[] }
 
+    /// <summary>
     /// The vault which stores the encrypts values
+    /// </summary>
     type Vault =
         internal { 
           Key : KeyInfo
           Variables : Map<string, Variable> }
 
+    /// <summary>
     /// Read a vault from the given encrypted variables
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `key` - The encryption/decryption key
-    ///  - `vars` - The vault variables
+    /// <param name="key">The encryption/decryption key</param>
+    /// <param name="vars">The vault variables</param>
     let fromEncryptedVariables key vars =
         let variables =
             vars
@@ -133,10 +146,11 @@ module Vault =
             |> Map.ofSeq
         { Key = key; Variables = variables }
 
-    /// Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)
+    /// <summary>
+    /// Create a new key with the given path to the secret file (or <c>Path.GetTempFileName()</c> otherwise)
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `file` - The secret file to use to create the key
+    /// <param name="file">The secret file to use to create the key</param>
     let createKey (file : string option) =
         let rnd = new RNGCryptoServiceProvider()
         let iv = Array.zeroCreate 16
@@ -153,18 +167,20 @@ module Vault =
     /// An empty vault without any variables
     let empty = { Key = { KeyFile = null; Iv = null }; Variables = Map.empty }
 
+    /// <summary>
     /// Read in a vault from a given json string, make sure to delete the source of the json after using this API
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `str` - The JSON string of the vault to read
+    /// <param name="str">The JSON string of the vault to read</param>
     let fromJson str =
         let vars = JsonConvert.DeserializeObject<Variables>(str)
         fromEncryptedVariables { KeyFile = vars.keyFile; Iv = vars.iv } vars.values
 
+    /// <summary>
     /// Read a vault from an environment variable.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `envVar` - The environment variable to use
+    /// <param name="envVar">The environment variable to use</param>
     let fromEnvironmentVariable envVar =
         let result = Environment.GetEnvironmentVariable(envVar)
         if String.IsNullOrEmpty result then
@@ -174,35 +190,46 @@ module Vault =
             Environment.SetEnvironmentVariable(envVar, null)
             vault
 
+    /// <summary>
     /// Read a vault from an environment variable or return None
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `envVar` - The environment variable to use
+    /// <param name="envVar">The environment variable to use</param>
     let fromEnvironmentVariableOrNone envVar =
         let vars = Environment.GetEnvironmentVariable envVar
         if String.IsNullOrEmpty vars then
             None
         else Some (fromEnvironmentVariable envVar)
 
-    /// Read a vault from `FAKE_VAULT_VARIABLES`
+    /// <summary>
+    /// Read a vault from <c>FAKE_VAULT_VARIABLES</c>
+    /// </summary>
     let fromFakeEnvironmentOrNone() =
         fromEnvironmentVariableOrNone "FAKE_VAULT_VARIABLES"
 
-    /// Read a vault from `FAKE_VAULT_VARIABLES`
+    /// <summary>
+    /// Read a vault from <c>FAKE_VAULT_VARIABLES</c>
+    /// </summary>
     let fromFakeEnvironmentVariable() =
         fromEnvironmentVariable "FAKE_VAULT_VARIABLES"
     
+    /// <summary>
     /// Retrieve the value from a given variable
+    /// </summary>
+    ///
+    /// <param name="key">The variable info</param>
+    /// <param name="v">The variable</param>
     let private fromVariable (key:KeyInfo) (v:Variable) =
         if v.Secret then
             decryptVariable key v.Value
         else v.Value       
 
-    /// try to retrieve the variable with the given name from the vault (decrypts the variable if needed)
+    /// <summary>
+    /// Try to retrieve the variable with the given name from the vault (decrypts the variable if needed)
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `name` - The variable name to retrieve
-    ///  - `v` - The vault to check
+    /// <param name="name">The variable name to retrieve</param>
+    /// <param name="v">The vault to check</param>
     let tryGet name (v:Vault) =
         v.Variables
         |> Map.tryFind name
@@ -211,13 +238,16 @@ module Vault =
     /// similar to tryGet but throws an exception if the variable with the given name is not available in the vault
     ///
     /// ## Parameters
-    ///  - `name` - The variable name to retrieve
-    ///  - `v` - The vault to check
+    /// <param name="name">The variable name to retrieve
+    /// <param name="v">The vault to check
     let get name (v:Vault) =
         match tryGet name v with
         | Some s -> s
         | None -> failwithf "Variable '%s' was not found in the vault!" name   
 
+/// Summary>
+/// An extenstion type for Vault module.
+/// </summary>
 [<AutoOpen>]
 module VaultExt =
     type Vault.Vault with

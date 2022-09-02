@@ -1,10 +1,12 @@
 namespace Fake.DotNet
 
+/// <summary>
 /// Contains a task to invoke the FxCop tool
+/// </summary>
 ///
-/// ### Sample
-///
-///        Target.create "FxCop" (fun _ ->
+/// <example>
+/// <code lang="fsharp">
+/// Target.create "FxCop" (fun _ ->
 ///            Directory.ensure "./_Reports"
 ///            let rules = [ "-Microsoft.Design#CA1011"   // maybe sometimes
 ///                          "-Microsoft.Design#CA1062" ] // null checks,  In F#!
@@ -16,7 +18,8 @@ namespace Fake.DotNet
 ///                                                      Rules = rules
 ///                                                      FailOnError = FxCop.ErrorLevel.Warning
 ///                                                      IgnoreGeneratedCode = true})
-///
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module FxCop =
 
@@ -34,7 +37,9 @@ module FxCop =
         | ToolError = 1
         | DontFailBuild = 0
 
+    /// <summary>
     /// Parameter type for the FxCop tool
+    /// </summary>
     [<NoComparison>]
     type Params =
         { /// Apply the XSL style sheet to the output.  Default false.
@@ -47,11 +52,12 @@ module FxCop =
           ImportFiles : string seq
           /// Directory containing rule assemblies or path to rule assembly. Enables all rules.  Default empty.
           RuleLibraries : string seq
-          /// Namespace and CheckId strings that identify a Rule. '+' enables the rule; '-' disables the rule.  Default empty.
+          /// Namespace and CheckId strings that identify a Rule. <c>+</c> enables the rule; <c>-</c> disables the rule.
+          /// Default empty.
           Rules : string seq
           /// Rule set to be used for the analysis. It can be a file path to the rule set
-          /// file or the file name of a built-in rule set. '+' enables all rules in the
-          /// rule set; '-' disables all rules in the rule set; '=' sets rules to match the
+          /// file or the file name of a built-in rule set. <c>+</c> enables all rules in the
+          /// rule set; <c>-</c> disables all rules in the rule set; <c>=</c> sets rules to match the
           /// rule set and disables all rules that are not enabled in the rule set.
           /// Default empty.
           CustomRuleset : string
@@ -59,9 +65,10 @@ module FxCop =
           IgnoreGeneratedCode : bool
           /// Apply specified XSL to console output.  Default empty.
           ConsoleXslFileName : string
-          /// FxCop project or XML report output file.  Default "FXCopResults.html" in the current working directory
+          /// FxCop project or XML report output file.  Default <c>FXCopResults.html</c> in the current working directory
           ReportFileName : string
-          /// Reference the specified XSL in the XML report file or "none" to generate an XML report with no XSL style sheet.
+          /// Reference the specified XSL in the XML report file or <c>none</c> to generate an XML report with no XSL
+          /// style sheet.
           /// Default empty.
           OutputXslFileName : string
           /// Location of platform assemblies.  Default empty.
@@ -82,8 +89,9 @@ module FxCop =
           Verbose : bool
           /// The error level that will cause a build failure.  Default ontFailBuild.
           FailOnError : ErrorLevel
-          /// Path to the FxCop executable.  Default = %VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe
-          /// where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from the registry
+          /// Path to the FxCop executable.  Default =
+          /// <c>%VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe</c>
+          /// where <c>%VSINSTALLDIR%</c> is a Visual Stdio 2017 installation location derived from the registry
           ToolPath : string
           /// Write output XML and project files even in the case where no violations
           /// occurred.  Default false.
@@ -137,8 +145,9 @@ module FxCop =
     // Unit test mocking point
     let mutable internal XmlReadInt = XmlReadIntBase
 
+    /// <summary>
     /// This checks the result file with some XML queries for errors
-    /// [omit]
+    /// </summary>
     let internal checkForErrors resultFile =
         // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
         let getErrorValue s =
@@ -220,7 +229,12 @@ module FxCop =
         let args = createArgs param assemblies
         createProcess param args
 
+    /// <summary>
     /// Run FxCop on a group of assemblies.
+    /// </summary>
+    ///
+    /// <param name="param">The FxCop parameters</param>
+    /// <param name="assemblies">Sequence of assemblies to run FxCop against</param>
     let run param (assemblies : string seq) =
         if Environment.isWindows then
             use __ = Trace.traceTask "FxCop" ""

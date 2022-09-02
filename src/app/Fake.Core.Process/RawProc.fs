@@ -46,7 +46,9 @@ module EnvMap =
         create()
         |> replace l
 
+/// <summary>
 /// The type of command to execute
+/// </summary>
 type Command =
     | ShellCommand of string
     /// Windows: https://msdn.microsoft.com/en-us/library/windows/desktop/bb776391(v=vs.85).aspx
@@ -69,8 +71,10 @@ type Command =
         | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Executable for ShellCommand"
         | RawCommand (f, _) -> f
 
+/// <summary>
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
 /// Used to retrieve "pipes"
+/// </summary>
 type DataRef<'T> =
     internal { mutable value : 'T option; mutable onSet : 'T -> unit }
     static member Empty =
@@ -120,7 +124,9 @@ type internal IRawProcessHook =
     abstract member OnStart : System.Diagnostics.Process -> unit
     //abstract member Retrieve : IDisposable * System.Threading.Tasks.Task<int> -> Async<'TRes>
 
+/// <summary>
 /// A raw (untyped) way to start a process
+/// </summary>
 type internal RawCreateProcess =
     internal {
         Command : Command

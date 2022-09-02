@@ -525,10 +525,12 @@ module internal InternalStreams =
                 else async.Return ()
             fromReadWriteDispose s.Dispose s.Read write
 
+        /// <summary>
         /// Duplicates the given stream, which means returning two stream instances
         /// which will read the same data. 
         /// At the same time buffers all data (ie read from s as fast as possible).
         /// Any data written to the returned instances will be written to the given instance.
+        /// </summary>
         let duplicate (s:IStream<_>) = 
             let close1, s1 = limitedStream()
             let close2, s2 = limitedStream()

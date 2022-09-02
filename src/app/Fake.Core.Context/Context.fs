@@ -1,11 +1,18 @@
 ﻿namespace Fake.Core
 
+/// <summary>
 /// This module tracks the context of the build.
+/// <remarks>
 /// This allows us to run some modules without any context and change behavior depending on the context
-/// (For example `Fake.Process` kills all processes when the Fake Context exists, but it should not when used as library)
+/// (For example <c>Fake.Process</c> kills all processes when the Fake Context exists, but it should not when used
+/// as library)
+/// </remarks>
+/// </summary>
 module Context =
 
+    /// <summary>
     /// FAKE execution context type
+    /// </summary>
     type FakeExecutionContext =
         {
           /// Mark if script is cached
@@ -100,65 +107,79 @@ module Context =
 
     let private fake_ExecutionType = "fake_context_execution_type"
 
+    /// <summary>
     /// Gets FAKE execution context
+    /// </summary>
     let getExecutionContext () =
         match getContext fake_ExecutionType with
         | null -> RuntimeContext.Unknown
         | :? RuntimeContextWrapper as e -> e.Type
         | o -> RuntimeContext.UnknownObj o
 
+    /// <summary>
     /// Sets FAKE execution context to the given context
+    /// </summary>
     let setExecutionContext (e: RuntimeContext) =
         setContext fake_ExecutionType (RuntimeContextWrapper(e))
 
+    /// <summary>
     /// Remove execution context
+    /// </summary>
     let removeExecutionContext () = setContext fake_ExecutionType null
 
+    /// <summary>
     /// Gets FAKE execution context by FAKE runtime context
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `e` - FAKE runtime execution context
+    /// <param name="e">FAKE runtime execution context</param>
     let getFakeExecutionContext (e: RuntimeContext) =
         match e with
         | RuntimeContext.UnknownObj _
         | RuntimeContext.Unknown -> None
         | RuntimeContext.Fake e -> Some e
 
+    /// <summary>
     /// Gets FAKE execution context data by name
-    /// 
-    /// ## Parameters
-    ///  - `name` - FAKE execution context data name
-    ///  - `f` - FAKE execution context
+    /// </summary>
+    ///
+    /// <param name="name">FAKE execution context data name</param>
+    /// <param name="f">FAKE execution context</param>
     let getFakeContext name (f: FakeExecutionContext) =
         match f.Context.TryGetValue(name) with
         | true, v -> Some v
         | _ -> None
 
+    /// <summary>
     /// Removes FAKE execution context data by name
-    /// 
-    /// ## Parameters
-    ///  - `name` - FAKE execution context data name
-    ///  - `f` - FAKE execution context
+    /// </summary>
+    ///
+    /// <param name="name">FAKE execution context data name</param>
+    /// <param name="f">FAKE execution context</param>
     let removeFakeContext (name: string) (f: FakeExecutionContext) =
         match f.Context.TryRemove(name) with
         | true, v -> Some v
         | _ -> None
 
+    /// <summary>
     /// Set or update FAKE execution context data by name
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `name` - FAKE execution context data name
-    ///  - `updateF` - callback to call when updating the value
-    ///  - `f` - FAKE execution context
+    /// <param name="name">FAKE execution context data name</param>
+    /// <param name="updateF">Callback to call when updating the value</param>
+    /// <param name="f">FAKE execution context</param>
     let setFakeContext name (v: obj) updateF (f: FakeExecutionContext) =
         f.Context.AddOrUpdate(name, v, (fun _ old -> updateF old))
 
+    /// <summary>
     /// Check if execution context is a FAKE execution context
+    /// </summary>
     let isFakeContext () =
         getExecutionContext () |> getFakeExecutionContext |> Option.isSome
 
+    /// <summary>
     /// Check and current context is a FAKE execution context and throws `InvalidOperationException`
     /// exception when not
+    /// </summary>
     let forceFakeContext () =
         match getExecutionContext () with
         | RuntimeContext.UnknownObj o ->

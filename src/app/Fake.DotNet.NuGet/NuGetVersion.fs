@@ -1,6 +1,8 @@
 namespace Fake.DotNet.NuGet
 
+/// <summary>
 /// Contains types and tasks to interact with NuGet versions
+/// </summary>
 module Version =
 
     open Fake.Core
@@ -8,7 +10,9 @@ module Version =
     open System
     open System.Threading
 
+    /// <summary>
     /// Holds data for search result of a NuGet package
+    /// </summary>
     type NuGetSearchItemResult =
         {
           /// The package Id
@@ -29,10 +33,11 @@ module Version =
     /// NuGet version incrementer
     type NuGetVersionIncrement = SemVerInfo -> SemVerInfo
 
+    /// <summary>
     /// Increment patch version
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `v` - The SemVer version to increment its patch component
+    /// <param name="v">The SemVer version to increment its patch component</param>
     let IncPatch: NuGetVersionIncrement =
         fun (v: SemVerInfo) ->
             { v with
@@ -40,10 +45,11 @@ module Version =
                 Patch = (v.Patch + 1u)
                 Original = None }
 
+    /// <summary>
     /// Increment minor version
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `v` - The SemVer version to increment its minor component
+    /// <param name="v">The SemVer version to increment its minor component</param>
     let IncMinor: NuGetVersionIncrement =
         fun (v: SemVerInfo) ->
             { v with
@@ -52,10 +58,11 @@ module Version =
                 Minor = (v.Minor + 1u)
                 Original = None }
 
+    /// <summary>
     /// Increment major version
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `v` - The SemVer version to increment its major component
+    /// <param name="v">The SemVer version to increment its major component</param>
     let IncMajor: NuGetVersionIncrement =
         fun (v: SemVerInfo) ->
             { v with
@@ -65,7 +72,9 @@ module Version =
                 Major = (v.Major + 1u)
                 Original = None }
 
+    /// <summary>
     /// Arguments for the next NuGet version number computing
+    /// </summary>
     type NuGetVersionArg =
         {
           /// The NuGet server
@@ -111,7 +120,12 @@ module Version =
     open global.NuGet.Protocol
 
 
+    /// <summary>
     /// Retrieve current NuGet version number
+    /// </summary>
+    ///
+    /// <param name="server">NuGet server</param>
+    /// <param name="packageName">NuGet package name</param>
     let getLastNuGetVersion server (packageName: string) : SemVerInfo option =
         async {
             let logger = NuGetLogger()
@@ -153,7 +167,11 @@ module Version =
         |> Async.RunSynchronously
 
 
+    /// <summary>
     /// Compute next NuGet version number
+    /// </summary>
+    ///
+    /// <param name="f">Function to override Nuget version parameters</param>
     let nextVersion (f: NuGetVersionArg -> NuGetVersionArg) =
         let arg = f (NuGetVersionArg.Default())
 

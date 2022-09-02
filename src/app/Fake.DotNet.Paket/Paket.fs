@@ -1,6 +1,10 @@
 namespace Fake.DotNet
 
-/// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
+/// <summary>
+/// Contains helper functions and task which allow to inspect, create and publish
+/// <a href="https://www.nuget.org/">NuGet</a> packages with
+/// <a href="http://fsprojects.github.io/Paket/index.html">Paket</a>.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Paket =
 
@@ -13,7 +17,9 @@ module Paket =
     open Fake.IO.FileSystemOperators
     open Fake.IO.Globbing.Operators
 
+    /// <summary>
     /// Paket pack parameter type
+    /// </summary>
     type PaketPackParams =
         {
           /// paket tool path
@@ -52,7 +58,7 @@ module Paket =
           /// the directory to execute command in
           WorkingDir: string
           
-          /// output directory for .nupkg files
+          /// output directory for <c>.nupkg</c> files
           OutputPath: string
           
           /// homepage URL for the package
@@ -68,8 +74,8 @@ module Paket =
           /// version; --lock-dependencies overrides this option
           MinimumFromLockFile: bool
           
-          /// pin dependencies generated from project references to exact versions (=)
-          /// instead of using minimum versions (>=); with --lock-dependencies project
+          /// pin dependencies generated from project references to exact versions (<c>=</c>)
+          /// instead of using minimum versions (<c>&gt;=</c>); with <c>--lock-dependencies</c> project
           /// references will be pinned even if this option is not specified
           PinProjectReferences: bool }
 
@@ -97,7 +103,9 @@ module Paket =
           MinimumFromLockFile = false
           PinProjectReferences = false }
 
+    /// <summary>
     /// Paket push parameter type
+    /// </summary>
     type PaketPushParams =
         {
           /// paket tool path
@@ -135,7 +143,9 @@ module Paket =
           DegreeOfParallelism = 8
           ApiKey = null }
 
+    /// <summary>
     /// Paket restore packages type
+    /// </summary>
     type PaketRestoreParams =
         {
           /// paket tool path
@@ -228,10 +238,11 @@ module Paket =
             |> List.foldBack (fun ref -> Arguments.append [ "--references-file"; ref ]) parameters.ReferenceFiles
             |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
 
+    /// <summary>
     /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default parameters.
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let pack setParams =
         let parameters: PaketPackParams = PaketPackDefaults() |> setParams
         use __ = Trace.traceTask "PaketPack" parameters.WorkingDir
@@ -244,11 +255,12 @@ module Paket =
         __.MarkSuccess()
 
 
+    /// <summary>
     /// Pushes the given NuGet packages to the server by using Paket push.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default parameters.
-    ///  - `files` - The files to be pushed to the server.
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
+    /// <param name="files">The files to be pushed to the server.</param>
     let pushFiles setParams files =
         let parameters: PaketPushParams = PaketPushDefaults() |> setParams
 
@@ -300,19 +312,22 @@ module Paket =
 
         __.MarkSuccess()
 
+    /// <summary>
     /// Pushes all NuGet packages in the working dir to the server by using Paket push.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default parameters.
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let push setParams =
         let parameters: PaketPushParams = PaketPushDefaults() |> setParams
 
         !!(parameters.WorkingDir @@ "/**/*.nupkg") |> pushFiles (fun _ -> parameters)
 
+    /// <summary>
     /// Returns the dependencies from specified paket.references file
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `referencesFile` - Paket reference file to use
+    /// <param name="referencesFile">Paket reference file to use</param>
+    /// - `referencesFile` - 
     let getDependenciesForReferencesFile (referencesFile: string) =
         let getReferenceFilePackages =
             let isSingleFile (line: string) = line.StartsWith "File:"
@@ -356,10 +371,11 @@ module Paket =
             refLines
             |> Array.exists (fun pn -> pn.Equals(n, StringComparison.OrdinalIgnoreCase)))
 
+    /// <summary>
     /// Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to manipulate the default parameters.
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let restore setParams =
         let parameters: PaketRestoreParams = PaketRestoreDefaults() |> setParams
         use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir

@@ -1,6 +1,8 @@
 namespace Fake.DotNet
 
+/// <summary>
 /// Contains tasks to interact with F# interactive
+/// </summary>
 [<RequireQualifiedAccess>]
 module Fsi =
 
@@ -13,9 +15,10 @@ module Fsi =
     open FSharp.Compiler.Diagnostics
     open FSharp.Compiler.Interactive.Shell
 
-    ///  Specify debugging type: full, portable, embedded, pdbonly. ('pdbonly' is the default if no debugging
-    /// type specified and enables attaching a debugger to a running program, 'portable' is a cross-platform format,
-    /// 'embedded' is a cross-platform format embedded into the output file).
+    ///  Specify debugging type: <c>full</c>, <c>portable</c>, <c>embedded</c>, <c>pdbonly</c>. (<c>pdbonly</c> is
+    /// the default if no debugging type specified and enables attaching a debugger to a running program,
+    /// <c>portable</c> is a cross-platform format, c>embedded</c> is a cross-platform format embedded into the
+    /// output file).
     type DebugTypes =
         | Full
         | Portable
@@ -49,8 +52,11 @@ module Fsi =
         | Internal
         | Default
 
+    /// <summary>
     /// FSI command line parameters. Please see
-    /// [F# Interactive options](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/fsharp-interactive-options)
+    /// <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/fsharp-interactive-options">
+    /// F# Interactive options</a>
+    /// </summary>
     type FsiParams =
         {
             (* - INPUT FILES - *)
@@ -60,17 +66,17 @@ module Fsi =
             /// Load the given file on startup
             Load: string
             
-            /// Reference an assembly (Short form: -r)
+            /// Reference an assembly (Short form: <c>-r</c>)
             Reference: string
 
             (* - CODE GENERATION - *)
-            /// Emit debug information (Short form: -g)
+            /// Emit debug information (Short form: <c>-g</c>)
             Debug: bool option
             
             /// Specify debugging type: full, portable, embedded, pdbonly. PdbOnly is the default
             DebugType: DebugTypes
             
-            /// Enable optimizations (Short form: -O)
+            /// Enable optimizations (Short form: <c>-O</c>)
             Optimize: bool option
             
             /// Enable or disable tailcalls
@@ -135,14 +141,14 @@ module Fsi =
             FullPaths: bool
             
             /// Specify a directory for the include path which is used to resolve source files and assemblies
-            /// (Short form: -I)
+            /// (Short form: <c>-I</c>)
             Lib: string list
             
             /// Resolve assembly references using directory-based rules rather than MSBuild resolution
             SimpleResolution: bool
             
             /// Specify target framework profile of this assembly. Valid values are mscorlib, netcore or netstandard.
-            /// Default - mscorlib
+            /// Default - <c>mscorlib</c>
             TargetProfile: Profile
             
             /// Do not reference the default CLI assemblies by default
@@ -166,7 +172,7 @@ module Fsi =
             /// Prevents references from being locked by the F# Interactive process
             ShadowCopyReferences: bool option
 
-            /// Sets the path to the fsharpi / fsi.exe to use
+            /// Sets the path to the <c>fsharpi</c>/<c>fsi.exe</c> to use
             ToolPath: FsiTool
             
             /// Environment variables
@@ -424,18 +430,19 @@ module Fsi =
             ExternalFsi.exec ExternalFsi.pathToFsiExe param args
 
 
+    /// <summary>
     /// Executes the internal fsi within FSC on the given script
     /// Returns error code and an exception message if any exceptions were thrown
-    ///
-    /// ## Parameters
-    ///  - `fsiParams` - Function used to override FSI parameters
-    ///  - `script` - The F# script to execute
-    ///  - `scriptArgs` - Any script arguments
+    /// </summary>
     /// 
-    /// ## Sample
+    /// <param name="fsiParams">Function used to override FSI parameters</param>
+    /// <param name="script">The F# script to execute</param>
+    /// <param name="scriptArgs">Any script arguments</param>
+    /// 
+    /// <example>
     /// e.g: Passing some arguments to fsi, along with the script and some args to be passed to the script
-    ///
-    ///     let fsiExe = "path/to/fsi.exe"
+    /// <code lang="fsharp">
+    /// let fsiExe = "path/to/fsi.exe"
     ///     let script = "MyScript.fsx"
     ///     let (exitcode,msgs) =
     ///         Fsi.exec (fun p ->
@@ -446,4 +453,6 @@ module Fsi =
     ///             }
     ///             |> Process.setEnvironmentVariable "SOME_VAR" "55"
     ///             |> Process.setEnvironmentVariable "GIT" "path/to/git") script ["stuff";"10"]
+    /// </code>
+    /// </example>
     let exec fsiParams script scriptArgs = execRaw fsiParams script scriptArgs

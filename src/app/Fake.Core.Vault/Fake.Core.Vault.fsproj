@@ -4,6 +4,7 @@
     <AssemblyName>Fake.Core.Vault</AssemblyName>
     <OutputType>Library</OutputType>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);DOTNETCORE;NETSTANDARD1_6</DefineConstants>

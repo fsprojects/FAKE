@@ -27,7 +27,9 @@ module Environment =
 
 namespace Fake.Core
 
+/// <summary>
 /// This module contains functions which allow to read and write environment variables and build parameters
+/// </summary>
 [<RequireQualifiedAccess>]
 module Environment =
 
@@ -44,63 +46,71 @@ module Environment =
     open System.Reflection
     open Microsoft.Win32
 
+    /// <summary>
     /// Type alias for System.EnvironmentVariableTarget
+    /// </summary>
     #if !DOTNETCORE
     type EnvironTarget = EnvironmentVariableTarget
     #endif
 
+    /// <summary>
     /// Retrieves the environment variable with the given name
+    /// </summary>
+    ///
+    /// <param name="name">The environment variable name</param>
     let environVar name = Environment.GetEnvironmentVariable name
 
+    /// <summary>
     /// Retrieves all environment variables from the given target
+    /// </summary>
     let environVars () = 
         let vars = Environment.GetEnvironmentVariables ()
         [ for e in vars -> 
               let e1 = e :?> Collections.DictionaryEntry
               e1.Key.ToString(), e1.Value.ToString() ]
 
+    /// <summary>
     /// Sets the environment variable with the given name
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable to set
-    ///  - `value` - The value of the environment variable to set
+    /// <param name="name">The name of the environment variable to set</param>
+    /// <param name="value">The value of the environment variable to set</param>
     let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
 
+    /// <summary>
     /// Clears the environment variable with the given name for the current process.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
+    /// <param name="name">The name of the environment variable</param>
     let clearEnvironVar name = Environment.SetEnvironmentVariable(name, null)
 
+    /// <summary>
     /// Retrieves the environment variable with the given name or returns the default if no value was set
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
-    ///  - `defaultValue` - The default value to return if no value was set
+    /// <param name="name">The name of the environment variable</param>
+    /// <param name="defaultValue">The default value to return if no value was set</param>
     let environVarOrDefault name defaultValue = 
         let var = environVar name
         if String.IsNullOrEmpty var then defaultValue
         else var
 
+    /// <summary>
     /// Retrieves the environment variable with the given name or fails if not found
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
+    /// <param name="name">The name of the environment variable</param>
     let environVarOrFail name = 
         let var = environVar name
         if String.IsNullOrEmpty var then failwith <| sprintf "Environment variable '%s' not found" name
         else var
 
+    /// <summary>
     /// Retrieves the environment variable with the given name or returns the default bool if no value was set
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
-    ///  - `defaultValue` - The default value to return if no value was set
+    /// <param name="name">The name of the environment variable</param>
+    /// <param name="defaultValue">The default value to return if no value was set</param>
     let environVarAsBoolOrDefault varName defaultValue =
         try
             match environVar varName with
@@ -109,46 +119,50 @@ module Environment =
         with
         | _ ->  defaultValue
 
+    /// <summary>
     /// Retrieves the environment variable with the given name or returns the false if no value was set
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `varName` - The name of the environment variable
+    /// <param name="varName">The name of the environment variable</param>
     let environVarAsBool varName = environVarAsBoolOrDefault varName false
 
+    /// <summary>
     /// Retrieves the environment variable or None
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
+    /// <param name="name">The name of the environment variable</param>
     let environVarOrNone name = 
         let var = environVar name
         if String.IsNullOrEmpty var then None
         else Some var
 
+    /// <summary>
     /// Splits the entries of an environment variable and removes the empty ones.
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
+    /// <param name="name">The name of the environment variable</param>
     let splitEnvironVar name =
         let var = environVarOrNone name
         if var = None then [ ]
         else var.Value.Split([| Path.PathSeparator |]) |> Array.toList
 
+    /// <summary>
     /// Returns if the build parameter with the given name was set
+    /// </summary>
     ///
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the environment variable
+    /// <param name="name">The name of the environment variable</param>
     let inline hasEnvironVar name = not (isNull (environVar name))
 
+    /// <summary>
     /// The path of the "Program Files" folder - might be x64 on x64 machine
+    /// </summary>
     let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
+    /// <summary>
     /// The path of Program Files (x86)
-    /// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
-    /// PROCESSOR\_ARCHITEW6432 can be null
+    /// It seems this covers all cases where <c>PROCESSOR\_ARCHITECTURE</c> may misreport and the case where
+    /// the other variable <c>PROCESSOR\_ARCHITEW6432</c> can be null
+    /// </summary>
     let ProgramFilesX86 = 
         let wow64 = environVar "PROCESSOR_ARCHITEW6432"
         let globalArch = environVar "PROCESSOR_ARCHITECTURE"
@@ -159,11 +173,17 @@ module Environment =
         | _ -> environVar "ProgramFiles"
         |> fun detected -> if isNull detected then @"C:\Program Files (x86)\" else detected
 
-    /// The system root environment variable. Typically "C:\Windows"
+    /// <summary>
+    /// The system root environment variable. Typically <c>C:\Windows</c>
+    /// </summary>
     let SystemRoot = environVar "SystemRoot"
 
+    /// <summary>
     /// Determines if the current system is an Unix system.
-    /// See http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform
+    /// See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform">
+    /// how-to-detect-the-execution-platform
+    /// </a>
+    /// </summary>
     let isUnix = 
     #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
@@ -174,7 +194,9 @@ module Environment =
         int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
     #endif
 
+    /// <summary>
     /// Determines if the current system is a MacOs system
+    /// </summary>
     let isMacOS =
     #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
@@ -185,7 +207,9 @@ module Environment =
             File.Exists "/usr/bin/osascript"
     #endif
 
+    /// <summary>
     /// Determines if the current system is a Linux system
+    /// </summary>
     let isLinux = 
     #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
@@ -194,7 +218,9 @@ module Environment =
         isUnix && not isMacOS
     #endif
 
+    /// <summary>
     /// Determines if the current system is a Windows system
+    /// </summary>
     let isWindows =
     #if !FX_NO_RUNTIME_INFORMATION
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
@@ -205,7 +231,9 @@ module Environment =
         | _ -> false
     #endif
 
+    /// <summary>
     /// Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
+    /// </summary>
     /// Todo: Detect mono on windows
     let isMono = 
     #if !FX_NO_RUNTIME_INFORMATION
@@ -239,13 +267,17 @@ module Environment =
             | true, v -> Some (minimizeVersion v)
             | _ -> None
 
-    /// required sometimes to workaround mono crashes
-    /// http://stackoverflow.com/a/8414517/1269722
-    /// Note: Only given when we are running on mono,
+    /// <summary>
+    /// Required sometimes to workaround mono crashes <a href="http://stackoverflow.com/a/8414517/1269722">
+    /// see this link</a>
+    /// <remarks>
+    /// Only given when we are running on mono,
     /// represents the version of the mono runtime we
     /// are currently running on.
     /// In netcore world you can retrieve the mono version in the
-    /// environment (PATH) via Fake.Core.Process.Mono.monoVersion
+    /// environment (PATH) via <c>Fake.Core.Process.Mono.monoVersion</c>
+    /// </remarks>
+    /// </summary>
     let monoVersion =
         let t = Type.GetType("Mono.Runtime")
         if (not (isNull t)) then
@@ -258,7 +290,9 @@ module Environment =
         else None
 
 
+    /// <summary>
     /// Gets the list of valid directories included in the PATH environment variable.
+    /// </summary>
     let pathDirectories =
         splitEnvironVar "PATH"
         |> Seq.map (fun value -> value.Trim())
@@ -270,7 +304,9 @@ module Environment =
         else
             "mono"
 
+    /// <summary>
     /// The path of the current target platform
+    /// </summary>
     let internal TargetPlatformPrefix = 
         let (<|>) a b = 
             match a with
@@ -282,11 +318,15 @@ module Environment =
             else Some @"C:\Windows\Microsoft.NET\Framework"
         |> Option.get
 
+    /// <summary>
     /// Base path for getting tools from windows SDKs
+    /// </summary>
     let sdkBasePath = Path.Combine(ProgramFilesX86, "Microsoft SDKs", "Windows")
 
+    /// <summary>
     /// Helper function to help find framework or sdk tools from the 
     /// newest toolkit available
+    /// </summary>
     let getNewestTool possibleToolPaths = 
            possibleToolPaths 
            |> Seq.sortBy (fun p -> p) 
@@ -295,12 +335,17 @@ module Environment =
            |> Seq.ofArray 
            |> Seq.head
 
+    /// <summary>
     /// Gets the local directory for the given target platform
+    /// </summary>
     let getTargetPlatformDir platformVersion = 
         if Directory.Exists(TargetPlatformPrefix + "64") then Path.Combine(TargetPlatformPrefix + "64", platformVersion)
         else  Path.Combine(TargetPlatformPrefix, platformVersion)
 
-    /// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.
+    /// <summary>
+    /// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding
+    /// was specified.
+    /// </summary>
     let getDefaultEncoding() = 
         match environVarOrDefault "encoding" "default" with
 #if !NETSTANDARD
@@ -339,7 +384,9 @@ module Environment =
 
 #if !NETSTANDARD
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
+    /// <summary>
     /// Returns a sequence with all installed .NET framework versions
+    /// </summary>
     let getInstalledDotNetFrameworks() = 
         let frameworks = new ResizeArray<_>()
         try 

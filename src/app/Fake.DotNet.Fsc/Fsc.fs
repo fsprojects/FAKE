@@ -1,7 +1,9 @@
 ﻿namespace Fake.DotNet
 
+/// <summary>
 /// Contains tasks to compiles F# source file with the
-/// [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
+/// <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Fsc =
 
@@ -11,7 +13,9 @@ module Fsc =
     open Fake.IO
     open Fake.Core
 
+    /// <summary>
     /// An exception type to signal build errors.
+    /// </summary>
     exception BuildException of string * list<string> with
         override x.ToString() =
             x.Data0.ToString()
@@ -55,8 +59,8 @@ module Fsc =
             | AnyCpu32BitPreferred -> "anycpu32bitpreferred"
             | AnyCpu -> "anycpu"
 
-    /// Specify debugging type: `full`, `pdbonly`.
-    /// (`full` is the default and enables attaching a debugger to a running program).
+    /// Specify debugging type: <c>full</c>, <c>pdbonly</c>.
+    /// (<c>full<c> is the default and enables attaching a debugger to a running program).
     type DebugType =
         | Full
         | PdbOnly
@@ -68,7 +72,7 @@ module Fsc =
                 self
 
     /// Specify target framework profile of this assembly.
-    /// Valid values are mscorlib or netcore. Default - `mscorlib`
+    /// Valid values are mscorlib or netcore. Default - <c>mscorlib</c>
     type Profile =
         | MsCorlib
         | Netcore
@@ -109,8 +113,8 @@ module Fsc =
 
 
     /// Specified path of a managed resource with an optional name alias and accessibility flag
-    /// resource info format is <file>[,<stringname>[,public|private]]
-    /// e.g. `resource.dat,rezName,public`
+    /// resource info format is <c>&lt;file&gt;[,&lt;stringname&gt;[,public|private]]
+    /// e.g. <c>resource.dat,rezName,public</c>
     type ResourceInfo = string * string option * Access option
 
     let resourceStr ((file, name, access): ResourceInfo) =
@@ -120,13 +124,15 @@ module Fsc =
         | f, None, Some a -> sprintf "%s,%s" f (string a)
         | f, Some n, Some a -> sprintf "%s,%s,%s" f n (string a)
 
+    /// <summary>
     /// The F# compiler parameters
+    /// </summary>
     type FscParam =
         (* - OUTPUT FILES - *)
         /// Name of the output file
         | Out of file: string
         
-        /// The 'fsc.exe' output target types : exe, winexe, library, module
+        /// The <c>fsc.exe</c> output target types : exe, winexe, library, module
         | Target of TargetType
         
         /// Delay-sign the assembly using only the public portion of the strong name key
@@ -182,7 +188,7 @@ module Fsc =
         | Debug of on: bool
         
         /// Specify debugging type: full, pdbonly.
-        /// ('full' is the default and enables attaching a debugger to a running program).
+        /// (<c>full</c> is the default and enables attaching a debugger to a running program).
         | DebugType of debugType: DebugType
         
         /// Enable optimizations
@@ -377,15 +383,21 @@ module Fsc =
 
         static member Defaults = [ Out ""; Target Exe; Platform AnyCpu; References []; Debug false ]
 
-    ///Common Error Result type for tracing errors
+    /// <summary>
+    /// Common Error Result type for tracing errors
+    /// </summary>
     type FscResultMessage =
         | Warning of string
         | Error of string
 
+    /// <summary>
     /// Type signature for a Compiler Function
+    /// </summary>
     type CompilerFunc = string[] -> FscResultMessage[] * int
 
+    /// <summary>
     /// Computes output type and appends source files to argument list
+    /// </summary>
     let private makeArgsList (opts: string list) (srcFiles: string list) =
         let outputArg arg = arg = "-o" || arg.StartsWith("--out:")
         let libTarget arg = arg = "-a" || arg = "--target:library"
@@ -401,17 +413,21 @@ module Fsc =
             "-o" :: Path.changeExtension outExt (List.head srcFiles) :: opts @ srcFiles
         |> Array.ofList
 
+    /// <summary>
     /// Reports Fsc compile errors to the console using Fake.Core.Trace
+    /// </summary>
     let private reportErrors (errors: FscResultMessage[]) =
         for e in errors do
             match e with
             | FscResultMessage.Warning errMsg -> Trace.traceImportant errMsg
             | FscResultMessage.Error errMsg -> Trace.traceError errMsg
 
+    /// <summary>
     /// Compiles the given source files with the given options using either
     /// the internal FCS or an external fsc.exe. If no options
     /// given (i.e. the second argument is an empty list), by default tries
-    /// to behave the same way as would the command-line 'fsc.exe' tool.
+    /// to behave the same way as would the command-line <c>fsc.exe</c> tool.
+    /// </summary>
     let private compileFiles (compiler: CompilerFunc) (srcFiles: string list) (opts: string list) : int =
         let optsArr = makeArgsList opts srcFiles
 
@@ -421,7 +437,9 @@ module Fsc =
         reportErrors errors
         exitCode
 
+    /// <summary>
     /// Common compiler arg prep code
+    /// </summary>
     let private doCompile (compiler: CompilerFunc) (fscParams: FscParam list) (inputFiles: string list) : int =
         let inputFiles = inputFiles |> Seq.toList
         let taskDesc = inputFiles |> String.separated ", "
@@ -443,7 +461,9 @@ module Fsc =
     (*
     Compile using the internals of FCS
     *)
+    /// <summary>
     /// The internal FCS Compiler
+    /// </summary>
     let private scsCompile optsArr =
         let scs = FSharpChecker.Create()
         // Always prepend "fsc.exe" since fsc compiler skips the first argument
@@ -463,37 +483,45 @@ module Fsc =
 
         errors, exitCode
 
+    /// <summary>
     /// Compiles the given F# source files with the specified parameters.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the default Fsc parameters.
-    ///  - `inputFiles` - The F# input files.
+    /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
+    /// <param name="inputFiles">The F# input files.</param>
     ///
-    /// ## Sample
-    ///     ["file1.fs"; "file2.fs"]
+    /// <example>
+    /// <code lang="fsharp">
+    /// ["file1.fs"; "file2.fs"]
     ///     |> compileWithResult [Out ""
     ///                 Target Exe
     ///                 Platform AnyCpu
     ///                 References []
     ///                 Debug false
     ///             ]
+    /// </code>
+    /// </example>    
     let compileWithResult (fscParams: FscParam list) (inputFiles: string list) : int =
         doCompile scsCompile fscParams inputFiles
 
+    /// <summary>
     /// Compiles one or more F# source files with the specified parameters.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `setParams` - Function used to overwrite the default Fsc parameters.
-    ///  - `inputFiles` - The F# input files.
+    /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
+    /// <param name="inputFiles">The F# input files.</param>
     ///
-    /// ## Sample
-    ///     ["file1.fs"; "file2.fs"]
+    /// <example>
+    /// <code lang="fsharp">
+    /// ["file1.fs"; "file2.fs"]
     ///     |> compile [Out ""
     ///                 Target Exe
     ///                 Platform AnyCpu
     ///                 References []
     ///                 Debug false
     ///             ]
+    /// </code>
+    /// </example>
     let compile (fscParams: FscParam list) (inputFiles: string list) : unit =
         let res = compileWithResult fscParams inputFiles
 
@@ -504,7 +532,9 @@ module Fsc =
     (*
     Compile using a path to Fsc.exe
     *)
+    /// <summary>
     /// An external fsc.exe compiler
+    /// </summary>
     let private extFscCompile (fscTool: string) (optsArr: string[]) =
         let args = Arguments.OfArgs optsArr
 
@@ -522,15 +552,17 @@ module Fsc =
         let errors = r.Result.Error |> splitLines |> Array.map FscResultMessage.Warning
         errors, r.ExitCode
 
+    /// <summary>
     /// Compiles the given F# source files with the specified parameters.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fscTool` - Path to an existing fsc.exe executable
-    ///  - `setParams` - Function used to overwrite the default Fsc parameters.
-    ///  - `inputFiles` - The F# input files.
+    /// <param name="fscTool">Path to an existing fsc.exe executable</param>
+    /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
+    /// <param name="inputFiles">The F# input files.</param>
     /// 
-    /// ## Sample
-    ///     ["file1.fs"; "file2.fs"]
+    /// <example>
+    /// <code lang="fsharp">
+    /// ["file1.fs"; "file2.fs"]
     ///     |> compileExternalWithResult "path/to/fsc.exe"
     ///                 [Out ""
     ///                 Target Exe
@@ -538,20 +570,24 @@ module Fsc =
     ///                 References []
     ///                 Debug false
     ///             ]
+    /// </code>
+    /// </example>
     let compileExternalWithResult (fscTool: string) (fscParams: FscParam list) (inputFiles: string list) : int =
         let compile = extFscCompile fscTool
         doCompile compile fscParams inputFiles
 
+    /// <summary>
     /// Compiles one or more F# source files with the specified parameters
     /// using an existing fsc.exe installed on the system
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///  - `fscTool` - Path to an existing fsc.exe executable
-    ///  - `setParams` - Function used to overwrite the default Fsc parameters.
-    ///  - `inputFiles` - The F# input files.
+    /// <param name="fscTool">Path to an existing fsc.exe executable</param>
+    /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
+    /// <param name="inputFiles">The F# input files.</param>
     ///
-    /// ## Sample
-    ///     ["file1.fs"; "file2.fs"]
+    /// <example>
+    /// <code lang="fsharp">
+    /// ["file1.fs"; "file2.fs"]
     ///     |> compileExternal "path/to/fsc.exe"
     ///                 [Out ""
     ///                 Target Exe
@@ -559,6 +595,8 @@ module Fsc =
     ///                 References []
     ///                 Debug false
     ///             ]
+    /// </code>
+    /// </example> 
     let compileExternal (fscTool: string) (fscParams: FscParam list) (inputFiles: string list) : unit =
         let compile = extFscCompile fscTool
         let res = doCompile compile fscParams inputFiles

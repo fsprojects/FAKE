@@ -1,7 +1,16 @@
 namespace Fake.DotNet.NuGet
 
+/// <namespacedoc>
+/// <summary>
+/// DotNet.NuGet namespace contains tasks to interact with NuGet registry and packages
+/// </summary>
+/// </namespacedoc>
+/// 
+/// <summary>
 /// Contains tasks for installing NuGet packages using the
-/// [nuget.exe install command](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-install).
+/// <a href="https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-install">
+/// nuget.exe install command</a>.
+/// </summary>
 module Install =
 
     open Fake.IO
@@ -20,7 +29,9 @@ module Install =
         /// Verbose/detailed verbosity level
         | Detailed
 
+    /// <summary>
     /// Nuget install parameters.
+    /// </summary>
     [<CLIMutable>]
     type NugetInstallParams =
         {
@@ -43,22 +54,22 @@ module Install =
             /// Default `false`.
             ExcludeVersion: bool
             
-            /// Allows updating to prerelease versions. Default `false`.
+            /// Allows updating to prerelease versions. Default <c>false</c>.
             Prerelease: bool
             
-            /// Specifies the directory in which packages will be installed. Default  `./packages/`.
+            /// Specifies the directory in which packages will be installed. Default  <c>./packages/</c>.
             OutputDirectory: string
             
-            /// Display this amount of details in the output: normal, quiet, detailed. Default `normal`.
+            /// Display this amount of details in the output: normal, quiet, detailed. Default <c>normal</c>.
             Verbosity: NugetInstallVerbosity
             
-            /// Do not prompt for user input or confirmations. Default `true`.
+            /// Do not prompt for user input or confirmations. Default <c>true</c>.
             NonInteractive: bool
             
-            /// Disable looking up packages from local machine cache. Default `false`.
+            /// Disable looking up packages from local machine cache. Default <c>false</c>.
             NoCache: bool
             
-            /// NuGet configuration file. Default `None`.
+            /// NuGet configuration file. Default <c>None</c>.
             ConfigFile: string option
         }
 
@@ -107,12 +118,13 @@ module Install =
         |> Seq.filter (not << String.IsNullOrEmpty)
         |> String.concat " "
 
+    /// <summary>
     /// Installs the given package.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///
-    ///  - `setParams` - Function used to manipulate the default parameters.
-    ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file, or simply a NuGet package name
+    /// <param name="setParams">Function used to manipulate the default parameters.</param>
+    /// <param name="packagesFile">Path to the <c>*.sln</c>, <c>*.*proj</c> or <c>packages.config</c> file,
+    /// or simply a NuGet package name</param>
     let NugetInstall setParams packageName =
         use __ = Trace.traceTask "NugetInstall" packageName
         let param = NugetInstallDefaults |> setParams

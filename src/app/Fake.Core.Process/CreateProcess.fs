@@ -5,7 +5,9 @@ open System.IO
 open System.Diagnostics
 open Fake.Core.ProcessHelpers
 
+/// <summary>
 /// Hook for events when an CreateProcess is executed.
+/// </summary>
 type internal IProcessHook<'TRes> =
     abstract member PrepareState : unit -> IDisposable
     abstract member PrepareStreams : IDisposable * StreamSpecs -> StreamSpecs
@@ -32,12 +34,16 @@ module internal ProcessHook =
                 h.RetrieveResult (state :?> 'TState, exitCode) }
 
 
+/// <summary>
 /// The output of the process. If ordering between stdout and stderr is important you need to use streams.
+/// </summary>
 type ProcessOutput = { Output : string; Error : string }
 
 type ProcessResult<'a> = { Result : 'a; ExitCode : int }
 
+/// <summary>
 /// Handle for creating a process and returning potential results.
+/// </summary>
 type CreateProcess<'TRes> =
     internal {
         InternalCommand : Command
@@ -52,32 +58,53 @@ type CreateProcess<'TRes> =
     member x.WorkingDirectory = x.InternalWorkingDirectory
     member x.Environment = x.InternalEnvironment
 
+/// <summary>
 /// Some information regarding the started process
+/// </summary>
 type StartedProcessInfo =
     internal {
         InternalProcess : Process
     }
     member x.Process = x.InternalProcess
 
-/// Module for creating and modifying CreateProcess<'TRes> instances.
-/// You can manage:
+/// <summary>
+/// Module for creating and modifying CreateProcess&lt;&apos;TRes&gt; instances.
+/// </summary>
+/// <remarks>
+/// You can manage: <br/>
+/// <list type="number">
+/// <item>
+/// The command (ie file to execute and arguments)
+/// </item>
+/// <item>
+/// The working directory
+/// </item>
+/// <item>
+/// The process environment
+/// </item>
+/// <item>
+/// Stream redirection and pipes
+/// </item>
+/// <item>
+/// Timeout for the process to exit
+/// </item>
+/// <item>
+/// The result and the result transformations (<c>map</c>, <c>mapResult</c>)
+/// </item>
+/// </list>
+/// <br/>
+/// More extensions can be found in the <a href="reference/fake-core-createprocessext-createprocess.html">
+/// CreateProcess Extensions</a>
+/// </remarks>
 /// 
-/// - The command (ie file to execute and arguments)
-/// - The working directory
-/// - The process environment
-/// - Stream redirection and pipes
-/// - Timeout for the process to exit
-/// - The result and the result transformations (`map`, `mapResult`)
-/// 
-/// More extensions can be found in the [CreateProcess Extensions](apidocs/v5/fake-core-createprocessext-createprocess.html)
-/// 
-/// ### Example
-/// 
-///     Command.RawCommand("file", Arguments.OfArgs ["arg1"; "arg2"])
-///     |> CreateProcess.fromCommand
-///     |> Proc.run
-///     |> ignore
-/// 
+/// <example>
+/// <code lang="fsharp">
+/// Command.RawCommand("file", Arguments.OfArgs ["arg1"; "arg2"])
+///     |&gt; CreateProcess.fromCommand
+///     |&gt; Proc.run
+///     |&gt; ignore
+/// </code>
+/// </example>
 module CreateProcess =
     let internal emptyHook =
         { new IProcessHook<ProcessResult<unit>> with
@@ -90,14 +117,18 @@ module CreateProcess =
                     return { ExitCode = raw.RawExitCode; Result = () } 
                 } }
         
-    /// Create a simple `CreateProcess<_>` instance from the given command.
+    /// <summary>
+    /// Create a simple <c>CreateProcess&lt;_&gt;</c> instance from the given command.
+    /// </summary>
     /// 
-    /// ### Example
-    /// 
-    ///     Command.RawCommand("file", Arguments.OfArgs ["arg1"; "arg2"])
-    ///     |> CreateProcess.fromCommand
-    ///     |> Proc.run
-    ///     |> ignore
+    /// <example>
+    /// <code lang="fsharp">
+    /// Command.RawCommand("file", Arguments.OfArgs ["arg1"; "arg2"])
+    ///     |&gt; CreateProcess.fromCommand
+    ///     |&gt; Proc.run
+    ///     |&gt; ignore
+    /// </code>
+    /// </example>
     let fromCommand command =
         {   InternalCommand = command
             InternalWorkingDirectory = None
@@ -113,44 +144,59 @@ module CreateProcess =
                   StandardError = Inherit }
             Hook = emptyHook }
     
+    /// <summary>
     /// Create a CreateProcess from the given file and arguments
+    /// </summary>
     /// 
-    /// ### Example
+    /// <example>
+    /// <code lang="fsharp">
+    /// CreateProcess.fromRawCommandLine "cmd" "/C \"echo test\""
+    ///     |&gt; Proc.run
+    ///     |&gt; ignore
+    /// </code>
+    /// </example>
     /// 
-    ///     CreateProcess.fromRawCommandLine "cmd" "/C \"echo test\""
-    ///     |> Proc.run
-    ///     |> ignore
-    /// 
-    /// ### Using BlackFox.CommandLine
-    /// 
-    /// See [`BlackFox.CommandLine`](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine) for details
-    /// 
-    ///     open BlackFox.CommandLine
+    /// <remarks>
+    /// Using BlackFox.CommandLine <br/>
+    /// See <a href="https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine">
+    /// <c>BlackFox.CommandLine</c></a> for details
+    /// <example>
+    /// <code lang="fsharp">
+    /// open BlackFox.CommandLine
     /// 
     ///     CmdLine.empty
-    ///     |> CmdLine.append "build"
-    ///     |> CmdLine.appendIf noRestore "--no-restore"
-    ///     |> CmdLine.appendPrefixIfSome "--framework" framework
-    ///     |> CmdLine.appendPrefixf "--configuration" "%A" configuration
-    ///     |> CmdLine.toString
-    ///     |> CreateProcess.fromRawCommandLine "dotnet.exe"
-    ///     |> Proc.run
-    ///     |> ignore
+    ///     |&gt; CmdLine.append "build"
+    ///     |&gt; CmdLine.appendIf noRestore "--no-restore"
+    ///     |&gt; CmdLine.appendPrefixIfSome "--framework" framework
+    ///     |&gt; CmdLine.appendPrefixf "--configuration" "%A" configuration
+    ///     |&gt; CmdLine.toString
+    ///     |&gt; CreateProcess.fromRawCommandLine "dotnet.exe"
+    ///     |&gt; Proc.run
+    ///     |&gt; ignore
+    /// </code>
+    /// </example>
+    /// </remarks>
     /// 
     let fromRawCommandLine command windowsCommandLine =
         fromCommand <| RawCommand(command, Arguments.OfWindowsCommandLine windowsCommandLine)
 
+    /// <summary>
     /// Create a CreateProcess from the given file and arguments
+    /// </summary>
     /// 
-    /// ### Example
-    /// 
-    ///     CreateProcess.fromRawCommand "cmd" [ "/C";  "echo test" ]
-    ///     |> Proc.run
-    ///     |> ignore
+    /// <example>
+    /// <code lang="fsharp">
+    /// CreateProcess.fromRawCommand "cmd" [ "/C";  "echo test" ]
+    ///     |&gt; Proc.run
+    ///     |&gt; ignore
+    /// </code>
+    /// </example>
     let fromRawCommand command args =
         fromCommand <| RawCommand(command, Arguments.OfArgs args)
 
-    /// Create a CreateProcess from the given `ProcessStartInfo`
+    /// <summary>
+    /// Create a CreateProcess from the given <c>ProcessStartInfo</c>
+    /// </summary>
     let ofStartInfo (p:ProcessStartInfo) =
         {   InternalCommand = if p.UseShellExecute then ShellCommand p.FileName else RawCommand(p.FileName, Arguments.OfStartInfo p.Arguments)
             TraceCommand = true
@@ -176,12 +222,21 @@ module CreateProcess =
         | CreatePipe pipe ->
             CreatePipe (StreamRef.Map (fun s -> Stream.InterceptStream(s, target)) pipe)
     
-    /// intercept the given StreamSpecification and writes the intercepted data into target.
+    /// <summary>
+    /// Intercept the given StreamSpecification and writes the intercepted data into target.
     /// Throws if the stream is not redirected (ie is Inherit).
+    /// </summary>
+    ///
+    /// <param name="target">The target stream</param>
+    /// <param name="s">The target stream specification</param>
     let interceptStream target (s:StreamSpecification) =
         interceptStreamFallback (fun _ -> failwithf "cannot intercept stream when it is not redirected. Please redirect the stream first!") target s
     
-    /// Copies std-out and std-err into the corresponding `System.Console` streams (by using interceptStream).
+    /// <summary>
+    /// Copies std-out and std-err into the corresponding <c>System.Console</c> streams (by using interceptStream).
+    /// </summary>
+    ///
+    /// <param name="c">The process to copy output to standard output</param>
     let copyRedirectedProcessOutputsToStandardOutputs (c:CreateProcess<_>)=
         { c with
             Streams =
@@ -193,22 +248,41 @@ module CreateProcess =
                         let stdErr = Console.OpenStandardError()
                         interceptStream stdErr c.Streams.StandardError } }
     
+    /// <summary>
     /// Set the working directory of the new process.
+    /// </summary>
+    ///
+    /// <param name="workDir">The working directory</param>
+    /// <param name="c">The create process instance</param>
     let withWorkingDirectory workDir (c:CreateProcess<_>)=
         { c with
             InternalWorkingDirectory = Some workDir }
 
+    /// <summary>
     /// Disable the default trace of started processes.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     let disableTraceCommand (c:CreateProcess<_>)=
         { c with
             TraceCommand = false }
     
+    /// <summary>
     /// Set the command to the given one.
+    /// </summary>
+    ///
+    /// <param name="command">The command to add to create process instance</param>
+    /// <param name="c">The create process instance</param>
     let withCommand command (c:CreateProcess<_>)=
         { c with
             InternalCommand = command }
 
+    /// <summary>
     /// Replace the file-path
+    /// </summary>
+    ///
+    /// <param name="newFilePath">The new file path to use as a replacement</param>
+    /// <param name="c">The create process instance</param>
     let replaceFilePath newFilePath (c:CreateProcess<_>)=
         { c with
             InternalCommand =
@@ -216,7 +290,12 @@ module CreateProcess =
                 | ShellCommand _s -> failwith "Expected RawCommand"
                 | RawCommand (_, c) -> RawCommand(newFilePath, c) }
 
-    /// Map the file-path according to the given function.            
+    /// <summary>
+    /// Map the file-path according to the given function.
+    /// </summary>
+    ///
+    /// <param name="f">Function to override file path</param>
+    /// <param name="c">The create process instance</param>
     let mapFilePath f (c:CreateProcess<_>)=
         c
         |> replaceFilePath (f (match c.Command with ShellCommand _s -> failwith "Expected RawCommand" | RawCommand (file, _) -> f file))
@@ -294,7 +373,15 @@ module CreateProcess =
             (fun state p -> onStart state.State p)
             (fun prev state exitCode -> onResult prev state.State exitCode)   
 
+    /// <summary>
     /// Attaches the given functions to the current CreateProcess instance.
+    /// </summary>
+    ///
+    /// <param name="prepareState">Function to override state</param>
+    /// <param name="onStart">Function to override start</param>
+    /// <param name="onResult">Function to override result</param>
+    /// <param name="onDispose">Function to override dispose</param>
+    /// <param name="c">The create process instance</param>
     let appendSimpleFuncs prepareState onStart onResult onDispose (c:CreateProcess<_>) =
         c
         |> appendFuncsDispose
@@ -304,7 +391,12 @@ module CreateProcess =
             onResult
             onDispose                     
 
-    /// Execute the given function before the process is started 
+    /// <summary>
+    /// Execute the given function before the process is started
+    /// </summary>
+    ///
+    /// <param name="f">Function to add on setup</param>
+    /// <param name="c">The create process instance</param>
     let addOnSetup f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs
@@ -313,7 +405,12 @@ module CreateProcess =
             (fun prev _state _exitCode -> prev)
             ignore
 
-    /// Execute the given function when the process is cleaned up.        
+    /// <summary>
+    /// Execute the given function when the process is cleaned up.
+    /// </summary>
+    ///
+    /// <param name="f">Function to add as a finally clause</param>
+    /// <param name="c">The create process instance</param>
     let addOnFinally f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
@@ -321,7 +418,13 @@ module CreateProcess =
             (fun _state _p -> ())
             (fun prev _state _exitCode -> prev)
             (fun _ -> f ())
+    
+    /// <summary>
     /// Execute the given function right after the process is started.
+    /// </summary> 
+    ///
+    /// <param name="f">Function to add on started event</param>
+    /// <param name="c">The create process instance</param>
     let addOnStarted f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
@@ -330,8 +433,13 @@ module CreateProcess =
             (fun prev _state _exitCode -> prev)
             ignore
     
+    /// <summary>
     /// Execute the given function right after the process is started.
     /// PID for process can be obtained from p parameter (p.Process.Id).
+    /// </summary>
+    ///
+    /// <param name="f">Function to add on started event</param>
+    /// <param name="c">The create process instance</param>
     let addOnStartedEx (f:StartedProcessInfo -> _) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
@@ -340,23 +448,43 @@ module CreateProcess =
             (fun prev _state _exitCode -> prev)
             ignore
 
+    /// <summary>
     /// Sets the given environment variables
+    /// </summary>
+    ///
+    /// <param name="env">The environment variables list to add</param>
+    /// <param name="c">The create process instance</param>
     let withEnvironment (env: (string * string) list) (c:CreateProcess<_>)=
         { c with
             InternalEnvironment = Some (EnvMap.ofSeq env) }
             
-    /// Sets the given environment map.        
+    /// <summary>
+    /// Sets the given environment map.
+    /// </summary>
+    ///
+    /// <param name="env">The environment variables map to add</param>
+    /// <param name="c">The create process instance</param>
     let withEnvironmentMap (env: EnvMap) (c:CreateProcess<_>)=
         { c with
             InternalEnvironment = Some env }
 
-    /// Retrieve the current environment map.    
+    /// <summary>
+    /// Retrieve the current environment map.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     let getEnvironmentMap (c:CreateProcess<_>)=
         match c.Environment with
         | Some en -> en
         | None -> EnvMap.create()
 
+    /// <summary>
     /// Set the given environment variable.
+    /// </summary>
+    ///
+    /// <param name="envKey">The environment variable key</param>
+    /// <param name="envVar">The environment variable value</param>
+    /// <param name="c">The create process instance</param>
     let setEnvironmentVariable envKey (envVar:string) (c:CreateProcess<_>) =
         { c with
             InternalEnvironment =
@@ -364,26 +492,45 @@ module CreateProcess =
                 |> IMap.add envKey envVar
                 |> Some }
 
+    /// <summary>
     /// Set the standard output stream.
+    /// </summary>
+    ///
+    /// <param name="stdOut">The standard output to use</param>
+    /// <param name="c">The create process instance</param>
     let withStandardOutput stdOut (c:CreateProcess<_>)=
         { c with
             Streams =
                 { c.Streams with
                     StandardOutput = stdOut } }
+    
+    /// <summary>
     /// Set the standard error stream.
+    /// </summary>
+    ///
+    /// <param name="stdOut">The standard error to use</param>
+    /// <param name="c">The create process instance</param>
     let withStandardError stdErr (c:CreateProcess<_>)=
         { c with
             Streams =
                 { c.Streams with
                     StandardError = stdErr } }
-    /// Set the standard input stream.                    
+    
+    /// <summary>
+    /// Set the standard input stream.
+    /// </summary>
+    ///
+    /// <param name="stdIn">The standard input to use</param>
+    /// <param name="c">The create process instance</param> 
     let withStandardInput stdIn (c:CreateProcess<_>)=
         { c with
             Streams =
                 { c.Streams with
                     StandardInput = stdIn } }
 
+    /// <summary>
     /// Map the current result to a new type.
+    /// </summary>
     let map f c =
         c
         |> appendSimpleFuncs 
@@ -396,13 +543,21 @@ module CreateProcess =
                 })
             ignore
     
+    /// <summary>
     /// Map only the result object and leave the exit code in the result type.
+    /// </summary>
+    ///
+    /// <param name="f">Function to run result map through</param>
     let mapResult f (c:CreateProcess<ProcessResult<_>>) =
         c
         |> map (fun r ->
             { ExitCode = r.ExitCode; Result = f r.Result })
 
-    /// Starts redirecting the output streams and collects all data at the end.        
+    /// <summary>
+    /// Starts redirecting the output streams and collects all data at the end.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param> 
     let redirectOutput (c:CreateProcess<_>) =
         c
         |> appendFuncsDispose 
@@ -433,8 +588,12 @@ module CreateProcess =
                 outMem.Dispose()
                 errMem.Dispose())
         
+    /// <summary>
     /// Starts redirecting the output streams if they are not already redirected.
     /// Be careful when using this function. Using redirectOutput is the preferred variant
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param> 
     let redirectOutputIfNotRedirected (c:CreateProcess<_>) =
         let refOut = StreamRef.Empty
         let refErr = StreamRef.Empty
@@ -496,7 +655,13 @@ module CreateProcess =
                 })
             (fun () -> ())
         
+    /// <summary>
     /// Calls the given functions whenever a new output-line is received.
+    /// </summary>
+    ///
+    /// <param name="onStdOut">Function to add as a standard output handler</param> 
+    /// <param name="onStdErr">Function to add as a standard error handler</param> 
+    /// <param name="c">The create process instance</param> 
     let withOutputEvents onStdOut onStdErr (c:CreateProcess<_>) =
         let watchStream onF (stream:Stream) =
             async {
@@ -547,13 +712,25 @@ module CreateProcess =
                 outMem.Dispose()
                 errMem.Dispose())
     
-    /// Like `withOutputEvents` but skips `null` objects.
+    /// <summary>
+    /// Like <c>withOutputEvents</c> but skips <c>null</c> objects.
+    /// </summary>
+    ///
+    /// <param name="onStdOut">Function to add as a standard output handler</param> 
+    /// <param name="onStdErr">Function to add as a standard error handler</param> 
+    /// <param name="c">The create process instance</param> 
     let withOutputEventsNotNull onStdOut onStdErr (c:CreateProcess<_>) =
         c
         |> withOutputEvents
             (fun m -> if isNull m |> not then onStdOut m)
             (fun m -> if isNull m |> not then onStdErr m)
+            
+    /// <summary>
     /// Execute the given function after the process has been exited and the previous result has been calculated.
+    /// </summary>
+    ///
+    /// <param name="f">Function to add on exit event</param> 
+    /// <param name="c">The create process instance</param> 
     let addOnExited f (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
@@ -568,7 +745,12 @@ module CreateProcess =
                 })
             (fun _ -> ())
 
-    /// throws an exception with the given message if `exitCode <> 0`     
+    /// <summary>
+    /// throws an exception with the given message if <c>exitCode &lt;&gt; 0</c>
+    /// </summary>
+    ///
+    /// <param name="msg">The message to use</param> 
+    /// <param name="c">The create process instance</param> 
     let ensureExitCodeWithMessage msg (r:CreateProcess<_>) =
         r
         |> addOnExited (fun data exitCode ->
@@ -584,7 +766,11 @@ module CreateProcess =
             Some output
         | _ -> None
 
-    /// Makes sure the exit code is `0`, otherwise a detailed exception is thrown (showing the command line).    
+    /// <summary>
+    /// Makes sure the exit code is <c>0</c>, otherwise a detailed exception is thrown (showing the command line).
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param> 
     let ensureExitCode (r:CreateProcess<_>) =
         r
         |> addOnExited (fun data exitCode ->
@@ -600,7 +786,11 @@ module CreateProcess =
             else
                 data
                 )
-    /// Like`ensureExitCode` but only triggers a warning instead of failing.
+    /// <summary>
+    /// Like<c>ensureExitCode</c> but only triggers a warning instead of failing.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param> 
     let warnOnExitCode msg (r:CreateProcess<_>) =
         r
         |> addOnExited (fun data exitCode ->
@@ -619,7 +809,13 @@ module CreateProcess =
     type internal TimeoutState =
         { Stopwatch : Stopwatch
           mutable HasExited : bool }
+        
+    /// <summary>
     /// Set the given timeout, kills the process after the specified timespan
+    /// </summary>
+    ///
+    /// <param name="timeout">The timeout amount</param> 
+    /// <param name="c">The create process instance</param> 
     let withTimeout (timeout:TimeSpan) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 

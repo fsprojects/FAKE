@@ -1,11 +1,15 @@
 namespace Fake.Core
 open System
 
-/// Helpers for capturing user input
+/// <summary>
+/// Contains tasks for capturing user input
+/// </summary>
 ///
-/// ## Sample
-///
-///     UserInput.getUserInput prompt
+/// <example>
+/// <code lang="fsharp">
+/// UserInput.getUserInput prompt
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module UserInput =
     let internal erasePreviousChar () =
@@ -49,20 +53,22 @@ module UserInput =
           Console.ForegroundColor <- before
 
 
+    /// <summary>
     /// Get plain text input from user
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `prompt` - text to display as a prompt
+    /// <param name="prompt">Text to display as a prompt</param>
     let getUserInput prompt =
         color ConsoleColor.White (fun _ -> printf "%s" prompt)
         let s = readString true
         printfn ""
         s
 
+    /// <summary>
     /// Get masked input from user - Display asterisks (*) as user type
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `prompt` - text to display as a prompt
+    /// <param name="prompt">Text to display as a prompt</param>
     let getUserPassword prompt =
         color ConsoleColor.White (fun _ -> printf "%s" prompt)
         let s = readString false

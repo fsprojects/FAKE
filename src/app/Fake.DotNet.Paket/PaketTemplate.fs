@@ -1,5 +1,7 @@
+/// <summary>
 /// Contains helper functions and task which allow it to generate a paket.template
-/// file for [Paket](http://fsprojects.github.io/Paket/index.html)
+/// file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a>
+/// </summary>
 module Fake.DotNet.PaketTemplate
 
 open System
@@ -37,10 +39,13 @@ type PaketDependencyVersionInfo =
 
 type PaketDependency = string * PaketDependencyVersionInfo
 
+/// <summary>
 /// Contains the different parameters to create a paket.template file
+/// </summary>
 type PaketTemplateParams =
-    { /// The file path to the `paket.template` file
-      /// if omitted, a `paket.template` file will be created in the current directory
+    {
+      /// The file path to the <c>paket.template</c> file
+      /// if omitted, a <c>paket.template</c> file will be created in the current directory
       TemplateFilePath : string option
       /// The type of the template (`File` or `Project`)
       TemplateType : PaketTemplateType
@@ -48,16 +53,17 @@ type PaketTemplateParams =
       /// If omitted, `paket` will use reflection to determine the assembly name.
       Id : string option
       /// The package version.
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyInformationalVersionAttribute` or if that is missing the `AssemblyVersionAttribute`.
+      /// If omitted, `paket` will use reflection to obtain the value of the
+      /// <c>AssemblyInformationalVersionAttribute</c> or if that is missing the `AssemblyVersionAttribute`.
       Version : string option
       /// The package description
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyDescriptionAttribute`.
+      /// If omitted, `paket` will use reflection to obtain the value of the <c>AssemblyDescriptionAttribute</c>.
       Description : string list
       /// The title of the package
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyTitleAttribute`.
+      /// If omitted, `paket` will use reflection to obtain the value of the <c>AssemblyTitleAttribute</c>.
       Title : string option
       /// a list of authors for the nuget package.
-      /// If omitted, `paket`will use reflection to obtain the value of the `AssemblyCompanyAttribute`.
+      /// If omitted, `paket`will use reflection to obtain the value of the <c>AssemblyCompanyAttribute</c>.
       Authors : string list
       /// A list of package owners
       Owners : string list
@@ -77,7 +83,7 @@ type PaketTemplateParams =
       Copyright : string option
       /// a list of tags
       Tags : string list
-      /// The included or excluded files (use this if the `TemplateType` is `File`)
+      /// The included or excluded files (use this if the <c>TemplateType</c> is <c>File</c>)
       Files : PaketFileInfo list
       /// A list of references
       References : string list
@@ -88,43 +94,93 @@ type PaketTemplateParams =
       Dependencies : PaketDependency list
       /// A list of excluded dependencies
       ExcludedDependencies : string list
-      /// If set to `true` this will tell `nuget`/`paket` to prompt the user for
+      /// If set to <c>true</c> this will tell <c>nuget</c>/<c>paket</c> to prompt the user for
       /// the acceptance of the provided license
       RequireLicenseAcceptance : bool option
-      /// If set to `true` this will tell `nuget`/`paket` that this is a development dependency
+      /// If set to <c>true</c> this will tell <c>nuget</c>/<c>paket</c> that this is a development dependency
       DevelopmentDependency : bool option
-      /// With the `IncludePDBs` switch you can tell `paket` to pack pdbs into the package.
+      /// With the <c>IncludePDBs</c> switch you can tell `paket` to pack pdbs into the package.
       /// this only works for paket.template files of type 'Project'.
       IncludePDBs : bool option}
 
-/// The default parameters for the generation of the `paket.template`
+/// <summary>
+/// The default parameters for the generation of the <c>paket.template</c>
+/// </summary>
 ///
-/// ## Defaults
-///
-///   - TemplateFilePath - `None`
-///   - TemplateType - `Project`
-///   - Id - `None`
-///   - Version - `None`
-///   - Description - `None`
-///   - Title - `None`
-///   - Authors - `Empty list`
-///   - Owners - `Empty list`
-///   - ReleaseNotes - `Empty list`
-///   - Summary - `Empty list`
-///   - Language - `None`
-///   - LicenseUrl - `None`
-///   - ProjectUrl - `None`
-///   - IconUrl - `None`
-///   - Copyright - `None`
-///   - Tags - `Empty list`
-///   - Files - `Empty list`
-///   - References - `Empty list`
-///   - FrameworkAssemblies - `Empty list`
-///   - Dependencies - `Empty list`
-///   - ExcludedDependencies - `Empty list`
-///   - RequireLicenseAcceptance - `None`
-///   - DevelopmentDependency - `None`
-///   - IncludePDBs - `None`
+/// <list type="number">
+/// <item>
+/// <c>TemplateFilePath</c> - <c>None</c>
+/// </item>
+/// <item>
+/// <c>TemplateType</c> - <c>Project</c>
+/// </item>
+/// <item>
+/// <c>Id</c> - <c>None</c>
+/// </item>
+/// <item>
+/// <c>Version</c> - <c>None</c>
+/// </item>
+/// <item>
+/// <c>Description</c> - <c>None</c>
+/// </item>
+/// <item>
+/// <c>Title</c> - <c>None</c>
+/// </item>
+/// <item>
+/// <c>Authors</c> - <c>>Empty list</c>
+/// </item>
+/// <item>
+/// <c>Owners</c> - <c>>Empty list</c>
+/// </item>
+/// <item>
+/// <c>ReleaseNotes</c> - <c>>Empty list</c>
+/// </item>
+/// <item>
+/// <c>Summary</c> - <c>>Empty list</c>
+/// </item>
+/// <item>
+/// <c>Language</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>LicenseUrl</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>ProjectUrl</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>IconUrl</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>Copyright</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>Tags</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>Files</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>References</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>FrameworkAssemblies</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>Dependencies</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>ExcludedDependencies</c> - <c>Empty list</c>
+/// </item>
+/// <item>
+/// <c>RequireLicenseAcceptance</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>DevelopmentDependency</c> - <c>>None</c>
+/// </item>
+/// <item>
+/// <c>IncludePDBs</c> - <c>>None</c>
+/// </item>
+/// </list>
 let DefaultPaketTemplateParams =
     { TemplateFilePath = None
       TemplateType = Project
@@ -248,15 +304,16 @@ module internal Rendering =
         |> string
 
 
+/// <summary>
 /// Creates a paket.template file with the given filename
 /// Will fail if the file could not be written
+/// </summary>
 ///
-/// ## Parameters
-///  - `setParams` - Function used to manipulate the default `PaketTemplateParams` value
+/// <param name="setParams">Function used to manipulate the default <c>PaketTemplateParams</c> value</param>
 ///
-/// ## Sample usage
-///
-///    Target "Create Paket Template" (fun _ ->
+/// <example>
+/// <code lang="fsharp">
+/// Target "Create Paket Template" (fun _ ->
 ///       PaketTemplate (fun p ->
 ///            { p with
 ///                TemplateFilePath = Some "./deploytemp/paket.template"
@@ -273,6 +330,8 @@ module internal Rendering =
 ///            }
 ///        )
 ///    )
+/// </code>
+/// </example>
 let create setParams =
     use __ = Trace.traceTask "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams

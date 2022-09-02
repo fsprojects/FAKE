@@ -1,6 +1,8 @@
 namespace Fake.DotNet
 
+/// <summary>
 /// Analyse a binlog and emit proper CI messages
+/// </summary>
 module MSBuildBinLog =
 
     open System

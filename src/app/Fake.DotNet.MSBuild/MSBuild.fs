@@ -9,10 +9,14 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 
+/// <summary>
 /// A type to represent MSBuild project files.
+/// </summary>
 type MSBuildProject = XDocument
 
+/// <summary>
 /// An exception type to signal build errors.
+/// </summary>
 exception MSBuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
@@ -29,8 +33,11 @@ type MSBuildVerbosity =
     | Detailed
     | Diagnostic
 
+/// <summary>
 /// MSBuild log option
-/// See https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2015
+/// See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2015">
+/// msbuild-command-line-reference</a>
+/// </summary>
 type MSBuildLogParameter =
     /// Determines whether the build log is appended to the log file or overwrites it. When you set the switch,
     /// the build log is appended to the log file. When the switch is not present, the contents of an existing
@@ -48,9 +55,9 @@ type MSBuildLogParameter =
     /// Show only warnings.
     | WarningsOnly
     /// Don't show the list of items and properties that would appear at the start of each project build if the
-    /// verbosity level is set to `diagnostic`.
+    /// verbosity level is set to <c>diagnostic</c>.
     | NoItemAndPropertyList
-    /// Show `TaskCommandLineEvent` messages.
+    /// Show <c>TaskCommandLineEvent</c> messages.
     | ShowCommandLine
     /// Show the timestamp as a prefix to any message.
     | ShowTimestamp
@@ -70,14 +77,18 @@ type MSBuildLogParameter =
     /// Other currently not supported parameter.
     | LogParameter of string
 
+/// <summary>
 /// A type for MSBuild configuration
+/// </summary>
 type MSBuildFileLoggerConfig =
     { Number : int
       Filename : string option
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
-/// A type for MSBuild distributed logger configuration 
+/// <summary>
+/// A type for MSBuild distributed logger configuration
+/// </summary>
 type MSBuildDistributedLoggerConfig =
     { ClassName : string option
       AssemblyPath : string
@@ -155,32 +166,75 @@ module private MSBuildExe =
   let private getAllKnownPaths =
     (knownMSBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMSBuildLocations
 
+  /// <summary>
   /// Versions of Mono prior to this one have faulty implementations of MSBuild
-  /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
+  /// NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is true...
+  /// </summary>
   let monoVersionToUseMSBuildOn = Version("5.0")
 
+  /// <summary>
   /// Tries to detect the right version of MSBuild.
+  /// </summary>
   ///
-  ///   - On all OS's, we check a `MSBuild` environment variable which is either
-  ///     * a direct path to a file to use, or
-  ///     * a directory that contains a file called
-  ///         * `msbuild` on non-Windows systems with mono >= 5.0.0.0, or
-  ///         * `xbuild` on non-Windows systems with mono < 5.0.0.0,
-  ///         * `MSBuild.exe` on Windows systems, or
-  ///     * a tool that exists on the current PATH
-  ///   - In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
-  ///     * Mono >= 5.0.0.0: `msbuild`, `xbuild`
-  ///     * Mono < 5.0.0.0: `xbuild`, `msbuild`
-  ///     * This is due to several known issues in the Mono < 5.0 implementation of MSBuild.
-  ///   - In addition, on Windows systems we
-  ///     * try to read the MSBuild tool location from the AppSettings file using a parameter named `MSBuild`, and finally
-  ///     * if a `VisualStudioVersion` environment variable is specified, we try to use the specific MSBuild version,
-  ///       matching that Visual Studio version.
+  /// <list type="number">
+  /// <item>
+  /// On all OS's, we check a <c>MSBuild</c> environment variable which is either
+  /// <list type="number">
+  /// <item>
+  /// a direct path to a file to use, or
+  /// </item>
+  /// <item>
+  /// a directory that contains a file called
+  /// <list type="number">
+  /// <item>
+  /// <c>msbuild</c> on non-Windows systems with mono &gt;= 5.0.0.0, or
+  /// </item>
+  /// <item>
+  /// <c>xbuild</c> on non-Windows systems with mono &lt; 5.0.0.0,
+  /// </item>
+  /// <item>
+  /// <c>MSBuild.exe</c> on Windows systems, or
+  /// </item>
+  /// </list>
+  /// </item>
+  /// <item>
+  /// a tool that exists on the current PATH
+  /// </item>
+  /// </list>
+  /// </item>
+  /// <item>
+  /// In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
+  /// <list type="number">
+  /// <item>
+  /// Mono &gt;= 5.0.0.0: <c>msbuild</c>, <c>xbuild</c>
+  /// </item>
+  /// <item>
+  /// Mono &lt; 5.0.0.0: <c>xbuild</c>, <c>msbuild</c>
+  /// </item>
+  /// <item>
+  /// This is due to several known issues in the Mono &lt; 5.0 implementation of MSBuild.
+  /// </item>
+  /// </list>
+  /// </item>
+  /// <item>
+  /// In addition, on Windows systems we
+  /// <list type="number">
+  /// <item>
+  /// try to read the MSBuild tool location from the AppSettings file using a parameter named <c>MSBuild</c>,
+  /// and finally
+  /// </item>
+  /// <item>
+  /// if a <c>VisualStudioVersion</c> environment variable is specified, we try to use the specific MSBuild version,
+  /// matching that Visual Studio version.
+  /// </item>
+  /// </list>
+  /// </item>
+  /// </list>
   let msBuildExe =
-    /// the value we're given can be a:
-    ///     * full path to a file or
-    ///     * just a directory
-    /// if just a directory we can make it the path to a file by Path-Combining the tool name to the directory.
+    // the value we're given can be a:
+    //     * full path to a file or
+    //     * just a directory
+    // if just a directory we can make it the path to a file by Path-Combining the tool name to the directory.
     let exactPathOrBinaryOnPath tool input =
         if Path.isDirectory input && Directory.Exists input
         then input </> tool
@@ -259,8 +313,10 @@ module private MSBuildExe =
         Trace.logVerbosefn "Using msbuild of VS2019 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
     foundExe
 
+/// <summary>
 /// A type for MSBuild task parameters
-/// Please see [MSBuild command line reference](https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/msbuild/msbuild-command-line-reference?view=vs-2015)
+/// Please see <a href="https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/msbuild/msbuild-command-line-reference?view=vs-2015">MSBuild command line reference</a>
+/// </summary>
 type MSBuildParams =
     {
       /// Set the MSBuild executable to use. Defaults to the latest installed MSBuild.
@@ -275,13 +331,23 @@ type MSBuildParams =
       /// The list of properties to pass to MSBuild
       Properties : (string * string) list
       
-      /// corresponds to the msbuild option '/m':
-      ///  - 'None' will omit the option.
-      ///  - 'Some None' will emit '/m'.
-      ///  - 'Some 2' will emit '/m:2'.
+      /// <summary>
+      /// corresponds to the msbuild option <c>/m</c>:
+      /// <list type="number">
+      /// <item>
+      /// <c>None</c> will omit the option.
+      /// </item>
+      /// <item>
+      /// <c>Some None</c> will emit <c>/m</c>.
+      /// </item>
+      /// <item>
+      /// <c>Some 2</c> will emit <c>/m:2</c>.
+      /// </item>
+      /// </list>
+      /// </summary>
       MaxCpuCount : int option option
       
-      /// Execute a restore before executing the targets (/restore flag)
+      /// Execute a restore before executing the targets (<c>/restore</c> flag)
       DoRestore : bool
       
       /// Don't display the startup banner or the copyright message.
@@ -309,22 +375,23 @@ type MSBuildParams =
       /// The list of warning to ignore
       NoWarn: string list option
       
-      /// corresponds to the msbuild option '/consoleloggerparameters'
+      /// corresponds to the msbuild option <c>/consoleloggerparameters</c>
       ConsoleLogParameters : MSBuildLogParameter list
       
-      /// Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior with this flag
+      /// Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior
+      /// with this flag
       DisableInternalBinLog: bool
       
-      /// corresponds to the msbuild option '/fl'
+      /// corresponds to the msbuild option <c>/fl</c>
       FileLoggers : MSBuildFileLoggerConfig list option
       
-      /// corresponds to the msbuild option '/bl'
+      /// corresponds to the msbuild option <c>/bl</c>
       BinaryLoggers : string list option
       
-      /// corresponds to the msbuild option '/l'
+      /// corresponds to the msbuild option <c>/l</c>
       Loggers : MSBuildLoggerConfig list option
       
-      /// corresponds to the msbuild option '/dl'
+      /// corresponds to the msbuild option <c>/dl</c>
       DistributedLoggers : (MSBuildLoggerConfig * MSBuildLoggerConfig option) list option
       
       Environment : Map<string, string> }
@@ -364,10 +431,14 @@ type MSBuildParams =
     member x.WithEnvironment map =
         { x with Environment = map }
 
+/// <summary>
 /// Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.
+/// </summary>
 [<RequireQualifiedAccess>]
 module MSBuild =
+  /// <summary>
   /// A type for MSBuild task parameters
+  /// </summary>
   type CliArguments =
     {
       /// The list of targets to use
@@ -376,13 +447,23 @@ module MSBuild =
       /// Set or override the specified project-level properties
       Properties : (string * string) list
       
-      /// corresponds to the msbuild option '/m':
-      ///  - 'None' will omit the option.
-      ///  - 'Some None' will emit '/m'.
-      ///  - 'Some 2' will emit '/m:2'.
+      /// <summary>
+      /// corresponds to the msbuild option <c>/m</c>:
+      /// <list type="number">
+      /// <item>
+      /// <c>None</c> will omit the option.
+      /// </item>
+      /// <item>
+      /// <c>Some None</c> will emit <c>/m</c>.
+      /// </item>
+      /// <item>
+      /// <c>Some 2</c> will emit <c>/m:2</c>.
+      /// </item>
+      /// </list>
+      /// </summary>
       MaxCpuCount : int option option
       
-      /// Execute a restore before executing the targets (/restore flag)
+      /// Execute a restore before executing the targets (<c>/restore</c> flag)
       DoRestore : bool
       
       /// Don't display the startup banner or the copyright message.
@@ -407,22 +488,23 @@ module MSBuild =
       /// The list of warning to ignore
       NoWarn: string list option
       
-      /// Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior with this flag
+      /// Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior
+      /// with this flag
       DisableInternalBinLog: bool
       
-      /// corresponds to the msbuild option '/fl'
+      /// corresponds to the msbuild option <c>/fl</c>
       FileLoggers : MSBuildFileLoggerConfig list option
       
-      /// corresponds to the msbuild option '/bl'
+      /// corresponds to the msbuild option <c>/bl</c>
       BinaryLoggers : string list option
       
-      /// corresponds to the msbuild option '/consoleloggerparameters'
+      /// corresponds to the msbuild option <c>/consoleloggerparameters</c>
       ConsoleLogParameters : MSBuildLogParameter list
       
-      /// corresponds to the msbuild option '/l'
+      /// corresponds to the msbuild option <c>/l</c>
       Loggers : MSBuildLoggerConfig list option
       
-      /// corresponds to the msbuild option '/dl'
+      /// corresponds to the msbuild option <c>/dl</c>
       DistributedLoggers : (MSBuildLoggerConfig * MSBuildLoggerConfig option) list option }
     
     static member Create() : CliArguments =
@@ -496,8 +578,10 @@ module MSBuild =
     member internal x.CliArguments = asCliArguments x
     member internal oldObj.WithCliArguments (x:CliArguments) = withCliArguments oldObj x
 
-  /// [omit]
+  /// <summary>
   /// Exposing MSBuild executable
+  /// </summary>
+  /// [omit]
   let msBuildExe = MSBuildExe.msBuildExe
   
   /// [omit]
@@ -519,7 +603,6 @@ module MSBuild =
                                           | "%3B" -> ";" | "%3F" -> "?" | "%2A" -> "*"
                                           | _ -> _match.Value))
 
-  /// [omit]
   let internal getReferenceElements elementName projectFileName (doc : XDocument) =
     let fi = FileInfo.ofPath projectFileName
     doc.Descendants(xName "Project").Descendants(xName "ItemGroup").Descendants(xName elementName)
@@ -835,12 +918,12 @@ module MSBuild =
         
     String.Join("\n", results)
 
+  /// <summary>
   /// Run MSBuild and collect output results and return it.
+  /// </summary>
   ///
-  /// ## Parameters
-  /// 
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `project` - A string with the path to the project file to build.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="project">A string with the path to the project file to build.</param>
   let buildWithRedirect setParams project =
     let msBuildParams, argsString = buildArgs setParams
 
@@ -876,14 +959,16 @@ module MSBuild =
         processResult.ExitCode, results
     with e -> processResult.ExitCode, results
 
+  /// <summary>
   /// Runs a MSBuild project
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `project` - A string with the path to the project file to build.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="project">A string with the path to the project file to build.</param>
   ///
-  /// ## Sample
-  ///     open Fake.DotNet
+  /// <example>
+  /// <code lang="fsharp">
+  /// open Fake.DotNet
   ///     let buildMode = Environment.environVarOrDefault "buildMode" "Release"
   ///     let setParams (defaults:MSBuildParams) =
   ///             { defaults with
@@ -897,6 +982,8 @@ module MSBuild =
   ///                     ]
   ///              }
   ///     MSBuild.build setParams "./MySolution.sln"
+  /// </code>
+  /// </example>
   let build setParams project =
     use __ = Trace.traceTask "MSBuild" project
     let msBuildParams, argsString = buildArgs setParams
@@ -921,14 +1008,15 @@ module MSBuild =
     handleAfterRun "msbuild" binlogPath processResult.ExitCode project
     __.MarkSuccess()
 
+  /// <summary>
   /// Builds the given project files and collects the output files.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - If it is null or empty then the project settings are used.
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `properties` - A list with tuples of property name and property values.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">If it is null or empty then the project settings are used.</param>
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="properties">A list with tuples of property name and property values.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let runWithProperties (setParams: MSBuildParams -> MSBuildParams) outputPath (targets : string) (properties : string -> (string * string) list) projects =
     let projects = projects |> Seq.toList
 
@@ -967,60 +1055,66 @@ module MSBuild =
     | Some path -> !! (path @@ "/**/*.*") |> Seq.toList
     | None -> []
 
+  /// <summary>
   /// Builds the given project files or solution files and collects the output files.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - If it is null or empty then the project settings are used.
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `properties` - A list with tuples of property name and property values.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">If it is null or empty then the project settings are used.</param>
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="properties">A list with tuples of property name and property values.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let run setParams outputPath targets properties projects = runWithProperties setParams outputPath targets (fun _ -> properties) projects
 
+  /// <summary>
   /// Builds the given project files or solution files and collects the output files.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - If it is null or empty then the project settings are used.
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">If it is null or empty then the project settings are used.</param>
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let runDebug setParams outputPath targets projects = run setParams outputPath targets [ "Configuration", "Debug" ] projects
 
+  /// <summary>
   /// Builds the given project files or solution files and collects the output files.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - If it is null or empty then the project settings are used.
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">If it is null or empty then the project settings are used.</param>
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let runRelease setParams outputPath targets projects = run setParams outputPath targets [ "Configuration", "Release" ] projects
 
+  /// <summary>
   /// Builds the given project files or solution files in release mode to the default outputs.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let runWithDefaults targets projects = run id null targets [ "Configuration", "Release" ] projects
 
+  /// <summary>
   /// Builds the given project files or solution files in release mode and collects the output files.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - If it is null or empty then the project settings are used.
-  ///  - `properties` - A list with tuples of property name and property values.
-  ///  - `targets` - A string with the target names which should be run by MSBuild.
-  ///  - `projects` - A list of project or solution files.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">If it is null or empty then the project settings are used.</param>
+  /// <param name="properties">A list with tuples of property name and property values.</param>
+  /// <param name="targets">A string with the target names which should be run by MSBuild.</param>
+  /// <param name="projects">A list of project or solution files.</param>
   let runReleaseExt setParams outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
     run setParams outputPath targets properties projects
 
+  /// <summary>
   /// Builds the given web project file in the specified configuration and copies it to the given outputPath.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - The output path.
-  ///  - `configuration` - MSBuild configuration.
-  ///  - `projectFile` - The project file path.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">The output path.</param>
+  /// <param name="configuration">MSBuild configuration.</param>
+  /// <param name="projectFile">The project file path.</param>
   let buildWebsiteConfig setParams (outputPath: string) configuration projectFile  =
     use __ = Trace.traceTask "BuildWebsite" projectFile
     let projectName = Path.GetFileNameWithoutExtension projectFile
@@ -1047,27 +1141,30 @@ module MSBuild =
     !! (projectDir + "/bin/*.*") |> Shell.copy(outputPath + "/" + projectName + "/bin/")
     __.MarkSuccess()
 
+  /// <summary>
   /// Builds the given web project file with debug configuration and copies it to the given outputPath.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `outputPath` - The output path.
-  ///  - `projectFile` - The project file path.
+  /// <param name="outputPath">The output path.</param>
+  /// <param name="projectFile">The project file path.</param>
   let buildWebsite outputPath projectFile = buildWebsiteConfig id outputPath "Debug" projectFile
 
+  /// <summary>
   /// Builds the given web project files in specified configuration and copies them to the given outputPath.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MSBuildParams
-  ///  - `outputPath` - The output path.
-  ///  - `configuration` - MSBuild configuration.
-  ///  - `projectFiles` - The project file paths.
+  /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
+  /// <param name="outputPath">The output path.</param>
+  /// <param name="configuration">MSBuild configuration.</param>
+  /// <param name="projectFiles">The project file paths.</param>
   let buildWebsitesConfig setParams outputPath configuration projectFiles = Seq.iter (buildWebsiteConfig setParams outputPath configuration) projectFiles
 
+  /// <summary>
   /// Builds the given web project files with debug configuration and copies them to the given websiteDir.
+  /// </summary>
   /// 
-  /// ## Parameters
-  ///  - `outputPath` - The output path.
-  ///  - `projectFiles` - The project file paths.
+  /// <param name="outputPath">The output path.</param>
+  /// <param name="projectFiles">The project file paths.</param>
   let buildWebsites outputPath projectFiles = buildWebsitesConfig outputPath "Debug" projectFiles
 
 [<AutoOpen>]

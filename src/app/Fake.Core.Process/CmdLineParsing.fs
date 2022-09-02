@@ -118,17 +118,36 @@ module internal CmdLineParsing =
 
 type FilePath = string
 
+/// <summary>
 /// Helper functions for proper command line parsing
+/// </summary>
 module Args =
-    /// Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if needed (currently always but this might change).
+    /// <summary>
+    /// Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if 
+    /// needed (currently always but this might change).
+    /// </summary>
+    ///
+    /// <param name="args">The arguments list</param>
     let toWindowsCommandLine args = CmdLineParsing.windowsArgvToCommandLine true args
+    
+    /// <summary>
     /// Escape the given argument list according to a unix shell (bash)
+    /// </summary>
+    /// 
+    /// <param name="args">The arguments list</param>
     let toLinuxShellCommandLine args =
         System.String.Join(" ", args |> Seq.map CmdLineParsing.escapeCommandLineForShell)
+    
+    /// <summary>
     /// Read a windows command line string into its arguments
+    /// </summary>
+    /// 
+    /// <param name="cmd">The command to construct</param>
     let fromWindowsCommandLine cmd = CmdLineParsing.windowsCommandLineToArgv cmd
 
+/// <summary>
 /// Represents a list of arguments
+/// </summary>
 type Arguments = 
     internal { Args : string array; Original : string option }
     static member Empty = { Args = [||]; Original = None }

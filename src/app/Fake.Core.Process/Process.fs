@@ -3,7 +3,9 @@
 open System
 open System.Diagnostics
 
+/// <summary>
 /// A record type which captures console messages
+/// </summary>
 type ConsoleMessage = 
     { IsError : bool
       Message : string
@@ -13,7 +15,9 @@ type ConsoleMessage =
     static member CreateError msg = ConsoleMessage.Create true msg
     static member CreateOut msg = ConsoleMessage.Create false msg
 
+/// <summary>
 /// A process result including error code, message log and errors.
+/// </summary>
 type ProcessResult = 
     { ExitCode : int
       Results : ConsoleMessage list}
@@ -52,8 +56,12 @@ module private ProcStartInfoData =
 
 open ProcStartInfoData
 
+/// <summary>
+/// The process start info, a type used to define a process configurations, options and arguments
+/// </summary>
 type ProcStartInfo =
-    { /// Gets or sets the set of command-line arguments to use when starting the application.
+    {
+      /// Gets or sets the set of command-line arguments to use when starting the application.
       Arguments : string
       
       /// Gets or sets a value indicating whether to start the process in a new window.
@@ -89,7 +97,8 @@ type ProcStartInfo =
       Password : string
       
 #if FX_WINDOWSTLE
-      /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
+      /// One of the enumeration values that indicates whether the process is started in a window that is maximized,
+      /// minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
       WindowStyle : ProcessWindowStyle
       
 #endif  
@@ -108,10 +117,12 @@ type ProcStartInfo =
       /// An object that represents the preferred encoding for standard output. The default is null.
       StandardOutputEncoding : System.Text.Encoding
       
-      /// The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name, the Domain property must be null.
+      /// The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name, the Domain
+      /// property must be null.
       UserName : string
       
-      /// true if the shell should be used when starting the process; false if the process should be created directly from the executable file. The default is true.
+      /// true if the shell should be used when starting the process; false if the process should be created directly
+      /// from the executable file. The default is true.
       UseShellExecute : bool
       
 #if FX_VERB
@@ -119,7 +130,9 @@ type ProcStartInfo =
       Verb : string
       
 #endif
-      /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
+      /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be
+      /// started. When the UseShellExecute property is false, the working directory for the process to be started.
+      /// The default is an empty string ("").
       WorkingDirectory : string
       }
     static member Create() =
@@ -212,9 +225,12 @@ type ProcStartInfo =
         p.WorkingDirectory <- x.WorkingDirectory
         p
 
+    /// <summary>
     /// Parameter type for process execution.
+    /// </summary>
     type ExecParams = 
-        { /// The path to the executable, without arguments. 
+        {
+          /// The path to the executable, without arguments. 
           Program : string
           
           /// The working directory for the program. Defaults to "".
@@ -273,11 +289,17 @@ module internal Kernel32 =
 
 type AsyncProcessResult<'a> = { Result : System.Threading.Tasks.Task<'a>; Raw : System.Threading.Tasks.Task<RawProcessResult> }
 
+/// <summary>
 /// Contains functions which can be used to start other tools.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Process =
 
+    /// <summary>
     /// Kills the given process
+    /// </summary>
+    ///
+    /// <param name="proc">The process to kill</param>
     let kill (proc : Process) = 
         Trace.tracefn "Trying to kill process '%s' (Id = %d)" proc.ProcessName proc.Id
         try 
@@ -323,7 +345,6 @@ module Process =
             member _.Dispose() =
                 if shouldKillProcesses then killProcesses()
 
-    /// [omit]
     //let startedProcesses = HashSet()
     let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
     let private getStartedProcesses, _, private setStartedProcesses = 
@@ -361,7 +382,6 @@ module Process =
           setRedirectOutputToTrace shouldEnable
           shouldEnable
 
-    /// [omit]
     //let mutable enableProcessTracing = true
     let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
     let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
@@ -371,12 +391,16 @@ module Process =
         | Some v -> v
         | None -> Context.isFakeContext()
 
+    /// <summary>
     /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
     /// If set to false (default) only mono processes will be changed.
+    /// </summary>
     let mutable AlwaysSetProcessEncoding = false
      
-    // The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
+    /// <summary>
+    /// The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
     /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
+    /// </summary>
     let mutable ProcessEncoding = Encoding.UTF8
 
     let inline internal recordProcess (proc:Process) =
@@ -510,8 +534,14 @@ module Process =
     let disableShellExecute (startInfo : ProcStartInfo) =
         { startInfo with UseShellExecute = false }
 
+    /// <summary>
     /// Sets the given environment variable for the given startInfo.
     /// Existing values will be overriden.
+    /// </summary>
+    ///
+    /// <param name="envKey">The environment variable name</param>
+    /// <param name="envVar">The environment variable value</param>
+    /// <param name="startInfo">The start process info</param>
     let inline setEnvironmentVariable envKey (envVar:string) (startInfo : ^a) =
         let inline getEnv s = ((^a) : (member Environment : Map<string, string>) s)
         let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
@@ -539,7 +569,12 @@ module Process =
             env
             |> Map.tryFind envKey
         
+    /// <summary>
     /// Unsets the given environment variable for the started process
+    /// </summary>
+    ///
+    /// <param name="envKey">The environment variable name</param>
+    /// <param name="startInfo">The start process info</param>
     let inline removeEnvironmentVariable envKey (startInfo : ^a) =
         let inline getEnv s = ((^a) : (member Environment : Map<string, string>) s)
         let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
@@ -554,13 +589,22 @@ module Process =
         //|> Map.remove envKey
         |> setEnv startInfo
 
+    /// <summary>
     /// Sets the given environment variables.
+    /// </summary>
+    ///
+    /// <param name="vars">The environment variables to set</param>
+    /// <param name="startInfo">The start process info</param>
     let inline setEnvironmentVariables vars (startInfo : ^a) =
         vars
         |> Seq.fold (fun state (newKey, newVar) ->
                 setEnvironmentVariable newKey newVar state) startInfo
 
+    /// <summary>
     /// Sets all current environment variables to their current values
+    /// </summary>
+    ///
+    /// <param name="startInfo">The start process info</param>
     let inline setCurrentEnvironmentVariables (startInfo : ^a) =
         setEnvironmentVariables (Environment.environVars ()) startInfo
         |> setEnvironmentVariable defaultEnvVar defaultEnvVar
@@ -578,10 +622,18 @@ module Process =
         |> Seq.collect (fun (k, v) -> [ delimit k; v ])
         |> CmdLineParsing.windowsArgvToCommandLine true
 
+    /// <summary>
     /// Kills all processes with the given id
+    /// </summary>
+    ///
+    /// <param name="id">The process id to kill</param>
     let killById id = Process.GetProcessById id |> kill
 
+    /// <summary>
     /// Retrieve the file-path of the running executable of the given process.
+    /// </summary>
+    ///
+    /// <param name="p">The process instance to use</param>
     let getFileName (p:Process) =
 #if !FX_NO_HANDLE
         if Environment.isWindows then
@@ -590,7 +642,11 @@ module Process =
 #endif    
             p.MainModule.FileName
 
+    /// <summary>
     /// Returns all processes with the given name
+    /// </summary>
+    ///
+    /// <param name="name">The process name</param>
     let getAllByName (name : string) = 
         Process.GetProcesses()
         |> Seq.filter (fun p -> 
@@ -602,30 +658,40 @@ module Process =
                    p.ProcessName.ToLower().StartsWith(name.ToLower())
                with _ -> false)
 
+    /// <summary>
     /// Kills all processes with the given name
+    /// </summary>
+    ///
+    /// <param name="name">The process name</param>
     let killAllByName name = 
         Trace.tracefn "Searching for process with name = %s" name
         getAllByName name |> Seq.iter kill
 
+    /// <summary>
     /// Kills the F# Interactive (FSI) process.
+    /// </summary>
     let killFSI() = killAllByName "fsi.exe"
 
+    /// <summary>
     /// Kills the MSBuild process.
+    /// </summary>
     let killMSBuild() = killAllByName "msbuild"
 
+    /// <summary>
     /// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
+    /// </summary>
     let killAllCreatedProcesses() =
         match getStartedProcesses() with
         | Some startedProcesses when shouldKillCreatedProcesses() ->
             startedProcesses.KillAll()
         | _ -> ()
 
+    /// <summary>
     /// Waits until the processes with the given name have stopped or fails after given timeout.
+    /// </summary>
     /// 
-    /// ## Parameters
-    /// 
-    ///  - `name` - The name of the processes in question.
-    ///  - `timeout` - The timespan to time out after.
+    /// <param name="name">The name of the processes in question.</param>
+    /// <param name="timeout">The timespan to time out after.</param>
     let ensureProcessesHaveStopped name timeout =
         let endTime = DateTime.Now.Add timeout
         while DateTime.Now <= endTime && not (getAllByName name |> Seq.isEmpty) do
@@ -634,7 +700,11 @@ module Process =
         if not (getAllByName name |> Seq.isEmpty) then
             failwithf "The process %s has not stopped (check the logs for errors)" name
 
+    /// <summary>
     /// Execute an external program and return the exit code.
+    /// </summary>
+    ///
+    /// <param name="args">The execution arguments</param>
     /// [omit]
     let shellExec (args : ExecParams) =
         if String.isNullOrEmpty args.Program then invalidArg "args" "You must specify a program to run!"
@@ -693,8 +763,12 @@ module Process =
             Some path, ver
         | None -> None, None
 
+    /// <summary>
     /// Ensures the executable is run with the full framework. On non-windows platforms that
     /// means running the tool by invoking 'mono'.
+    /// </summary>
+    ///
+    /// <param name="proc">The process start info</param>
     let withFramework (proc:ProcStartInfo) =
         match Environment.isWindows, proc.FileName.ToLowerInvariant().EndsWith(".exe"), monoPath with
         | false, true, Some monoPath ->
@@ -705,7 +779,9 @@ module Process =
             failwithf "trying to start a .NET process on a non-windows platform, but mono could not be found. Try to set the MONO environment variable or add mono to the PATH."
         | _ -> proc
 
+/// <summary>
 /// Allows to exec shell operations synchronously and asynchronously.
+/// </summary>
 type Shell private() = 
     static member private GetParams(cmd, ?args, ?dir) = 
         let args = defaultArg args ""
@@ -715,22 +791,22 @@ type Shell private() =
           CommandLine = args
           Args = [] }
     
+    /// <summary>
     /// Runs the given process, waits for it's completion and returns the exit code.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///
-    ///  - `cmd` - The command which should be run in elevated context.
-    ///  - `args` - The process arguments (optional).
-    ///  - `directory` - The working directory (optional).
+    /// <param name="cmd">The command which should be run in elevated context.</param>
+    /// <param name="args">The process arguments (optional).</param>
+    /// <param name="directory">The working directory (optional).</param>
     static member Exec(cmd, ?args, ?dir) = Process.shellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
     
+    /// <summary>
     /// Runs the given process asynchronously.
+    /// </summary>
     /// 
-    /// ## Parameters
-    ///
-    ///  - `cmd` - The command which should be run in elevated context.
-    ///  - `args` - The process arguments (optional).
-    ///  - `directory` - The working directory (optional).
+    /// <param name="cmd">The command which should be run in elevated context.</param>
+    /// <param name="args">The process arguments (optional).</param>
+    /// <param name="directory">The working directory (optional).</param>
     static member AsyncExec(cmd, ?args, ?dir) =
         let internalArgs = Shell.GetParams(cmd, ?args = args, ?dir = dir) 
         if String.isNullOrEmpty internalArgs.Program then invalidArg "args" "You must specify a program to run!"
@@ -749,6 +825,9 @@ type Shell private() =
         
         processResult.ExitCode
 
+/// <summary>
+/// An extension to process start info type
+/// </summary>
 [<AutoOpen>]
 module ProcStartInfoExtensions =
     type ProcStartInfo with
@@ -839,41 +918,74 @@ module ProcStartInfoExtensions =
         member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }
 
 
-/// Module to start or run processes, used in combination with the `CreateProcess` API.
+/// <summary>
+/// Module to start or run processes, used in combination with the <c>CreateProcess</c> API.
+/// </summary>
 /// 
-/// ### Example
-/// 
-///     #r "paket: 
+/// <example>
+/// <code lang="fsharp">
+/// #r "paket: 
 ///     nuget Fake.Core.Process //"
 ///     open Fake.Core
 ///     CreateProcess.fromRawCommand "./folder/mytool.exe" ["arg1"; "arg2"]
-///     |> Proc.run
-///     |> ignore
+///     |&gt; Proc.run
+///     |&gt; ignore
+/// </code>
+/// </example>
 /// 
 [<RequireQualifiedAccess>]
 module Proc =
 
+    /// <summary>
     /// Starts a process. The process has been started successfully after the returned task has been completed.
-    /// After the task has been completed you retrieve two other tasks:
-    /// - One `Raw`-Task to indicate when the process exited (and return the exit-code for example)
-    /// - One `Result`-Task for the final result object.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     /// 
-    /// Note: The `Result` task might finish while the `Raw` task is still running, 
+    /// <remarks>
+    /// After the task has been completed you retrieve two other tasks: <br/>
+    /// <list type="number">
+    /// <item>
+    /// One <c>Raw</c> - Task to indicate when the process exited (and return the exit-code for example)
+    /// </item>
+    /// <item>
+    /// One <c>Result</c> - Task for the final result object.
+    /// </item>
+    /// </list>
+    /// <br/>
+    /// Note: The <c>Result</c> task might finish while the <c>Raw</c> task is still running, 
     /// this enables you to work with the result object before the process has exited.
     /// For example consider a long running process where you are only interested in the first couple of output lines
+    /// </remarks>
     let startRaw (c:CreateProcess<_>) = Process.Proc.startRaw Process.processStarter c
     
-    /// Similar to `startRaw` but waits until the process has been started. 
+    /// <summary>
+    /// Similar to <c>startRaw</c> but waits until the process has been started.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     let startRawSync c = Process.Proc.startRawSync Process.processStarter c
 
-    /// Starts the given process and waits for the `Result` task. (see `startRaw` documentation). 
-    /// In most common scenarios the `Result` includes the `Raw` task or the exit-code one way or another.
+    /// <summary>
+    /// Starts the given process and waits for the <c>Result</c> task. (see <c>startRaw</c> documentation). 
+    /// In most common scenarios the <c>Result</c> includes the <c>Raw</c> task or the exit-code one way or another.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     let start c = Process.Proc.start Process.processStarter c
 
-    /// Convenience method when you immediately want to await the result of 'start', just note that
+    /// <summary>
+    /// Convenience method when you immediately want to await the result of <c>start</c>, just note that
     /// when used incorrectly this might lead to race conditions 
-    /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
+    /// (ie if you use StartAsTask and access reference cells in <c>CreateProcess</c> after that returns)
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
     let startAndAwait c = Process.Proc.startAndAwait Process.processStarter c
 
-    /// Like `start` but waits for the result synchronously.
+    /// <summary>
+    /// Like <c>start</c> but waits for the result synchronously.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param> 
     let run c = Process.Proc.run Process.processStarter c

@@ -1,10 +1,17 @@
 namespace Fake.Core.DependencyManager.Paket
 
+/// <namespacedoc>
+/// <summary>
+/// DependencyManager.Paket namespace contains tasks to interact with paket dependency manager
+/// </summary>
+/// </namespacedoc>
 module Internals = 
     open System
 
+    /// <summary>
     /// A marker attribute to tell FCS that this assembly contains a Dependency Manager, or
-    /// that a class with the attribute is a DependencyManager
+    /// that a class with the attribute is a <c>DependencyManager</c>
+    /// </summary>
     [<AttributeUsage(AttributeTargets.Assembly ||| AttributeTargets.Class , AllowMultiple = false)>]
     type DependencyManagerAttribute() =
         inherit Attribute()
@@ -12,7 +19,9 @@ module Internals =
     [<assembly: DependencyManagerAttribute()>]
     do ()
 
-    /// returned structure from the ResolveDependencies method call. 
+    /// <summary>
+    /// returned structure from the ResolveDependencies method call.
+    /// </summary>
     type ResolveDependenciesResult (success: bool, stdOut: string array, stdError: string array, resolutions: string seq, sourceFiles: string seq, roots: string seq) =
 
         /// Succeeded?

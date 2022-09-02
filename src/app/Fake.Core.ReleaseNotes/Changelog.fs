@@ -1,11 +1,14 @@
 namespace Fake.Core
 
+/// <summary>
 /// Contains helpers which allow to parse Change log text files.
-/// These files have to be in a format as described on [keepachangelog](https://keepachangelog.com/en/1.1.0/)
-///
-/// ## Format
-///
-/// ```markdown
+/// These files have to be in a format as described on
+/// <a href="https://keepachangelog.com/en/1.1.0/">keepachangelog</a>
+/// </summary>
+/// <remarks>
+/// Format <br/>
+/// <example>
+/// <code lang="markdown">
 /// # Changelog
 ///
 /// All notable changes to this project will be documented in this file.
@@ -22,15 +25,17 @@ namespace Fake.Core
 /// - This release already has lots of features
 ///
 /// [0.1.0]: https://github.com/user/MyCoolNewLib.git/releases/tag/v0.1.0
-/// ```
+/// </code>
+/// </example>
+/// </remarks>
 ///
-/// ## Sample
+/// <example>
+/// <code lang="fsharp">
+/// let changelogFile = &quot;CHANGELOG.md&quot;
+///     let newVersion = &quot;1.0.0&quot;
 ///
-///     let changelogFile = "CHANGELOG.md"
-///     let newVersion = "1.0.0"
-///
-///     Target.create "AssemblyInfo" (fun _ ->
-///         let changelog = changeLogFile |> Changelog.load
+///     Target.create &quot;AssemblyInfo&quot; (fun _ -&gt;
+///         let changelog = changeLogFile |&gt; Changelog.load
 ///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
 ///           [ Attribute.Title project
 ///             Attribute.Product project
@@ -42,10 +47,12 @@ namespace Fake.Core
 ///     Target.create "Promote Unreleased to new version" (fun _ ->
 ///         let newChangelog =
 ///             changelogFile
-///             |> ChangeLog.load
-///             |> ChangeLog.promoteUnreleased newVersion
-///             |> ChangeLog.save changelogFile
+///             |&gt; ChangeLog.load
+///             |&gt; ChangeLog.promoteUnreleased newVersion
+///             |&gt; ChangeLog.save changelogFile
 ///     )
+/// </code>
+/// </example> 
 [<RequireQualifiedAccess>]
 module Changelog =
 
@@ -67,7 +74,9 @@ module Changelog =
     let internal betweenNewlines x = "\n" + x + "\n"
     let internal appendNewlines = String.trim >> sprintf "%s\n\n"
 
+    /// <summary>
     /// Holds cleared and original text versions of log entry
+    /// </summary>
     type ChangeText =
         { CleanedText: string
           OriginalText: string option }
@@ -147,7 +156,9 @@ module Changelog =
         |> fixMultipleNewlines
         |> String.trim
 
+    /// <summary>
     /// The changelog entry info
+    /// </summary>
     type ChangelogEntry =
         {
             /// the parsed Version
@@ -200,7 +211,9 @@ module Changelog =
         static member New(assemblyVersion, nugetVersion, changes) =
             ChangelogEntry.New(assemblyVersion, nugetVersion, None, None, changes, false)
 
+    /// <summary>
     /// Holds data for an unreleased changelog entry type
+    /// </summary>
     type Unreleased =
         {
             /// a descriptive text (after the header)
@@ -235,10 +248,11 @@ module Changelog =
 
     let internal assemblyVersionRegex = String.getRegEx @"([0-9]+\.)+[0-9]+"
 
-    /// parse versions in changelog file
+    /// <summary>
+    /// Parse versions in changelog file
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `line` - the changelog line to parse version from
+    /// <param name="line">The changelog line to parse version from</param>
     let parseVersions =
         fun line ->
             let assemblyVersion = assemblyVersionRegex.Match line
@@ -253,7 +267,9 @@ module Changelog =
 
             assemblyVersion, nugetVersion
 
-    /// Holds data for a changelog file, which include changelog entries an other metadata 
+    /// <summary>
+    /// Holds data for a changelog file, which include changelog entries an other metadata
+    /// </summary>
     type Changelog =
         {
             /// the header line
@@ -334,30 +350,33 @@ module Changelog =
             |> fixMultipleNewlines
             |> String.trim
 
+    /// <summary>
     /// Create a changelog with given custom header value
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `header` - the custom header value for changelog
-    ///  - `description` - the descriptive text for changelog 
-    ///  - `unreleased` - the unreleased list of changelog entries
-    ///  - `entries` - the list of changelog entries
+    /// <param name="header">the custom header value for changelog</param>
+    /// <param name="description">the descriptive text for changelog</param>
+    /// <param name="unreleased">the unreleased list of changelog entries</param>
+    /// <param name="entries">the list of changelog entries</param>
     let createWithCustomHeader header description unreleased entries =
         Changelog.New(header, description, unreleased, entries)
 
+    /// <summary>
     /// Create a changelog with given data
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `description` - the descriptive text for changelog 
-    ///  - `unreleased` - the unreleased list of changelog entries
-    ///  - `entries` - the list of changelog entries
+    /// <param name="description">the descriptive text for changelog </param>
+    /// <param name="unreleased">the unreleased list of changelog entries</param>
+    /// <param name="entries">the list of changelog entries</param>
     let create description unreleased entries =
         createWithCustomHeader "Changelog" description unreleased entries
 
+    /// <summary>
     /// Create a changelog with given entries and default values for other data including
     /// header and description.
-    /// ## Parameters
+    /// </summary>
     ///
-    ///  - `entries` - the list of changelog entries
+    /// <param name="entries">the list of changelog entries</param>
     let fromEntries entries = create None None entries
 
     let internal isMainHeader line : bool = "# " <* line
@@ -376,10 +395,11 @@ module Changelog =
     let internal isAnyHeader line =
         isBlockHeader line || isCategoryHeader line
 
+    /// <summary>
     /// Parses a change log text and returns the change log.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `data` - change log text
+    /// <param name="data">change log text</param>
     let parse (data: seq<string>) : Changelog =
         let parseDate =
             let dateRegex =
@@ -520,31 +540,32 @@ module Changelog =
 
             Changelog.New(header, description, unreleased, entries)
 
+    /// <summary>
     /// Parses a Changelog text file and returns the latest changelog.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `filename` - Changelog text file name
+    /// <param name="filename">Changelog text file name</param>
     ///
-    /// ## Returns
-    /// The loaded changelog (or throws an exception, if the changelog could not be parsed)
+    /// <returns>The loaded changelog (or throws an exception, if the changelog could not be parsed)</returns>
     let load filename =
         System.IO.File.ReadLines filename |> parse
 
+    /// <summary>
     /// Saves a Changelog to a text file.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `filename` - Changelog text file name
-    ///  - `changelog` - the changelog data
+    /// <param name="filename">Changelog text file name</param>
+    /// <param name="changelog">the changelog data</param>
     let save (filename: string) (changelog: Changelog) : unit =
         System.IO.File.WriteAllText(filename, changelog |> string)
 
-    /// Promotes the `Unreleased` section of a changelog
+    /// <summary>
+    /// Promotes the <c>Unreleased</c> section of a changelog
     /// to a new changelog entry with the given version
+    /// </summary>
     ///
-    /// ## Parameters
-    /// - `version` - The version (in NuGet-Version format, e.g. `3.13.4-alpha1.212`
-    /// - `changelog` - The changelog to promote
+    /// <param name="version">The version (in NuGet-Version format, e.g. <c>3.13.4-alpha1.212</c></param>
+    /// <param name="changelog">The changelog to promote</param>
     ///
-    /// ## Returns
-    /// The promoted changelog
+    /// <returns>The promoted changelog</returns>
     let promoteUnreleased (version: string) (changelog: Changelog) : Changelog = changelog.PromoteUnreleased(version)

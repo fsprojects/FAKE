@@ -1,5 +1,11 @@
 namespace Fake.DotNet.Testing.NUnit
 
+/// <namespacedoc>
+/// <summary>
+/// Testing.NUnit namespace contains tasks to interact with NUnit testing framework
+/// </summary>
+/// </namespacedoc>
+/// 
 /// <summary>
 /// Contains types and utility functions related to running <a href="http://www.nunit.org/">NUnit</a> unit tests.
 /// </summary>

@@ -2,12 +2,16 @@
 
 open Fake.Core
 
-/// Contains tasks to interact with [fsdocs](https://fsprojects.github.io/FSharp.Formatting/) tool to
+/// <summary>
+/// Contains tasks to interact with <a href="https://fsprojects.github.io/FSharp.Formatting/">fsdocs</a> tool to
 /// process F# script files, markdown and for generating API documentation.
+/// </summary>
 [<RequireQualifiedAccess>]
 module Fsdocs =
 
+    /// <summary>
     /// Fsdocs build command parameters and options
+    /// </summary>
     type BuildCommandParams =
         {
             /// Input directory of content (default: docs)
@@ -16,7 +20,7 @@ module Fsdocs =
             /// Project files to build API docs for outputs, defaults to all packable projects
             Projects: seq<string> option
 
-            /// Output Directory (default 'output' for 'build' and 'tmp/watch' for 'watch')
+            /// Output Directory (default <c>output</c> for <c>build</c> and <c>tmp/watch</c> for <c>watch</c>)
             Output: string option
 
             /// Disable generation of API docs
@@ -46,25 +50,25 @@ module Fsdocs =
             /// Display version information
             Version: bool option
 
-            /// Provide properties to dotnet msbuild, e.g. --properties Configuration=Release Version=3.4
+            /// Provide properties to dotnet msbuild, e.g. <c>--properties Configuration=Release Version=3.4</c>
             Properties: string option
 
             /// Additional arguments passed down as otherflags to the F# compiler when the API is being generated.
-            /// Note that these arguments are trimmed, this is to overcome a limitation in the command line argument processing.
-            /// A typical use-case would be to pass an addition assembly reference.
-            /// Example --fscoptions " -r:MyAssembly.dll"
+            /// Note that these arguments are trimmed, this is to overcome a limitation in the command line argument
+            /// processing. A typical use-case would be to pass an addition assembly reference.
+            /// Example <c>--fscoptions " -r:MyAssembly.dll"</c>
             FscOptions: string option
 
             /// Fail if docs are missing or can't be generated
             Strict: bool option
 
-            /// Source folder at time of component build (<FsDocsSourceFolder>)
+            /// Source folder at time of component build (<c>&lt;FsDocsSourceFolder&gt;</c>)
             SourceFolder: string option
 
-            /// Source repository for github links (<FsDocsSourceRepository>)
+            /// Source repository for github links (<c>&lt;FsDocsSourceRepository&gt;</c>)
             SourceRepository: string option
 
-            /// Assume comments in F# code are markdown (<UsesMarkdownComments>)
+            /// Assume comments in F# code are markdown (<c>&lt;UsesMarkdownComments&gt;</c>)
             MdComments: bool option
         }
 
@@ -89,7 +93,9 @@ module Fsdocs =
               SourceRepository = None
               MdComments = None }
 
+    /// <summary>
     /// Fsdocs watch command parameters and options
+    /// </summary>
     type WatchCommandParams =
         {
             /// Do not serve content when watching.
@@ -98,10 +104,10 @@ module Fsdocs =
             /// Do not launch a browser window.
             NoLaunch: bool option
 
-            /// URL extension to launch http://localhost:/%s.
+            /// URL extension to launch <c>http://localhost:/%s</c>.
             Open: string option
 
-            /// Port to serve content for http://localhost serving.
+            /// Port to serve content for <c>http://localhost</c> serving.
             Port: int option
         }
 
@@ -152,13 +158,17 @@ module Fsdocs =
         |> StringBuilder.toText
         |> String.trim
 
-    /// Build documentation using `fsdocs build` command
+    /// <summary>
+    /// Build documentation using <c>fsdocs build</c> command
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setBuildParams` - Function used to overwrite the build command default parameters.
+    /// <param name="setBuildParams">Function used to overwrite the build command default parameters.</param>
     ///
-    /// ## Sample
-    ///   Fsdocs.build (fun p -> { p with Clean = Some(true); Strict = Some(true) })
+    /// <example>
+    /// <code lang="fsharp">
+    /// Fsdocs.build (fun p -> { p with Clean = Some(true); Strict = Some(true) })
+    /// </code>
+    /// </example>
     let build setBuildParams =
         let buildParams = setBuildParams BuildCommandParams.Default
         let formattedParameters = buildBuildCommandParams buildParams
@@ -169,13 +179,17 @@ module Fsdocs =
         if 0 <> result.ExitCode
         then failwithf "fsdocs build failed with exit code '%d'" result.ExitCode
     
-    /// Watch documentation using `fsdocs watch` command
+    /// <summary>
+    /// Watch documentation using <c>fsdocs watch</c> command
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `setWatchParams` - Function used to overwrite the watch command default parameters.
+    /// <param name="setWatchParams">Function used to overwrite the watch command default parameters.</param>
     ///
-    /// ## Sample
-    ///   Fsdocs.watch (fun p -> { p with Port = Some(3005) })
+    /// <example>
+    /// <code lang="fsharp">
+    /// Fsdocs.watch (fun p -> { p with Port = Some(3005) })
+    /// </code>
+    /// </example>
     let watch setWatchParams =
         let watchParams = setWatchParams WatchCommandParams.Default
         let formattedParameters = buildWatchCommandParams watchParams

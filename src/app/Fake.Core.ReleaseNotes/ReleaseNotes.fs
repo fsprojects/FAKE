@@ -1,17 +1,22 @@
 ﻿namespace Fake.Core
 
+/// <summary>
 /// Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.
-///
-/// ## Formats
-///
-/// ### Simple format
-///
-///     * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
-///     * 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
-///
-/// ### Complex format
-///
-///     ### New in 1.1.10 (Released 2013/09/12)
+/// </summary>
+/// <remarks>
+/// <br/> Formats: <br/>
+/// - Simple format
+/// <example>
+/// <code lang="markdown">
+/// 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+/// 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
+/// </code>
+/// </example>
+/// <br/>
+/// - Complex format
+/// <example>
+/// <code lang="markdown">
+/// ### New in 1.1.10 (Released 2013/09/12)
 ///     * Support for heterogeneous XML attributes.
 ///     * Make CsvFile re-entrant.
 ///     * Support for compressed HTTP responses.
@@ -21,30 +26,36 @@
 ///     * Infer booleans for ints that only manifest 0 and 1.
 ///     * Support for partially overriding the Schema in CsvProvider.
 ///     * PreferOptionals and SafeMode parameters for CsvProvider.
+/// </code>
+/// </example>
+/// </remarks>
 ///
-/// ## Sample
+/// <example>
+/// <code lang="fsharp">
+/// #r &quot;paket:
+///     nuget Fake.Core.ReleaseNotes //&quot;
 ///
+///     let release = ReleaseNotes.load &quot;RELEASE_NOTES.md&quot;
 ///
-///     #r "paket:
-///     nuget Fake.Core.ReleaseNotes //"
-///
-///     let release = ReleaseNotes.load "RELEASE_NOTES.md"
-///
-///     Target "AssemblyInfo" (fun _ ->
-///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
+///     Target &quot;AssemblyInfo&quot; (fun _ -&gt;
+///         CreateFSharpAssemblyInfo &quot;src/Common/AssemblyInfo.fs&quot;
 ///           [ Attribute.Title project
 ///             Attribute.Product project
 ///             Attribute.Description summary
 ///             Attribute.Version release.AssemblyVersion
 ///             Attribute.FileVersion release.AssemblyVersion]
 ///     )
+/// </code>
+/// </example>  
 [<RequireQualifiedAccess>]
 module ReleaseNotes =
 
     open System
     open Fake.Core
 
+    /// <summary>
     /// Contains the parsed information of the release notes text file.
+    /// </summary>
     type ReleaseNotes =
         {
             /// The parsed version
@@ -194,10 +205,11 @@ module ReleaseNotes =
             result
 
 
+    /// <summary>
     /// Parses a Release Notes text and returns all release notes.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `data` - Release notes text
+    /// <param name="data">Release notes text</param>
     let parseAll (data: seq<string>) =
         let data = data |> Seq.toList |> List.filter (not << String.isNullOrWhiteSpace)
 
@@ -220,10 +232,11 @@ module ReleaseNotes =
             |> List.rev
 
 
+    /// <summary>
     /// Parses a Release Notes text and returns the latest release notes.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `data` - Release notes text
+    /// <param name="data">Release notes text</param>
     let parse (data: seq<string>) =
         match data |> parseAll |> Seq.tryHead with
         | Some head -> head
@@ -231,10 +244,11 @@ module ReleaseNotes =
             failwithf
                 "The release notes document was not valid, see https://fake.build/apidocs/v5/fake-core-releasenotes.html for the allowed formats"
 
+    /// <summary>
     /// Parses a Release Notes text file and returns the latest release notes.
+    /// </summary>
     ///
-    /// ## Parameters
-    ///  - `fileName` - Release notes text file name
+    /// <param name="fileName">Release notes text file name</param>
     let load fileName =
         System.IO.File.ReadLines fileName
         |> parse
