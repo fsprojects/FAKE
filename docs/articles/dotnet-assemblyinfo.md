@@ -2,7 +2,7 @@
 
 In this article the `AssemblyInfo` task is used in order to set specific version information to .NET assemblies.
 
-If you succeeded with the [Getting Started tutorial]({{root}}articles/getting-started.html), then you just have to modify your 
+If you succeeded with the [Getting Started tutorial]({{root}}guide/getting-started.html), then you just have to modify your 
 `BuildApp` target to the following:
 
 ```fsharp

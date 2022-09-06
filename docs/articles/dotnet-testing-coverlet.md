@@ -1,9 +1,10 @@
-# Analyze your code coverage with Coverlet
+# Analyze your Code Coverage with Coverlet
 
-From the [project](https://github.com/tonerdo/coverlet):
-> Coverlet is a cross platform code coverage framework for .NET, with support for line, branch and method coverage. It works with .NET Framework on Windows and .NET Core on all supported platforms.
+[Coverlet](https://github.com/tonerdo/coverlet) is a cross platform code coverage framework for .NET, with support for line, 
+branch and method coverage. It works with .NET Framework on Windows and .NET Core on all supported platforms.
 
-[API-Reference](apidocs/v5/fake-dotnet-testing-coverlet.html)
+To see the available Coverlet APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-dotnet-testing-coverlet.html) 
+for the Coverlet module.
 
 ## Minimal working example
 
@@ -33,6 +34,8 @@ DotNet.test (fun p ->
 ```
 
 ## Full example
+
+Following FSI script shows a complete usage of Coverlet module:
 
 ```fsharp
 #r "paket:

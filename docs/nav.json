@@ -24,7 +24,7 @@
             },
             {
                 "title": "Create custom modules",
-                "href": "/fake-fake5-custom-modules.html"
+                "href": "guide/fake-custom-modules.html"
             }
         ]
     },
@@ -74,7 +74,7 @@
         "links": [
             {
                 "title": "Slack",
-                "href": "/reference/fake-api-slack.html"
+                "href": "/articles/fake-api-slack.html"
             },
             {
                 "title": "GitHub",
@@ -456,7 +456,7 @@
             },
             {
                 "title": "SignTool",
-                "href": "/reference/fake-tools-signtool.html"
+                "href": "/reference/fake-signtool.html"
             }
         ]
     },

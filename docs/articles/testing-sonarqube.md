@@ -1,7 +1,7 @@
 # Analyze your code with SonarQube
 
-From the [web page](http://sonarqube.org):
->"The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, >from project portfolio down to the method level"
+[SonarQube](http://sonarqube.org) platform is an open source quality management platform, dedicated to continuously analyzing and 
+measuring the technical quality of source code, from project portfolio down to the method level
 
 It can analyze a lot of different programming languages, from PHP, Erlang, CSS to Cobol. C# can be installed
 with an additional plugin. This must be done on the SonarQube server. 
@@ -49,11 +49,12 @@ Target.create "Default" DoNothing
 Target.runOrDefault "Default"
 ```
 
-By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.
+By default, the SonarQube module looks for the MSBuild runner in the `tools/SonarQube` directory. This can be overwritten 
+using the ToolsPath property of the parameters.
 
 ## Additional options for SonarQube
 
-* You can send additional global settings  to the server with the '/d:' parameter.
+* You can send additional global settings  to the server with the `/d:` parameter.
 In the SonarQubeParams, this is the new field Settings:
 
 ```fsharp
@@ -66,7 +67,7 @@ SonarQube.start (fun p ->
   )
 ```
 
-* Configuration can also be read from a configuration file. This is the '/s:' parameter.
+* Configuration can also be read from a configuration file. This is the `/s:` parameter.
 This can be done with the new field Config:
 
 ```fsharp

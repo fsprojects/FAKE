@@ -36,7 +36,7 @@ In order to get variables into FAKE you need to encrypt them via AES. When in do
 
 You need to create a json in the following format:
 
-```json
+```
 { "keyFile": "<Path to file of the 32 byte key, encoded as base64 and saved in utf8>",
   "iv": "<base64 string of the 16 byte IV>",
   "values": [

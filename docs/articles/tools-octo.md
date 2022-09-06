@@ -7,7 +7,7 @@ To see the available Octo APIs in FAKE, please see the [`API-Reference`]({{root}
 ## Installing Octopus Deploy
 
 You can try the cloud version of Octopus [*here*](https://octopus.com/cloud). Otherwise you can download it 
-from [*http://octopusdeploy.com/downloads*](http://octopusdeploy.com/downloads) - and then start 
+from [*octopusdeploy downloads page*](http://octopusdeploy.com/downloads) - and then start 
 a [*free trial*](https://octopus.com/trial). Then follow the [*Installation Instructions*](http://octopusdeploy.com/documentation/install/octopus) 
 to get yourself up and running.
 

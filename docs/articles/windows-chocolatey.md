@@ -1,5 +1,8 @@
 # Using Chocolatey
 
+[Chocolatey](https://chocolatey.org/) is software management automation for Windows that wraps installers, executables, zips, 
+and scripts into compiled packages.
+
 ## Namespace
 
 To be used, the `Choco` module needs the `Fake.Windows` namespace:

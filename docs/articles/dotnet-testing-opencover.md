@@ -1,11 +1,14 @@
-# Analyze your code coverage with OpenCover
+# Analyze your Code Coverage with OpenCover
 
-From the [project](https://github.com/OpenCover/opencover):
->"A code coverage tool for .NET 2 and above (WINDOWS OS only), support for 32 and 64 processes with both branch and sequence points."
+[OpenCover](https://github.com/OpenCover/opencover) is a code coverage tool for .NET 2 and above (WINDOWS OS only), 
+support for 32 and 64 processes with both branch and sequence points.
 
-It will analyze the code coverage during testing and generates an XML report which can be used to generates HTML pages or uploaded to online services like [coveralls](https://coveralls.io/) or [codecov](https://codecov.io/).
+It will analyze the code coverage during testing and generates an XML report which can be used to generates HTML pages or 
+uploaded to online services like [coveralls](https://coveralls.io/) or [codecov](https://codecov.io/).
 
 ## Minimal working example
+
+Following FSI script shows how to use OpenCover:
 
 ```fsharp
 #r "paket:
@@ -19,9 +22,12 @@ OpenCover.run (fun p ->
     "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
 ```
 
-By default, the OpenCover module looks for the OpenCover Console in the OpenCover installation path '%LOCALAPPDATA%/Apps/OpenCover' directory. This can be overwritten using the `ExePath` property of the parameters.
+By default, the OpenCover module looks for the OpenCover Console in the OpenCover installation path 
+`%LOCALAPPDATA%/Apps/OpenCover` directory. This can be overwritten using the `ExePath` property of the parameters.
 
 ## Version
+
+To get version of OpenCover you can use the `getVersion` API as shown below:
 
 ```fsharp
 #r "paket:
@@ -32,6 +38,8 @@ OpenCover.getVersion None
 ```
 
 ## Full example
+
+Following FSI script shows a full usage example of OpenCover module: 
 
 ```fsharp
 #r "paket:

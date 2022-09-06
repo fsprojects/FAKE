@@ -1,4 +1,4 @@
-# Releasifying NuGet packages with Squirrel
+# Releasifying NuGet Packages with Squirrel
 
 [*Squirrel.Windows*](https://github.com/Squirrel/Squirrel.Windows) is an installation tool with an auto-update system 
 for Windows desktop apps.

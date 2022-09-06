@@ -125,48 +125,7 @@
         </span>
             </button>
         </div>
-
-        <ul>
-            <li class="mt-12 lg:mt-8">
-                <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900">
-                    Sample Pages
-                </h5>
-                <ul class="space-y-6 lg:space-y-2 border-l">
-                    <li class="group">
-                        <a
-                            class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
-                            href="/articles/api-slack.html"
-                            :class="window.location.pathname.startsWith('/articles/api-slack.html') ? 'text-\[#d4b43c\]' : 'text-slate-700'">
-                                <span
-                                    class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
-                                    <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                  </span>
-                            <span class="inline-block">Slack - Article</span>
-                        </a>
-                    </li>
-                    <li class="group">
-                        <a
-                            class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
-                            href="/reference/fake-api-github.html"
-                            :class="window.location.pathname.startsWith('/reference/fake-api-github.html') ? 'text-\[#d4b43c\]' : 'text-slate-700'">
-                                <span
-                                    class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
-                                    <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                  </span>
-                            <span class="inline-block">GitHub - API Docs</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        
         <ul
             x-data="{nav: []}"
             x-init="
@@ -204,7 +163,7 @@
         </ul>
     </nav>
     <div id="content"
-         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose md:prose-lg prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
         {{fsdocs-content}}
     </div>
 </div>

@@ -71,7 +71,7 @@ type AssemblyInfoFileConfig
 /// 
 /// <summary>
 /// Contains tasks to generate AssemblyInfo files for C# and F#.
-/// There is also a tutorial about the <a href="guide/dotnet-assemblyinfo.html">AssemblyInfo tasks</a> available.
+/// There is also a tutorial about the <a href="/articles/dotnet-assemblyinfo.html">AssemblyInfo tasks</a> available.
 /// </summary>
 [<RequireQualifiedAccess>]
 module AssemblyInfo =
