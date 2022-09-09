@@ -158,9 +158,6 @@ module private MSBuildExe =
   let private toDict items =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
-  let private getAllKnownPaths =
-    (knownMSBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMSBuildLocations
-
   /// Versions of Mono prior to this one have faulty implementations of MSBuild
   /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
   let monoVersionToUseMSBuildOn = System.Version("5.0")
@@ -233,17 +230,28 @@ module private MSBuildExe =
                 else
 #endif
                     None
+
             let findOnVSPathsThenSystemPath =
                 let visualStudioVersion = Environment.environVarOrNone "VisualStudioVersion"
+
+                // with VS 2022 Visual Studio can also be installed in "Program Files" instead of "Program Files (x86)"
+                // so we need to search both paths for every version of Visual Studio
+                let withProgramFiles paths =
+                    (paths |> List.map ((@@) Fake.Core.Environment.ProgramFilesX86))
+                    @ (paths |> List.map ((@@) Fake.Core.Environment.ProgramFiles))
+
                 let vsVersionPaths =
                     let dict = toDict knownMSBuildEntries
-                    defaultArg (visualStudioVersion |> Option.bind dict.TryFind) getAllKnownPaths
-                    |> List.map ((@@) Environment.ProgramFilesX86)
+                    match Fake.Core.Environment.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind with
+                    | Some x -> x |> withProgramFiles
+                    | None -> (knownMSBuildEntries |> List.collect(fun x -> x.Paths |> withProgramFiles)) @ oldMSBuildLocations
+
                 let vsWhereVersionPaths =
                     let orderedVersions = MSBuildExeFromVsWhere.getOrdered()
                     let all = orderedVersions |> List.collect (fun e -> e.Paths)
                     let dict = toDict orderedVersions
                     defaultArg (visualStudioVersion |> Option.bind dict.TryFind) all
+
                 let fullList = vsWhereVersionPaths @ vsVersionPaths |> List.distinct
 
                 Process.tryFindFile fullList "MSBuild.exe"
@@ -262,6 +270,8 @@ module private MSBuildExe =
         Trace.logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
     elif foundExe.Contains @"\2019\" then
         Trace.logVerbosefn "Using msbuild of VS2019 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
+    elif foundExe.Contains @"\2022\" then
+        Trace.logVerbosefn "Using msbuild of VS2022 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe        
     foundExe
 
 /// A type for MSBuild task parameters
