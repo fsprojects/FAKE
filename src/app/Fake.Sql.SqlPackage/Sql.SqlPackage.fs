@@ -48,10 +48,8 @@ module SqlPackage =
 
     let internal validPaths =
         let paths = [
-            let macOrLinux = Set [ PlatformID.MacOSX; PlatformID.Unix ]
-            if macOrLinux.Contains Environment.OSVersion.Platform then
-                !!"/usr/local/bin/sqlpackage"
-                |> Seq.map (fun path -> path, 15)
+            if Environment.isUnix then
+                Environment.pathDirectories |> Seq.map (fun dir -> !!(dir </> "sqlpackage")) |> Seq.concat |> Seq.map (fun path -> path, 15)
             else
                 let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
                 let getVsVersion (path: string) = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
@@ -210,4 +208,3 @@ module SqlPackage =
                 data)
         |> Proc.run
         |> ignore
-
