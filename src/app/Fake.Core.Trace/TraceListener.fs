@@ -272,11 +272,12 @@ module ConsoleWriter =
         | TraceData.TraceMessage _ -> ConsoleColor.Green
         | _ -> ConsoleColor.Gray
 
+/// <summary>
 /// Implements a TraceListener for System.Console.
+/// </summary>
 /// 
-/// ## Parameters
-///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
-///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+/// <param name="importantMessagesToStdErr">Defines whether to trace important messages to StdErr.</param>
+/// <param name="colorMap">A function which maps TracePriorities to ConsoleColors.</param>
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
     interface ITraceListener with
         /// Writes the given message to the Console.

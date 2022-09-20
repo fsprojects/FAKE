@@ -59,10 +59,12 @@ let colorMap traceData =
     | LogMessage _ -> ConsoleColor.Gray
     | TraceMessage _ -> ConsoleColor.Green
 
+/// <summary>
 /// Implements a TraceListener for System.Console.
-/// ## Parameters
-///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
-///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+/// </summary>
+/// 
+/// <param name="importantMessagesToStdErr">Defines whether to trace important messages to StdErr.</param>
+/// <param name="colorMap">A function which maps TracePriorities to ConsoleColors.</param>
 type ConsoleTraceListener(colorMap) =
     let writeText stdErr color newLine text = 
         let curColor = Console.ForegroundColor

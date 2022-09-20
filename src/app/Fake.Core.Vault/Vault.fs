@@ -237,7 +237,6 @@ module Vault =
 
     /// similar to tryGet but throws an exception if the variable with the given name is not available in the vault
     ///
-    /// ## Parameters
     /// <param name="name">The variable name to retrieve
     /// <param name="v">The vault to check
     let get name (v:Vault) =
