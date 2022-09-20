@@ -44,15 +44,18 @@ DotNet.restore (fun args ->
     } |> withWorkDir "./test" ) "mysolution.sln"
 ```
 
-More [API Documentation](apidocs/v5/fake-dotnet-dotnet.html)
+More on [*API Documentation*]({{root}}reference/fake-dotnet-dotnet.html)
 
-## SDK tools (local, global, clireference)
+## SDK tools (local, global, cli-reference)
 
-Some dotnet SDK based tools support project or path based installation. These tools have a `ToolType` parameter in addition to the `ToolPath` or `ExePath` parameters.
+Some dotnet SDK based tools support project or path based installation. These tools have a `ToolType` parameter in addition to 
+the `ToolPath` or `ExePath` parameters.
 
-> Note: If your tool doesn't have this parameter please send a pull request to add it. See the [`ReportGenerator.fs` file changes in PR 2399](https://github.com/fsharp/FAKE/pull/2399/files#diff-6bd782ab06dfa727e4e35ce4bbaae43c) on an example what needs to be changed. Basically `CreateProcess.withFramework` is replaced with `CreateProcess.withToolType`.
+> Note: If your tool doesn't have this parameter please send a pull request to add it. See the 
+> [*`ReportGenerator.fs` file changes in PR 2399*](https://github.com/fsharp/FAKE/pull/2399/files#diff-6bd782ab06dfa727e4e35ce4bbaae43c) 
+> on an example what needs to be changed. Basically `CreateProcess.withFramework` is replaced with `CreateProcess.withToolType`.
 
-You can use the parameter similar to this (in this example to start the reportgenerator as local tool with `dotnet reportgenerator`):
+You can use the parameter similar to this (in this example to start the report-generator as local tool with `dotnet reportgenerator`):
 
 ```fsharp
 let install = lazy DotNet.install DotNet.Versions.FromGlobalJson

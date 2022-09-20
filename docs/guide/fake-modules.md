@@ -30,7 +30,7 @@ group NetcoreBuild
     nuget Fake.Core.Target prerelease
 ```
 
-Now you can directly use `open Fake.Core` and use the [*Target module*]({{root}}articles/core-targets.html).
+Now you can directly use `open Fake.Core` and use the [*Target module*]({{root}}guide/core-targets.html).
 
 For example create a new file `build.fsx` with
 
@@ -53,7 +53,7 @@ and execute `fake run build.fsx`. This works for all FAKE modules, just add anot
 
 Please read introduction about [*Paket*](https://fsprojects.github.io/Paket/) for more information about the `paket.dependencies` file.
 
- > This works because by default the FAKE runner searches for a group annotated with the `<code>// [ FAKE GROUP ]</code>` comment.
+ > This works because by default the FAKE runner searches for a group annotated with the `// [ FAKE GROUP ]` comment.
 
 ### Reference a paket group
 
@@ -70,7 +70,7 @@ The last line `#load` is not required by FAKE, however this way the file can sti
 (after restoring packages initially). Fake will write an `intellisense.fsx` file for you importing all
 required references.
 
-> Note that in this scenario the `<code>// [ FAKE GROUP ]</code>` comment mentioned above is not required.
+> Note that in this scenario the `// [ FAKE GROUP ]` comment mentioned above is not required.
 
 ### Declaring FAKE dependencies within the script
 

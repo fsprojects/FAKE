@@ -30,12 +30,13 @@
 
 <body class="antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
       x-data="{open: false}"
-      :class="{'bg-gray-100': open === true}">
+      :class="{'bg-gray-100 overflow-hidden': open === true}">
 <header
-    class="sticky inset-0 flex lg:h-20 lg:px-8 bg-white justify-between items-center py-4 border-b lg:border 
-    lg:border-t-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0">
+    class="sticky inset-0 flex lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+    :class="{'bg-white': open === false}">
     <div class="flex gap-2 items-center block">
-        <a class="flex items-center gap-2" href="/">
+        <a class="flex items-center gap-2" href="{{root}}index.html">
             <img src="{{root}}content/assets/img/logo.svg"
                  alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
@@ -48,7 +49,7 @@
         <div class="mr-5">
             <ul class="flex space-x-4">
                 <li><a class="hover:text-[#d4b43c]" href="{{root}}reference/index.html">Docs</a></li>
-                <li><a class="hover:text-[#d4b43c]" href="{{root}}guide/index.html">Guide</a></li>
+                <li><a class="hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
             </ul>
         </div>
         <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -102,14 +103,14 @@
 <div class="lg:ml-[25rem] min-w-0 lg:px-16">
     <nav
         class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] 
-        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none lg:border pl-4 pr-4 lg:pl-8 lg:pr-8"
+        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8"
         role="navigation"
         aria-label="main navigation"
         :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
         <div
             class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
             <div class="flex gap-2 items-center">
-                <a class="flex items-center gap-2" href="/">
+                <a class="flex items-center gap-2" href="{{root}}index.html">
                     <img src="{{root}}content/assets/img/logo.svg"
                          alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
                     <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
@@ -144,7 +145,7 @@
                                 <a
                                     class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
                                     :href="navLink.href"
-                                    :class="window.location.pathname.startsWith(navLink.href) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    :class="window.location.pathname.startsWith(navLink.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
                                     <span
                                         class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
                                         <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"

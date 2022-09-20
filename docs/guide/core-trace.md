@@ -1,6 +1,6 @@
 # Fake.Core.Trace module
 
-[API-Reference](apidocs/v5/fake-core-trace.html)
+To see the available Trace APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-core-trace.html) for the Trace module.
 
 ## Logging and Tracing
 

@@ -1,4 +1,4 @@
-# Fake.Core.CommandLineParsing
+# `Fake.Core.CommandLineParsing`
 
 This module is a fork from https://github.com/docopt/docopt.fs/ but with strong ordering.
 The strong ordering enables you to have a nice CLI on your script or to write your own fake 5 modules with a CLI.

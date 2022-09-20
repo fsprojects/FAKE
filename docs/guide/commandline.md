@@ -13,7 +13,8 @@ Fake Options [fake_opts]:
                         Is ignored if -s is used.
                         * -v: Log verbose but only for FAKE
                         * -vv: Log verbose for Paket as well
--s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.
+-s, --silent          Be silent, use this option if you need to pipe your output into another 
+                      tool or need some additional processing.
 
 Fake Run Options [run_opts]:
 -d, --debug           Debug the script.
@@ -33,9 +34,11 @@ Fake Build Options [build_opts]:
 -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
 ```
-Please refer to the [Fake.Core.CommandLineParsing](core-commandlineparsing.html) documentation for an explanation of the synax.
+Please refer to the [*Fake.Core.CommandLineParsing*](core-commandlineparsing.html) documentation for an explanation of the syntax.
 
-For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future. In general you should use the `run` subcommand in scripting when you use parameters, because it is safer in regards to adding options without breaking. Use `build` to have a more dense workflow in the command line
+For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, 
+but more are planned in the future. In general you should use the `run` subcommand in scripting when you use parameters, 
+because it is safer in regards to adding options without breaking. Use `build` to have a more dense workflow in the command line
 
 ## Disclaimer
 
@@ -53,7 +56,7 @@ Print details of FAKE's activity. Note that `-v` was used for `--version` in pre
 Currently Fake supports 4 verbosity levels:
 
 - a single `--silent` will prevent all output from the fake runner. This makes it easy to use a `.fsx` script for data processing or pipelining on the command-line
-- None is regular fake information like performance-numbers, general informations and warnings as well as regular output from the script
+- None is regular fake information like performance-numbers, general information and warnings as well as regular output from the script
 - a single `--verbose` means verbose output from the fake runner
 - two `--verbose --verbose` or `-vv` mean to set other projects (like paket) to verbose mode as well.
 
@@ -84,7 +87,7 @@ To support specially named files like `--fsiargs` you could use `fake build --sc
 
 ### `--fsiargs <fsiargs>`
 
-Pass a single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
+Pass a single argument after this switch to FSI when running the build script.  See [*F# Interactive Options*](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
 
 This way you can use for example `#if MYFLAG` compiler directives in your script and use `--fsiargs --define:MYFLAG`
 
@@ -94,7 +97,7 @@ Display CLI help.
 
 ## Running Targets
 
-Please refer to the [Fake.Core.Target](core-targets.html) module documentation
+Please refer to the [*Fake.Core.Target*](core-targets.html) module documentation
 
 For reference the CLI for the targets-module looks like this:
 

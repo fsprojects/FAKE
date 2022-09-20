@@ -1,6 +1,8 @@
-# Debugging of FAKE 5 build scripts
+# Debugging of FAKE build scripts
 
-We recommend [Visual Studio Code](https://code.visualstudio.com/) with the [Ionide extension](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) for best FAKE tooling support, including proper debugging.
+We recommend [*Visual Studio Code*](https://code.visualstudio.com/) with 
+the [*Ionide extension*](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) 
+for best FAKE tooling support, including proper debugging.
 The easiest way to debug a script is by using the "Debug" buttons in the FAKE targets outline
 
 <video loop autoplay>
@@ -10,18 +12,17 @@ The easiest way to debug a script is by using the "Debug" buttons in the FAKE ta
 
 ## Non-Ionide or no Fake.Core.Targets
 
-If you don't use Ionide or if you don't use `Fake.Core.Targets` the Outline stays empty and you (currently) cannot run or debug via UI. Please see the following sections on how to debug and run.
+If you don't use Ionide or if you don't use `Fake.Core.Targets` the Outline stays empty and you (currently) cannot 
+run or debug via UI. Please see the following sections on how to debug and run.
 
 ## General considerations
 
 - Run with more verbose logging `-v`
-- If an error happens while restoring packages (before even running the script), consider using `-vv` or `-v -v` to increase the logging even more.
+- If an error happens while restoring packages (before even running the script), consider using `-vv` or `-v -v` 
+- to increase the logging even more.
 
-<div class="alert alert-warning">
-    <h5>WARNING</h5>
-    <p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
-</div>
-
+> Currently debugging via the `chocolatey` installation is not possible. This is because we currently do not 
+> distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!
 
 ## Visual Studio Code && portable.zip
 
@@ -30,8 +31,7 @@ Debugging works (on windows) in the following way:
 - Download the portable fake distribution `fake-dotnetcore-portable.zip` and extract it somewhere (for example `E:\fake-dotnetcore-portable`)
 - Open Visual Studio Code
 - Open "The Debugger" view and add the following configuration
-
-  <pre><code class="lang-json">
+  ```json
   {
     "name": "Debug My Build Script",
     "type": "coreclr",
@@ -42,13 +42,9 @@ Debugging works (on windows) in the following way:
     "stopAtEntry": false,
     "console": "internalConsole"
   }
-  </code></pre>
-  <div class="alert alert-info">
-     <h5>INFO</h5>
-     <p>It is important to specify <code>--debug:portable --optimize-</code><br>
-     To get debugging support for .NET Core you need <a href="https://github.com/OmniSharp/omnisharp-vscode">C# for Visual Studio Code</a> 
-     </p>
-  </div>
+  ```
+  > It is important to specify `--debug:portable --optimize-`
+  > To get debugging support for .NET Core you need [*C# for Visual Studio Code*](https://github.com/OmniSharp/omnisharp-vscode)
 
 - Delete the `.fake` directory
 - Set a breakpoint in your script and run the new configuration

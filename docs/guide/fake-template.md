@@ -5,21 +5,24 @@ The Fake template bootstraps FAKE and sets up a basic build-script.
 ## Installation
 
 Run
-<pre><code class="lang-bash">
+```shell
 dotnet new -i "fake-template::*"
-</code></pre>
+```
 to install or update the template.
 
 ## Usage
 After you have installed the template you can setup FAKE by running:
-<pre><code class="lang-bash">
+```shell
 dotnet new fake
-</code></pre>
-This will create a default `build.fsx` file and two shell scripts `fake.sh` and `fake.cmd`. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed directly to FAKE so you can run:
-<pre><code class="lang-bash">
+```
+This will create a default `build.fsx` file and two shell scripts `fake.sh` and `fake.cmd`. The shell scripts are used to bootstrap 
+and run FAKE. All of the arguments are passed directly to FAKE so you can run:
+```shell
 .\fake.cmd build
-</code></pre>
-to run your build. Have a look at the [fake commandline](fake-commandline.html) for the available command-line options. For additional information on how to use a build script, checkout the [getting started](fake-gettingstarted.html#Example-Compiling-and-building-your-NET-application) page.
+```
+to run your build. Have a look at the [*fake commandline*]({{root}}guide/commandline.html) for the available command-line options. 
+For additional information on how to use a build script, checkout the 
+[*getting started*]({{root}}guide/fake-gettingstarted.html#Example-Compiling-and-building-your-NET-application) page.
 
 ## Options
 
@@ -44,7 +47,7 @@ Specifies your preferred way to define the nuget packages used in your build:
 Specifies your preferred way to define build tasks inside your build script:
 
 - `fake` (default) - Uses the default FAKE domain specific language
-- `buildtask` - Uses a string free domain specific language, called [BuildTask](https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md)
+- `buildtask` - Uses a string free domain specific language, called [*BuildTask*](https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md)
 
 ### --tool-path
 Specifies the folder for the fake-cli tool. This parameter is only applicable when `tool` option is used for bootstrapping with `--bootstrap`. Defaults to `.fake`.
