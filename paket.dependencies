@@ -1,14 +1,6 @@
-version 5.6
+version 6.0
 source https://api.nuget.org/v3/index.json
 content: none
-
-group DocsLegacyV4
-    source https://api.nuget.org/v3/index.json
-    nuget FAKE ~> 4.0
-
-group DocsLegacyV5
-    source https://api.nuget.org/v3/index.json
-    nuget FAKE ~> 5.0
 
 group Build
     source release/dotnetcore
