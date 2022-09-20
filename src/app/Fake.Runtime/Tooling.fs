@@ -290,7 +290,7 @@ let getTargets (file:string) (ctx:FakeContext) : Async<GetTargetsResult> = async
     checkLogging()
     match detectFakeScript file with
     | None ->
-      return { WarningsAndErrors = [|{ Type = GetTargetsWarningOrErrorType.NoFakeScript; Message = "This file is not a valid FAKE 5 script" }|]; Targets = [||] }// Ok [| errorTarget file "not a FAKE 5 script" "This file is not a valid FAKE 5 script" |]
+      return { WarningsAndErrors = [|{ Type = GetTargetsWarningOrErrorType.NoFakeScript; Message = "This file is not a valid FAKE script" }|]; Targets = [||] }// Ok [| errorTarget file "not a FAKE script" "This file is not a valid FAKE script" |]
     | Some { Config = config; Prepared = prepared } ->
         // check cache
         let cacheDir = prepared._CacheDir

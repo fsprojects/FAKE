@@ -66,4 +66,4 @@ let inline internal fakeContextAssembly () = getAssemblyFromType typeof<Fake.Cor
 let fakeVersion = fakeContextAssembly().GetName().Version.ToString()
 
 /// Gets the FAKE Version string
-let fakeVersionStr = sprintf "FAKE 5 - F# Make (%s)" fakeVersion
+let fakeVersionStr = sprintf "FAKE 6 - F# Make (%s)" fakeVersion

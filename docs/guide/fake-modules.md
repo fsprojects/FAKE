@@ -35,7 +35,7 @@ Now you can directly use `open Fake.Core` and use the [*Target module*]({{root}}
 For example create a new file `build.fsx` with
 
 ```fsharp
-// Use this for IDE support. Not required by FAKE 5. Change "build.fsx" to the name of your script.
+// Use this for IDE support. Not required by FAKE 5 and above. Change "build.fsx" to the name of your script.
 #load ".fake/build.fsx/intellisense.fsx"
 
 open Fake.Core

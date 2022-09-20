@@ -22,7 +22,7 @@ Fake modules has target frameworks of `net6` and `netstandard2.0`. Please [see t
 ## Installation
 
 * Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
-* Or: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
+* Or: Install FAKE 5 or later (for example via `choco install fake -pre`) and run `fake build`
 
 > Note: You can find more details on the [contributing page](https://fake.build/contributing.html)
 

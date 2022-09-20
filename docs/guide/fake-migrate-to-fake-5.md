@@ -4,7 +4,7 @@
 
 In this tutorial you will learn how to migrate your existing build scripts to the new FAKE 5 and above dotnet-core version.
 
-First we want you to know that there are two versions of FAKE 5. One is just an update to the regular FAKE 4, but also contains the new API.
+First we want you to know that there are two versions of FAKE 5 and above. One is just an update to the regular FAKE 4, but also contains the new API.
 We will call this the "legacy FAKE version" it is just like the FAKE you are already used to. The second version is the 
 "new/dotnetcore/standalone FAKE 5" or just "FAKE".
 This "new" version has several advantages:

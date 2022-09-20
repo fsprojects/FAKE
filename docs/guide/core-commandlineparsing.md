@@ -1,7 +1,7 @@
 # `Fake.Core.CommandLineParsing`
 
 This module is a fork from https://github.com/docopt/docopt.fs/ but with strong ordering.
-The strong ordering enables you to have a nice CLI on your script or to write your own fake 5 modules with a CLI.
+The strong ordering enables you to have a nice CLI on your script or to write your own fake 5 and above modules with a CLI.
 
 Example `script.fsx`:
 
@@ -21,7 +21,7 @@ options:
  -m <msg>  Message
 """
 
-// retrieve the fake 5 context information
+// retrieve the fake 5 and above context information
 let ctx = Context.forceFakeContext ()
 // get the arguments
 let args = ctx.Arguments

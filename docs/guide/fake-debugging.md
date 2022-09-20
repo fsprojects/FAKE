@@ -65,7 +65,7 @@ System.Console.ReadKey() |> ignore
 
 ## Run script without fake.exe (via fsi)
 
-FAKE 5 scripts are not hardwired to the new FAKE 5 runner (even if they look like with the new header). To make them work with FSI all you need to do is to setup a "FAKE-Context":
+FAKE 5 and above scripts are not hardwired to the new FAKE 5 runner (even if they look like with the new header). To make them work with FSI all you need to do is to setup a "FAKE-Context":
 
 ```fsharp
 // Regular header and `#load ".fake/build.fsx/intellisense.fsx"`

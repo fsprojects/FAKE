@@ -232,7 +232,8 @@ module Environment =
     #endif
 
     /// <summary>
-    /// Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
+    /// Determines if the current FAKE runner is being run via mono.  With the FAKE 5 or above runner,
+    /// this will always be false
     /// </summary>
     /// Todo: Detect mono on windows
     let isMono = 

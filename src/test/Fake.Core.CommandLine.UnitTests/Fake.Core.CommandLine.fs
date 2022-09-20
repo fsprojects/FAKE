@@ -89,7 +89,7 @@ Fake Run Options [run_opts]:
       
     )
 
-    TestCaseHelper.Create("FAKE 5 tests", """
+    TestCaseHelper.Create("FAKE 6 tests", """
 Usage:
   fake.exe [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
   fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
@@ -203,7 +203,7 @@ Fake Build Options [build_opts]:
       Expect.isFalse "Expected to be not required" fsiArgs.Value.IsRequired
       Expect.isTrue "Expected to have argument" fsiArgs.Value.HasArgument
 
-    TestCaseHelper.Create("FAKE 5 target CLI tests", """
+    TestCaseHelper.Create("FAKE 6 target CLI tests", """
 Usage:
   fake-run --list
   fake-run --version
@@ -271,7 +271,7 @@ Fake Build Options [build_opts]:
       // TODO implement&test '-include'
       ()
 
-    TestCaseHelper.Create("FAKE 5 tests (twice run_opts)", """
+    TestCaseHelper.Create("FAKE 6 tests (twice run_opts)", """
 Usage:
   fake.exe [fake_opts] run [run_opts] [<script.fsx>] [run_opts] [--] [<scriptargs>...]
   fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
@@ -304,7 +304,7 @@ Fake Build Options [build_opts]:
     )
 
 
-    TestCaseHelper.Create("FAKE 5 usage (simple)", """
+    TestCaseHelper.Create("FAKE 6 usage (simple)", """
 Usage:
   fake.exe file -- [<moreargs>...]
 

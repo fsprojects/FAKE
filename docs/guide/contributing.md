@@ -153,7 +153,7 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 
 ## Style Guidelines
 
-* When working on FAKE 5, [*Visual Studio Code*](https://code.visualstudio.com/) with [*Ionide*](http://ionide.io/) helps a lot!
+* When working on FAKE 5 or above, [*Visual Studio Code*](https://code.visualstudio.com/) with [*Ionide*](http://ionide.io/) helps a lot!
 
 * Read the [*F# component design guidelines*](http://fsharp.org/specs/component-design-guidelines/).
 
@@ -193,17 +193,17 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 
 ## Considerations Regarding FAKE 4
 
-* Fake 4 (FakeLib) is in maintenance mode. Therefore new features need to be at least available as a new FAKE 5 module 
+* Fake 4 (FakeLib) is in maintenance mode. Therefore new features need to be at least available as a new FAKE 5 and above module 
 * (that might mean that the old module needs to be migrated as part of the PR).
 
 * Fake 4 still allows hotfixes. Please send the PR against the [*hotfix_fake4 branch*](https://github.com/fsharp/FAKE/tree/hotfix_fake4).
 
   It would be helpful if a second PR against `release/next` is sent that merges the hotfix into `release/next` 
-* and adds the hotfix to the FAKE 5 code as well.
+* and adds the hotfix to the FAKE 5 and above code as well.
 
-## Porting Modules to FAKE 5
+## Porting Modules to FAKE 5 and above
 
-As mentioned in the [*Fake 5 learn more*](fake-fake5-learn-more.html) section, we could use your help porting modules to FAKE 5. 
+As mentioned in the [*Fake 5 and above learn more*](fake-fake5-learn-more.html) section, we could use your help porting modules to FAKE 5. 
 To save you from some pitfalls, this section provides a working approach to migrating modules.
 
 Try the following:
