@@ -22,7 +22,6 @@ nuget Fake.DotNet.MSBuild prerelease
 nuget Fake.DotNet.Cli prerelease
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Paket prerelease
-nuget Fake.DotNet.Fsdocs prerelease
 nuget Fake.DotNet.Testing.MSpec prerelease
 nuget Fake.DotNet.Testing.XUnit2 prerelease
 nuget Fake.DotNet.Testing.NUnit prerelease
@@ -577,6 +576,7 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "GenerateDocs" (fun _ ->
     let source = "./docs"
     
+    Shell.cleanDir ".fsdocs"
     Directory.ensure "output"
 
     let projInfo =
@@ -590,14 +590,20 @@ Target.create "GenerateDocs" (fun _ ->
     File.writeString false "./output/CNAME" docsDomain
     Shell.copy source [ "RELEASE_NOTES.md" ]
     
-    Fsdocs.build (fun p -> { p with
-                                Input = Some(source)
-                                SaveImages = Some(true)
-                                Clean = Some(true)
-                                Parameters = Some projInfo
-                                Properties = Some "Configuration=Release"
-                                // Strict = Some(true)
-    })
+    let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+    
+    DotNet.exec id "fsdocs" command
+    
+    // Fsdocs.build (fun p -> { p with
+    //                             Input = Some(source)
+    //                             SaveImages = Some(true)
+    //                             Clean = Some(true)
+    //                             Parameters = Some projInfo
+    //                             Properties = Some "Configuration=debug"
+    //                             //Strict = Some(true)
+    // })
+    
+    Shell.rm (source </> "RELEASE_NOTES.md")
     
     Directory.ensure "temp"
     
