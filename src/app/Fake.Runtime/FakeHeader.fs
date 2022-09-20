@@ -137,7 +137,7 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
             match Paket.Dependencies.TryLocate(scriptDir) with 
             | Some deps -> deps
             | None ->
-                failwithf "Could not find '%s'. To use Fake with an external file, please run 'paket init' first.%sAlternatively you can use inline-dependencies. See https://fake.build/guide/fake-fake5-modules.html" 
+                failwithf "Could not find '%s'. To use Fake with an external file, please run 'paket init' first.%sAlternatively you can use inline-dependencies. See https://fake.build/guide/fake-modules.html" 
                     Constants.DependenciesFileName Environment.NewLine
       
       let fullpath = Path.GetFullPath dependencies.DependenciesFile

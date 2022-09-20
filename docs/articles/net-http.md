@@ -19,7 +19,7 @@ group build
     nuget Fake.Core.Target prerelease
 ```
 
-Please see more details on referencing FAKE modules [*here*]({{root}}articles/fake-modules.html).
+Please see more details on referencing FAKE modules [*here*]({{root}}guide/fake-modules.html).
 
 ## Downloading a Single File
 

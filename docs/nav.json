@@ -8,11 +8,11 @@
             },
             {
                 "title": "Running FAKE from command line",
-                "href": "/fake-commandline.html"
+                "href": "/guide/commandline.html"
             },
             {
                 "title": "FAKE template",
-                "href": "/fake-template.html"
+                "href": "/guide/fake-template.html"
             },
             {
                 "title": "Debugging scripts",
@@ -456,7 +456,7 @@
             },
             {
                 "title": "SignTool",
-                "href": "/reference/fake-signtool.html"
+                "href": "/reference/fake-tools-signtool.html"
             }
         ]
     },

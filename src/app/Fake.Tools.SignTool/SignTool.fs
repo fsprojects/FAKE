@@ -5,7 +5,7 @@ namespace Fake.Tools
 /// command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
 /// </summary>
 /// <remarks>
-/// <a href="/articles/fake-tools-signtool.html">Documentation &amp; samples</a>
+/// <a href="/articles/tools-signtool.html">Documentation &amp; samples</a>
 /// </remarks>
 /// 
 ///

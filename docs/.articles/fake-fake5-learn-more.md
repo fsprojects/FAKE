@@ -27,7 +27,7 @@ In the past it was cumbersome and hard to extend your own builds with customized
 Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructure for simply running a build script.
 So in a sense it made sense to combine all good parts of paket, dotnet-core and the huge fake library to go to the next level. The result is a standalone, dependency free version of Fake which is modular and extendible. On top of that you can now use all the Fake 5 modules in your "regular" F# projects!
 
-You only need to know the simple [paket.dependencies](http://fsprojects.github.io/Paket/dependencies-file.html) syntax (basically a list of nuget packages) and are able to add [custom logic](fake-fake5-custom-modules.html) to your script.
+You only need to know the simple [paket.dependencies](http://fsprojects.github.io/Paket/dependencies-file.html) syntax (basically a list of nuget packages) and are able to add [custom logic](/guide/fake-custom-modules.html) to your script.
 If you are in the scripting area there is not even a need to save `paket.dependencies` as a separate file. Just put it on top of the script. Fake will take care of the rest.
 
 ## Open Work / Help wanted

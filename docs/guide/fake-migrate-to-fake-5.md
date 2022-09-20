@@ -36,7 +36,7 @@ Upgrading to FAKE 5 is a multi step process and has various manual steps in betw
 
   * This is for example done by installing FAKE as dependency on your build infrastructure.
     There are a variety of [*installing options*]({{root}}guide/fake-gettingstarted.html#Install-FAKE) available.
-  * Tell FAKE which [*modules*]({{root}}guide/fake-fake5-modules.html) you need.
+  * Tell FAKE which [*modules*]({{root}}guide/fake-modules.html) you need.
     See the [*Add FAKE dependencies*](#Add-FAKE-dependencies) section below.
   * Run the build with the new version of FAKE :). You might want to read the [*CLI migration*](#CLI-Migration) section
 

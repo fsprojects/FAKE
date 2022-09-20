@@ -28,7 +28,7 @@ There are no special requirements, you can add dependencies to your NuGet packag
 > Note: As FAKE (from version 5 and above) currently is a `netcoreapp20` and `net6` application you need to provide a binary 
 > in your NuGet package compatible with netcore. We suggest targeting `netstandard20` or `net6` or lower.
 > as we update to newer netcore versions from time to time you should re-check and open a PR to change this text if it is outdated. 
-> (Just edit [*here*](https://github.com/fsharp/FAKE/blob/master/help/markdown/fake-fake5-custom-modules.md) with the pencil)
+> (Just edit [*here*](https://github.com/fsharp/FAKE/blob/master/docs/guide/fake-custom-modules.md) with the pencil)
 
 If you want to use FAKE's standard functionality (like [*globbing*](http://en.wikipedia.org/wiki/Glob_(programming))) within your 
 custom task project, just reference the corresponding NuGet package and [*explore the FAKE namespace*]({{root}}reference/index.html).
@@ -42,7 +42,7 @@ Now you can use your CustomTask in the build script, by adding fake dependencies
     nuget MyTaskNuGetPackage
 ```
 
-> For more information about using FAKE with Paket, please see [<ins>fake dependencies</ins>]({{root}}articles/fake-modules.html), 
+> For more information about using FAKE with Paket, please see [<ins>fake dependencies</ins>]({{root}}guide/fake-modules.html), 
 > see the relevant documentation for adding modules. This documentation now applies to your package too!
 
 A full example would be:

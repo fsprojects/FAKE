@@ -68,11 +68,11 @@ See [Fake 5 Migration Guide](fake-migrate-to-fake-5.html)
 
 ## How to specify dependencies?
 
-See the [FAKE 5 modules](fake-fake5-modules.html) section.
+See the [FAKE 5 modules](fake-modules.html) section.
 
 ## How does debugging work?
 
-See the [Debugging user guide](fake-debugging.html)
+See the [Debugging user guide](/guide/fake-debugging.html)
 
 ## What is a FAKE package and a FAKE module?
 

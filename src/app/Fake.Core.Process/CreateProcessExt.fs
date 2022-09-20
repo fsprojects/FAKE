@@ -6,7 +6,7 @@ namespace Fake.Core
 [<AutoOpen>]
 module CreateProcessExt =
     /// <summary>
-    /// Extensions to <a href="reference/fake-core-createprocess.html"><c>CreateProcess</c></a>.
+    /// Extensions to <a href="/reference/fake-core-createprocess.html"><c>CreateProcess</c></a>.
     /// </summary>
     module CreateProcess =
         

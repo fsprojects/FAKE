@@ -4,7 +4,7 @@ namespace Fake.Core
 
 /// <summary>
 /// Provides a encrypted store of variables to prevent accidental leakage 
-/// Please read the <a href="guide/core-vault.html">documentation</a>
+/// Please read the <a href="articles/core-vault.html">documentation</a>
 /// </summary>
 [<RequireQualifiedAccess>]
 module Vault =

@@ -6,7 +6,7 @@ open Fake.Core
 /// Native support for GitHub Actions specific APIs.
 /// </summary>
 /// <remarks>
-/// The general documentation on how to use CI server integration can be found <a href="/articles/buildserver.html">here</a>.
+/// The general documentation on how to use CI server integration can be found <a href="/guide/buildserver.html">here</a>.
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue.
 /// </remarks>

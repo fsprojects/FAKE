@@ -149,7 +149,7 @@ type PreRelease =
 
 
 /// <summary>
-/// Contains the version information. For parsing use <a href="guide/fake-core-semver.html"><c>SemVer.parse</c></a>
+/// Contains the version information. For parsing use <c>SemVer.parse</c>
 /// </summary>
 /// <remarks>
 /// Note: If you use <c>{ version with Patch = myPath; Original = None }</c> to overwrite some parts of this

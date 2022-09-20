@@ -52,7 +52,7 @@ There are various ways to install FAKE:
    of `fake-bootstrap` for ideas to bootstrap in your CI process.
    If you run into issues, see [<ins>this</ins>](https://github.com/fsharp/FAKE/issues/2346).
 
-3. Bootstrap via the `fake dotnet new` [<ins>template</ins>]({{root}}articles/fake-template.html). The template
+3. Bootstrap via the `fake dotnet new` [<ins>template</ins>]({{root}}guide/fake-template.html). The template
    bootstraps FAKE and sets up a basic build-script. To install the template run:
     ```shell
     dotnet new -i "fake-template::*"
@@ -63,7 +63,7 @@ There are various ways to install FAKE:
     dotnet new fake
     ```
 
-   See the [<ins>template</ins>]({{root}}articles/fake-template.html) page for more information. Install the `fake`
+   See the [<ins>template</ins>]({{root}}guide/fake-template.html) page for more information. Install the `fake`
    or `fake-netcore` package for your system (
    currently [<ins>chocolatey</ins>](https://chocolatey.org/install)).
    Example `choco install fake`.
@@ -118,7 +118,7 @@ the `<script>.fsx.lock` file and re-run fake to update all files).
   #load "./.fake/myscript.fsx/intellisense.fsx"
   ```
 
-  Where you can add all the [<ins>fake modules</ins>]({{root}}articles/fake-modules.html) you need (work through the
+  Where you can add all the [<ins>fake modules</ins>]({{root}}guide/fake-modules.html) you need (work through the
   example below if you see
   this the first time).
 

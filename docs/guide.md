@@ -3,6 +3,7 @@
 ### Guide
 * [commandline](/guide/commandline.html)
 * [contributing](/guide/contributing.html)
+* [buildserver](/guide/buildserver.html)
 * [core-commandlineparsing](/guide/core-commandlineparsing.html)
 * [core-trace](/guide/core-trace.html)
 * [dotnet-cli](/guide/dotnet-cli.html)
@@ -18,12 +19,11 @@
 
 ### Articles
 * [api-slack](/articles/api-slack.html)
-* [buildserver](/articles/buildserver.html)
 * [core-vault](/articles/core-vault.html)
 * [dotnet-assemblyinfo](/articles/dotnet-assemblyinfo.html)
 * [dotnet-testing-coverlet](/articles/dotnet-testing-coverlet.html)
 * [dotnet-testing-opencover](/articles/dotnet-testing-opencover.html)
-* [fake-dotnet-testing-specflow](/articles/fake-dotnet-testing-specflow.html)
+* [dotnet-testing-specflow](/articles/dotnet-testing-specflow.html)
 * [fake-signtool](/articles/fake-signtool.html)
 * [installer-squirrel](/articles/installer-squirrel.html)
 * [installer-wix](/articles/installer-wix.html)
