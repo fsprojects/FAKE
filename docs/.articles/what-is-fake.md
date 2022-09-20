@@ -83,7 +83,7 @@ So the term `module` should be used for code fragments while `package` for NuGet
 
 ## Can FAKE code be used from a regular F# project
 
-Yes indeed! You can just use all the different FAKE packages, like [`Fake.Core.Environment`](https://fake.build/apidocs/v5/fake-core-environment.html). The API reference will list the [NuGet package](https://www.nuget.org/packages/Fake.Core.Environment) you need to install right at the top.
+Yes indeed! You can just use all the different FAKE packages, like [`Fake.Core.Environment`](https://fake.build/reference/fake-core-environment.html). The API reference will list the [NuGet package](https://www.nuget.org/packages/Fake.Core.Environment) you need to install right at the top.
 Some/most of the FAKE-APIs will complain about a missing context, to initialize one you can use
 
 ```fsharp

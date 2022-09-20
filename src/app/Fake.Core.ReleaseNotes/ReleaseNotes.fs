@@ -242,7 +242,7 @@ module ReleaseNotes =
         | Some head -> head
         | None ->
             failwithf
-                "The release notes document was not valid, see https://fake.build/apidocs/v5/fake-core-releasenotes.html for the allowed formats"
+                "The release notes document was not valid, see https://fake.build/reference/fake-core-releasenotes.html for the allowed formats"
 
     /// <summary>
     /// Parses a Release Notes text file and returns the latest release notes.

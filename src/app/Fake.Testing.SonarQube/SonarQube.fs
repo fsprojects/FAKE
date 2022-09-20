@@ -164,7 +164,7 @@ module SonarQube =
     ///                   "sonar.cs.opencover.reportsPaths=opencovercoverage.xml"
     ///                 ]
     ///              // choose what you need
-    ///              // https://fake.build/dotnet-cli.html#SDK-tools-local-global-clireference
+    ///              // https://fake.build/guide/dotnet-cli.html#SDK-tools-local-global-clireference
     ///              ToolType = ToolType.CreateGlobalTool() // Start as dotnet global tool (`sonarscanner`)
     ///              ToolType = ToolType.CreateLocalTool()  // Start as dotnet local tool (`dotnet sonarscanner`)
     ///     }

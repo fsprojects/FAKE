@@ -521,7 +521,7 @@ let prepareFakeScript (config:FakeConfig) : PrepareInfo =
                 """
         if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
             Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "paket: nuget FSharp.Core //"'.
-See https://fake.build/fake-fake5-modules.html for details. 
+See https://fake.build/guide/fake-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =
             { FakeHeader.Header = FakeHeader.PaketInline

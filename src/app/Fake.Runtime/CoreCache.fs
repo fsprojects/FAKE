@@ -322,7 +322,7 @@ let findAndLoadInRuntimeDepsCached =
 This can happen for various reasons:
 - You are trying to load full-framework assemblies which is not supported
   -> You might try to load a legacy-script with the new netcore runner.
-    Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
+    Please take a look at the migration guide: https://fake.build/guide/fake-migrate-to-fake-5.html
 - The nuget cache (or packages folder) might be broken.
   -> Please save your state, open an issue and then 
   - delete '%s' from the '~/.nuget' cache (and the 'packages' folder)

@@ -55,7 +55,7 @@
             "defaultValue": "fake",
             "choices": [{
                     "choice": "fake",
-                    "description": "Uses the default FAKE domain specific language (see https://fake.build/core-targets.html)"
+                    "description": "Uses the default FAKE domain specific language (see https://fake.build/guide/core-targets.html)"
                 },
                 {
                     "choice": "buildtask",
