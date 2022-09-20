@@ -690,16 +690,6 @@ NUGET
       System.Threading (>= 4.3) - restriction: && (< monoandroid) (< monotouch) (< net46) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
       System.Xml.ReaderWriter (>= 4.3) - restriction: && (< monoandroid) (< monotouch) (< net46) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
 
-GROUP DocsLegacyV4
-NUGET
-  remote: https://api.nuget.org/v3/index.json
-    FAKE (4.64.18)
-
-GROUP DocsLegacyV5
-NUGET
-  remote: https://api.nuget.org/v3/index.json
-    FAKE (5.16)
-
 GROUP fakemodule
 STORAGE: NONE
 RESTRICTION: || (== net472) (== net6.0) (== netcoreapp2.1) (== netstandard2.0)
