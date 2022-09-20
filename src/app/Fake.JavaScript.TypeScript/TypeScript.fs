@@ -108,7 +108,6 @@ module TypeScript =
           ToolPath = resolveTypeScriptCompilerInstallation()
           TimeOut = TimeSpan.FromMinutes 5. }
 
-    /// [omit]
     let internal buildArguments parameters file = 
         let version = 
             match parameters.ECMAScript with

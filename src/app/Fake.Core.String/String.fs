@@ -91,7 +91,6 @@ module String =
         else
             text.Remove(pos, pattern.Length).Insert(pos, replacement)
 
-    /// [omit]
     let private regexes = Dictionary<_, _>()
 
     /// [omit]

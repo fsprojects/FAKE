@@ -377,7 +377,6 @@ module Choco =
     /// <param name="exePath">The location of choco executable. Automatically found if null or empty.</param>
     /// <param name="args">The arguments given to the executable.</param>
     /// <param name="timeout">The choco execution timeout</param>
-    /// [omit]
     let private callChoco exePath args timeout =
         // Try to find the choco executable if not specified by the user.
         let chocoExe =
@@ -522,7 +521,6 @@ module Choco =
     /// <summary>
     /// Create nuspec from template
     /// </summary>
-    /// [omit]
     let private createNuSpecFromTemplate (parameters:ChocoPackParams) (templateNuSpec:FileInfo) outputDir =
         let specFile = outputDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                         |> Path.getFullName
@@ -565,7 +563,6 @@ module Choco =
     /// <summary>
     /// Create nuspec from data
     /// </summary>
-    /// [omit]
     let private createNuSpec (parameters:ChocoPackParams) outputDir =
         let specFile = outputDir @@ parameters.PackageId + "." + parameters.Version + ".nuspec"
                         |> Path.getFullName
