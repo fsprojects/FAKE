@@ -130,9 +130,9 @@
         <ul
             x-data="{nav: []}"
             x-init="
-                fetch('/nav.json')
+                fetch('/data.json')
                 .then(response => response.json())
-                .then(response => nav = response)
+                .then(response => nav = response.nav)
             ">
             <template x-for="navGroup in nav">
                 <li class="mt-12 lg:mt-8">
@@ -246,7 +246,7 @@
                             <span class="inline-block">FAKE is a community effort</span>
                         </span>
             </h4>
-            <p>Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+            <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
                 running F# scripts. Look at the open issues at
                 <a href="https://github.com/fsharp/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
                 send pull requests!</p>

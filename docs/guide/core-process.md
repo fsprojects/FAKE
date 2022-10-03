@@ -1,20 +1,15 @@
-# Starting processes in "FAKE - F# Make"
+# Starting Processes in "FAKE - F# Make"
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later.</p>
-</div>
-
-[API-Reference CreateProcess](apidocs/v5/fake-core-createprocess.html)
-[API-Reference Proc](apidocs/v5/fake-core-proc.html)
-[API-Reference Process](apidocs/v5/fake-core-process.html)
+To see the available Process APIs in FAKE, please see:
+* [`API-Reference CreateProcess`]({{root}}reference/fake-core-createprocess.html),
+* [`API-Reference Proc`]({{root}}reference/fake-core-proc.html),
+* [`API-Reference Process`]({{root}}reference/fake-core-process.html),
 
 ## Just start a process
 
 You can either use a list of arguments:
 
 ```fsharp
-
 CreateProcess.fromRawCommand "./folder/mytool.exe" ["arg1"; "arg2"]
 |> Proc.run // start with the above configuration
 |> ignore // ignore exit code
@@ -27,17 +22,14 @@ CreateProcess.fromRawCommand "./folder/mytool.exe" ["arg1"; "arg2"]
 |> CreateProcess.withWorkingDirectory "./folder"
 |> Proc.run
 |> ignore
-
 ```
 
 Or a properly escaped command line:
 
 ```fsharp
-
 CreateProcess.fromRawCommandLine "./folder/mytool.exe" "arg1 arg2 arg3"
 |> Proc.run // start with the above configuration
 |> ignore // ignore exit code
-
 ```
 
 Or use some FAKE helpers:
@@ -59,7 +51,6 @@ Arguments.Empty
 Or use helper libraries like [`BlackFox.CommandLine`](https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine):
 
 ```fsharp
-
 open BlackFox.CommandLine
 
 CmdLine.empty
@@ -84,13 +75,12 @@ let result =
     |> Proc.run
 
 if result.ExitCode <> 0 then failwith "Command failed"
-
 ```
 
-To simplify your life you can "embed" the return code check into the `CreateProcess` instance (which allows to pass the instance through your application and fail appropriately):
+To simplify your life you can "embed" the return code check into the `CreateProcess` instance (which allows to pass the 
+instance through your application and fail appropriately):
 
 ```fsharp
-
 [ "arg1"; "arg2"; "arg3" ]
 |> CreateProcess.fromRawCommand "./folder/mytool.exe"
 |> CreateProcess.ensureExitCode // will make sure to throw on error
@@ -109,7 +99,6 @@ To simplify your life you can "embed" the return code check into the `CreateProc
         data)
 |> Proc.run
 |> ignore
-
 ```
 
 ## Different ways to "run" or "start"
@@ -119,7 +108,7 @@ The basic difference between "start" and "run" is:
 - "start" starts the process and returns after the process is started. This usually means the process is still running.
 - "run" waits for the started process to exit and returns the result. 
 
-The different ways to start or run a process are documented [here](/apidocs/v5/fake-core-proc.html).
+The different ways to start or run a process are documented [here](/reference/fake-core-proc.html).
 
 ## Running a command and analyse results
 
@@ -142,10 +131,9 @@ let output = result.Result.Output
 // Parse output?
 ```
 
-But even better you can make the 'process-call' type safe for others, by parsing the output:
+But even better you can make the `process-call` type safe for others, by parsing the output:
 
 ```fsharp
-
 type MySafeOutput = // ...
 let parseOutput (r:ProcessResult<ProcessOutput>) : MySafeOutput =
     // use r.Result.Output, r.ExitCode and create MySafeOutput
@@ -159,14 +147,12 @@ let startProcess () (*args*)=
 let myOutput : MySafeOutput =
     startProcess()
         |> Proc.run
-
 ```
 
 Additionally sometimes you need/want asynchronous results to have intermediate results.
 For example if you want that the user continuously "sees" the output as the process generates it:
 
 ```fsharp
-
 let output =
     CreateProcess.fromRawCommand "./folder/mytool.exe" ["arg1"; "arg2"]
     |> CreateProcess.redirectOutput
@@ -183,7 +169,6 @@ Redirect output from one process `outgen.exe` to `processIn.exe`:
 
 
 ```fsharp
-
 let input = StreamRef.Empty
 let p1 =
     CreateProcess.fromRawCommand "processIn.exe" []
@@ -194,5 +179,4 @@ let p2 =
     CreateProcess.fromRawCommand "outgen.exe" []
     |> CreateProcess.withStandardOutput (UseStream(true, input.Value))
     |> Proc.run
-
 ```
