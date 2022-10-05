@@ -549,27 +549,29 @@ Target.create "GenerateDocs" (fun _ ->
     File.writeString false "./output/CNAME" docsDomain
     Shell.copy source [ "RELEASE_NOTES.md" ]
 
-    Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
-    
-    Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
+    try
+        Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
+        
+        Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
 
-    // renaming node_modules directory so that fsdocs skip it when generating site.
-    Directory.Move("./docs/node_modules", "./docs/.node_modules")
+        // renaming node_modules directory so that fsdocs skip it when generating site.
+        Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-    let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
-    DotNet.exec id "fsdocs" command |> ignore
+        let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+        DotNet.exec id "fsdocs" command |> ignore
 
-    // Fsdocs.build (fun p -> { p with
-    //                             Input = Some(source)
-    //                             SaveImages = Some(true)
-    //                             Clean = Some(true)
-    //                             Parameters = Some projInfo
-    //                             Properties = Some "Configuration=debug"
-    //                             //Strict = Some(true)
-    // })
-    
-    // renaming node_modules directory back after fsdocs generated site.
-    Directory.Move("./docs/.node_modules", "./docs/node_modules")
+        // Fsdocs.build (fun p -> { p with
+        //                             Input = Some(source)
+        //                             SaveImages = Some(true)
+        //                             Clean = Some(true)
+        //                             Parameters = Some projInfo
+        //                             Properties = Some "Configuration=debug"
+        //                             //Strict = Some(true)
+        // })
+        
+    finally
+        // renaming node_modules directory back after fsdocs generated site.
+        Directory.Move("./docs/.node_modules", "./docs/node_modules")
 
 
     // validate site generation and ensure all components are generated successfully.
@@ -594,20 +596,22 @@ Target.create "GenerateDocs" (fun _ ->
 
 Target.create "HostDocs" (fun _ ->
 
-    Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
+    try
+        Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
 
-    Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
-    
-    // renaming node_modules directory so that fsdocs skip it when generating site.
-    Directory.Move("./docs/node_modules", "./docs/.node_modules")
+        Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
+        
+        // renaming node_modules directory so that fsdocs skip it when generating site.
+        Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-    let command = sprintf "watch --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
-    DotNet.exec id "fsdocs" command |> ignore
+        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+        DotNet.exec id "fsdocs" command |> ignore
 
-    // Fsdocs.watch id
+        // Fsdocs.watch id
 
-    // renaming node_modules directory back after fsdocs generated site.
-    Directory.Move("./docs/.node_modules", "./docs/node_modules")
+    finally
+        // renaming node_modules directory back after fsdocs generated site.
+        Directory.Move("./docs/.node_modules", "./docs/node_modules")
     
 )
 
