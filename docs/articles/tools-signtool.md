@@ -1,4 +1,4 @@
-# SignTool
+# Sign Files using SignTool
 
 This module is a wrapper around the [signtool.exe](https://docs.microsoft.com/en-gb/windows/win32/seccrypto/signtool) tool, a 
 command-line tool that digitally signs files, verifies signatures in files, or time stamps files.

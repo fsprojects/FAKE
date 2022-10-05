@@ -94,7 +94,7 @@
                 <span class="inline-block text-white">Getting Started</span>
             </h3>
 
-            <ul class="grid grid-cols-2 auto-cols-fr gap-6" x-data="{guide: []}" x-init="
+            <ul class="grid auto-cols-fr gap-6" x-data="{guide: []}" x-init="
                 fetch('/data.json')
                 .then(response => response.json())
                 .then(response => guide = response.guide)
@@ -102,14 +102,14 @@
                 <template x-for="(guideItem, index) in guide">
                     <li class="group" @click="window.location.href = guideItem.href">
                         <div
-                            class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            class="flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
                             <div>
                                 <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
                                 <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
                                     x-text="guideItem.title"></h5>
                             </div>
                             <div>
-                                <p class="mt-2 text-sm" x-text="guideItem.description">
+                                <p class="mt-2" x-text="guideItem.description">
                                 </p>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                 <span class="inline-block text-white">Articles and Examples</span>
             </h3>
 
-            <ul class="grid grid-cols-3 auto-cols-fr gap-6" x-data="{articles: []}" x-init="
+            <ul class="grid auto-cols-fr gap-6" x-data="{articles: []}" x-init="
                 fetch('/data.json')
                 .then(response => response.json())
                 .then(response => articles = response.articles)
@@ -141,14 +141,14 @@
                 <template x-for="(article, index) in articles">
                     <li class="group" @click="window.location.href = article.href">
                         <div
-                            class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            class="flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
                             <div>
                                 <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
                                 <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
                                     x-text="article.title"></h5>
                             </div>
                             <div>
-                                <p class="mt-2 text-sm" x-text="article.description">
+                                <p class="mt-2" x-text="article.description">
                                 </p>
                             </div>
                         </div>
