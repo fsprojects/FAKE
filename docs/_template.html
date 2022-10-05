@@ -21,8 +21,8 @@
 
     <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/style.css" />
     <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/prism.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/tailwind.css" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
     {{fsdocs-watch-script}}
@@ -46,7 +46,7 @@
         <div class="flex items-center">
             <div class="mr-5">
                 <ul class="flex space-x-4">
-                    <li><a class="hover:text-[#d4b43c]" href="{{root}}reference/index.html">Docs</a></li>
+                    <li><a class="hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a></li>
                     <li><a class="hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
                 </ul>
             </div>
@@ -99,7 +99,7 @@
         </div>
     </header>
 
-    <div class="lg:ml-[25rem] min-w-0 lg:px-16 bg-[url('/content/img/shape.svg')] bg-no-repeat bg-right-top">
+    <div class="lg:ml-[25rem] min-w-0 lg:px-16">
         <nav class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem]
          w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
             aria-label="main navigation"
@@ -165,7 +165,7 @@
     </div>
 
     <footer
-        class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10 bg-[url('/content/img/shape2.svg')] bg-no-repeat bg-right-bottom">
+        class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
         <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
             <div class="flex flex-col justify-between lg:w-2/3">
                 <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
@@ -184,7 +184,7 @@
                         </h4>
                         <ul class="mt-3 space-y-3">
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="/articles/fake-gettingstarted.html">Getting
+                                    href="/guide/fake-gettingstarted.html">Getting
                                     started</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
                                     href="/guide/fake-modules.html">Modules</a>
@@ -218,9 +218,6 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://ionide.io/">Ionide</a>
                             </li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://forge.run/">Forge</a></li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -251,7 +248,7 @@
                     send pull requests!
                 </p>
                 <div class="block py-8">
-                    <a href="/articles/contributing.html">
+                    <a href="/guide/contributing.html">
                         <span
                             class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
                             <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">

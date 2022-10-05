@@ -16,13 +16,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/tailwind.css" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body class="antialiased min-h-screen text-slate-500 bg-white relative flex flex-col w-fit md:w-full">
     <header
-        class="h-20 px-4 py-4 flex justify-between items-center bg-white border-b border border-t-0 border-r-0 border-l-0 border-b-[#d4b43c]/50 shadow">
+        class="h-20 px-4 py-4 flex justify-between items-center bg-white border-b-4 border-b-[#d4b43c] shadow-inner">
 
         <div class="flex items-center block">
             <a class="flex items-center gap-2" href="/index.html">
@@ -35,7 +35,7 @@
         <div class="flex items-center">
             <div>
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">Docs</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a></li>
                     <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
                 </ul>
             </div>
@@ -77,38 +77,38 @@
 
     </header>
 
-    <div class="md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[88rem]">
+    <section class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10 bg-gray-800">
 
-        <section class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10">
-
-            <div class="mt-10 lg:mt-0 flex flex-col justify-center items-center space-y-10">
-                <h1
-                    class="text-center text-2xl md:text-4xl font-bold text-[#d4b43c] leading-6 md:leading-10 tracking-wide lg:tracking-widest">
-                    A DSL FOR BUILD TASKS AND MORE
-                    <br />
-                    THE POWER OF F# - ANYWHERE - ANYTIME
-                </h1>
-                <div class="flex justify-between items-center space-x-5">
-                    <a href="/guide.html"
-                        class="w-48 py-3 flex justify-center bg-[#d4b43c] text-white rounded shadow-md font-semibold bg-gradient-to-r from-red-800 via-yellow-600 to-[#d4b43c] hover:from-[#d4b43c]">
-                        Guide
-                    </a>
-                    <a href="/reference/index.html"
-                        class="w-48 py-3 flex justify-center border border-[#d4b43c] text-[#d4b43c] rounded shadow-md font-semibold hover:text-white hover:bg-[#d4b43c]">
-                        API Docs
-                    </a>
-                </div>
+        <div class="mt-10 lg:mt-0 flex flex-col justify-center items-center space-y-10">
+            <h1
+                class="text-center text-2xl md:text-4xl font-bold text-[#d4b43c] leading-6 md:leading-10 tracking-wide lg:tracking-widest">
+                A DSL FOR BUILD TASKS AND MORE
+                <br />
+                THE POWER OF F# - ANYWHERE - ANYTIME
+            </h1>
+            <div class="flex justify-between items-center space-x-5">
+                <a href="/guide.html"
+                    class="w-48 py-3 flex justify-center bg-[#d4b43c] text-white rounded shadow-md font-semibold bg-gradient-to-r from-red-800 via-yellow-600 to-[#d4b43c] hover:from-[#d4b43c]">
+                    Guide
+                </a>
+                <a href="/reference/index.html"
+                    class="w-48 py-3 flex justify-center border border-[#d4b43c] text-[#d4b43c] rounded shadow-md font-semibold hover:text-white hover:bg-[#d4b43c]">
+                    API Docs
+                </a>
             </div>
+        </div>
 
-            <div class="mt-10 lg:mt-0 z-10 shadow-lg">
-                <img class="" src="/content/img/homepage/code-sample.svg" />
-            </div>
+        <div class="mt-10 lg:mt-0 z-10 shadow-lg bg-[#d4b43c] p-20 rounded-lg">
+            <img class="" src="/content/img/homepage/code-sample.svg" />
+        </div>
 
-            <div class="hidden lg:block absolute right-0 z-0">
-                <img src="/content/img/homepage/pattern.svg" />
-            </div>
+        <div class="hidden lg:block absolute right-0 z-0">
+            <img src="/content/img/homepage/pattern.svg" />
+        </div>
 
-        </section>
+    </section>
+
+    <div class="mt-20 md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[83rem]">
 
         <section class="mt-10 lg:mt-0 flex flex-col justify-center items-center">
 
@@ -235,7 +235,7 @@
 
     <footer
         class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 mt-40 pb-40 pt-10 px-10 bg-no-repeat bg-right-bottom">
-        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-[83rem] mx-auto space-y-10">
             <div class="flex flex-col justify-between lg:w-2/3">
                 <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
                     <div class="lg:mr-16">
@@ -253,7 +253,7 @@
                         </h4>
                         <ul class="mt-3 space-y-3">
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="/articles/fake-gettingstarted.html">Getting
+                                    href="/guide/fake-gettingstarted.html">Getting
                                     started</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
                                     href="/guide/fake-modules.html">Modules</a>
@@ -287,9 +287,6 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://ionide.io/">Ionide</a>
                             </li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://forge.run/">Forge</a></li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -317,7 +314,7 @@
                     send pull requests!
                 </p>
                 <div class="block py-8">
-                    <a href="/articles/contributing.html">
+                    <a href="/guide/contributing.html">
                         <span
                             class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
                             <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">

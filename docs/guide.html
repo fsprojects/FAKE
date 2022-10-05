@@ -16,8 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/tailwind.css" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body class="antialiased min-h-screen text-slate-500 bg-white relative flex flex-col w-fit md:w-full">
@@ -35,7 +35,7 @@
         <div class="flex items-center">
             <div>
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">Docs</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a></li>
                     <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
                 </ul>
             </div>
@@ -77,7 +77,8 @@
 
     </header>
 
-    <div class="min-h-screen mx-auto px-4 lg:px-0 w-full mt-10 bg-[url('/content/img/homepage/shape-2.svg')] bg-no-repeat bg-right-top">
+    <div
+        class="min-h-screen mx-auto px-4 lg:px-0 w-full mt-10 bg-[url('/content/img/homepage/shape-2.svg')] bg-no-repeat bg-right-top">
 
         <section class="w-full min-h-screen max-w-[88rem] mx-auto">
 
@@ -91,31 +92,30 @@
                     </svg>
                 </span>
                 <span class="inline-block text-white">Getting Started</span>
-                </span>
-                </h4>
+            </h3>
 
-                <ul class="grid grid-cols-2 auto-cols-fr gap-6" x-data="{guide: []}" x-init="
+            <ul class="grid grid-cols-2 auto-cols-fr gap-6" x-data="{guide: []}" x-init="
                 fetch('/data.json')
                 .then(response => response.json())
                 .then(response => guide = response.guide)
             ">
-                    <template x-for="(guideItem, index) in guide">
-                        <li class="group" @click="window.location.href = guideItem.link">
-                            <div
-                                class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
-                                <div>
-                                    <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
-                                    <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
-                                        x-text="guideItem.title"></h5>
-                                </div>
-                                <div>
-                                    <p class="mt-2 text-sm" x-text="guideItem.description">
-                                    </p>
-                                </div>
+                <template x-for="(guideItem, index) in guide">
+                    <li class="group" @click="window.location.href = guideItem.link">
+                        <div
+                            class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            <div>
+                                <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
+                                <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
+                                    x-text="guideItem.title"></h5>
                             </div>
-                        </li>
-                    </template>
-                </ul>
+                            <div>
+                                <p class="mt-2 text-sm" x-text="guideItem.description">
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
 
         </section>
 
@@ -131,38 +131,37 @@
                     </svg>
                 </span>
                 <span class="inline-block text-white">Articles and Examples</span>
-                </span>
-                </h4>
+            </h3>
 
-                <ul class="grid grid-cols-3 auto-cols-fr gap-6" x-data="{articles: []}" x-init="
+            <ul class="grid grid-cols-3 auto-cols-fr gap-6" x-data="{articles: []}" x-init="
                 fetch('/data.json')
                 .then(response => response.json())
                 .then(response => articles = response.articles)
             ">
-                    <template x-for="(article, index) in articles">
-                        <li class="group" @click="window.location.href = article.link">
-                            <div
-                                class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
-                                <div>
-                                    <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
-                                    <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
-                                        x-text="article.title"></h5>
-                                </div>
-                                <div>
-                                    <p class="mt-2 text-sm" x-text="article.description">
-                                    </p>
-                                </div>
+                <template x-for="(article, index) in articles">
+                    <li class="group" @click="window.location.href = article.link">
+                        <div
+                            class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            <div>
+                                <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
+                                <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
+                                    x-text="article.title"></h5>
                             </div>
-                        </li>
-                    </template>
-                </ul>
+                            <div>
+                                <p class="mt-2 text-sm" x-text="article.description">
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
 
         </section>
     </div>
 
     <footer
         class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 mt-40 pb-40 pt-10 px-10 bg-no-repeat bg-right-bottom">
-        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-[83rem] mx-auto space-y-10">
             <div class="flex flex-col justify-between lg:w-2/3">
                 <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
                     <div class="lg:mr-16">
@@ -180,7 +179,7 @@
                         </h4>
                         <ul class="mt-3 space-y-3">
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="/articles/fake-gettingstarted.html">Getting
+                                    href="/guide/fake-gettingstarted.html">Getting
                                     started</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]"
                                     href="/guide/fake-modules.html">Modules</a>
@@ -214,9 +213,6 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://ionide.io/">Ionide</a>
                             </li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="http://forge.run/">Forge</a></li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]"
-                                    href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -244,7 +240,7 @@
                     send pull requests!
                 </p>
                 <div class="block py-8">
-                    <a href="/articles/contributing.html">
+                    <a href="/guide/contributing.html">
                         <span
                             class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
                             <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">

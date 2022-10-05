@@ -26,6 +26,7 @@ nuget Fake.DotNet.Testing.MSpec prerelease
 nuget Fake.DotNet.Testing.XUnit2 prerelease
 nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Fake.Windows.Chocolatey prerelease
+nuget Fake.JavaScript.Npm prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
 nuget System.Reactive.Compatibility
@@ -53,6 +54,7 @@ open Fake.DotNet.Testing
 open Fake.Core.TargetOperators
 open System.Net.Http
 open Microsoft.Deployment.DotNet.Releases
+open Fake.JavaScript
 
 // ****************************************************************************************************
 // ------------------------------------------- Definitions -------------------------------------------
@@ -374,49 +376,6 @@ let callPaket wd args =
         failwithf "paket failed to start: %A" res
 
 /// <summary>
-/// Start a web server to host documentation. Uses Suave to host the docs
-/// </summary>
-let startWebServer () =
-    let rec findPort port =
-        let portIsTaken = false
-
-        if portIsTaken then findPort (port + 1) else port
-
-    let port = findPort 8083
-
-    let inline (@@) a b = Suave.WebPart.concatenate a b
-
-    let mimeTypes =
-        Suave.Writers.defaultMimeTypesMap
-        @@ (function
-        | ".avi" -> Suave.Writers.createMimeType "video/avi" false
-        | ".mp4" -> Suave.Writers.createMimeType "video/mp4" false
-        | _ -> None)
-
-    let serverConfig =
-        { Suave.Web.defaultConfig with
-            homeFolder = Some(Path.GetFullPath "output")
-            mimeTypesMap = mimeTypes
-            bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ] }
-
-    let (>=>) = Suave.Operators.op_GreaterEqualsGreater
-
-    let app =
-        Suave.WebPart.choose
-            [ Suave.Writers.setHeader "Cache-Control" "no-cache, no-store, must-revalidate"
-              >=> Suave.Writers.setHeader "Pragma" "no-cache"
-              >=> Suave.Writers.setHeader "Expires" "0"
-              >=> Suave.Files.browseHome ]
-
-    Suave.Web.startWebServerAsync serverConfig app |> snd |> Async.Start
-
-    let psi =
-        System.Diagnostics.ProcessStartInfo(sprintf "http://localhost:%d/index.html" port)
-
-    psi.UseShellExecute <- true
-    System.Diagnostics.Process.Start(psi) |> ignore
-
-/// <summary>
 /// Calls Expecto tool to run tests in the given working directory and DLL.
 /// </summary>
 ///
@@ -589,11 +548,17 @@ Target.create "GenerateDocs" (fun _ ->
     File.writeString false "./output/.nojekyll" ""
     File.writeString false "./output/CNAME" docsDomain
     Shell.copy source [ "RELEASE_NOTES.md" ]
+
+    Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
     
+    Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
+
+    // renaming node_modules directory so that fsdocs skip it when generating site.
+    Directory.Move("./docs/node_modules", "./docs/.node_modules")
+
     let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
-    
-    DotNet.exec id "fsdocs" command
-    
+    DotNet.exec id "fsdocs" command |> ignore
+
     // Fsdocs.build (fun p -> { p with
     //                             Input = Some(source)
     //                             SaveImages = Some(true)
@@ -603,8 +568,24 @@ Target.create "GenerateDocs" (fun _ ->
     //                             //Strict = Some(true)
     // })
     
+    // renaming node_modules directory back after fsdocs generated site.
+    Directory.Move("./docs/.node_modules", "./docs/node_modules")
+
+
+    // validate site generation and ensure all components are generated successfully.
+    if DirectoryInfo.ofPath("./output/guide").GetFiles().Length = 0 then failwith "site generation failed due to missing guide directory"
+    if DirectoryInfo.ofPath("./output/reference").GetFiles().Length = 0 then failwith "site generation failed due to missing reference directory"
+    if DirectoryInfo.ofPath("./output/articles").GetFiles().Length = 0 then failwith "site generation failed due to missing articles directory"
+    if not (File.exists("./output/data.json")) then failwith "site generation failed due to missing data.json file"
+    if not (File.exists("./output/RELEASE_NOTES.html")) then failwith "site generation failed due to missing RELEASE_NOTES.html file"
+    if not (File.exists("./output/guide.html")) then failwith "site generation failed due to missing guide.html file"
+    if not (File.exists("./output/index.html")) then failwith "site generation failed due to missing index.html file"
+
+
+    // clean up
     Shell.rm (source </> "RELEASE_NOTES.md")
-    
+
+    // prepare artifact
     Directory.ensure "temp"
     
     !!("output" </> "**/*")
@@ -612,9 +593,23 @@ Target.create "GenerateDocs" (fun _ ->
     publish "temp/docs.zip")
 
 Target.create "HostDocs" (fun _ ->
-    startWebServer ()
-    Trace.traceImportant "Press any key to stop."
-    System.Console.ReadKey() |> ignore)
+
+    Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
+
+    Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
+    
+    // renaming node_modules directory so that fsdocs skip it when generating site.
+    Directory.Move("./docs/node_modules", "./docs/.node_modules")
+
+    let command = sprintf "watch --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+    DotNet.exec id "fsdocs" command |> ignore
+
+    // Fsdocs.watch id
+
+    // renaming node_modules directory back after fsdocs generated site.
+    Directory.Move("./docs/.node_modules", "./docs/node_modules")
+    
+)
 
 // ----------------------------------------------------------------------------------------------------
 // Test targets.
