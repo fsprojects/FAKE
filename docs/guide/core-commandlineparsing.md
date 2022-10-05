@@ -63,11 +63,8 @@ You can also take a look at the test-suite:
   options: --foo
   ```
 
-  <div class="alert alert-info">
-      <h5>INFO</h5>
-      <p>Note that --foo has no argument because it was not specified in the options section!</p>
-  </div>
-  
+> Note that --foo has no argument because it was not specified in the options section!
+    
   In this scenario `prog --foo 10` is parsed as `--foo` and `NAME` argument because that is the only   option. However `prog --foo=10` is parsed as `NAME` argument without any `--foo` option. Usually to   prefer `--foo` you should put it first in the usage string:
   
   ```bash

@@ -459,23 +459,23 @@
     ],
     "guide": [
         {
-            "title": "Getting Started",
-            "description": "TBD",
-            "href": "/guide/getting-started.html"
-        },
-        {
             "title": "What is FAKE?",
-            "description": "TBD",
+            "description": "Get to know FAKE, the F# Make Tool",
             "href": "/guide/what-is-fake.html"
         },
         {
             "title": "FAKE History",
-            "description": "TBD",
+            "description": "A brief look into FAKE history, current position, and future",
             "href": "/guide/fake-history.html"
         },
         {
-            "title": "Core Target",
-            "description": "TBD",
+            "title": "Getting Started",
+            "description": "Build your first deployment script using FAKE",
+            "href": "/guide/getting-started.html"
+        },
+        {
+            "title": "Target Module",
+            "description": "Use the targets module to organize and run targets",
             "href": "/guide/core-targets.html"
         },
         {
@@ -484,29 +484,39 @@
             "href": "/guide/commandline.html"
         },
         {
-            "title": "Contributing",
-            "description": "FAKE Contribution guide",
-            "href": "/guide/contributing.html"
-        },
-        {
-            "title": "build server",
-            "description": "TBD",
-            "href": "/guide/buildserver.html"
-        },
-        {
-            "title": "core - command line parsing",
-            "description": "TBD",
+            "title": "Command Line Parsing",
+            "description": "FAKE command arguments parsing",
             "href": "/guide/core-commandlineparsing.html"
         },
         {
-            "title": "core-process",
-            "description": "TBD",
+            "title": "Contributing",
+            "description": "See FAKE Contribution guide",
+            "href": "/guide/contributing.html"
+        },
+        {
+            "title": "Process Module",
+            "description": "Use the process module to run processes and executables",
             "href": "/guide/core-process.html"
         },
         {
-            "title": "core-trace",
-            "description": "TBD",
+            "title": "Fake Debugging",
+            "description": "Debug your build scripts",
+            "href": "/guide/fake-debugging.html"
+        },
+        {
+            "title": "Trace Module",
+            "description": "Debug and add tracing info to your build",
             "href": "/guide/core-trace.html"
+        },
+        {
+            "title": "Caching in FAKE",
+            "description": "See how FAKE runner cache your build script for faster quick start",
+            "href": "/guide/fake-cache.html"
+        },
+        {
+            "title": "build Server",
+            "description": "See the different build servers supported in FAKE",
+            "href": "/guide/buildserver.html"
         },
         {
             "title": "dotnet-cli",
@@ -514,48 +524,38 @@
             "href": "/guide/dotnet-cli.html"
         },
         {
-            "title": "fake cache",
-            "description": "TBD",
-            "href": "/guide/fake-cache.html"
-        },
-        {
-            "title": "fake completion",
-            "description": "TBD",
+            "title": "FAKE Completion",
+            "description": "Add command line completion",
             "href": "/guide/fake-completion.html"
         },
         {
-            "title": "fake custom modules",
-            "description": "TBD",
-            "href": "/guide/fake-custom-modules.html"
-        },
-        {
-            "title": "fake debugging",
-            "description": "TBD",
-            "href": "/guide/fake-debugging.html"
-        },
-        {
-            "title": "migrate to fake 5",
-            "description": "TBD",
+            "title": "Migrate to FAKE 5 and above",
+            "description": "See migration guide from legacy FAKE",
             "href": "/guide/fake-migrate-to-fake-5.html"
         },
         {
-            "title": "fake modules",
-            "description": "TBD",
+            "title": "FAKE Modules",
+            "description": "How FAKE modules are organized",
             "href": "/guide/fake-modules.html"
         },
         {
-            "title": "fake template",
-            "description": "TBD",
+            "title": "FAKE Template",
+            "description": "Scaffold your build script quickly using FAKE template",
             "href": "/guide/fake-template.html"
         },
         {
-            "title": "fake supporters",
-            "description": "TBD",
+            "title": "FAKE Custom Modules",
+            "description": "Define your own custom modules by extending FAKE",
+            "href": "/guide/fake-custom-modules.html"
+        },
+        {
+            "title": "FAKE Supporters",
+            "description": "List of FAKE supports",
             "href": "/guide/help-supporters.html"
         },
         {
-            "title": "fake users",
-            "description": "TBD",
+            "title": "FAKE Users",
+            "description": "Who is using FAKE?",
             "href": "/guide/help-users.html"
         }
     ],
