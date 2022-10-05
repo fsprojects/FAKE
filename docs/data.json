@@ -1,154 +1,12 @@
 {
-    "nav": [
-        {
-            "title": "Tutorials",
-            "links": [
-                {
-                    "title": "Getting started",
-                    "href": "/reference/gettingstarted.html"
-                },
-                {
-                    "title": "Running FAKE from command line",
-                    "href": "/guide/commandline.html"
-                },
-                {
-                    "title": "FAKE template",
-                    "href": "/guide/fake-template.html"
-                },
-                {
-                    "title": "Debugging scripts",
-                    "href": "/fake-debugging.html"
-                },
-                {
-                    "title": "FAKE command-line completion",
-                    "href": "/fake-completion.html"
-                },
-                {
-                    "title": "Create custom modules",
-                    "href": "guide/fake-custom-modules.html"
-                }
-            ]
-        },
-        {
-            "title": "About",
-            "links": [
-                {
-                    "title": "Who is using FAKE?",
-                    "href": "/help-users.html"
-                },
-                {
-                    "title": "FAQ",
-                    "href": "/fake-what-is-fake.html"
-                },
-                {
-                    "title": "Supporters",
-                    "href": "/help-supporters.html"
-                },
-                {
-                    "title": "NuGet",
-                    "href": "https://www.nuget.org/packages/FAKE"
-                },
-                {
-                    "title": "Chocolatey",
-                    "href": "https://chocolatey.org/packages/fake"
-                },
-                {
-                    "title": "License",
-                    "href": "https://github.com/fsprojects/FAKE/blob/master/License.txt"
-                },
-                {
-                    "title": "Release Notes",
-                    "href": "/RELEASE_NOTES.html"
-                },
-                {
-                    "title": "Contributing",
-                    "href": "/contributing.html"
-                },
-                {
-                    "title": "Question or report a bug",
-                    "href": "https://github.com/fsprojects/FAKE/issues/new"
-                }
-            ]
-        },
-        {
-            "title": "API",
-            "links": [
-                {
-                    "title": "Slack",
-                    "href": "/articles/fake-api-slack.html"
-                },
-                {
-                    "title": "GitHub",
-                    "href": "/reference/fake-api-github.html"
-                }
-            ]
-        },
-        {
-            "title": "Azure",
-            "links": [
-                {
-                    "title": "Cloud Services",
-                    "href": "/reference/fake-azure-cloudservices.html"
-                },
-                {
-                    "title": "Emulators",
-                    "href": "/reference/fake-azure-emulators.html"
-                },
-                {
-                    "title": "Kudu",
-                    "href": "/reference/fake-azure-kudu.html"
-                },
-                {
-                    "title": "WebJobs",
-                    "href": "/reference/fake-azure-webjobs.html"
-                }
-            ]
-        },
-        {
-            "title": "Build",
-            "links": [
-                {
-                    "title": "CMake",
-                    "href": "/reference/fake-build-cmake.html"
-                }
-            ]
-        },
-        {
-            "title": "Build Server",
-            "links": [
-                {
-                    "title": "AppVeyor",
-                    "href": "/reference/fake-buildserver-appveyor.html"
-                },
-                {
-                    "title": "Azure DevOps",
-                    "href": "/reference/fake-buildserver-teamfoundation.html"
-                },
-                {
-                    "title": "GitLab",
-                    "href": "/reference/fake-buildserver-gitlab.html"
-                },
-                {
-                    "title": "GitHub Actions",
-                    "href": "/reference/fake-buildserver-githubactions.html"
-                },
-                {
-                    "title": "TeamCity",
-                    "href": "/reference/fake-buildserver-teamcity.html"
-                },
-                {
-                    "title": "Travis",
-                    "href": "/reference/fake-buildserver-travis.html"
-                },
-                {
-                    "title": "Bitbucket",
-                    "href": "/reference/fake-buildserver-bitbucketpipelines.html"
-                }
-            ]
-        },
+    "apidocs": [
         {
             "title": "Core",
             "links": [
+                {
+                    "title": "Core",
+                    "href": "/reference/fake-core.html"
+                },
                 {
                     "title": "BuildServer",
                     "href": "/reference/fake-core-buildserver.html"
@@ -191,7 +49,7 @@
                 },
                 {
                     "title": "Targets",
-                    "href": "/reference/fake-core-targets.html"
+                    "href": "/reference/fake-core-target.html"
                 },
                 {
                     "title": "Tasks",
@@ -216,11 +74,60 @@
             ]
         },
         {
-            "title": "Documentation",
+            "title": "IO",
             "links": [
                 {
-                    "title": "DocFx",
-                    "href": "/reference/fake-documentation-docfx.html"
+                    "title": "IO",
+                    "href": "/reference/fake-io.html"
+                },
+                {
+                    "title": "Change Watcher",
+                    "href": "/reference/fake-io-changewatcher.html"
+                },
+                {
+                    "title": "Globbing",
+                    "href": "/reference/fake-io-globbing-operators.html"
+                },
+                {
+                    "title": "Zip",
+                    "href": "/reference/fake-io-zip.html"
+                }
+            ]
+        },
+        {
+            "title": "Build Server",
+            "links": [
+                {
+                    "title": "Build Server",
+                    "href": "/reference/fake-buildserver.html"
+                },
+                {
+                    "title": "AppVeyor",
+                    "href": "/reference/fake-buildserver-appveyor.html"
+                },
+                {
+                    "title": "Azure DevOps",
+                    "href": "/reference/fake-buildserver-teamfoundation.html"
+                },
+                {
+                    "title": "GitLab",
+                    "href": "/reference/fake-buildserver-gitlab.html"
+                },
+                {
+                    "title": "GitHub Actions",
+                    "href": "/reference/fake-buildserver-githubactions.html"
+                },
+                {
+                    "title": "TeamCity",
+                    "href": "/reference/fake-buildserver-teamcity.html"
+                },
+                {
+                    "title": "Travis",
+                    "href": "/reference/fake-buildserver-travis.html"
+                },
+                {
+                    "title": "Bitbucket",
+                    "href": "/reference/fake-buildserver-bitbucketpipelines.html"
                 }
             ]
         },
@@ -228,8 +135,12 @@
             "title": "DotNet",
             "links": [
                 {
+                    "title": "DotNet",
+                    "href": "/reference/fake-dotnet.html"
+                },
+                {
                     "title": "Cli",
-                    "href": "/reference/fake-dotnet-cli.html"
+                    "href": "/reference/fake-dotnet-dotnet.html"
                 },
                 {
                     "title": "AssemblyInfo File",
@@ -318,21 +229,80 @@
             ]
         },
         {
-            "title": "External Modules",
+            "title": "API",
             "links": [
                 {
-                    "title": "BlackFox.Fake.BuildTask",
-                    "href": "https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md"
+                    "title": "API",
+                    "href": "/reference/fake-api.html"
                 },
                 {
-                    "title": "Xake",
-                    "href": "https://github.com/xakebuild/Xake"
+                    "title": "Slack",
+                    "href": "/reference/fake-api-slack.html"
+                },
+                {
+                    "title": "GitHub",
+                    "href": "/reference/fake-api-github.html"
+                }
+            ]
+        },
+        {
+            "title": "Azure",
+            "links": [
+                {
+                    "title": "Azure",
+                    "href": "/reference/fake-azure.html"
+                },
+                {
+                    "title": "Cloud Services",
+                    "href": "/reference/fake-azure-cloudservices.html"
+                },
+                {
+                    "title": "Emulators",
+                    "href": "/reference/fake-azure-emulators.html"
+                },
+                {
+                    "title": "Kudu",
+                    "href": "/reference/fake-azure-kudu.html"
+                },
+                {
+                    "title": "WebJobs",
+                    "href": "/reference/fake-azure-webjobs.html"
+                }
+            ]
+        },
+        {
+            "title": "Build",
+            "links": [
+                {
+                    "title": "Build",
+                    "href": "/reference/fake-build.html"
+                },
+                {
+                    "title": "CMake",
+                    "href": "/reference/fake-build-cmake.html"
+                }
+            ]
+        },
+        {
+            "title": "Documentation",
+            "links": [
+                {
+                    "title": "Documentation",
+                    "href": "/reference/fake-documentation.html"
+                },
+                {
+                    "title": "DocFx",
+                    "href": "/reference/fake-documentation-docfx.html"
                 }
             ]
         },
         {
             "title": "Installer",
             "links": [
+                {
+                    "title": "Installer",
+                    "href": "/reference/fake-installer.html"
+                },
                 {
                     "title": "InnoSetup",
                     "href": "/reference/fake-installer-innosetup.html"
@@ -348,29 +318,12 @@
             ]
         },
         {
-            "title": "IO",
-            "links": [
-                {
-                    "title": "File System",
-                    "href": "/reference/fake-io-filesystem.html"
-                },
-                {
-                    "title": "Change Watcher",
-                    "href": "/reference/fake-io-changewatcher.html"
-                },
-                {
-                    "title": "Globbing",
-                    "href": "/reference/fake-io-globbing-operators.html"
-                },
-                {
-                    "title": "Zip",
-                    "href": "/reference/fake-io-zip.html"
-                }
-            ]
-        },
-        {
             "title": "JavaScript",
             "links": [
+                {
+                    "title": "JavaScript",
+                    "href": "/reference/fake-javascript.html"
+                },
                 {
                     "title": "Npm",
                     "href": "/reference/fake-javascript-npm.html"
@@ -389,6 +342,10 @@
             "title": "Network",
             "links": [
                 {
+                    "title": "Network",
+                    "href": "/reference/fake-net.html"
+                },
+                {
                     "title": "Http",
                     "href": "/reference/fake-net-http.html"
                 },
@@ -406,18 +363,22 @@
             "title": "SQL",
             "links": [
                 {
-                    "title": "SQL Package",
-                    "href": "/reference/fake-sql-sqlpackage.html"
+                    "title": "SQL",
+                    "href": "/reference/fake-sql.html"
                 },
                 {
-                    "title": "SQL Server",
-                    "href": "/reference/fake-sql-sqlserver.html"
+                    "title": "SQL Package",
+                    "href": "/reference/fake-sql-sqlpackage.html"
                 }
             ]
         },
         {
             "title": "Testing",
             "links": [
+                {
+                    "title": "Testing",
+                    "href": "/reference/fake-testing.html"
+                },
                 {
                     "title": "SonarQube",
                     "href": "/reference/fake-testing-sonarqube.html"
@@ -435,6 +396,10 @@
         {
             "title": "Tools",
             "links": [
+                {
+                    "title": "Tools",
+                    "href": "/reference/fake-tools.html"
+                },
                 {
                     "title": "Git",
                     "href": "/reference/fake-tools-git.html"
@@ -465,12 +430,29 @@
             "title": "Windows",
             "links": [
                 {
+                    "title": "Windows",
+                    "href": "/reference/fake-windows.html"
+                },
+                {
                     "title": "Chocolatey",
-                    "href": "/reference/fake-windows-chocolatey.html"
+                    "href": "/reference/fake-windows-choco.html"
                 },
                 {
                     "title": "Registry",
                     "href": "/reference/fake-windows-registry.html"
+                }
+            ]
+        },
+        {
+            "title": "External Modules",
+            "links": [
+                {
+                    "title": "BlackFox.Fake.BuildTask",
+                    "href": "https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md"
+                },
+                {
+                    "title": "Xake",
+                    "href": "https://github.com/xakebuild/Xake"
                 }
             ]
         }
@@ -479,179 +461,179 @@
         {
             "title": "Command Line",
             "description": "Get to know the FAKE command line interface and the available options",
-            "link": "/guide/commandline.html"
+            "href": "/guide/commandline.html"
         },
         {
             "title": "Contributing",
             "description": "FAKE Contribution guide",
-            "link": "/guide/contributing.html"
+            "href": "/guide/contributing.html"
         },
         {
             "title": "build server",
             "description": "TBD",
-            "link": "/guide/buildserver.html"
+            "href": "/guide/buildserver.html"
         },
         {
             "title": "core - command line parsing",
             "description": "TBD",
-            "link": "/guide/core-commandlineparsing.html"
+            "href": "/guide/core-commandlineparsing.html"
         },
         {
             "title": "core-process",
             "description": "TBD",
-            "link": "/guide/core-process.html"
+            "href": "/guide/core-process.html"
         },
         {
             "title": "core-trace",
             "description": "TBD",
-            "link": "/guide/core-trace.html"
+            "href": "/guide/core-trace.html"
         },
         {
             "title": "dotnet-cli",
             "description": "TBD",
-            "link": "/guide/dotnet-cli.html"
+            "href": "/guide/dotnet-cli.html"
         },
         {
             "title": "fake cache",
             "description": "TBD",
-            "link": "/guide/fake-cache.html"
+            "href": "/guide/fake-cache.html"
         },
         {
             "title": "fake completion",
             "description": "TBD",
-            "link": "/guide/fake-completion.html"
+            "href": "/guide/fake-completion.html"
         },
         {
             "title": "fake custom modules",
             "description": "TBD",
-            "link": "/guide/fake-custom-modules.html"
+            "href": "/guide/fake-custom-modules.html"
         },
         {
             "title": "fake debugging",
             "description": "TBD",
-            "link": "/guide/fake-debugging.html"
+            "href": "/guide/fake-debugging.html"
         },
         {
             "title": "migrate to fake 5",
             "description": "TBD",
-            "link": "/guide/fake-migrate-to-fake-5.html"
+            "href": "/guide/fake-migrate-to-fake-5.html"
         },
         {
             "title": "fake modules",
             "description": "TBD",
-            "link": "/guide/fake-modules.html"
+            "href": "/guide/fake-modules.html"
         },
         {
             "title": "fake template",
             "description": "TBD",
-            "link": "/guide/fake-template.html"
+            "href": "/guide/fake-template.html"
         },
         {
             "title": "fake supporters",
             "description": "TBD",
-            "link": "/guide/help-supporters.html"
+            "href": "/guide/help-supporters.html"
         },
         {
             "title": "fake users",
             "description": "TBD",
-            "link": "/guide/help-users.html"
+            "href": "/guide/help-users.html"
         }
     ],
     "articles": [
         {
             "title": "api-slack",
             "description": "TBD",
-            "link": "/articles/api-slack.html"
+            "href": "/articles/api-slack.html"
         },
         {
             "title": "core-vault",
             "description": "TBD",
-            "link": "/articles/core-vault.html"
+            "href": "/articles/core-vault.html"
         },
         {
             "title": "dotnet-assemblyinfo",
             "description": "TBD",
-            "link": "/articles/dotnet-assemblyinfo.html"
+            "href": "/articles/dotnet-assemblyinfo.html"
         },
         {
             "title": "dotnet-testing-coverlet",
             "description": "TBD",
-            "link": "/articles/dotnet-testing-coverlet.html"
+            "href": "/articles/dotnet-testing-coverlet.html"
         },
         {
             "title": "dotnet-testing-opencover",
             "description": "TBD",
-            "link": "/articles/dotnet-testing-opencover.html"
+            "href": "/articles/dotnet-testing-opencover.html"
         },
         {
             "title": "dotnet-testing-specflow",
             "description": "TBD",
-            "link": "/articles/dotnet-testing-specflow.html"
+            "href": "/articles/dotnet-testing-specflow.html"
         },
         {
             "title": "fake-signtool",
             "description": "TBD",
-            "link": "/articles/fake-signtool.html"
+            "href": "/articles/fake-signtool.html"
         },
         {
             "title": "installer-squirrel",
             "description": "TBD",
-            "link": "/articles/installer-squirrel.html"
+            "href": "/articles/installer-squirrel.html"
         },
         {
             "title": "installer-wix",
             "description": "TBD",
-            "link": "/articles/installer-wix.html"
+            "href": "/articles/installer-wix.html"
         },
         {
             "title": "javascript-typescript",
             "description": "TBD",
-            "link": "/articles/javascript-typescript.html"
+            "href": "/articles/javascript-typescript.html"
         },
         {
             "title": "net-http",
             "description": "TBD",
-            "link": "/articles/net-http.html"
+            "href": "/articles/net-http.html"
         },
         {
             "title": "sql-sqlpackage",
             "description": "TBD",
-            "link": "/articles/sql-sqlpackage.html"
+            "href": "/articles/sql-sqlpackage.html"
         },
         {
             "title": "testing-fixie",
             "description": "TBD",
-            "link": "/articles/testing-fixie.html"
+            "href": "/articles/testing-fixie.html"
         },
         {
             "title": "testing-reportgenerator",
             "description": "TBD",
-            "link": "/articles/testing-reportgenerator.html"
+            "href": "/articles/testing-reportgenerator.html"
         },
         {
             "title": "testing-sonarqube",
             "description": "TBD",
-            "link": "/articles/testing-sonarqube.html"
+            "href": "/articles/testing-sonarqube.html"
         },
         {
             "title": "tools-gitversion",
             "description": "TBD",
-            "link": "/articles/tools-gitversion.html"
+            "href": "/articles/tools-gitversion.html"
         },
         {
             "title": "tools-octo",
             "description": "TBD",
-            "link": "/articles/tools-octo.html"
+            "href": "/articles/tools-octo.html"
         },
         {
             "title": "tools-pickles",
             "description": "TBD",
-            "link": "/articles/tools-pickles.html"
+            "href": "/articles/tools-pickles.html"
         },
         {
             "title": "windows-chocolatey",
             "description": "TBD",
-            "link": "/articles/windows-chocolatey.html"
+            "href": "/articles/windows-chocolatey.html"
         }
     ]
 }

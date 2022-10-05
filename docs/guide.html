@@ -100,7 +100,7 @@
                 .then(response => guide = response.guide)
             ">
                 <template x-for="(guideItem, index) in guide">
-                    <li class="group" @click="window.location.href = guideItem.link">
+                    <li class="group" @click="window.location.href = guideItem.href">
                         <div
                             class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
                             <div>
@@ -139,7 +139,7 @@
                 .then(response => articles = response.articles)
             ">
                 <template x-for="(article, index) in articles">
-                    <li class="group" @click="window.location.href = article.link">
+                    <li class="group" @click="window.location.href = article.href">
                         <div
                             class="h-32 flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
                             <div>

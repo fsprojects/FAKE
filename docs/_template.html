@@ -104,68 +104,91 @@
          w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
             aria-label="main navigation"
             :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
-        <div
-            class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
+            <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
             lg:hidden">
-            <div class="flex gap-2 items-center">
-                <a class="flex items-center gap-2" href="{{root}}index.html">
-                    <img src="{{root}}content/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
-                        width="28" height="28" class="w-10 h-10">
-                    <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
-                </a>
+                <div class="flex gap-2 items-center">
+                    <a class="flex items-center gap-2" href="{{root}}index.html">
+                        <img src="{{root}}content/assets/img/logo.svg"
+                            alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
+                            class="w-10 h-10">
+                        <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                    </a>
+                </div>
+                <button
+                    class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                    @click="open = false">
+                    <span
+                        class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                        <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
             </div>
-            <button
-                class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
-                @click="open = false">
-                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
-                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </span>
-            </button>
-    </div>
 
-    <ul x-data="{nav: []}" x-init="
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Guide
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
                 fetch('/data.json')
                 .then(response => response.json())
-                .then(response => nav = response.nav)
+                .then(response => nav = response.guide)
             ">
-        <template x-for="navGroup in nav">
-            <li class="mt-12 lg:mt-8">
-                <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900" x-text="navGroup.title">
-                </h5>
-                <ul class="space-y-6 lg:space-y-2 border-l">
-                    <template x-for="navLink in navGroup.links">
-                        <li class="group">
-                            <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
-                                :href="navLink.href" :class="window.location.pathname.startsWith(navLink.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
-                                    <span
-                                        class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname.startsWith(navItem.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
                                 -ml-6 text-slate-300">
                                 <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 5l7 7-7 7"></path>
                                 </svg>
-                                </span>
-                                <span class="inline-block" x-text="navLink.title"></span>
-                            </a>
-                        </li>
-                    </template>
-                </ul>
-            </li>
-        </template>
-    </ul>
-    </nav>
-    <div id="content"
-        class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
-        {{fsdocs-content}}
-    </div>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Articles
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.articles)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname === navItem.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+        <div id="content"
+            class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+            {{fsdocs-content}}
+        </div>
     </div>
 
-    <footer
-        class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+    <footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
         <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
             <div class="flex flex-col justify-between lg:w-2/3">
                 <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
@@ -242,7 +265,8 @@
                         <span class="inline-block">FAKE is a community effort</span>
                     </span>
                 </h4>
-                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and
+                    Runtime for
                     running F# scripts. Look at the open issues at
                     <a href="https://github.com/fsharp/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
                     send pull requests!

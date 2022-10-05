@@ -132,7 +132,7 @@
             x-init="
                 fetch('/data.json')
                 .then(response => response.json())
-                .then(response => nav = response.nav)
+                .then(response => nav = response.apidocs)
             ">
             <template x-for="navGroup in nav">
                 <li class="mt-12 lg:mt-8">
@@ -145,7 +145,7 @@
                                 <a
                                     class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
                                     :href="navLink.href"
-                                    :class="window.location.pathname.startsWith(navLink.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    :class="window.location.pathname === navLink.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
                                     <span
                                         class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
                                         <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
