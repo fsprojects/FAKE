@@ -1,47 +1,51 @@
-# NuGet package restore
+# Managing Dependencies using NuGet
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
-</div>
+If you are using a source control system like [*Git*](http://git-scm.com/) you probably don't want to store all binary dependencies in it.
+With FAKE you can use [*NuGet*](http://nuget.org/) to download all dependent packages during the build.
 
-If you are using a source control system like [git](http://git-scm.com/) you probably don't want to store all binary dependencies in it.
-With FAKE you can use [NuGet](http://nuget.codeplex.com/) to download all dependent packages during the build.
+To see the available NuGet APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-dotnet-nuget.html) for the NuGet module.
 
-## Setting the stage for NuGet
+## Setting the Stage for NuGet
 
-In order to download the packages during the build we need to add NuGet.exe to our repository.
-You can download the "NuGet.exe Command Line Tool" from the [release page](https://github.com/NuGet/Home/releases).
+In order to download the packages during the build we need to add NuGet executable to our repository.
+You can download the "NuGet.exe Command Line Tool" from the [*release page*](https://github.com/NuGet/Home/releases).
 
 ## Restore packages from the build script
 
-Modify your build script and add **RestorePackages()** near the beginning of the script.
-This will use the default parameters to retrieve all NuGet packages specified in *"./\*\*/packages.config"* files.
+Modify your build script and add **`RestorePackages()`** near the beginning of the script.
+This will use the default parameters to retrieve all NuGet packages specified in `"./\*\*/packages.config"` files.
 
-If you need to use different parameters please use the [RestorePackage](apidocs/v5/legacy/fake-restorepackagehelper.html) task directly.
+## Creating NuGet packages
 
-## Download latest version of FAKE via NuGet
-
-If you don't want to store FAKE.exe and its components in your repository, you can use a batch file which downloads it before the build:
-
-<pre><code class="language-bash">
-    @echo off
-    cls
-    "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
-    "tools\FAKE\tools\Fake.exe" build.fsx
-    pause
-</code></pre>
-# Creating NuGet packages
-
-## Creating a .nuspec template
+### Creating a `.nuspec` template
 
 The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
-The following code shows such .nuspec file from the [OctoKit](https://github.com/octokit/octokit.net) project.
+The following code shows such .nuspec file from the [*OctoKit*](https://github.com/octokit/octokit.net) project.
 
-<pre data-src="nuspec-example.xml"><code class="language-xml">
-
-</code></pre>
-The .nuspec template contains some placeholders like `@build.number@` which can be replaced later by the build script.
+```
+<?xml version="1.0" encoding="utf-8"?>
+<packagexmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+        <id>@project@</id>    
+        <version>@build.number@</version>    
+        <authors>@authors@</authors>
+        <owners>@authors@</owners>
+        <summary>@summary@</summary>   
+        <licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>    
+        <projectUrl>https://github.com/octokit/octokit.net</projectUrl>
+        <iconUrl>https://github.com/octokit/octokit.net/icon.png</iconUrl>   
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>    
+        <description>@description@</description>    
+        <releaseNotes>@releaseNotes@</releaseNotes>
+        <copyright>Copyright GitHub 2013</copyright>   
+        <tags>GitHub API Octokit</tags>
+        @dependencies@
+        @references@
+    </metadata>
+    @files@
+</package>
+```
+The `.nuspec` template contains some placeholders like `@build.number@` which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.
 
 The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.
@@ -58,12 +62,12 @@ Placeholder | replaced by (`NuGetParams` record field)
 `@copyright@` | `Copyright`
 `@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
 `@references@` | a combination of `References` and `ReferencesByFramework`
-`@contentFiles@` | a list of [contentFiles](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files) to be included in the nuget package
+`@contentFiles@` | a list of [*contentFiles*](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files) to be included in the nuget package
 `@files@` | a list of source, target, and exclude strings for files to be included in the nuget package
 
-## Setting up the build script
+### Setting up the build script
 
-In the build script you need to create a target which executes the [NuGet task](apidocs/v5/legacy/fake-nugethelper.html):
+In the build script you need to create a target which executes the [*NuGet task*](/reference/fake-dotnet-nuget.html):
 
 ```fsharp
 open Fake.DotNet.NuGet
@@ -92,9 +96,9 @@ There are a couple of interesting things happening here. In this sample FAKE cre
 * created the NuGet package
 * pushed it to [nuget.org](http://www.nuget.org) using the given `myAccessKey`.
 
-## Handling package dependencies
+### Handling package dependencies
 
-If your project depends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)).
+If your project depends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [*Nuget docs*](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)).
 Here is a small sample which sets up dependencies for different framework versions:
 
 ```fsharp
@@ -123,9 +127,9 @@ NuGet.NuGet (fun p ->
     "template.nuspec"
 ```
 
-## Explicit assembly references
+### Explicit assembly references
 
-If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the `lib` directory and explicitly specify which of them should be referenced (see [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above)) via the `References` and `ReferencesByFramework` fields.
+If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the `lib` directory and explicitly specify which of them should be referenced (see [*Nuget docs*](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above)) via the `References` and `ReferencesByFramework` fields.
 Here is a code snippet showing how to use these:
 
 ```fsharp
@@ -144,7 +148,7 @@ NuGet.NuGet (fun p ->
     "template.nuspec"
 ```
 
-## Explicit file specifications
+### Explicit file specifications
 
 If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
 Here is a code snippet showing how to use this:
@@ -169,11 +173,11 @@ NuGet.NuGet (fun p ->
 
 ## NuGet ContentFiles
 
-ContentFiles in NuGet are static files that the NuGet client will make available to a project for inclusion in the project.  For more information see this [blog post](https://blog.nuget.org/20160126/nuget-contentFiles-demystified.html) explaining the difference and relationship to the Files element.
+ContentFiles in NuGet are static files that the NuGet client will make available to a project for inclusion in the project.  For more information see this [*blog post*](https://blog.nuget.org/20160126/nuget-contentFiles-demystified.html) explaining the difference and relationship to the Files element.
 
-The ContentFiles param supports all the documented nuspec contentFiles [attributes](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files).
+The ContentFiles param supports all the documented nuspec contentFiles [*attributes*](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files).
 
-It takes a value of type `list<string*string option*string option*bool option*bool option>` where each tuple part maps respectively to the following [attributes]((https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files)):
+It takes a value of type `list<string*string option*string option*bool option*bool option>` where each tuple part maps respectively to the following [*attributes*]((https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files)):
 
 * include
 * exclude

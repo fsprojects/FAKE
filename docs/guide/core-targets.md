@@ -1,11 +1,6 @@
 # Running targets in "FAKE - F# Make"
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-core-targets.html">here</a></p>
-</div>
-
-[API-Reference](apidocs/v5/fake-core-target.html), [Operators](apidocs/v5/fake-core-targetoperators.html)
+To see the available Target APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-core-target.html) for the Target module.
 
 ## Command line interface for the target module
 
@@ -27,10 +22,7 @@ Target Module Options [target_opts]:
     -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>Please refer to the general <a href="fake-commandline.html">FAKE 5 runner command line interface</a> or the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a></p> 
-</div>
+> Please refer to the general <ins><a href="/guide/commandline.html">FAKE 5 runner command line interface</a></ins> or the <ins><a href="/guide/core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a></ins>
 
 This means you can - for example - run `fake run build.fsx --list`
 or `fake build --list` to list your targets.
@@ -39,22 +31,18 @@ To run a target `MyTarget` you could use  `fake run build.fsx -t MyTarget` or `f
 
 All parameters after `--` or `target <target>` are given to the target as paramters. Note that this feature needs to be enabled by using `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault`!
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
-    <ul>
-        <li><code>fake run -t Target build.fs</code> - because of ordering fake will assume <code>-t</code> to be the script name </li>
-        <li> <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.</li>
-    </ul>
-    In general you should use the command-line in a way to not be broken when new parameters are added.
-    Use longer forms in your scripts and shorter forms on your shell!</p>
-</div>
-
+> Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+> <br />1. <code>fake run -t Target build.fs</code> - because of ordering fake will assume <code>-t</code> to be the script name.
+> <br />2. <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.
+>
+> In general you should use the command-line in a way to not be broken when new parameters are added.
+> Use longer forms in your scripts and shorter forms on your shell!
 
 
 ## Running specific targets
 
-FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script (`build.fsx`):
+FAKE has a special param "target" which can be used to run specific targets in a build. 
+We assume the following build script (`build.fsx`):
 
 ```fsharp
 #r "paket:
@@ -87,23 +75,17 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Deploy"
 ```
 
-<div class="alert alert-warning">
-    <h5>WARNING</h5>
-    <p>
-    Previous versions of FAKE 5 used <code>(fun () -> ...)</code> instead of <code>(fun _ -> ...)</code>.
-    We decided to change the syntax here to introduce some parameters or other features at a later point.
-    Using the current parameter object is not supported yet.
-    </p> 
-</div>
-
+> Previous versions of FAKE 5 used <code>(fun () -> ...)</code> instead of <code>(fun _ -> ...)</code>.
+> We decided to change the syntax here to introduce some parameters or other features at a later point.
+> Using the current parameter object is not supported yet.
 
 
 Now we have the following options:
 
-- `fake run build.fsx -t "Build"` --> starts the *Build* target and runs the dependency *Clean*
-- `fake run build.fsx -t "Build" --single-target` --> starts only the *Build* target and runs no dependencies
-- `fake run build.fsx -s -t Build` --> starts only the *Build* target and runs no dependencies
-- `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
+- `fake run build.fsx -t "Build"` => starts the *Build* target and runs the dependency *Clean*
+- `fake run build.fsx -t "Build" --single-target` => starts only the *Build* target and runs no dependencies
+- `fake run build.fsx -s -t Build` => starts only the *Build* target and runs no dependencies
+- `fake run build.fsx` => starts the Deploy target (and runs the dependencies *Clean* and *Build*)
 
 ## Script with arguments
 
@@ -145,8 +127,8 @@ Target.runOrDefaultWithArguments "Default"
 
 Everything after the target will be interpreted as argument for the target:
 
-- `fake run build.fsx target MyTarget --arg` --> `--arg` will be contained in `args`
-- `fake build -t MyTarget --arg` --> `--arg` will be contained in `args`, because `--arg` is not a valid argument for the `Fake.Core.Target` (see command line spec above)
+- `fake run build.fsx target MyTarget --arg` => `--arg` will be contained in `args`
+- `fake build -t MyTarget --arg` => `--arg` will be contained in `args`, because `--arg` is not a valid argument for the `Fake.Core.Target` (see command line spec above)
 
 ## Targets with arguments
 
@@ -165,8 +147,8 @@ Target.runOrDefaultWithArguments "Deploy"
 
 Everything after the target will be interpreted as argument for the target:
 
-- `fake run build.fsx target MyTarget --arg` --> `--arg` will be contained in `p.Context.Arguments`
-- `fake build -t MyTarget --arg` --> `--arg` will be contained in `p.Context.Arguments`, because --arg is not a valid argument for the `Fake.Core.Target` (see command line spec above)
+- `fake run build.fsx target MyTarget --arg` => `--arg` will be contained in `p.Context.Arguments`
+- `fake build -t MyTarget --arg` => `--arg` will be contained in `p.Context.Arguments`, because --arg is not a valid argument for the `Fake.Core.Target` (see command line spec above)
 
 You can access the arguments from every target executed along the way.
 
@@ -290,7 +272,7 @@ For example this dependency tree:
 
 ...would be treated as follows:
 
-![](pics/parallel/ParallelExample.png)
+![Parallel example]({{root}}/content/img/parallel/ParallelExample.png)
 
 This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.
 

@@ -459,6 +459,26 @@
     ],
     "guide": [
         {
+            "title": "Getting Started",
+            "description": "TBD",
+            "href": "/guide/getting-started.html"
+        },
+        {
+            "title": "What is FAKE?",
+            "description": "TBD",
+            "href": "/guide/what-is-fake.html"
+        },
+        {
+            "title": "FAKE History",
+            "description": "TBD",
+            "href": "/guide/fake-history.html"
+        },
+        {
+            "title": "Core Target",
+            "description": "TBD",
+            "href": "/guide/core-targets.html"
+        },
+        {
             "title": "Command Line",
             "description": "Get to know the FAKE command line interface and the available options",
             "href": "/guide/commandline.html"
@@ -540,6 +560,11 @@
         }
     ],
     "articles": [
+        {
+            "title": "nuget",
+            "description": "TBD",
+            "href": "/articles/dotnet-nuget.html"
+        },
         {
             "title": "api-slack",
             "description": "TBD",

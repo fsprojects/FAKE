@@ -1,4 +1,4 @@
-# Getting started
+# Getting Started
 
 In this tutorial you will learn how to set up a complete build infrastructure with FAKE. This includes:
 
@@ -7,7 +7,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 * how to automatically compile your C# or F# projects
 * how to automatically run NUnit tests on your projects
 
-If you are interested in what FAKE actually is, see our [<ins>FAQ</ins>]({{root}}articles/what-is-fake.html).
+If you are interested in what FAKE actually is, see our [*FAQ*]({{root}}guide/what-is-fake.html).
 
 ## Install FAKE
 
