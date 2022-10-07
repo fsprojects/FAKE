@@ -1,18 +1,36 @@
 # Contributing to FAKE
 
+Table of Content:
+
+* [Prerequisites](#Prerequisites)
+    * [Install F#](#Install-F)
+    * [Install an Editor](#Install-an-Editor)
+    * [Install FAKE](#Install-FAKE)
+* [Creating Pull Requests](#Creating-Pull-Requests)
+* [Contributing Documentation](#Contributing-Documentation)
+    * [Building the Documentation](#Building-the-Documentation)
+    * [Viewing the Documentation](#Viewing-the-Documentation)
+* [Testing Modules](#Testing-Modules)
+* [Style Guidelines](#Style-Guidelines)
+    * [API Design Guidelines](#API-Design-Guidelines)
+* [Considerations Regarding FAKE 4](#Considerations-Regarding-FAKE-4)
+* [Porting Legacy Modules to Current Version of FAKE](#Porting-Legacy-Modules-to-Current-Version-of-FAKE)
+* [Release Process](#Release-Process)
+* [Staging environment](#Staging-environment)
+
 Thank you for your interest in contributing to FAKE! This guide explains everything you'll need to know to get started.
 
 __Before diving in__, please note:
 
 * You are encouraged to **improve this document** by sending a pull request to the FAKE project on GitHub. If you learn 
-* something while playing with FAKE, please record your [*findings here*](https://github.com/fsharp/FAKE/blob/master/docs/guide/contributing.md)!
+* something while playing with FAKE, please record your [<ins>findings here</ins>](https://github.com/fsprojects/FAKE/blob/master/docs/guide/contributing.md)!
 
 * If you'd like to discuss a feature (a good idea!) or are looking for suggestions on how to to contribute:
-  * **Check the [Issue list](https://github.com/fsharp/FAKE/issues)** on GitHub,
-  * **Visit the [Gitter room](https://gitter.im/fsharp/FAKE)**
+  * **Check the [<ins>Issue list</ins>](https://github.com/fsprojects/FAKE/issues)** on GitHub,
+  * **Visit the [<ins>Gitter room</ins>](https://gitter.im/fsprojects/FAKE)**
 
 * Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall 
-* be under the terms and conditions of the **Apache 2.0 license**. See [*`/License.txt`*](https://github.com/fsharp/FAKE/tree/release/next/License.txt) for details.
+* be under the terms and conditions of the **Apache 2.0 license**. See [*<ins>`/License.txt`</ins>*](https://github.com/fsprojects/FAKE/tree/release/next/License.txt) for details.
 
 ## Prerequisites
 
@@ -21,24 +39,24 @@ Before building and developing FAKE, you must:
 ### Install F#
 
 **Linux and Mac** users should install the .NET Core SDK and Mono per this guide, 
-"[*Cross-Platform Development with F#*](http://fsharp.org/guides/mac-linux-cross-platform/)".
+"[<ins>Cross-Platform Development with F#</ins>](http://fsharp.org/guides/mac-linux-cross-platform/)".
 
-**Windows** users can install **Visual Studio**. The [*Community Edition*](https://www.visualstudio.com/de/vs/community/) 
+**Windows** users can install **Visual Studio**. The [<ins>Community Edition</ins>](https://www.visualstudio.com/de/vs/community/) 
   is freely available for open-source projects.
 
 > When developing on Windows, make sure to have long paths enabled 
-> ([instructions available here](https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing)), 
+> ([<ins>instructions available here</ins>](https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing)), 
 > otherwise the test-suite will fail -- although, the build should work. 
 
 ### Install an Editor
 
-For FAKE development, [*Visual Studio Code*](https://code.visualstudio.com/Download) 
-with [*Ionide*](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) is highly recommended. 
+For FAKE development, [<ins>Visual Studio Code</ins>](https://code.visualstudio.com/Download) 
+with [<ins>Ionide</ins>](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) is highly recommended. 
 The following IDEs are also excellent choices:
 
-- JetBrains Rider [[download](https://www.jetbrains.com/rider/download)]
-- Visual Studio for Mac [[download](https://visualstudio.microsoft.com/vs/mac/)]
-- Visual Studio for Windows [[download](https://visualstudio.microsoft.com/vs/)]
+- JetBrains Rider [[<ins>download</ins>](https://www.jetbrains.com/rider/download)]
+- Visual Studio for Mac [[<ins>download</ins>](https://visualstudio.microsoft.com/vs/mac/)]
+- Visual Studio for Windows [[<ins>download</ins>](https://visualstudio.microsoft.com/vs/)]
 
 
 ### Install FAKE
@@ -50,17 +68,17 @@ dotnet tool restore
 dotnet fake --version
 ```
 
-For alternative methods of installing FAKE, please see the [*Getting Started guide*]({{root}}guide/gettingstarted.html#Install-FAKE).
+For alternative methods of installing FAKE, please see the [<ins>Getting Started guide</ins>]({{root}}guide/gettingstarted.html#Install-FAKE).
 
 ## Creating Pull Requests
 
-1. **Fork** the [*FAKE repo on GitHub*](https://github.com/fsharp/FAKE).
+1. **Fork** the [<ins>FAKE repo on GitHub</ins>](https://github.com/fsprojects/FAKE).
 
 2. **Clone** your personal fork locally.
 
 3. **Add a new git remote** in order to retrieve upstream changes.
 ```shell
-git remote add upstream https://github.com/fsharp/FAKE.git
+git remote add upstream https://github.com/fsprojects/FAKE.git
 ```
 
 4. **Checkout** the `release/next` branch. 
@@ -80,7 +98,7 @@ git checkout -b myfeature
 
 7. **Implement** your bugfix/feature.
 
-8. Add a bit of **documentation** (see the section on [*Contributing Documentation*](#Contributing-Documentation)).
+8. Add a bit of **documentation** (see the section on [<ins>Contributing Documentation</ins>](#Contributing-Documentation)).
 
 9. Re-run the build script to **confirm that all tests pass**.
 ```shell
@@ -89,7 +107,7 @@ dotnet fake build
 
 10. **Commit** your changes, and **push** them to your fork.
 
-11. Use GitHub's UI to [*create a pull request*](https://github.com/fsharp/FAKE/pulls). (Write "WIP" into the pull request description if it's not completely ready.)<br/><br/>If you need to rebase you can do:
+11. Use GitHub's UI to [<ins>create a pull request</ins>](https://github.com/fsprojects/FAKE/pulls). (Write "WIP" into the pull request description if it's not completely ready.)<br/><br/>If you need to rebase you can do:
 ```shell
 git fetch upstream
 git rebase upstream/release/next
@@ -100,21 +118,50 @@ The pull request will be updated automatically.
 
 ## Contributing Documentation
 
-The code for all documentation can be found in the [*`help` directory on GitHub*](https://github.com/fsharp/FAKE/tree/release/next/help). 
+The code for all documentation can be found in the [<ins>`docs` directory on GitHub</ins>](https://github.com/fsprojects/FAKE/tree/release/next/docs). 
 If you find a bug or add a new feature, **make sure you document it**!
+
+The documentation uses the following stack:
+
+* [<ins>TailwindCSS</ins>](https://tailwindcss.com/) as a styling framework
+* [<ins>AlpineJS</ins>](https://alpinejs.dev/) as a JS framework for adding interactivity to website
+* [<ins>FSDocs</ins>](https://fsprojects.github.io/FSharp.Formatting/) to generate API documentation from FAKE modules
+
+The `docs` directory is first built using NPM by running the command `npm run build` to generate styles and other files.
+Next `fsdocs` is called to generate complete site and API documentation. FSDocs uses template pages to generate site.
+We have two template pages:
+
+* `docs/_template.html`: used for markdown files in `guide` and `articles` directories
+* `docs/reference/_template.html`: used in API documentation
+
+The two templates are 90% identical, except some styles for markdown files to use TailwindCSS typography plugin.
+
+The next part is the `docs/data.json` file. This file has the navigation and content of the site. The side navigation
+for **guide** and **API Docs** is built using this file. **So to add new articles or modules to FAKE, this file need
+to be updated to include the new module/article**.
+
+Another part is the following. If you want to modify the styles, you can run TailwindCSS dev server by navigating
+to `docs` directory and entering the following command in a CMD:
+
+```shell
+npm run dev
+```
+
 
 ### Building the Documentation
 
-Documentation for FAKE is automatically generated using **the amazing [*F# Docs*](https://github.com/fsprojects/FSharp.Formatting) library**.
+Documentation for FAKE is automatically generated using **the amazing [<ins>F# Docs</ins>](https://github.com/fsprojects/FSharp.Formatting) library**.
 It turns Markdown files `*.md` with embedded code snippets and F# script `*.fsx` files containing embedded Markdown documentation into 
 nice HTML documentation.
 
 To build the documentation from scratch, simply run: 
+
 ```shell
 dotnet fake build target GenerateDocs
 ```
 
 To save time, you may skip the prerequisite build steps and run the `GenerateDocs` target directly using the single target `-s` switch:
+
 ```shell
 dotnet fake build -s target GenerateDocs
 ```
@@ -124,6 +171,7 @@ dotnet fake build -s target GenerateDocs
 ### Viewing the Documentation
 
 Running the following target spins up a webserver on localhost and opens the newly built docs in a browser window:
+
 ```shell
 dotnet fake build target HostDocs
 ```
@@ -135,6 +183,7 @@ local nuget package and reference it in your script per the steps below:
 
 1. Create a local nuget package for the module you've changed.  
 e.g: Using dotnet cli
+
 ```shell
 cd path/to/project
     dotnet pack
@@ -153,22 +202,22 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 
 ## Style Guidelines
 
-* When working on FAKE 5 or above, [*Visual Studio Code*](https://code.visualstudio.com/) with [*Ionide*](http://ionide.io/) helps a lot!
+* When working on FAKE 5 or above, [<ins>Visual Studio Code</ins>](https://code.visualstudio.com/) with [<ins>Ionide</ins>](http://ionide.io/) helps a lot!
 
-* Read the [*F# component design guidelines*](http://fsharp.org/specs/component-design-guidelines/).
+* Read the [<ins>F# component design guidelines</ins>](http://fsharp.org/specs/component-design-guidelines/).
 
-* Read the [*API Design Guidelines*](#API-Design-Guidelines) below.
+* Read the [<ins>API Design Guidelines</ins>](#API-Design-Guidelines) below.
 
 * Add documentation for your feature
 
 * If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the 
-* [menu](https://github.com/fsharp/FAKE/blob/release/next/help/templates/template.cshtml)
+* [<ins>menu</ins>](https://github.com/fsprojects/FAKE/blob/release/next/help/templates/template.cshtml)
 
 * If you write API documentation but no extra markdown, please consider adding it to the menu as well.
 
 ### API Design Guidelines
 
-[*We've learned from our mistakes*](fake-fake5-learn-more.html) and adopted new API design guidelines. 
+[<ins>We've learned from our mistakes</ins>](/guide/fake-history.html) and adopted new API design guidelines. 
 **Please read them very carefully**, and please ask if you don't understand any of the following rules:
 
 * `[<AutoOpen>]` is no longer used
@@ -196,14 +245,15 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 * Fake 4 (FakeLib) is in maintenance mode. Therefore new features need to be at least available as a new FAKE 5 and above module 
 * (that might mean that the old module needs to be migrated as part of the PR).
 
-* Fake 4 still allows hotfixes. Please send the PR against the [*hotfix_fake4 branch*](https://github.com/fsharp/FAKE/tree/hotfix_fake4).
+* Fake 4 still allows hotfixes. Please send the PR against the [*hotfix_fake4 branch*](https://github.com/fsprojects/FAKE/tree/hotfix_fake4).
 
   It would be helpful if a second PR against `release/next` is sent that merges the hotfix into `release/next` 
 * and adds the hotfix to the FAKE 5 and above code as well.
 
-## Porting Modules to FAKE 5 and above
 
-As mentioned in the [*Fake 5 and above learn more*](fake-fake5-learn-more.html) section, we could use your help porting modules to FAKE 5. 
+## Porting Legacy Modules to Current Version of FAKE
+
+As mentioned in the [*Fake 5 and above learn more*](/guide/fake-history.html) section, we could use your help porting modules to FAKE 5. 
 To save you from some pitfalls, this section provides a working approach to migrating modules.
 
 Try the following:
@@ -223,6 +273,16 @@ These steps will ensure:
 * The new API is part of FakeLib (deprecated)
 * The new API is available as separate module
 
+
+## Release Process
+To publish a release, merge the changes to `master` branch and prepare release notes in `RELEASE_NOTES.md` file, and trigger the `release` GitHub action providing as an input the release version.
+The release process needs an admin approval, once that is approved the release action will start. FAKE release push packages to the following
+registries:
+
+1. Pushing all FAKE modules to NuGet source.
+2. Pushing FAKE as a chocolatey package.
+3. Publish site to GitHub Pages.
+
 ## Staging environment
 
 In order to test and preview our changes faster, we have a fully automated release process in place.
@@ -238,4 +298,4 @@ If you ever need a release/bugfix, make sure to mention that in your PR. We can 
 > Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
 > Those bits should be considered for "unblocking"-purposes or testing only.
 
-The [*release process*](https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&view=mine&_a=releases) is publicly available as well.
+The [<ins>release process</ins>](https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&view=mine&_a=releases) is publicly available as well.
