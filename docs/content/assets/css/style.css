@@ -51,6 +51,18 @@ table * tr {
     border-right-width: 0;
 }
 
+table.pre * tr {
+    box-sizing: border-box;
+    border: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+table.pre .fssnip {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 table thead tr {
     border-bottom-color: #d4b43c;
     border-top: 0;

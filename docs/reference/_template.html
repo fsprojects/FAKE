@@ -24,11 +24,10 @@
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
 
-
     {{fsdocs-watch-script}}
 </head>
 
-<body class="antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
       x-data="{open: false}"
       :class="{'bg-gray-100 overflow-hidden': open === true}">
 <header

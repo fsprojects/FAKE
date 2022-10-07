@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-pt-32">
 
 <head>
     <title>{{fsdocs-page-title}}</title>
@@ -19,16 +19,15 @@
     <link type="text/css" rel="stylesheet" href="{{root}}content/fsdocs-{{fsdocs-theme}}.css" />
     <script type="text/javascript" src="{{root}}content/fsdocs-tips.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/style.css"/>
     <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/prism.css" />
     <link type="text/css" rel="stylesheet" href="{{root}}content/assets/css/tailwind.css" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-
     {{fsdocs-watch-script}}
 </head>
 
-<body class="antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
     x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
     <header class="sticky inset-0 flex lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
     lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
