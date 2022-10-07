@@ -1,0 +1,7 @@
+node_modules
+.node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+/guide/RELEASE_NOTES.md
