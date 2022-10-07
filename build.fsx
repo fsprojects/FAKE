@@ -547,7 +547,7 @@ Target.create "GenerateDocs" (fun _ ->
 
     File.writeString false "./output/.nojekyll" ""
     File.writeString false "./output/CNAME" docsDomain
-    Shell.copy source [ "RELEASE_NOTES.md" ]
+    Shell.copy (source @@ "guide") [ "RELEASE_NOTES.md" ]
 
     try
         Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
@@ -570,6 +570,9 @@ Target.create "GenerateDocs" (fun _ ->
         // })
         
     finally
+        // clean up
+        Shell.rm (source </> "guide/RELEASE_NOTES.md")
+
         // renaming node_modules directory back after fsdocs generated site.
         Directory.Move("./docs/.node_modules", "./docs/node_modules")
 
@@ -579,13 +582,9 @@ Target.create "GenerateDocs" (fun _ ->
     if DirectoryInfo.ofPath("./output/reference").GetFiles().Length = 0 then failwith "site generation failed due to missing reference directory"
     if DirectoryInfo.ofPath("./output/articles").GetFiles().Length = 0 then failwith "site generation failed due to missing articles directory"
     if not (File.exists("./output/data.json")) then failwith "site generation failed due to missing data.json file"
-    if not (File.exists("./output/RELEASE_NOTES.html")) then failwith "site generation failed due to missing RELEASE_NOTES.html file"
+    if not (File.exists("./output/guide/RELEASE_NOTES.html")) then failwith "site generation failed due to missing RELEASE_NOTES.html file"
     if not (File.exists("./output/guide.html")) then failwith "site generation failed due to missing guide.html file"
     if not (File.exists("./output/index.html")) then failwith "site generation failed due to missing index.html file"
-
-
-    // clean up
-    Shell.rm (source </> "RELEASE_NOTES.md")
 
     // prepare artifact
     Directory.ensure "temp"
@@ -595,11 +594,14 @@ Target.create "GenerateDocs" (fun _ ->
     publish "temp/docs.zip")
 
 Target.create "HostDocs" (fun _ ->
+    let source = "./docs"
 
     try
         Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
 
         Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
+
+        Shell.copy (source @@ "guide") [ "RELEASE_NOTES.md" ]
         
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
@@ -610,6 +612,9 @@ Target.create "HostDocs" (fun _ ->
         // Fsdocs.watch id
 
     finally
+        // clean up
+        Shell.rm (source </> "guide/RELEASE_NOTES.md")
+
         // renaming node_modules directory back after fsdocs generated site.
         Directory.Move("./docs/.node_modules", "./docs/node_modules")
     

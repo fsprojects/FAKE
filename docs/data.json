@@ -557,6 +557,11 @@
             "title": "FAKE Users",
             "description": "Who is using FAKE?",
             "href": "/guide/help-users.html"
+        },
+        {
+            "title": "Release Notes",
+            "description": "FAKE release notes",
+            "href": "/guide/RELEASE_NOTES.html"
         }
     ],
     "articles": [

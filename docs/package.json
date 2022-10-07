@@ -2,7 +2,8 @@
   "name": "my-vue-app",
   "version": "0.0.0",
   "scripts": {
-    "build": "npx tailwindcss -i ./content/assets/css/tailwind-style.css -o ./content/assets/css/tailwind.css --minify"
+    "build": "npx tailwindcss -i ./content/assets/css/tailwind-style.css -o ./content/assets/css/tailwind.css --minify",
+    "dev": "npx tailwindcss -i ./content/assets/css/tailwind-style.css -o ./content/assets/css/tailwind.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.7",
