@@ -554,6 +554,8 @@ Target.create "GenerateDocs" (fun _ ->
         
         Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
 
+        Shell.copy "./output" [source </> "robots.txt"]
+
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
@@ -602,6 +604,8 @@ Target.create "HostDocs" (fun _ ->
         Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
 
         Shell.copy (source @@ "guide") [ "RELEASE_NOTES.md" ]
+
+        Shell.copy "./output" [source </> "robots.txt"]
         
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
