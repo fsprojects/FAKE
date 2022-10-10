@@ -1,36 +1,13 @@
-# FAKE - F# Make &middot; [![FAKE Build and Test](https://github.com/fsprojects/FAKE/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/fsprojects/FAKE/actions/workflows/build_and_test.yml) [![NuGet Badge](https://buildstats.info/nuget/Fake-Cli)](https://www.nuget.org/packages/Fake-Cli) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]([https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request](https://fake.build/guide/contributing.html)) [![Join the chat at https://gitter.im/fsharp/FAKE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsharp/FAKE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# FAKE - F# Make &middot; [![FAKE Build and Test](https://github.com/fsprojects/FAKE/actions/workflows/build_and_test.yml/badge.svg?branch=release/next)](https://github.com/fsprojects/FAKE/actions/workflows/build_and_test.yml) [![NuGet Badge](https://buildstats.info/nuget/Fake-Cli)](https://www.nuget.org/packages/Fake-Cli) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]([https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request](https://fake.build/guide/contributing.html)) [![Join the chat at https://gitter.im/fsharp/FAKE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsharp/FAKE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 "FAKE - F# Make" is a cross platform build automation system. Due to its integration
-in F#, all benefits of the .NET Framework and functional programming can be used, including
+in F#, all the benefits of the .NET Framework and functional programming can be used, including
 the extensive class library, powerful debuggers and integrated development environments like
 Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
-See the [project home page](https://fake.build/) for tutorials and [API documentation](https://fake.build/reference/index.html).
-
-## Usage
-
-See detailed instructions on [how to use](https://fake.build/guide/fake-gettingstarted.html#Install-FAKE) the project.
-
-## Requirements
-
-Fake runner requires .Net v6 SDK to be installed on the machine to run it. .Net v6 was chosen since it is the current LTS release.
-
-Fake modules has target frameworks of `net6` and `netstandard2.0`. Please [see this link](https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0) which lists the supported .Net and .NET Framework versions by `netstandard2.0`
-
-## Installation
-
-* Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
-* Or: Install FAKE 5 or later (for example via `choco install fake -pre`) and run `fake build`
-
-> Note: You can find more details on the [contributing page](https://fake.build/guide/contributing.html)
-
-Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-Otherwise the test-suite will fail (However, the compilation should work)
-
-## Example
-[Fake site](https://fake.build) has several examples and API samples to get you started. Here is an example to get a glimpse on FAKE:
+Here is an example to get a glimpse on FAKE:
 
 ```F#
 // build.fsx
@@ -72,6 +49,30 @@ This example pulls Fake's `Target` and `Trace` modules and define three targets:
 *  the `Deploy` target can push your built project to a cloud service.
 
 At the bottom, the example define target dependencies, which specify that a `Deploy` must run after a `Build` which must run after a `Clean`.
+
+**See the [project home page](https://fake.build/) for tutorials and the [API documentation](https://fake.build/reference/index.html) for various FAKE modules.**
+
+## Requirements
+
+Fake runner requires .Net v6 SDK to be installed on the machine to run it. .Net v6 was chosen since it is the current LTS release of .Net
+
+> FAKE 5 doesn't have this requirement. You can use FAKE 5 runner without having .NET 6 SDK installed since it will default to NETSTANDARD2.0 assemblies. But we advice to see the options available to run your build script in [Different Ways to run FAKE](https://fake.build/guide/getting-started.html#Different-ways-to-run-FAKE)
+
+Fake modules has target frameworks of `net6` and `netstandard2.0`. Please [see this link](https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0) which lists the supported .Net and .NET Framework versions by `netstandard2.0`
+
+## Installation
+
+* Either: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet tool restore` followed by `dotnet fake build`
+* Or: Install FAKE 5 or later (for example via `choco install fake -pre`) and run `fake build`
+
+> Note: You can find more details on the [contributing page](https://fake.build/guide/contributing.html)
+
+Make sure to have long path enabled: [see how to enable long paths](https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing)
+Otherwise the test-suite will fail (However, the compilation should work)
+
+## Usage
+
+See detailed instructions on how to use FAKE in the [getting started guide](https://fake.build/guide/getting-started.html).
 
 ## NuGet Packages
 
