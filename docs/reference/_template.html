@@ -32,7 +32,7 @@
       x-data="{open: false}"
       :class="{'bg-gray-100 overflow-hidden': open === true}">
 <header
-    class="sticky inset-0 flex lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
     lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
     :class="{'bg-white': open === false}">
     <div class="flex gap-2 items-center block">
@@ -44,14 +44,6 @@
         <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
             <span>{{fsdocs-fake-version}}</span>
         </div>
-    </div>
-    <div class="flex items-center">
-        <div class="mr-5">
-            <ul class="flex space-x-4">
-                <li><a class="hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a></li>
-                <li><a class="hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
-            </ul>
-        </div>
         <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
                 @click="open = true">
 
@@ -62,6 +54,17 @@
             </svg>
           </span>
         </button>
+    </div>
+    <div class="flex items-center pt-10 md:pt-0">
+        <div class="md:mr-5">
+            <ul class="flex space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a></li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
+                </ul>
+            </ul>
+        </div>
         <div class="hidden lg:block relative ml-auto">
             <div class="flex items-center">
                 <a href="https://github.com/fsprojects/fake"
