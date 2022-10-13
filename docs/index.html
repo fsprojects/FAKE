@@ -78,7 +78,8 @@
 
     </header>
 
-    <section class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10 bg-gray-800">
+    <section
+        class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10 bg-gray-800">
 
         <div class="mt-10 lg:mt-0 flex flex-col justify-center items-center space-y-10">
             <h1
@@ -109,7 +110,7 @@
 
     </section>
 
-    <div class="mt-20 md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[83rem]">
+    <div class="mt-20 md:w-none px-4 lg:px-0 max-w-none max-w-[83rem]">
 
         <section class="mt-10 lg:mt-0 flex flex-col justify-center items-center">
 
@@ -125,56 +126,72 @@
 
                 <div class="flex justify-center items-center space-x-4">
                     <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate modularization feature of FAKE" src="/content/img/homepage/modularization-icon.svg">
+                        <img alt="illustrate modularization feature of FAKE" width="100"
+                            src="/content/img/homepage/modularization-icon.svg">
                     </div>
                     <div class="space-y-1">
                         <h3 class="text-2xl text-[#d4b43c] tracking-widest">Modularization</h3>
                         <p class="text-sm tracking-wider text-gray-600">Use the Modules you Need</p>
-                        <a href="/guide/fake-modules.html" class="text-xs underline text-gray-400 hover:text-gray-800">See Modules</a>
+                        <a href="/guide/fake-modules.html"
+                            class="text-xs underline text-gray-400 hover:text-gray-800">See Modules</a>
                     </div>
                 </div>
 
                 <div class="flex justify-center items-center space-x-4">
                     <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate extensibility feature of FAKE" src="/content/img/homepage/extensibility-icon.svg">
+                        <img alt="illustrate extensibility feature of FAKE" width="100"
+                            src="/content/img/homepage/extensibility-icon.svg">
                     </div>
                     <div class="space-y-1">
                         <h3 class="text-2xl text-[#d4b43c] tracking-widest">Extensibility</h3>
                         <p class="text-sm tracking-wider text-gray-600">Integrate your own Modules</p>
-                        <a href="/guide/fake-custom-modules.html" class="-mt-2 text-xs underline text-gray-400 hover:text-gray-800 text-center">See Custom Modules</a>
+                        <a href="/guide/fake-custom-modules.html"
+                            class="-mt-2 text-xs underline text-gray-400 hover:text-gray-800 text-center">See Custom
+                            Modules</a>
                     </div>
                 </div>
 
                 <div class="flex justify-center items-center space-x-4">
                     <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate quick start feature of FAKE" src="/content/img/homepage/quick-start-icon.svg">
+                        <img alt="illustrate quick start feature of FAKE" width="100"
+                            src="/content/img/homepage/quick-start-icon.svg">
                     </div>
                     <div class="space-y-1">
                         <h3 class="text-2xl text-[#d4b43c] tracking-widest">Quick Start</h3>
                         <p class="text-sm tracking-wider text-gray-600">Get Started as Fast as Possible</p>
-                        <a href="/guide/getting-started.html" class="text-xs underline text-gray-400 hover:text-gray-800 text-center">Check Getting Started</a>
+                        <a href="/guide/getting-started.html"
+                            class="text-xs underline text-gray-400 hover:text-gray-800 text-center">Check Getting
+                            Started</a>
                     </div>
                 </div>
 
             </div>
+        </section>
 
-            <div class="mt-40 flex flex-col justify-center max-w-3xl">
-                <h3 class="text-start text-4xl text-[#d4b43c] tracking-widest">Bootstrapping</h3>
-                <p class="mt-4 text-justify tracking-wider text-gray-600 leading-6">
-                    Every project has different needs. Therefore, FAKE supports several ways to bootstrap the build
-                    process.
-                    From an assumed installation - for example via chocolatey - to automatically updated
-                    bootstrapping scripts.
-                </p>
+        <div class="absolute left-0 z-10">
+            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
+                src="/content/img/homepage/shape.svg">
+        </div>
+    </div>
 
-                <div class="absolute left-0 z-0">
-                    <img alt="background illustration - hexagons to demonstrate FAKE's modularity" 
-                    src="/content/img/homepage/shape.svg">
+    <div class="mt-40 p-10 flex flex-col justify-center bg-[#f9f9f9] shadow">
+        <section>
+            <div class="py-20 flex flex-col justify-center items-center bg-[#f9f9f9]">
+                <div class="max-w-2xl">
+                    <h3 class="text-4xl text-[#d4b43c] tracking-widest text-start">Bootstrapping</h3>
+                    <p class="mt-4 text-justify tracking-wider text-gray-600 leading-6">
+                        Every project has different needs. Therefore, FAKE supports several ways to bootstrap the build
+                        process.
+                        From an assumed installation - for example via chocolatey - to automatically updated
+                        bootstrapping scripts.
+                    </p>
                 </div>
             </div>
         </section>
+    </div>
 
-        <section class="mt-80 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
+    <div class=" md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[83rem]">
+        <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
             <div>
                 <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
                     A Simple Build Script
@@ -193,8 +210,8 @@
         </section>
 
         <div class="hidden md:block absolute right-0 z-0">
-            <img alt="background illustration - hexagons to demonstrate FAKE's modularity" 
-            src="/content/img/homepage/shape-2.svg">
+            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
+                src="/content/img/homepage/shape-2.svg">
         </div>
 
         <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
@@ -227,8 +244,8 @@
                 </p>
             </div>
             <div class="hidden lg:block flex justify-center z-0">
-                <img alt="background illustration - hexagons to demonstrate FAKE's modularity" 
-                src="/content/img/homepage/shape-2.svg">
+                <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
+                    src="/content/img/homepage/shape-2.svg">
             </div>
             <div class="p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300">
                 <img alt="code sample #3" src="/content/img/homepage/code-sample-3.svg">
@@ -289,7 +306,8 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
                             </li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
