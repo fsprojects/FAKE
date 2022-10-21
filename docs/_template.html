@@ -28,7 +28,8 @@
     {{fsdocs-watch-script}}
 </head>
 
-<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+<body
+    class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
     x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
     <header class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
     lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
@@ -58,7 +59,8 @@
         <div class="flex items-center pt-10 md:pt-0">
             <div class="md:mr-5">
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}reference/index.html">API Docs</a>
+                    </li>
                     <li class="md:hidden">|</li>
                     <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
                 </ul>
@@ -111,8 +113,10 @@
             </div>
         </div>
 
-        <div class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
-            <a target="_blank" href="https://github.com/fsprojects/FAKE/blob/master/docs/{{fsdocs-source-filename}}">Edit this page</a>
+        <div
+            class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank"
+                href="https://github.com/fsprojects/FAKE/blob/master/docs/{{fsdocs-source-filename}}">Edit this page</a>
         </div>
     </header>
 
@@ -199,6 +203,21 @@
                 </template>
             </ul>
         </nav>
+        <div class="max-w-[50rem] mt-16 mx-4 lg:mx-auto px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+            <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+            <p>
+                <a target="_blank" href="https://staging.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                        </path>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                        </path>
+                    </svg>
+                    <span class="underline">staging.fake.build</span>
+                </a>
+            </p>
+        </div>
         <div id="content"
             class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
             {{fsdocs-content}}
@@ -257,7 +276,8 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
                             </li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
