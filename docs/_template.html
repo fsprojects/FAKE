@@ -43,7 +43,7 @@
                 <span>{{fsdocs-fake-version}}</span>
             </div>
             <button
-                class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
                 @click="open = true">
 
                 <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
@@ -63,6 +63,18 @@
                     <li><a class="font-medium hover:text-[#d4b43c]" href="{{root}}guide.html">Guide</a></li>
                 </ul>
             </div>
+            <button
+                class="border-slate-700 hidden md:block lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
             <div class="hidden lg:block relative ml-auto">
                 <div class="flex items-center">
                     <a href="https://github.com/fsprojects/fake"
@@ -97,6 +109,10 @@
                     </a>
                 </div>
             </div>
+        </div>
+
+        <div class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank" href="https://github.com/fsprojects/FAKE/blob/master/docs/{{fsdocs-source-filename}}">Edit this page</a>
         </div>
     </header>
 

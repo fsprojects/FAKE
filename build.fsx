@@ -610,7 +610,7 @@ Target.create "HostDocs" (fun _ ->
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=debug --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=release --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
         DotNet.exec id "fsdocs" command |> ignore
 
         // Fsdocs.watch id
