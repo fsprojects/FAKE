@@ -17,6 +17,7 @@ Table of Content:
 * [Porting Legacy Modules to Current Version of FAKE](#Porting-Legacy-Modules-to-Current-Version-of-FAKE)
 * [Release Process](#Release-Process)
 * [Staging environment](#Staging-environment)
+* [Notes for Maintainers](#Notes-for-Maintainers)
 
 Thank you for your interest in contributing to FAKE! This guide explains everything you'll need to know to get started.
 
@@ -127,14 +128,20 @@ The documentation uses the following stack:
 * [<ins>AlpineJS</ins>](https://alpinejs.dev/) as a JS framework for adding interactivity to website
 * [<ins>FSDocs</ins>](https://fsprojects.github.io/FSharp.Formatting/) to generate API documentation from FAKE modules
 
+TailwindCSS can be considered a pre step in build process, after that it will be handled to FSDocs. FSDocs is an 
+**amazing [<ins>F# Docs</ins>](https://github.com/fsprojects/FSharp.Formatting) library**
+that turns Markdown files `*.md` with embedded code snippets and F# script `*.fsx` files containing embedded 
+Markdown documentation into nice HTML documentation.
+
+
 The `docs` directory is first built using NPM by running the command `npm run build` to generate styles and other files.
-Next `fsdocs` is called to generate complete site and API documentation. FSDocs uses template pages to generate site.
+Next `fsdocs` is called to generate the complete site and API documentation. FSDocs uses template pages to generate the site.
 We have two template pages:
 
 * `docs/_template.html`: used for markdown files in `guide` and `articles` directories
 * `docs/reference/_template.html`: used in API documentation
 
-The two templates are 90% identical, except some styles for markdown files to use TailwindCSS typography plugin.
+The two templates are 90% identical, except some styles for markdown files to use [<ins>TailwindCSS typography plugin</ins>](https://tailwindcss.com/docs/typography-plugin).
 
 The next part is the `docs/data.json` file. This file has the navigation and content of the site. The side navigation
 for **guide** and **API Docs** is built using this file. **So to add new articles or modules to FAKE, this file need
@@ -149,10 +156,6 @@ npm run dev
 
 
 ### Building the Documentation
-
-Documentation for FAKE is automatically generated using **the amazing [<ins>F# Docs</ins>](https://github.com/fsprojects/FSharp.Formatting) library**.
-It turns Markdown files `*.md` with embedded code snippets and F# script `*.fsx` files containing embedded Markdown documentation into 
-nice HTML documentation.
 
 To build the documentation from scratch, simply run: 
 
@@ -299,3 +302,14 @@ If you ever need a release/bugfix, make sure to mention that in your PR. We can 
 > Those bits should be considered for "unblocking"-purposes or testing only.
 
 The [<ins>release process</ins>](https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&view=mine&_a=releases) is publicly available as well.
+
+
+## Notes for Maintainers
+
+FAKE uses GitHub actions in build process. We have two GitHub actions; the `build_and_test` and `release` actions.
+The `build_and_test` action is the action triggered on PRs and pushes to `release/next` branch. To validate changes
+in a PR.
+
+The `release` action is responsible on release a new release of FAKE. It is triggered manually and needs an admin 
+approval be it kick-off the release process. The `release` action uses API Keys to interact with services that 
+packages will be pushed to. These keys are hosted in production environment in GitHub repository.

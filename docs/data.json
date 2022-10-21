@@ -566,6 +566,11 @@
     ],
     "articles": [
         {
+            "title": "FAKE v6 Release Announcement",
+            "description": "Announcing FAKE v6!",
+            "href": "/articles/fake-v6-release-announcement.html"
+        },
+        {
             "title": "Managing Dependencies using NuGet",
             "description": "Install, restore and manage all of your build dependencies using NuGet",
             "href": "/articles/dotnet-nuget.html"
