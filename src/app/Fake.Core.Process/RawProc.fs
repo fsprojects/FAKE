@@ -40,8 +40,8 @@ module EnvMap =
 
     let ofSeq l : EnvMap =
         empty
-            .AddRange(Environment.environVars () |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
-            .AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
+            .AddRange(Environment.environVars () |> Seq.map (fun (k, v) -> KeyValuePair<_, _>(k, v)))
+            .AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_, _>(k, v)))
 
     let create () = ofSeq (Environment.environVars ())
 

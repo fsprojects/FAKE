@@ -503,6 +503,7 @@ module Process =
             if Environment.isMono || AlwaysSetProcessEncoding then
                 if si.RedirectStandardOutput then
                     si.StandardOutputEncoding <- ProcessEncoding
+
                 if si.RedirectStandardError then
                     si.StandardErrorEncoding <- ProcessEncoding
 

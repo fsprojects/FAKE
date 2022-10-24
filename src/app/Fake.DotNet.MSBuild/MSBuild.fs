@@ -307,9 +307,15 @@ module private MSBuildExe =
 
                     let vsVersionPaths =
                         let dict = toDict knownMSBuildEntries
-                        match Fake.Core.Environment.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind with
+
+                        match
+                            Fake.Core.Environment.environVarOrNone "VisualStudioVersion"
+                            |> Option.bind dict.TryFind
+                        with
                         | Some x -> x |> withProgramFiles
-                        | None -> (knownMSBuildEntries |> List.collect(fun x -> x.Paths |> withProgramFiles)) @ oldMSBuildLocations
+                        | None ->
+                            (knownMSBuildEntries |> List.collect (fun x -> x.Paths |> withProgramFiles))
+                            @ oldMSBuildLocations
 
                     let vsWhereVersionPaths =
                         let orderedVersions = MSBuildExeFromVsWhere.getOrdered ()
@@ -933,8 +939,11 @@ module MSBuild =
                 Trace.traceFAKE
                     "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning."
                     v
-#endif
+
+                None, args
+#else
         None, args
+#endif
 
     let internal handleAfterRun command binLogPath exitCode project =
         let msgs =
