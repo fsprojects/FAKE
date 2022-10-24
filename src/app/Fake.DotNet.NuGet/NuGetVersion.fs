@@ -15,21 +15,22 @@ module Version =
     /// </summary>
     type NuGetSearchItemResult =
         {
-          /// The package Id
-          Id: string
-          
-          /// The package version
-          Version: string
-          
-          /// The published date of the package
-          Published: DateTime }
+            /// The package Id
+            Id: string
+
+            /// The package version
+            Version: string
+
+            /// The published date of the package
+            Published: DateTime
+        }
 
     /// Holds list of results of a NuGet search
     type NuGetSearchResult = { results: NuGetSearchItemResult list }
-    
+
     /// The response type of NuGet search
     type NuGetSearchResponse = { d: NuGetSearchResult }
-    
+
     /// NuGet version incrementer
     type NuGetVersionIncrement = SemVerInfo -> SemVerInfo
 
@@ -77,17 +78,18 @@ module Version =
     /// </summary>
     type NuGetVersionArg =
         {
-          /// The NuGet server
-          Server: string
-          
-          /// The package name
-          PackageName: string
-          
-          /// The next version of the package after increment
-          Increment: NuGetVersionIncrement
-          
-          /// The original/default version before increment 
-          DefaultVersion: string }
+            /// The NuGet server
+            Server: string
+
+            /// The package name
+            PackageName: string
+
+            /// The next version of the package after increment
+            Increment: NuGetVersionIncrement
+
+            /// The original/default version before increment
+            DefaultVersion: string
+        }
 
         /// Default arguments to compute next NuGet version number
         static member Default() =
@@ -138,8 +140,7 @@ module Version =
             let sourceRepository = SourceRepository(packageSource, providers)
 
             let! packageMetadataResource =
-                sourceRepository.GetResourceAsync<PackageMetadataResource>()
-                |> Async.AwaitTask
+                sourceRepository.GetResourceAsync<PackageMetadataResource>() |> Async.AwaitTask
 
             let cacheContext = new SourceCacheContext()
 

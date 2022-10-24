@@ -5,7 +5,7 @@ namespace Fake.Installer
 /// Installer namespace contains tasks to interact with install and setup tools for applications, like InnoSetup and Wix
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// This module contains helper functions to create <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a>
 /// installers.
@@ -23,7 +23,8 @@ module InnoSetup =
     let private toolPath =
         let innoExe = "ISCC.exe"
 
-        let toolPath = ProcessUtils.tryFindLocalTool "TOOL" innoExe [ Directory.GetCurrentDirectory() ]
+        let toolPath =
+            ProcessUtils.tryFindLocalTool "TOOL" innoExe [ Directory.GetCurrentDirectory() ]
 
         match toolPath with
         | Some path -> path
@@ -46,35 +47,36 @@ module InnoSetup =
     /// </summary>
     type InnoSetupParams =
         {
-          /// The tool path - FAKE tries to find ISCC.exe automatically in any sub folder.
-          ToolPath: string
+            /// The tool path - FAKE tries to find ISCC.exe automatically in any sub folder.
+            ToolPath: string
 
-          /// Specify the process working directory
-          WorkingDirectory: string
+            /// Specify the process working directory
+            WorkingDirectory: string
 
-          /// Specify a timeout for ISCC. Default: 5 min.
-          Timeout: TimeSpan
+            /// Specify a timeout for ISCC. Default: 5 min.
+            Timeout: TimeSpan
 
-          /// Enable or disable output (overrides Output)
-          EnableOutput: bool option
+            /// Enable or disable output (overrides Output)
+            EnableOutput: bool option
 
-          /// Output files to specified path (overrides OutputDir)
-          OutputFolder: string
+            /// Output files to specified path (overrides OutputDir)
+            OutputFolder: string
 
-          /// Overrides OutputBaseFilename with the specified filename
-          OutputBaseFilename: string
+            /// Overrides OutputBaseFilename with the specified filename
+            OutputBaseFilename: string
 
-          /// Specifies output mode when compiling
-          QuietMode: QuietMode
+            /// Specifies output mode when compiling
+            QuietMode: QuietMode
 
-          /// Emulate #define public <name> <value>
-          Defines: Map<string, string>
+            /// Emulate #define public <name> <value>
+            Defines: Map<string, string>
 
-          /// Additional parameters
-          AdditionalParameters: string option
+            /// Additional parameters
+            AdditionalParameters: string option
 
-          /// Path to inno-script file
-          ScriptFile: string }
+            /// Path to inno-script file
+            ScriptFile: string
+        }
 
         /// InnoSetup default parameters
         static member Create() =
@@ -99,7 +101,8 @@ module InnoSetup =
             |> CreateProcess.withTimeout timeout
             |> Proc.run
 
-        if processResult.ExitCode <> 0 then failwithf $"InnoSetup command {command} failed."
+        if processResult.ExitCode <> 0 then
+            failwithf $"InnoSetup command {command} failed."
 
         __.MarkSuccess()
 
@@ -144,6 +147,4 @@ module InnoSetup =
     let build setParams =
         let p = InnoSetupParams.Create() |> setParams
 
-        p
-        |> serializeInnoSetupParams
-        |> run p.ToolPath p.WorkingDirectory p.Timeout
+        p |> serializeInnoSetupParams |> run p.ToolPath p.WorkingDirectory p.Timeout

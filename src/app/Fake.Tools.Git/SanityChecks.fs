@@ -13,7 +13,8 @@ module SanityChecks =
     /// <param name="repositoryDir">The git repository.</param>
     /// <param name="revision1">The revision to check for.</param>
     let checkRevisionExists repositoryDir revision1 =
-        let ok1, _, errors1 = CommandHelper.runGitCommand repositoryDir <| sprintf "log %s" revision1
+        let ok1, _, errors1 =
+            CommandHelper.runGitCommand repositoryDir <| sprintf "log %s" revision1
 
         if not ok1 || errors1 <> "" then
             failwithf "Revision %s is not found in the current repository." revision1

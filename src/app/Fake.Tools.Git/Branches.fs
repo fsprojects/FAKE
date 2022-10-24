@@ -7,7 +7,7 @@ open Fake.Core.String.Operators
 /// Tools.Git namespace contains tasks to interact with Git version control system tool
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains helper functions which allow to deal with git branches.
 /// </summary>
@@ -22,7 +22,7 @@ module Branches =
     /// </summary>
     ///
     /// <param name="repositoryDir">The path of the target directory.</param>
-    ///  - `repositoryDir` - 
+    ///  - `repositoryDir` -
     let getLocalBranches repositoryDir =
         CommandHelper.getGitResult repositoryDir "branch" |> cleanBranches
 
@@ -60,7 +60,8 @@ module Branches =
     /// <param name="commit1">The first commit for which git should find the merge base.</param>
     /// <param name="commit2">The second commit for which git should find the merge base.</param>
     let findMergeBase repositoryDir commit1 commit2 =
-        sprintf "merge-base %s %s" commit1 commit2 |> CommandHelper.runSimpleGitCommand repositoryDir
+        sprintf "merge-base %s %s" commit1 commit2
+        |> CommandHelper.runSimpleGitCommand repositoryDir
 
     /// <summary>
     /// Returns the number of revisions between the two given commits.
@@ -71,7 +72,8 @@ module Branches =
     /// <param name="commit2">The second commit for which git should find the merge base.</param>
     let revisionsBetween repositoryDir commit1 commit2 =
         let _, msg, _ =
-            sprintf "rev-list %s..%s" commit1 commit2 |> CommandHelper.runGitCommand repositoryDir
+            sprintf "rev-list %s..%s" commit1 commit2
+            |> CommandHelper.runGitCommand repositoryDir
 
         msg.Length
 
@@ -102,7 +104,8 @@ module Branches =
     /// <param name="baseBranch">The base branch.</param>
     /// <param name="branch">The new branch.</param>
     let checkoutNewBranch repositoryDir baseBranch branch =
-        sprintf "checkout -b %s %s" branch baseBranch |> CommandHelper.gitCommand repositoryDir
+        sprintf "checkout -b %s %s" branch baseBranch
+        |> CommandHelper.gitCommand repositoryDir
 
     /// <summary>
     /// Performs a checkout of the given branch to the working copy.
@@ -122,11 +125,12 @@ module Branches =
     /// <param name="newBranchName">The new branch.</param>
     /// <param name="commit">The commit which git should take as the new HEAD. - can be <c>HEAD</c>, <c>HEAD~1</c>, ...
     /// , a branch name or a prefix of a SHA1.</param>
-    ///  - `repositoryDir` - 
-    ///  - `newBranchName` - 
-    ///  - `commit` - 
+    ///  - `repositoryDir` -
+    ///  - `newBranchName` -
+    ///  - `commit` -
     let createBranch repositoryDir newBranchName commit =
-        sprintf "branch -f %s %s" newBranchName commit |> CommandHelper.gitCommand repositoryDir
+        sprintf "branch -f %s %s" newBranchName commit
+        |> CommandHelper.gitCommand repositoryDir
 
     /// <summary>
     /// Deletes the given branch.

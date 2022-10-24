@@ -156,7 +156,7 @@ module NUnit3 =
     /// For reference, see:
     /// <a href="https://github.com/nunit/docs/wiki/Console-Command-Line">NUnit3 command line options</a>
     /// </remarks>
-    /// 
+    ///
     type NUnit3Params =
         {
             /// The path to the NUnit3 console runner: `nunit3-console.exe`
@@ -264,7 +264,7 @@ module NUnit3 =
         match toolPath with
         | Some path -> path
         | None -> toolName
-    
+
     /// <summary>
     /// The <c>NUnit3Params</c> default parameters.
     /// </summary>
@@ -439,6 +439,7 @@ module NUnit3 =
 
         let path = createTempFile ()
         let argLine = Args.toWindowsCommandLine [ (sprintf "@%s" path) ]
+
         CreateProcess.fromRawCommandLine tool argLine
         |> CreateProcess.withFramework
         |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
@@ -446,9 +447,7 @@ module NUnit3 =
         |> CreateProcess.addOnSetup (fun () ->
             File.WriteAllText(path, generatedArgs)
             Trace.trace (sprintf "Saved args to '%s' with value: %s" path generatedArgs))
-        |> CreateProcess.addOnFinally (fun () ->
-            File.Delete(path)
-        )
+        |> CreateProcess.addOnFinally (fun () -> File.Delete(path))
         |> CreateProcess.addOnExited (fun _ exitCode ->
             let errorDescription error =
                 match error with
@@ -471,7 +470,7 @@ module NUnit3 =
     /// <summary>
     /// Run NUnit3 with given configuration parameters on the list of assemblies
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">NUnit parameters</param>
     /// <param name="assemblies">Test assemblies to run NUnit on</param>
     let run (setParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =

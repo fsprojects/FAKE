@@ -18,86 +18,86 @@ module TestData =
     let replaceNewLines text =
         RegularExpressions.Regex.Replace(text, @"\r\n?|\n", Environment.NewLine)
 
-    let exists file =
-        File.Exists(file)
+    let exists file = File.Exists(file)
 
     let require file =
         if not (exists file) then
-            invalidArg "file" (sprintf "Unable to read test data from %s"
-                                       (Path.GetFullPath(file)))
+            invalidArg "file" (sprintf "Unable to read test data from %s" (Path.GetFullPath(file)))
 
     let read file =
         require file
-        File.ReadAllText(file, Encoding.UTF8)
-        |> replaceNewLines
+        File.ReadAllText(file, Encoding.UTF8) |> replaceNewLines
 
     let copy source dest =
         require source
         File.Copy(source, dest, true)
 
-    let delete file =
-        File.Delete(file)
+    let delete file = File.Delete(file)
 
     let withTestDir f =
         let tempFolder = Path.GetTempFileName()
         File.Delete(tempFolder)
-        Directory.CreateDirectory(tempFolder)
-            |> ignore
+        Directory.CreateDirectory(tempFolder) |> ignore
+
         try
             f tempFolder
         finally
             try
                 Directory.Delete(tempFolder, true)
-            with
-            | :? DirectoryNotFoundException -> ()
+            with :? DirectoryNotFoundException ->
+                ()
 
 open Fake.IO.FileSystemOperators
 
 [<Tests>]
 let tests =
-    testList "Fake.DotNet.SdkAssemblyResolver.Tests" [
-        test "follows symlinks when dotnet is symlinked" {
-            TestData.withTestDir (fun dir ->
-                let corelib =
-                    // System.Private.CoreLib.dll
-                    System.Reflection.Assembly.GetAssembly(typeof<int>).Location
-                let dotnetContainingPath =
-                    corelib
-                    // 6.0.3 (for example)
-                    |> Path.getDirectory
-                    // Microsoft.NETCore.App
-                    |> Path.getDirectory
-                    // shared
-                    |> Path.getDirectory
-                    // dotnet
-                    |> Path.getDirectory
+    testList
+        "Fake.DotNet.SdkAssemblyResolver.Tests"
+        [ test "follows symlinks when dotnet is symlinked" {
+              TestData.withTestDir (fun dir ->
+                  let corelib =
+                      // System.Private.CoreLib.dll
+                      System.Reflection.Assembly.GetAssembly(typeof<int>).Location
 
-                let exeExtension = if RuntimeInformation.IsOSPlatform OSPlatform.Windows then ".exe" else ""
-                let dotnetExeName = sprintf "dotnet%s" exeExtension
-                let dotnetExe = Path.Combine(dotnetContainingPath, dotnetExeName)
+                  let dotnetContainingPath =
+                      corelib
+                      // 6.0.3 (for example)
+                      |> Path.getDirectory
+                      // Microsoft.NETCore.App
+                      |> Path.getDirectory
+                      // shared
+                      |> Path.getDirectory
+                      // dotnet
+                      |> Path.getDirectory
 
-                let customDotnet = dir </> dotnetExeName
-                let symlinkedDotnet = File.CreateSymbolicLink (customDotnet, dotnetExe)
+                  let exeExtension =
+                      if RuntimeInformation.IsOSPlatform OSPlatform.Windows then
+                          ".exe"
+                      else
+                          ""
 
-                Expect.isTrue symlinkedDotnet.Exists "how do symbolic links work :("
+                  let dotnetExeName = sprintf "dotnet%s" exeExtension
+                  let dotnetExe = Path.Combine(dotnetContainingPath, dotnetExeName)
 
-                let resolverEnvVar = "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH"
-                let dotnetHostPathEnvVar = "DOTNET_HOST_PATH"
-                let oldDotnetHostPath = Environment.GetEnvironmentVariable dotnetHostPathEnvVar
-                let oldResolver = Environment.GetEnvironmentVariable resolverEnvVar
+                  let customDotnet = dir </> dotnetExeName
+                  let symlinkedDotnet = File.CreateSymbolicLink(customDotnet, dotnetExe)
 
-                try
-                    Environment.SetEnvironmentVariable(dotnetHostPathEnvVar, customDotnet)
+                  Expect.isTrue symlinkedDotnet.Exists "how do symbolic links work :("
 
-                    let resolver = SdkAssemblyResolver VerboseLevel.Silent
-                    Environment.SetEnvironmentVariable(resolverEnvVar, "")
+                  let resolverEnvVar = "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH"
+                  let dotnetHostPathEnvVar = "DOTNET_HOST_PATH"
+                  let oldDotnetHostPath = Environment.GetEnvironmentVariable dotnetHostPathEnvVar
+                  let oldResolver = Environment.GetEnvironmentVariable resolverEnvVar
 
-                    // Observe that this does not throw
-                    resolver.SdkReferenceAssemblies ()
-                    |> ignore
-                finally
-                    Environment.SetEnvironmentVariable(dotnetHostPathEnvVar, oldDotnetHostPath)
-                    Environment.SetEnvironmentVariable(resolverEnvVar, oldResolver)
-            )
-        }
-    ]
+                  try
+                      Environment.SetEnvironmentVariable(dotnetHostPathEnvVar, customDotnet)
+
+                      let resolver = SdkAssemblyResolver VerboseLevel.Silent
+                      Environment.SetEnvironmentVariable(resolverEnvVar, "")
+
+                      // Observe that this does not throw
+                      resolver.SdkReferenceAssemblies() |> ignore
+                  finally
+                      Environment.SetEnvironmentVariable(dotnetHostPathEnvVar, oldDotnetHostPath)
+                      Environment.SetEnvironmentVariable(resolverEnvVar, oldResolver))
+          } ]

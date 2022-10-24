@@ -5,4 +5,3 @@
 open Fake.Core.IntegrationTests
 
 // Define your library scripting code here
-

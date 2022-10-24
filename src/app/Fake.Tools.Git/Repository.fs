@@ -93,5 +93,4 @@ module Repository =
     ///
     /// <param name="repositoryDir">The path of the directory to clean.</param>
     [<Obsolete("Please use fullClean instead. This method will be removed in FAKE next major release")>]
-    let fullclean repositoryDir =
-        fullClean repositoryDir
+    let fullclean repositoryDir = fullClean repositoryDir

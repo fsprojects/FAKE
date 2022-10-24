@@ -131,162 +131,162 @@ module Fsc =
         (* - OUTPUT FILES - *)
         /// Name of the output file
         | Out of file: string
-        
+
         /// The <c>fsc.exe</c> output target types : exe, winexe, library, module
         | Target of TargetType
-        
+
         /// Delay-sign the assembly using only the public portion of the strong name key
         | DelaySign of on: bool
-        
+
         /// Write the xmldoc of the assembly to the given file
         | Doc of file: string
-        
+
         /// Specify a strong name key file
         | KeyFile of file: string
-        
+
         /// Specify a strong name key container
         | KeyContainer of name: string
-        
+
         /// Limit which platforms the compiled code can run on:
         | Platform of platform: PlatformType
-        
+
         /// Only include optimization information essential for implementing inlined constructs.
         /// Inhibits cross-module inlining but improves binary compatibility.
         | NoOptimizationData
-        
+
         /// Don't add a resource to the generated assembly containing F#-specific metadata
         | NoInterfacedata
-        
+
         /// Print the inferred interface of the assembly to a file
         | Sig of file: string
 
         (* - INPUT FILES - *)
         /// Reference an assembly
         | Reference of dllPath: string
-        
+
         /// Reference assemblies in the order listed
         | References of dllPaths: string list
 
         (* - RESOURCES - *)
         /// Specify a Win32 resource file (.res)
         | Win32res of file: string
-        
+
         /// Specify a Win32 manifest file
         | Win32Manifest of file: string
-        
+
         /// Do not include the default Win32 manifest
         | NoWin32Manifest
-        
+
         /// Embed the specified managed resource
         | Resource of resInfo: ResourceInfo
-        
+
         /// Link the specified resource to this assembly
         | LinkResource of resInfo: ResourceInfo
 
         (* - CODE GENERATION - *)
         /// Emit debug information
         | Debug of on: bool
-        
+
         /// Specify debugging type: full, pdbonly.
         /// (<c>full</c> is the default and enables attaching a debugger to a running program).
         | DebugType of debugType: DebugType
-        
+
         /// Enable optimizations
         | Optimize of on: bool * optimizations: Optimization list
-        
+
         /// Enable or disable tailcalls
         | Tailcalls of on: bool
-        
+
         /// Enable or disable cross-module optimizations
         | CrossOptimize of on: bool
 
         (* - ERRORS AND WARNINGS - *)
         /// Report all warnings as errors
         | WarnAsError of on: bool
-        
+
         /// Report specific warnings as errors
         | WarnAsErrors of on: bool * warningCodes: int list
-        
+
         /// Set a warning level (0-5)
         | Warn of level: int
-        
+
         /// Disable specific warning messages
         | NoWarn of warningCodes: int list
-        
+
         /// Enable specific warnings that may be off by default
         | WarnOn of warningCodes: int list
-        
+
         /// Output warning and error messages in color
         | ConsoleColors of on: bool
 
         (* - LANGUAGE - *)
         /// Generate overflow checks
         | Checked of on: bool
-        
+
         /// Define a conditional compilation symbols
         | Define of symbol: string
-        
+
         /// Define a list of conditional compilation symbols
         | Definitions of symbols: string list
-        
+
         /// Ignore ML compatibility warnings
         | MLCompatibility
 
         (* - MISCELLANEOUS - *)
         /// Suppress compiler copyright message
         | NoLogo
-        
+
         ///  Display the commandline flags and their usage
         | Help
 
         (* - ADVANCED - *)
         /// Specify the codepage used to read source files
         | Codepage of n: int
-        
+
         /// Displays timing information for compilation.
         | Times
-        
+
         /// Output messages in UTF-8 encoding
         | Utf8Output
-        
+
         /// Output messages with fully qualified paths
         | FullPaths
-        
+
         ///  Specify a directory for the include path which is used to resolve source files and assemblies
         | Lib of directories: string list
-        
+
         /// Base address for the library to be built
         | BaseAddress of address: string
-        
+
         /// Do not reference the default CLI assemblies by default
         | NoFramework
-        
+
         /// Statically link the F# library and all referenced DLLs
         /// that depend on it into the assembly being generated
         | Standalone
-        
+
         /// Statically link the given assembly and all referenced DLLs that depend on this assembly.
         /// Use an assembly name e.g. mylib, not a DLL name.
         | StaticLink of assemblyName: string
-        
+
         /// Name the output debug file
         | Pdb of debugFile: string
-        
+
         /// Resolve assembly references using directory-based rules rather than MSBuild resolution
         | SimpleResolution
-        
+
         /// Enable high-entropy ASLR
         | HighEntropyVA of on: bool
-        
+
         /// Specifies the version of the OS subsystem to be used by the generated executable.
         /// Use 6.02 for Windows 8, 6.01 for Windows 7, 6.00 for Windows Vista.
         /// This option only applies to executables, not DLL  and need only be used if your application
         /// depends on specific security features available only on certain versions of the OS
         | SubsystemVersion of version: string
-        
+
         /// Specify target framework profile of this assembly.
         | TargetProfile of profile: Profile
-        
+
         /// Emit debug information in quotations
         | QuotationsDebug of on: bool
 
@@ -500,14 +500,14 @@ module Fsc =
     ///                 Debug false
     ///             ]
     /// </code>
-    /// </example>    
+    /// </example>
     let compileWithResult (fscParams: FscParam list) (inputFiles: string list) : int =
         doCompile scsCompile fscParams inputFiles
 
     /// <summary>
     /// Compiles one or more F# source files with the specified parameters.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
     /// <param name="inputFiles">The F# input files.</param>
     ///
@@ -559,7 +559,7 @@ module Fsc =
     /// <param name="fscTool">Path to an existing fsc.exe executable</param>
     /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
     /// <param name="inputFiles">The F# input files.</param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// ["file1.fs"; "file2.fs"]
@@ -580,7 +580,7 @@ module Fsc =
     /// Compiles one or more F# source files with the specified parameters
     /// using an existing fsc.exe installed on the system
     /// </summary>
-    /// 
+    ///
     /// <param name="fscTool">Path to an existing fsc.exe executable</param>
     /// <param name="setParams">Function used to overwrite the default Fsc parameters.</param>
     /// <param name="inputFiles">The F# input files.</param>
@@ -596,7 +596,7 @@ module Fsc =
     ///                 Debug false
     ///             ]
     /// </code>
-    /// </example> 
+    /// </example>
     let compileExternal (fscTool: string) (fscParams: FscParam list) (inputFiles: string list) : unit =
         let compile = extFscCompile fscTool
         let res = doCompile compile fscParams inputFiles

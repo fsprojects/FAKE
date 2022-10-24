@@ -62,122 +62,122 @@ module Fsi =
             (* - INPUT FILES - *)
             /// Use the given file on startup as initial input
             Use: string
-            
+
             /// Load the given file on startup
             Load: string
-            
+
             /// Reference an assembly (Short form: <c>-r</c>)
             Reference: string
 
             (* - CODE GENERATION - *)
             /// Emit debug information (Short form: <c>-g</c>)
             Debug: bool option
-            
+
             /// Specify debugging type: full, portable, embedded, pdbonly. PdbOnly is the default
             DebugType: DebugTypes
-            
+
             /// Enable optimizations (Short form: <c>-O</c>)
             Optimize: bool option
-            
+
             /// Enable or disable tailcalls
             TailCalls: bool option
-            
+
             /// Produce a deterministic assembly (including module version GUID and timestamp)
             Deterministic: bool option
-            
+
             /// Enable or disable cross-module optimizations
             CrossOptimize: bool option
 
             (* - ERRORS AND WARNINGS - *)
             /// Report all warnings as errors
             WarnAsError: bool option
-            
+
             /// Report specific warnings as errors
             WarnAsErrors: bool * int list
-            
+
             /// Set a warning level (0-5)
             Warn: int option
-            
+
             /// Disable specific warning messages
             NoWarn: int list
-            
+
             /// Enable specific warnings that may be off by default
             WarnOn: int list
-            
+
             /// Output warning and error messages in color
             ConsoleColors: bool option
 
             (* - LANGUAGE - *)
             /// Generate overflow checks
             Checked: bool option
-            
+
             /// (Obsolete) Define a conditional compilation symbol (use FsiParams.Definitions instead)
             Define: string
-            
+
             /// Define a list of conditional compilation symbols
             Definitions: string list
-            
+
             /// Ignore ML compatibility warnings
             MLCompatibility: bool
 
             (* - MISCELLANEOUS - *)
             /// Suppress compiler copyright message
             NoLogo: bool
-            
+
             ///  Display the commandline flags and their usage
             Help: bool
 
             (* - ADVANCED - *)
             /// Specify the codepage used to read source files
             Codepage: int option
-            
+
             /// Output messages in UTF-8 encoding
             Utf8Output: bool
-            
+
             /// Specify the preferred output language culture name (e.g. es-ES, ja-JP)
             PreferredUiLang: string
-            
+
             /// Output messages with fully qualified paths
             FullPaths: bool
-            
+
             /// Specify a directory for the include path which is used to resolve source files and assemblies
             /// (Short form: <c>-I</c>)
             Lib: string list
-            
+
             /// Resolve assembly references using directory-based rules rather than MSBuild resolution
             SimpleResolution: bool
-            
+
             /// Specify target framework profile of this assembly. Valid values are mscorlib, netcore or netstandard.
             /// Default - <c>mscorlib</c>
             TargetProfile: Profile
-            
+
             /// Do not reference the default CLI assemblies by default
             NoFramework: bool
-            
+
             /// Exit fsi after loading the files or running the .fsx script given on the command line
             Exec: bool
-            
+
             /// Execute interactions on a Windows Forms event loop (on by default)
             GUI: bool option
-            
+
             /// Suppress fsi writing to stdout
             Quiet: bool
-            
+
             /// Support TAB completion in console (on by default)
             ReadLine: bool option
-            
+
             /// Emit debug information in quotations
             QuotationsDebug: bool option
-            
+
             /// Prevents references from being locked by the F# Interactive process
             ShadowCopyReferences: bool option
 
             /// Sets the path to the <c>fsharpi</c>/<c>fsi.exe</c> to use
             ToolPath: FsiTool
-            
+
             /// Environment variables
             Environment: Map<string, string>
-            
+
             /// When UseShellExecute is true, the fully qualified name of the directory that contains the process
             /// to be started. When the UseShellExecute property is false, the working directory for the process
             /// to be started. The default is an empty string ("").
@@ -335,7 +335,7 @@ module Fsi =
                     | Some file -> file
                     | None -> "fsharpi"
             else
-                ProcessUtils.findPath [FSIPath] "fsi.exe"
+                ProcessUtils.findPath [ FSIPath ] "fsi.exe"
 
         /// Gets the default environment variables and additionally appends user defined vars to it
         let private defaultEnvironmentVars =
@@ -358,7 +358,9 @@ module Fsi =
 
             let processResult =
                 CreateProcess.fromRawCommandLine fsiExe args
-                |> CreateProcess.withEnvironment (defaultEnvironmentVars |> List.append (parameters.Environment |> Map.toList))
+                |> CreateProcess.withEnvironment (
+                    defaultEnvironmentVars |> List.append (parameters.Environment |> Map.toList)
+                )
                 |> CreateProcess.withWorkingDirectory parameters.WorkingDirectory
                 |> CreateProcess.withTimeout TimeSpan.MaxValue
                 |> CreateProcess.redirectOutput
@@ -434,11 +436,11 @@ module Fsi =
     /// Executes the internal fsi within FSC on the given script
     /// Returns error code and an exception message if any exceptions were thrown
     /// </summary>
-    /// 
+    ///
     /// <param name="fsiParams">Function used to override FSI parameters</param>
     /// <param name="script">The F# script to execute</param>
     /// <param name="scriptArgs">Any script arguments</param>
-    /// 
+    ///
     /// <example>
     /// e.g: Passing some arguments to fsi, along with the script and some args to be passed to the script
     /// <code lang="fsharp">

@@ -177,7 +177,7 @@ module DotCover =
     ///         WorkingDir ".
     ///         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" })
     /// </code>
-    /// </example>  
+    /// </example>
     let run (setParams: Params -> Params) =
         let parameters = (Defaults |> setParams)
 
@@ -195,7 +195,7 @@ module DotCover =
     ///
     /// <param name="setParams">Function used to overwrite the dotCover merge default parameters.</param>
     ///
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DotCover.merge (fun p -> { p with
@@ -203,7 +203,7 @@ module DotCover =
     ///         artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
     ///         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" })
     /// </code>
-    /// </example>    
+    /// </example>
     let merge (setParams: MergeParams -> MergeParams) =
         let parameters = (MergeDefaults |> setParams)
         buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir true
@@ -338,9 +338,7 @@ module DotCover =
     /// </summary>
     let internal buildMSTestArgsForDotCover parameters assemblies =
         let testContainers =
-            assemblies
-            |> Array.map (fun a -> "/testcontainer:" + a)
-            |> String.concat " "
+            assemblies |> Array.map (fun a -> "/testcontainer:" + a) |> String.concat " "
 
         let testResultsFile =
             if parameters.ResultsDir <> null then
@@ -372,7 +370,7 @@ module DotCover =
     ///             (fun  -> dotCoverOptions )
     ///             (fun MSTestOptions -> MSTestOptions)
     /// </code>
-    /// </example> 
+    /// </example>
     let runMSTest
         (setDotCoverParams: Params -> Params)
         (setMSTestParams: MSTestParams -> MSTestParams)

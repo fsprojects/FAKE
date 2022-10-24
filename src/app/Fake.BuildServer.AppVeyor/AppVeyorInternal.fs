@@ -8,13 +8,14 @@ open Fake.Net
 
 /// [omit]
 module internal AppVeyorInternal =
-    
+
     let environVar = Environment.environVar
-    
+
     let getJobId () = environVar "APPVEYOR_JOB_ID"
-    
+
     let internal sendToAppVeyor args =
         let argsList = Arguments.OfStartInfo args
+
         CreateProcess.fromCommand <| RawCommand("appveyor", argsList)
         |> CreateProcess.disableTraceCommand
         |> Proc.run
@@ -25,6 +26,7 @@ module internal AppVeyorInternal =
         | Warning
         | Error
         | NoCategory
+
         member x.AsString =
             match x with
             | Information -> Some "Information"
@@ -32,7 +34,7 @@ module internal AppVeyorInternal =
             | Error -> Some "Error"
             | NoCategory -> None
 
-    let AddMessage (category:MessageCategory) details msg =
+    let AddMessage (category: MessageCategory) details msg =
         if not <| String.isNullOrEmpty msg then
             try
                 [ yield "AddMessage"
@@ -49,48 +51,60 @@ module internal AppVeyorInternal =
                 |> sendToAppVeyor
             with e ->
                 // because otherwise there might be recursive failure...
-                eprintfn "AppVeyor 'AddMessage' failed: %O" e             
+                eprintfn "AppVeyor 'AddMessage' failed: %O" e
 
     let internal quoteString str =
         StringBuilder()
         |> StringBuilder.appendQuotedIfNotNull Some str
         |> StringBuilder.toText
-    
+
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
-        sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
+        sendToAppVeyor
+        <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
 
     /// Updates test info
     let UpdateTest testSuiteName testCaseName outcome =
-        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome %s" (quoteString (testSuiteName + " - " + testCaseName)) outcome
+        sendToAppVeyor
+        <| sprintf "UpdateTest %s -Outcome %s" (quoteString (testSuiteName + " - " + testCaseName)) outcome
 
     /// Updates test info
     let UpdateTestEx testSuiteName testCaseName outcome message stackTrace stdOut stdErr =
-        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome %s -ErrorMessage %s -ErrorStackTrace %s -StdOut %s -StdErr %s"
-            (quoteString (testSuiteName + " - " + testCaseName)) outcome
-            (quoteString message) (quoteString stackTrace)
-            (quoteString stdOut) (quoteString stdErr)
+        sendToAppVeyor
+        <| sprintf
+            "UpdateTest %s -Outcome %s -ErrorMessage %s -ErrorStackTrace %s -StdOut %s -StdErr %s"
+            (quoteString (testSuiteName + " - " + testCaseName))
+            outcome
+            (quoteString message)
+            (quoteString stackTrace)
+            (quoteString stdOut)
+            (quoteString stdErr)
 
     /// Reports a failed test.
     let TestFailed testSuiteName testCaseName message details =
-        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s"
+        sendToAppVeyor
+        <| sprintf
+            "UpdateTest %s -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s"
             (quoteString (testSuiteName + " - " + testCaseName))
-            (quoteString message) (quoteString details)
+            (quoteString message)
+            (quoteString details)
 
     /// Ignores the test case.
-    let IgnoreTestCase testSuiteName testCaseName _ = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
+    let IgnoreTestCase testSuiteName testCaseName _ =
+        sendToAppVeyor
+        <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
     /// Reports a succeeded test.
-    let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
+    let TestSucceeded testSuiteName testCaseName =
+        sendToAppVeyor
+        <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
 
     /// Finishes the test case.
-    let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
-        let duration =
-            duration.TotalMilliseconds
-            |> round
-            |> string
+    let FinishTestCase testSuiteName testCaseName (duration: System.TimeSpan) =
+        let duration = duration.TotalMilliseconds |> round |> string
 
-        sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
+        sendToAppVeyor
+        <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
 
     /// Union type representing the available test result formats accepted by AppVeyor.
     type TestResultsType =
@@ -101,19 +115,22 @@ module internal AppVeyorInternal =
         | JUnit
 
     /// Uploads a test result file to make them visible in Test tab of the build console.
-    let UploadTestResultsFile (testResultsType : TestResultsType) file =
+    let UploadTestResultsFile (testResultsType: TestResultsType) file =
         let resultsType = (sprintf "%A" testResultsType).ToLower()
-        let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType (getJobId())
+
+        let url =
+            sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType (getJobId ())
+
         try
             Http.upload url file
             printfn "Successfully uploaded test results %s" file
-        with
-        | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+        with ex ->
+            printfn "An error occurred while uploading %s:\r\n%O" file ex
 
     /// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
-    let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
+    let UploadTestResultsXml (testResultsType: TestResultsType) outputDir =
         Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
-        |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
+        |> Seq.map (fun file -> async { UploadTestResultsFile testResultsType file })
         |> Async.Parallel
         |> Async.RunSynchronously
         |> ignore
@@ -123,7 +140,9 @@ module internal AppVeyorInternal =
         sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
 
     /// Type of artifact that is pushed
-    type ArtifactType = Auto | WebDeployPackage
+    type ArtifactType =
+        | Auto
+        | WebDeployPackage
 
     /// AppVeyor parameters for artifact push as [described](https://www.appveyor.com/docs/build-worker-api/#push-artifact)
     type PushArtifactParams =
@@ -140,12 +159,10 @@ module internal AppVeyorInternal =
 
     /// AppVeyor artifact push default parameters
     let defaultPushArtifactParams =
-        {
-            Path = ""
-            FileName = ""
-            DeploymentName = ""
-            Type = Auto
-        }
+        { Path = ""
+          FileName = ""
+          DeploymentName = ""
+          Type = Auto }
 
     let internal appendArgIfNotNullOrEmpty value name builder =
         if (String.isNotNullOrEmpty value) then
@@ -154,8 +171,9 @@ module internal AppVeyorInternal =
             builder
 
     /// Push an artifact
-    let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
+    let PushArtifact (setParams: PushArtifactParams -> PushArtifactParams) =
         let parameters = setParams defaultPushArtifactParams
+
         StringBuilder()
         |> StringBuilder.append "PushArtifact"
         |> StringBuilder.append parameters.Path
@@ -168,5 +186,7 @@ module internal AppVeyorInternal =
     /// Push multiple artifacts
     let PushArtifacts paths =
         for path in paths do
-            PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
-
+            PushArtifact(fun p ->
+                { p with
+                    Path = path
+                    FileName = Path.GetFileName(path) })

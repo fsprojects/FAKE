@@ -16,7 +16,7 @@ open System.IO
 ///             WorkingDirectory = "./src/FAKESimple.Web/"
 ///         })
 /// </code>
-/// </example> 
+/// </example>
 [<RequireQualifiedAccess>]
 module Yarn =
 
@@ -32,21 +32,21 @@ module Yarn =
 
     /// Arguments for the Yarn install command
     type InstallArgs =
-    | Standard
-    | Flat
-    | Force
-    | Har
-    | NoLockFile
-    | Production
-    | PureLockFile
-    | FrozenLockFile
+        | Standard
+        | Flat
+        | Force
+        | Har
+        | NoLockFile
+        | Production
+        | PureLockFile
+        | FrozenLockFile
 
     /// The list of supported Yarn commands. The `Custom` alternative
     /// can be used for other commands not in the list until they are
     /// implemented
     type YarnCommand =
-    | Install of InstallArgs
-    | Custom of string
+        | Install of InstallArgs
+        | Custom of string
 
     /// The Yarn parameter type
     type YarnParams =
@@ -62,7 +62,8 @@ module Yarn =
           WorkingDirectory = "."
           Timeout = TimeSpan.MaxValue }
 
-    let private parseInstallArgs = function
+    let private parseInstallArgs =
+        function
         | Standard -> ""
         | Flat -> " --flat"
         | Force -> " --force"
@@ -72,13 +73,15 @@ module Yarn =
         | PureLockFile -> " --pure-lockfile"
         | FrozenLockFile -> " --frozen-lockfile"
 
-    let private parse = function
+    let private parse =
+        function
         | Install installArgs -> sprintf "install%s" (installArgs |> parseInstallArgs)
         | Custom str -> str
 
     let private run yarnParams command =
         let yarnPath = Path.GetFullPath(yarnParams.YarnFilePath)
         let arguments = command |> parse
+
         arguments
         |> CreateProcess.fromRawCommandLine yarnPath
         |> CreateProcess.withWorkingDirectory yarnParams.WorkingDirectory
@@ -102,7 +105,7 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example>   
+    /// </example>
     let install setParams = yarn setParams <| Install Standard
 
     /// <summary>
@@ -120,7 +123,7 @@ module Yarn =
     /// </code>
     /// </example>
     let installProduction setParams = yarn setParams <| Install Production
-    
+
     /// <summary>
     /// Run <c>yarn install --force</c>
     /// </summary>
@@ -134,7 +137,7 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example> 
+    /// </example>
     let installForced setParams = yarn setParams <| Install Force
 
     /// <summary>
@@ -150,7 +153,7 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example>  
+    /// </example>
     let installFlat setParams = yarn setParams <| Install Flat
 
     /// <summary>
@@ -182,7 +185,7 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example>  
+    /// </example>
     let installNoLock setParams = yarn setParams <| Install NoLockFile
 
     /// <summary>
@@ -198,7 +201,7 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example> 
+    /// </example>
     let installPureLock setParams = yarn setParams <| Install PureLockFile
 
     /// <summary>
@@ -215,7 +218,8 @@ module Yarn =
     ///         })
     /// </code>
     /// </example>
-    let installFrozenLockFile setParams = yarn setParams <| Install FrozenLockFile
+    let installFrozenLockFile setParams =
+        yarn setParams <| Install FrozenLockFile
 
     /// <summary>
     /// Run <c>yarn &lt;command&gt;</c>
@@ -230,5 +234,5 @@ module Yarn =
     ///             WorkingDirectory = "./src/FAKESimple.Web/"
     ///         })
     /// </code>
-    /// </example>  
+    /// </example>
     let exec command setParams = yarn setParams <| Custom command

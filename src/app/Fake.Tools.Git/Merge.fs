@@ -68,6 +68,6 @@ module Merge =
     /// <code lang="fsharp">
     /// merge @"C:\code\Fake" NoFastForwardFlag "master"
     /// </code>
-    /// </example>   
+    /// </example>
     let merge repositoryDir flags branch =
         sprintf "merge %s %s" flags branch |> CommandHelper.gitCommand repositoryDir

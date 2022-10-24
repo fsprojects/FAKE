@@ -53,64 +53,64 @@ module XUnit2 =
         {
             /// The path to the xUnit console runner: `xunit.console.exe`
             ToolPath: string
-            
+
             /// Do not use app domains to run test code.
             NoAppDomain: bool
-            
+
             /// The xUnit parallelization mode.
             Parallel: ParallelMode
-            
+
             /// The xUnit thread limiting strategy.
             MaxThreads: CollectionConcurrencyMode
-            
+
             /// The output path of the xUnit HTML report.
             HtmlOutputPath: string option
-            
+
             /// The output path of the xUnit XML report.
             XmlOutputPath: string option
-            
+
             /// The output path of the xUnit XML report (in the xUnit v1 style).
             XmlV1OutputPath: string option
-            
+
             /// The output path of the NUnit XML report.
             NUnitXmlOutputPath: string option
-            
+
             /// The working directory for running the xunit console runner.
             WorkingDir: string option
-            
+
             /// Run xUnit with shadow copy enabled.
             ShadowCopy: bool
-            
+
             /// Run xUnit without reporting test progress.
             Silent: bool
-            
+
             /// Maximum time to allow xUnit to run before being killed.
             TimeOut: TimeSpan
-            
+
             /// Test runner error level.
             ErrorLevel: TestRunnerErrorLevel
-            
+
             /// List of traits to include.
             IncludeTraits: (string * string) list
-            
+
             /// List of traits to exclude.
             ExcludeTraits: (string * string) list
-            
+
             /// Forces TeamCity mode (normally auto-detected).
             ForceTeamCity: bool
-            
+
             /// Forces AppVeyor CI mode (normally auto-detected).
             ForceAppVeyor: bool
-            
+
             /// Waits for input after completion.
             Wait: bool
-            
+
             /// Run xUnit against a specific namespace
             Namespace: string option
-            
+
             /// Run xUnit against a specific class
             Class: string option
-            
+
             /// Run xUnit against a specific method
             Method: string option
         }
@@ -118,7 +118,8 @@ module XUnit2 =
     let private toolPath =
         let xUnitTool = "xunit.console.exe"
 
-        let toolPath = ProcessUtils.tryFindLocalTool "TOOL" xUnitTool [ Directory.GetCurrentDirectory() ]
+        let toolPath =
+            ProcessUtils.tryFindLocalTool "TOOL" xUnitTool [ Directory.GetCurrentDirectory() ]
 
         match toolPath with
         | Some path -> path
@@ -126,7 +127,7 @@ module XUnit2 =
             match ProcessUtils.tryFindFileOnPath xUnitTool with
             | Some inno when File.exists inno -> inno
             | _ -> xUnitTool
-    
+
     /// The xUnit2 default parameters.
     let XUnit2Defaults =
         { NoAppDomain = false
@@ -196,14 +197,14 @@ module XUnit2 =
     /// If the xunit console runner does not support this flag, it will change the value to false
     /// so it does not interfere with older versions.
     /// </summary>
-    let internal discoverNoAppDomainExists parameters =                
+    let internal discoverNoAppDomainExists parameters =
         let helpText =
             CreateProcess.fromRawCommandLine parameters.ToolPath ""
             |> CreateProcess.withTimeout (TimeSpan.FromMinutes 1.)
             |> CreateProcess.withFramework
             |> CreateProcess.redirectOutput
             |> Proc.run
-        
+
         let canSetNoAppDomain = helpText.Result.Output.Contains("-noappdomain")
 
         { parameters with NoAppDomain = canSetNoAppDomain }

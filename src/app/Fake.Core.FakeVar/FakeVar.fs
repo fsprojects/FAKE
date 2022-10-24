@@ -14,10 +14,8 @@ module FakeVar =
         |> Option.map (fun o ->
             try
                 o :?> 'a
-            with
-            | e ->
-                raise
-                <| exn (sprintf "Cast error on variable '%s'" name, e))
+            with e ->
+                raise <| exn (sprintf "Cast error on variable '%s'" name, e))
 
     /// <summary>
     /// Gets a strongly typed FakeVar by name returning an option type
@@ -64,9 +62,7 @@ module FakeVar =
     /// Sets value of a FakeVar
     /// </summary>
     let internal setFrom name (v: 'a) context =
-        context
-        |> setFakeContext name v (fun _ -> v :> obj)
-        |> ignore
+        context |> setFakeContext name v (fun _ -> v :> obj) |> ignore
 
     /// <summary>
     /// Sets value of a FakeVar

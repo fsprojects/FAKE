@@ -3,7 +3,7 @@
 /// Testing namespace contains tasks to run tests and test tools, like Fixie, ReportGenerator
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Some common definition for testing data
 /// </summary>

@@ -20,50 +20,51 @@ module Squirrel =
     /// </summary>
     type ReleasifyParams =
         {
-          /// Path to a release directory to use with Releasify
-          ReleaseDir: string
+            /// Path to a release directory to use with Releasify
+            ReleaseDir: string
 
-          /// The working directory.
-          WorkingDir: string option
+            /// The working directory.
+            WorkingDir: string option
 
-          /// The full path to an optional setup.exe template
-          BootstrapperExe: string option
+            /// The full path to an optional setup.exe template
+            BootstrapperExe: string option
 
-          /// The full path to an optional animated gif to be displayed during installation
-          LoadingGif: string option
+            /// The full path to an optional animated gif to be displayed during installation
+            LoadingGif: string option
 
-          /// The full path to an optional icon, which will be used for the generated installer.
-          SetupIcon: string option
+            /// The full path to an optional icon, which will be used for the generated installer.
+            SetupIcon: string option
 
-          /// Don't generate delta packages to save time
-          NoDelta: bool
+            /// Don't generate delta packages to save time
+            NoDelta: bool
 
-          /// Do not create an MSI file
-          NoMsi: bool
+            /// Do not create an MSI file
+            NoMsi: bool
 
-          /// Mark the MSI as 64-bit, which is useful in Enterprise deployment scenarios
-          MsiWin64: bool
+            /// Mark the MSI as 64-bit, which is useful in Enterprise deployment scenarios
+            MsiWin64: bool
 
-          /// The path to Squirrel: `squirrel.exe`
-          ToolPath: string
+            /// The path to Squirrel: `squirrel.exe`
+            ToolPath: string
 
-          /// Maximum time to allow Squirrel to run before being killed.
-          TimeOut: TimeSpan
+            /// Maximum time to allow Squirrel to run before being killed.
+            TimeOut: TimeSpan
 
-          /// Sign the installer with <c>signtool.exe</c>
-          SignExecutable: bool option
+            /// Sign the installer with <c>signtool.exe</c>
+            SignExecutable: bool option
 
-          /// The code signing certificate to be used for signing
-          SigningKeyFile: string option
+            /// The code signing certificate to be used for signing
+            SigningKeyFile: string option
 
-          /// The secret key for the code signing certificate
-          SigningSecret: string option
+            /// The secret key for the code signing certificate
+            SigningSecret: string option
 
-          /// Set the required .NET framework version, e.g. net461
-          FrameworkVersion: string option
+            /// Set the required .NET framework version, e.g. net461
+            FrameworkVersion: string option
 
-          /// Add other arguments, in case Squirrel adds new arguments in future
-          AdditionalArguments: string option }
+            /// Add other arguments, in case Squirrel adds new arguments in future
+            AdditionalArguments: string option
+        }
 
     let internal toolPath toolName =
         let toolPath =

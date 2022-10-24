@@ -52,7 +52,7 @@ namespace Fake.Core
 ///             |&gt; ChangeLog.save changelogFile
 ///     )
 /// </code>
-/// </example> 
+/// </example>
 [<RequireQualifiedAccess>]
 module Changelog =
 
@@ -274,13 +274,13 @@ module Changelog =
         {
             /// the header line
             Header: string
-            
+
             /// The description
             Description: string option
-            
+
             /// The Unreleased section
             Unreleased: Unreleased option
-            
+
             /// The change log entries
             Entries: ChangelogEntry list
         }
@@ -313,7 +313,7 @@ module Changelog =
                 let unreleased' = Some { Description = None; Changes = [] }
                 Changelog.New(x.Header, x.Description, unreleased', newEntry :: x.Entries)
 
-        /// Promote an unreleased changelog entry to a released one using version number  
+        /// Promote an unreleased changelog entry to a released one using version number
         member x.PromoteUnreleased(version: string) : Changelog =
             let assemblyVersion, nugetVersion = version |> parseVersions
             x.PromoteUnreleased(assemblyVersion.Value, nugetVersion.Value)

@@ -32,7 +32,7 @@ module Restore =
     /// </item>
     /// </list>
     /// </summary>
-    /// 
+    ///
     /// <param name="defaultPath">The default path to return when NuGet cannot be found by path specified above</param>
     let findNuget defaultPath =
         try
@@ -100,19 +100,19 @@ module Restore =
         {
             /// The path to the NuGet program
             ToolPath: string
-            
+
             /// Specifies the list of package sources (as URLs) to use for the restore
             Sources: string list
-            
+
             /// The timeout to use to restrict command execution time
             TimeOut: TimeSpan
-            
+
             /// Specifies how often nuget should try to restore the packages - default is 5
             Retries: int
-            
+
             /// Specifies the folder in which packages are installed. Output Directory
             OutputPath: string
-            
+
             /// The verbosity level
             Verbosity: NugetRestoreVerbosity
         }
@@ -133,28 +133,28 @@ module Restore =
         {
             /// The path to the NuGet program
             ToolPath: string
-            
+
             /// Specifies the list of package sources (as URLs) to use for the restore
             Sources: string list
-            
+
             /// The timeout to use to restrict command execution time
             TimeOut: TimeSpan
-            
+
             /// Specifies the folder in which packages are installed. Output Directory
             OutputPath: string
-            
+
             /// The version to use in restoring the package
             Version: Version option
-            
-            /// Mark a version to be excluded, the version is specified in <c>Version</c> property 
+
+            /// Mark a version to be excluded, the version is specified in <c>Version</c> property
             ExcludeVersion: bool
-            
+
             /// Specifies how often nuget should try to restore the packages - default is 5
             Retries: int
-            
+
             /// Mark if pre-releases are included in restore process
             IncludePreRelease: bool
-            
+
             /// The verbosity level
             Verbosity: NugetRestoreVerbosity
         }
@@ -179,7 +179,8 @@ module Restore =
             |> CreateProcess.withTimeout timeOut
             |> Proc.run
 
-        if processResult.ExitCode <> 0 then failWith()
+        if processResult.ExitCode <> 0 then
+            failWith ()
 
     /// [omit]
     let rec runNuGetTrial retries toolPath timeOut args failWith =
@@ -238,7 +239,7 @@ module Restore =
     /// <summary>
     /// Restores the packages in the given packages.config file from NuGet.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     /// <param name="packageFile">The packages.config file name.</param>
     ///
@@ -282,7 +283,7 @@ module Restore =
     /// <summary>
     /// Restores the packages in the given solution file file from NuGet.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     /// <param name="solutionFile">The microsoft sln file name.</param>
     ///

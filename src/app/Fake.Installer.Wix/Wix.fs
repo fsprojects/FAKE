@@ -58,7 +58,7 @@ module Wix =
     /// <summary>
     /// Creates WiX File tags from the given files
     /// </summary>
-    /// 
+    ///
     /// <param name="files">The files to get</param>
     let getFilesAsWiXString files =
         files
@@ -69,6 +69,7 @@ module Wix =
     type Architecture =
         | X64
         | X86
+
         override a.ToString() =
             match a with
             | X64 -> "x64"
@@ -79,14 +80,16 @@ module Wix =
     /// </summary>
     type File =
         {
-          /// File Id in WiX definition
-          Id: string
-          /// File Name in WiX definition
-          Name: string
-          /// File Path in WiX definition
-          Source: string
-          /// File Architecture, either X64 or X86, defaults to X64
-          ProcessorArchitecture: Architecture }
+            /// File Id in WiX definition
+            Id: string
+            /// File Name in WiX definition
+            Name: string
+            /// File Path in WiX definition
+            Source: string
+            /// File Architecture, either X64 or X86, defaults to X64
+            ProcessorArchitecture: Architecture
+        }
+
         override w.ToString() =
             sprintf
                 "<File Id=\"%s\" Name=\"%s\" Source=\"%s\" ProcessorArchitecture=\"%s\" />"
@@ -108,6 +111,7 @@ module Wix =
         | Uninstall
         | Both
         | Never
+
         override w.ToString() =
             match w with
             | Install -> "install"
@@ -119,6 +123,7 @@ module Wix =
     type YesOrNo =
         | Yes
         | No
+
         override y.ToString() =
             match y with
             | Yes -> "yes"
@@ -134,6 +139,7 @@ module Wix =
           Start: InstallUninstall
           Stop: InstallUninstall
           Wait: YesOrNo }
+
         member w.createAttributeList() =
             seq {
                 yield ("Id", w.Id)
@@ -189,6 +195,7 @@ module Wix =
         | Normal
         /// Logs the error if it is possible and the system is restarted with the last configuration known to be good. If the last-known-good configuration is being started, the startup operation fails.
         | Critical
+
         override w.ToString() =
             match w with
             | Ignore -> "ignore"
@@ -207,6 +214,7 @@ module Wix =
         | Boot
         /// The service is a device driver that will be started by the IoInitSystem function. This value is not currently supported by the Windows Installer.
         | System
+
         override w.ToString() =
             match w with
             | Auto -> "auto"
@@ -225,6 +233,7 @@ module Wix =
         | KernelDriver
         /// A file system driver service. This value is not currently supported by the Windows Installer.
         | SystemDriver
+
         override w.ToString() =
             match w with
             | OwnProcess -> "ownProcess"
@@ -238,6 +247,7 @@ module Wix =
         | Reboot
         | Restart
         | RunCommand
+
         override w.ToString() =
             match w with
             | NoneAction -> "none"
@@ -250,22 +260,24 @@ module Wix =
     /// </summary>
     type ServiceConfig =
         {
-          /// [Required] Determines the type of the service failure action.
-          FirstFailureActionType: ServiceFailureActionType
-          /// If any of the three *ActionType attributes is "runCommand", this specifies the command to run when doing so. This value is formatted.
-          ProgramCommandLine: string
-          /// If any of the three *ActionType attributes is "reboot", this specifies the message to broadcast to server users before doing so.
-          RebootMessage: string
-          /// Number of days after which to reset the failure count to zero if there are no failures.
-          ResetPeriodInDays: int
-          /// If any of the three *ActionType attributes is "restart", this specifies the number of seconds to wait before doing so.
-          RestartServiceDelayInSeconds: int
-          /// [Required] Action to take on the second failure of the service.
-          SecondFailureActionType: ServiceFailureActionType
-          /// Required if not under a ServiceInstall element.
-          ServiceName: String
-          /// [Required] Action to take on the third failure of the service.
-          ThirdFailureActionType: ServiceFailureActionType }
+            /// [Required] Determines the type of the service failure action.
+            FirstFailureActionType: ServiceFailureActionType
+            /// If any of the three *ActionType attributes is "runCommand", this specifies the command to run when doing so. This value is formatted.
+            ProgramCommandLine: string
+            /// If any of the three *ActionType attributes is "reboot", this specifies the message to broadcast to server users before doing so.
+            RebootMessage: string
+            /// Number of days after which to reset the failure count to zero if there are no failures.
+            ResetPeriodInDays: int
+            /// If any of the three *ActionType attributes is "restart", this specifies the number of seconds to wait before doing so.
+            RestartServiceDelayInSeconds: int
+            /// [Required] Action to take on the second failure of the service.
+            SecondFailureActionType: ServiceFailureActionType
+            /// Required if not under a ServiceInstall element.
+            ServiceName: String
+            /// [Required] Action to take on the third failure of the service.
+            ThirdFailureActionType: ServiceFailureActionType
+        }
+
         member w.createAttributeList() =
             seq {
                 yield ("FirstFailureActionType", w.FirstFailureActionType.ToString())
@@ -311,12 +323,14 @@ module Wix =
     /// </summary>
     type ServiceDependency =
         {
-          /// [Required] The value of this attribute should be one of the following:
-          /// 1. The name (not the display name) of a previously installed service.
-          /// 2. The name of a service group (in which case the Group attribute must be set to 'yes').
-          Id: string
-          /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.
-          Group: YesOrNo option }
+            /// [Required] The value of this attribute should be one of the following:
+            /// 1. The name (not the display name) of a previously installed service.
+            /// 2. The name of a service group (in which case the Group attribute must be set to 'yes').
+            Id: string
+            /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.
+            Group: YesOrNo option
+        }
+
         member w.createAttributeList() =
             seq {
                 yield ("Id", w.Id)
@@ -346,38 +360,40 @@ module Wix =
     /// </summary>
     type ServiceInstall =
         {
-          /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
-          Account: string
-          /// Contains any command line arguments or properties required to run the service.
-          Arguments: string
-          /// Sets the description of the service.
-          Description: string
-          /// This column is the localizable string that user interface programs use to identify the service.
-          DisplayName: string
-          /// Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.
-          EraseDescription: YesOrNo option
-          /// [Required] Determines what action should be taken on an error. (Default: Normal)
-          ErrorControl: ErrorControl
-          /// Unique identifier for this service configuration. This value will default to the Name attribute if not specified.
-          Id: string
-          /// Whether or not the service interacts with the desktop.
-          Interactive: YesOrNo option
-          /// The load ordering group that this service should be a part of.
-          LoadOrderGroup: string
-          /// [Required] This column is the string that gives the service name to install.
-          Name: string
-          /// The password for the account. Valid only when the account has a password.
-          Password: string
-          /// [Required] Determines when the service should be started. The Windows Installer does not support boot or system. (Default: Demand)
-          Start: ServiceInstallStart
-          /// [Required] The Windows Installer does not currently support kernelDriver or systemDriver. (Default: OwnProcess)
-          Type: ServiceInstallType
-          /// The overall install should fail if this service fails to install. (Default: Yes)
-          Vital: YesOrNo
-          /// Services or groups of services that must start before the parent service.
-          ServiceDependencies: ServiceDependency seq
-          /// Service configuration information for failure actions.
-          ServiceConfig: ServiceConfig seq }
+            /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
+            Account: string
+            /// Contains any command line arguments or properties required to run the service.
+            Arguments: string
+            /// Sets the description of the service.
+            Description: string
+            /// This column is the localizable string that user interface programs use to identify the service.
+            DisplayName: string
+            /// Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.
+            EraseDescription: YesOrNo option
+            /// [Required] Determines what action should be taken on an error. (Default: Normal)
+            ErrorControl: ErrorControl
+            /// Unique identifier for this service configuration. This value will default to the Name attribute if not specified.
+            Id: string
+            /// Whether or not the service interacts with the desktop.
+            Interactive: YesOrNo option
+            /// The load ordering group that this service should be a part of.
+            LoadOrderGroup: string
+            /// [Required] This column is the string that gives the service name to install.
+            Name: string
+            /// The password for the account. Valid only when the account has a password.
+            Password: string
+            /// [Required] Determines when the service should be started. The Windows Installer does not support boot or system. (Default: Demand)
+            Start: ServiceInstallStart
+            /// [Required] The Windows Installer does not currently support kernelDriver or systemDriver. (Default: OwnProcess)
+            Type: ServiceInstallType
+            /// The overall install should fail if this service fails to install. (Default: Yes)
+            Vital: YesOrNo
+            /// Services or groups of services that must start before the parent service.
+            ServiceDependencies: ServiceDependency seq
+            /// Service configuration information for failure actions.
+            ServiceConfig: ServiceConfig seq
+        }
+
         member w.createAttributeList() =
             seq {
                 if not (String.IsNullOrWhiteSpace w.Account) then
@@ -467,6 +483,7 @@ module Wix =
         | HKLM
         /// Writes this registry key inside either the HKEY_USers registry root
         | HKU
+
         override w.ToString() =
             match w with
             | HKMU -> "HKMU"
@@ -483,6 +500,7 @@ module Wix =
         | Prepend
         /// Writes a registry value
         | Write
+
         override a.ToString() =
             match a with
             | Append -> "append"
@@ -501,6 +519,7 @@ module Wix =
         | Expandable
         /// The value is interpreted and stored as a multiple strings (REG_MULTI_SZ)
         | MultiString
+
         override t.ToString() =
             match t with
             | String -> "string"
@@ -514,23 +533,25 @@ module Wix =
     /// </summary>
     type RegistryValue =
         {
-          /// The Id of this value
-          Id: string
-          /// The localizable registry value name. If this attribute is not provided the default value for the registry key will be set instead
-          Name: string
-          /// The localizable registry value.
-          Value: string
-          /// The action that will be taken for this registry value
-          Action: RegistryValueAction
-          /// The type of the desired registry key
-          Type: RegistryValueType
-          /// The localizable key for the registry value
-          /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
-          Key: string
-          /// Set this attribute to 'yes' to make this registry key the KeyPath of the parent component
-          KeyPath: YesOrNo
-          /// The predefined root key for the registry value.
-          Root: RegistryRootType Option }
+            /// The Id of this value
+            Id: string
+            /// The localizable registry value name. If this attribute is not provided the default value for the registry key will be set instead
+            Name: string
+            /// The localizable registry value.
+            Value: string
+            /// The action that will be taken for this registry value
+            Action: RegistryValueAction
+            /// The type of the desired registry key
+            Type: RegistryValueType
+            /// The localizable key for the registry value
+            /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
+            Key: string
+            /// Set this attribute to 'yes' to make this registry key the KeyPath of the parent component
+            KeyPath: YesOrNo
+            /// The predefined root key for the registry value.
+            Root: RegistryRootType Option
+        }
+
         member v.createAttributeList() =
             seq {
                 if not (String.IsNullOrWhiteSpace v.Id) then
@@ -568,7 +589,7 @@ module Wix =
     /// <summary>
     /// Generates a registry value based on the given parameters, use toString on it when embedding it
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -584,7 +605,7 @@ module Wix =
     ///             Value = "2"
     ///         })
     /// </code>
-    /// </example>   
+    /// </example>
     let generateRegistryValue (setParams: RegistryValue -> RegistryValue) =
         let parameters = RegistryValueDefaults |> setParams
         parameters
@@ -594,25 +615,27 @@ module Wix =
     /// </summary>
     type RegistryKey =
         {
-          /// Primary key used to identify this particular entry
-          Id: string
-          /// The predefined root key for the registry value
-          Root: RegistryRootType Option
-          /// The localizable key for the registry value
-          /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
-          Key: string
-          /// Set this attribute to 'yes' to create an empty key, if absent, when the parent component is installed
-          /// This value is needed only to create an empty key with no subkeys or values.
-          /// Windows Installer creates keys as needed to store subkeys and values. The default is "no"
-          ForceCreateOnInstall: YesOrNo
-          /// Set this attribute to 'yes' to remove the key with all its values and subkeys when the parent component is uninstalled
-          /// Note that this value is useful only if your program creates additional values or subkeys under this key and you want an uninstall to remove them
-          /// MSI already removes all values and subkeys that it creates, so this option just adds additional overhead to uninstall. The default is "no"
-          ForceDeleteOnUninstall: YesOrNo
-          /// You can nest child registry keys here
-          Keys: RegistryKey seq
-          /// You can nest child registry values here
-          Values: RegistryValue seq }
+            /// Primary key used to identify this particular entry
+            Id: string
+            /// The predefined root key for the registry value
+            Root: RegistryRootType Option
+            /// The localizable key for the registry value
+            /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
+            Key: string
+            /// Set this attribute to 'yes' to create an empty key, if absent, when the parent component is installed
+            /// This value is needed only to create an empty key with no subkeys or values.
+            /// Windows Installer creates keys as needed to store subkeys and values. The default is "no"
+            ForceCreateOnInstall: YesOrNo
+            /// Set this attribute to 'yes' to remove the key with all its values and subkeys when the parent component is uninstalled
+            /// Note that this value is useful only if your program creates additional values or subkeys under this key and you want an uninstall to remove them
+            /// MSI already removes all values and subkeys that it creates, so this option just adds additional overhead to uninstall. The default is "no"
+            ForceDeleteOnUninstall: YesOrNo
+            /// You can nest child registry keys here
+            Keys: RegistryKey seq
+            /// You can nest child registry values here
+            Values: RegistryValue seq
+        }
+
         member k.createAttributeList() =
             seq {
                 if not (String.IsNullOrWhiteSpace k.Id) then
@@ -648,7 +671,7 @@ module Wix =
     /// Generates a registry key based on the given parameters, use toString on it when embedding it
     /// You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -672,6 +695,7 @@ module Wix =
     /// Reference to a component for including it in a feature
     type ComponentRef =
         { Id: string }
+
         override w.ToString() =
             sprintf "<ComponentRef Id=\"%s\" />" w.Id
 
@@ -695,6 +719,7 @@ module Wix =
     type DirectoryComponent =
         | C of Component
         | D of Dir
+
         member w.ToComponentRef() =
             match w with
             | C c -> c.ToComponentRef()
@@ -715,6 +740,7 @@ module Wix =
           ServiceInstalls: ServiceInstall seq
           RegistryKeys: RegistryKey seq
           RegistryValues: RegistryValue seq }
+
         member w.ToComponentRef() =
             generateComponentRef (fun f -> { f with Id = w.Id })
 
@@ -736,6 +762,7 @@ module Wix =
           Name: string
           Files: File seq
           Components: DirectoryComponent seq }
+
         override d.ToString() =
             sprintf
                 "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>"
@@ -757,6 +784,7 @@ module Wix =
     type DirectoryRef =
         { Id: string
           Components: DirectoryComponent seq }
+
         override r.ToString() =
             sprintf
                 "<DirectoryRef Id=\"%s\">%s</DirectoryRef>"
@@ -839,20 +867,13 @@ module Wix =
 
     /// Calculates the SHA1 for a given string.
     let private calcSHA1 (text: string) =
-        Fake
-            .Core
-            .Environment
-            .getDefaultEncoding()
-            .GetBytes text
+        Fake.Core.Environment.getDefaultEncoding().GetBytes text
         |> (SHA1.Create()).ComputeHash
         |> Array.fold
             (fun acc e ->
                 let t = Convert.ToString(e, 16)
 
-                if t.Length = 1 then
-                    acc + "0" + t
-                else
-                    acc + t)
+                if t.Length = 1 then acc + "0" + t else acc + t)
             ""
 
     let private getDirectoryId (directoryName: string) = "d" + calcSHA1 directoryName
@@ -1137,7 +1158,7 @@ module Wix =
     /// <summary>
     /// Retrieves all component ids from given WiX directory string
     /// </summary>
-    /// 
+    ///
     /// <param name="wiXString">The directory string which was generated by getWixDirTag</param>
     ///
     /// <example>
@@ -1146,7 +1167,7 @@ module Wix =
     /// let componentIds = getComponentIdsFromWiXString directoryString
     /// </code>
     /// </example>
-    ///     
+    ///
     let getComponentIdsFromWiXString wiXString =
         let lines = Fake.Core.String.split '\n' wiXString
 
@@ -1167,8 +1188,7 @@ module Wix =
             |> Seq.map getComponentRefsTags
             |> Fake.Core.String.toLines
 
-        if (Fake.IO.DirectoryInfo.getFiles directoryInfo)
-            .Length > 0 then
+        if (Fake.IO.DirectoryInfo.getFiles directoryInfo).Length > 0 then
             sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos (getCompRefName directoryInfo.Name)
         else
             compos
@@ -1212,6 +1232,7 @@ module Wix =
         | Expand
         /// Prevents the feature from displaying in the user interface.
         | Hidden
+
         override f.ToString() =
             match f with
             | Collapse -> "collapse"
@@ -1223,44 +1244,43 @@ module Wix =
     /// </summary>
     type Feature =
         {
-          /// Unique identifier of the feature.
-          Id: string
+            /// Unique identifier of the feature.
+            Id: string
 
-          /// Short string of text identifying the feature.
-          /// This string is listed as an item by the SelectionTree control of the Selection Dialog.
-          Title: string
+            /// Short string of text identifying the feature.
+            /// This string is listed as an item by the SelectionTree control of the Selection Dialog.
+            Title: string
 
-          /// Sets the install level of this feature. A value of 0 will disable the feature.
-          /// Processing the Condition Table can modify the level value (this is set via the Condition child element).
-          /// The default value is "1".
-          Level: int
+            /// Sets the install level of this feature. A value of 0 will disable the feature.
+            /// Processing the Condition Table can modify the level value (this is set via the Condition child element).
+            /// The default value is "1".
+            Level: int
 
-          /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog.
-          Description: string
+            /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog.
+            Description: string
 
-          /// Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
-          /// collapse
-          ///    Initially shows the feature collapsed. This is the default value.
-          /// expand
-          ///    Initially shows the feature expanded.
-          /// hidden
-          ///    Prevents the feature from displaying in the user interface.
-          /// <an explicit integer value>
-          ///    For advanced users only, it is possible to directly set the integer value of the display value that will
-          /// appear in the Feature row.
-          Display: FeatureDisplay
+            /// Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
+            /// collapse
+            ///    Initially shows the feature collapsed. This is the default value.
+            /// expand
+            ///    Initially shows the feature expanded.
+            /// hidden
+            ///    Prevents the feature from displaying in the user interface.
+            /// <an explicit integer value>
+            ///    For advanced users only, it is possible to directly set the integer value of the display value that will
+            /// appear in the Feature row.
+            Display: FeatureDisplay
 
-          /// Nest sub features
-          NestedFeatures: Feature seq
+            /// Nest sub features
+            NestedFeatures: Feature seq
 
-          /// Components included in this feature
-          Components: ComponentRef option seq }
+            /// Components included in this feature
+            Components: ComponentRef option seq
+        }
+
         override f.ToString() =
             let (|Empty|NotEmpty|) seq =
-                if Seq.isEmpty seq then
-                    Empty
-                else
-                    NotEmpty seq
+                if Seq.isEmpty seq then Empty else NotEmpty seq
 
             let rec ConcatAll feature (node: string) =
                 match feature.NestedFeatures with
@@ -1315,6 +1335,7 @@ module Wix =
     type ProgramFilesFolder =
         | ProgramFiles32
         | ProgramFiles64
+
         override p.ToString() =
             match p with
             | ProgramFiles32 -> "ProgramFilesFolder"
@@ -1338,6 +1359,7 @@ module Wix =
         | Rollback
         /// Indicates that a custom action should be run a second time if it was previously run in an earlier sequence.
         | SecondSequence
+
         override c.ToString() =
             match c with
             | Commit -> "commit"
@@ -1358,6 +1380,7 @@ module Wix =
         | Check
         /// Indicates that the custom action will run synchronously and the return code will not be checked.
         | Ignore
+
         override c.ToString() =
             match c with
             | AsyncNoWait -> "asyncNoWait"
@@ -1368,28 +1391,30 @@ module Wix =
     /// Parameters for WiX custom action, use ToString for creating the string xml nodes
     type CustomAction =
         {
-          ///	The identifier of the custom action.
-          Id: string
+            ///	The identifier of the custom action.
+            Id: string
 
-          /// This attribute specifies a reference to a File element with matching Id attribute that will execute the custom action code
-          /// in the file after the file is installed. This attribute is typically used with the ExeCommand attribute to specify
-          /// a type 18 custom action that runs an installed executable, with the DllEntry attribute to specify an installed custom action
-          /// DLL to use for a type 17 custom action, or with the VBScriptCall or JScriptCall attributes to specify a type 21 or 22 custom action.
-          FileKey: string
+            /// This attribute specifies a reference to a File element with matching Id attribute that will execute the custom action code
+            /// in the file after the file is installed. This attribute is typically used with the ExeCommand attribute to specify
+            /// a type 18 custom action that runs an installed executable, with the DllEntry attribute to specify an installed custom action
+            /// DLL to use for a type 17 custom action, or with the VBScriptCall or JScriptCall attributes to specify a type 21 or 22 custom action.
+            FileKey: string
 
-          /// This attribute indicates the scheduling of the custom action.
-          Execute: CustomActionExecute
-          /// This attribute specifies whether the Windows Installer, which executes as LocalSystem, should impersonate the user context of
-          /// the installing user when executing this custom action. Typically the value should be 'yes', except when the custom action needs
-          /// elevated privileges to apply changes to the machine.
-          Impersonate: YesOrNo
-          /// This attribute specifies the command line parameters to supply to an externally run executable.
-          /// This attribute is typically used with the BinaryKey attribute for a type 2 custom action, the FileKey attribute for a type 18
-          /// custom action, the Property attribute for a type 50 custom action, or the Directory attribute for a type 34 custom action that
-          /// specify the executable to run.
-          ExeCommand: string
-          /// Set this attribute to set the return behavior of the custom action.
-          Return: CustomActionReturn }
+            /// This attribute indicates the scheduling of the custom action.
+            Execute: CustomActionExecute
+            /// This attribute specifies whether the Windows Installer, which executes as LocalSystem, should impersonate the user context of
+            /// the installing user when executing this custom action. Typically the value should be 'yes', except when the custom action needs
+            /// elevated privileges to apply changes to the machine.
+            Impersonate: YesOrNo
+            /// This attribute specifies the command line parameters to supply to an externally run executable.
+            /// This attribute is typically used with the BinaryKey attribute for a type 2 custom action, the FileKey attribute for a type 18
+            /// custom action, the Property attribute for a type 50 custom action, or the Directory attribute for a type 34 custom action that
+            /// specify the executable to run.
+            ExeCommand: string
+            /// Set this attribute to set the return behavior of the custom action.
+            Return: CustomActionReturn
+        }
+
         override w.ToString() =
             "<CustomAction Id=\""
             + w.Id
@@ -1420,6 +1445,7 @@ module Wix =
         | After
         /// Specifies that action should be executed before some standard or custom action
         | Before
+
         override a.ToString() =
             match a with
             | After -> "After"
@@ -1428,14 +1454,16 @@ module Wix =
     /// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
     type CustomActionExecution =
         {
-          /// The action to which the Custom element applies.
-          ActionId: string
-          /// Specify if action should be executed before or after target action
-          Verb: ActionExecutionVerb
-          /// Name of the standard or custom action that the verb points to
-          Target: string
-          /// Conditions that have to be fulfilled for running execution
-          Condition: string }
+            /// The action to which the Custom element applies.
+            ActionId: string
+            /// Specify if action should be executed before or after target action
+            Verb: ActionExecutionVerb
+            /// Name of the standard or custom action that the verb points to
+            Target: string
+            /// Conditions that have to be fulfilled for running execution
+            Condition: string
+        }
+
         override w.ToString() =
             "<Custom Action=\""
             + w.ActionId
@@ -1457,8 +1485,10 @@ module Wix =
     /// Parameters for WiX UI Reference, use ToString for creating the string xml nodes
     type UIRef =
         {
-          /// Name of referenced UI
-          Id: string }
+            /// Name of referenced UI
+            Id: string
+        }
+
         override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
 
     /// Default value for WiX UI Reference (WixUI_Minimal)
@@ -1467,16 +1497,14 @@ module Wix =
     /// Parameters for WiX Upgrade
     type Upgrade =
         {
-          /// This value specifies the upgrade code for the products that are to be detected by the FindRelatedProducts action.
-          Id: Guid
-          /// You can nest UpgradeVersion sequences in here
-          UpgradeVersion: string }
+            /// This value specifies the upgrade code for the products that are to be detected by the FindRelatedProducts action.
+            Id: Guid
+            /// You can nest UpgradeVersion sequences in here
+            UpgradeVersion: string
+        }
+
         override w.ToString() =
-            "<Upgrade Id=\""
-            + w.Id.ToString("D")
-            + "\">"
-            + w.UpgradeVersion
-            + "</Upgrade>"
+            "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
 
     /// Default value for WiX Upgrade
     let internal UpgradeDefaults = { Id = Guid.Empty; UpgradeVersion = "" }
@@ -1484,22 +1512,24 @@ module Wix =
     /// Parameters for WiX Upgrade Version
     type UpgradeVersion =
         {
-          /// Set to "yes" to detect products and applications but do not uninstall.
-          OnlyDetect: YesOrNo
-          /// Specifies the lower bound on the range of product versions to be detected by FindRelatedProducts.
-          Minimum: string
-          /// Specifies the upper boundary of the range of product versions detected by FindRelatedProducts.
-          Maximum: string
-          /// When the FindRelatedProducts action detects a related product installed on the system, it appends the product code to the property specified in this field.
-          /// Windows Installer documentation for the Upgrade table states that the property specified in this field must be a public property and must be added to the
-          /// SecureCustomProperties property. WiX automatically appends the property specified in this field to the SecureCustomProperties property when creating an MSI.
-          /// Each UpgradeVersion must have a unique Property value. After the FindRelatedProducts action is run, the value of this property is a list of product codes,
-          /// separated by semicolons (;), detected on the system.
-          Property: string
-          /// Set to "no" to make the range of versions detected exclude the value specified in Minimum. This attribute is "yes" by default.
-          IncludeMinimum: YesOrNo
-          /// Set to "yes" to make the range of versions detected include the value specified in Maximum.
-          IncludeMaximum: YesOrNo }
+            /// Set to "yes" to detect products and applications but do not uninstall.
+            OnlyDetect: YesOrNo
+            /// Specifies the lower bound on the range of product versions to be detected by FindRelatedProducts.
+            Minimum: string
+            /// Specifies the upper boundary of the range of product versions detected by FindRelatedProducts.
+            Maximum: string
+            /// When the FindRelatedProducts action detects a related product installed on the system, it appends the product code to the property specified in this field.
+            /// Windows Installer documentation for the Upgrade table states that the property specified in this field must be a public property and must be added to the
+            /// SecureCustomProperties property. WiX automatically appends the property specified in this field to the SecureCustomProperties property when creating an MSI.
+            /// Each UpgradeVersion must have a unique Property value. After the FindRelatedProducts action is run, the value of this property is a list of product codes,
+            /// separated by semicolons (;), detected on the system.
+            Property: string
+            /// Set to "no" to make the range of versions detected exclude the value specified in Minimum. This attribute is "yes" by default.
+            IncludeMinimum: YesOrNo
+            /// Set to "yes" to make the range of versions detected include the value specified in Maximum.
+            IncludeMaximum: YesOrNo
+        }
+
         override w.ToString() =
             "<UpgradeVersion Minimum=\""
             + w.Minimum
@@ -1545,6 +1575,7 @@ module Wix =
         /// the installation transaction so if installation of the upgrade product fails, Windows Installer does not roll back the removal of the installed product,
         /// so the machine will have both versions installed.
         | AfterInstallFinalize
+
         override m.ToString() =
             match m with
             | AfterInstallValidate -> "afterInstallValidate"
@@ -1556,22 +1587,21 @@ module Wix =
     /// Parameters for WiX Major Upgrade
     type MajorUpgrade =
         {
-          /// Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the
-          /// installed product entirely before installing the upgrade product. It's slowest but gives the most flexibility in changing components and features in the upgrade product.
-          Schedule: MajorUpgradeSchedule
-          /// When set to no (the default), products with lower version numbers are blocked from installing when a product with a higher version is installed; the DowngradeErrorMessage
-          /// attribute must also be specified. When set to yes, any version can be installed over any other version.
-          AllowDowngrades: YesOrNo
-          /// The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default).
-          DowngradeErrorMessage: string }
+            /// Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the
+            /// installed product entirely before installing the upgrade product. It's slowest but gives the most flexibility in changing components and features in the upgrade product.
+            Schedule: MajorUpgradeSchedule
+            /// When set to no (the default), products with lower version numbers are blocked from installing when a product with a higher version is installed; the DowngradeErrorMessage
+            /// attribute must also be specified. When set to yes, any version can be installed over any other version.
+            AllowDowngrades: YesOrNo
+            /// The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default).
+            DowngradeErrorMessage: string
+        }
+
         override w.ToString() =
             let downgradeErrorMessage =
                 match w.AllowDowngrades with
                 | Yes -> ""
-                | No ->
-                    " DowngradeErrorMessage=\""
-                    + w.DowngradeErrorMessage
-                    + "\""
+                | No -> " DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\""
 
             "<MajorUpgrade Schedule=\""
             + w.Schedule.ToString()
@@ -1590,13 +1620,15 @@ module Wix =
     /// Parameters for WiX Variable, use ToString for creating the string xml nodes
     type Variable =
         {
-          /// The name of the variable.
-          Id: string
-          /// Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
-          /// If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'.
-          Overridable: YesOrNo
-          /// The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null.
-          Value: string }
+            /// The name of the variable.
+            Id: string
+            /// Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
+            /// If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'.
+            Overridable: YesOrNo
+            /// The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null.
+            Value: string
+        }
+
         override w.ToString() =
             "<WixVariable Id=\""
             + w.Id
@@ -1615,68 +1647,69 @@ module Wix =
     /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
     type Script =
         {
-          /// The product code GUID for the product.
-          ProductCode: Guid
+            /// The product code GUID for the product.
+            ProductCode: Guid
 
-          /// The descriptive name of the product.
-          ProductName: string
+            /// The descriptive name of the product.
+            ProductName: string
 
-          /// The program files folder
-          ProgramFilesFolder: ProgramFilesFolder
+            /// The program files folder
+            ProgramFilesFolder: ProgramFilesFolder
 
-          /// Product description
-          Description: string
+            /// Product description
+            Description: string
 
-          /// The decimal language ID (LCID) for the product.
-          ProductLanguage: int
+            /// The decimal language ID (LCID) for the product.
+            ProductLanguage: int
 
-          /// The product's version string.
-          ProductVersion: string
+            /// The product's version string.
+            ProductVersion: string
 
-          /// The manufacturer of the product.
-          ProductPublisher: string
+            /// The manufacturer of the product.
+            ProductPublisher: string
 
-          /// The upgrade code GUID for the product.
-          UpgradeGuid: Guid
+            /// The upgrade code GUID for the product.
+            UpgradeGuid: Guid
 
-          /// You can nest upgrade elements in here
-          Upgrade: Upgrade seq
+            /// You can nest upgrade elements in here
+            Upgrade: Upgrade seq
 
-          /// Nest major upgrade elements in here
-          MajorUpgrade: MajorUpgrade seq
+            /// Nest major upgrade elements in here
+            MajorUpgrade: MajorUpgrade seq
 
-          /// Nest UIRefs in here
-          UIRefs: UIRef seq
+            /// Nest UIRefs in here
+            UIRefs: UIRef seq
 
-          /// Nest WiXVariables in here
-          WiXVariables: Variable seq
+            /// Nest WiXVariables in here
+            WiXVariables: Variable seq
 
-          /// Nest directories in here
-          Directories: Dir seq
+            /// Nest directories in here
+            Directories: Dir seq
 
-          /// You can nest DirectoryRefs in here
-          DirectoryRefs: DirectoryRef seq
+            /// You can nest DirectoryRefs in here
+            DirectoryRefs: DirectoryRef seq
 
-          /// Nest Components in here
-          Components: DirectoryComponent seq
+            /// Nest Components in here
+            Components: DirectoryComponent seq
 
-          /// Build Number of product
-          BuildNumber: string
+            /// Build Number of product
+            BuildNumber: string
 
-          /// You can nest feature elements in here
-          Features: Feature seq
+            /// You can nest feature elements in here
+            Features: Feature seq
 
-          /// You can nest custom actions in here
-          CustomActions: CustomAction seq
+            /// You can nest custom actions in here
+            CustomActions: CustomAction seq
 
-          /// You can nest InstallExecuteSequence actions in here
-          ActionSequences: CustomActionExecution seq
+            /// You can nest InstallExecuteSequence actions in here
+            ActionSequences: CustomActionExecution seq
 
-          /// You can add custom replacements for the wix xml here.
-          CustomReplacements: (string * string) seq
+            /// You can add custom replacements for the wix xml here.
+            CustomReplacements: (string * string) seq
 
-          /// Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.
-          Platform: Architecture }
+            /// Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.
+            Platform: Architecture
+        }
 
     /// Default values for WiX Script properties
     let internal ScriptDefaults =
@@ -1706,7 +1739,7 @@ module Wix =
     /// Generates WiX Template with specified file name (you can prepend location too)
     /// You need to run this once every build an then use fillInWiXScript to replace placeholders
     /// </summary>
-    /// 
+    ///
     /// <param name="fileName">Pass desired fileName for your wiXScript file</param>
     ///
     /// <example>
@@ -1781,7 +1814,7 @@ module Wix =
     /// <summary>
     /// Takes path where script files reside and sets all parameters as defined
     /// </summary>
-    /// 
+    ///
     /// <param name="wiXPath">Pass path where your script is located at. Function will search for all Scripts in
     /// that location and fill in parameters</param>
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
@@ -1807,7 +1840,7 @@ module Wix =
     ///         ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
     ///     })
     /// </code>
-    /// </example> 
+    /// </example>
     let fillInWiXTemplate wiXPath setParams =
         let parameters = ScriptDefaults |> setParams
         let wixScript = !!(wiXPath @@ "*.wxs")
@@ -1847,7 +1880,7 @@ module Wix =
     /// Generates a feature based on the given parameters, use toString on it when embedding it
     /// You can pass other features into InnerContent for making a hierarchy
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1877,7 +1910,7 @@ module Wix =
     /// Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
     /// ExeCommand are the parameters passed to your executable
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1892,7 +1925,7 @@ module Wix =
     ///             Return = "check"
     ///         })
     /// </code>
-    /// </example>   
+    /// </example>
     let generateCustomAction setParams =
         let parameters: CustomAction = CustomActionDefaults |> setParams
 
@@ -1905,7 +1938,7 @@ module Wix =
     /// Generates a custom action execution based on the given parameters, use toString on it when embedding it
     /// Condition in sample makes execute only on install
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1930,7 +1963,7 @@ module Wix =
     /// <summary>
     /// Generates a ui ref based on the given parameters, use toString on it when embedding it
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1940,7 +1973,7 @@ module Wix =
     ///             Id = "WixUI_Mondo"
     ///         })
     /// </code>
-    /// </example>   
+    /// </example>
     let generateUIRef setParams =
         let parameters: UIRef = UIRefDefaults |> setParams
 
@@ -1953,7 +1986,7 @@ module Wix =
     /// <summary>
     /// Generates an upgrade based on the given parameters, use toString on it when embedding it
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1975,7 +2008,7 @@ module Wix =
     /// <summary>
     /// Generates an upgrade version based on the given parameters, use toString on it when embedding it
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -1995,7 +2028,7 @@ module Wix =
     /// <summary>
     /// Generates a major upgrade based on the given parameters, use toString on it when embedding it
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the WiX default parameters.</param>
     ///
     /// <example>
@@ -2005,7 +2038,7 @@ module Wix =
     ///             DowngradeErrorMessage = "A later version is already installed, exiting."
     ///         })
     /// </code>
-    /// </example>    
+    /// </example>
     let generateMajorUpgradeVersion setParams =
         let parameters: MajorUpgrade = MajorUpgradeDefaults |> setParams
         parameters
@@ -2021,9 +2054,7 @@ module Wix =
         use __ = Trace.traceTask "Candle" wixScript
         let fi = Fake.IO.FileInfo.ofPath wixScript
 
-        let wixObj =
-            fi.Directory.FullName
-            @@ sprintf @"%s.wixobj" fi.Name
+        let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
 
         let tool = parameters.ToolDirectory @@ "candle.exe"
 
@@ -2116,38 +2147,37 @@ module Wix =
     let WiX setParams outputFile wixScript =
         let parameters = setParams Defaults
 
-        wixScript
-        |> Candle parameters
-        |> Light parameters outputFile
+        wixScript |> Candle parameters |> Light parameters outputFile
 
     /// The Heat task parameters
     type HeatParams =
         {
-          /// Directory that contains the Heat tool
-          ToolDirectory: string
-          /// Timeout for the call to Heat
-          TimeOut: TimeSpan
-          /// Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)
-          AutoGenerateGuid: bool
-          /// Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)
-          GenerateGuidNow: bool
-          /// Suppress COM elements. (Parameter: -scom)
-          SupressComElements: bool
-          /// Suppress generation of fragments for directories and components. (Parameter: -sfrag)
-          SupressDirectoryFragments: bool
-          /// Suppress harvesting the root directory as an element. (Parameter: -srd)
-          SupressRootDirectory: bool
-          /// Suppress registry harvesting. (Parameter: -sreg)
-          SupressRegistry: bool
-          /// Suppress unique identifiers for files, components, & directories.(Parameter: -suid)
-          SupressUniqueIds: bool
-          /// Directory reference to root directories, cannot contains spaces. (Parameter: -dr)
-          DirectoryReference: string
-          /// Component group name, cannot contain spaces. (Parameter: -cg)
-          ComponentGroupName: string
-          /// Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)
-          VariableName: string
-          AdditionalHeatArgs: string list }
+            /// Directory that contains the Heat tool
+            ToolDirectory: string
+            /// Timeout for the call to Heat
+            TimeOut: TimeSpan
+            /// Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)
+            AutoGenerateGuid: bool
+            /// Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)
+            GenerateGuidNow: bool
+            /// Suppress COM elements. (Parameter: -scom)
+            SupressComElements: bool
+            /// Suppress generation of fragments for directories and components. (Parameter: -sfrag)
+            SupressDirectoryFragments: bool
+            /// Suppress harvesting the root directory as an element. (Parameter: -srd)
+            SupressRootDirectory: bool
+            /// Suppress registry harvesting. (Parameter: -sreg)
+            SupressRegistry: bool
+            /// Suppress unique identifiers for files, components, & directories.(Parameter: -suid)
+            SupressUniqueIds: bool
+            /// Directory reference to root directories, cannot contains spaces. (Parameter: -dr)
+            DirectoryReference: string
+            /// Component group name, cannot contain spaces. (Parameter: -cg)
+            ComponentGroupName: string
+            /// Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)
+            VariableName: string
+            AdditionalHeatArgs: string list
+        }
 
     /// Default values for the Heat harvesting
     let internal HeatDefaultParams =
@@ -2169,7 +2199,7 @@ module Wix =
     /// Harvests the contents of a Directory for use with Wix using the
     /// <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the Heat default parameters.</param>
     /// <param name="directory">The path to the directory that will be harvested by Heat.</param>
     /// <param name="outputFile">The output file path given to Heat.</param>

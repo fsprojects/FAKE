@@ -81,14 +81,14 @@ module TeamFoundation =
     /// <summary>
     /// Set <c>task.setvariable</c> with given name and value
     /// </summary>
-    /// 
+    ///
     /// <param name="variableName">The name of the variable to set</param>
     /// <param name="value">The value of the variable to set</param>
     let setVariable variableName value =
         write "task.setvariable" [ "variable", variableName ] value
 
     let private toType t o = o |> Option.map (fun value -> t, value)
-    
+
     let private toList t o = o |> toType t |> Option.toList
 
     /// <summary>
@@ -328,15 +328,23 @@ module TeamFoundation =
 
     let private publishArtifactIfOk artifactFolder artifactName path =
         let pushAnyWay = Environment.environVarAsBoolOrDefault "FAKE_VSO_PUSH_ALWAYS" false
+
         let canPush =
             match Environment.SystemPullRequestIsFork with
             | Some true when Environment.BuildReason = BuildReason.PullRequest -> false
             | _ -> true
+
         if pushAnyWay || canPush then
             publishArtifact artifactFolder artifactName path
         else
-            logIssue true None None None None 
-                (sprintf "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
+            logIssue
+                true
+                None
+                None
+                None
+                None
+                (sprintf
+                    "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
                     path)
 
     /// <summary>

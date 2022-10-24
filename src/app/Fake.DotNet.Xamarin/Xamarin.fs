@@ -51,25 +51,27 @@ module Xamarin =
 
     let internal toolPath =
         let toolPath =
-            ProcessUtils.tryFindLocalTool "TOOL" "xamarin-component.exe" [ ((Path.GetFullPath ".") @@ "tools" @@ "xpkg") ]
+            ProcessUtils.tryFindLocalTool
+                "TOOL"
+                "xamarin-component.exe"
+                [ ((Path.GetFullPath ".") @@ "tools" @@ "xpkg") ]
 
         match toolPath with
         | Some path -> path
         | None -> "xamarin-component.exe"
-    
+
     /// <summary>
     /// The default package restore parameters
     /// </summary>
     let XamarinComponentRestoreDefaults =
         {
-            // Xamarin component tool path
-            ToolPath = toolPath
-        }
+          // Xamarin component tool path
+          ToolPath = toolPath }
 
     /// <summary>
     /// Restores NuGet packages and Xamarin Components for a project or solution
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default package restore parameters</param>
     /// <param name="projectFile">The project file to use</param>
     let RestoreComponents setParams projectFile =
@@ -85,52 +87,52 @@ module Xamarin =
         {
             /// (Required) Path to solution or project file
             ProjectPath: string
-            
+
             /// Build target, defaults to Build
             Target: string
-            
+
             /// Build configuration, defaults to 'Debug'
             Configuration: string
-            
+
             /// Build platform, defaults to 'iPhoneSimulator'
             Platform: string
-            
+
             /// Output path for build, defaults to project settings
             OutputPath: string
-            
+
             /// Indicates if an IPA file should be generated
             BuildIpa: bool
-            
+
             /// Additional MSBuild properties, defaults to empty list
             Properties: (string * string) list
-            
+
             /// Max CPU count to use
             MaxCpuCount: int option option
-            
+
             /// Disable/enable logging, default is false
             NoLogo: bool
-            
+
             /// Disable/enable node re-use, default is false
             NodeReuse: bool
-            
+
             /// Disable/enable package restoring, default is false
             RestorePackagesFlag: bool
-            
+
             /// Tools version
             ToolsVersion: string option
-            
+
             /// Set verbosity level
             Verbosity: MSBuildVerbosity option
-            
+
             /// Disable/enable console logging, default is false
             NoConsoleLogger: bool
-            
+
             /// The MSBuild file logger configurations
             FileLoggers: MSBuildFileLoggerConfig list option
-            
+
             /// The binary logger configurations
             BinaryLoggers: string list option
-            
+
             /// The distributed logger configurations
             DistributedLoggers: (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
         }
@@ -191,7 +193,7 @@ module Xamarin =
     /// <summary>
     /// Builds a project or solution using Xamarin's iOS build tools
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default build parameters</param>
     let iOSBuild setParams =
         let validateParams param =
@@ -257,49 +259,49 @@ module Xamarin =
         {
             /// (Required) Path to the Android project file (not the solution file!)
             ProjectPath: string
-            
+
             /// Build configuration, defaults to 'Release'
             Configuration: string
-            
+
             /// Output path for build, defaults to 'bin/Release'
             OutputPath: string
-            
+
             /// Additional MSBuild properties, defaults to empty list
             Properties: (string * string) list
-            
+
             /// Build an APK Targeting One ABI (used to reduce the size of the APK and support different CPU architectures)
             PackageAbiTargets: AndroidPackageAbiParam
-            
+
             /// Used for multiple APK packaging to set different version code par ABI
             VersionStepper: IncrementerVersion option
-            
+
             /// Max CPU count to use
             MaxCpuCount: int option option
-            
+
             /// Disable/enable logging, default is false
             NoLogo: bool
-            
+
             /// Disable/enable node re-use, default is false
             NodeReuse: bool
-            
+
             /// Disable/enable package restoring, default is false
             RestorePackagesFlag: bool
-            
+
             /// Tools version
             ToolsVersion: string option
-            
+
             /// Set verbosity level
             Verbosity: MSBuildVerbosity option
-            
+
             /// Disable/enable console logging, default is false
             NoConsoleLogger: bool
-            
+
             /// The MSBuild file logger configurations
             FileLoggers: MSBuildFileLoggerConfig list option
-            
+
             /// The binary logger configurations
             BinaryLoggers: string list option
-            
+
             /// The distributed logger configurations
             DistributedLoggers: (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
         }
@@ -326,7 +328,7 @@ module Xamarin =
     /// <summary>
     /// Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default build parameters</param>
     let AndroidBuildPackages setParams =
         let validateParams param =
@@ -497,7 +499,7 @@ module Xamarin =
     /// <summary>
     /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default build parameters</param>
     let AndroidPackage setParams =
         AndroidBuildPackages setParams |> Seq.exactlyOne
@@ -509,22 +511,22 @@ module Xamarin =
         {
             /// (Required) Path to keystore used to sign the app
             KeystorePath: string
-            
+
             /// (Required) Password for keystore
             KeystorePassword: string
-            
+
             /// (Required) Alias for keystore
             KeystoreAlias: string
-            
+
             /// Specifies the name of the signature algorithm to use to sign the JAR file.
             SignatureAlgorithm: string
-            
+
             /// Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file.
             MessageDigestAlgorithm: string
-            
+
             /// Path to jarsigner tool, defaults to assuming it is in your path
             JarsignerPath: string
-            
+
             /// Path to zipalign tool, defaults to assuming it is in your path
             ZipalignPath: string
         }
@@ -542,7 +544,7 @@ module Xamarin =
     /// <summary>
     /// Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default build parameters</param>
     /// <param name="apkFile">FileInfo object for an unsigned APK file to sign and align</param>
     let AndroidSignAndAlign setParams apkFile =
@@ -585,11 +587,7 @@ module Xamarin =
                 Regex.Replace(fullSignedFilePath, "-Signed.apk$", "-SignedAndAligned.apk")
 
             let zipalignArgs =
-                String.Format(
-                    "-f -v 4 {0} {1}",
-                    quotesSurround fullSignedFilePath,
-                    quotesSurround fullAlignedFilePath
-                )
+                String.Format("-f -v 4 {0} {1}", quotesSurround fullSignedFilePath, quotesSurround fullAlignedFilePath)
 
             executeCommand param.ZipalignPath zipalignArgs
 
@@ -603,7 +601,7 @@ module Xamarin =
     /// <summary>
     /// Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default build parameters</param>
     /// <param name="apkFiles">FileInfo object for an unsigned APK file to sign and align</param>
     let AndroidSignAndAlignPackages setParams apkFiles =
@@ -617,13 +615,13 @@ module Xamarin =
             /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
             /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.
             SolutionPath: string
-            
+
             /// Project name within a solution file
             ProjectName: string
-            
+
             /// Build configuration, defaults to 'Debug|iPhoneSimulator'
             Configuration: string
-            
+
             /// Path to mdtool, defaults to Xamarin Studio's usual path
             MDToolPath: string
         }
@@ -638,7 +636,7 @@ module Xamarin =
     /// <summary>
     /// Archive a project using Xamarin's iOS archive tools
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to override the default archive parameters</param>
     let iOSArchive setParams =
         let archiveProject param =

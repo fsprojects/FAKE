@@ -18,10 +18,11 @@ module Octo =
     /// </summary>
     type ServerOptions =
         {
-          /// The base URL for your Octopus server
-          ServerUrl: string
-          /// Your API key; retrieved from the user profile page.
-          ApiKey: string }
+            /// The base URL for your Octopus server
+            ServerUrl: string
+            /// Your API key; retrieved from the user profile page.
+            ApiKey: string
+        }
 
     /// <summary>
     /// Common <c>Octo.exe</c> CLI params
@@ -39,96 +40,100 @@ module Octo =
     /// </summary>
     type CreateReleaseOptions =
         {
-          /// Name of the project
-          Project: string
-          /// Release number to use for the new release
-          Version: string
-          /// Default version of all packages to use for this release
-          PackageVersion: string
-          /// Version number to use for a package in the release
-          Packages: string list
-          /// A folder containing NuGet packages from which we should get versions
-          PackagesFolder: string option
-          /// Release Notes for the new release
-          ReleaseNotes: string
-          /// Path to a file that contains Release Notes for the new release
-          ReleaseNotesFile: string
-          /// If a release with the version number already exists, ignore it
-          IgnoreExisting: bool
-          /// Channel to use for the new release
-          Channel: string option
-          /// Ignore package version matching rules
-          IgnoreChannelRules: bool
-          ///common parameters
-          Common: Options }
+            /// Name of the project
+            Project: string
+            /// Release number to use for the new release
+            Version: string
+            /// Default version of all packages to use for this release
+            PackageVersion: string
+            /// Version number to use for a package in the release
+            Packages: string list
+            /// A folder containing NuGet packages from which we should get versions
+            PackagesFolder: string option
+            /// Release Notes for the new release
+            ReleaseNotes: string
+            /// Path to a file that contains Release Notes for the new release
+            ReleaseNotesFile: string
+            /// If a release with the version number already exists, ignore it
+            IgnoreExisting: bool
+            /// Channel to use for the new release
+            Channel: string option
+            /// Ignore package version matching rules
+            IgnoreChannelRules: bool
+            ///common parameters
+            Common: Options
+        }
 
     /// <summary>
     /// Options for deploying a release to an environment
     /// </summary>
     type DeployReleaseOptions =
         {
-          /// Name of the project
-          Project: string
-          /// Environment to deploy to
-          DeployTo: string
-          /// Version number of the release to deploy; Specify "latest" for
-          /// the latest release
-          Version: string
-          /// If a project is configured to skip packages with already-installed
-          /// versions, override this setting to force re-deployment
-          Force: bool
-          /// Whether to wait synchronously for deployment to finish
-          WaitForDeployment: bool
-          /// Don't print the raw log of failed tasks
-          NoRawLog: bool
-          /// Show progress of the deployment.
-          /// (Sets --waitfordeployment and --norawlog to true.)
-          Progress: bool
-          /// Specifies maximum time that deployment can take
-          /// (default: 10 minutes)
-          DeploymentTimeout: TimeSpan option
-          /// Specifies how much time should elapse between deployment status
-          /// checks (default: 10 seconds)
-          DeploymentCheckSleepCycle: TimeSpan option
-          /// A comma-separated list of machine names to target in the
-          /// deployed environment. If not specified, all machines in
-          /// the environment will be considered.
-          SpecificMachines: string option
-          /// Channel to use for the new release
-          Channel: string option
-          /// Common parameters
-          Common: Options }
+            /// Name of the project
+            Project: string
+            /// Environment to deploy to
+            DeployTo: string
+            /// Version number of the release to deploy; Specify "latest" for
+            /// the latest release
+            Version: string
+            /// If a project is configured to skip packages with already-installed
+            /// versions, override this setting to force re-deployment
+            Force: bool
+            /// Whether to wait synchronously for deployment to finish
+            WaitForDeployment: bool
+            /// Don't print the raw log of failed tasks
+            NoRawLog: bool
+            /// Show progress of the deployment.
+            /// (Sets --waitfordeployment and --norawlog to true.)
+            Progress: bool
+            /// Specifies maximum time that deployment can take
+            /// (default: 10 minutes)
+            DeploymentTimeout: TimeSpan option
+            /// Specifies how much time should elapse between deployment status
+            /// checks (default: 10 seconds)
+            DeploymentCheckSleepCycle: TimeSpan option
+            /// A comma-separated list of machine names to target in the
+            /// deployed environment. If not specified, all machines in
+            /// the environment will be considered.
+            SpecificMachines: string option
+            /// Channel to use for the new release
+            Channel: string option
+            /// Common parameters
+            Common: Options
+        }
 
     /// <summary>
     /// Options for deleting a range of releases in a project
     /// </summary>
     type DeleteReleasesOptions =
         {
-          /// Name of the project
-          Project: string
-          /// Minimum (inclusive) version number for the range of versions to delete
-          MinVersion: string
-          /// Maximum (inclusive) version number for the range of versions to delete
-          MaxVersion: string
-          /// If specified, only releases
-          /// associated with the channel will be deleted;
-          /// specify this argument multiple times to target
-          /// multiple channels
-          Channel: string option
-          /// Common parameters
-          Common: Options }
+            /// Name of the project
+            Project: string
+            /// Minimum (inclusive) version number for the range of versions to delete
+            MinVersion: string
+            /// Maximum (inclusive) version number for the range of versions to delete
+            MaxVersion: string
+            /// If specified, only releases
+            /// associated with the channel will be deleted;
+            /// specify this argument multiple times to target
+            /// multiple channels
+            Channel: string option
+            /// Common parameters
+            Common: Options
+        }
 
     /// <summary>
     /// Option type for pushing packages
     /// </summary>
     type PushOptions =
         {
-          // paths to one or more packages to push to the server
-          Packages: string list
-          /// if the package already exists, should this package overwrite it?
-          ReplaceExisting: bool
-          /// Common parameters
-          Common: Options }
+            // paths to one or more packages to push to the server
+            Packages: string list
+            /// if the package already exists, should this package overwrite it?
+            ReplaceExisting: bool
+            /// Common parameters
+            Common: Options
+        }
 
     /// Option type for selecting one command
     type internal Command =
@@ -223,8 +228,7 @@ module Octo =
         let sb = Text.StringBuilder()
 
         for o in os do
-            sb.Append(sprintf "--%s=%s " p (o.ToString()))
-            |> ignore
+            sb.Append(sprintf "--%s=%s " p (o.ToString())) |> ignore
 
         sb.ToString().Trim()
 
@@ -390,12 +394,9 @@ module Octo =
     ///
     /// <param name="setParams">The create release parameters</param>
     let createRelease setParams =
-        let commandLine =
-            (CreateRelease((setParams releaseOptions), None))
-                .ToString()
+        let commandLine = (CreateRelease((setParams releaseOptions), None)).ToString()
 
-        createReleaseWithExitCode setParams
-        |> (handleIgnoreExitCode <| commandLine)
+        createReleaseWithExitCode setParams |> (handleIgnoreExitCode <| commandLine)
 
     /// <summary>
     /// Creates a release, and optionally deploys it to one or more environments.
@@ -417,12 +418,9 @@ module Octo =
     ///
     /// <param name="setParams">The release deployment parameters</param>
     let deployRelease setParams =
-        let commandLine =
-            (DeployRelease(setParams deployOptions))
-                .ToString()
+        let commandLine = (DeployRelease(setParams deployOptions)).ToString()
 
-        deployReleaseWithExitCode setParams
-        |> (handleIgnoreExitCode <| commandLine)
+        deployReleaseWithExitCode setParams |> (handleIgnoreExitCode <| commandLine)
 
     /// <summary>
     /// Deletes a range of releases.
@@ -430,12 +428,9 @@ module Octo =
     ///
     /// <param name="setParams">The releases to delete parameters</param>
     let deleteReleases setParams =
-        let commandLine =
-            (DeleteReleases(setParams deleteOptions))
-                .ToString()
+        let commandLine = (DeleteReleases(setParams deleteOptions)).ToString()
 
-        deleteReleasesWithExitCode setParams
-        |> (handleIgnoreExitCode <| commandLine)
+        deleteReleasesWithExitCode setParams |> (handleIgnoreExitCode <| commandLine)
 
     /// <summary>
     /// Lists all environments.
@@ -445,8 +440,7 @@ module Octo =
     let listEnvironments setParams =
         let commandLine = ListEnvironments.ToString()
 
-        listEnvironmentsWithExitCode setParams
-        |> (handleIgnoreExitCode <| commandLine)
+        listEnvironmentsWithExitCode setParams |> (handleIgnoreExitCode <| commandLine)
 
     /// <summary>
     /// Pushes one or more packages to the Octopus built-in repository.
@@ -456,5 +450,4 @@ module Octo =
     let push setParams =
         let commandLine = (Push(setParams pushOptions)).ToString()
 
-        pushWithExitCode setParams
-        |> (handleIgnoreExitCode <| commandLine)
+        pushWithExitCode setParams |> (handleIgnoreExitCode <| commandLine)

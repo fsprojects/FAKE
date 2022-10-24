@@ -6,7 +6,7 @@ namespace Fake.DotNet.Testing
 /// like NUnit, Expecto and Coverlet
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains options to run <a href="https://github.com/tonerdo/coverlet">Coverlet</a> as part of dotnet test.
 /// </summary>
@@ -42,28 +42,29 @@ module Coverlet =
     /// </summary>
     type CoverletParams =
         {
-          /// (Required) Format of the generated output.
-          OutputFormat: OutputFormat list
-          /// (Required) Path to the generated output file, or directory if it ends with a <c>/</c>.
-          Output: string
-          /// Namespaces to include, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
-          Include: (string * string) list
-          /// Namespaces to exclude, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
-          Exclude: (string * string) list
-          /// Exclude methods, types and assemblies annotated with these attributes.
-          ExcludeByAttribute: string list
-          /// Exclude these source files. Supports path globbing.
-          ExcludeByFile: string list
-          /// Coverlet json file to merge with the output of this run.
-          MergeWith: string option
-          /// Minimum coverage percent. Build fails if the result is below.
-          Threshold: int option
-          /// Type of coverage to check against the threshold.
-          ThresholdType: ThresholdType
-          /// Coverage statistic to check against the threshold.
-          ThresholdStat: ThresholdStat
-          /// Generate results with URL links from SourceLink instead of file paths.
-          UseSourceLink: bool }
+            /// (Required) Format of the generated output.
+            OutputFormat: OutputFormat list
+            /// (Required) Path to the generated output file, or directory if it ends with a <c>/</c>.
+            Output: string
+            /// Namespaces to include, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
+            Include: (string * string) list
+            /// Namespaces to exclude, as (AssemblyName, Namespace) pairs. Supports <c>*</c> and <c>?</c> globbing.
+            Exclude: (string * string) list
+            /// Exclude methods, types and assemblies annotated with these attributes.
+            ExcludeByAttribute: string list
+            /// Exclude these source files. Supports path globbing.
+            ExcludeByFile: string list
+            /// Coverlet json file to merge with the output of this run.
+            MergeWith: string option
+            /// Minimum coverage percent. Build fails if the result is below.
+            Threshold: int option
+            /// Type of coverage to check against the threshold.
+            ThresholdType: ThresholdType
+            /// Coverage statistic to check against the threshold.
+            ThresholdStat: ThresholdStat
+            /// Generate results with URL links from SourceLink instead of file paths.
+            UseSourceLink: bool
+        }
 
     /// The default parameters.
     let private defaults =
@@ -91,8 +92,7 @@ module Coverlet =
         List.map outputFormatToString >> String.concat ","
 
     let private namespacesToString =
-        Seq.map (fun (asm, ns) -> "[" + asm + "]" + ns)
-        >> String.concat ","
+        Seq.map (fun (asm, ns) -> "[" + asm + "]" + ns) >> String.concat ","
 
     let private thresholdTypeToString =
         function

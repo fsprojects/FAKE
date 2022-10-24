@@ -12,37 +12,42 @@ open Fake.Runtime
 [<Tests>]
 let tests =
     testList
-        "Fake.DotNet.sdkAssemblyResolverTests" [
-          testCase "Runner run script with 6.0.100 SDK version assemblies" <| fun _ ->
+        "Fake.DotNet.sdkAssemblyResolverTests"
+        [ testCase "Runner run script with 6.0.100 SDK version assemblies"
+          <| fun _ ->
               try
-                  use d = createTestDir()
+                  use d = createTestDir ()
                   let installerDir = Path.Combine(d.Dir, "Temp Dir")
                   Directory.create installerDir
                   let preparedDir = Path.Combine(d.Dir, "Install Dir")
                   Directory.create preparedDir
 
                   DotNet.install (fun option ->
-                  { option with
-                        InstallerOptions = fun o ->
-                                  { option.InstallerOptions o with
-                                        CustomDownloadDir = Some installerDir }
-                        ForceInstall = true
-                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
-                        CustomInstallDir = Some preparedDir
-                        Channel = DotNet.CliChannel.Version 6 0
-                        Version = DotNet.CliVersion.Version "6.0.100" })
+                      { option with
+                          InstallerOptions =
+                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                          ForceInstall = true
+                          WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
+                          CustomInstallDir = Some preparedDir
+                          Channel = DotNet.CliChannel.Version 6 0
+                          Version = DotNet.CliVersion.Version "6.0.100" })
                   |> ignore
 
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" preparedDir
 
                   let result =
-                      handleAndFormat <| fun _ ->
-                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60100"
+                      handleAndFormat
+                      <| fun _ ->
+                          fakeRunAndCheck
+                              Ctx.Verbose
+                              "reference-assemblies.fsx"
+                              "reference-assemblies.fsx"
+                              "core-reference-assemblies-net60100"
 
-                  let stdOut =
-                      String.Join("\n", result.Messages).Trim()
+                  let stdOut = String.Join("\n", result.Messages).Trim()
 
-                  let expectedNet6PathPortion = "packs"</>"Microsoft.NETCore.App.Ref"</>"6.0.0"</>"ref"</>"net6.0"
+                  let expectedNet6PathPortion =
+                      "packs" </> "Microsoft.NETCore.App.Ref" </> "6.0.0" </> "ref" </> "net6.0"
 
                   (sprintf "stdout should contain path like '%s', but was: '%s'" expectedNet6PathPortion stdOut)
                   |> Expect.isTrue (stdOut.Contains expectedNet6PathPortion)
@@ -50,102 +55,119 @@ let tests =
                   // clean up after the test run
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
 
-          testCase "Runner run script with 6.0.101 SDK version assemblies" <| fun _ ->
+          testCase "Runner run script with 6.0.101 SDK version assemblies"
+          <| fun _ ->
               try
-                  use d = createTestDir()
+                  use d = createTestDir ()
                   let installerDir = Path.Combine(d.Dir, "Temp Dir")
                   Directory.create installerDir
                   let preparedDir = Path.Combine(d.Dir, "Install Dir")
                   Directory.create preparedDir
 
                   DotNet.install (fun option ->
-                  { option with
-                        InstallerOptions = fun o ->
-                                  { option.InstallerOptions o with
-                                        CustomDownloadDir = Some installerDir }
-                        ForceInstall = true
-                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101"
-                        CustomInstallDir = Some preparedDir
-                        Channel = DotNet.CliChannel.Version 6 0
-                        Version = DotNet.CliVersion.Version "6.0.101" })
+                      { option with
+                          InstallerOptions =
+                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                          ForceInstall = true
+                          WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101"
+                          CustomInstallDir = Some preparedDir
+                          Channel = DotNet.CliChannel.Version 6 0
+                          Version = DotNet.CliVersion.Version "6.0.101" })
                   |> ignore
 
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" preparedDir
 
                   let result =
-                      handleAndFormat <| fun _ ->
-                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60101"
+                      handleAndFormat
+                      <| fun _ ->
+                          fakeRunAndCheck
+                              Ctx.Verbose
+                              "reference-assemblies.fsx"
+                              "reference-assemblies.fsx"
+                              "core-reference-assemblies-net60101"
 
-                  let stdOut =
-                      String.Join("\n", result.Messages).Trim()
+                  let stdOut = String.Join("\n", result.Messages).Trim()
 
-                  let expectedNet6PathPortion = "packs"</>"Microsoft.NETCore.App.Ref"</>"6.0.1"</>"ref"</>"net6.0"
+                  let expectedNet6PathPortion =
+                      "packs" </> "Microsoft.NETCore.App.Ref" </> "6.0.1" </> "ref" </> "net6.0"
 
                   (sprintf "stdout should contain path like '%s', but was: '%s'" expectedNet6PathPortion stdOut)
                   |> Expect.isTrue (stdOut.Contains expectedNet6PathPortion)
               finally
                   // clean up after the test run
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
-          
-          testCase "Runner run script with Can properly rollForward to latestPatch" <| fun _ ->
-                use d = createTestDir()
-                let installerDir = Path.Combine(d.Dir, "Temp Dir")
-                Directory.create installerDir
-                let preparedDir = Path.Combine(d.Dir, "Install Dir")
-                Directory.create preparedDir
 
-                DotNet.install (fun option ->
-                { option with
-                    InstallerOptions = fun o ->
-                                { option.InstallerOptions o with
-                                    CustomDownloadDir = Some installerDir }
-                    ForceInstall = true
-                    WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101-rollforward"
-                    CustomInstallDir = Some preparedDir
-                    Channel = DotNet.CliChannel.Version 6 0
-                    Version = DotNet.CliVersion.Version "6.0.101" })
-                |> ignore
+          testCase "Runner run script with Can properly rollForward to latestPatch"
+          <| fun _ ->
+              use d = createTestDir ()
+              let installerDir = Path.Combine(d.Dir, "Temp Dir")
+              Directory.create installerDir
+              let preparedDir = Path.Combine(d.Dir, "Install Dir")
+              Directory.create preparedDir
 
-                let result =
-                    handleAndFormat <| fun _ ->
-                        fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60101-rollforward"
+              DotNet.install (fun option ->
+                  { option with
+                      InstallerOptions =
+                          fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                      ForceInstall = true
+                      WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101-rollforward"
+                      CustomInstallDir = Some preparedDir
+                      Channel = DotNet.CliChannel.Version 6 0
+                      Version = DotNet.CliVersion.Version "6.0.101" })
+              |> ignore
 
-                Expect.isTrue result.OK "The build did not succeed"
+              let result =
+                  handleAndFormat
+                  <| fun _ ->
+                      fakeRunAndCheck
+                          Ctx.Verbose
+                          "reference-assemblies.fsx"
+                          "reference-assemblies.fsx"
+                          "core-reference-assemblies-net60101-rollforward"
 
-          testCase "Runner run script with 6.0.100 SDK version assemblies and resolve runtime version from cached file" <| fun _ ->
+              Expect.isTrue result.OK "The build did not succeed"
+
+          testCase "Runner run script with 6.0.100 SDK version assemblies and resolve runtime version from cached file"
+          <| fun _ ->
               try
-                  use d = createTestDir()
+                  use d = createTestDir ()
                   let installerDir = Path.Combine(d.Dir, "Temp Dir")
                   Directory.create installerDir
                   let preparedDir = Path.Combine(d.Dir, "Install Dir")
                   Directory.create preparedDir
 
                   DotNet.install (fun option ->
-                  { option with
-                        InstallerOptions = fun o ->
-                                  { option.InstallerOptions o with
-                                        CustomDownloadDir = Some installerDir }
-                        ForceInstall = true
-                        WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
-                        CustomInstallDir = Some preparedDir
-                        Channel = DotNet.CliChannel.Version 6 0
-                        Version = DotNet.CliVersion.Version "6.0.100" })
+                      { option with
+                          InstallerOptions =
+                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                          ForceInstall = true
+                          WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
+                          CustomInstallDir = Some preparedDir
+                          Channel = DotNet.CliChannel.Version 6 0
+                          Version = DotNet.CliVersion.Version "6.0.100" })
                   |> ignore
 
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" preparedDir
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" "cache"
 
                   let result =
-                      handleAndFormat <| fun _ ->
-                          fakeRunAndCheck Ctx.Verbose "reference-assemblies.fsx" "reference-assemblies.fsx" "core-reference-assemblies-net60100"
+                      handleAndFormat
+                      <| fun _ ->
+                          fakeRunAndCheck
+                              Ctx.Verbose
+                              "reference-assemblies.fsx"
+                              "reference-assemblies.fsx"
+                              "core-reference-assemblies-net60100"
 
-                  let stdOut =
-                      String.Join("\n", result.Messages).Trim()
+                  let stdOut = String.Join("\n", result.Messages).Trim()
 
                   printfn "%s" stdOut
 
-                  let expectedNet6PathPortion = "packs"</>"Microsoft.NETCore.App.Ref"</>"6.0.0"</>"ref"</>"net6.0"
-                  let expectedCacheFileResolutionMessage = "Trying to resolve runtime version from cache.."
+                  let expectedNet6PathPortion =
+                      "packs" </> "Microsoft.NETCore.App.Ref" </> "6.0.0" </> "ref" </> "net6.0"
+
+                  let expectedCacheFileResolutionMessage =
+                      "Trying to resolve runtime version from cache.."
 
                   (sprintf "stdout should contain path like '%s', but was: '%s'" expectedNet6PathPortion stdOut)
                   |> Expect.isTrue (stdOut.Contains expectedNet6PathPortion)
@@ -157,4 +179,4 @@ let tests =
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH" ""
                   Environment.setEnvironVar "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
 
-        ]
+          ]

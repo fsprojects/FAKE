@@ -41,5 +41,7 @@ module SHA1 =
     /// <param name="repositoryDir">The repository directory to execute command in</param>
     /// <param name="fileName">The file name to show SHA1 for</param>
     let showObjectHash repositoryDir fileName =
-        let _, msg, _ = CommandHelper.runGitCommand repositoryDir (sprintf "hash-object %s" fileName)
+        let _, msg, _ =
+            CommandHelper.runGitCommand repositoryDir (sprintf "hash-object %s" fileName)
+
         msg |> Seq.head

@@ -11,7 +11,7 @@ open System.IO
 /// <remarks>
 /// Under windows you will need to add it yourself to your system or use something like cygwin/babun
 /// </remarks>
-/// 
+///
 /// <example>
 /// <code lang="fsharp">
 /// let result =
@@ -33,7 +33,7 @@ open System.IO
 ///              ""
 ///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
 /// </code>
-/// </example> 
+/// </example>
 [<RequireQualifiedAccess>]
 module Rsync =
 
@@ -258,33 +258,31 @@ module Rsync =
     /// </summary>
     type Options =
         {
-          /// Command working directory
-          WorkingDirectory: string
-          /// Possible actions/options for rsync tool
-          Actions : Action list
-          /// The list of source directories/files
-          Sources : string list
-          /// The destination connection/location
-          Destination : string }
+            /// Command working directory
+            WorkingDirectory: string
+            /// Possible actions/options for rsync tool
+            Actions: Action list
+            /// The list of source directories/files
+            Sources: string list
+            /// The destination connection/location
+            Destination: string
+        }
 
         /// Create an rsync options type with default values
-        static member Create () =
+        static member Create() =
             { WorkingDirectory = Directory.GetCurrentDirectory()
               Actions = []
               Sources = []
               Destination = "" }
 
         /// Add actions to rsync
-        static member WithActions actions options =
-            { options with Actions = actions }
+        static member WithActions actions options = { options with Actions = actions }
 
         /// Add the list of sources to rsync
-        static member WithSources sources options =
-            { options with Sources = sources }
+        static member WithSources sources options = { options with Sources = sources }
 
         /// Add the destination connection or location to rsync
-        static member WithDestination dest options =
-            { options with Destination = dest }
+        static member WithDestination dest options = { options with Destination = dest }
 
     let rec private actionToString =
         function
@@ -295,7 +293,7 @@ module Rsync =
         | Archive -> "--archive"
         | NoOption action ->
             let action = actionToString action
-            "--no-" + action.TrimStart([|'-'|])
+            "--no-" + action.TrimStart([| '-' |])
         | Recursive -> "--recursive"
         | Relative -> "--relative"
         | NoImpliedDirs -> "--no-implied-dirs"
@@ -399,8 +397,7 @@ module Rsync =
 
     let private buildCommonArgs (param: Options) =
         (param.Actions |> List.map actionToString)
-        @ param.Sources
-        @ [ param.Destination ]
+        @ param.Sources @ [ param.Destination ]
         |> String.concat " "
 
     /// <summary>
@@ -428,11 +425,11 @@ module Rsync =
 
         let errorF msg =
             Trace.traceError msg
-            results.Add (ConsoleMessage.CreateError msg)
+            results.Add(ConsoleMessage.CreateError msg)
 
         let messageF msg =
             Trace.trace msg
-            results.Add (ConsoleMessage.CreateOut msg)
+            results.Add(ConsoleMessage.CreateOut msg)
 
         let options = buildOptions (Options.Create())
         let commonOptions = buildCommonArgs options

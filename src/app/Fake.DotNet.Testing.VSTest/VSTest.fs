@@ -35,61 +35,61 @@ module VSTest =
         {
             /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
             SettingsPath: string
-            
+
             /// Names of the tests that should be run (optional).
             Tests: seq<string>
-            
+
             /// Enables parallel test execution (optional).
             Parallel: bool
-            
+
             /// Enables code coverage collection (optional).
             EnableCodeCoverage: bool
-            
+
             /// Run the tests in an isolated process (optional).
             InIsolation: bool
-            
+
             /// Use installed VSIX extensions in VSTest (optional).
             UseVsixExtensions: bool
-            
+
             /// Target platform architecture for test execution (optional). Valid options include "x86", "x64" and "ARM".
             Platform: string
-            
+
             /// Target .NET framework version to use for test execution (optional).
             Framework: string
-            
+
             /// Run tests that match the given expression (optional). Cannot be used with the Tests argument
             TestCaseFilter: string
-            
+
             /// The logger to use for test results (optional).
             Logger: string
-            
+
             /// List discovered tests from the given container path (optional).
             ListTestsPath: string
-            
+
             /// List installed test discoverers (optional).
             ListDiscoverers: bool
-            
+
             /// List installed test executors (optional).
             ListExecutors: bool
-            
+
             /// List installed loggers (optional).
             ListLoggers: bool
-            
+
             /// List installed settings providers (optional).
             ListSettingsProviders: bool
-            
+
             /// Path to VSTest.Console.exe (optional). By default the default install location is searched.
             ToolPath: string
-            
+
             /// Working directory (optional).
             WorkingDir: string
-            
+
             /// A timeout for the test runner (optional).
             TimeOut: TimeSpan
-            
+
             /// Error level for controlling how VSTest failures should break the build (optional).
             ErrorLevel: ErrorLevel
-            
+
             /// Path to test adapter e.g. xUnit (optional)
             TestAdapterPath: string
         }
@@ -180,7 +180,7 @@ module VSTest =
     /// <summary>
     /// Runs the VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default VSTestParams values.</param>
     /// <param name="assemblies">Sequence of one or more assemblies containing Microsoft Visual Studio Unit
     /// Test Framework unit tests.</param>

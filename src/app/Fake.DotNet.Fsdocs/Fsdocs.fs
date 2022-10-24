@@ -124,8 +124,9 @@ module Fsdocs =
                 subParameters
                 |> Seq.map (fun (key, value) -> (sprintf "%s %s" key value))
                 |> String.concat " "
+
             sprintf "--parameters %s" subParameters
-        
+
         System.Text.StringBuilder()
         |> StringBuilder.appendIfSome buildParams.Input (sprintf "--input %s")
         |> StringBuilder.appendIfSome buildParams.Projects (fun projects ->
@@ -148,7 +149,7 @@ module Fsdocs =
         |> StringBuilder.appendIfSome buildParams.MdComments (fun _ -> "--mdcomments")
         |> StringBuilder.toText
         |> String.trim
-        
+
     let internal buildWatchCommandParams (watchParams: WatchCommandParams) =
         System.Text.StringBuilder()
         |> StringBuilder.appendIfSome watchParams.NoServer (fun _ -> "--noserver")
@@ -172,13 +173,13 @@ module Fsdocs =
     let build setBuildParams =
         let buildParams = setBuildParams BuildCommandParams.Default
         let formattedParameters = buildBuildCommandParams buildParams
-        
-        let dotnetOptions = (fun (buildOptions:DotNet.Options) -> buildOptions);
+
+        let dotnetOptions = (fun (buildOptions: DotNet.Options) -> buildOptions)
         let result = DotNet.exec dotnetOptions "fsdocs build" formattedParameters
-        
-        if 0 <> result.ExitCode
-        then failwithf "fsdocs build failed with exit code '%d'" result.ExitCode
-    
+
+        if 0 <> result.ExitCode then
+            failwithf "fsdocs build failed with exit code '%d'" result.ExitCode
+
     /// <summary>
     /// Watch documentation using <c>fsdocs watch</c> command
     /// </summary>
@@ -193,9 +194,9 @@ module Fsdocs =
     let watch setWatchParams =
         let watchParams = setWatchParams WatchCommandParams.Default
         let formattedParameters = buildWatchCommandParams watchParams
-        
-        let dotnetOptions = (fun (buildOptions:DotNet.Options) -> buildOptions);
+
+        let dotnetOptions = (fun (buildOptions: DotNet.Options) -> buildOptions)
         let result = DotNet.exec dotnetOptions "fsdocs watch" formattedParameters
-        
-        if 0 <> result.ExitCode
-        then failwithf "fsdocs watch failed with exit code '%d'" result.ExitCode 
+
+        if 0 <> result.ExitCode then
+            failwithf "fsdocs watch failed with exit code '%d'" result.ExitCode

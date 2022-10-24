@@ -39,7 +39,8 @@ module Reset =
     /// <param name="commit">The commit to which git should perform the reset.</param>
     /// <param name="file">The file to reset - null means all files.</param>
     let soft repositoryDir commit file =
-        resetOrCheckout file "soft" + addArgs commit file |> CommandHelper.gitCommand repositoryDir
+        resetOrCheckout file "soft" + addArgs commit file
+        |> CommandHelper.gitCommand repositoryDir
 
     /// <summary>
     /// Performs a git reset "mixed".
@@ -50,7 +51,8 @@ module Reset =
     /// <param name="commit">The commit to which git should perform the reset.</param>
     /// <param name="file">The file to reset - null means all files.</param>
     let mixed repositoryDir commit file =
-        resetOrCheckout file "mixed" + addArgs commit file |> CommandHelper.gitCommand repositoryDir
+        resetOrCheckout file "mixed" + addArgs commit file
+        |> CommandHelper.gitCommand repositoryDir
 
     /// <summary>
     /// Performs a git reset "hard".
@@ -62,7 +64,8 @@ module Reset =
     /// <param name="commit">The commit to which git should perform the reset.</param>
     /// <param name="file">The file to reset - null means all files.</param>
     let hard repositoryDir commit file =
-        resetOrCheckout file "hard" + addArgs commit file |> CommandHelper.gitCommand repositoryDir
+        resetOrCheckout file "hard" + addArgs commit file
+        |> CommandHelper.gitCommand repositoryDir
 
     /// <summary>
     /// Performs a git reset "soft" to the current HEAD.

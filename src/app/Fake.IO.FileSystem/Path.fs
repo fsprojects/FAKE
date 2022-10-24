@@ -74,7 +74,7 @@ module Path =
     /// <summary>
     /// Change the extension of the file.
     /// </summary>
-    /// 
+    ///
     /// <param name="extension">The new extension containing the leading '.'.</param>
     /// <param name="fileName">Name of the file from which the extension is retrieved.</param>
     let changeExtension extension fileName =
@@ -83,7 +83,7 @@ module Path =
     /// <summary>
     /// Tests whether the file has specified extensions (containing the leading '.')
     /// </summary>
-    /// 
+    ///
     /// <param name="extension">The extension to fine containing the leading '.'.</param>
     /// <param name="fileName">Name of the file from which the extension is retrieved.</param>
     let hasExtension extension (fileName: string) =
@@ -92,7 +92,7 @@ module Path =
     /// <summary>
     /// Get the directory of the specified path
     /// </summary>
-    /// 
+    ///
     /// <param name="path">The path from which the directory is retrieved.</param>
     let getDirectory (path: string) = Path.GetDirectoryName path
 
@@ -106,7 +106,7 @@ module Path =
     /// <summary>
     /// Gets the absolute path for the given path
     /// </summary>
-    /// 
+    ///
     /// <param name="p">The path to get its absolute path</param>
     let getFullName p = Path.GetFullPath p
 
@@ -121,7 +121,7 @@ module Path =
     /// <summary>
     /// Produces relative path when possible to go from baseLocation to targetLocation.
     /// </summary>
-    /// 
+    ///
     /// <param name="baseLocation">The root folder</param>
     /// <param name="targetLocation">The target folder</param>
     /// <returns>The relative path relative to baseLocation</returns>
@@ -160,15 +160,19 @@ module Path =
                     ref baseLocation
 
             while not
-                  <| targetLocation.StartsWith(baseLocation.Value + directorySeparator, StringComparison.OrdinalIgnoreCase) do
+                  <| targetLocation.StartsWith(
+                      baseLocation.Value + directorySeparator,
+                      StringComparison.OrdinalIgnoreCase
+                  ) do
                 resultPath.Value <- resultPath.Value + directorySeparator + ".."
                 baseLocation.Value <- Path.GetDirectoryName baseLocation.Value
 
                 if baseLocation.Value |> String.endsWith directorySeparator then
                     baseLocation.Value <- baseLocation.Value.Substring(0, baseLocation.Value.Length - 1)
 
-            resultPath.Value <- (resultPath.Value + targetLocation.Substring(baseLocation.Value.Length))
-               |> String.replace (directorySeparator + directorySeparator) directorySeparator
+            resultPath.Value <-
+                (resultPath.Value + targetLocation.Substring(baseLocation.Value.Length))
+                |> String.replace (directorySeparator + directorySeparator) directorySeparator
             // preprocess .\..\ case
             if (sprintf ".%s..%s" directorySeparator directorySeparator) <* resultPath.Value then
                 resultPath.Value.Substring(2, resultPath.Value.Length - 3)
@@ -193,7 +197,7 @@ module Path =
     /// <summary>
     /// Replaces the absolute path with a relative path
     /// </summary>
-    /// 
+    ///
     /// <param name="path">The path to operate on</param>
     let toRelativeFromCurrent path =
         let currentDir = normalizeFileName <| Directory.GetCurrentDirectory()

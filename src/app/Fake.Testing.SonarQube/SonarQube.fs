@@ -20,24 +20,26 @@ module SonarQube =
     /// Parameter type to configure the SonarQube runner.
     /// </summary>
     type SonarQubeParams =
-        { /// The directory where the SonarQube scanner process will be started.
-          WorkingDirectory: string
-          /// Tool type
-          ToolType: ToolType
-          /// FileName of the SonarQube runner exe.
-          ToolsPath: string
-          /// Organization which owns the SonarQube project
-          Organization: string option
-          /// Key to identify the SonarQube project
-          Key: string
-          /// Name of the project
-          Name: string
-          /// Version number of the project
-          Version: string
-          /// Individual global settings for SonarQube
-          Settings: string list
-          /// Read settings from configuration file
-          Config: string option }
+        {
+            /// The directory where the SonarQube scanner process will be started.
+            WorkingDirectory: string
+            /// Tool type
+            ToolType: ToolType
+            /// FileName of the SonarQube runner exe.
+            ToolsPath: string
+            /// Organization which owns the SonarQube project
+            Organization: string option
+            /// Key to identify the SonarQube project
+            Key: string
+            /// Name of the project
+            Name: string
+            /// Version number of the project
+            Version: string
+            /// Individual global settings for SonarQube
+            Settings: string list
+            /// Read settings from configuration file
+            Config: string option
+        }
 
     /// SonarQube default parameters
     let internal SonarQubeDefaults =
@@ -105,7 +107,7 @@ module SonarQube =
     ///           Name = "MainTool"
     ///           Version = "1.0 })
     /// </code>
-    /// </example> 
+    /// </example>
     let start setParams =
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults

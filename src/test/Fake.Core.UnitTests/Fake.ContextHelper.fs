@@ -12,11 +12,15 @@ let time f =
     sw.Elapsed
 
 let withFakeContext name f =
-    use execContext = Fake.Core.Context.FakeExecutionContext.Create false (sprintf "text.fsx - %s" name) []
+    use execContext =
+        Fake.Core.Context.FakeExecutionContext.Create false (sprintf "text.fsx - %s" name) []
+
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-    try f ()
-    finally 
-        Fake.Core.Context.removeExecutionContext()
+
+    try
+        f ()
+    finally
+        Fake.Core.Context.removeExecutionContext ()
 
 
 let withMaxTime maxTime name f =
@@ -26,14 +30,11 @@ let withMaxTime maxTime name f =
 
 
 let testCaseAssertTime maxTime name f =
-    testCase name <| fun arg ->
-        withMaxTime maxTime name (fun () -> f arg)
+    testCase name <| fun arg -> withMaxTime maxTime name (fun () -> f arg)
 
 let fakeContextTestCase name f =
-    testCase name <| fun arg ->
-        withFakeContext name (fun () -> f arg)
+    testCase name <| fun arg -> withFakeContext name (fun () -> f arg)
 
-let fakeContextTestCaseAssertTime maxTime name f =   
-    testCase name <| fun arg ->
-        withFakeContext name (fun () -> 
-            withMaxTime maxTime name (fun () -> f arg))
+let fakeContextTestCaseAssertTime maxTime name f =
+    testCase name
+    <| fun arg -> withFakeContext name (fun () -> withMaxTime maxTime name (fun () -> f arg))

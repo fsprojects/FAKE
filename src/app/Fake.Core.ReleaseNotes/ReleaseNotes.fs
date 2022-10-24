@@ -46,7 +46,7 @@
 ///             Attribute.FileVersion release.AssemblyVersion]
 ///     )
 /// </code>
-/// </example>  
+/// </example>
 [<RequireQualifiedAccess>]
 module ReleaseNotes =
 
@@ -60,16 +60,16 @@ module ReleaseNotes =
         {
             /// The parsed version
             AssemblyVersion: string
-            
+
             /// The nuget package version
             NugetVersion: string
-            
+
             /// Semantic version
             SemVer: SemVerInfo
-            
+
             /// Release date
             Date: DateTime option
-            
+
             // The parsed release notes
             Notes: string list
         }
@@ -91,35 +91,40 @@ module ReleaseNotes =
     let private parseVersions =
         // https://github.com/fsprojects/FAKE/issues/2557
         let nugetRegexLegacy = String.getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
-        let nugetRegex = 
+
+        let nugetRegex =
             /// From Fake.Core.SemVer
             let pattern = SemVerActivePattern.Pattern
             String.getRegEx pattern
+
         let assemblyVersionRegex = String.getRegEx @"([0-9]+.)+[0-9]+"
+
         fun line ->
             let assemblyVersion = assemblyVersionRegex.Match line
-            if not assemblyVersion.Success
-            then failwithf "Unable to parse valid Assembly version from release notes (%s)." line
 
-            let nugetVersion = 
-                let nugetVersion = 
+            if not assemblyVersion.Success then
+                failwithf "Unable to parse valid Assembly version from release notes (%s)." line
+
+            let nugetVersion =
+                let nugetVersion =
                     // Must split by whitespace to try match start of line and end of line in SemVer regex pattern
-                    line.Split(' ') 
-                    |> Array.tryPick (fun segment -> 
-                      // Trim() might be unnecessary
-                      let m = segment.Trim() |> nugetRegex.Match
-                      if m.Success then Some m else None
-                    )
+                    line.Split(' ')
+                    |> Array.tryPick (fun segment ->
+                        // Trim() might be unnecessary
+                        let m = segment.Trim() |> nugetRegex.Match
+                        if m.Success then Some m else None)
                 // Add support for "nugetRegexLegacy" after change to correct SemVer parsing.
                 // This should lead to the least disruption to users.
-                let nugetVersionLegacy = 
+                let nugetVersionLegacy =
                     let m = nugetRegexLegacy.Match line
                     if m.Success then Some m else None
+
                 match nugetVersion, nugetVersionLegacy with
                 // if nugetVersion.IsSome then it must be Success, so no need to check for that
-                | Some nugetVersionValue, _             -> nugetVersionValue
-                | None, Some nugetVersionLegacyValue    -> nugetVersionLegacyValue
-                | None, none                            -> failwithf "Unable to parse valid Nuget version from release notes (%s)." line
+                | Some nugetVersionValue, _ -> nugetVersionValue
+                | None, Some nugetVersionLegacyValue -> nugetVersionLegacyValue
+                | None, none -> failwithf "Unable to parse valid Nuget version from release notes (%s)." line
+
             assemblyVersion, nugetVersion
 
     let private parseDate =
@@ -139,16 +144,18 @@ module ReleaseNotes =
     /// Parse simple release notes sequence
     let private parseSimple line =
         let assemblyVersion, nugetVersion = parseVersions line
-        let trimDot (s:string) = s.TrimEnd('.')
-        /// Find nugetVersion index in line. Necessary, since "nugetVersion" is created from line.Split(' '). 
+        let trimDot (s: string) = s.TrimEnd('.')
+        /// Find nugetVersion index in line. Necessary, since "nugetVersion" is created from line.Split(' ').
         let nugetVersionIndex = line.IndexOf nugetVersion.Value
-        let notes = 
-            line.Substring (nugetVersionIndex + nugetVersion.Length)
-            |> String.trimChars [|' '; '-'|]
+
+        let notes =
+            line.Substring(nugetVersionIndex + nugetVersion.Length)
+            |> String.trimChars [| ' '; '-' |]
             |> String.splitStr ". "
             |> List.map (trimDot >> String.trim)
             |> List.filter String.isNotNullOrEmpty
             |> List.map (fun x -> x + ".")
+
         ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value, None, notes)
 
     open Fake.Core.String.Operators
@@ -250,5 +257,4 @@ module ReleaseNotes =
     ///
     /// <param name="fileName">Release notes text file name</param>
     let load fileName =
-        System.IO.File.ReadLines fileName
-        |> parse
+        System.IO.File.ReadLines fileName |> parse

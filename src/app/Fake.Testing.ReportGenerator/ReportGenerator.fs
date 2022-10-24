@@ -63,42 +63,43 @@ module ReportGenerator =
     /// </summary>
     type ReportGeneratorParams =
         {
-          /// Tool type
-          ToolType: ToolType
-          /// (Required) Path to the ReportGenerator exe file.
-          ExePath: string
-          /// (Required) The directory where the generated report should be saved.
-          TargetDir: string
-          /// The output formats and scope.
-          ReportTypes: ReportType list
-          /// Optional directories which contain the corresponding source code.
-          SourceDirs: string list
-          /// Optional directory for storing persistent coverage information.
-          /// Can be used in future reports to show coverage evolution.
-          HistoryDir: string
-          /// Optional list of assemblies that should be included or excluded
-          /// in the report  e.g. <c>-Foo.Test</c> (default is <c>+*</c>)
-          /// Exclusion filters take precedence over inclusion
-          /// filters. Wildcards are allowed.
-          Filters: string list
-          /// Optional list of files that should be included or excluded
-          /// in the report e.g. <c>-*.xaml.cs</c> or <c>+*.cs</c> (default is <c>+*</c>)
-          /// Exclusion filters take precedence over inclusion
-          /// filters. Wildcards are allowed.
-          FileFilters: string list
-          /// Optional list of classes that should be included or excluded
-          /// in the report  e.g. <c>-*Tests</c> (default is <c>+*</c>)
-          /// Exclusion filters take precedence over inclusion
-          /// filters. Wildcards are allowed.
-          ClassFilters: string list
-          /// Optional tag or build version
-          Tag: string option
-          /// The verbosity level of the log messages.
-          LogVerbosity: LogVerbosity
-          /// The directory where the ReportGenerator process will be started.
-          WorkingDir: string
-          /// The timeout for the ReportGenerator process.
-          TimeOut: TimeSpan }
+            /// Tool type
+            ToolType: ToolType
+            /// (Required) Path to the ReportGenerator exe file.
+            ExePath: string
+            /// (Required) The directory where the generated report should be saved.
+            TargetDir: string
+            /// The output formats and scope.
+            ReportTypes: ReportType list
+            /// Optional directories which contain the corresponding source code.
+            SourceDirs: string list
+            /// Optional directory for storing persistent coverage information.
+            /// Can be used in future reports to show coverage evolution.
+            HistoryDir: string
+            /// Optional list of assemblies that should be included or excluded
+            /// in the report  e.g. <c>-Foo.Test</c> (default is <c>+*</c>)
+            /// Exclusion filters take precedence over inclusion
+            /// filters. Wildcards are allowed.
+            Filters: string list
+            /// Optional list of files that should be included or excluded
+            /// in the report e.g. <c>-*.xaml.cs</c> or <c>+*.cs</c> (default is <c>+*</c>)
+            /// Exclusion filters take precedence over inclusion
+            /// filters. Wildcards are allowed.
+            FileFilters: string list
+            /// Optional list of classes that should be included or excluded
+            /// in the report  e.g. <c>-*Tests</c> (default is <c>+*</c>)
+            /// Exclusion filters take precedence over inclusion
+            /// filters. Wildcards are allowed.
+            ClassFilters: string list
+            /// Optional tag or build version
+            Tag: string option
+            /// The verbosity level of the log messages.
+            LogVerbosity: LogVerbosity
+            /// The directory where the ReportGenerator process will be started.
+            WorkingDir: string
+            /// The timeout for the ReportGenerator process.
+            TimeOut: TimeSpan
+        }
 
     let private currentDirectory = Directory.GetCurrentDirectory()
 
@@ -159,21 +160,11 @@ module ReportGenerator =
                   |> List.map (fun rt -> rt.ToString())
                   |> yieldIfNotEmpty "reporttypes"
 
-              yield!
-                  parameters.SourceDirs
-                  |> yieldIfNotEmpty "sourcedirs"
-              yield!
-                  parameters.HistoryDir
-                  |> yieldIfNotNullOrEmpty "historydir"
-              yield!
-                  parameters.Filters
-                  |> yieldIfNotEmpty "assemblyfilters"
-              yield!
-                  parameters.ClassFilters
-                  |> yieldIfNotEmpty "classfilters"
-              yield!
-                  parameters.FileFilters
-                  |> yieldIfNotEmpty "filefilters"
+              yield! parameters.SourceDirs |> yieldIfNotEmpty "sourcedirs"
+              yield! parameters.HistoryDir |> yieldIfNotNullOrEmpty "historydir"
+              yield! parameters.Filters |> yieldIfNotEmpty "assemblyfilters"
+              yield! parameters.ClassFilters |> yieldIfNotEmpty "classfilters"
+              yield! parameters.FileFilters |> yieldIfNotEmpty "filefilters"
               yield! parameters.Tag |> yieldIfSome "tag"
               yield sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()) ]
             |> Arguments.OfArgs
@@ -189,7 +180,7 @@ module ReportGenerator =
     /// <summary>
     /// Runs ReportGenerator on one or more coverage reports.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to overwrite the default ReportGenerator parameters.</param>
     /// <param name="reports">Coverage reports.</param>
     ///
@@ -199,7 +190,7 @@ module ReportGenerator =
     ///         |> Seq.toList
     ///         |> ReportGenerator.generateReports (fun p -> { p with TargetDir = "c:/reports/" })
     /// </code>
-    /// </example> 
+    /// </example>
     let generateReports setParams (reports: string seq) =
         use __ = Trace.traceTask "ReportGenerator" "Generating reports"
 
@@ -207,10 +198,6 @@ module ReportGenerator =
 
         match list with
         | [] -> Trace.trace "No reports given. Ignoring task"
-        | reports ->
-            reports
-            |> createProcess setParams
-            |> Proc.run
-            |> ignore
+        | reports -> reports |> createProcess setParams |> Proc.run |> ignore
 
         __.MarkSuccess()

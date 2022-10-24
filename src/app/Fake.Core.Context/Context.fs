@@ -15,17 +15,18 @@ module Context =
     /// </summary>
     type FakeExecutionContext =
         {
-          /// Mark if script is cached
-          IsCached: bool
-          
-          /// The context data
-          Context: System.Collections.Concurrent.ConcurrentDictionary<string, obj>
-          
-          /// The script file current build is running
-          ScriptFile: string
-          
-          /// Script arguments
-          Arguments: string list }
+            /// Mark if script is cached
+            IsCached: bool
+
+            /// The context data
+            Context: System.Collections.Concurrent.ConcurrentDictionary<string, obj>
+
+            /// The script file current build is running
+            ScriptFile: string
+
+            /// Script arguments
+            Arguments: string list
+        }
 
         interface System.IDisposable with
             member x.Dispose() =
@@ -130,7 +131,7 @@ module Context =
     /// <summary>
     /// Gets FAKE execution context by FAKE runtime context
     /// </summary>
-    /// 
+    ///
     /// <param name="e">FAKE runtime execution context</param>
     let getFakeExecutionContext (e: RuntimeContext) =
         match e with
@@ -163,7 +164,7 @@ module Context =
     /// <summary>
     /// Set or update FAKE execution context data by name
     /// </summary>
-    /// 
+    ///
     /// <param name="name">FAKE execution context data name</param>
     /// <param name="updateF">Callback to call when updating the value</param>
     /// <param name="f">FAKE execution context</param>

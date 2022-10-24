@@ -5,7 +5,7 @@ namespace Fake.IO.Globbing
 /// Globbing namespace contains tasks for crawling directories and files in a file system
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// This module contains a file pattern globbing implementation.
 /// This module is part of the <c>Fake.IO.FileSystem</c> package
@@ -20,7 +20,7 @@ module Glob =
     /// <summary>
     /// Normalizes path for different OS
     /// </summary>
-    /// 
+    ///
     /// <param name="path">The path to normalize</param>
     let inline normalizePath (path: string) =
         path
@@ -43,11 +43,7 @@ module Glob =
         else
             let path = Path.Combine(root, dir)
 
-            let di =
-                if absolute then
-                    DirectoryInfo(dir)
-                else
-                    DirectoryInfo(path)
+            let di = if absolute then DirectoryInfo(dir) else DirectoryInfo(path)
 
             if di.Exists then [ di.FullName ] else []
 
@@ -229,7 +225,7 @@ module Glob =
     /// <summary>
     /// Check if the given path follows the given pattern
     /// </summary>
-    /// 
+    ///
     /// <param name="pattern">The glob pattern to use</param>
     /// <param name="path">The path to check</param>
     let isMatch pattern path : bool =

@@ -10,7 +10,7 @@ open Fake.IO
 /// Documentation namespace contains tasks to generate documentation for source code, like DocFx
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains helper functions to use <a href="https://dotnet.github.io/docfx/">DocFx</a>
 /// </summary>
@@ -54,7 +54,7 @@ module DocFx =
     ///
     /// <param name="command">The command to execute</param>
     /// <param name="args">The arguments list to give to the command</param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DocFx.exec docfx_project\docfx.json --serve
@@ -71,7 +71,8 @@ module DocFx =
             |> CreateProcess.withTimeout p.Timeout
             |> Proc.run
 
-        if processResult.ExitCode <> 0 then failwithf $"DocFx command %s{command} failed."
+        if processResult.ExitCode <> 0 then
+            failwithf $"DocFx command %s{command} failed."
 
         __.MarkSuccess()
 
@@ -147,7 +148,7 @@ module DocFx =
     /// <summary>
     /// Initialize a DocFx documentation.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default Init parameters. See <c>InitParams.Create()</c></param>
     /// <example>
     /// <code lang="fsharp">
@@ -157,7 +158,7 @@ module DocFx =
     ///              Timeout = TimeSpan.FromMinutes 10.
     ///          })
     /// </code>
-    /// </example>      
+    /// </example>
     let init setParams =
         let p = InitParams.Create() |> setParams
         p |> serializeInitParams |> exec (fun _ -> p.Common) "init"
@@ -416,8 +417,7 @@ module DocFx =
               ("cleanupCacheHistory", stringify p.CleanupCacheHistory)
               ("falName", p.FALName)
               ("disableGitFeatures", stringify p.DisableGitFeatures)
-              ("schemaLicense", p.SchemaLicense)
-              ]
+              ("schemaLicense", p.SchemaLicense) ]
 
         List.append buildParams (parseLogParams p.LogParams)
 
@@ -428,7 +428,7 @@ module DocFx =
     /// <summary>
     /// Builds a DocFx documentation.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default build parameters. See <c>BuildParams.Create()</c></param>
     /// <example>
     /// <code lang="fsharp">
@@ -450,7 +450,7 @@ module DocFx =
         {
             /// Specify build parameters.
             BuildParams: BuildParams
-            
+
             /// Specify the name of the generated pdf.
             Name: string
 
@@ -525,8 +525,7 @@ module DocFx =
               ("host", p.Host)
               ("locale", p.Locale)
               ("excludedTocs", stringifyList p.ExcludedTocs)
-              ("basePath", p.BasePath)
-              ]
+              ("basePath", p.BasePath) ]
 
         List.append pdfParams (parseBuildParams p.BuildParams)
 
@@ -596,7 +595,7 @@ module DocFx =
     /// </summary>
     ///
     /// <param name="setParams">Function used to manipulate the default exportTemplate parameters. See <c>ExportTemplateParams.Create()</c></param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DocFx.exportTemplate (fun p ->
@@ -605,7 +604,7 @@ module DocFx =
     ///                     OutputFolder = "templates"
     ///             })
     /// </code>
-    /// </example>    
+    /// </example>
     let exportTemplate setParams =
         let p = ExportTemplateParams.Create() |> setParams
         p |> serializeExportTemplateParams |> exec (fun _ -> p.Common) "template"
@@ -641,7 +640,7 @@ module DocFx =
     /// </summary>
     ///
     /// <param name="setParams">Function used to manipulate the default download parameters. See <c>DownloadParams.Create()</c></param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DocFx.download (fun p ->
@@ -650,7 +649,7 @@ module DocFx =
     ///                     Uri = "uri"
     ///             })
     /// </code>
-    /// </example>     
+    /// </example>
     let download setParams =
         let p = DownloadParams.Create() |> setParams
         p |> serializeDownloadParams |> exec (fun _ -> p.Common) "download"
@@ -694,7 +693,7 @@ module DocFx =
     /// </summary>
     ///
     /// <param name="setParams">Function used to manipulate the default serve parameters. See <c>ServeParams.Create()</c></param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DocFx.serve (fun p ->
@@ -794,7 +793,7 @@ module DocFx =
     /// </summary>
     ///
     /// <param name="setParams">Function used to manipulate the default serve parameters. See <c>MetadataParams.Create()</c></param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// DocFx.metadata (fun p ->

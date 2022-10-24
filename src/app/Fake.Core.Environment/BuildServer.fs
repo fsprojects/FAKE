@@ -22,9 +22,9 @@ type TraceMode =
     | Xml
 
 [<AbstractClass>]
-type BuildServerInstaller () =
-    abstract member Install : unit -> unit
-    abstract member Detect : unit -> bool
+type BuildServerInstaller() =
+    abstract member Install: unit -> unit
+    abstract member Detect: unit -> bool
 
 /// <summary>
 /// Contains functions which allow build scripts to interact with a build server.
@@ -41,7 +41,8 @@ module BuildServer =
     /// Defines the XML output file - used for build servers like CruiseControl.NET.
     /// This output file can be specified by using the *logfile* build parameter.
     /// </summary>
-    let mutable xmlOutputFile = Environment.environVarOrDefault "logfile" "./output/Results.xml"
+    let mutable xmlOutputFile =
+        Environment.environVarOrDefault "logfile" "./output/Results.xml"
 
     /// <summary>
     /// Build number retrieved from Bamboo
@@ -53,8 +54,7 @@ module BuildServer =
     /// Checks if we are on Bamboo
     /// </summary>
     /// [omit]
-    let isBambooBuild =
-        String.IsNullOrEmpty bambooBuildNumber |> not
+    let isBambooBuild = String.IsNullOrEmpty bambooBuildNumber |> not
 
     /// <summary>
     /// Checks if we are on Team Foundation
@@ -86,7 +86,9 @@ module BuildServer =
     /// Checks if we are on GitLab CI
     /// </summary>
     /// [omit]
-    let isGitlabCI = Environment.environVar "CI_SERVER_NAME" = "GitLab CI" || Environment.environVar "GITLAB_CI" = "true"
+    let isGitlabCI =
+        Environment.environVar "CI_SERVER_NAME" = "GitLab CI"
+        || Environment.environVar "GITLAB_CI" = "true"
 
     /// <summary>
     /// Build number retrieved from GitLab CI
@@ -96,11 +98,14 @@ module BuildServer =
         if isGitlabCI then
             // https://github.com/fsharp/FAKE/issues/2290
             let s = Environment.environVar "CI_PIPELINE_ID"
+
             if String.IsNullOrEmpty s then
                 let id = Environment.environVar "CI_BUILD_ID"
                 if isNull id then "" else id
-            else s
-        else ""
+            else
+                s
+        else
+            ""
 
     // <summary>
     /// Checks if we are on GitHub Actions
@@ -114,9 +119,10 @@ module BuildServer =
     /// </summary>
     /// [omit]
     let gitHubActionsBuildNumber =
-        if isGitHubActionsBuild
-        then Environment.environVar "GITHUB_RUN_NUMBER"
-        else ""
+        if isGitHubActionsBuild then
+            Environment.environVar "GITHUB_RUN_NUMBER"
+        else
+            ""
 
     /// <summary>
     /// Build number retrieved from Jenkins
@@ -140,23 +146,35 @@ module BuildServer =
     /// The current build server
     /// </summary>
     let buildServer =
-        if Environment.hasEnvironVar "JENKINS_HOME" then Jenkins
-        elif Environment.hasEnvironVar "TEAMCITY_VERSION" then TeamCity
-        elif not (String.IsNullOrEmpty ccBuildLabel) then CCNet
-        elif not (String.IsNullOrEmpty travisBuildNumber) then Travis
-        elif not (String.IsNullOrEmpty appVeyorBuildVersion) then AppVeyor
-        elif isGitlabCI then GitLabCI
-        elif isGitHubActionsBuild then GitHubActions
-        elif isTFBuild then TeamFoundation
-        elif isBambooBuild then Bamboo
-        elif Environment.hasEnvironVar "BITBUCKET_COMMIT" then BitbucketPipelines
-        else LocalBuild
+        if Environment.hasEnvironVar "JENKINS_HOME" then
+            Jenkins
+        elif Environment.hasEnvironVar "TEAMCITY_VERSION" then
+            TeamCity
+        elif not (String.IsNullOrEmpty ccBuildLabel) then
+            CCNet
+        elif not (String.IsNullOrEmpty travisBuildNumber) then
+            Travis
+        elif not (String.IsNullOrEmpty appVeyorBuildVersion) then
+            AppVeyor
+        elif isGitlabCI then
+            GitLabCI
+        elif isGitHubActionsBuild then
+            GitHubActions
+        elif isTFBuild then
+            TeamFoundation
+        elif isBambooBuild then
+            Bamboo
+        elif Environment.hasEnvironVar "BITBUCKET_COMMIT" then
+            BitbucketPipelines
+        else
+            LocalBuild
 
     /// <summary>
     /// The current build version as detected from the current build server.
     /// </summary>
     let buildVersion =
         let getVersion = Environment.environVarOrDefault "buildVersion"
+
         match buildServer with
         | Jenkins -> getVersion jenkinsBuildNumber
         | TeamCity -> getVersion tcBuildNumber

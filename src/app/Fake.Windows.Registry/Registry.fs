@@ -64,8 +64,7 @@ module Registry =
     /// <param name="subKey">The sub key</param>
     /// <param name="writePermission">The write permissions on registry entry</param>
     let getRegistryKey64 baseKey subKey (writePermission: bool) =
-        (get64BitKey baseKey)
-            .OpenSubKey(subKey, writePermission)
+        (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
 
     /// <summary>
     /// Gets a registry key and falls back to 32 bit if the 64bit key is not there
@@ -75,15 +74,12 @@ module Registry =
     /// <param name="subKey">The sub key</param>
     /// <param name="writePermission">The write permissions on registry entry</param>
     let getRegistryKey baseKey subKey (writePermission: bool) =
-        let x64BitKey =
-            (getKey baseKey)
-                .OpenSubKey(subKey, writePermission)
+        let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
 
         if (isNull >> not) x64BitKey then
             x64BitKey
         else
-            (get32BitKey baseKey)
-                .OpenSubKey(subKey, writePermission) // fall back to 32 bit
+            (get32BitKey baseKey).OpenSubKey(subKey, writePermission) // fall back to 32 bit
 
     /// <summary>
     /// Gets a registry value as string
@@ -201,9 +197,7 @@ module Registry =
     /// </code>
     /// </example>
     let valueExistsForKey =
-        fun baseKey subKey name ->
-            getRegistryValueNames baseKey subKey
-            |> Seq.exists (fun n -> n = name)
+        fun baseKey subKey name -> getRegistryValueNames baseKey subKey |> Seq.exists (fun n -> n = name)
 
     /// <summary>
     /// Create a registry subKey

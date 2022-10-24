@@ -5,7 +5,7 @@ namespace Fake.DotNet.NuGet
 /// DotNet.NuGet namespace contains tasks to interact with NuGet registry and packages
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains tasks for installing NuGet packages using the
 /// <a href="https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-install">
@@ -37,38 +37,38 @@ module Install =
         {
             /// Path to the nuget.exe.
             ToolPath: string
-            
+
             /// Timeout for the update.
             TimeOut: TimeSpan
-            
+
             /// Number of retries if update fails.
             Retries: int
-            
+
             /// Nuget feeds to search updates in. Use default if empty.
             Sources: string list
-            
+
             /// The version of the package to install.
             Version: string
-            
+
             /// If set, the destination directory will contain only the package name, not the version number.
             /// Default `false`.
             ExcludeVersion: bool
-            
+
             /// Allows updating to prerelease versions. Default <c>false</c>.
             Prerelease: bool
-            
+
             /// Specifies the directory in which packages will be installed. Default  <c>./packages/</c>.
             OutputDirectory: string
-            
+
             /// Display this amount of details in the output: normal, quiet, detailed. Default <c>normal</c>.
             Verbosity: NugetInstallVerbosity
-            
+
             /// Do not prompt for user input or confirmations. Default <c>true</c>.
             NonInteractive: bool
-            
+
             /// Disable looking up packages from local machine cache. Default <c>false</c>.
             NoCache: bool
-            
+
             /// NuGet configuration file. Default <c>None</c>.
             ConfigFile: string option
         }

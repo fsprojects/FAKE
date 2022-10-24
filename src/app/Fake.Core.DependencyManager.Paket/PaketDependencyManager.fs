@@ -5,24 +5,32 @@ namespace Fake.Core.DependencyManager.Paket
 /// DependencyManager.Paket namespace contains tasks to interact with paket dependency manager
 /// </summary>
 /// </namespacedoc>
-module Internals = 
+module Internals =
     open System
 
     /// <summary>
     /// A marker attribute to tell FCS that this assembly contains a Dependency Manager, or
     /// that a class with the attribute is a <c>DependencyManager</c>
     /// </summary>
-    [<AttributeUsage(AttributeTargets.Assembly ||| AttributeTargets.Class , AllowMultiple = false)>]
+    [<AttributeUsage(AttributeTargets.Assembly ||| AttributeTargets.Class, AllowMultiple = false)>]
     type DependencyManagerAttribute() =
         inherit Attribute()
 
-    [<assembly: DependencyManagerAttribute()>]
+    [<assembly: DependencyManagerAttribute>]
     do ()
 
     /// <summary>
     /// returned structure from the ResolveDependencies method call.
     /// </summary>
-    type ResolveDependenciesResult (success: bool, stdOut: string array, stdError: string array, resolutions: string seq, sourceFiles: string seq, roots: string seq) =
+    type ResolveDependenciesResult
+        (
+            success: bool,
+            stdOut: string array,
+            stdError: string array,
+            resolutions: string seq,
+            sourceFiles: string seq,
+            roots: string seq
+        ) =
 
         /// Succeeded?
         member _.Success = success
@@ -51,17 +59,23 @@ module Internals =
     type PaketDependencyManager(outputDir: string option) =
 
         /// Name of the dependency manager
-        member val Name = "Dummy Paket Dependency Manager" with get
+        member val Name = "Dummy Paket Dependency Manager"
 
         /// Key that identifies the types of dependencies that this DependencyManager operates on
-        member val Key = "paket" with get
+        member val Key = "paket"
 
         /// Resolve the dependencies, for the given set of arguments, go find the .dll references, scripts and additional include values.
-        member _.ResolveDependencies(scriptExt: ScriptExtension, includeLines: HashRLines, tfm: TFM): obj = 
+        member _.ResolveDependencies(scriptExt: ScriptExtension, includeLines: HashRLines, tfm: TFM) : obj =
             // generally, here we'd parse the includeLines to determine what to do,
             // package those results into a `ResolveDependenciesResult`,
             // and return it boxed as obj.
             // but here we will return a dummy
-            ResolveDependenciesResult(true, [|"Skipped processing of paket references"|], [||], Seq.empty, Seq.empty, Seq.empty) :> _
-
-
+            ResolveDependenciesResult(
+                true,
+                [| "Skipped processing of paket references" |],
+                [||],
+                Seq.empty,
+                Seq.empty,
+                Seq.empty
+            )
+            :> _

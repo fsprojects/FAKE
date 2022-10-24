@@ -24,9 +24,7 @@ module Emulators =
     let private AzureEmulatorDefaults =
         { StorageEmulatorToolPath =
             lazy
-                let path =
-                    msSdkBasePath
-                    @@ @"\Azure\Storage Emulator\AzureStorageEmulator.exe"
+                let path = msSdkBasePath @@ @"\Azure\Storage Emulator\AzureStorageEmulator.exe"
 
                 if File.exists path then
                     path

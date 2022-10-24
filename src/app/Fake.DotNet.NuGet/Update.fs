@@ -21,38 +21,38 @@ module Update =
         {
             /// Path to the nuget.exe.
             ToolPath: string
-            
+
             /// Timeout for the update.
             TimeOut: TimeSpan
-            
+
             /// Number of retries if update fails.
             Retries: int
-            
+
             /// Nuget feeds to search updates in. Use default if empty.
             Sources: string list
-            
+
             /// Packages to update. Update all if empty.
             Ids: string list
-            
+
             /// Version to update to. Default <c>None</c>. Used to upgrade/downgrade to a explicit version of a package.
             Version: string option
-            
+
             /// Folder to store packages in. Default <c>./packages</c>.
             RepositoryPath: string
-            
+
             /// Looks for updates with the highest version available within the same major and minor version as
             /// the installed package. Default <c>false</c>.
             Safe: bool
-            
+
             /// Show verbose output while updating. Default <c>false</c>.
             Verbose: bool
-            
+
             /// Allows updating to prerelease versions. Default <c>false</c>.
             Prerelease: bool
-            
+
             /// Do not prompt for user input or confirmations. Default <c>true</c>.
             NonInteractive: bool
-            
+
             /// NuGet configuration file. Default <c>None</c>.
             ConfigFile: string option
         }
@@ -94,7 +94,7 @@ module Update =
     /// Fails if packages file has no corresponding VS project; see
     /// <a href="https://nuget.codeplex.com/workitem/3875">nuget bug</a>.
     /// </remarks>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default parameters.</param>
     /// <param name="packagesFile">Path to the <c>*.sln</c>, <c>*.*proj</c> or <c>packages.config</c> file.</param>
     let NugetUpdate setParams packagesFile =

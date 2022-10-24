@@ -54,10 +54,7 @@ module ILMerge =
 
     let internal toolPath toolName =
         let toolPath =
-            ProcessUtils.tryFindLocalTool
-                "TOOL"
-                toolName
-                [ Directory.GetCurrentDirectory() ]
+            ProcessUtils.tryFindLocalTool "TOOL" toolName [ Directory.GetCurrentDirectory() ]
 
         match toolPath with
         | Some path -> path
@@ -68,42 +65,44 @@ module ILMerge =
     /// </summary>
     [<NoComparison>]
     type Params =
-        { /// Path to ILMerge.exe
-          ToolPath: string
-          /// Version to use for the merged assembly
-          Version: Version option
-          /// Assemblies to merge with the primary assembly
-          Libraries: string seq
-          /// Duplicate types policy
-          AllowDuplicateTypes: AllowDuplicateTypes
-          /// Assembly-level attributes names that have the same type are copied over into the target directory
-          AllowMultipleAssemblyLevelAttributes: bool
-          /// Wild cards in file names are expanded and all matching files will be used as input.
-          AllowWildcards: bool
-          AllowZeroPeKind: bool
-          /// Path to an assembly that will be used to get all of the assembly-level attributes
-          AttributeFile: string
-          /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
-          Closed: bool
-          CopyAttributes: bool
-          /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found
-          /// for input assemblies.
-          DebugInfo: bool
-          Internalize: InternalizeTypes
-          FileAlignment: int option
-          KeyFile: string
-          // DelaySign
-          LogFile: string
-          // PublicKeyTokens
-          /// Directories to be used to search for input assemblies
-          SearchDirectories: string seq
-          /// v1 or v1.1 or v2 or v4 or version,platform
-          TargetPlatform: string
-          TargetKind: TargetKind
-          /// True -> types with the same name are all merged into a single type in the target assembly.
-          UnionMerge: bool
-          /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
-          XmlDocs: bool }
+        {
+            /// Path to ILMerge.exe
+            ToolPath: string
+            /// Version to use for the merged assembly
+            Version: Version option
+            /// Assemblies to merge with the primary assembly
+            Libraries: string seq
+            /// Duplicate types policy
+            AllowDuplicateTypes: AllowDuplicateTypes
+            /// Assembly-level attributes names that have the same type are copied over into the target directory
+            AllowMultipleAssemblyLevelAttributes: bool
+            /// Wild cards in file names are expanded and all matching files will be used as input.
+            AllowWildcards: bool
+            AllowZeroPeKind: bool
+            /// Path to an assembly that will be used to get all of the assembly-level attributes
+            AttributeFile: string
+            /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
+            Closed: bool
+            CopyAttributes: bool
+            /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found
+            /// for input assemblies.
+            DebugInfo: bool
+            Internalize: InternalizeTypes
+            FileAlignment: int option
+            KeyFile: string
+            // DelaySign
+            LogFile: string
+            // PublicKeyTokens
+            /// Directories to be used to search for input assemblies
+            SearchDirectories: string seq
+            /// v1 or v1.1 or v2 or v4 or version,platform
+            TargetPlatform: string
+            TargetKind: TargetKind
+            /// True -> types with the same name are all merged into a single type in the target assembly.
+            UnionMerge: bool
+            /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
+            XmlDocs: bool
+        }
 
         /// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
         static member Create() =
@@ -142,9 +141,7 @@ module ILMerge =
             if x |> isNull then
                 []
             else
-                x
-                |> Seq.collect (fun i -> [ sprintf a i ])
-                |> Seq.toList
+                x |> Seq.collect (fun i -> [ sprintf a i ]) |> Seq.toList
 
         let Flag a predicate = if predicate then [ a ] else []
 
@@ -157,8 +154,7 @@ module ILMerge =
           Item "/attr:%s" parameters.AttributeFile
           Item "/keyfile:%s" parameters.KeyFile
           Item "/log:%s" parameters.LogFile
-          Item "/target:%s"
-          <| (sprintf "%A" parameters.TargetKind).ToLower()
+          Item "/target:%s" <| (sprintf "%A" parameters.TargetKind).ToLower()
           Item "/targetplatform:%s" parameters.TargetPlatform
           Item
               "/align:%s"
@@ -182,8 +178,7 @@ module ILMerge =
            | AllPublicTypes -> Flag "/allowDup" true
            | DuplicateTypes types -> ItemList "/allowDup:%s" types)
           ItemList "/lib:%s" parameters.SearchDirectories
-          (primaryAssembly
-           :: (parameters.Libraries |> Seq.toList)) ]
+          (primaryAssembly :: (parameters.Libraries |> Seq.toList)) ]
         |> List.concat
 
     /// <summary>
@@ -206,9 +201,7 @@ module ILMerge =
         if Environment.isWindows then
             use __ = Trace.traceTask "ILMerge" primaryAssembly
 
-            let run =
-                createProcess parameters outputFile primaryAssembly
-                |> Proc.run
+            let run = createProcess parameters outputFile primaryAssembly |> Proc.run
 
             if 0 <> run.ExitCode then
                 let args = getArguments outputFile primaryAssembly parameters
@@ -216,5 +209,4 @@ module ILMerge =
 
             __.MarkSuccess()
         else
-            raise
-            <| NotSupportedException("ILMerge is currently not supported on mono")
+            raise <| NotSupportedException("ILMerge is currently not supported on mono")

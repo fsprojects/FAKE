@@ -5,9 +5,9 @@ namespace Fake.Tools
 /// Tools namespace contains tasks to interact other tools, like Git and Rsync
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
-/// The GitVersion module contains tasks to interact with GitVersion tool 
+/// The GitVersion module contains tasks to interact with GitVersion tool
 /// </summary>
 [<RequireQualifiedAccess>]
 module GitVersion =
@@ -23,12 +23,13 @@ module GitVersion =
     /// </summary>
     type GitVersionParams =
         {
-          /// Tool type
-          ToolType: ToolType
-          /// Path to the GitVersion exe file.
-          ToolPath: string
-          /// The timeout for the GitVersion process.
-          TimeOut: TimeSpan }
+            /// Tool type
+            ToolType: ToolType
+            /// Path to the GitVersion exe file.
+            ToolPath: string
+            /// The timeout for the GitVersion process.
+            TimeOut: TimeSpan
+        }
 
     let internal toolPath toolName =
         let toolPath =
@@ -98,9 +99,8 @@ module GitVersion =
     /// generateProperties id // Use Defaults
     /// generateProperties (fun p -> { p with ToolPath = "/path/to/directory" }
     /// </code>
-    /// </example>     
+    /// </example>
     let generateProperties setParams =
         let result = createProcess setParams |> Proc.run
 
-        result.Result.Output
-        |> JsonConvert.DeserializeObject<GitVersionProperties>
+        result.Result.Output |> JsonConvert.DeserializeObject<GitVersionProperties>

@@ -56,38 +56,40 @@ module Pickles =
     /// The Pickles parameter type
     /// </summary>
     type PicklesParams =
-        { /// The path to the Pickles console tool: 'pickles.exe'
-          ToolPath: string
-          /// The working directory
-          WorkingDir: string
-          /// The directory to start scanning recursively for features
-          FeatureDirectory: string
-          /// The language of the feature files
-          FeatureFileLanguage: string option
-          /// The directory where output files will be placed
-          OutputDirectory: string
-          /// The format of the output documentation
-          OutputFileFormat: DocumentationFormat
-          /// the format of the linked test results
-          TestResultsFormat: TestResultsFormat
-          /// the paths to the linked test results files
-          LinkedTestResultFiles: string list
-          /// The name of the system under test
-          SystemUnderTestName: string option
-          /// The version of the system under test
-          SystemUnderTestVersion: string option
-          /// Maximum time to allow xUnit to run before being killed.
-          TimeOut: TimeSpan
-          /// Option which allows to specify if failure of pickles should break the build.
-          ErrorLevel: ErrorLevel
-          /// Option which allows to enable some experimental features
-          IncludeExperimentalFeatures: bool option
-          /// As of version 2.6, Pickles includes Gherkin #-style comments. As of version 2.7, this inclusion is configurable.
-          EnableComments: bool option
-          /// exclude scenarios that match this tags
-          ExcludeTags: string list
-          /// Technical tags that shouldn&apos;t be displayed
-          HideTags: string list }
+        {
+            /// The path to the Pickles console tool: 'pickles.exe'
+            ToolPath: string
+            /// The working directory
+            WorkingDir: string
+            /// The directory to start scanning recursively for features
+            FeatureDirectory: string
+            /// The language of the feature files
+            FeatureFileLanguage: string option
+            /// The directory where output files will be placed
+            OutputDirectory: string
+            /// The format of the output documentation
+            OutputFileFormat: DocumentationFormat
+            /// the format of the linked test results
+            TestResultsFormat: TestResultsFormat
+            /// the paths to the linked test results files
+            LinkedTestResultFiles: string list
+            /// The name of the system under test
+            SystemUnderTestName: string option
+            /// The version of the system under test
+            SystemUnderTestVersion: string option
+            /// Maximum time to allow xUnit to run before being killed.
+            TimeOut: TimeSpan
+            /// Option which allows to specify if failure of pickles should break the build.
+            ErrorLevel: ErrorLevel
+            /// Option which allows to enable some experimental features
+            IncludeExperimentalFeatures: bool option
+            /// As of version 2.6, Pickles includes Gherkin #-style comments. As of version 2.7, this inclusion is configurable.
+            EnableComments: bool option
+            /// exclude scenarios that match this tags
+            ExcludeTags: string list
+            /// Technical tags that shouldn&apos;t be displayed
+            HideTags: string list
+        }
 
     let private currentDirectory = Directory.GetCurrentDirectory()
 
@@ -167,41 +169,25 @@ module Pickles =
                     yield tags |> String.concat ";"
             }
 
-        [ yield!
-              parameters.FeatureDirectory
-              |> yieldIfNotNullOrWhitespace "f"
-          yield!
-              parameters.OutputDirectory
-              |> yieldIfNotNullOrWhitespace "o"
+        [ yield! parameters.FeatureDirectory |> yieldIfNotNullOrWhitespace "f"
+          yield! parameters.OutputDirectory |> yieldIfNotNullOrWhitespace "o"
           yield! parameters.SystemUnderTestName |> yieldIfSome "sn"
-          yield!
-              parameters.SystemUnderTestVersion
-              |> yieldIfSome "sv"
+          yield! parameters.SystemUnderTestVersion |> yieldIfSome "sv"
           yield! parameters.FeatureFileLanguage |> yieldIfSome "l"
           yield!
-              match parameters.OutputFileFormat
-                    |> string
-                    |> String.toLower
-                  with
+              match parameters.OutputFileFormat |> string |> String.toLower with
               | "html" -> None
               | v -> Some v
               |> yieldIfSome "df"
           yield!
               match parameters.LinkedTestResultFiles with
               | [] -> None
-              | _ ->
-                  parameters.TestResultsFormat
-                  |> string
-                  |> String.toLower
-                  |> Some
+              | _ -> parameters.TestResultsFormat |> string |> String.toLower |> Some
               |> yieldIfSome "trfmt"
           yield!
               match parameters.LinkedTestResultFiles with
               | [] -> None
-              | _ ->
-                  parameters.LinkedTestResultFiles
-                  |> String.concat ";"
-                  |> Some
+              | _ -> parameters.LinkedTestResultFiles |> String.concat ";" |> Some
               |> yieldIfSome "lr"
           yield! experimentalFeatures
           yield! enableComments
@@ -226,8 +212,7 @@ module Pickles =
             | _ -> failwith
 
         let failBuildIfPicklesReportedError errorLevel =
-            buildErrorMessage
-            >> Option.iter (failBuildWithMessage errorLevel)
+            buildErrorMessage >> Option.iter (failBuildWithMessage errorLevel)
 
 
     /// <summary>
@@ -258,7 +243,7 @@ module Pickles =
     /// The pickles command line tool terminates with a non-zero exit code if there
     /// is any error.
     /// </remarks>
-    /// 
+    ///
     ///
     /// <param name="setParams">Function used to manipulate the default <c>PicklesParams</c> value</param>
     let convert setParams =

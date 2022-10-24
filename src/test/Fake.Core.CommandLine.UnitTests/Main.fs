@@ -8,14 +8,12 @@ open System
 
 [<EntryPoint>]
 let main argv =
-    let config =
-        defaultConfig
-        |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
+    let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
 
     Tests.runTestsInAssembly
         { config with
-              runInParallel = false
-              parallelWorkers = 0
-              printer = ExpectoHelpers.fakeDefaultPrinter
-              verbosity = LogLevel.Debug }
+            runInParallel = false
+            parallelWorkers = 0
+            printer = ExpectoHelpers.fakeDefaultPrinter
+            verbosity = LogLevel.Debug }
         argv

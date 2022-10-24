@@ -6,13 +6,13 @@ open System
 open Fake.Core.CommandLineParsing
 
 let fakeArgsHint =
-  $"""
+    $"""
 {Fake.Runtime.Environment.fakeVersionStr}
 
 """
 
 let fakeUsage =
-  """
+    """
 Usage:
   fake [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
   fake [fake_opts] build [build_opts] [--] [<scriptargs>...]
@@ -49,7 +49,7 @@ Fake Build options [build_opts]:
 """
 
 let fakeAdditionalHelp =
-  """
+    """
 
  ----- SCRIPT ARGUMENTS SECTION -----
 

@@ -34,7 +34,7 @@ module Parallel =
     /// <summary>
     /// Runs NUnit in parallel on a group of assemblies.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default <c>NUnitParams</c> value.</param>
     /// <param name="assemblies">Sequence of one or more assemblies containing NUnit unit tests.</param>
     ///
@@ -59,9 +59,9 @@ module Parallel =
             Trace.tracefn "Run NUnit tests from %s." name
             let stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
-            let errorF (msg:string) = errout.Append(msg) |> ignore
+            let errorF (msg: string) = errout.Append(msg) |> ignore
 
-            let messageF (msg:string) = stdout.Append(msg) |> ignore
+            let messageF (msg: string) = stdout.Append(msg) |> ignore
 
             let processResult =
                 CreateProcess.fromRawCommandLine tool args
@@ -73,7 +73,12 @@ module Parallel =
                 |> Proc.run
 
             stopwatch.Stop()
-            Trace.tracefn "NUnit tests from %s finished in %O with result code %d." name stopwatch.Elapsed processResult.ExitCode
+
+            Trace.tracefn
+                "NUnit tests from %s finished in %O with result code %d."
+                name
+                stopwatch.Elapsed
+                processResult.ExitCode
 
             { AssemblyName = name
               ErrorOut = errout

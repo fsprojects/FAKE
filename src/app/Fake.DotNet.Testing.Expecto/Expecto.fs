@@ -15,34 +15,35 @@ module Expecto =
     /// </summary>
     type Params =
         {
-          /// Extra verbose output for your tests.
-          Debug: bool
-          /// Run all tests in parallel. Default is true.
-          Parallel: bool
-          /// Number of parallel workers (defaults to the number of logical processors).
-          ParallelWorkers: int
-          /// Prints out summary after all tests are finished.
-          Summary: bool
-          /// Prints out summary after all tests are finished including their source code location.
-          SummaryLocation: bool
-          /// Fails the build if focused tests exist. Default is true
-          FailOnFocusedTests: bool
-          /// Filter a specific hierarchy to run.
-          Filter: string
-          /// Filter a specific test case to run.
-          FilterTestCase: string
-          /// Filter a specific test list to run.
-          FilterTestList: string
-          /// Run only provided tests.
-          Run: string list
-          /// Doesn't run tests, print out list of tests instead.
-          ListTests: bool
-          /// Custom arguments to use in the case the helper not yet supports them
-          CustomArgs: string list
-          /// Prints the version on startup. Default is true
-          PrintVersion: bool
-          /// Working directory
-          WorkingDirectory: string }
+            /// Extra verbose output for your tests.
+            Debug: bool
+            /// Run all tests in parallel. Default is true.
+            Parallel: bool
+            /// Number of parallel workers (defaults to the number of logical processors).
+            ParallelWorkers: int
+            /// Prints out summary after all tests are finished.
+            Summary: bool
+            /// Prints out summary after all tests are finished including their source code location.
+            SummaryLocation: bool
+            /// Fails the build if focused tests exist. Default is true
+            FailOnFocusedTests: bool
+            /// Filter a specific hierarchy to run.
+            Filter: string
+            /// Filter a specific test case to run.
+            FilterTestCase: string
+            /// Filter a specific test list to run.
+            FilterTestList: string
+            /// Run only provided tests.
+            Run: string list
+            /// Doesn't run tests, print out list of tests instead.
+            ListTests: bool
+            /// Custom arguments to use in the case the helper not yet supports them
+            CustomArgs: string list
+            /// Prints the version on startup. Default is true
+            PrintVersion: bool
+            /// Working directory
+            WorkingDirectory: string
+        }
 
         override this.ToString() =
             let append (s: string) (sb: StringBuilder.StringBuilder) = sb.Append s
@@ -61,17 +62,12 @@ module Expecto =
                     sb
 
             let appendList list s (sb: StringBuilder.StringBuilder) =
-                let filtered =
-                    list
-                    |> List.filter (String.IsNullOrWhiteSpace >> not)
+                let filtered = list |> List.filter (String.IsNullOrWhiteSpace >> not)
 
                 if List.isEmpty filtered then
                     sb
                 else
-                    filtered
-                    |> String.separated " "
-                    |> sprintf "%s%s " s
-                    |> sb.Append
+                    filtered |> String.separated " " |> sprintf "%s%s " s |> sb.Append
 
             StringBuilder.StringBuilder()
             |> appendIfTrue this.Debug "--debug "
@@ -112,12 +108,7 @@ module Expecto =
         | DotNetCli
 
     let private getRunMode (assembly: string) =
-        match System
-            .IO
-            .Path
-            .GetExtension(assembly)
-            .ToLowerInvariant()
-            with
+        match System.IO.Path.GetExtension(assembly).ToLowerInvariant() with
         | ".dll" -> DotNetCli
         | ".exe" -> Direct
         | ext -> failwithf "Unable to find a way to run expecto test executable with extension %s" ext

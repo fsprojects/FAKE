@@ -1,5 +1,6 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.Runners
+
 open FSharp.Compiler.Diagnostics
 #if NETSTANDARD1_6
 open System.Runtime.Loader
@@ -10,59 +11,76 @@ open System.IO
 open Yaaf.FSharp.Scripting
 
 module internal ExnHelper =
-   let formatError (e:FSharpDiagnostic) =
-     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLine e.StartColumn e.EndLine e.EndColumn e.Severity e.ErrorNumber e.Message
-   let formatErrors errors =
+    let formatError (e: FSharpDiagnostic) =
+        sprintf
+            "%s (%d,%d)-(%d,%d): %A FS%04d: %s"
+            e.FileName
+            e.StartLine
+            e.StartColumn
+            e.EndLine
+            e.EndColumn
+            e.Severity
+            e.ErrorNumber
+            e.Message
+
+    let formatErrors errors =
         String.Join("\n", errors |> Seq.map formatError)
 
 type CompilationErrors =
-  { Errors : FSharpDiagnostic list }
-  member x.FormattedErrors = ExnHelper.formatErrors x.Errors
-  static member ofErrors errors = { Errors = errors }
+    { Errors: FSharpDiagnostic list }
+
+    member x.FormattedErrors = ExnHelper.formatErrors x.Errors
+    static member ofErrors errors = { Errors = errors }
 
 #if !NETSTANDARD1_6
-type AssemblyLoadContext () =
-  member x.LoadFromAssemblyPath (loc:string) =
-    Reflection.Assembly.LoadFrom(loc)
-  member x.LoadFromAssemblyName(fullname:AssemblyName)=
-    Reflection.Assembly.Load(fullname)
+type AssemblyLoadContext() =
+    member x.LoadFromAssemblyPath(loc: string) = Reflection.Assembly.LoadFrom(loc)
+    member x.LoadFromAssemblyName(fullname: AssemblyName) = Reflection.Assembly.Load(fullname)
 #endif
 
 type AssemblyInfo =
-  { FullName : string
-    Version : string
-    Location : string }
-  static member ofLocation (loc:string) =
-    let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
-    { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
+    { FullName: string
+      Version: string
+      Location: string }
 
-type NativeLibrary =
-    { File : string }
-type CompileOptions = 
-    internal { FsiOptions : FsiOptions }
+    static member ofLocation(loc: string) =
+        let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
+
+        { FullName = n.FullName
+          Version = n.Version.ToString()
+          Location = loc }
+
+type NativeLibrary = { File: string }
+
+type CompileOptions =
+    internal
+        { FsiOptions: FsiOptions }
+
     member x.AsArgs = x.FsiOptions.AsArgs
 
 type RuntimeOptions =
-    internal { _RuntimeDependencies : AssemblyInfo list; _NativeLibraries : NativeLibrary list }
-    member x.RuntimeDependencies : AssemblyInfo list = x._RuntimeDependencies
-    member x.NativeLibraries : NativeLibrary list = x._NativeLibraries
+    internal
+        { _RuntimeDependencies: AssemblyInfo list
+          _NativeLibraries: NativeLibrary list }
 
-type RedirectConfig =
-  { Out : TextWriter
-    Err : TextWriter }
+    member x.RuntimeDependencies: AssemblyInfo list = x._RuntimeDependencies
+    member x.NativeLibraries: NativeLibrary list = x._NativeLibraries
+
+type RedirectConfig = { Out: TextWriter; Err: TextWriter }
 
 type FakeConfig =
-  { VerboseLevel : Trace.VerboseLevel
-    ScriptFilePath : string
-    ScriptTokens : Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
-    RuntimeOptions : RuntimeOptions
-    CompileOptions : CompileOptions
-    UseCache : bool
-    UseSimpleRestore : bool
-    RestoreOnlyGroup : bool
-    Redirect: RedirectConfig option
-    ScriptArgs: string list }
-  member x.FsArgs = x.CompileOptions.FsiOptions.AsArgs
+    { VerboseLevel: Trace.VerboseLevel
+      ScriptFilePath: string
+      ScriptTokens: Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
+      RuntimeOptions: RuntimeOptions
+      CompileOptions: CompileOptions
+      UseCache: bool
+      UseSimpleRestore: bool
+      RestoreOnlyGroup: bool
+      Redirect: RedirectConfig option
+      ScriptArgs: string list }
+
+    member x.FsArgs = x.CompileOptions.FsiOptions.AsArgs
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"
@@ -72,30 +90,43 @@ let loadScriptName = "intellisense.fsx"
 let loadScriptLazyName = "intellisense_lazy.fsx"
 
 type RunResult =
-  | CompilationError of CompilationErrors
-  | RuntimeError of Exception
-  | SuccessRun of warnings:string
+    | CompilationError of CompilationErrors
+    | RuntimeError of Exception
+    | SuccessRun of warnings: string
 
 type ResultCoreCacheInfo =
-  { MaybeCompiledAssembly : string option
-    Warnings : string }
+    { MaybeCompiledAssembly: string option
+      Warnings: string }
+
     member x.AsCacheInfo =
-      match x.MaybeCompiledAssembly with
-      | Some c -> Some { CompiledAssembly = c; Warnings = x.Warnings }
-      | None -> None
+        match x.MaybeCompiledAssembly with
+        | Some c ->
+            Some
+                { CompiledAssembly = c
+                  Warnings = x.Warnings }
+        | None -> None
+
 and CoreCacheInfo =
-  { CompiledAssembly : string
-    Warnings : string }
+    { CompiledAssembly: string
+      Warnings: string }
+
     member x.AsResult =
-      { MaybeCompiledAssembly = Some x.CompiledAssembly
-        Warnings = x.Warnings }
+        { MaybeCompiledAssembly = Some x.CompiledAssembly
+          Warnings = x.Warnings }
+
 type FakeContext =
-  { Config : FakeConfig
-    CreateAssemblyContext : unit -> AssemblyLoadContext
-    FakeDirectory : string
-    Hash : string }
+    { Config: FakeConfig
+      CreateAssemblyContext: unit -> AssemblyLoadContext
+      FakeDirectory: string
+      Hash: string }
+
     member x.FileName = Path.GetFileNameWithoutExtension x.Config.ScriptFilePath
     member x.FileNameWithExtension = Path.GetFileName x.Config.ScriptFilePath
-    member x.HashPath = Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.FileName + "_" + x.Hash)
+
+    member x.HashPath =
+        Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.FileName + "_" + x.Hash)
+
     member x.CachedAssemblyFileName = x.FileName + "_" + x.Hash
-    member x.CachedAssemblyFilePath = Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.CachedAssemblyFileName)
+
+    member x.CachedAssemblyFilePath =
+        Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.CachedAssemblyFileName)

@@ -47,6 +47,7 @@ module Trace =
             if not verbose then
                 let hint =
                     "Note: To further diagnose the following problem you can increase verbosity of the fake modules by setting the 'FAKE_COREFX_VERBOSE' environment variable to 'true' or by using 'Trace.setVerbose()' in your script."
+
                 log hint
 
         verbose
@@ -296,14 +297,14 @@ module Trace =
     /// <summary>
     /// Removes an opening tag from the internal tag stack
     /// </summary>
-    /// 
+    ///
     /// <param name="tag">The tag to insert</param>
     let closeTagUnsafe tag = closeTagUnsafeEx TagStatus.Success tag
 
     /// <summary>
     /// Traces a tag
     /// </summary>
-    /// 
+    ///
     /// <param name="tag">The tag to trace</param>
     /// <param name="description">the tag description</param>
     let traceTag tag description =
@@ -313,7 +314,7 @@ module Trace =
     /// <summary>
     /// Set build state with the given tag and message
     /// </summary>
-    /// 
+    ///
     /// <param name="tag">The tag to trace</param>
     /// <param name="message">the build message</param>
     let setBuildStateWithMessage tag message =
@@ -322,15 +323,15 @@ module Trace =
     /// <summary>
     /// Set build state with the given tag
     /// </summary>
-    /// 
+    ///
     /// <param name="tag">The tag to trace</param>
     let setBuildState tag =
         TraceData.BuildState(tag, None) |> CoreTracing.postMessage
 
     /// <summary>
     /// Set status for the given test
-    /// </summary> 
-    /// 
+    /// </summary>
+    ///
     /// <param name="testName">The test name</param>
     /// <param name="testStatus">The test status</param>
     let testStatus testName testStatus =
@@ -340,7 +341,7 @@ module Trace =
     /// <summary>
     /// Trace test output and errors
     /// </summary>
-    /// 
+    ///
     /// <param name="testName">The test name</param>
     /// <param name="out">The test output</param>
     /// <param name="err">The test error</param>
@@ -351,7 +352,7 @@ module Trace =
     /// <summary>
     /// Publish given type in given path
     /// </summary>
-    /// 
+    ///
     /// <param name="typ">The type to publish</param>
     /// <param name="path">The path to publish type to</param>
     let publish typ path =
@@ -360,7 +361,7 @@ module Trace =
     /// <summary>
     /// Trace the given build number
     /// </summary>
-    /// 
+    ///
     /// <param name="number">The build number to trace</param>
     let setBuildNumber number =
         TraceData.BuildNumber number |> CoreTracing.postMessage
@@ -374,7 +375,7 @@ module Trace =
     /// <summary>
     /// Traces the begin of a target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -384,7 +385,7 @@ module Trace =
     /// <summary>
     /// Traces the begin of a final target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -394,7 +395,7 @@ module Trace =
     /// <summary>
     /// Traces the begin of a failure target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -404,7 +405,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a target
     /// </summary>
-    /// 
+    ///
     /// <param name="state">The target state</param>
     /// <param name="name">The name of the target</param>
     let traceEndTargetUnsafeEx state name =
@@ -413,7 +414,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a final target
     /// </summary>
-    /// 
+    ///
     /// <param name="state">The target state</param>
     /// <param name="name">The name of the target</param>
     let traceEndFinalTargetUnsafeEx state name =
@@ -422,7 +423,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a failure target
     /// </summary>
-    /// 
+    ///
     /// <param name="state">The target state</param>
     /// <param name="name">The name of the target</param>
     let traceEndFailureTargetUnsafeEx state name =
@@ -431,7 +432,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     let traceEndTargetUnsafe name =
         traceEndTargetUnsafeEx TagStatus.Success name
@@ -439,7 +440,7 @@ module Trace =
     /// <summary>
     /// Traces a target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -450,7 +451,7 @@ module Trace =
     /// <summary>
     /// Traces a final target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -461,7 +462,7 @@ module Trace =
     /// <summary>
     /// Traces a failed target
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the target</param>
     /// <param name="description">The description of the target</param>
     /// <param name="dependencyString">The target dependency string</param>
@@ -472,7 +473,7 @@ module Trace =
     /// <summary>
     /// Traces the begin of a task
     /// </summary>
-    /// 
+    ///
     /// <param name="task">The name of the task</param>
     /// <param name="description">The description of the task</param>
     let traceStartTaskUnsafe task description =
@@ -481,7 +482,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a task
     /// </summary>
-    /// 
+    ///
     /// <param name="state">The state of the task</param>
     /// <param name="task">The name of the task</param>
     let traceEndTaskUnsafeEx state task =
@@ -490,7 +491,7 @@ module Trace =
     /// <summary>
     /// Traces the end of a task
     /// </summary>
-    /// 
+    ///
     /// <param name="task">The name of the task</param>
     let traceEndTaskUnsafe task =
         traceEndTaskUnsafeEx TagStatus.Success task
@@ -498,7 +499,7 @@ module Trace =
     /// <summary>
     /// Wrap functions in a 'use' of this function
     /// </summary>
-    /// 
+    ///
     /// <param name="name">The name of the task</param>
     /// <param name="description">The description of the task</param>
     let traceTask name description =
@@ -510,7 +511,7 @@ module Trace =
     /// If in automatic success mode and no exception is thrown then trace is marked as success
     /// Any exception thrown will result in a mark failed and exception re-thrown
     /// </summary>
-    /// 
+    ///
     /// <param name="automaticSuccess">Flag to mark trace task as success</param>
     /// <param name="func">Callback to call on result of task trace</param>
     /// <param name="trace">The trace instance</param>
@@ -539,7 +540,7 @@ module Trace =
     /// <summary>
     /// Traces the message to the console
     /// </summary>
-    /// 
+    ///
     /// <param name="msg">The message to log</param>
     /// <param name="eventLogEntry">The message log level</param>
     let logToConsole (msg, eventLogEntry: EventLogEntryType) =
@@ -555,7 +556,7 @@ module Trace =
     /// <summary>
     /// Logs the given files with the message.
     /// </summary>
-    /// 
+    ///
     /// <param name="message">The message to log</param>
     /// <param name="items">The files to log message to</param>
     let logItems message items =

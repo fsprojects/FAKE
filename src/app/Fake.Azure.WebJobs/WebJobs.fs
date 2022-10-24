@@ -22,28 +22,30 @@ module WebJobs =
     /// WebJob type
     type WebJob =
         {
-          /// The name of the web job, this will also be the name out of zip file.
-          Name: string
-          /// Specifies what type of webjob this is. Note that this also determines it's deployment location on Azure
-          JobType: WebJobType
-          /// The project to be zipped and deployed as a webjob
-          Project: string
-          /// The directory path of the webjob to zip
-          DirectoryToPackage: string
-          /// The package path to once zipped
-          PackageLocation: string }
+            /// The name of the web job, this will also be the name out of zip file.
+            Name: string
+            /// Specifies what type of webjob this is. Note that this also determines it's deployment location on Azure
+            JobType: WebJobType
+            /// The project to be zipped and deployed as a webjob
+            Project: string
+            /// The directory path of the webjob to zip
+            DirectoryToPackage: string
+            /// The package path to once zipped
+            PackageLocation: string
+        }
 
     /// The website that webjobs are deployed to
     type WebSite =
         {
-          /// The url of the website, usually in the format of https://<yourwebsite>.scm.azurewebsites.net
-          Url: Uri
-          /// The FTP username, usually the $username from the site's publish profile
-          UserName: string
-          /// The FTP Password
-          Password: string
-          /// The webjobs to deploy to this web site
-          WebJobs: WebJob list }
+            /// The url of the website, usually in the format of https://<yourwebsite>.scm.azurewebsites.net
+            Url: Uri
+            /// The FTP username, usually the $username from the site's publish profile
+            UserName: string
+            /// The FTP Password
+            Password: string
+            /// The webjobs to deploy to this web site
+            WebJobs: WebJob list
+        }
 
     let private jobTypePath webJobType =
         match webJobType with
@@ -65,7 +67,7 @@ module WebJobs =
     /// This task to can be used create a zip for each webjob to deploy to a website
     /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
     /// </summary>
-    /// 
+    ///
     /// <param name="webSites">The websites and webjobs to build zips from.</param>
     let packageWebJobs webSites =
         webSites
@@ -96,13 +98,12 @@ module WebJobs =
         Trace.tracefn "Response from webjob upload: %s" result
 
     let private deployWebJobsToWebSite webSite =
-        webSite.WebJobs
-        |> List.iter (deployWebJobToWebSite webSite)
+        webSite.WebJobs |> List.iter (deployWebJobToWebSite webSite)
 
     /// <summary>
     /// This task to can be used deploy a prebuilt webjob zip to a website
     /// </summary>
-    ///  
+    ///
     /// <param name="webSites">The websites and webjobs to deploy.</param>
     let deployWebJobs webSites =
         webSites |> List.iter deployWebJobsToWebSite

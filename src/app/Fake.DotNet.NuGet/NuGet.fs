@@ -43,17 +43,18 @@ module NuGet =
 
     type internal ToolOptions =
         {
-          /// The NuGet executable path
-          ToolPath: string
-          
-          /// The NuGet command to execute
-          Command: string
-          
-          /// The working directory to execute the command in
-          WorkingDir: string
-          
-          /// Mark if to use full framework or not
-          IsFullFramework: bool }
+            /// The NuGet executable path
+            ToolPath: string
+
+            /// The NuGet command to execute
+            Command: string
+
+            /// The working directory to execute the command in
+            WorkingDir: string
+
+            /// Mark if to use full framework or not
+            IsFullFramework: bool
+        }
 
         static member Create toolPath command workingDir isFullFramework =
             { ToolPath = toolPath
@@ -66,111 +67,112 @@ module NuGet =
     /// </summary>
     type NuGetParams =
         {
-          /// The path to the NuGet executable
-          ToolPath: string
-          
-          /// The timeout to use to restrict NuGet command run time
-          TimeOut: TimeSpan
-          
-          /// The package version
-          Version: string
-          
-          /// The list of authors of the package
-          Authors: string list
-          
-          /// The project name of the package
-          Project: string
-          
-          /// The package title
-          Title: string
-          
-          /// The summary description of the package
-          Summary: string
-          
-          /// The descriptive text of the package
-          Description: string
-          
-          /// Tags referring to the package
-          Tags: string
-          
-          /// The release notes file path of the package
-          ReleaseNotes: string
-          
-          /// The copyright text of the package
-          Copyright: string
-          
-          /// The working directory to execute command in
-          WorkingDir: string
-          
-          /// Sets the base path of the files defined in the .nuspec file.
-          BasePath: string option
-          
-          /// Specifies the folder in which the created package is stored. If no folder is specified,
-          /// the current folder is used.
-          OutputPath: string
-          
-          /// Specifies the server URL. NuGet identifies a UNC or local folder source and simply
-          /// copies the file there instead of pushing it using HTTP
-          PublishUrl: string
-          
-          /// NuGet API access key
-          AccessKey: string
-          
-          /// Specifies the symbol server URL.
-          SymbolPublishUrl: string
-          
-          /// NuGet symbol API access key
-          SymbolAccessKey: string
-          
-          /// Prevents default exclusion of NuGet package files and files and folders starting with a dot,
-          /// such as <c>.svn</c> and <c>.gitignore</c>.
-          NoDefaultExcludes: bool
-          
-          /// Specifies that pack should not run package analysis after building the package.
-          NoPackageAnalysis: bool
-          
-          /// The project file to use
-          ProjectFile: string
-          
-          /// The list of dependencies of the package. <c>dependencies</c>
-          Dependencies: NugetDependencies
-          
-          /// The list of dependencies of the package grouped by Framework. <c>dependencies</c>
-          DependenciesByFramework: NugetFrameworkDependencies list
-          
-          /// The list of packages that reference the package. <c>references</c>
-          References: NugetReferences
-          
-          /// The list of packages that reference the package grouped by Framework. <c>references</c>
-          ReferencesByFramework: NugetFrameworkReferences list
-          
-          /// The list of <c>frameworkAssemblies</c>
-          FrameworkAssemblies: NugetFrameworkAssemblyReferences list
-          
-          /// Mark if to include list of projects that reference the package
-          IncludeReferencedProjects: bool
-          
-          /// mark if to publish a trial version of the package
-          PublishTrials: int
-          
-          /// mark if to publish the package or not
-          Publish: bool
-          
-          /// `NugetSymbolPackage` parameters
-          SymbolPackage: NugetSymbolPackage
-          
-          /// Should appear last on the command line after other options. Specifies a list of properties
-          /// that override values in the project file
-          Properties: list<string * string>
-          
-          /// The list of files to include or exclude. <c>files</c>
-          Files: list<string * string option * string option>
-          
-          /// The list of content files to include or exclude. <c>contentFiles</c>
-          ContentFiles: list<string * string option * string option * bool option * bool option>
-          
-          /// The package language. <c>language</c>
-          Language: string }
+            /// The path to the NuGet executable
+            ToolPath: string
+
+            /// The timeout to use to restrict NuGet command run time
+            TimeOut: TimeSpan
+
+            /// The package version
+            Version: string
+
+            /// The list of authors of the package
+            Authors: string list
+
+            /// The project name of the package
+            Project: string
+
+            /// The package title
+            Title: string
+
+            /// The summary description of the package
+            Summary: string
+
+            /// The descriptive text of the package
+            Description: string
+
+            /// Tags referring to the package
+            Tags: string
+
+            /// The release notes file path of the package
+            ReleaseNotes: string
+
+            /// The copyright text of the package
+            Copyright: string
+
+            /// The working directory to execute command in
+            WorkingDir: string
+
+            /// Sets the base path of the files defined in the .nuspec file.
+            BasePath: string option
+
+            /// Specifies the folder in which the created package is stored. If no folder is specified,
+            /// the current folder is used.
+            OutputPath: string
+
+            /// Specifies the server URL. NuGet identifies a UNC or local folder source and simply
+            /// copies the file there instead of pushing it using HTTP
+            PublishUrl: string
+
+            /// NuGet API access key
+            AccessKey: string
+
+            /// Specifies the symbol server URL.
+            SymbolPublishUrl: string
+
+            /// NuGet symbol API access key
+            SymbolAccessKey: string
+
+            /// Prevents default exclusion of NuGet package files and files and folders starting with a dot,
+            /// such as <c>.svn</c> and <c>.gitignore</c>.
+            NoDefaultExcludes: bool
+
+            /// Specifies that pack should not run package analysis after building the package.
+            NoPackageAnalysis: bool
+
+            /// The project file to use
+            ProjectFile: string
+
+            /// The list of dependencies of the package. <c>dependencies</c>
+            Dependencies: NugetDependencies
+
+            /// The list of dependencies of the package grouped by Framework. <c>dependencies</c>
+            DependenciesByFramework: NugetFrameworkDependencies list
+
+            /// The list of packages that reference the package. <c>references</c>
+            References: NugetReferences
+
+            /// The list of packages that reference the package grouped by Framework. <c>references</c>
+            ReferencesByFramework: NugetFrameworkReferences list
+
+            /// The list of <c>frameworkAssemblies</c>
+            FrameworkAssemblies: NugetFrameworkAssemblyReferences list
+
+            /// Mark if to include list of projects that reference the package
+            IncludeReferencedProjects: bool
+
+            /// mark if to publish a trial version of the package
+            PublishTrials: int
+
+            /// mark if to publish the package or not
+            Publish: bool
+
+            /// `NugetSymbolPackage` parameters
+            SymbolPackage: NugetSymbolPackage
+
+            /// Should appear last on the command line after other options. Specifies a list of properties
+            /// that override values in the project file
+            Properties: list<string * string>
+
+            /// The list of files to include or exclude. <c>files</c>
+            Files: list<string * string option * string option>
+
+            /// The list of content files to include or exclude. <c>contentFiles</c>
+            ContentFiles: list<string * string option * string option * bool option * bool option>
+
+            /// The package language. <c>language</c>
+            Language: string
+        }
 
     /// NuGet default parameters
     let NuGetDefaults () =
@@ -216,7 +218,7 @@ module NuGet =
     /// <summary>
     /// Creates a string which tells NuGet that you require exactly this package version.
     /// </summary>
-    /// 
+    ///
     /// <param name="version">The exact version to require</param>
     let RequireExactly version = sprintf "[%s]" version
 
@@ -282,7 +284,8 @@ module NuGet =
 
             Trace.logfn "Version %s found for package %s" version package
             version
-        with exn -> Exception("Could not detect package version for " + package, exn) |> raise
+        with exn ->
+            Exception("Could not detect package version for " + package, exn) |> raise
 
     let private createNuSpecFromTemplate parameters (templateNuSpec: FileInfo) =
         let specFile =
@@ -579,29 +582,29 @@ module NuGet =
         {
             /// Disables buffering when pushing to an HTTP(S) server to reduce memory usage.
             DisableBuffering: bool
-            
+
             /// The API key for the server
             ApiKey: string option
-            
+
             /// Doesn't push symbols (even if present).
             NoSymbols: bool
-            
+
             /// Doesn't append "api/v2/package" to the source URL.
             NoServiceEndpoint: bool
-            
+
             /// Specifies the server URL. This option is required unless DefaultPushSource config value is set in
             /// the NuGet config file.
             Source: string option
-            
+
             /// The API key for the symbol server.
             SymbolApiKey: string option
-            
+
             /// Specifies the symbol server URL.
             SymbolSource: string option
-            
+
             /// Specifies the timeout for pushing to a server.
             Timeout: TimeSpan option
-            
+
             /// Number of times to retry pushing the package
             PushTrials: int
         }
@@ -725,7 +728,7 @@ module NuGet =
                         |> CreateProcess.withFramework
                         |> CreateProcess.withWorkingDirectory (Path.getFullName parameters.WorkingDir)
                         |> Proc.run
-                    
+
                     processResult.ExitCode
                 finally
                     Process.setEnableProcessTracing tracing
@@ -741,7 +744,7 @@ module NuGet =
     /// Creates a new NuGet package based on the given .nuspec or project file.
     /// The .nuspec / projectfile is passed as-is (no templating is performed)
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     /// <param name="nuspecOrProjectFile">The .nuspec or project file name.</param>
     let NuGetPackDirectly setParams nuspecOrProjectFile =
@@ -764,7 +767,7 @@ module NuGet =
     /// Creates a new NuGet package based on the given .nuspec or project file.
     /// Template parameter substitution is performed when passing a .nuspec
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     /// <param name="nuspecOrProjectFile">The .nuspec or project file name.</param>
     let NuGetPack setParams nuspecOrProjectFile =
@@ -790,7 +793,7 @@ module NuGet =
     /// <summary>
     /// Publishes a NuGet package to the nuget server.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     let NuGetPublish setParams =
         let parameters = NuGetDefaults() |> setParams
@@ -812,7 +815,7 @@ module NuGet =
     /// Creates a new NuGet package, and optionally publishes it.
     /// Template parameter substitution is performed when passing a .nuspec
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default NuGet parameters.</param>
     /// <param name="nuspecOrProjectFile">The .nuspec file name.</param>
     let NuGet setParams nuspecOrProjectFile =
@@ -847,57 +850,58 @@ module NuGet =
     /// </summary>
     type NuSpecPackage =
         {
-          /// The case-insensitive package identifier
-          Id: string
-          
-          /// The version of the package, following the major.minor.patch pattern. Version numbers may
-          /// include a pre-release suffix
-          Version: string
-          
-          /// A comma-separated list of packages authors, matching the profile names on nuget.org.
-          Authors: string
-          
-          /// A comma-separated list of the package creators using profile names on nuget.org.
-          Owners: string
-          
-          /// A URL for the package's home page, often shown in UI displays as well as nuget.org.
-          Url: string
-          
-          /// Holds if the package is the latest version published or not
-          IsLatestVersion: bool
-          
-          /// The creation date of the package
-          Created: DateTime
-          
-          /// The published date of the package
-          Published: DateTime
-          
-          /// The unique hash of the package
-          PackageHash: string
-          
-          /// The package hash algorithm used
-          PackageHashAlgorithm: string
-          
-          /// package license URL
-          LicenseUrl: string
-          
-          /// The package project URL
-          ProjectUrl: string
-          
-          /// Mark if the package need usage acceptance before using it by license
-          RequireLicenseAcceptance: bool
-          
-          /// The package description
-          Description: string
-          
-          /// The package language
-          Language: string
-          
-          /// The release notes file of the package
-          ReleaseNotes: string
-          
-          /// tags referencing the package
-          Tags: string }
+            /// The case-insensitive package identifier
+            Id: string
+
+            /// The version of the package, following the major.minor.patch pattern. Version numbers may
+            /// include a pre-release suffix
+            Version: string
+
+            /// A comma-separated list of packages authors, matching the profile names on nuget.org.
+            Authors: string
+
+            /// A comma-separated list of the package creators using profile names on nuget.org.
+            Owners: string
+
+            /// A URL for the package's home page, often shown in UI displays as well as nuget.org.
+            Url: string
+
+            /// Holds if the package is the latest version published or not
+            IsLatestVersion: bool
+
+            /// The creation date of the package
+            Created: DateTime
+
+            /// The published date of the package
+            Published: DateTime
+
+            /// The unique hash of the package
+            PackageHash: string
+
+            /// The package hash algorithm used
+            PackageHashAlgorithm: string
+
+            /// package license URL
+            LicenseUrl: string
+
+            /// The package project URL
+            ProjectUrl: string
+
+            /// Mark if the package need usage acceptance before using it by license
+            RequireLicenseAcceptance: bool
+
+            /// The package description
+            Description: string
+
+            /// The package language
+            Language: string
+
+            /// The release notes file of the package
+            ReleaseNotes: string
+
+            /// tags referencing the package
+            Tags: string
+        }
 
         member x.Name = sprintf "%s %s" x.Id x.Version
         override x.ToString() = x.Name
@@ -907,7 +911,7 @@ module NuGet =
     /// <summary>
     /// Parses nuspec metadata from a nuspec file.
     /// </summary>
-    /// 
+    ///
     /// <param name="nuspec">The .nuspec file content.</param>
     let getNuspecProperties (nuspec: string) =
         let doc = Xml.createDoc nuspec
@@ -955,39 +959,40 @@ module NuGet =
     /// </summary>
     type NugetPackageInfo =
         {
-          /// The case-insensitive package identifier
-          Id: string
-          
-          /// The version of the package, following the major.minor.patch pattern. Version numbers may
-          /// include a pre-release suffix
-          Version: string
-          
-           /// The package description
-          Description: string
-          
-          /// The package summary notes
-          Summary: string
-          
-          /// Holds if the package is the latest version published or not
-          IsLatestVersion: bool
-          
-          /// A comma-separated list of packages authors, matching the profile names on nuget.org.
-          Authors: string
-          
-          /// A comma-separated list of the package creators using profile names on nuget.org.
-          Owners: string
-          
-          /// tags referencing the package
-          Tags: string
-          
-          /// The package project URL
-          ProjectUrl: string
-          
-          /// package license URL
-          LicenseUrl: string
-          
-          /// The package title
-          Title: string }
+            /// The case-insensitive package identifier
+            Id: string
+
+            /// The version of the package, following the major.minor.patch pattern. Version numbers may
+            /// include a pre-release suffix
+            Version: string
+
+            /// The package description
+            Description: string
+
+            /// The package summary notes
+            Summary: string
+
+            /// Holds if the package is the latest version published or not
+            IsLatestVersion: bool
+
+            /// A comma-separated list of packages authors, matching the profile names on nuget.org.
+            Authors: string
+
+            /// A comma-separated list of the package creators using profile names on nuget.org.
+            Owners: string
+
+            /// tags referencing the package
+            Tags: string
+
+            /// The package project URL
+            ProjectUrl: string
+
+            /// package license URL
+            LicenseUrl: string
+
+            /// The package title
+            Title: string
+        }
 
     /// Default NuGet feed. Using V3 feed: <c>https://api.nuget.org/v3/index.json</c>
     let galleryV3 = "https://api.nuget.org/v3/index.json"
@@ -1093,9 +1098,7 @@ module NuGet =
 
     let internal addAcceptHeader (client: HttpClient) (contentType: string) =
         for headerVal in contentType.Split([| ',' |], StringSplitOptions.RemoveEmptyEntries) do
-            client.DefaultRequestHeaders.Accept.Add(
-                System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(headerVal)
-            )
+            client.DefaultRequestHeaders.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(headerVal))
 
     let internal addHeader (client: HttpClient) (headerKey: string) (headerVal: string) =
         client.DefaultRequestHeaders.Add(headerKey, headerVal)
@@ -1173,22 +1176,22 @@ module NuGet =
 
     /// [omit]
     let extractFeedPackageFromJson (data: JObject) isLatestVersion =
-        { Id = data["id"].ToString()
-          Version = data["version"].ToString()
-          Description = data["description"].ToString()
-          Summary = data["summary"].ToString()
+        { Id = data[ "id" ].ToString()
+          Version = data[ "version" ].ToString()
+          Description = data[ "description" ].ToString()
+          Summary = data[ "summary" ].ToString()
           IsLatestVersion = isLatestVersion
           Authors = String.Join(",", data["authors"] :?> JArray)
           Owners = String.Join(",", data["authors"] :?> JArray)
           Tags = String.Join(",", data["tags"] :?> JArray)
-          ProjectUrl = data["projectUrl"].ToString()
-          LicenseUrl = data["licenseUrl"].ToString()
-          Title = data["title"].ToString() }
+          ProjectUrl = data[ "projectUrl" ].ToString()
+          LicenseUrl = data[ "licenseUrl" ].ToString()
+          Title = data[ "title" ].ToString() }
 
     /// <summary>
     /// Gets a Package information from NuGet feed by package id.
     /// </summary>
-    /// 
+    ///
     /// <param name="repoUrl">Query endpoint of NuGet search service</param>
     /// <param name="packageName">The package to get</param>
     /// <param name="version">The specific version to get</param>
@@ -1201,12 +1204,12 @@ module NuGet =
 
         let versionExists =
             packageVersions
-            |> List.exists (fun listedVersion -> listedVersion["version"].ToString() = version)
+            |> List.exists (fun listedVersion -> listedVersion[ "version" ].ToString() = version)
 
         if not versionExists then
             failwithf "Requested %s for package %s is not registered on NuGet" version packageName
 
-        let isLatest = (data["version"].ToString() = version)
+        let isLatest = (data[ "version" ].ToString() = version)
         // set the requested version instead of latest.
         data["version"] <- JValue version
         extractFeedPackageFromJson data isLatest
@@ -1214,7 +1217,7 @@ module NuGet =
     /// <summary>
     /// Gets the latest published package from NuGet feed by package id.
     /// </summary>
-    /// 
+    ///
     /// <param name="repoUrl">Query endpoint of NuGet search service</param>
     /// <param name="packageName">The package to get</param>
     let getLatestPackage (repoUrl: string) packageName =
@@ -1227,7 +1230,7 @@ module NuGet =
     /// <summary>
     /// Search NuGet query endpoint for packages matching given name by title
     /// </summary>
-    /// 
+    ///
     /// <param name="repoUrl">Query endpoint of NuGet search service</param>
     /// <param name="packageName">The package to search for</param>
     let searchByTitle (repoUrl: string) (packageName: string) =
@@ -1263,14 +1266,15 @@ module NuGet =
     /// </summary>
     type NuGetDependency =
         {
-          /// The package Id
-          Id: string
-          
-          /// The package version
-          Version: SemVerInfo
-          
-          /// Mark if the dependency is a development (dev) dependency or not
-          IsDevelopmentDependency: bool }
+            /// The package Id
+            Id: string
+
+            /// The package version
+            Version: SemVerInfo
+
+            /// Mark if the dependency is a development (dev) dependency or not
+            IsDevelopmentDependency: bool
+        }
 
     /// <summary>
     /// Returns the dependencies from specified packages.config file

@@ -17,32 +17,29 @@ module MSpec =
     /// </summary>
     type MSpecParams =
         {
-          /// The path to the mspec console runner. Use <c>mspec-clr4.exe</c> if you are on .NET 4.0 or above.
-          ToolPath: string
-          /// Output directory for html reports (optional).
-          HtmlOutputDir: string
-          /// Output file path for xml reports (optional).
-          XmlOutputPath: string
-          /// Working directory (optional)
-          WorkingDir: string
-          /// Can be used to run MSpec in silent mode.
-          Silent: bool
-          /// Tests with theses tags are ignored by MSpec
-          ExcludeTags: string list
-          /// Tests with theses tags are included by MSpec
-          IncludeTags: string list
-          /// A timeout for the test runner
-          TimeOut: TimeSpan
-          /// An error level setting to specify whether a failed test should break the build
-          ErrorLevel: TestRunnerErrorLevel }
+            /// The path to the mspec console runner. Use <c>mspec-clr4.exe</c> if you are on .NET 4.0 or above.
+            ToolPath: string
+            /// Output directory for html reports (optional).
+            HtmlOutputDir: string
+            /// Output file path for xml reports (optional).
+            XmlOutputPath: string
+            /// Working directory (optional)
+            WorkingDir: string
+            /// Can be used to run MSpec in silent mode.
+            Silent: bool
+            /// Tests with theses tags are ignored by MSpec
+            ExcludeTags: string list
+            /// Tests with theses tags are included by MSpec
+            IncludeTags: string list
+            /// A timeout for the test runner
+            TimeOut: TimeSpan
+            /// An error level setting to specify whether a failed test should break the build
+            ErrorLevel: TestRunnerErrorLevel
+        }
 
     let internal toolPath toolName =
         let toolPath =
-            ProcessUtils.tryFindLocalTool
-                "TOOL"
-                toolName
-                [ Directory.GetCurrentDirectory()
-                  @@ "tools" @@ "MSpec" ]
+            ProcessUtils.tryFindLocalTool "TOOL" toolName [ Directory.GetCurrentDirectory() @@ "tools" @@ "MSpec" ]
 
         match toolPath with
         | Some path -> path

@@ -188,22 +188,8 @@ module Mage =
 
         let allParameters =
             match action with
-            | NewApp ->
-                [ processor
-                  name
-                  iconFile
-                  version
-                  fromDir
-                  trustLevel
-                  algorithm ]
-            | UpdateApp ->
-                [ processor
-                  name
-                  iconFile
-                  version
-                  fromDir
-                  trustLevel
-                  algorithm ]
+            | NewApp -> [ processor; name; iconFile; version; fromDir; trustLevel; algorithm ]
+            | UpdateApp -> [ processor; name; iconFile; version; fromDir; trustLevel; algorithm ]
             | Sign -> [ certFile; password; certHash ]
             | Deploy ->
                 [ processor

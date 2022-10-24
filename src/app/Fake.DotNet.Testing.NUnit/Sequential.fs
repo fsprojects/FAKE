@@ -13,10 +13,10 @@ module Sequential =
     /// <summary>
     /// Runs NUnit on a group of assemblies.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default <c>NUnitParams</c> value.</param>
     /// <param name="assemblies">Sequence of one or more assemblies containing NUnit unit tests.</param>
-    /// 
+    ///
     /// <example>
     /// <code lang="fsharp">
     /// Target "Test" (fun _ ->
@@ -24,7 +24,7 @@ module Sequential =
     ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
     ///     )
     /// </code>
-    /// </example>    
+    /// </example>
     let run (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "NUnit" details

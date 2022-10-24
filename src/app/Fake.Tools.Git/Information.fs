@@ -86,7 +86,8 @@ module Information =
     /// </summary>
     ///
     /// <param name="repositoryDir">The git repository.</param>
-    let showStatus repositoryDir = CommandHelper.showGitCommand repositoryDir "status"
+    let showStatus repositoryDir =
+        CommandHelper.showGitCommand repositoryDir "status"
 
     /// <summary>
     /// Checks if the working copy is clean
@@ -104,7 +105,9 @@ module Information =
     /// <param name="repositoryDir">The git repository.</param>
     /// <param name="sha1">The sha1 to use</param>
     let showName repositoryDir sha1 =
-        let _, msg, _ = CommandHelper.runGitCommand repositoryDir <| sprintf "name-rev %s" sha1
+        let _, msg, _ =
+            CommandHelper.runGitCommand repositoryDir <| sprintf "name-rev %s" sha1
+
         if msg.Length = 0 then sha1 else msg[0]
 
     /// <summary>
@@ -150,8 +153,11 @@ module Information =
     /// Gets the last git tag of the current repository by calling git describe
     /// </summary>
     let getLastTag () =
-        let _,msg,error = CommandHelper.runGitCommand "" "describe --tags --abbrev=0"
-        if error <> "" then failwithf "git describe --tags failed: %s" error
+        let _, msg, error = CommandHelper.runGitCommand "" "describe --tags --abbrev=0"
+
+        if error <> "" then
+            failwithf "git describe --tags failed: %s" error
+
         msg |> Seq.head
 
     /// <summary>
@@ -162,9 +168,9 @@ module Information =
             let tmp = (shortlog "").Split(' ') |> Seq.head |> (fun s -> s.Split('m'))
 
             if tmp |> Array.length > 2 then
-                tmp[1].Substring(0, 6)
+                tmp[ 1 ].Substring(0, 6)
             else
-                tmp[0].Substring(0, 6)
+                tmp[ 0 ].Substring(0, 6)
         with _ when BuildServer.buildServer = TeamFoundation ->
             match Environment.environVarOrNone "BUILD_SOURCEVERSION" with
             | None -> reraise ()

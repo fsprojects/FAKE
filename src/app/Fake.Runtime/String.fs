@@ -1,6 +1,7 @@
 ﻿/// Contains basic functions for string manipulation.
 
 module Fake.Runtime.String
+
 type String = System.String
 open System
 

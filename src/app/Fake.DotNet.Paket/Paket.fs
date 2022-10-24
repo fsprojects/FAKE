@@ -22,62 +22,63 @@ module Paket =
     /// </summary>
     type PaketPackParams =
         {
-          /// paket tool path
-          ToolPath: string
-          
-          /// The kind of application ToolPath references
-          ToolType: ToolType
-          
-          /// The timeout for the toll commands execution
-          TimeOut: TimeSpan
-          
-          /// The packaging version
-          Version: string
-          
-          /// version number to use for package ID; may be repeated
-          SpecificVersions: (string * string) list
-          
-          /// use version constraints from paket.lock instead of paket.dependencies
-          LockDependencies: bool
-          
-          /// the release notes to include in output NuGet package
-          ReleaseNotes: string
-          
-          /// build configuration that should be packaged (default: Release)
-          BuildConfig: string
-          
-          /// build platform that should be packaged (default: check all known platform targets)
-          BuildPlatform: string
-          
-          /// pack a single paket.template file
-          TemplateFile: string
-          
-          /// exclude paket.template file by package ID; may be repeated
-          ExcludedTemplates: string list
-          
-          /// the directory to execute command in
-          WorkingDir: string
-          
-          /// output directory for <c>.nupkg</c> files
-          OutputPath: string
-          
-          /// homepage URL for the package
-          ProjectUrl: string
-          
-          /// create symbol and source packages in addition to library and content packages
-          Symbols: bool
-          
-          /// include symbols and source from referenced projects
-          IncludeReferencedProjects: bool
-          
-          /// use version constraints from paket.lock instead of paket.dependencies and add them as a minimum
-          /// version; --lock-dependencies overrides this option
-          MinimumFromLockFile: bool
-          
-          /// pin dependencies generated from project references to exact versions (<c>=</c>)
-          /// instead of using minimum versions (<c>&gt;=</c>); with <c>--lock-dependencies</c> project
-          /// references will be pinned even if this option is not specified
-          PinProjectReferences: bool }
+            /// paket tool path
+            ToolPath: string
+
+            /// The kind of application ToolPath references
+            ToolType: ToolType
+
+            /// The timeout for the toll commands execution
+            TimeOut: TimeSpan
+
+            /// The packaging version
+            Version: string
+
+            /// version number to use for package ID; may be repeated
+            SpecificVersions: (string * string) list
+
+            /// use version constraints from paket.lock instead of paket.dependencies
+            LockDependencies: bool
+
+            /// the release notes to include in output NuGet package
+            ReleaseNotes: string
+
+            /// build configuration that should be packaged (default: Release)
+            BuildConfig: string
+
+            /// build platform that should be packaged (default: check all known platform targets)
+            BuildPlatform: string
+
+            /// pack a single paket.template file
+            TemplateFile: string
+
+            /// exclude paket.template file by package ID; may be repeated
+            ExcludedTemplates: string list
+
+            /// the directory to execute command in
+            WorkingDir: string
+
+            /// output directory for <c>.nupkg</c> files
+            OutputPath: string
+
+            /// homepage URL for the package
+            ProjectUrl: string
+
+            /// create symbol and source packages in addition to library and content packages
+            Symbols: bool
+
+            /// include symbols and source from referenced projects
+            IncludeReferencedProjects: bool
+
+            /// use version constraints from paket.lock instead of paket.dependencies and add them as a minimum
+            /// version; --lock-dependencies overrides this option
+            MinimumFromLockFile: bool
+
+            /// pin dependencies generated from project references to exact versions (<c>=</c>)
+            /// instead of using minimum versions (<c>&gt;=</c>); with <c>--lock-dependencies</c> project
+            /// references will be pinned even if this option is not specified
+            PinProjectReferences: bool
+        }
 
     let internal findPaketExecutable baseDir =
         ProcessUtils.findLocalTool "PAKET" "paket" [ Path.Combine(baseDir, ".paket") ]
@@ -108,29 +109,30 @@ module Paket =
     /// </summary>
     type PaketPushParams =
         {
-          /// paket tool path
-          ToolPath: string
-          
-          /// The kind of application ToolPath references
-          ToolType: ToolType
-          
-          /// The timeout for the toll commands execution
-          TimeOut: TimeSpan
-          
-          /// URL of the NuGet feed
-          PublishUrl: string
-          
-          /// API endpoint to push to (default: /api/v2/package)
-          EndPoint: string
-          
-          /// the directory to execute command in
-          WorkingDir: string
-          
-          /// the number of parallel processes to use
-          DegreeOfParallelism: int
-          
-          /// API key for the URL (default: value of the NUGET_KEY environment variable)
-          ApiKey: string }
+            /// paket tool path
+            ToolPath: string
+
+            /// The kind of application ToolPath references
+            ToolType: ToolType
+
+            /// The timeout for the toll commands execution
+            TimeOut: TimeSpan
+
+            /// URL of the NuGet feed
+            PublishUrl: string
+
+            /// API endpoint to push to (default: /api/v2/package)
+            EndPoint: string
+
+            /// the directory to execute command in
+            WorkingDir: string
+
+            /// the number of parallel processes to use
+            DegreeOfParallelism: int
+
+            /// API key for the URL (default: value of the NUGET_KEY environment variable)
+            ApiKey: string
+        }
 
     /// Paket push default parameters
     let PaketPushDefaults () : PaketPushParams =
@@ -148,29 +150,30 @@ module Paket =
     /// </summary>
     type PaketRestoreParams =
         {
-          /// paket tool path
-          ToolPath: string
-          
-          /// The kind of application ToolPath references
-          ToolType: ToolType
-          
-          /// The timeout for the toll commands execution
-          TimeOut: TimeSpan
-          
-          /// the directory to execute command in
-          WorkingDir: string
-          
-          /// force download and re-installation of all dependencies
-          ForceDownloadOfPackages: bool
-          
-          /// only restore packages that are referenced by paket.references files
-          OnlyReferencedFiles: bool
-          
-          /// restore dependencies of a single group
-          Group: string
-          
-          /// restore packages from a paket.references file; may be repeated
-          ReferenceFiles: string list }
+            /// paket tool path
+            ToolPath: string
+
+            /// The kind of application ToolPath references
+            ToolType: ToolType
+
+            /// The timeout for the toll commands execution
+            TimeOut: TimeSpan
+
+            /// the directory to execute command in
+            WorkingDir: string
+
+            /// force download and re-installation of all dependencies
+            ForceDownloadOfPackages: bool
+
+            /// only restore packages that are referenced by paket.references files
+            OnlyReferencedFiles: bool
+
+            /// restore dependencies of a single group
+            Group: string
+
+            /// restore packages from a paket.references file; may be repeated
+            ReferenceFiles: string list
+        }
 
     /// Paket restore default parameters
     let PaketRestoreDefaults () : PaketRestoreParams =
@@ -241,7 +244,7 @@ module Paket =
     /// <summary>
     /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let pack setParams =
         let parameters: PaketPackParams = PaketPackDefaults() |> setParams
@@ -258,7 +261,7 @@ module Paket =
     /// <summary>
     /// Pushes the given NuGet packages to the server by using Paket push.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default parameters.</param>
     /// <param name="files">The files to be pushed to the server.</param>
     let pushFiles setParams files =
@@ -315,7 +318,7 @@ module Paket =
     /// <summary>
     /// Pushes all NuGet packages in the working dir to the server by using Paket push.
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let push setParams =
         let parameters: PaketPushParams = PaketPushDefaults() |> setParams
@@ -327,7 +330,7 @@ module Paket =
     /// </summary>
     ///
     /// <param name="referencesFile">Paket reference file to use</param>
-    /// - `referencesFile` - 
+    /// - `referencesFile` -
     let getDependenciesForReferencesFile (referencesFile: string) =
         let getReferenceFilePackages =
             let isSingleFile (line: string) = line.StartsWith "File:"
@@ -374,7 +377,7 @@ module Paket =
     /// <summary>
     /// Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket
     /// </summary>
-    /// 
+    ///
     /// <param name="setParams">Function used to manipulate the default parameters.</param>
     let restore setParams =
         let parameters: PaketRestoreParams = PaketRestoreDefaults() |> setParams

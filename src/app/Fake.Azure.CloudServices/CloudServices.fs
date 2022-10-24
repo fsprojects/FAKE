@@ -5,7 +5,7 @@
 /// Azure namespace contains tasks to interact with Azure Services, like CloudServices and Kudu
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains tasks to package Azure Cloud Services.
 /// </summary>
@@ -19,14 +19,16 @@ module CloudServices =
 
     /// Configuration details for packaging cloud services.
     type PackageCloudServiceParams =
-        { /// The name of the Cloud Service.
-          CloudService: string
-          /// The name of the role in the service.
-          WorkerRole: string
-          /// The SDK version to use e.g. 2.2. If None, the latest available version is used.
-          SdkVersion: float option
-          /// The output path for the .cspkg.
-          OutputPath: string option }
+        {
+            /// The name of the Cloud Service.
+            CloudService: string
+            /// The name of the role in the service.
+            WorkerRole: string
+            /// The SDK version to use e.g. 2.2. If None, the latest available version is used.
+            SdkVersion: float option
+            /// The output path for the .cspkg.
+            OutputPath: string option
+        }
 
     let DefaultCloudServiceParams =
         { CloudService = ""

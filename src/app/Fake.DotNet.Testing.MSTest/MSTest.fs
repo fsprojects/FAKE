@@ -23,7 +23,7 @@ module MSTest =
            @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE"
            @"[ProgramFilesX86]\Microsoft Visual Studio 10.0\Common7\IDE" |]
 
-    let internal  msTestExe =
+    let internal msTestExe =
         if Environment.isWindows then
             "mstest.exe"
         else
@@ -44,34 +44,34 @@ module MSTest =
             /// separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be
             /// used together to create a test category filter.
             Category: string
-            
+
             /// Test results directory (optional)
             ResultsDir: string
-            
+
             /// Path to the Test Metadata file (.vsmdi)  (optional)
             TestMetadataPath: string
-            
+
             /// Path to the Test Settings file (.testsettings)  (optional)
             TestSettingsPath: string
-            
+
             /// Working directory (optional)
             WorkingDir: string
-            
+
             /// List of tests be run (optional)
             Tests: string list
-            
+
             /// A timeout for the test runner (optional)
             TimeOut: TimeSpan
-            
+
             /// Path to MSTest.exe
             ToolPath: string
-            
+
             /// List of additional test case properties to display, if they exist (optional)
             Details: string list
-            
+
             /// Option which allow to specify if a MSTest error should break the build.
             ErrorLevel: ErrorLevel
-            
+
             /// Run tests in isolation (optional).
             NoIsolation: bool
         }
@@ -129,7 +129,7 @@ module MSTest =
     ///           |> MSTest (fun p -> { p with Category = "group1" })
     ///     )
     /// </code>
-    /// </example>  
+    /// </example>
     let exec (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
         let details = assemblies |> String.separated ", "
         use __ = Trace.traceTask "MSTest" details
@@ -154,7 +154,7 @@ module MSTest =
                 |> CreateProcess.withTimeout parameters.TimeOut
                 |> CreateProcess.withFramework
                 |> Proc.run
-                
+
             failIfError assembly processResult.ExitCode
 
         __.MarkSuccess()

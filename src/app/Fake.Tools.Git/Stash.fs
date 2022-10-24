@@ -23,4 +23,5 @@ module Stash =
     /// </summary>
     ///
     /// <param name="repositoryDir">The git repository.</param>
-    let pop repositoryDir = CommandHelper.gitCommand repositoryDir "stash pop"
+    let pop repositoryDir =
+        CommandHelper.gitCommand repositoryDir "stash pop"

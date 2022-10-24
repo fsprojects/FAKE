@@ -5,7 +5,7 @@
 /// SQL namespace contains tasks to interact with SQL databases, like SqlPackage
 /// </summary>
 /// </namespacedoc>
-/// 
+///
 /// <summary>
 /// Contains helpers around deploying databases.
 /// </summary>
@@ -23,66 +23,74 @@ module SqlPackage =
         /// Generate and apply a synchronisation script between two databases.
         | Deploy
         /// Generate a SQL script to sync two databases.
-        | Script of OutputPath:string
+        | Script of OutputPath: string
         /// Generate an XML report for the differences between two databases.
-        | Report of OutputPath:string
+        | Report of OutputPath: string
 
     /// <summary>
     /// Configuration arguments for DacPac deploy
     /// </summary>
-    type DeployDbArgs = {
-        /// The path to SqlPackage.exe.
-        SqlPackageToolPath : string
-        /// Type of action to execute. Defaults to Deploy.
-        Action : DeployAction
-        /// Azure AccessToken
-        AccessToken: string
-        /// Path to source (path to DACPAC or Connection String).
-        Source : string
-        /// Path to destination (path to DACPAC or Connection String).
-        Destination : string
-        /// Timeout for deploy (defaults to 120 seconds).
-        Timeout : int option
-        /// Block deployment if data loss can occur. Defaults to true.
-        BlockOnPossibleDataLoss : bool option
-        /// Drops objects in the destination that do not exist in the source. Defaults to false.
-        DropObjectsNotInSource : bool option
-        /// Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.
-        RecreateDb : bool option
-        /// Additional configuration parameters required by sqlpackage.exe
-        AdditionalSqlPackageProperties : (string * string) list
-        /// SQLCMD variables
-        Variables : (string * string) list
-        ///Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs.
-        Profile : string }
+    type DeployDbArgs =
+        {
+            /// The path to SqlPackage.exe.
+            SqlPackageToolPath: string
+            /// Type of action to execute. Defaults to Deploy.
+            Action: DeployAction
+            /// Azure AccessToken
+            AccessToken: string
+            /// Path to source (path to DACPAC or Connection String).
+            Source: string
+            /// Path to destination (path to DACPAC or Connection String).
+            Destination: string
+            /// Timeout for deploy (defaults to 120 seconds).
+            Timeout: int option
+            /// Block deployment if data loss can occur. Defaults to true.
+            BlockOnPossibleDataLoss: bool option
+            /// Drops objects in the destination that do not exist in the source. Defaults to false.
+            DropObjectsNotInSource: bool option
+            /// Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.
+            RecreateDb: bool option
+            /// Additional configuration parameters required by sqlpackage.exe
+            AdditionalSqlPackageProperties: (string * string) list
+            /// SQLCMD variables
+            Variables: (string * string) list
+            ///Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs.
+            Profile: string
+        }
 
     let internal validPaths =
-        let paths = [
-            let macOrLinux = Set [ PlatformID.MacOSX; PlatformID.Unix ]
-            if macOrLinux.Contains Environment.OSVersion.Platform then
-                !!"/usr/local/bin/sqlpackage"
-                |> Seq.map (fun path -> path, 15)
-            else
-                let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
-                let getVsVersion (path: string) = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
-                !!(Environment.ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
-                !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
-                !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
-                !!(Environment.ProgramFiles </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\SqlPackage.exe") |> Seq.map(fun path -> path, Reflection.Assembly.LoadFile(path).GetName().Version.Major)
-        ]
+        let paths =
+            [ let macOrLinux = Set [ PlatformID.MacOSX; PlatformID.Unix ]
 
-        paths
-        |> Seq.concat
-        |> Seq.sortByDescending snd
-        |> Seq.map fst
-        |> Seq.cache
+              if macOrLinux.Contains Environment.OSVersion.Platform then
+                  !! "/usr/local/bin/sqlpackage" |> Seq.map (fun path -> path, 15)
+              else
+                  let getSqlVersion (path: string) = path.Split '\\' |> Array.item 3 |> int
+
+                  let getVsVersion (path: string) =
+                      (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
+
+                  !!(Environment.ProgramFilesX86
+                     </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe")
+                  |> Seq.map (fun path -> path, getSqlVersion path)
+
+                  !!(Environment.ProgramFilesX86
+                     </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe")
+                  |> Seq.map (fun path -> path, getVsVersion path)
+
+                  !!(Environment.ProgramFilesX86
+                     </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe")
+                  |> Seq.map (fun path -> path, getVsVersion path)
+
+                  !!(Environment.ProgramFiles
+                     </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\SqlPackage.exe")
+                  |> Seq.map (fun path -> path, Reflection.Assembly.LoadFile(path).GetName().Version.Major) ]
+
+        paths |> Seq.concat |> Seq.sortByDescending snd |> Seq.map fst |> Seq.cache
 
     /// The default DacPac deployment arguments.
     let internal DefaultDeploymentArgs =
-        { SqlPackageToolPath =
-            validPaths
-            |> Seq.tryHead
-            |> defaultArg <| ""
+        { SqlPackageToolPath = validPaths |> Seq.tryHead |> defaultArg <| ""
           Action = Deploy
           AccessToken = ""
           Source = ""
@@ -131,27 +139,42 @@ module SqlPackage =
     [<Literal>]
     let internal Profile = "Profile"
 
-    let (|NullOrEmptyString|NonEmptyString|) (x:string) = if String.isNullOrEmpty x then NullOrEmptyString else NonEmptyString x
+    let (|NullOrEmptyString|NonEmptyString|) (x: string) =
+        if String.isNullOrEmpty x then
+            NullOrEmptyString
+        else
+            NonEmptyString x
 
     /// [omit]
-    let formatArgument (args:DeployDbArgs) action outputPath additionalParameters variables argumentName =
+    let formatArgument (args: DeployDbArgs) action outputPath additionalParameters variables argumentName =
         match argumentName, args with
         | Action, _ -> sprintf "/Action:%s" action
         | AccessToken, { AccessToken = NonEmptyString token } -> sprintf """/AccessToken:"%s" """ token
         | Source, _ -> sprintf """/SourceFile:"%s" """ args.Source
-        | Destination, { Destination = NonEmptyString destination } -> sprintf """/TargetConnectionString:"%s" """ destination
+        | Destination, { Destination = NonEmptyString destination } ->
+            sprintf """/TargetConnectionString:"%s" """ destination
         | OutputPath, _ -> sprintf "%s" outputPath
-        | BlockOnPossibleDataLoss, { BlockOnPossibleDataLoss = Some value } -> sprintf "/p:BlockOnPossibleDataLoss=%b" value
-        | BlockOnPossibleDataLoss, { Profile = NullOrEmptyString; BlockOnPossibleDataLoss = None } -> "/p:BlockOnPossibleDataLoss=false"
-        | DropObjectsNotInSource, { DropObjectsNotInSource = Some value } -> sprintf "/p:DropObjectsNotInSource=%b" value
-        | DropObjectsNotInSource, { Profile = NullOrEmptyString; DropObjectsNotInSource = None } -> "/p:DropObjectsNotInSource=false"
+        | BlockOnPossibleDataLoss, { BlockOnPossibleDataLoss = Some value } ->
+            sprintf "/p:BlockOnPossibleDataLoss=%b" value
+        | BlockOnPossibleDataLoss,
+          { Profile = NullOrEmptyString
+            BlockOnPossibleDataLoss = None } -> "/p:BlockOnPossibleDataLoss=false"
+        | DropObjectsNotInSource, { DropObjectsNotInSource = Some value } ->
+            sprintf "/p:DropObjectsNotInSource=%b" value
+        | DropObjectsNotInSource,
+          { Profile = NullOrEmptyString
+            DropObjectsNotInSource = None } -> "/p:DropObjectsNotInSource=false"
         | Timeout, { Timeout = Some timeout }
-        | Timeout, { Profile = NullOrEmptyString; Timeout = Some timeout } ->
-            sprintf "/p:CommandTimeout=%d" timeout
+        | Timeout,
+          { Profile = NullOrEmptyString
+            Timeout = Some timeout } -> sprintf "/p:CommandTimeout=%d" timeout
         | RecreateDb, { RecreateDb = Some value } -> sprintf "/p:CreateNewDatabase=%b" value
-        | RecreateDb, { Profile = NullOrEmptyString; RecreateDb = None } -> "/p:CreateNewDatabase=false"
-        | AdditionalSqlPackageProperties, _ when not(String.isNullOrEmpty(additionalParameters)) -> sprintf "%s" additionalParameters
-        | Variables, _ when not(String.isNullOrEmpty(variables)) -> sprintf "%s" variables
+        | RecreateDb,
+          { Profile = NullOrEmptyString
+            RecreateDb = None } -> "/p:CreateNewDatabase=false"
+        | AdditionalSqlPackageProperties, _ when not (String.isNullOrEmpty (additionalParameters)) ->
+            sprintf "%s" additionalParameters
+        | Variables, _ when not (String.isNullOrEmpty (variables)) -> sprintf "%s" variables
         | Profile, { Profile = NonEmptyString profile } -> sprintf "/pr:%s" profile
         | _ -> ""
 
@@ -165,24 +188,25 @@ module SqlPackage =
             | Deploy -> "Publish", None
             | Script outputPath -> "Script", Some outputPath
             | Report outputPath -> "DeployReport", Some outputPath
-        let outputPath = defaultArg(outputPath |> Option.map(sprintf """/OutputPath:"%s" """)) ""
+
+        let outputPath =
+            defaultArg (outputPath |> Option.map (sprintf """/OutputPath:"%s" """)) ""
+
         action, outputPath
 
     let private formatDacPacArguments args action outputPath additionalParameters variables =
-        [
-            Action
-            AccessToken
-            Source
-            Destination
-            OutputPath
-            BlockOnPossibleDataLoss
-            DropObjectsNotInSource
-            Timeout
-            RecreateDb
-            AdditionalSqlPackageProperties
-            Variables
-            Profile
-        ]
+        [ Action
+          AccessToken
+          Source
+          Destination
+          OutputPath
+          BlockOnPossibleDataLoss
+          DropObjectsNotInSource
+          Timeout
+          RecreateDb
+          AdditionalSqlPackageProperties
+          Variables
+          Profile ]
         |> List.map (formatArgument args action outputPath additionalParameters variables)
         |> List.filter ((<>) "")
         |> String.concat " "
@@ -214,15 +238,19 @@ module SqlPackage =
 
         let variables = args.Variables |> concat "v"
 
-        let arguments = formatDacPacArguments args action outputPath additionalParameters variables
+        let arguments =
+            formatDacPacArguments args action outputPath additionalParameters variables
 
         if String.IsNullOrWhiteSpace args.SqlPackageToolPath then
             failwith "No SqlPackage.exe filename was given."
 
         if not (File.Exists args.SqlPackageToolPath) then
             let paths =
-                if validPaths |> Seq.contains args.SqlPackageToolPath then validPaths
-                else [ args.SqlPackageToolPath ]
+                if validPaths |> Seq.contains args.SqlPackageToolPath then
+                    validPaths
+                else
+                    [ args.SqlPackageToolPath ]
+
             failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
 
         CreateProcess.fromRawCommandLine args.SqlPackageToolPath arguments
@@ -234,4 +262,3 @@ module SqlPackage =
                 data)
         |> Proc.run
         |> ignore
-

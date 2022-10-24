@@ -15,15 +15,19 @@ module Kudu =
     /// Location where staged outputs should go before synced up to the site.
     let deploymentTemp =
         Environment.environVarOrDefault "DEPLOYMENT_TEMP" (Path.GetTempPath() + "kudutemp")
+
     /// Location where synced outputs should be deployed to.
     let deploymentTarget =
         Environment.environVarOrDefault "DEPLOYMENT_TARGET" (Path.GetTempPath() + "kudutarget")
+
     /// Used by KuduSync for tracking and diffing deployments.
     let nextManifestPath =
         Environment.environVarOrDefault "NEXT_MANIFEST_PATH" String.Empty
+
     /// Used by KuduSync for tracking and diffing deployments.
     let previousManifestPath =
         Environment.environVarOrDefault "PREVIOUS_MANIFEST_PATH" String.Empty
+
     /// The path to the KuduSync application.
     let kuduPath =
         Environment.environVarOrNone "GO_WEB_CONFIG_TEMPLATE"
@@ -45,14 +49,16 @@ module Kudu =
 
     /// Kudu ZipDeploy parameters
     type ZipDeployParams =
-        { /// The url of the website, usually in the format of https://<yourwebsite>.scm.azurewebsites.net
-          Url: Uri
-          /// The WebDeploy or Git username, usually the $username from the site's publish profile
-          UserName: string
-          /// The WebDeploy or Git Password
-          Password: string
-          /// The path to the zip archive to upload
-          PackageLocation: string }
+        {
+            /// The url of the website, usually in the format of https://<yourwebsite>.scm.azurewebsites.net
+            Url: Uri
+            /// The WebDeploy or Git username, usually the $username from the site's publish profile
+            UserName: string
+            /// The WebDeploy or Git Password
+            Password: string
+            /// The path to the zip archive to upload
+            PackageLocation: string
+        }
 
     /// <summary>
     /// Stages a folder and all subdirectories into the temp deployment area, ready for deployment into the website.
@@ -68,7 +74,7 @@ module Kudu =
     /// <summary>
     /// Gets the path for deploying a web job to.
     /// </summary>
-    /// 
+    ///
     /// <param name="webJobType">The web job type. Of type <c>WebJobType</c></param>
     /// <param name="webJobName">The name of the web job</param>
     let getWebJobPath webJobType webJobName =
@@ -82,7 +88,7 @@ module Kudu =
     /// <summary>
     /// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
     /// </summary>
-    /// 
+    ///
     /// <param name="webJobType">The web job type. Of type <c>WebJobType</c></param>
     /// <param name="webJobName">The name of the web job</param>
     /// <param name="files">Files to deploy</param>
@@ -95,18 +101,19 @@ module Kudu =
     /// any obsolete files, updating changed files and adding new files.
     let kuduSync () =
         let args =
-            Args.toWindowsCommandLine [ "-v"
-                                        "50"
-                                        "-f"
-                                        deploymentTemp
-                                        "-t"
-                                        deploymentTarget
-                                        "-n"
-                                        nextManifestPath
-                                        "-p"
-                                        previousManifestPath
-                                        "-i"
-                                        ".git;.hg;.deployment;deploy.cmd" ]
+            Args.toWindowsCommandLine
+                [ "-v"
+                  "50"
+                  "-f"
+                  deploymentTemp
+                  "-t"
+                  deploymentTarget
+                  "-n"
+                  nextManifestPath
+                  "-p"
+                  previousManifestPath
+                  "-i"
+                  ".git;.hg;.deployment;deploy.cmd" ]
 
         let results = System.Collections.Generic.List<ConsoleMessage>()
 
@@ -125,8 +132,7 @@ module Kudu =
             |> CreateProcess.withOutputEventsNotNull messageF errorF
             |> Proc.run
 
-        results
-        |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
+        results |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
 
         if processResult.ExitCode <> 0 then
             failwith "Error occurred during Kudu Sync deployment."
@@ -134,16 +140,12 @@ module Kudu =
     /// <summary>
     /// Synchronizes contents of the zip package with the target web app using Kudu ZipDeploy.
     /// </summary>
-    /// 
+    ///
     /// <param name="zipDeployParams">The parameters for zip deploy command</param>
     let zipDeploy (zipDeployParams: ZipDeployParams) =
         let authToken =
             Convert.ToBase64String(
-                Text.Encoding.ASCII.GetBytes(
-                    zipDeployParams.UserName
-                    + ":"
-                    + zipDeployParams.Password
-                )
+                Text.Encoding.ASCII.GetBytes(zipDeployParams.UserName + ":" + zipDeployParams.Password)
             )
 
         let statusCode =
