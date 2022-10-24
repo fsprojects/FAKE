@@ -50,7 +50,9 @@ module Environment =
     /// Type alias for System.EnvironmentVariableTarget
     /// </summary>
     #if !DOTNETCORE
-    type EnvironTarget = EnvironmentVariableTarget
+        type EnvironTarget = EnvironmentVariableTarget
+    #else
+        type EnvironTarget = EnvironmentVariableTarget  
     #endif
 
     /// <summary>

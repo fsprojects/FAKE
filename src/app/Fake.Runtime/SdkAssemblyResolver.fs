@@ -24,7 +24,6 @@ open Microsoft.Deployment.DotNet.Releases
 /// is not possible, then we will use a cached releases file.
 
 type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
-#if DOTNETCORE
 
     // following environment variables are used in testing for different scenarios that the SDK resolver
     // could encounter, they are not intended to be used other than that!
@@ -332,4 +331,3 @@ type SdkAssemblyResolver(logLevel:Trace.VerboseLevel) =
             Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
 
         this.SdkReferenceAssemblies()
-#endif
