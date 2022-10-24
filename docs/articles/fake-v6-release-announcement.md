@@ -12,11 +12,12 @@ development and releases of FAKE to be much easier and streamlined. In addition,
 step closer to complete the transition that started from FAKE v5 to move FAKE codebase to a modular approach.
 
 The main points that this release addresses are the following:
-1. Update dependencies of repository.
-2. Remove obsolete APIs and replace their usage with alternative suggested API's,
-3. FAKE build enhancements,
-4. Update FAKE website to use new FSDocs library and give it a new fresh look,
-5. General Enhancements
+
+1. Update dependencies of repository. 
+2. Remove obsolete APIs and replace their usage with alternative suggested API's, 
+3. FAKE build enhancements, 
+4. Update FAKE website to use new FSDocs library and give it a new fresh look, 
+5. General Enhancements, 
 6. Add Fantomas tool to FAKE codebase as a styling and formatter tool.
 
 Following sections explain each point in more details.
@@ -161,37 +162,37 @@ and F# best practice now uses XMl syntax as a documentation blocks as explained 
 [Recommended XML doc extensions for F# documentation tooling](https://github.com/fsharp/fslang-design/blob/main/tooling/FST-1031-xmldoc-extensions.md).
 So we took the chance once again to convert the documentation from markdown syntax to XML syntax. 
 For example, a doc block like this one:
-```f#
+```F#
 /// Creates a GitHub Release for the specified repository and tag name
-    /// Creates a draft GitHub Release for the specified repository and tag name
-    /// ## Parameters
-    /// - `owner` - the repository's owner
-    /// - `repoName` - the repository's name
-    /// - `tagName` - the name of the tag to use for this release
-    /// - `prerelease` - indicates whether the release will be created as a prerelease
-    /// - `notes` - collection of release notes that will be inserted into the body of the release
-    /// - `client` - GitHub API v3 client
-    ///
-    /// # Sample
-    /// Target.create "GitHubRelease" (fun _ ->
-    ///            let token =
-    ///                match Environment.environVarOrDefault "github_token" "" with
-    ///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
-    ///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
-    ///
-    ///            let files =
-    ///                runtimes @ [ "portable"; "packages" ]
-    ///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    ///
-    ///            GitHub.createClientWithToken token
-    ///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &lt;&gt; None) release.Notes
-    ///            |> GitHub.uploadFiles files
-    ///            |> GitHub.publishDraft
-    ///            |> Async.RunSynchronously)
+/// Creates a draft GitHub Release for the specified repository and tag name
+/// ## Parameters
+/// - `owner` - the repository's owner
+/// - `repoName` - the repository's name
+/// - `tagName` - the name of the tag to use for this release
+/// - `prerelease` - indicates whether the release will be created as a prerelease
+/// - `notes` - collection of release notes that will be inserted into the body of the release
+/// - `client` - GitHub API v3 client
+///
+/// # Sample
+/// Target.create "GitHubRelease" (fun _ ->
+///            let token =
+///                match Environment.environVarOrDefault "github_token" "" with
+///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
+///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+///
+///            let files =
+///                runtimes @ [ "portable"; "packages" ]
+///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///
+///            GitHub.createClientWithToken token
+///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &lt;&gt; None) release.Notes
+///            |> GitHub.uploadFiles files
+///            |> GitHub.publishDraft
+///            |> Async.RunSynchronously)
 ```
 
 Is converted to the following XML syntax:
-```f#
+```F#
 /// <summary>
 /// Creates a draft GitHub Release for the specified repository and tag name
 /// </summary>
@@ -226,7 +227,7 @@ Is converted to the following XML syntax:
 ## General Enhancements
 
 1. Removed the following files or directories since they are not used;
-    1. `[fake.sh](http://fake.sh)` file
+    1. `fake.sh` file
     2. `release-website.cmd` file 
     3. `.circleci` directory
 2. Enhance documentation pages and fix any broken links on them.
