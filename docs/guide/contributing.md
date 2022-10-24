@@ -59,7 +59,6 @@ The following IDEs are also excellent choices:
 - Visual Studio for Mac [[<ins>download</ins>](https://visualstudio.microsoft.com/vs/mac/)]
 - Visual Studio for Windows [[<ins>download</ins>](https://visualstudio.microsoft.com/vs/)]
 
-
 ### Install FAKE
 
 You can quickly install and use FAKE with the dotnet SDK (we use fake-cli as local tool):
@@ -154,7 +153,6 @@ to `docs` directory and entering the following command in a CMD:
 npm run dev
 ```
 
-
 ### Building the Documentation
 
 To build the documentation from scratch, simply run: 
@@ -169,7 +167,6 @@ To save time, you may skip the prerequisite build steps and run the `GenerateDoc
 dotnet fake build -s target GenerateDocs
 ```
 (Note: this assumes binaries are already built and have not been modified.)
-
 
 ### Viewing the Documentation
 
@@ -253,7 +250,6 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
   It would be helpful if a second PR against `release/next` is sent that merges the hotfix into `release/next` 
 * and adds the hotfix to the FAKE 5 and above code as well.
 
-
 ## Porting Legacy Modules to Current Version of FAKE
 
 As mentioned in the [*Fake 5 and above learn more*](/guide/fake-history.html) section, we could use your help porting modules to FAKE 5. 
@@ -275,7 +271,6 @@ These steps will ensure:
 * People using the NuGet package will get the warnings to update the new API
 * The new API is part of FakeLib (deprecated)
 * The new API is available as separate module
-
 
 ## Release Process
 To publish a release, merge the changes to `master` branch and prepare release notes in `RELEASE_NOTES.md` file, and trigger the `release` GitHub action providing as an input the release version.
@@ -302,7 +297,6 @@ If you ever need a release/bugfix, make sure to mention that in your PR. We can 
 > Those bits should be considered for "unblocking"-purposes or testing only.
 
 The [<ins>release process</ins>](https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&view=mine&_a=releases) is publicly available as well.
-
 
 ## Notes for Maintainers
 

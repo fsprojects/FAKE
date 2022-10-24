@@ -1,36 +1,38 @@
 FAKE v6 is finally here -- this new major release lays the foundation for future releases of FAKE
-and complete the transition that started in FAKE v5.
+and move a step closer to complete the transition that started in FAKE v5. We have removed the
+obsolete API's and replaced there usages with alternatives, updated dependencies, polished some
+API's, and refreshed the website!
 
 ![FAKE v6 Home Page Hero Section]({{root}}content/img/fakev6-release/fake-v6-hero-section.png)
 
 The above screenshot is from the new FAKE website!
 
 FAKE v6 focuses on FAKE modules and repository. We wanted this release to lay foundation for future
-development and releases of FAKE to be much easier and streamlined. In addition, this release tries
-to complete the transition that started from FAKE v5 to move FAKE codebase to a modular approach.
+development and releases of FAKE to be much easier and streamlined. In addition, this release move one
+step closer to complete the transition that started from FAKE v5 to move FAKE codebase to a modular approach.
 
-The main points that this release address are the following:
-1. Update dependencies of repsoitory.
+The main points that this release addresses are the following:
+1. Update dependencies of repository.
 2. Remove obsolete APIs and replace their usage with alternative suggested API's,
 3. FAKE build enhancements,
 4. Update FAKE website to use new FSDocs library and give it a new fresh look,
-6. General Enhancements
-7. Add Fantomas tool to FAKE codebase as a styling and formatter tool.
+5. General Enhancements
+6. Add Fantomas tool to FAKE codebase as a styling and formatter tool.
 
 Following sections explain each point in more details.
 
 
-## Update dependencies of repsoitory
+## Update dependencies of repository
 
 FAKE was lacking behind the tools it uses as dependencies, especially, F# compiler services and Paket.
-FAKE v6 cleans the dependenices in `paket.dependencies` and upgrade them to newer versions. However,
+FAKE v6 cleans the dependencies in `paket.dependencies` and upgrade them to newer versions. However,
 not every upgrade is smooth and direct! After upgrading dependencies, including F# compiler services 
 to latest major version, 41. The runner using reference assemblies for Net Standard 2.0 stopped working.
 
 As a recap, in FAKE v5 we supported .NET 6 reference assemblies in FAKE runner in addition to .NET STANDARD
 2.0, so uses can opt-in to use .NET 6 references assemblies when running scripts using FAKE runner. However,
 updating the F# compiler services dependency, broke the support for .NET STANDARD 2.0 reference assemblies in
-runner. We tried to solve it, but with no luck. The error we get is the following:  
+the runner. We tried to solve it, but with no luck. The error we get is the following:  
 
 ```fsharp
 MissingMethodException: Method not found: 'Void Microsoft.FSharp.Core.PrintfFormat`5..ctor(System.String)'.. Actual value was false but had expected it to be true.
@@ -42,7 +44,9 @@ assemblies from runner**. This move has the effect of requiring that, .NET SDK v
 to use FAKE runner.
 
 By that, FAKE runner will have a minimum requirement of .NET v6 SDK. This new requirement has been added to the README 
-file of the repository under a new section called *requirements*.
+file of the repository under a new section called *requirements*. Also, we updated the contribution guide to add the
+other possible ways that FAKE modules can be used in addition to using FAKE runner. These new approaches are being
+adopted by community to overcome some limitations on the runner. Especially, when upgrading to a new version of .NET.
 
 > We choose .NET 6 reference assemblies since .NET 6 is the current LTS release of .NET
 
@@ -50,7 +54,7 @@ file of the repository under a new section called *requirements*.
 ## Obsolete APIs
 
 A lot of modules in FAKE uses obsolete API's from other part of the codebase, especially from the process module.
-FAKE v6 removed the obsolete API's in process module and replace their usage in other parts of the codebase with
+FAKE v6 removed the obsolete API's in the process module and replace their usage in other parts of the codebase with
 alternatives.
 
 Not only API's from process module were removed, but other API's that were marked with obsolete attribute as well.
@@ -60,16 +64,33 @@ to see the changes in each module [<ins>[Modules Changes](#Modules-Changes)</ins
 
 ## FAKE Build Enhancements
 
-Following points present the changes went in FAKE's `build.fsx` file:
+The build file in FAKE was cluttered by a lot of things that are now not used, so dealing with the file is somehow
+a little hard. For example, the script supports running the build on multiple CI providers, which was the case before
+we switch to GitHub actions. But now the support for other providers is not needed, hence we can remove a good amount of
+unused code. This with a long of other changes we did to the script. 
+
+Another major change was to remove all the handling for `AssemblyInfo.fs` files from script and modules. In which FAKE now uses
+a `Directory.Build.props` file for build information instead of scattered `AssemblyInfo.fs` files. The main reason we did this change
+was that, when we open an `AssemblyInfo.fs` file in one of the modules, the information is old and irrelevant! - the dates and the assembly
+version. They are from the first time the module is published. The reader need to go to build script to understand what is going on
+and how new data is set. In addition, the build script modify the GIT tree to remove these files from GIT when adding the new information
+and then revert changes again once done. The `Directory.Build.props` file removes all of these steps in favor of one file that .NET
+take and use in build, and the file is always up-to-date with information from build script directly.
+
+Following points present the changes went in FAKE's `build.fsx` file and build process of FAKE in general:
 
 1. Added `Directory.Build.props` file at the root of the repository as a root level MSBuild properties file for projects in FAKE.sln
 This file include top level MSBuild parameters, including:
     1. Property `SourceRoot` which is set root directory of FAKE repository
     2. `SourceRevisionId` which is set to current date and time. Used in FAKE runner hints
-    3. `IncludeSourceRevisionInInformationalVersion` which is set to `true`. This field is used in combination with `SourceRevisionId` which is set to current date and time. So MSBuild append the value in `SourceRevisionId` to `Version` property when specified - before we used NuGet version which has build date info as well. In FAKE, we have used `SourceRevisionId` to only set build time to be used in FAKE runner hints., but to be available in runtime for FAKE runner. [<ins>Please see this link for relation between them</ins>](https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#generateassemblyinfo)
+    3. `IncludeSourceRevisionInInformationalVersion` which is set to `true`. This field is used in combination with `SourceRevisionId` 
+        which is set to current date and time. So MSBuild append the value in `SourceRevisionId` to `Version` property when specified
+        - before we used NuGet version which has build date info as well. In FAKE, we have used `SourceRevisionId` to only set build 
+        time to be used in FAKE runner hints., but to be available in runtime for FAKE runner. 
+        [<ins>Please see this link for relation between them</ins>](https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#generateassemblyinfo)
     4. Add the FAKE logo to output NuGet packages
     5. Add README file to output NuGet packages
-2. Added another `Directory.Build.props` in `src\app` with specific information information for FAKE source projects. This file include
+2. Added another `Directory.Build.props` in `src\app` with specific information for FAKE source projects. This file include
 properties for NuGet pack to use, like project description, authors, logo, README, etc..
 Guidelines in [<ins>this link</ins>](https://docs.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices) were followed in the process
 3. Removed all the `AssemblyInfo.fs` files in projects in FAKE.sln in favor of `Directory.Build.props` files added.
@@ -89,39 +110,26 @@ Guidelines in [<ins>this link</ins>](https://docs.microsoft.com/en-us/nuget/crea
         
     3. `Fake.Runtime.FakeRuntimeHints` which displays the upgrade hint for FAKE runner. Now this gets the build time of the assembly. To get assembly
     build time we have added the `SourceRevisionId`  variable in build (see point #1 b and c) above, and extract it in FAKE hint file.
-5. Enhanced `build.fsx` script as follows:
+5. Enhanced `build.fsx` script targets as follows:
     1. Removed targets: 
         
         `SetAssemblyInfo`
-        
         `UnskipAssemblyInfo`
-        
         `UnskipAndRevertAssemblyInfo`
-        
         `Release_Staging`
         
     2. Renamed targets:
         
         `BootstrapTestDotNetCore` → `BootstrapFake`
-        
-        `DotNetCoreCreateChocolateyPackage` → `DotNetCreateChocolateyPackage`
-        
+        `DotNetCoreCreateChocolateyPackage` → `DotNetCreateChocolateyPackage`        
         `DotNetCorePushChocolateyPackage` → `DotNetPushChocolateyPackage`
-        
         `DotNetCoreCreateDebianPackage` → `DotNetCreateDebianPackage`
-        
         `_DotNetPackage` → `DotNetCreateNuGetPackage`
-        
         `DotNetCorePushNuGet` → `DotNetPushToNuGet`
-        
         `PrintColors` → `BootstrapFake_PrintColors` 
-        
         `FailFast` → `BootstrapFake_FailFast` 
-        
         `_StartDnc` → `BeforeBuild`
-        
         `_AfterBuild` → `AfterBuild`
-        
         `FastRelease` → `GitHubRelease` 
     3. New targets:
         `CheckFormatting`
@@ -135,10 +143,11 @@ Guidelines in [<ins>this link</ins>](https://docs.microsoft.com/en-us/nuget/crea
 
 During the dependency update, we faced an issue in FSDocs (formerly FSFormatting). FAKE was using 4.x version of the
 library, and currently released version is 16.x! The library has changed a lot in which a lot of the steps FAKE
-uses to generate the website were removed from library. For instance, using Razor pages as templates, API and usage.
+uses to generate the website were removed from the library. For instance, using Razor pages as templates, the API and 
+command line usage.
 
-This let to a major re-implemntation and re-design of FAKE website from the ground up. We took the chance to do all
-of that during update of FSDocs library.
+This push to a major re-implementation and re-design of the FAKE website from the ground up. We took the chance to do all
+of that during the update of FSDocs library!
 
 So, from FAKE v6, we now have a new module; `Fake.DotNet.Fsdocs`, and `Fake.DotNet.FSFormatting` has been removed.
 The new module uses the new API from FSDocs and it is used in generating the new website.
@@ -146,10 +155,78 @@ The new module uses the new API from FSDocs and it is used in generating the new
 The stack and details of the new website are added to the [<ins>contribution guide page</ins>](/guide/contributing.html#Contributing-Documentation), please refer to that page to get
 more details new site.
 
+One other major detail is that, FSDocs now defaults to XML syntax as a documentation blocks for code.
+On the other hand, FAKE codebase uses markdown syntax. Which caused problems in generating the new site
+and F# best practice now uses XMl syntax as a documentation blocks as explained in 
+[Recommended XML doc extensions for F# documentation tooling](https://github.com/fsharp/fslang-design/blob/main/tooling/FST-1031-xmldoc-extensions.md).
+So we took the chance once again to convert the documentation from markdown syntax to XML syntax. 
+For example, a doc block like this one:
+```f#
+/// Creates a GitHub Release for the specified repository and tag name
+    /// Creates a draft GitHub Release for the specified repository and tag name
+    /// ## Parameters
+    /// - `owner` - the repository's owner
+    /// - `repoName` - the repository's name
+    /// - `tagName` - the name of the tag to use for this release
+    /// - `prerelease` - indicates whether the release will be created as a prerelease
+    /// - `notes` - collection of release notes that will be inserted into the body of the release
+    /// - `client` - GitHub API v3 client
+    ///
+    /// # Sample
+    /// Target.create "GitHubRelease" (fun _ ->
+    ///            let token =
+    ///                match Environment.environVarOrDefault "github_token" "" with
+    ///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
+    ///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    ///
+    ///            let files =
+    ///                runtimes @ [ "portable"; "packages" ]
+    ///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    ///
+    ///            GitHub.createClientWithToken token
+    ///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &lt;&gt; None) release.Notes
+    ///            |> GitHub.uploadFiles files
+    ///            |> GitHub.publishDraft
+    ///            |> Async.RunSynchronously)
+```
+
+Is converted to the following XML syntax:
+```f#
+/// <summary>
+/// Creates a draft GitHub Release for the specified repository and tag name
+/// </summary>
+///
+/// <param name="owner">The repository's owner</param>
+/// <param name="repoName">The repository's name</param>
+/// <param name="tagName">The name of the tag to use for this release</param>
+/// <param name="prerelease">Indicates whether the release will be created as a prerelease</param>
+/// <param name="notes">Collection of release notes that will be inserted into the body of the release</param>
+/// <param name="client">GitHub API v3 client</param>
+/// <example>
+/// <code lang="fsharp">
+///         Target.create "GitHubRelease" (fun _ ->
+///            let token =
+///                match Environment.environVarOrDefault "github_token" "" with
+///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
+///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+///
+///            let files =
+///                runtimes @ [ "portable"; "packages" ]
+///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///
+///            GitHub.createClientWithToken token
+///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &lt;&gt; None) release.Notes
+///            |> GitHub.uploadFiles files
+///            |> GitHub.publishDraft
+///            |> Async.RunSynchronously)
+/// </code>
+/// </example>
+```
+
 ## General Enhancements
 
 1. Removed the following files or directories since they are not used;
-    1.  `[fake.sh](http://fake.sh)` file
+    1. `[fake.sh](http://fake.sh)` file
     2. `release-website.cmd` file 
     3. `.circleci` directory
 2. Enhance documentation pages and fix any broken links on them.
@@ -160,10 +237,9 @@ more details new site.
 ## FAKE now uses Fantomas as a styling tool
 
 FAKE v6 adds [<ins>Fantomas</ins>](https://fsprojects.github.io/fantomas/docs/index.html) as a styling and code formatter tool.
-The tool uses offical F# style guide. Additions to FAKE repsoitory include a new build target to check formatting of the codebase,
-`CheckFormatting` tagret. More details are added to [<ins>contribution guide page</ins>](/guide/contributing.html#Style-Guidelines), please refer to that page to get
-more details.
-
+The tool uses the official F# style guide. Additions to FAKE repository include a new build target to check formatting of the codebase,
+the `CheckFormatting` target. More details are added to [<ins>contribution guide page</ins>](/guide/contributing.html#Style-Guidelines), 
+please refer to that page to get more details.
 
 ## Modules Changes
 
