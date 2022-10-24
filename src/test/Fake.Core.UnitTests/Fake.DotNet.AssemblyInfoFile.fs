@@ -332,8 +332,8 @@ let tests =
                   (AssemblyInfoFile.getAttributes originalFilePath)
                   (Some(AssemblyInfoFileConfig(false, true, "System")))
 
-              let originalContent = (File.ReadAllText originalFilePath).Replace("\r", "")
-              let newContent = (File.ReadAllText newFilePath).Replace("\r", "")
+              let originalContent = (File.ReadAllText originalFilePath).Replace("\r", "").Replace("\n", "")
+              let newContent = (File.ReadAllText newFilePath).Replace("\r", "").Replace("\n", "")
 
               Expect.equal originalContent newContent "File content differs when read and write"
 
