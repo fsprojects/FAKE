@@ -529,6 +529,19 @@ Target.create "CheckReleaseSecrets" (fun _ ->
     for secret in secrets do
         secret.Force() |> ignore)
 
+Target.create "CheckFormatting" (fun _ ->
+    let dotnetOptions = (fun (buildOptions:DotNet.Options) -> { buildOptions with RedirectOutput = false})
+    let result =
+     DotNet.exec id "fantomas" "src/app/ src/template/ src/test/ --recurse --check"
+
+    if result.ExitCode = 0 then
+        Trace.log "No files need formatting"
+    elif result.ExitCode = 99 then
+        failwith "Some files need formatting, please run \"dotnet fantomas  src/app/ src/template/ src/test/ --recurse\" to resolve this."
+    else
+        failwith "Errors while formatting"
+)
+
 // ----------------------------------------------------------------------------------------------------
 // Documentation targets.
 
@@ -1152,6 +1165,8 @@ for runtime in "current" :: "portable" :: runtimes do
     | None -> "DotNetCreateNuGetPackage" ?=> rawTargetName |> ignore
 
     prev <- Some rawTargetName
+
+"CheckFormatting" ==> "Clean"
 
 "CheckReleaseSecrets" ?=> "Clean"
 "WorkaroundPaketNuspecBug" ==> "Clean"
