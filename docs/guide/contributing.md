@@ -202,17 +202,27 @@ e.g: If you wanted to test a local build of Fake.DotNet.NuGet
 
 ## Style Guidelines
 
+From FAKE v6, FAKE uses [Fantomas](https://fsprojects.github.io/fantomas/) as a code formatter and style
+guideline tool. The tool will be run automatically on codebase to check if any style guidelines are not
+being followed. To accomplish that, the target `CheckFormatting` in `build.fsx` script will be run on
+each build of the codebase to ensure all files follow guideline. If not, then build will fail with
+instructions on what should be done to follow the guideline. 
+
+A useful way to ensure you are not waiting for build to fail when run it, is to add a GIT hook on pre-commit
+to run Fantomas. Please see [Fantomas GIT hook documentation page](https://fsprojects.github.io/fantomas/docs/end-users/GitHooks.html).
+For FAKE usage, you need to run the following command:
+```shell
+dotnet fantomas  src/app/ src/template/ src/test/ --recurse
+```
+
+For development setup, we advise the following:
+
 * When working on FAKE 5 or above, [<ins>Visual Studio Code</ins>](https://code.visualstudio.com/) with [<ins>Ionide</ins>](http://ionide.io/) helps a lot!
-
 * Read the [<ins>F# component design guidelines</ins>](http://fsharp.org/specs/component-design-guidelines/).
-
 * Read the [<ins>API Design Guidelines</ins>](#API-Design-Guidelines) below.
-
 * Add documentation for your feature
-
 * If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the 
 * [<ins>menu</ins>](https://github.com/fsprojects/FAKE/blob/release/next/help/templates/template.cshtml)
-
 * If you write API documentation but no extra markdown, please consider adding it to the menu as well.
 
 ### API Design Guidelines
