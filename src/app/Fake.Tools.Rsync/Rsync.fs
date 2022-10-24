@@ -287,7 +287,7 @@ module Rsync =
     let rec private actionToString =
         function
         | Verbose -> "--verbose"
-        | Quiet -> "--quit"
+        | Quiet -> "--quiet"
         | NoMotd -> "--no-motd"
         | Checksum -> "--checksum"
         | Archive -> "--archive"

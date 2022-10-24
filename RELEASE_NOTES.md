@@ -8,6 +8,16 @@
 * ENHANCEMENT: General Enhancements, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: Add Fantomas tool to FAKE codebase as a styling and formatter tool, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 
+## 5.23.1 - 2022-10-21
+* BUGFIX: On Unix like OSs, look for sqlpackage in directories specified in $PATH, thanks @nickgravgaard - https://github.com/fsprojects/FAKE/pull/2700
+* BUGFIX: Core.Process: only set StandardEncoding if output/err is redirected, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2672
+* BUGFIX: Enhanced search path for Visual Studio, thanks @plainionist - https://github.com/fsprojects/FAKE/pull/2699
+* BUGFIX: Fake.Tools.Rsync: fix quiet flag typo, thanks @SimenLK - https://github.com/fsprojects/FAKE/pull/2698
+
+## 5.23.0 - 2022-08-01
+* ENHANCEMENT: Fake.Core.Process: stop using old ref-cell operators, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2674
+* BUGFIX: Fixes #2600, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/issues/2600
+
 ## 5.23.0-alpha002 - 2022-07-22
 * ENHANCEMENT: GitHubCI: stop restricting build+test jobs to release/next branch, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2673
 * BUGFIX: Fix getLastTag, thanks @akhansari - https://github.com/fsprojects/FAKE/issues/2677

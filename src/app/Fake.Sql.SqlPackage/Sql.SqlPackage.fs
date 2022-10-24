@@ -59,16 +59,17 @@ module SqlPackage =
         }
 
     let internal validPaths =
-        let paths =
-            [ let macOrLinux = Set [ PlatformID.MacOSX; PlatformID.Unix ]
-
-              if macOrLinux.Contains Environment.OSVersion.Platform then
-                  !! "/usr/local/bin/sqlpackage" |> Seq.map (fun path -> path, 15)
-              else
-                  let getSqlVersion (path: string) = path.Split '\\' |> Array.item 3 |> int
-
-                  let getVsVersion (path: string) =
-                      (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
+        let paths = [
+            if Environment.isUnix then
+                Seq.append Environment.pathDirectories ["/usr/local/bin"; "/usr/bin"] |> Seq.map (fun dir -> !!(dir </> "sqlpackage")) |> Seq.concat |> Seq.map (fun path -> path, 15)
+            else
+                let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
+                let getVsVersion (path: string) = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
+                !!(Environment.ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
+                !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+                !!(Environment.ProgramFilesX86 </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+                !!(Environment.ProgramFiles </> @"Microsoft Visual Studio\**\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\SqlPackage.exe") |> Seq.map(fun path -> path, Reflection.Assembly.LoadFile(path).GetName().Version.Major)
+        ]
 
                   !!(Environment.ProgramFilesX86
                      </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe")

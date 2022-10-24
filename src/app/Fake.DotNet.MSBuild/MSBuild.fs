@@ -299,11 +299,17 @@ module private MSBuildExe =
                 let findOnVSPathsThenSystemPath =
                     let visualStudioVersion = Environment.environVarOrNone "VisualStudioVersion"
 
+                    // with VS 2022 Visual Studio can also be installed in "Program Files" instead of "Program Files (x86)"
+                    // so we need to search both paths for every version of Visual Studio
+                    let withProgramFiles paths =
+                        (paths |> List.map ((@@) Fake.Core.Environment.ProgramFilesX86))
+                        @ (paths |> List.map ((@@) Fake.Core.Environment.ProgramFiles))
+
                     let vsVersionPaths =
                         let dict = toDict knownMSBuildEntries
-
-                        defaultArg (visualStudioVersion |> Option.bind dict.TryFind) getAllKnownPaths
-                        |> List.map ((@@) Environment.ProgramFilesX86)
+                        match Fake.Core.Environment.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind with
+                        | Some x -> x |> withProgramFiles
+                        | None -> (knownMSBuildEntries |> List.collect(fun x -> x.Paths |> withProgramFiles)) @ oldMSBuildLocations
 
                     let vsWhereVersionPaths =
                         let orderedVersions = MSBuildExeFromVsWhere.getOrdered ()
@@ -333,6 +339,10 @@ module private MSBuildExe =
         elif foundExe.Contains @"\2019\" then
             Trace.logVerbosefn
                 "Using msbuild of VS2019 (%s), if you encounter build errors make sure you have installed the necessary workflows!"
+                foundExe
+        elif foundExe.Contains @"\2022\" then
+            Trace.logVerbosefn
+                "Using msbuild of VS2022 (%s), if you encounter build errors make sure you have installed the necessary workflows!"
                 foundExe
 
         foundExe

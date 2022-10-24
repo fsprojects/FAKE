@@ -501,8 +501,10 @@ module Process =
             let si = p.StartInfo
 
             if Environment.isMono || AlwaysSetProcessEncoding then
-                si.StandardOutputEncoding <- ProcessEncoding
-                si.StandardErrorEncoding <- ProcessEncoding
+                if si.RedirectStandardOutput then
+                    si.StandardOutputEncoding <- ProcessEncoding
+                if si.RedirectStandardError then
+                    si.StandardErrorEncoding <- ProcessEncoding
 
             if c.TraceCommand && shouldEnableProcessTracing () then
                 let commandLine =
