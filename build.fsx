@@ -443,10 +443,7 @@ let rec nugetPush tries nugetPackage =
 
     try
         if not <| String.IsNullOrEmpty apiKey.Value then
-            let quoteString str =
-                StringBuilder()
-                |> StringBuilder.appendQuotedIfNotNull Some str
-                |> StringBuilder.toText
+            let quoteString str = sprintf "\"%s\"" str
             
             let args = sprintf "push %s %s -Source %s" (quoteString nugetPackage) (quoteString apiKey.Value) (quoteString nugetSource)
             
