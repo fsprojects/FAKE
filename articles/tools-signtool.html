@@ -6,11 +6,11 @@
 </title>
     <meta charset="utf-8">
     <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
-    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
-    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
-    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="/content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/content/favicon-16x16.png">
+    <link rel="manifest" href="/content/site.webmanifest">
+    <link rel="mask-icon" href="/content/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
@@ -18,12 +18,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
-    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+    <link type="text/css" rel="stylesheet" href="/content/fsdocs-default.css">
+    <script type="text/javascript" src="/content/fsdocs-tips.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/tailwind.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     
@@ -36,13 +36,13 @@
     lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
         :class="{'bg-white': open === false}">
         <div class="flex gap-2 items-center block">
-            <a class="flex items-center gap-2" href="fake.buildindex.html">
-                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+            <a class="flex items-center gap-2" href="/index.html">
+                <img src="/content/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
                     width="28" height="28" class="w-10 h-10">
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.0.0-alpha001</span>
+                <span>6.0.0-alpha002</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -60,10 +60,10 @@
         <div class="flex items-center pt-10 md:pt-0">
             <div class="md:mr-5">
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a>
                     </li>
                     <li class="md:hidden">|</li>
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
                 </ul>
             </div>
             <button
@@ -129,8 +129,8 @@
             <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
             lg:hidden">
                 <div class="flex gap-2 items-center">
-                    <a class="flex items-center gap-2" href="fake.buildindex.html">
-                        <img src="fake.buildcontent/assets/img/logo.svg"
+                    <a class="flex items-center gap-2" href="/index.html">
+                        <img src="/content/assets/img/logo.svg"
                             alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
                             class="w-10 h-10">
                         <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
@@ -238,14 +238,14 @@ command-line tool that digitally signs files, verifies signatures in files, or t
 </ul>
 <p>API Reference:</p>
 <ul>
-<li><a href="fake.buildreference/fake-tools-signtool.html"><code>SignTool</code></a>: The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.</li>
-<li><a href="fake.buildreference/fake-tools-signtool-certificatefromfile.html"><code>CertificateFromFile</code></a>: Specifies parameters to use when using a certificate from a file.</li>
-<li><a href="fake.buildreference/fake-tools-signtool-certificatefromstore.html"><code>CertificateFromStore</code></a>: Specifies parameters to use when using a certificate from a certificate store.</li>
-<li><a href="fake.buildreference/fake-tools-signtool-signcertificate.html"><code>SignCertificate</code></a>: Specifies what type of certificate to use.</li>
-<li><a href="fake.buildreference/fake-tools-signtool-signoptions.html"><code>SignOptions</code></a>: Sign command options</li>
-<li><a href="fake.buildreference/fake-tools-signtool-timestampoption.html"><code>TimeStampOption</code></a>: Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.</li>
-<li><a href="fake.buildreference/fake-tools-signtool-timestampoptions.html"><code>TimeStampOptions</code></a>: Timestamp command options</li>
-<li><a href="fake.buildreference/fake-tools-signtool-verifyoptions.html"><code>VerifyOptions</code></a>: Verify command options</li>
+<li><a href="/reference/fake-tools-signtool.html"><code>SignTool</code></a>: The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.</li>
+<li><a href="/reference/fake-tools-signtool-certificatefromfile.html"><code>CertificateFromFile</code></a>: Specifies parameters to use when using a certificate from a file.</li>
+<li><a href="/reference/fake-tools-signtool-certificatefromstore.html"><code>CertificateFromStore</code></a>: Specifies parameters to use when using a certificate from a certificate store.</li>
+<li><a href="/reference/fake-tools-signtool-signcertificate.html"><code>SignCertificate</code></a>: Specifies what type of certificate to use.</li>
+<li><a href="/reference/fake-tools-signtool-signoptions.html"><code>SignOptions</code></a>: Sign command options</li>
+<li><a href="/reference/fake-tools-signtool-timestampoption.html"><code>TimeStampOption</code></a>: Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.</li>
+<li><a href="/reference/fake-tools-signtool-timestampoptions.html"><code>TimeStampOptions</code></a>: Timestamp command options</li>
+<li><a href="/reference/fake-tools-signtool-verifyoptions.html"><code>VerifyOptions</code></a>: Verify command options</li>
 </ul>
 <h2><a name="Open-namespace" class="anchor" href="#Open-namespace">Open namespace</a></h2>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
@@ -269,8 +269,8 @@ command-line tool that digitally signs files, verifies signatures in files, or t
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-certificatefromfile.html"><em><code>CertificateFromFile</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-certificatefromfile.html"><em><code>CertificateFromFile</code></em></a>,
+<a href="/reference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
 <h3><a name="When-the-certificate-is-located-in-a-certificate-store" class="anchor" href="#When-the-certificate-is-located-in-a-certificate-store">When the certificate is located in a certificate store</a></h3>
 <p>All options are optional, and any combination may be used, depending on specific needs.</p>
 <p>If no <code>StoreName</code> is specified, the "My" store is opened.</p>
@@ -289,8 +289,8 @@ command-line tool that digitally signs files, verifies signatures in files, or t
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-certificatefromstore.html"><em><code>CertificateFromStore</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-certificatefromstore.html"><em><code>CertificateFromStore</code></em></a>,
+<a href="/reference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
 <h3><a name="Custom-signing-options" class="anchor" href="#Custom-signing-options">Custom signing options</a></h3>
 <p>Use SHA256 (<a href="#SHA1-SHA256"><em>see SHA1/SHA256</em></a>) to create file signatures.</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// val sign :</span>
@@ -305,7 +305,7 @@ command-line tool that digitally signs files, verifies signatures in files, or t
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>.</p>
 <h3><a name="Adding-a-time-stamp" class="anchor" href="#Adding-a-time-stamp">Adding a time stamp</a></h3>
 <p>Time stamp at the same time as signing.</p>
 <p>There is a separate function <code>signWithTimeStamp</code> that, compared to <code>sign</code>, has 2 additional parameters to set time stamping options.</p>
@@ -325,7 +325,7 @@ command-line tool that digitally signs files, verifies signatures in files, or t
     <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> <span class="id">o</span><span class="pn">)</span>
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
-<p>Only a subset of options is shown in the example, see API Reference for all available options: <a href="fake.buildreference/fake-tools-signtool-signoptions.html"><code>SignOptions</code></a>, <a href="fake.buildreference/fake-tools-signtool-timestampoption.html"><code>TimeStampOption</code></a>.</p>
+<p>Only a subset of options is shown in the example, see API Reference for all available options: <a href="/reference/fake-tools-signtool-signoptions.html"><code>SignOptions</code></a>, <a href="/reference/fake-tools-signtool-timestampoption.html"><code>TimeStampOption</code></a>.</p>
 <h4><a name="Custom-time-stamp-options" class="anchor" href="#Custom-time-stamp-options">Custom time stamp options</a></h4>
 <p>Use SHA256 (<a href="#SHA1-SHA256"><em>see SHA1/SHA256</em></a>).</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// val signWithTimeStamp :</span>
@@ -344,8 +344,8 @@ command-line tool that digitally signs files, verifies signatures in files, or t
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-timestampoption.html"><em><code>TimeStampOption</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>,
+<a href="/reference/fake-tools-signtool-timestampoption.html"><em><code>TimeStampOption</code></em></a>.</p>
 <h2><a name="Time-stamping" class="anchor" href="#Time-stamping">Time stamping</a></h2>
 <p>Time stamping previously signed files.</p>
 <p>When signing a file, the signature is valid only as long as the certificate used to create it is valid. The moment
@@ -365,7 +365,7 @@ while the certificate was still valid and effectively extends the signature's va
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>.</p>
 <h3><a name="Custom-options" class="anchor" href="#Custom-options">Custom options</a></h3>
 <p>Use SHA256 (<a href="#SHA1-SHA256"><em>see SHA1/SHA256</em></a>).</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// val timeStamp :</span>
@@ -380,8 +380,8 @@ while the certificate was still valid and effectively extends the signature's va
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-timestampoption.html"><em><code>TimeStampOption</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-timestampoption.html"><em><code>TimeStampOption</code></em></a>,
+<a href="/reference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>.</p>
 <h2><a name="Verifying" class="anchor" href="#Verifying">Verifying</a></h2>
 <p>Verify signed files.</p>
 <p>The verify command determines whether the signing certificate was issued by a trusted authority, whether the signing certificate
@@ -396,7 +396,7 @@ has been revoked, and, optionally, whether the signing certificate is valid for 
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>.</p>
 <h3><a name="Custom-options-1" class="anchor" href="#Custom-options-1">Custom options</a></h3>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// val verify :</span>
 <span class="c">//  setOptions:(SignTool.VerifyOptions -&gt; SignTool.VerifyOptions)</span>
@@ -411,7 +411,7 @@ has been revoked, and, optionally, whether the signing certificate is valid for 
     <span class="pn">[</span><span class="s">&quot;program.exe&quot;</span><span class="pn">;</span> <span class="s">&quot;library.dll&quot;</span><span class="pn">]</span>
 </code></pre>
 <p>Only a subset of options is shown in the example, see API Reference for all available options:
-<a href="fake.buildreference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>.</p>
+<a href="/reference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>.</p>
 <h2><a name="Common-options" class="anchor" href="#Common-options">Common options</a></h2>
 <p>All functions share some common options.</p>
 <p>Tool options - path to signtool.exe, execution timeout, working directory. These options are not set by default.</p>
@@ -448,10 +448,10 @@ has been revoked, and, optionally, whether the signing certificate is valid for 
 <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span>
     <span class="id">Verbosity</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 19)" onmouseover="showTip(event, 'fs2', 19)" class="id">None</span> <span class="pn">}</span>
 </code></pre>
-<p>API References: <a href="fake.buildreference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>,
-<a href="fake.buildreference/fake-tools-signtool-verbosity.html"><em><code>Verbosity</code></em></a>.</p>
+<p>API References: <a href="/reference/fake-tools-signtool-signoptions.html"><em><code>SignOptions</code></em></a>,
+<a href="/reference/fake-tools-signtool-timestampoptions.html"><em><code>TimeStampOptions</code></em></a>,
+<a href="/reference/fake-tools-signtool-verifyoptions.html"><em><code>VerifyOptions</code></em></a>,
+<a href="/reference/fake-tools-signtool-verbosity.html"><em><code>Verbosity</code></em></a>.</p>
 <h2><a name="Certificates" class="anchor" href="#Certificates">Certificates</a></h2>
 <p>The SignTool needs a certificate to sign files.</p>
 <h3><a name="Prod-release" class="anchor" href="#Prod-release">Prod / release</a></h3>
@@ -551,7 +551,7 @@ to true when signing the second time, otherwise the first signature will be repl
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.0.0-alpha001</span>
+                            <span>6.0.0-alpha002</span>
                         </a>
                     </p>
                 </div>
@@ -636,7 +636,7 @@ to true when signing the second time, otherwise the first signature will be repl
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+    <script type="text/javascript" src="/content/assets/js/prism.js"></script>
 </body>
 
 </html>

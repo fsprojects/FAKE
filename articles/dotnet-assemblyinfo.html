@@ -6,11 +6,11 @@
 </title>
     <meta charset="utf-8">
     <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
-    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
-    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
-    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="/content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/content/favicon-16x16.png">
+    <link rel="manifest" href="/content/site.webmanifest">
+    <link rel="mask-icon" href="/content/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
@@ -18,12 +18,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
-    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+    <link type="text/css" rel="stylesheet" href="/content/fsdocs-default.css">
+    <script type="text/javascript" src="/content/fsdocs-tips.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
-    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="/content/assets/css/tailwind.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     
@@ -36,13 +36,13 @@
     lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
         :class="{'bg-white': open === false}">
         <div class="flex gap-2 items-center block">
-            <a class="flex items-center gap-2" href="fake.buildindex.html">
-                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+            <a class="flex items-center gap-2" href="/index.html">
+                <img src="/content/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
                     width="28" height="28" class="w-10 h-10">
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.0.0-alpha001</span>
+                <span>6.0.0-alpha002</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -60,10 +60,10 @@
         <div class="flex items-center pt-10 md:pt-0">
             <div class="md:mr-5">
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a>
                     </li>
                     <li class="md:hidden">|</li>
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
                 </ul>
             </div>
             <button
@@ -129,8 +129,8 @@
             <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
             lg:hidden">
                 <div class="flex gap-2 items-center">
-                    <a class="flex items-center gap-2" href="fake.buildindex.html">
-                        <img src="fake.buildcontent/assets/img/logo.svg"
+                    <a class="flex items-center gap-2" href="/index.html">
+                        <img src="/content/assets/img/logo.svg"
                             alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
                             class="w-10 h-10">
                         <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
@@ -223,7 +223,7 @@
             class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
             <h1><a name="Generating-Files" class="anchor" href="#Generating-Files">Generating <code>AssemblyInfo</code> Files</a></h1>
 <p>In this article the <code>AssemblyInfo</code> task is used in order to set specific version information to .NET assemblies.</p>
-<p>If you succeeded with the <a href="fake.buildguide/getting-started.html">Getting Started tutorial</a>, then you just have to modify your
+<p>If you succeeded with the <a href="/guide/getting-started.html">Getting Started tutorial</a>, then you just have to modify your
 <code>BuildApp</code> target to the following:</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.DotNet.AssemblyInfoFile</span>
@@ -254,7 +254,7 @@
 <span class="pn">)</span>
 </code></pre>
 <p>As you can see generating an <code>AssemblyInfo.fs</code> file is pretty easy with FAKE. You can read more about the C# and F# <code>AssemblyInfo</code> tasks
-in the <a href="fake.buildreference/fake-dotnet-assemblyinfofile.html">API docs</a>.</p>
+in the <a href="/reference/fake-dotnet-assemblyinfofile.html">API docs</a>.</p>
 <h2><a name="Setting-the-version-Number" class="anchor" href="#Setting-the-version-Number">Setting the version Number</a></h2>
 <p>The version parameter can be declared as a property or fetched from a build server like TeamCity:</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">version</span> <span class="o">=</span>
@@ -262,7 +262,7 @@ in the <a href="fake.buildreference/fake-dotnet-assemblyinfofile.html">API docs<
   <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="fn">TeamCity</span> <span class="k">-&gt;</span> <span class="id">buildVersion</span>
   <span class="pn">|</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="s">&quot;0.2&quot;</span>
 </code></pre>
-<p><img src="fake.build/content/img/assemblyinfo/result.png" alt="alt text" title="The file version is set by FAKE" /></p>
+<p><img src="//content/img/assemblyinfo/result.png" alt="alt text" title="The file version is set by FAKE" /></p>
 <h2><a name="Storing-the-in-the-File" class="anchor" href="#Storing-the-in-the-File">Storing the <code>githash</code> in the <code>AssemblyInfo</code> File</a></h2>
 <p>Storing the <code>githash</code> with the assembly can make it easier to identify exactly what code is running. There isn't an attribute that
 directly fits with doing this, but one way is by storing it as Metadata (warning: this attribute is only available in .NET 4.5 and above)</p>
@@ -273,17 +273,17 @@ directly fits with doing this, but one way is by storing it as Metadata (warning
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Metadata</span><span class="pn">(</span><span class="s">&quot;githash&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs4', 9)" onmouseover="showTip(event, 'fs4', 9)" class="id">commitHash</span><span class="pn">)</span>
 </code></pre>
 <p>One of the easiest ways to retrieve this hash is to load and use a reflector program, like <a href="https://github.com/icsharpcode/ILSpy"><ins>ILSpy</ins></a>:</p>
-<p><img src="fake.build/content/img/assemblyinfo/assemblymetadata.png" alt="alt text" title="Checking the git hash of an assembly" /></p>
+<p><img src="//content/img/assemblyinfo/assemblymetadata.png" alt="alt text" title="Checking the git hash of an assembly" /></p>
 <h2><a name="Using-the-Approach" class="anchor" href="#Using-the-Approach">Using the <code>SolutionInfo</code> Approach</a></h2>
 <p>Some companies split their <code>AssemblyInfo</code> into a <code>SolutionInfo.cs</code> which is shared by all projects and a specific <code>AssemblyInfo.cs</code> per
 project which contains the product data. All versioning data is generated by the <code>AssemblyInfo</code> task into the <code>SolutionInfo.cs</code> and the
 <code>AssemblyInfo.cs</code> files are edited manually. This could look like this:</p>
-<p><img src="fake.build/content/img/assemblyinfo/solutioninfo.png" alt="alt text" title="SolutionInfo.cs is shared between projects" /></p>
+<p><img src="//content/img/assemblyinfo/solutioninfo.png" alt="alt text" title="SolutionInfo.cs is shared between projects" /></p>
 <blockquote>
 <p>The above picture and code within is from FAKE v4 (but the concept is very similar with fake 5 and above)</p>
 </blockquote>
 <p>The generated <code>SolutionInfo.cs</code> looks like this:</p>
-<p><img src="fake.build/content/img/assemblyinfo/generated.png" alt="alt text" title="Generated SolutionInfo.cs" /></p>
+<p><img src="//content/img/assemblyinfo/generated.png" alt="alt text" title="Generated SolutionInfo.cs" /></p>
 
         </div>
     </div>
@@ -348,7 +348,7 @@ project which contains the product data. All versioning data is generated by the
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.0.0-alpha001</span>
+                            <span>6.0.0-alpha002</span>
                         </a>
                     </p>
                 </div>
@@ -433,7 +433,7 @@ project which contains the product data. All versioning data is generated by the
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+    <script type="text/javascript" src="/content/assets/js/prism.js"></script>
 </body>
 
 </html>
