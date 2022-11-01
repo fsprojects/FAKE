@@ -31,7 +31,7 @@ __Before diving in__, please note:
   * **Visit the [<ins>Gitter room</ins>](https://gitter.im/fsprojects/FAKE)**
 
 * Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall 
-* be under the terms and conditions of the **Apache 2.0 license**. See [*<ins>`/License.txt`</ins>*](https://github.com/fsprojects/FAKE/tree/release/next/License.txt) for details.
+* be under the terms and conditions of the **Apache 2.0 license**. See [*<ins>`/License.txt`</ins>*](https://github.com/fsprojects/FAKE/tree/master/License.txt) for details.
 
 ## Prerequisites
 
@@ -81,12 +81,12 @@ For alternative methods of installing FAKE, please see the [<ins>Getting Started
 git remote add upstream https://github.com/fsprojects/FAKE.git
 ```
 
-4. **Checkout** the `release/next` branch. 
+4. **Checkout** the `master` branch. 
 ```shell
-git checkout release/next
+git checkout master
 ```
 
-5. To verify that everything works, **build** `release/next` via:
+5. To verify that everything works, **build** `master` via:
 ```shell
 dotnet fake build
 ```
@@ -110,7 +110,7 @@ dotnet fake build
 11. Use GitHub's UI to [<ins>create a pull request</ins>](https://github.com/fsprojects/FAKE/pulls). (Write "WIP" into the pull request description if it's not completely ready.)<br/><br/>If you need to rebase you can do:
 ```shell
 git fetch upstream
-git rebase upstream/release/next
+git rebase upstream/master
 git push origin myfeature -f
 ```
 
@@ -118,7 +118,7 @@ The pull request will be updated automatically.
 
 ## Contributing Documentation
 
-The code for all documentation can be found in the [<ins>`docs` directory on GitHub</ins>](https://github.com/fsprojects/FAKE/tree/release/next/docs). 
+The code for all documentation can be found in the [<ins>`docs` directory on GitHub</ins>](https://github.com/fsprojects/FAKE/tree/master/docs). 
 If you find a bug or add a new feature, **make sure you document it**!
 
 The documentation uses the following stack:
@@ -222,7 +222,7 @@ For development setup, we advise the following:
 * Read the [<ins>API Design Guidelines</ins>](#API-Design-Guidelines) below.
 * Add documentation for your feature
 * If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the 
-* [<ins>menu</ins>](https://github.com/fsprojects/FAKE/blob/release/next/help/templates/template.cshtml)
+* [<ins>menu</ins>](https://github.com/fsprojects/FAKE/blob/master/help/templates/template.cshtml)
 * If you write API documentation but no extra markdown, please consider adding it to the menu as well.
 
 ### API Design Guidelines
@@ -257,7 +257,7 @@ For development setup, we advise the following:
 
 * Fake 4 still allows hotfixes. Please send the PR against the [*hotfix_fake4 branch*](https://github.com/fsprojects/FAKE/tree/hotfix_fake4).
 
-  It would be helpful if a second PR against `release/next` is sent that merges the hotfix into `release/next` 
+  It would be helpful if a second PR against `master` is sent that merges the hotfix into `master` 
 * and adds the hotfix to the FAKE 5 and above code as well.
 
 ## Porting Legacy Modules to Current Version of FAKE
@@ -311,7 +311,7 @@ The [<ins>release process</ins>](https://fakebuild.visualstudio.com/FSProjects/_
 ## Notes for Maintainers
 
 FAKE uses GitHub actions in build process. We have two GitHub actions; the `build_and_test` and `release` actions.
-The `build_and_test` action is the action triggered on PRs and pushes to `release/next` branch. To validate changes
+The `build_and_test` action is the action triggered on PRs and pushes to `master` branch. To validate changes
 in a PR.
 
 The `release` action is responsible on release a new release of FAKE. It is triggered manually and needs an admin 

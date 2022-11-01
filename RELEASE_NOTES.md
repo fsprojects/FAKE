@@ -1,9 +1,10 @@
 # Release Notes
 
-## 6.0.0-alpha001 - tbd
-* ENHANCEMENT: Update dependencies of repsoitory, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+## 6.0.0-alpha001 - 2022-11-01
+* ENHANCEMENT: Update dependencies of repository, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: Remove obsolete APIs and replace their usage with alternative suggested API's, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: FAKE build enhancements, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: Switch documentation blocks to XML syntax instead of Markdown syntax to work with new FSDocs tool, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: Update FAKE website to use new FSDocs library and give it a new fresh look, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: General Enhancements, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: Add Fantomas tool to FAKE codebase as a styling and formatter tool, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
