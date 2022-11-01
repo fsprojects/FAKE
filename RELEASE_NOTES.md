@@ -1,6 +1,6 @@
 # Release Notes
 
-## 6.0.0-alpha001 - 2022-11-02
+## 6.0.0-alpha002 - 2022-11-02
 * ENHANCEMENT: Fix website assets loading
 
 ## 6.0.0-alpha001 - 2022-11-01
