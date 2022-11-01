@@ -3,7 +3,7 @@
 In this article you will learn how to create a [Slack](https://slack.com) webhook integration and 
 send a notification to it. This article assumes that you already have a Slack team setup.
 
-To see the available Slack APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-api-slack.html) for the Slack module.
+To see the available Slack APIs in FAKE, please see the [`API-Reference`](/reference/fake-api-slack.html) for the Slack module.
 
 ## Adding a Webhook Integration to a Channel
 
@@ -51,6 +51,6 @@ Slack.sendNotification webhookUrl (fun p ->
 
 The result should look something like this:
 
-![alt text]({{root}}content/img/slacknotification/slacknotification.png "Slack Notification Result")
+![alt text](/content/img/slacknotification/slacknotification.png "Slack Notification Result")
 
 For additional information on the parameters, check out Slack's [Webhook Documentation](https://api.slack.com/incoming-webhooks)

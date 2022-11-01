@@ -3,7 +3,7 @@ and move a step closer to complete the transition that started in FAKE v5. We ha
 obsolete API's and replaced there usages with alternatives, updated dependencies, polished some
 API's, and refreshed the website!
 
-![FAKE v6 Home Page Hero Section]({{root}}content/img/fakev6-release/fake-v6-hero-section.png)
+![FAKE v6 Home Page Hero Section](/content/img/fakev6-release/fake-v6-hero-section.png)
 
 The above screenshot is from the new FAKE website!
 

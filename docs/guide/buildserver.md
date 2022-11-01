@@ -91,4 +91,4 @@ Also, prior to currently setup of FAKE which uses GitHub actions. The previous s
 and AppVeyor. Look at this [*CI-build*](https://fakebuild.visualstudio.com/FSProjects/FSProjects%20Team/_build/results?buildId=425)
 for an example on how it looks in VSTS, and the following image shows how it looks like in AppVeyor:
 
-![AppVeyor test import]({{root}}content/img/buildserver/AppVeyor_imported_tests.png)
+![AppVeyor test import](/content/img/buildserver/AppVeyor_imported_tests.png)

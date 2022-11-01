@@ -8,7 +8,7 @@ and supports the .NET framework, Xamarin and Mono.
 
 The package `Fake.DotNet.Testing.SpecFlow` is a bridge to the [*SpecFlow*](specflow.exe) CLI.
 
-To see the available SpecFlow APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-dotnet-testing-specflow.html) 
+To see the available SpecFlow APIs in FAKE, please see the [`API-Reference`](/reference/fake-dotnet-testing-specflow.html) 
 for the SpecFlow module.
 
 ## Minimal working example

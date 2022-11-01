@@ -26,7 +26,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 how to install and use the latest FAKE version, how to edit and run scripts, how to automatically compile 
 your C# or F# projects, and finally how to automatically run NUnit tests on your projects.
 
-> If you are interested in what FAKE actually is, see our [<ins>FAQ</ins>]({{root}}guide/what-is-fake.html).
+> If you are interested in what FAKE actually is, see our [<ins>FAQ</ins>](/guide/what-is-fake.html).
 
 But before going into these details, let's first discuss the possible ways you can use to run FAKE.
 
@@ -180,7 +180,7 @@ There are various ways to install FAKE:
    of `fake-bootstrap` for ideas to bootstrap in your CI process.
    If you run into issues, see [<ins>this</ins>](https://github.com/fsharp/FAKE/issues/2346).
 
-3. Bootstrap via the `fake dotnet new` [<ins>template</ins>]({{root}}guide/fake-template.html). The template
+3. Bootstrap via the `fake dotnet new` [<ins>template</ins>](/guide/fake-template.html). The template
    bootstraps FAKE and sets up a basic build-script. To install the template run:
     ```shell
     dotnet new -i "fake-template::*"
@@ -191,7 +191,7 @@ There are various ways to install FAKE:
     dotnet new fake
     ```
 
-   See the [<ins>template</ins>]({{root}}guide/fake-template.html) page for more information. Install the `fake`
+   See the [<ins>template</ins>](/guide/fake-template.html) page for more information. Install the `fake`
    or `fake-netcore` package for your system (
    currently [<ins>chocolatey</ins>](https://chocolatey.org/install)).
    Example `choco install fake`.
@@ -247,7 +247,7 @@ the `<script>.fsx.lock` file and re-run fake to update all files).
   #load "./.fake/myscript.fsx/intellisense.fsx"
   ```
 
-  Where you can add all the [<ins>fake modules</ins>]({{root}}guide/fake-modules.html) you need (work through the
+  Where you can add all the [<ins>fake modules</ins>](/guide/fake-modules.html) you need (work through the
   example below if you see
   this the first time).
 
@@ -431,7 +431,7 @@ deletes all files in the folder or creates the directory if necessary.
 In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *
 Clean* is a prerequisite of *Default* and will run before the *Default* target is executed:
 
-![alt text]({{root}}content/img/gettingstarted/afterclean.png "We introduced a Clean target")
+![alt text](/content/img/gettingstarted/afterclean.png "We introduced a Clean target")
 
 #### Compiling the Application
 
@@ -497,7 +497,7 @@ In addition the target dependencies are extended again. Now *Default* is depende
 
 This means the execution order is: Clean ==> BuildApp ==> Default.
 
-![alt text]({{root}}content/img/gettingstarted/aftercompile.png "We introduced a Build target")
+![alt text](/content/img/gettingstarted/aftercompile.png "We introduced a Build target")
 
 #### Compiling Test Projects
 
@@ -620,14 +620,14 @@ Target.runOrDefault "Default"
 
 Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE
 automatically tries to locate the runner in one of your subfolders. See
-the [<ins>NUnit3 task documentation</ins>]({{root}}reference/fake-dotnet-testing-nunit3.html) if you need to specify the
+the [<ins>NUnit3 task documentation</ins>](/reference/fake-dotnet-testing-nunit3.html) if you need to specify the
 tool path
 explicitly.
 
 The mysterious part **`(fun p -> ...)`** simply overrides the default parameters of the NUnit task and allows to specify
 concrete parameters.
 
-![alt text]({{root}}content/img/gettingstarted/alltestsgreen.png "All tests green")
+![alt text](/content/img/gettingstarted/alltestsgreen.png "All tests green")
 
 ### Advanced Examples
 
@@ -643,13 +643,13 @@ FAKE runner uses **.Net6** runtime assemblies when compiling and running a scrip
 
 ## Get to Know FAKE CLI
 
-See [<ins>Fake command line</ins>]({{root}}articles/commandline.html) for more information on command line and available
+See [<ins>Fake command line</ins>](/articles/commandline.html) for more information on command line and available
 commands and options
 
 ## What's Next?
 
 * Add more modules specific to your application and discover the Fake-APIs
-* look at the [<ins>FAQ</ins>]({{root}}/articles/what-is-fake.html) for some commonly asked questions.
+* look at the [<ins>FAQ</ins>](//articles/what-is-fake.html) for some commonly asked questions.
 * look at some of the samples in [<ins>FakeBuild</ins>](https://github.com/FakeBuild)
 * look at [<ins>FAKEs own build script</ins>](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples
   across the F#

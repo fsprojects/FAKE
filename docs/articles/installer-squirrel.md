@@ -3,7 +3,7 @@
 [*Squirrel.Windows*](https://github.com/Squirrel/Squirrel.Windows) is an installation tool with an auto-update system 
 for Windows desktop apps.
 
-To see the available Squirrel APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-installer-squirrel.html) for the Squirrel module.
+To see the available Squirrel APIs in FAKE, please see the [`API-Reference`](/reference/fake-installer-squirrel.html) for the Squirrel module.
 
 ## `Squirrel.exe` CLI tool
 

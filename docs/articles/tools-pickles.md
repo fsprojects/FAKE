@@ -3,7 +3,7 @@
 [*Pickles*](http://www.picklesdoc.com/) is a Living Documentation generator: it takes your Specification (written in Gherkin, with Markdown descriptions) 
 and turns them into an always up-to-date documentation of the current state of your software - in a variety of formats.
 
-To see the available Pickles APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-tools-pickles.html) for the Pickles module.
+To see the available Pickles APIs in FAKE, please see the [`API-Reference`](/reference/fake-tools-pickles.html) for the Pickles module.
 
 
 ## Minimal working example

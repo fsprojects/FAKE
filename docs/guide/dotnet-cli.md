@@ -44,7 +44,7 @@ DotNet.restore (fun args ->
     } |> withWorkDir "./test" ) "mysolution.sln"
 ```
 
-More on [*API Documentation*]({{root}}reference/fake-dotnet-dotnet.html)
+More on [*API Documentation*](/reference/fake-dotnet-dotnet.html)
 
 ## SDK tools (local, global, cli-reference)
 
