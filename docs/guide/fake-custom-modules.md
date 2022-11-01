@@ -31,7 +31,7 @@ There are no special requirements, you can add dependencies to your NuGet packag
 > (Just edit [*here*](https://github.com/fsharp/FAKE/blob/master/docs/guide/fake-custom-modules.md) with the pencil)
 
 If you want to use FAKE's standard functionality (like [*globbing*](http://en.wikipedia.org/wiki/Glob_(programming))) within your 
-custom task project, just reference the corresponding NuGet package and [*explore the FAKE namespace*]({{root}}reference/index.html).
+custom task project, just reference the corresponding NuGet package and [*explore the FAKE namespace*](/reference/index.html).
 
 ## Using the custom task
 
@@ -42,7 +42,7 @@ Now you can use your CustomTask in the build script, by adding fake dependencies
     nuget MyTaskNuGetPackage
 ```
 
-> For more information about using FAKE with Paket, please see [<ins>fake dependencies</ins>]({{root}}guide/fake-modules.html), 
+> For more information about using FAKE with Paket, please see [<ins>fake dependencies</ins>](/guide/fake-modules.html), 
 > see the relevant documentation for adding modules. This documentation now applies to your package too!
 
 A full example would be:

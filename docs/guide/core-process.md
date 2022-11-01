@@ -1,9 +1,9 @@
 # Starting Processes in "FAKE - F# Make"
 
 To see the available Process APIs in FAKE, please see:
-* [`API-Reference CreateProcess`]({{root}}reference/fake-core-createprocess.html),
-* [`API-Reference Proc`]({{root}}reference/fake-core-proc.html),
-* [`API-Reference Process`]({{root}}reference/fake-core-process.html),
+* [`API-Reference CreateProcess`](/reference/fake-core-createprocess.html),
+* [`API-Reference Proc`](/reference/fake-core-proc.html),
+* [`API-Reference Process`](/reference/fake-core-process.html),
 
 ## Just start a process
 

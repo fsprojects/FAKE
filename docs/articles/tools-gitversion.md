@@ -2,7 +2,7 @@
 
 [*GitVersion*](https://gitversion.net/docs/) is a tool that generates a Semantic Version number based on your Git history.
 
-To see the available GitVersion APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-tools-gitversion.html) for the GitVersion module.
+To see the available GitVersion APIs in FAKE, please see the [`API-Reference`](/reference/fake-tools-gitversion.html) for the GitVersion module.
 
 ## Minimal working example
 To get started, [*install GitVersion*](https://gitversion.net/docs/usage/cli/installation) as a Chocolaty tool

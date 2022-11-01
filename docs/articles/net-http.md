@@ -2,7 +2,7 @@
 
 The `Fake.Net.Http` module provides a functionality to download files over HTTP.
 
-To see the available HTTP APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-net-http.html) for the HTTP module.
+To see the available HTTP APIs in FAKE, please see the [`API-Reference`](/reference/fake-net-http.html) for the HTTP module.
 
 ## Including the `Fake.Net.Http` dependency
 
@@ -19,7 +19,7 @@ group build
     nuget Fake.Core.Target prerelease
 ```
 
-Please see more details on referencing FAKE modules [*here*]({{root}}guide/fake-modules.html).
+Please see more details on referencing FAKE modules [*here*](/guide/fake-modules.html).
 
 ## Downloading a Single File
 

@@ -3,7 +3,7 @@
 If you are using a source control system like [*Git*](http://git-scm.com/) you probably don't want to store all binary dependencies in it.
 With FAKE you can use [*NuGet*](http://nuget.org/) to download all dependent packages during the build.
 
-To see the available NuGet APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-dotnet-nuget.html) for the NuGet module.
+To see the available NuGet APIs in FAKE, please see the [`API-Reference`](/reference/fake-dotnet-nuget.html) for the NuGet module.
 
 ## Setting the Stage for NuGet
 

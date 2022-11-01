@@ -3,7 +3,7 @@
 [Coverlet](https://github.com/tonerdo/coverlet) is a cross platform code coverage framework for .NET, with support for line, 
 branch and method coverage. It works with .NET Framework on Windows and .NET Core on all supported platforms.
 
-To see the available Coverlet APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-dotnet-testing-coverlet.html) 
+To see the available Coverlet APIs in FAKE, please see the [`API-Reference`](/reference/fake-dotnet-testing-coverlet.html) 
 for the Coverlet module.
 
 ## Minimal working example

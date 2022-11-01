@@ -17,14 +17,14 @@ Additional information:
 
 API Reference:
 
- - [`SignTool`]({{root}}reference/fake-tools-signtool.html): The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
- - [`CertificateFromFile`]({{root}}reference/fake-tools-signtool-certificatefromfile.html): Specifies parameters to use when using a certificate from a file.
- - [`CertificateFromStore`]({{root}}reference/fake-tools-signtool-certificatefromstore.html): Specifies parameters to use when using a certificate from a certificate store.
- - [`SignCertificate`]({{root}}reference/fake-tools-signtool-signcertificate.html): Specifies what type of certificate to use.
- - [`SignOptions`]({{root}}reference/fake-tools-signtool-signoptions.html): Sign command options
- - [`TimeStampOption`]({{root}}reference/fake-tools-signtool-timestampoption.html): Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.
- - [`TimeStampOptions`]({{root}}reference/fake-tools-signtool-timestampoptions.html): Timestamp command options
- - [`VerifyOptions`]({{root}}reference/fake-tools-signtool-verifyoptions.html): Verify command options
+ - [`SignTool`](/reference/fake-tools-signtool.html): The SignTool tool is a command-line tool that digitally signs files, verifies signatures in files, or time stamps files.
+ - [`CertificateFromFile`](/reference/fake-tools-signtool-certificatefromfile.html): Specifies parameters to use when using a certificate from a file.
+ - [`CertificateFromStore`](/reference/fake-tools-signtool-certificatefromstore.html): Specifies parameters to use when using a certificate from a certificate store.
+ - [`SignCertificate`](/reference/fake-tools-signtool-signcertificate.html): Specifies what type of certificate to use.
+ - [`SignOptions`](/reference/fake-tools-signtool-signoptions.html): Sign command options
+ - [`TimeStampOption`](/reference/fake-tools-signtool-timestampoption.html): Specifies the URL of the time stamp server and the digest algorithm used by the RFC 3161 time stamp server.
+ - [`TimeStampOptions`](/reference/fake-tools-signtool-timestampoptions.html): Timestamp command options
+ - [`VerifyOptions`](/reference/fake-tools-signtool-verifyoptions.html): Verify command options
 
 ## Open namespace
 
@@ -59,8 +59,8 @@ SignTool.sign
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`CertificateFromFile`*]({{root}}reference/fake-tools-signtool-certificatefromfile.html), 
-[*`SignOptions`*]({{root}}reference/fake-tools-signtool-signoptions.html).
+[*`CertificateFromFile`*](/reference/fake-tools-signtool-certificatefromfile.html), 
+[*`SignOptions`*](/reference/fake-tools-signtool-signoptions.html).
 
 ### When the certificate is located in a certificate store
 
@@ -85,8 +85,8 @@ SignTool.sign
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`CertificateFromStore`*]({{root}}reference/fake-tools-signtool-certificatefromstore.html), 
-[*`SignOptions`*]({{root}}reference/fake-tools-signtool-signoptions.html).
+[*`CertificateFromStore`*](/reference/fake-tools-signtool-certificatefromstore.html), 
+[*`SignOptions`*](/reference/fake-tools-signtool-signoptions.html).
 
 ### Custom signing options
 
@@ -106,7 +106,7 @@ SignTool.sign
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`SignOptions`*]({{root}}reference/fake-tools-signtool-signoptions.html).
+[*`SignOptions`*](/reference/fake-tools-signtool-signoptions.html).
 
 ### Adding a time stamp
 
@@ -134,7 +134,7 @@ SignTool.signWithTimeStamp
     ["program.exe"; "library.dll"]
 ```
 
-Only a subset of options is shown in the example, see API Reference for all available options: [`SignOptions`]({{root}}reference/fake-tools-signtool-signoptions.html), [`TimeStampOption`]({{root}}reference/fake-tools-signtool-timestampoption.html).
+Only a subset of options is shown in the example, see API Reference for all available options: [`SignOptions`](/reference/fake-tools-signtool-signoptions.html), [`TimeStampOption`](/reference/fake-tools-signtool-timestampoption.html).
 
 #### Custom time stamp options
 
@@ -158,8 +158,8 @@ SignTool.signWithTimeStamp
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`SignOptions`*]({{root}}reference/fake-tools-signtool-signoptions.html), 
-[*`TimeStampOption`*]({{root}}reference/fake-tools-signtool-timestampoption.html).
+[*`SignOptions`*](/reference/fake-tools-signtool-signoptions.html), 
+[*`TimeStampOption`*](/reference/fake-tools-signtool-timestampoption.html).
 
 ## Time stamping
 
@@ -188,7 +188,7 @@ SignTool.timeStamp
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`TimeStampOptions`*]({{root}}reference/fake-tools-signtool-timestampoptions.html).
+[*`TimeStampOptions`*](/reference/fake-tools-signtool-timestampoptions.html).
 
 ### Custom options
 
@@ -208,8 +208,8 @@ SignTool.timeStamp
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`TimeStampOption`*]({{root}}reference/fake-tools-signtool-timestampoption.html), 
-[*`TimeStampOptions`*]({{root}}reference/fake-tools-signtool-timestampoptions.html).
+[*`TimeStampOption`*](/reference/fake-tools-signtool-timestampoption.html), 
+[*`TimeStampOptions`*](/reference/fake-tools-signtool-timestampoptions.html).
 
 ## Verifying
 
@@ -232,7 +232,7 @@ SignTool.verify
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`VerifyOptions`*]({{root}}reference/fake-tools-signtool-verifyoptions.html).
+[*`VerifyOptions`*](/reference/fake-tools-signtool-verifyoptions.html).
 
 
 ### Custom options
@@ -252,7 +252,7 @@ SignTool.verify
 ```
 
 Only a subset of options is shown in the example, see API Reference for all available options: 
-[*`VerifyOptions`*]({{root}}reference/fake-tools-signtool-verifyoptions.html).
+[*`VerifyOptions`*](/reference/fake-tools-signtool-verifyoptions.html).
 
 ## Common options
 
@@ -302,10 +302,10 @@ Verbosity - output verbosity (signtool options: `/q`, `/v`). This option is not 
     Verbosity = None }
 ```
 
-API References: [*`SignOptions`*]({{root}}reference/fake-tools-signtool-signoptions.html), 
-[*`TimeStampOptions`*]({{root}}reference/fake-tools-signtool-timestampoptions.html), 
-[*`VerifyOptions`*]({{root}}reference/fake-tools-signtool-verifyoptions.html), 
-[*`Verbosity`*]({{root}}reference/fake-tools-signtool-verbosity.html).
+API References: [*`SignOptions`*](/reference/fake-tools-signtool-signoptions.html), 
+[*`TimeStampOptions`*](/reference/fake-tools-signtool-timestampoptions.html), 
+[*`VerifyOptions`*](/reference/fake-tools-signtool-verifyoptions.html), 
+[*`Verbosity`*](/reference/fake-tools-signtool-verbosity.html).
 
 ## Certificates
 

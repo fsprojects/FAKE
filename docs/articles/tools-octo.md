@@ -2,7 +2,7 @@
 
 [*Octopus Deploy*](http://octopusdeploy.com/) is a great tool for simple and user-friendly release management.
 
-To see the available Octo APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-tools-octo.html) for the Octo module.
+To see the available Octo APIs in FAKE, please see the [`API-Reference`](/reference/fake-tools-octo.html) for the Octo module.
 
 ## Installing Octopus Deploy
 
@@ -35,9 +35,9 @@ It is a good idea to create an account in Octopus Deploy for your Continuous Int
 (eg: [*TeamCity*](https://www.jetbrains.com/teamcity/)) - and then generate a new API key for that account, 
 that can be safely used from within your build process. See the following screenshots:
 
-![My Profile]({{root}}content/img/octopusdeploy/myprofile.png "My Profile")
+![My Profile](/content/img/octopusdeploy/myprofile.png "My Profile")
 
-![Generate API Key]({{root}}content/img/octopusdeploy/apikey.png "Generate API Key")
+![Generate API Key](/content/img/octopusdeploy/apikey.png "Generate API Key")
 
 ## Define common options
 

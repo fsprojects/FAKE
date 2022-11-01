@@ -3,7 +3,7 @@
 FAKE can be used to build a variety of different application types. In this tutorial we are 
 looking at the TypeScript support.
 
-To see the available TypeScript compiler APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-javascript-typescript.html) 
+To see the available TypeScript compiler APIs in FAKE, please see the [`API-Reference`](/reference/fake-javascript-typescript.html) 
 for the TypeScript module.
 
 

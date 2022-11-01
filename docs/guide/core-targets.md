@@ -1,6 +1,6 @@
 # Running targets in "FAKE - F# Make"
 
-To see the available Target APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-core-target.html) for the Target module.
+To see the available Target APIs in FAKE, please see the [`API-Reference`](/reference/fake-core-target.html) for the Target module.
 
 ## Command line interface for the target module
 
@@ -272,7 +272,7 @@ For example this dependency tree:
 
 ...would be treated as follows:
 
-![Parallel example]({{root}}/content/img/parallel/ParallelExample.png)
+![Parallel example](//content/img/parallel/ParallelExample.png)
 
 This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.
 

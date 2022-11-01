@@ -8,7 +8,7 @@ The reports do not only show the coverage quota, but also include the source cod
 ReportGenerator supports merging several reports into one. It is also possible to pass one XML file containing several reports
 to ReportGenerator (e.g. a build log file).
 
-To see the available ReportGenerator APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-testing-reportgenerator.html) 
+To see the available ReportGenerator APIs in FAKE, please see the [`API-Reference`](/reference/fake-testing-reportgenerator.html) 
 for the ReportGenerator module.
 
 ## Minimal working example

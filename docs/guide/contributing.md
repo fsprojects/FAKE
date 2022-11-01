@@ -68,7 +68,7 @@ dotnet tool restore
 dotnet fake --version
 ```
 
-For alternative methods of installing FAKE, please see the [<ins>Getting Started guide</ins>]({{root}}guide/gettingstarted.html#Install-FAKE).
+For alternative methods of installing FAKE, please see the [<ins>Getting Started guide</ins>](/guide/gettingstarted.html#Install-FAKE).
 
 ## Creating Pull Requests
 

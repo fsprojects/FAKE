@@ -3,7 +3,7 @@
 The Vault module in FAKE provide a way to secure sensitive information from the build logs. It works in a way similar
 to secret variables in VSTS.
 
-To see the available Vault APIs in FAKE, please see the [`API-Reference`]({{root}}reference/fake-core-vault.html) for the Vault module.
+To see the available Vault APIs in FAKE, please see the [`API-Reference`](/reference/fake-core-vault.html) for the Vault module.
 
 ## Goals and non-goals
 

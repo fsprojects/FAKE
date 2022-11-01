@@ -1,5 +1,8 @@
 # Release Notes
 
+## 6.0.0-alpha001 - 2022-11-02
+* ENHANCEMENT: Fix website assets loading
+
 ## 6.0.0-alpha001 - 2022-11-01
 * ENHANCEMENT: Update dependencies of repository, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
 * ENHANCEMENT: Remove obsolete APIs and replace their usage with alternative suggested API's, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html

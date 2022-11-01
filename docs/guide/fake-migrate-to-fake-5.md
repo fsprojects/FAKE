@@ -15,7 +15,7 @@ This "new" version has several advantages:
 * This will be the only Version available in FAKE 6
 
 Therefore you have the FAKE 5 timeframe to update your build scripts to the new version. If you have any issues in 
-the migration process, please see [*how to fill issues or discuss about your issues*]({{root}}guide/contributing.html) 
+the migration process, please see [*how to fill issues or discuss about your issues*](/guide/contributing.html) 
 (don't be shy about contributing ;)).
 
 ## Migration Guide
@@ -35,8 +35,8 @@ Upgrading to FAKE 5 is a multi step process and has various manual steps in betw
 * Change to the new version of FAKE 5.
 
   * This is for example done by installing FAKE as dependency on your build infrastructure.
-    There are a variety of [*installing options*]({{root}}guide/fake-gettingstarted.html#Install-FAKE) available.
-  * Tell FAKE which [*modules*]({{root}}guide/fake-modules.html) you need.
+    There are a variety of [*installing options*](/guide/fake-gettingstarted.html#Install-FAKE) available.
+  * Tell FAKE which [*modules*](/guide/fake-modules.html) you need.
     See the [*Add FAKE dependencies*](#Add-FAKE-dependencies) section below.
   * Run the build with the new version of FAKE :). You might want to read the [*CLI migration*](#CLI-Migration) section
 
@@ -60,7 +60,7 @@ The "open Fake" and AutoOpen modules are completely obsolete.
 We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
 This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the 
 obsolete warning (let us know) or that 
-stuff you are using was not migrated yet (let us know or send a PR, see [*Contributing to FAKE*]({{root}}guide/contributing.html)).
+stuff you are using was not migrated yet (let us know or send a PR, see [*Contributing to FAKE*](/guide/contributing.html)).
 
 ### Add FAKE dependencies
 
@@ -106,6 +106,6 @@ Yes we even broke the CLI. The old CLI was actually a mixture of two different C
 It was obvious that we would not even try to make things compatible with it in any way.
 However your changes should only be minimal in the most cases. I'd say in 80% its just about adding the `run` verb between the `fake.exe` and the build script.
 `fake build.fsx` will be `fake run build.fsx`. Running a particular target is as easy `fake target` will be `fake run build.fsx --target target`.
-For a full reference use `--help` or the [*documentation*]({{root}}guide/fake-commandline.html).
+For a full reference use `--help` or the [*documentation*](/guide/fake-commandline.html).
 
 If you used special cases which aren't mentioned here please edit this page or open an issue.

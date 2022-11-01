@@ -20,9 +20,9 @@ and run FAKE. All of the arguments are passed directly to FAKE so you can run:
 ```shell
 .\fake.cmd build
 ```
-to run your build. Have a look at the [*fake commandline*]({{root}}guide/commandline.html) for the available command-line options. 
+to run your build. Have a look at the [*fake commandline*](/guide/commandline.html) for the available command-line options. 
 For additional information on how to use a build script, checkout the 
-[*getting started*]({{root}}guide/fake-gettingstarted.html#Example-Compiling-and-building-your-NET-application) page.
+[*getting started*](/guide/fake-gettingstarted.html#Example-Compiling-and-building-your-NET-application) page.
 
 ## Options
 
