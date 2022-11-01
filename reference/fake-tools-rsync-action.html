@@ -1,0 +1,5014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Action (Fake)</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - API docs page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+      x-data="{open: false}"
+      :class="{'bg-gray-100 overflow-hidden': open === true}">
+<header
+    class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+    :class="{'bg-white': open === false}">
+    <div class="flex gap-2 items-center block">
+        <a class="flex items-center gap-2" href="fake.buildindex.html">
+            <img src="fake.buildcontent/assets/img/logo.svg"
+                 alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+            <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+        </a>
+        <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+            <span>6.0.0-alpha001</span>
+        </div>
+        <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+          <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+            <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </span>
+        </button>
+    </div>
+    <div class="flex items-center pt-10 md:pt-0">
+        <div class="md:mr-5">
+            <ul class="flex space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a></li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </ul>
+        </div>
+        <div class="hidden lg:block relative ml-auto">
+            <div class="flex items-center">
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/fsharpMake"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="lg:ml-[25rem] min-w-0 lg:px-16">
+    <nav
+        class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] 
+        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8"
+        role="navigation"
+        aria-label="main navigation"
+        :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+        <div
+            class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
+            <div class="flex gap-2 items-center">
+                <a class="flex items-center gap-2" href="fake.buildindex.html">
+                    <img src="fake.buildcontent/assets/img/logo.svg"
+                         alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+                    <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                </a>
+            </div>
+            <button
+                class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                @click="open = false">
+        <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+          <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </span>
+            </button>
+        </div>
+
+        <ul
+            x-data="{nav: []}"
+            x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.apidocs)
+            ">
+            <template x-for="navGroup in nav">
+                <li class="mt-12 lg:mt-8">
+                    <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900"
+                        x-text="navGroup.title">
+                    </h5>
+                    <ul class="space-y-6 lg:space-y-2 border-l">
+                        <template x-for="navLink in navGroup.links">
+                            <li class="group">
+                                <a
+                                    class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                                    :href="navLink.href"
+                                    :class="window.location.pathname === navLink.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    <span
+                                        class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
+                                        <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                      </span>
+                                    <span class="inline-block" x-text="navLink.title"></span>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </nav>
+    <div class="mt-16 mx-4 lg:mx-auto max-w-[80rem] px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+        <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+        <p>
+            <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                    </path>
+                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                    </path>
+                </svg>
+                <span class="underline">v5.fake.build</span>
+            </a>
+        </p>
+    </div>
+    <div id="content"
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
+        <div>
+  <h2>
+    Rsync.Action Type
+  </h2>
+  <dl class="fsdocs-metadata">
+    <dt>
+      Namespace: 
+      <a href="fake.buildreference/fake-tools.html">
+        Fake.Tools
+      </a>
+    </dt>
+    <dt>
+      Assembly: Fake.Tools.Rsync.dll
+    </dt>
+    <dt>
+      Parent Module: 
+      <a href="fake.buildreference/fake-tools-rsync.html">
+        Rsync
+      </a>
+    </dt>
+    <dt>
+      Base Type: 
+      <code>obj</code>
+    </dt>
+    <dt>
+      All Interfaces: 
+      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a href="fake.buildreference/fake-tools-rsync-action.html">Action</a>&gt;</span></code>
+      , 
+      <code><a href="https://docs.microsoft.com/dotnet/api/system.collections.istructuralequatable">IStructuralEquatable</a></code>
+      , 
+      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a href="fake.buildreference/fake-tools-rsync-action.html">Action</a>&gt;</span></code>
+      , 
+      <code><a href="https://docs.microsoft.com/dotnet/api/system.icomparable">IComparable</a></code>
+      , 
+      <code><a href="https://docs.microsoft.com/dotnet/api/system.collections.istructuralcomparable">IStructuralComparable</a></code>
+    </dt>
+  </dl>
+  <div class="fsdocs-xmldoc">
+    <div>
+      <p class="fsdocs-summary">
+        
+      </p>
+    </div>
+  </div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div>
+    <h3>
+      Union cases
+    </h3>
+    <table class="table outer-list fsdocs-member-list">
+      <thead>
+        <tr>
+          <td class="fsdocs-member-list-header">
+            Union case
+          </td>
+          <td class="fsdocs-member-list-header">
+            Description
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3495', 3495)" onmouseover="showTip(event, '3495', 3495)">
+                <p>
+                  <a id="Address">
+                    <a href="#Address">
+                      <code><span>Address&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3495">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Address&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L204-204" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Bind address for outgoing socket to daemon
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3496', 3496)" onmouseover="showTip(event, '3496', 3496)">
+                <p>
+                  <a id="Append">
+                    <a href="#Append">
+                      <code><span>Append</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3496">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Append</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L71-71" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Append data onto shorter files
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3497', 3497)" onmouseover="showTip(event, '3497', 3497)">
+                <p>
+                  <a id="Archive">
+                    <a href="#Archive">
+                      <code><span>Archive</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3497">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Archive</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L50-50" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Archive mode; same as -rlptgoD (no -H)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3498', 3498)" onmouseover="showTip(event, '3498', 3498)">
+                <p>
+                  <a id="Backup">
+                    <a href="#Backup">
+                      <code><span>Backup</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3498">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Backup</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L61-61" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Make backups (see --suffix & --backup-dir)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3499', 3499)" onmouseover="showTip(event, '3499', 3499)">
+                <p>
+                  <a id="BackupDir">
+                    <a href="#BackupDir">
+                      <code><span>BackupDir&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3499">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>BackupDir&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L63-63" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Make backups into hierarchy based in DIR
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3500', 3500)" onmouseover="showTip(event, '3500', 3500)">
+                <p>
+                  <a id="BlockSize">
+                    <a href="#BlockSize">
+                      <code><span>BlockSize&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3500">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>BlockSize&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L119-119" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Force a fixed checksum block-size
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3501', 3501)" onmouseover="showTip(event, '3501', 3501)">
+                <p>
+                  <a id="BlockingIO">
+                    <a href="#BlockingIO">
+                      <code><span>BlockingIO</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3501">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>BlockingIO</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L210-210" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Use blocking I/O for the remote shell
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3502', 3502)" onmouseover="showTip(event, '3502', 3502)">
+                <p>
+                  <a id="Bwlimit">
+                    <a href="#Bwlimit">
+                      <code><span>Bwlimit&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3502">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Bwlimit&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L234-234" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Limit I/O bandwidth; KBytes per second
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3503', 3503)" onmouseover="showTip(event, '3503', 3503)">
+                <p>
+                  <a id="Cache">
+                    <a href="#Cache">
+                      <code><span>Cache</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3503">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Cache</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L246-246" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Disable fcntl(F_NOCACHE)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3504', 3504)" onmouseover="showTip(event, '3504', 3504)">
+                <p>
+                  <a id="Checksum">
+                    <a href="#Checksum">
+                      <code><span>Checksum</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3504">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Checksum</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L48-48" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Skip based on checksum, not mod-time & size
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3505', 3505)" onmouseover="showTip(event, '3505', 3505)">
+                <p>
+                  <a id="Chmod">
+                    <a href="#Chmod">
+                      <code><span>Chmod&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3505">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Chmod&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L93-93" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Affect file and/or directory permissions
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3506', 3506)" onmouseover="showTip(event, '3506', 3506)">
+                <p>
+                  <a id="CompareDest">
+                    <a href="#CompareDest">
+                      <code><span>CompareDest&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3506">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CompareDest&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L175-175" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Also compare destination files relative to DIR
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3507', 3507)" onmouseover="showTip(event, '3507', 3507)">
+                <p>
+                  <a id="Compress">
+                    <a href="#Compress">
+                      <code><span>Compress</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3507">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Compress</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L181-181" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Compress file data during the transfer
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3508', 3508)" onmouseover="showTip(event, '3508', 3508)">
+                <p>
+                  <a id="CompressLevel">
+                    <a href="#CompressLevel">
+                      <code><span>CompressLevel&#32;int</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3508">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CompressLevel&#32;int</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>int</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L183-183" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Explicitly set compression level
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>int</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3509', 3509)" onmouseover="showTip(event, '3509', 3509)">
+                <p>
+                  <a id="CopyDest">
+                    <a href="#CopyDest">
+                      <code><span>CopyDest&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3509">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CopyDest&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L177-177" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ ... and include copies of unchanged files
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3510', 3510)" onmouseover="showTip(event, '3510', 3510)">
+                <p>
+                  <a id="CopyDirLinks">
+                    <a href="#CopyDirLinks">
+                      <code><span>CopyDirLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3510">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CopyDirLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L83-83" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Transform symlink to a dir into referent dir
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3511', 3511)" onmouseover="showTip(event, '3511', 3511)">
+                <p>
+                  <a id="CopyLinks">
+                    <a href="#CopyLinks">
+                      <code><span>CopyLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3511">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CopyLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L77-77" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Transform symlink into referent file/dir
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3512', 3512)" onmouseover="showTip(event, '3512', 3512)">
+                <p>
+                  <a id="CopyUnsafeLinks">
+                    <a href="#CopyUnsafeLinks">
+                      <code><span>CopyUnsafeLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3512">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CopyUnsafeLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L79-79" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Only "unsafe" symlinks are transformed
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3513', 3513)" onmouseover="showTip(event, '3513', 3513)">
+                <p>
+                  <a id="CvsExclude">
+                    <a href="#CvsExclude">
+                      <code><span>CvsExclude</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3513">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>CvsExclude</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L185-185" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Auto-ignore files the same way CVS does
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3514', 3514)" onmouseover="showTip(event, '3514', 3514)">
+                <p>
+                  <a id="D">
+                    <a href="#D">
+                      <code><span>D</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3514">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>D</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L103-103" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Same as --devices --specials
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3515', 3515)" onmouseover="showTip(event, '3515', 3515)">
+                <p>
+                  <a id="Del">
+                    <a href="#Del">
+                      <code><span>Del</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3515">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Del</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L131-131" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ An alias for --delete-during
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3516', 3516)" onmouseover="showTip(event, '3516', 3516)">
+                <p>
+                  <a id="DelayUpdates">
+                    <a href="#DelayUpdates">
+                      <code><span>DelayUpdates</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3516">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DelayUpdates</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L157-157" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Put all updated files into place at transfer's end
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3517', 3517)" onmouseover="showTip(event, '3517', 3517)">
+                <p>
+                  <a id="Delete">
+                    <a href="#Delete">
+                      <code><span>Delete</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3517">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Delete</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L133-133" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Delete extraneous files from destination dirs
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3518', 3518)" onmouseover="showTip(event, '3518', 3518)">
+                <p>
+                  <a id="DeleteAfter">
+                    <a href="#DeleteAfter">
+                      <code><span>DeleteAfter</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3518">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DeleteAfter</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L139-139" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Receiver deletes after transfer, not before
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3519', 3519)" onmouseover="showTip(event, '3519', 3519)">
+                <p>
+                  <a id="DeleteBefore">
+                    <a href="#DeleteBefore">
+                      <code><span>DeleteBefore</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3519">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DeleteBefore</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L135-135" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Receiver deletes before transfer (default)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3520', 3520)" onmouseover="showTip(event, '3520', 3520)">
+                <p>
+                  <a id="DeleteDuring">
+                    <a href="#DeleteDuring">
+                      <code><span>DeleteDuring</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3520">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DeleteDuring</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L137-137" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Receiver deletes during transfer, not before
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3521', 3521)" onmouseover="showTip(event, '3521', 3521)">
+                <p>
+                  <a id="DeleteExcluded">
+                    <a href="#DeleteExcluded">
+                      <code><span>DeleteExcluded</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3521">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DeleteExcluded</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L141-141" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Also delete excluded files from destination dirs
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3522', 3522)" onmouseover="showTip(event, '3522', 3522)">
+                <p>
+                  <a id="Devices">
+                    <a href="#Devices">
+                      <code><span>Devices</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3522">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Devices</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L99-99" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve device files (super-user only)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3523', 3523)" onmouseover="showTip(event, '3523', 3523)">
+                <p>
+                  <a id="Dirs">
+                    <a href="#Dirs">
+                      <code><span>Dirs</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3523">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Dirs</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L73-73" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Transfer directories without recursing
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3524', 3524)" onmouseover="showTip(event, '3524', 3524)">
+                <p>
+                  <a id="DryRun">
+                    <a href="#DryRun">
+                      <code><span>DryRun</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3524">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DryRun</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L113-113" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Show what would have been transferred
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3525', 3525)" onmouseover="showTip(event, '3525', 3525)">
+                <p>
+                  <a id="Exclude">
+                    <a href="#Exclude">
+                      <code><span>Exclude&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3525">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Exclude&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L192-192" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Exclude files matching PATTERN
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3526', 3526)" onmouseover="showTip(event, '3526', 3526)">
+                <p>
+                  <a id="ExcludeFrom">
+                    <a href="#ExcludeFrom">
+                      <code><span>ExcludeFrom&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3526">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ExcludeFrom&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L194-194" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Read exclude patterns from FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3527', 3527)" onmouseover="showTip(event, '3527', 3527)">
+                <p>
+                  <a id="Executability">
+                    <a href="#Executability">
+                      <code><span>Executability</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3527">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Executability</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L91-91" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve the file's executability
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3528', 3528)" onmouseover="showTip(event, '3528', 3528)">
+                <p>
+                  <a id="Existing">
+                    <a href="#Existing">
+                      <code><span>Existing</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3528">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Existing</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L125-125" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Skip creating new files on receiver
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3529', 3529)" onmouseover="showTip(event, '3529', 3529)">
+                <p>
+                  <a id="ExtendedAttributes">
+                    <a href="#ExtendedAttributes">
+                      <code><span>ExtendedAttributes</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3529">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ExtendedAttributes</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L244-244" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Copy extended attributes
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3530', 3530)" onmouseover="showTip(event, '3530', 3530)">
+                <p>
+                  <a id="F">
+                    <a href="#F">
+                      <code><span>F</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3530">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>F</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L190-190" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Same as --filter='dir-merge /.rsync-filter'
+ repeated: --filter='- .rsync-filter'
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3531', 3531)" onmouseover="showTip(event, '3531', 3531)">
+                <p>
+                  <a id="FilesFrom">
+                    <a href="#FilesFrom">
+                      <code><span>FilesFrom&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3531">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>FilesFrom&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L200-200" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Read list of source-file names from FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3532', 3532)" onmouseover="showTip(event, '3532', 3532)">
+                <p>
+                  <a id="Filter">
+                    <a href="#Filter">
+                      <code><span>Filter&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3532">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Filter&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L187-187" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Add a file-filtering RULE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3533', 3533)" onmouseover="showTip(event, '3533', 3533)">
+                <p>
+                  <a id="Force">
+                    <a href="#Force">
+                      <code><span>Force</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3533">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Force</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L145-145" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Force deletion of directories even if not empty
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3534', 3534)" onmouseover="showTip(event, '3534', 3534)">
+                <p>
+                  <a id="From0">
+                    <a href="#From0">
+                      <code><span>From0</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3534">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>From0</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L202-202" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ All *-from/filter files are delimited by 0s
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3535', 3535)" onmouseover="showTip(event, '3535', 3535)">
+                <p>
+                  <a id="Fuzzy">
+                    <a href="#Fuzzy">
+                      <code><span>Fuzzy</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3535">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Fuzzy</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L173-173" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Find similar file for basis if no dest file
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3536', 3536)" onmouseover="showTip(event, '3536', 3536)">
+                <p>
+                  <a id="Group">
+                    <a href="#Group">
+                      <code><span>Group</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3536">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Group</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L97-97" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve group
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3537', 3537)" onmouseover="showTip(event, '3537', 3537)">
+                <p>
+                  <a id="HardLinks">
+                    <a href="#HardLinks">
+                      <code><span>HardLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3537">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>HardLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L87-87" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve hard links
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3538', 3538)" onmouseover="showTip(event, '3538', 3538)">
+                <p>
+                  <a id="HeightBitsOutput">
+                    <a href="#HeightBitsOutput">
+                      <code><span>HeightBitsOutput</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3538">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>HeightBitsOutput</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L214-214" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Leave high-bit chars unescaped in output
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3539', 3539)" onmouseover="showTip(event, '3539', 3539)">
+                <p>
+                  <a id="Help">
+                    <a href="#Help">
+                      <code><span>Help</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3539">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Help</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L254-254" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Show this help (-h works with no other options)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3540', 3540)" onmouseover="showTip(event, '3540', 3540)">
+                <p>
+                  <a id="HumanReadable">
+                    <a href="#HumanReadable">
+                      <code><span>HumanReadable</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3540">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>HumanReadable</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L216-216" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Output numbers in a human-readable format
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3541', 3541)" onmouseover="showTip(event, '3541', 3541)">
+                <p>
+                  <a id="IgnoreErrors">
+                    <a href="#IgnoreErrors">
+                      <code><span>IgnoreErrors</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3541">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>IgnoreErrors</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L143-143" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Delete even if there are I/O errors
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3542', 3542)" onmouseover="showTip(event, '3542', 3542)">
+                <p>
+                  <a id="IgnoreExisting">
+                    <a href="#IgnoreExisting">
+                      <code><span>IgnoreExisting</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3542">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>IgnoreExisting</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L127-127" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Skip updating files that already exist on receiver
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3543', 3543)" onmouseover="showTip(event, '3543', 3543)">
+                <p>
+                  <a id="IgnoreTimes">
+                    <a href="#IgnoreTimes">
+                      <code><span>IgnoreTimes</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3543">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>IgnoreTimes</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L165-165" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't skip files that match in size and mod-time
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3544', 3544)" onmouseover="showTip(event, '3544', 3544)">
+                <p>
+                  <a id="InPlace">
+                    <a href="#InPlace">
+                      <code><span>InPlace</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3544">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>InPlace</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L69-69" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Update destination files in-place (SEE MAN PAGE)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3545', 3545)" onmouseover="showTip(event, '3545', 3545)">
+                <p>
+                  <a id="Include">
+                    <a href="#Include">
+                      <code><span>Include&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3545">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Include&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L196-196" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't exclude files matching PATTERN
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3546', 3546)" onmouseover="showTip(event, '3546', 3546)">
+                <p>
+                  <a id="IncludeFrom">
+                    <a href="#IncludeFrom">
+                      <code><span>IncludeFrom&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3546">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>IncludeFrom&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L198-198" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Read include patterns from FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3547', 3547)" onmouseover="showTip(event, '3547', 3547)">
+                <p>
+                  <a id="Ipv4">
+                    <a href="#Ipv4">
+                      <code><span>Ipv4</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3547">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Ipv4</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L248-248" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Prefer IPv4
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3548', 3548)" onmouseover="showTip(event, '3548', 3548)">
+                <p>
+                  <a id="Ipv6">
+                    <a href="#Ipv6">
+                      <code><span>Ipv6</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3548">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Ipv6</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L250-250" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Prefer IPv6
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3549', 3549)" onmouseover="showTip(event, '3549', 3549)">
+                <p>
+                  <a id="ItemizeChanges">
+                    <a href="#ItemizeChanges">
+                      <code><span>ItemizeChanges</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3549">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ItemizeChanges</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L222-222" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Output a change-summary for all updates
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3550', 3550)" onmouseover="showTip(event, '3550', 3550)">
+                <p>
+                  <a id="KeepDirLinks">
+                    <a href="#KeepDirLinks">
+                      <code><span>KeepDirLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3550">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>KeepDirLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L85-85" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Treat symlinked dir on receiver as dir
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3551', 3551)" onmouseover="showTip(event, '3551', 3551)">
+                <p>
+                  <a id="LinkDest">
+                    <a href="#LinkDest">
+                      <code><span>LinkDest&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3551">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>LinkDest&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L179-179" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Hardlink to files in DIR when unchanged
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3552', 3552)" onmouseover="showTip(event, '3552', 3552)">
+                <p>
+                  <a id="Links">
+                    <a href="#Links">
+                      <code><span>Links</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3552">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Links</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L75-75" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Copy symlinks as symlinks
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3553', 3553)" onmouseover="showTip(event, '3553', 3553)">
+                <p>
+                  <a id="ListOnly">
+                    <a href="#ListOnly">
+                      <code><span>ListOnly</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3553">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ListOnly</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L232-232" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ List the files instead of copying them
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3554', 3554)" onmouseover="showTip(event, '3554', 3554)">
+                <p>
+                  <a id="LogFile">
+                    <a href="#LogFile">
+                      <code><span>LogFile&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3554">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>LogFile&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L226-226" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Log what we're doing to the specified FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3555', 3555)" onmouseover="showTip(event, '3555', 3555)">
+                <p>
+                  <a id="LogFileFormat">
+                    <a href="#LogFileFormat">
+                      <code><span>LogFileFormat&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3555">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>LogFileFormat&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L228-228" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Log updates using the specified FMT
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3556', 3556)" onmouseover="showTip(event, '3556', 3556)">
+                <p>
+                  <a id="MaxDelete">
+                    <a href="#MaxDelete">
+                      <code><span>MaxDelete&#32;int</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3556">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>MaxDelete&#32;int</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>int</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L147-147" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't delete more than NUM files
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>int</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3557', 3557)" onmouseover="showTip(event, '3557', 3557)">
+                <p>
+                  <a id="MaxSize">
+                    <a href="#MaxSize">
+                      <code><span>MaxSize&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3557">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>MaxSize&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L149-149" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't transfer any file larger than SIZE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3558', 3558)" onmouseover="showTip(event, '3558', 3558)">
+                <p>
+                  <a id="MinSize">
+                    <a href="#MinSize">
+                      <code><span>MinSize&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3558">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>MinSize&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L151-151" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't transfer any file smaller than SIZE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3559', 3559)" onmouseover="showTip(event, '3559', 3559)">
+                <p>
+                  <a id="ModifyWindow">
+                    <a href="#ModifyWindow">
+                      <code><span>ModifyWindow&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3559">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ModifyWindow&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L169-169" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Compare mod-times with reduced accuracy
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3560', 3560)" onmouseover="showTip(event, '3560', 3560)">
+                <p>
+                  <a id="NoImpliedDirs">
+                    <a href="#NoImpliedDirs">
+                      <code><span>NoImpliedDirs</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3560">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>NoImpliedDirs</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L59-59" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't send implied dirs with --relative
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3561', 3561)" onmouseover="showTip(event, '3561', 3561)">
+                <p>
+                  <a id="NoMotd">
+                    <a href="#NoMotd">
+                      <code><span>NoMotd</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3561">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>NoMotd</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L46-46" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Suppress daemon-mode MOTD (see manpage caveat)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3562', 3562)" onmouseover="showTip(event, '3562', 3562)">
+                <p>
+                  <a id="NoOption">
+                    <a href="#NoOption">
+                      <code><span>NoOption&#32;<a href="fake.buildreference/fake-tools-rsync-action.html">Action</a></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3562">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>NoOption&#32;<a href="fake.buildreference/fake-tools-rsync-action.html">Action</a></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-tools-rsync-action.html">Action</a></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L53-53" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Turn off an implied OPTION (e.g. --no-D)
+ NoOption Verbose ==> --no-verbose
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-tools-rsync-action.html">Action</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3563', 3563)" onmouseover="showTip(event, '3563', 3563)">
+                <p>
+                  <a id="NumericIds">
+                    <a href="#NumericIds">
+                      <code><span>NumericIds</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3563">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>NumericIds</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L161-161" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't map uid/gid values by user/group name
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3564', 3564)" onmouseover="showTip(event, '3564', 3564)">
+                <p>
+                  <a id="OmitDirTimes">
+                    <a href="#OmitDirTimes">
+                      <code><span>OmitDirTimes</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3564">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>OmitDirTimes</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L107-107" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Omit directories when preserving times
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3565', 3565)" onmouseover="showTip(event, '3565', 3565)">
+                <p>
+                  <a id="OneFileSystem">
+                    <a href="#OneFileSystem">
+                      <code><span>OneFileSystem</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3565">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>OneFileSystem</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L117-117" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Don't cross filesystem boundaries
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3566', 3566)" onmouseover="showTip(event, '3566', 3566)">
+                <p>
+                  <a id="OnlyWriteBatch">
+                    <a href="#OnlyWriteBatch">
+                      <code><span>OnlyWriteBatch&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3566">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>OnlyWriteBatch&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L238-238" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Like --write-batch but w/o updating destination
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3567', 3567)" onmouseover="showTip(event, '3567', 3567)">
+                <p>
+                  <a id="OutFormat">
+                    <a href="#OutFormat">
+                      <code><span>OutFormat&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3567">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>OutFormat&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L224-224" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Output updates using the specified FORMAT
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3568', 3568)" onmouseover="showTip(event, '3568', 3568)">
+                <p>
+                  <a id="Owner">
+                    <a href="#Owner">
+                      <code><span>Owner</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3568">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Owner</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L95-95" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve owner (super-user only)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3569', 3569)" onmouseover="showTip(event, '3569', 3569)">
+                <p>
+                  <a id="P">
+                    <a href="#P">
+                      <code><span>P</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3569">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>P</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L220-220" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Same as --partial --progress
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3570', 3570)" onmouseover="showTip(event, '3570', 3570)">
+                <p>
+                  <a id="Partial">
+                    <a href="#Partial">
+                      <code><span>Partial</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3570">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Partial</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L153-153" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Keep partially transferred files
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3571', 3571)" onmouseover="showTip(event, '3571', 3571)">
+                <p>
+                  <a id="PartialDir">
+                    <a href="#PartialDir">
+                      <code><span>PartialDir&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3571">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>PartialDir&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L155-155" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Put a partially transferred file into DIR
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3572', 3572)" onmouseover="showTip(event, '3572', 3572)">
+                <p>
+                  <a id="PasswordFile">
+                    <a href="#PasswordFile">
+                      <code><span>PasswordFile&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3572">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>PasswordFile&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L230-230" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Read password from FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3573', 3573)" onmouseover="showTip(event, '3573', 3573)">
+                <p>
+                  <a id="Perms">
+                    <a href="#Perms">
+                      <code><span>Perms</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3573">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Perms</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L89-89" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve permissions
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3574', 3574)" onmouseover="showTip(event, '3574', 3574)">
+                <p>
+                  <a id="Port">
+                    <a href="#Port">
+                      <code><span>Port&#32;int</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3574">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Port&#32;int</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>int</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L206-206" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Specify double-colon alternate port number
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>int</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3575', 3575)" onmouseover="showTip(event, '3575', 3575)">
+                <p>
+                  <a id="Progress">
+                    <a href="#Progress">
+                      <code><span>Progress</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3575">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Progress</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L218-218" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Show progress during transfer
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3576', 3576)" onmouseover="showTip(event, '3576', 3576)">
+                <p>
+                  <a id="Protocol">
+                    <a href="#Protocol">
+                      <code><span>Protocol&#32;int</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3576">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Protocol&#32;int</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>int</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L242-242" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Force an older protocol version to be used
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>int</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3577', 3577)" onmouseover="showTip(event, '3577', 3577)">
+                <p>
+                  <a id="PruneEmptyDirs">
+                    <a href="#PruneEmptyDirs">
+                      <code><span>PruneEmptyDirs</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3577">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>PruneEmptyDirs</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L159-159" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Prune empty directory chains from the file-list
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3578', 3578)" onmouseover="showTip(event, '3578', 3578)">
+                <p>
+                  <a id="Quiet">
+                    <a href="#Quiet">
+                      <code><span>Quiet</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3578">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Quiet</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L44-44" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Suppress non-error messages
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3579', 3579)" onmouseover="showTip(event, '3579', 3579)">
+                <p>
+                  <a id="ReadBatch">
+                    <a href="#ReadBatch">
+                      <code><span>ReadBatch&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3579">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ReadBatch&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L240-240" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Read a batched update from FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3580', 3580)" onmouseover="showTip(event, '3580', 3580)">
+                <p>
+                  <a id="Recursive">
+                    <a href="#Recursive">
+                      <code><span>Recursive</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3580">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Recursive</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L55-55" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Recurse into directories
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3581', 3581)" onmouseover="showTip(event, '3581', 3581)">
+                <p>
+                  <a id="Relative">
+                    <a href="#Relative">
+                      <code><span>Relative</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3581">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Relative</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L57-57" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Use relative path names
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3582', 3582)" onmouseover="showTip(event, '3582', 3582)">
+                <p>
+                  <a id="RemoveSourceFiles">
+                    <a href="#RemoveSourceFiles">
+                      <code><span>RemoveSourceFiles</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3582">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>RemoveSourceFiles</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L129-129" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Sender removes synchronized files (non-dirs)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3583', 3583)" onmouseover="showTip(event, '3583', 3583)">
+                <p>
+                  <a id="Rsh">
+                    <a href="#Rsh">
+                      <code><span>Rsh&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3583">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Rsh&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L121-121" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Specify the remote shell to use
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3584', 3584)" onmouseover="showTip(event, '3584', 3584)">
+                <p>
+                  <a id="RsyncPath">
+                    <a href="#RsyncPath">
+                      <code><span>RsyncPath&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3584">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>RsyncPath&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L123-123" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Specify the rsync to run on the remote machine
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3585', 3585)" onmouseover="showTip(event, '3585', 3585)">
+                <p>
+                  <a id="SafeLinks">
+                    <a href="#SafeLinks">
+                      <code><span>SafeLinks</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3585">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>SafeLinks</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L81-81" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Ignore symlinks that point outside the source tree
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3586', 3586)" onmouseover="showTip(event, '3586', 3586)">
+                <p>
+                  <a id="SizeOnly">
+                    <a href="#SizeOnly">
+                      <code><span>SizeOnly</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3586">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>SizeOnly</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L167-167" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Skip files that match in size
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3587', 3587)" onmouseover="showTip(event, '3587', 3587)">
+                <p>
+                  <a id="Sockopts">
+                    <a href="#Sockopts">
+                      <code><span>Sockopts&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3587">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Sockopts&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L208-208" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Specify custom TCP options
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3588', 3588)" onmouseover="showTip(event, '3588', 3588)">
+                <p>
+                  <a id="Sparse">
+                    <a href="#Sparse">
+                      <code><span>Sparse</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3588">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Sparse</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L111-111" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Handle sparse files efficiently
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3589', 3589)" onmouseover="showTip(event, '3589', 3589)">
+                <p>
+                  <a id="Specials">
+                    <a href="#Specials">
+                      <code><span>Specials</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3589">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Specials</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L101-101" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve special files
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3590', 3590)" onmouseover="showTip(event, '3590', 3590)">
+                <p>
+                  <a id="Stats">
+                    <a href="#Stats">
+                      <code><span>Stats</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3590">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Stats</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L212-212" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Give some file-transfer stats
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3591', 3591)" onmouseover="showTip(event, '3591', 3591)">
+                <p>
+                  <a id="Suffix">
+                    <a href="#Suffix">
+                      <code><span>Suffix&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3591">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Suffix&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L65-65" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set backup suffix (default ~ w/o --backup-dir)
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3592', 3592)" onmouseover="showTip(event, '3592', 3592)">
+                <p>
+                  <a id="Super">
+                    <a href="#Super">
+                      <code><span>Super</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3592">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Super</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L109-109" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Receiver attempts super-user activities
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3593', 3593)" onmouseover="showTip(event, '3593', 3593)">
+                <p>
+                  <a id="TempDir">
+                    <a href="#TempDir">
+                      <code><span>TempDir&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3593">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>TempDir&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L171-171" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create temporary files in directory DIR
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3594', 3594)" onmouseover="showTip(event, '3594', 3594)">
+                <p>
+                  <a id="Timeout">
+                    <a href="#Timeout">
+                      <code><span>Timeout&#32;int</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3594">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Timeout&#32;int</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>int</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L163-163" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set I/O timeout in seconds
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>int</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3595', 3595)" onmouseover="showTip(event, '3595', 3595)">
+                <p>
+                  <a id="Times">
+                    <a href="#Times">
+                      <code><span>Times</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3595">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Times</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L105-105" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Preserve times
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3596', 3596)" onmouseover="showTip(event, '3596', 3596)">
+                <p>
+                  <a id="Update">
+                    <a href="#Update">
+                      <code><span>Update</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3596">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Update</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L67-67" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Skip files that are newer on the receiver
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3597', 3597)" onmouseover="showTip(event, '3597', 3597)">
+                <p>
+                  <a id="Verbose">
+                    <a href="#Verbose">
+                      <code><span>Verbose</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3597">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Verbose</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L42-42" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Increase verbosity
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3598', 3598)" onmouseover="showTip(event, '3598', 3598)">
+                <p>
+                  <a id="Version">
+                    <a href="#Version">
+                      <code><span>Version</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3598">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Version</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L252-252" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Print version number
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3599', 3599)" onmouseover="showTip(event, '3599', 3599)">
+                <p>
+                  <a id="WholeFile">
+                    <a href="#WholeFile">
+                      <code><span>WholeFile</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3599">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>WholeFile</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L115-115" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Copy files whole (without rsync algorithm)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '3600', 3600)" onmouseover="showTip(event, '3600', 3600)">
+                <p>
+                  <a id="WriteBatch">
+                    <a href="#WriteBatch">
+                      <code><span>WriteBatch&#32;string</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="3600">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>WriteBatch&#32;string</span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        Item
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Tools.Rsync/Rsync.fs#L236-236" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Write a batched update to FILE
+
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  Item
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+        
+    </div>
+</div>
+
+<footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+    <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col justify-between lg:w-2/3">
+            <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                <div class="lg:mr-16">
+                    <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Important Links</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/getting-started.html">Getting
+                            started</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/fake-modules.html">Modules</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                            Header</a></li>
+                    </ul>
+                </div>
+                <div class="lg:mx-16">
+                    <h4 class="text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Further projects</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsprojects.github.io/Paket/">Paket</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                            Formatting</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 mx-auto w-full">
+                <p>© FAKE. All rights reserved | Version:
+                    <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                        <span>6.0.0-alpha001</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="lg:w-1/3 space-y-3">
+            <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">FAKE is a community effort</span>
+                        </span>
+            </h4>
+            <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                running F# scripts. Look at the open issues at
+                <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                send pull requests!</p>
+            <div class="block py-8">
+                <a href="/guide/contributing.html">
+                    <span
+                        class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                        <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7"></path>
+                            </svg>
+                    </span>
+                    <span>Learn more</span>
+                    </span>
+                </a>
+            </div>
+
+            <h4 class="text-lg">Get in touch</h4>
+
+            <div class="flex items-center space-x-2">
+                <a href="https://twitter.com/fsharpMake"
+                   class="block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+                <a href="https://fake.build"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Website</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+</html>

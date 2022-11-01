@@ -1,46 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-pt-32">
 
 <head>
-    <title>FAKE - F# Make - A DSL for build tasks</title>
+    <title>Releasifying NuGet Packages with Squirrel
+</title>
     <meta charset="utf-8">
-    <meta name="description" content="FAKE - F# Make - A DSL for build tasks">
-    <link rel="apple-touch-icon" sizes="180x180" href="/content/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/content/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/content/favicon-16x16.png">
-    <link rel="manifest" href="/content/site.webmanifest">
-    <link rel="mask-icon" href="{{root}}content/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
-    <meta name="author" content="FAKE team">
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link type="text/css" rel="stylesheet" href="/content/assets/css/tailwind.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
 </head>
 
-<body class="font-fake antialiased min-h-screen text-slate-500 bg-white relative flex flex-col w-fit md:w-full">
-    <header
-        class="h-20 px-4 py-4 flex justify-between items-center bg-white border-b-4 border-b-[#d4b43c] shadow-inner">
-
-        <div class="flex items-center block">
-            <a class="flex items-center gap-2" href="/index.html">
-                <img src="/content/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more" width="28"
-                    height="28" class="w-10 h-10">
+<body
+    class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+    x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
+    <header class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+        :class="{'bg-white': open === false}">
+        <div class="flex gap-2 items-center block">
+            <a class="flex items-center gap-2" href="fake.buildindex.html">
+                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+                    width="28" height="28" class="w-10 h-10">
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
-        </div>
+            <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+                <span>6.0.0-alpha001</span>
+            </div>
+            <button
+                class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
 
-        <div class="flex items-center">
-            <div>
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="flex items-center pt-10 md:pt-0">
+            <div class="md:mr-5">
                 <ul class="flex space-x-4">
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a></li>
-                    <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    </li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
                 </ul>
             </div>
-            <div class="hidden lg:block">
+            <button
+                class="border-slate-700 hidden md:block lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+            <div class="hidden lg:block relative ml-auto">
                 <div class="flex items-center">
                     <a href="https://github.com/fsprojects/fake"
                         class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
@@ -76,186 +114,133 @@
             </div>
         </div>
 
+        <div
+            class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank"
+                href="https://github.com/fsprojects/FAKE/blob/master/docs/articles/installer-squirrel.md">Edit this page</a>
+        </div>
     </header>
 
-    <section
-        class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10 bg-gray-800">
+    <div class="lg:ml-[25rem] min-w-0 lg:px-16">
+        <nav class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem]
+         w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
+            aria-label="main navigation"
+            :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+            <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
+            lg:hidden">
+                <div class="flex gap-2 items-center">
+                    <a class="flex items-center gap-2" href="fake.buildindex.html">
+                        <img src="fake.buildcontent/assets/img/logo.svg"
+                            alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
+                            class="w-10 h-10">
+                        <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                    </a>
+                </div>
+                <button
+                    class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                    @click="open = false">
+                    <span
+                        class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                        <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
 
-        <div class="mt-10 lg:mt-0 flex flex-col justify-center items-center space-y-10">
-            <h1
-                class="text-center text-2xl md:text-4xl font-bold text-[#d4b43c] leading-6 md:leading-10 tracking-wide lg:tracking-widest">
-                A DSL FOR BUILD TASKS AND MORE
-                <br />
-                THE POWER OF F# - ANYWHERE - ANYTIME
-            </h1>
-            <div class="flex justify-between items-center space-x-5">
-                <a href="/guide.html"
-                    class="w-48 py-3 flex justify-center bg-[#d4b43c] text-white rounded shadow-md font-semibold bg-gradient-to-r from-red-800 via-yellow-600 to-[#d4b43c] hover:from-[#d4b43c]">
-                    Guide
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Guide
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.guide)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname.startsWith(navItem.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Articles
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.articles)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname === navItem.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+        <div class="max-w-[50rem] mt-16 mx-4 lg:mx-auto px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+            <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+            <p>
+                <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                        </path>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                        </path>
+                    </svg>
+                    <span class="underline">v5.fake.build</span>
                 </a>
-                <a href="/reference/index.html"
-                    class="w-48 py-3 flex justify-center border border-[#d4b43c] text-[#d4b43c] rounded shadow-md font-semibold hover:text-white hover:bg-[#d4b43c]">
-                    API Docs
-                </a>
-            </div>
+            </p>
         </div>
+        <div id="content"
+            class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+            <h1><a name="Releasifying-NuGet-Packages-with-Squirrel" class="anchor" href="#Releasifying-NuGet-Packages-with-Squirrel">Releasifying NuGet Packages with Squirrel</a></h1>
+<p><a href="https://github.com/Squirrel/Squirrel.Windows"><em>Squirrel.Windows</em></a> is an installation tool with an auto-update system
+for Windows desktop apps.</p>
+<p>To see the available Squirrel APIs in FAKE, please see the <a href="fake.buildreference/fake-installer-squirrel.html"><code>API-Reference</code></a> for the Squirrel module.</p>
+<h2><a name="CLI-tool" class="anchor" href="#CLI-tool"><code>Squirrel.exe</code> CLI tool</a></h2>
+<p>This module is a wrapper around the <a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/using/squirrel-command-line.md"><em>Squirrel.exe</em></a>
+CLI tool that is available in the <a href="https://www.nuget.org/packages/squirrel.windows/"><em>squirrel.windows</em></a> NuGet package.</p>
+<h2><a name="Releasify" class="anchor" href="#Releasify">Releasify</a></h2>
+<p><a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/getting-started/2-packaging.md#releasifying"><em>Releasifying</em></a> create all files
+necessary for release from a NuGet package.</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Installer</span>
 
-        <div class="mt-10 lg:mt-0 z-10 shadow-lg bg-[#d4b43c] p-20 rounded-lg">
-            <img alt="main sample code to illustrate FAKE syntax" src="/content/img/homepage/code-sample.svg">
-        </div>
+<span class="id">Squirrel</span><span class="pn">.</span><span class="id">releasify</span> <span class="s">&quot;./my.nupkg&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ReleaseDir</span> <span class="o">=</span> <span class="s">&quot;./squirrel_release&quot;</span><span class="pn">)</span>
+</code></pre>
 
-        <div class="hidden lg:block absolute right-0 z-0">
-            <img alt="top section background pattern" src="/content/img/homepage/pattern.svg">
-        </div>
-
-    </section>
-
-    <div class="mt-20 md:w-none px-4 lg:px-0 max-w-none max-w-[83rem]">
-
-        <section class="mt-10 lg:mt-0 flex flex-col justify-center items-center">
-
-            <div class="flex flex-col justify-center items-center">
-                <h1 class="text-4xl font-medium text-gray-900 tracking-widest">Why Use FAKE?</h1>
-                <p class="mt-4 text-lg text-center text-gray-600 tracking-widest">Fake is built on several key design
-                    principles...
-                </p>
-            </div>
-
-            <div
-                class="mt-10 lg:mt-20 w-full flex lg:flex-row flex-col justify-around items-center space-y-5 lg:space-y-0 z-10">
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate modularization feature of FAKE" width="100"
-                            src="/content/img/homepage/modularization-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Modularization</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Use the Modules you Need</p>
-                        <a href="/guide/fake-modules.html"
-                            class="text-xs underline text-gray-400 hover:text-gray-800">See Modules</a>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate extensibility feature of FAKE" width="100"
-                            src="/content/img/homepage/extensibility-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Extensibility</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Integrate your own Modules</p>
-                        <a href="/guide/fake-custom-modules.html"
-                            class="-mt-2 text-xs underline text-gray-400 hover:text-gray-800 text-center">See Custom
-                            Modules</a>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate quick start feature of FAKE" width="100"
-                            src="/content/img/homepage/quick-start-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Quick Start</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Get Started as Fast as Possible</p>
-                        <a href="/guide/getting-started.html"
-                            class="text-xs underline text-gray-400 hover:text-gray-800 text-center">Check Getting
-                            Started</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <div class="absolute left-0 z-10">
-            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                src="/content/img/homepage/shape.svg">
         </div>
     </div>
 
-    <div class="mt-40 p-10 flex flex-col justify-center bg-[#f9f9f9] shadow">
-        <section>
-            <div class="py-20 flex flex-col justify-center items-center bg-[#f9f9f9]">
-                <div class="max-w-2xl">
-                    <h3 class="text-4xl text-[#d4b43c] tracking-widest text-start">Bootstrapping</h3>
-                    <p class="mt-4 text-justify tracking-wider text-gray-600 leading-6">
-                        Every project has different needs. Therefore, FAKE supports several ways to bootstrap the build
-                        process.
-                        From an assumed installation - for example via chocolatey - to automatically updated
-                        bootstrapping scripts.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class=" md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[83rem]">
-        <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div>
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    A Simple Build Script
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    This is a simple build script in FAKE. Build scripts can contain multiple targets which can do
-                    different things
-                    like building your app or publishing it. They are written in F# and can contain references to third
-                    party
-                    libraries by including them directly or via Paket.
-                </p>
-            </div>
-            <div class="p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300">
-                <img alt="code sample #1" src="/content/img/homepage/code-sample-1.svg">
-            </div>
-        </section>
-
-        <div class="hidden md:block absolute right-0 z-0">
-            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                src="/content/img/homepage/shape-2.svg">
-        </div>
-
-        <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div class="order-2 lg:order-1 mt-10 lg:mt-0 p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300 z-0">
-                <img alt="code sample #2" src="/content/img/homepage/code-sample-2.svg">
-            </div>
-            <div class="order-1 lg:order-2">
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    Target Dependencies
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    Targets in your build script might have dependencies on other targets like cleaning up your output
-                    folder before building your app. FAKE supports specifying dependencies between your targets.
-                    While it might look a bit strange at first, just read it from the bottom to the top.
-                </p>
-            </div>
-        </section>
-
-        <section
-            class="relative mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div>
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    Globbing
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    In order to search for files deep down in your folder structure, FAKE supports globbing.
-                    The following build script can search for project files in a given folder path and compile them
-                    using MSBuild.
-                    To give you even more power, FAKE can exclude and include additional files.
-                </p>
-            </div>
-            <div class="hidden lg:block flex justify-center z-0">
-                <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                    src="/content/img/homepage/shape-2.svg">
-            </div>
-            <div class="p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300">
-                <img alt="code sample #3" src="/content/img/homepage/code-sample-3.svg">
-            </div>
-        </section>
-    </div>
-
-    <footer
-        class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 mt-40 pb-40 pt-10 px-10 bg-no-repeat bg-right-bottom">
-        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-[83rem] mx-auto space-y-10">
+    <footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
             <div class="flex flex-col justify-between lg:w-2/3">
                 <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
                     <div class="lg:mr-16">
@@ -312,7 +297,11 @@
                     </div>
                 </div>
                 <div class="mt-10 mx-auto w-full">
-                    <p>© FAKE. All rights reserved</p>
+                    <p>© FAKE. All rights reserved | Version:
+                        <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                            <span>6.0.0-alpha001</span>
+                        </a>
+                    </p>
                 </div>
             </div>
             <div class="lg:w-1/3 space-y-3">
@@ -328,8 +317,8 @@
                         <span class="inline-block">FAKE is a community effort</span>
                     </span>
                 </h4>
-                <p class="text-justify">
-                    Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and
+                    Runtime for
                     running F# scripts. Look at the open issues at
                     <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
                     send pull requests!
@@ -395,6 +384,7 @@
             </div>
         </div>
     </footer>
+    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,2945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fake.Core</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - API docs page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+      x-data="{open: false}"
+      :class="{'bg-gray-100 overflow-hidden': open === true}">
+<header
+    class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+    :class="{'bg-white': open === false}">
+    <div class="flex gap-2 items-center block">
+        <a class="flex items-center gap-2" href="fake.buildindex.html">
+            <img src="fake.buildcontent/assets/img/logo.svg"
+                 alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+            <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+        </a>
+        <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+            <span>6.0.0-alpha001</span>
+        </div>
+        <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+          <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+            <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </span>
+        </button>
+    </div>
+    <div class="flex items-center pt-10 md:pt-0">
+        <div class="md:mr-5">
+            <ul class="flex space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a></li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </ul>
+        </div>
+        <div class="hidden lg:block relative ml-auto">
+            <div class="flex items-center">
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/fsharpMake"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="lg:ml-[25rem] min-w-0 lg:px-16">
+    <nav
+        class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] 
+        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8"
+        role="navigation"
+        aria-label="main navigation"
+        :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+        <div
+            class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
+            <div class="flex gap-2 items-center">
+                <a class="flex items-center gap-2" href="fake.buildindex.html">
+                    <img src="fake.buildcontent/assets/img/logo.svg"
+                         alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+                    <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                </a>
+            </div>
+            <button
+                class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                @click="open = false">
+        <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+          <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </span>
+            </button>
+        </div>
+
+        <ul
+            x-data="{nav: []}"
+            x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.apidocs)
+            ">
+            <template x-for="navGroup in nav">
+                <li class="mt-12 lg:mt-8">
+                    <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900"
+                        x-text="navGroup.title">
+                    </h5>
+                    <ul class="space-y-6 lg:space-y-2 border-l">
+                        <template x-for="navLink in navGroup.links">
+                            <li class="group">
+                                <a
+                                    class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                                    :href="navLink.href"
+                                    :class="window.location.pathname === navLink.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    <span
+                                        class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
+                                        <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                      </span>
+                                    <span class="inline-block" x-text="navLink.title"></span>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </nav>
+    <div class="mt-16 mx-4 lg:mx-auto max-w-[80rem] px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+        <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+        <p>
+            <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                    </path>
+                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                    </path>
+                </svg>
+                <span class="underline">v5.fake.build</span>
+            </a>
+        </p>
+    </div>
+    <div id="content"
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
+        <div>
+  <h2 id="fake-core">
+    Fake.Core Namespace
+  </h2>
+  <div class="fsdocs-xmldoc">
+    <p>
+      
+ Core namespace contains FAKE's core tasks, like Target, Process, BuildeServer, etc.. modules.
+ 
+    </p>
+  </div>
+  <table class="table outer-list fsdocs-entity-list">
+    <thead>
+      <tr>
+        <td>
+          Type/Module
+        </td>
+        <td>
+          Description
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Args">
+              <a href="fake.buildreference/fake-core-args.html">
+                Args
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Args`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Args\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L140-140" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Helper functions for proper command line parsing
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Arguments">
+              <a href="fake.buildreference/fake-core-argumentsmodule.html">
+                Arguments (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ArgumentsModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ArgumentsModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L203-203" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Module for working with an `Arguments` instance
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Arguments">
+              <a href="fake.buildreference/fake-core-arguments.html">
+                Arguments (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Arguments`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Arguments\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L169-169" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Represents a list of arguments
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="AsyncProcessResult<'a>">
+              <a href="fake.buildreference/fake-core-asyncprocessresult-1.html">
+                AsyncProcessResult<'a>
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('``cref:T:Fake.Core.AsyncProcessResult`1``')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.AsyncProcessResult`1\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L322-322" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="BuildFailedException">
+              <a href="fake.buildreference/fake-core-buildfailedexception.html">
+                BuildFailedException
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.BuildFailedException`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.BuildFailedException\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/Target.fs#L131-131" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Exception for request errors
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="BuildServer">
+              <a href="fake.buildreference/fake-core-buildservermodule.html">
+                BuildServer (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.BuildServerModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.BuildServerModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/BuildServer.fs#L33-33" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains functions which allow build scripts to interact with a build server.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="BuildServer">
+              <a href="fake.buildreference/fake-core-buildserver.html">
+                BuildServer (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.BuildServer`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.BuildServer\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/BuildServer.fs#L6-6" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The server type option.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="BuildServerInstaller">
+              <a href="fake.buildreference/fake-core-buildserverinstaller.html">
+                BuildServerInstaller
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.BuildServerInstaller`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.BuildServerInstaller\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/BuildServer.fs#L25-25" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Changelog">
+              <a href="fake.buildreference/fake-core-changelog.html">
+                Changelog
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Changelog`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Changelog\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.ReleaseNotes/Changelog.fs#L57-57" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains helpers which allow to parse Change log text files.
+ These files have to be in a format as described on
+ <a href="https://keepachangelog.com/en/1.1.0/">keepachangelog</a>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Command">
+              <a href="fake.buildreference/fake-core-command.html">
+                Command
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Command`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Command\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L56-56" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The type of command to execute
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ConsoleMessage">
+              <a href="fake.buildreference/fake-core-consolemessage.html">
+                ConsoleMessage
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ConsoleMessage`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ConsoleMessage\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L9-9" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ A record type which captures console messages
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ConsoleTraceListener">
+              <a href="fake.buildreference/fake-core-consoletracelistener.html">
+                ConsoleTraceListener
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ConsoleTraceListener`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ConsoleTraceListener\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L291-291" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Implements a TraceListener for System.Console.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ConsoleWriter">
+              <a href="fake.buildreference/fake-core-consolewriter.html">
+                ConsoleWriter
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ConsoleWriter`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ConsoleWriter\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L223-223" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Context">
+              <a href="fake.buildreference/fake-core-context.html">
+                Context
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Context`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Context\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Context/Context.fs#L11-11" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ This module tracks the context of the build.
+ <remarks>
+ This allows us to run some modules without any context and change behavior depending on the context
+ (For example <c>Fake.Process</c> kills all processes when the Fake Context exists, but it should not when used
+ as library)
+ </remarks>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="CoreTracing">
+              <a href="fake.buildreference/fake-core-coretracing.html">
+                CoreTracing
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.CoreTracing`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.CoreTracing\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L363-363" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="CreateProcess">
+              <a href="fake.buildreference/fake-core-createprocess.html">
+                CreateProcess
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.CreateProcess`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.CreateProcess\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L111-111" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Module for creating and modifying CreateProcess<'TRes> instances.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="CreateProcess<'TRes>">
+              <a href="fake.buildreference/fake-core-createprocess-1.html">
+                CreateProcess<'TRes>
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('``cref:T:Fake.Core.CreateProcess`1``')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.CreateProcess`1\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L50-50" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Handle for creating a process and returning potential results.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="CreateProcessDotNetExt">
+              <a href="fake.buildreference/fake-core-createprocessdotnetext.html">
+                CreateProcessDotNetExt
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.CreateProcessDotNetExt`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.CreateProcessDotNetExt\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/CreateProcessExt.fs#L138-138" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Some extensions for the <code>CreateProcess</code> module, opened automatically (use add <code>open Fake.Core</code>)
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="CreateProcessExt">
+              <a href="fake.buildreference/fake-core-createprocessext.html">
+                CreateProcessExt
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.CreateProcessExt`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.CreateProcessExt\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcessExt.fs#L7-7" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Some extensions for the <code>CreateProcess</code> module, opened automatically (use add <code>open Fake.Core</code>)
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DataRef<'T>">
+              <a href="fake.buildreference/fake-core-dataref-1.html">
+                DataRef<'T>
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('``cref:T:Fake.Core.DataRef`1``')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DataRef`1\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L82-82" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
+ Used to retrieve "pipes"
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DocHelper">
+              <a href="fake.buildreference/fake-core-dochelper.html">
+                DocHelper
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DocHelper`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DocHelper\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Docopt.fs#L9-9" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Docopt">
+              <a href="fake.buildreference/fake-core-docopt.html">
+                Docopt
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Docopt`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Docopt\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Docopt.fs#L105-105" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DocoptException">
+              <a href="fake.buildreference/fake-core-docoptexception.html">
+                DocoptException
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DocoptException`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DocoptException\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L3-3" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DocoptMap">
+              <a href="fake.buildreference/fake-core-docoptmap.html">
+                DocoptMap
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DocoptMap`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DocoptMap\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Args.fs#L18-18" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DocoptResult">
+              <a href="fake.buildreference/fake-core-docoptresultmodule.html">
+                DocoptResult (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DocoptResultModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DocoptResultModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Args.fs#L21-21" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DocoptResult">
+              <a href="fake.buildreference/fake-core-docoptresult.html">
+                DocoptResult (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DocoptResult`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DocoptResult\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/Args.fs#L3-3" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="DotNetCoverageTool">
+              <a href="fake.buildreference/fake-core-dotnetcoveragetool.html">
+                DotNetCoverageTool
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.DotNetCoverageTool`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.DotNetCoverageTool\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L45-45" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The list of DotNet coverage tools supported
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Environment">
+              <a href="fake.buildreference/fake-core-environment.html">
+                Environment
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Environment`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Environment\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/Environment.fs#L37-37" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ This module contains functions which allow to read and write environment variables and build parameters
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="EnvMap">
+              <a href="fake.buildreference/fake-core-envmapmodule.html">
+                EnvMap (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.EnvMapModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.EnvMapModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L34-34" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="EnvMap">
+              <a href="fake.buildreference/fake-core-envmap.html">
+                EnvMap (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.EnvMap`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.EnvMap\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L32-32" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ExecParams">
+              <a href="fake.buildreference/fake-core-execparams.html">
+                ExecParams
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ExecParams`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ExecParams\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L260-260" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Parameter type for process execution.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="FakeVar">
+              <a href="fake.buildreference/fake-core-fakevar.html">
+                FakeVar
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.FakeVar`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.FakeVar\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L7-7" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ This module contains helpers for managing build time variables
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="FilePath">
+              <a href="fake.buildreference/fake-core-filepath.html">
+                FilePath
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.FilePath`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.FilePath\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CmdLineParsing.fs#L135-135" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="IMap">
+              <a href="fake.buildreference/fake-core-imap.html">
+                IMap
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.IMap`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.IMap\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L13-13" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="IMap<'TKey, 'TValue>">
+              <a href="fake.buildreference/fake-core-imap-2.html">
+                IMap<'TKey, 'TValue>
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('``cref:T:Fake.Core.IMap`2``')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.IMap`2\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L11-11" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ImportData">
+              <a href="fake.buildreference/fake-core-importdata.html">
+                ImportData
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ImportData`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ImportData\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L70-70" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The types of data to import in build process
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ITraceListener">
+              <a href="fake.buildreference/fake-core-itracelistener.html">
+                ITraceListener
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ITraceListener`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ITraceListener\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L220-220" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Defines a TraceListener interface
+ Note: Please contribute implementations to the fake repository, as external implementations are not supported.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="KnownTags">
+              <a href="fake.buildreference/fake-core-knowntags.html">
+                KnownTags
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.KnownTags`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.KnownTags\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L9-9" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The supported tracing tags
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Mono">
+              <a href="fake.buildreference/fake-core-mono.html">
+                Mono
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Mono`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Mono\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Mono.fs#L1-1" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="NunitDataVersion">
+              <a href="fake.buildreference/fake-core-nunitdataversion.html">
+                NunitDataVersion
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.NunitDataVersion`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.NunitDataVersion\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L62-62" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The NUnit versions supported
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Operators">
+              <a href="fake.buildreference/fake-core-operators.html">
+                Operators
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Operators`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Operators\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/Operators.fs#L3-3" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="PreRelease">
+              <a href="fake.buildreference/fake-core-prerelease.html">
+                PreRelease
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.PreRelease`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.PreRelease\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.SemVer/SemVer.fs#L78-78" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Information about PreRelease packages.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="PreReleaseSegment">
+              <a href="fake.buildreference/fake-core-prereleasesegment.html">
+                PreReleaseSegment
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.PreReleaseSegment`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.PreReleaseSegment\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.SemVer/SemVer.fs#L43-43" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Proc">
+              <a href="fake.buildreference/fake-core-proc.html">
+                Proc
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Proc`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Proc\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L1082-1082" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Module to start or run processes, used in combination with the <code>CreateProcess</code> API.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Process">
+              <a href="fake.buildreference/fake-core-process.html">
+                Process
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Process`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Process\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L330-330" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains functions which can be used to start other tools.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcessOutput">
+              <a href="fake.buildreference/fake-core-processoutput.html">
+                ProcessOutput
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ProcessOutput`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcessOutput\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L43-43" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The output of the process. If ordering between stdout and stderr is important you need to use streams.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcessResult">
+              <a href="fake.buildreference/fake-core-processresult.html">
+                ProcessResult
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ProcessResult`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcessResult\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L25-25" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ A process result including error code, message log and errors.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcessResult<'a>">
+              <a href="fake.buildreference/fake-core-processresult-1.html">
+                ProcessResult<'a>
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('``cref:T:Fake.Core.ProcessResult`1``')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcessResult`1\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L45-45" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcessUtils">
+              <a href="fake.buildreference/fake-core-processutils.html">
+                ProcessUtils
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ProcessUtils`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcessUtils\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/ProcessUtils.fs#L10-10" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains functions which can be used to start other tools.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcStartInfo">
+              <a href="fake.buildreference/fake-core-procstartinfo.html">
+                ProcStartInfo
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ProcStartInfo`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcStartInfo\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L81-81" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The process start info, a type used to define a process configurations, options and arguments
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ProcStartInfoExtensions">
+              <a href="fake.buildreference/fake-core-procstartinfoextensions.html">
+                ProcStartInfoExtensions
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ProcStartInfoExtensions`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ProcStartInfoExtensions\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L969-969" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ An extension to process start info type
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="RawProcessResult">
+              <a href="fake.buildreference/fake-core-rawprocessresult.html">
+                RawProcessResult
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.RawProcessResult`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.RawProcessResult\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L188-188" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="ReleaseNotes">
+              <a href="fake.buildreference/fake-core-releasenotes.html">
+                ReleaseNotes
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.ReleaseNotes`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.ReleaseNotes\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.ReleaseNotes/ReleaseNotes.fs#L51-51" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="SemVer">
+              <a href="fake.buildreference/fake-core-semver.html">
+                SemVer
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.SemVer`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.SemVer\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.SemVer/SemVer.fs#L259-259" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+ Make sure to read the documentation in the <a href="guide/fake-core-semverinfo.html">SemVerInfo</a>
+ record as well if you manually create versions.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="SemVerActivePattern">
+              <a href="fake.buildreference/fake-core-semveractivepattern.html">
+                SemVerActivePattern
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.SemVerActivePattern`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.SemVerActivePattern\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.SemVer/SemVer.fs#L12-12" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="SemVerInfo">
+              <a href="fake.buildreference/fake-core-semverinfo.html">
+                SemVerInfo
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.SemVerInfo`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.SemVerInfo\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.SemVer/SemVer.fs#L168-168" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains the version information. For parsing use <code>SemVer.parse</code>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Shell">
+              <a href="fake.buildreference/fake-core-shell.html">
+                Shell
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Shell`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Shell\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/Process.fs#L916-916" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Allows to exec shell operations synchronously and asynchronously.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="StartedProcessInfo">
+              <a href="fake.buildreference/fake-core-startedprocessinfo.html">
+                StartedProcessInfo
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.StartedProcessInfo`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.StartedProcessInfo\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L67-67" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Some information regarding the started process
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="StreamExtensions">
+              <a href="fake.buildreference/fake-core-streamextensions.html">
+                StreamExtensions
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.StreamExtensions`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.StreamExtensions\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/InternalStreams.fs#L8-8" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="StreamRef">
+              <a href="fake.buildreference/fake-core-streamref.html">
+                StreamRef
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.StreamRef`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.StreamRef\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L108-108" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="StreamSpecification">
+              <a href="fake.buildreference/fake-core-streamspecification.html">
+                StreamSpecification
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.StreamSpecification`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.StreamSpecification\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/RawProc.fs#L111-111" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Various options to redirect streams.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="String">
+              <a href="fake.buildreference/fake-core-string.html">
+                String
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.String`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.String\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.String/String.fs#L7-7" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains basic functions for string manipulation.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="StringBuilder">
+              <a href="fake.buildreference/fake-core-stringbuilder.html">
+                StringBuilder
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.StringBuilder`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.StringBuilder\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.String/StringBuilder.fs#L7-7" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ FAKE's StringBuilder module.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TagStatus">
+              <a href="fake.buildreference/fake-core-tagstatus.html">
+                TagStatus
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TagStatus`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TagStatus\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L138-138" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The types of tagging on testing supported
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Target">
+              <a href="fake.buildreference/fake-core-targetmodule.html">
+                Target
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TargetModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TargetModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/Target.fs#L164-164" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ FAKE Target module contains tasks to define and run targets.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TargetContext">
+              <a href="fake.buildreference/fake-core-targetcontext.html">
+                TargetContext
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TargetContext`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TargetContext\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/Target.fs#L44-44" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TargetOperators">
+              <a href="fake.buildreference/fake-core-targetoperators.html">
+                TargetOperators
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TargetOperators`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TargetOperators\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/TargetOperators.fs#L6-6" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Provides functions and operators to deal with FAKE targets and target dependencies.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TargetParameter">
+              <a href="fake.buildreference/fake-core-targetparameter.html">
+                TargetParameter
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TargetParameter`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TargetParameter\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/Target.fs#L75-75" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TargetResult">
+              <a href="fake.buildreference/fake-core-targetresult.html">
+                TargetResult
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TargetResult`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TargetResult\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Target/Target.fs#L38-38" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TaskRunner">
+              <a href="fake.buildreference/fake-core-taskrunner.html">
+                TaskRunner
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TaskRunner`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TaskRunner\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Tasks/TaskRunner.fs#L8-8" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains a helper which can be used to implement timeouts and retries.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TestStatus">
+              <a href="fake.buildreference/fake-core-teststatusmodule.html">
+                TestStatus (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TestStatusModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TestStatusModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L126-126" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Testing status
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TestStatus">
+              <a href="fake.buildreference/fake-core-teststatus.html">
+                TestStatus (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TestStatus`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TestStatus\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L121-121" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The testing statuses supported
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Trace">
+              <a href="fake.buildreference/fake-core-trace.html">
+                Trace
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Trace`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Trace\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/Trace.fs#L7-7" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ This module contains function which allow to trace build output
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TraceData">
+              <a href="fake.buildreference/fake-core-tracedatamodule.html">
+                TraceData (Module)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TraceDataModule`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TraceDataModule\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L190-190" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TraceData">
+              <a href="fake.buildreference/fake-core-tracedata.html">
+                TraceData (Type)
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TraceData`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TraceData\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L147-147" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Defines Tracing information for TraceListeners
+ Please consider not using a match on this type in code external to the fake repository.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TraceMode">
+              <a href="fake.buildreference/fake-core-tracemode.html">
+                TraceMode
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TraceMode`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TraceMode\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Environment/BuildServer.fs#L20-20" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ The trace mode option.
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TraceSecret">
+              <a href="fake.buildreference/fake-core-tracesecret.html">
+                TraceSecret
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TraceSecret`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TraceSecret\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L332-332" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="TraceSecrets">
+              <a href="fake.buildreference/fake-core-tracesecrets.html">
+                TraceSecrets
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.TraceSecrets`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.TraceSecrets\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Trace/TraceListener.fs#L335-335" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Module to handle tracing secret values in logs
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="UserInput">
+              <a href="fake.buildreference/fake-core-userinput.html">
+                UserInput
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.UserInput`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.UserInput\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.UserInput/UserInput.fs#L15-15" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains tasks for capturing user input
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Vault">
+              <a href="fake.buildreference/fake-core-vault.html">
+                Vault
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Vault`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Vault\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Vault/Vault.fs#L10-10" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Provides a encrypted store of variables to prevent accidental leakage
+ Please read the <a href="articles/core-vault.html">documentation</a>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="VaultExt">
+              <a href="fake.buildreference/fake-core-vaultext.html">
+                VaultExt
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.VaultExt`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.VaultExt\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Vault/Vault.fs#L269-269" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Summary>
+ An extenstion type for Vault module.
+ </summary>
+
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="fsdocs-entity-name">
+          <p>
+            <a name="Xml">
+              <a href="fake.buildreference/fake-core-xml.html">
+                Xml
+              </a>
+            </a>
+          </p>
+        </td>
+        <td class="fsdocs-entity-xmldoc">
+          <div>
+            <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.Core.Xml`')">
+              <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+            </div>
+            <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.Core.Xml\'/>')">
+              <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+              <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+            </div>
+            <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Xml/Xml.fs#L8-8" class="fsdocs-source-link" title="Source on GitHub">
+              <img src="fake.buildcontent/img/github.png" class="normal"/>
+              <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+            </a>
+            <p class="fsdocs-summary">
+              
+ Contains functions to read and write XML files.
+ 
+            </p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+        
+    </div>
+</div>
+
+<footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+    <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col justify-between lg:w-2/3">
+            <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                <div class="lg:mr-16">
+                    <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Important Links</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/getting-started.html">Getting
+                            started</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/fake-modules.html">Modules</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                            Header</a></li>
+                    </ul>
+                </div>
+                <div class="lg:mx-16">
+                    <h4 class="text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Further projects</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsprojects.github.io/Paket/">Paket</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                            Formatting</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 mx-auto w-full">
+                <p>© FAKE. All rights reserved | Version:
+                    <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                        <span>6.0.0-alpha001</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="lg:w-1/3 space-y-3">
+            <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">FAKE is a community effort</span>
+                        </span>
+            </h4>
+            <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                running F# scripts. Look at the open issues at
+                <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                send pull requests!</p>
+            <div class="block py-8">
+                <a href="/guide/contributing.html">
+                    <span
+                        class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                        <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7"></path>
+                            </svg>
+                    </span>
+                    <span>Learn more</span>
+                    </span>
+                </a>
+            </div>
+
+            <h4 class="text-lg">Get in touch</h4>
+
+            <div class="flex items-center space-x-2">
+                <a href="https://twitter.com/fsharpMake"
+                   class="block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+                <a href="https://fake.build"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Website</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,3266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DotNet (Fake)</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - API docs page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+      x-data="{open: false}"
+      :class="{'bg-gray-100 overflow-hidden': open === true}">
+<header
+    class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+    :class="{'bg-white': open === false}">
+    <div class="flex gap-2 items-center block">
+        <a class="flex items-center gap-2" href="fake.buildindex.html">
+            <img src="fake.buildcontent/assets/img/logo.svg"
+                 alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+            <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+        </a>
+        <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+            <span>6.0.0-alpha001</span>
+        </div>
+        <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+          <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+            <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </span>
+        </button>
+    </div>
+    <div class="flex items-center pt-10 md:pt-0">
+        <div class="md:mr-5">
+            <ul class="flex space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a></li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </ul>
+        </div>
+        <div class="hidden lg:block relative ml-auto">
+            <div class="flex items-center">
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/fsharpMake"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="lg:ml-[25rem] min-w-0 lg:px-16">
+    <nav
+        class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] 
+        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8"
+        role="navigation"
+        aria-label="main navigation"
+        :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+        <div
+            class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
+            <div class="flex gap-2 items-center">
+                <a class="flex items-center gap-2" href="fake.buildindex.html">
+                    <img src="fake.buildcontent/assets/img/logo.svg"
+                         alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+                    <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                </a>
+            </div>
+            <button
+                class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                @click="open = false">
+        <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+          <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </span>
+            </button>
+        </div>
+
+        <ul
+            x-data="{nav: []}"
+            x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.apidocs)
+            ">
+            <template x-for="navGroup in nav">
+                <li class="mt-12 lg:mt-8">
+                    <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900"
+                        x-text="navGroup.title">
+                    </h5>
+                    <ul class="space-y-6 lg:space-y-2 border-l">
+                        <template x-for="navLink in navGroup.links">
+                            <li class="group">
+                                <a
+                                    class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                                    :href="navLink.href"
+                                    :class="window.location.pathname === navLink.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    <span
+                                        class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
+                                        <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                      </span>
+                                    <span class="inline-block" x-text="navLink.title"></span>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </nav>
+    <div class="mt-16 mx-4 lg:mx-auto max-w-[80rem] px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+        <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+        <p>
+            <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                    </path>
+                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                    </path>
+                </svg>
+                <span class="underline">v5.fake.build</span>
+            </a>
+        </p>
+    </div>
+    <div id="content"
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
+        <div>
+  <h2>
+    DotNet Module
+  </h2>
+  <dl class="fsdocs-metadata">
+    <dt>
+      Namespace: 
+      <a href="fake.buildreference/fake-dotnet.html">
+        Fake.DotNet
+      </a>
+    </dt>
+    <dt>
+      Assembly: Fake.DotNet.Cli.dll
+    </dt>
+  </dl>
+  <div class="fsdocs-xmldoc">
+    <div>
+      <p class="fsdocs-summary">
+        
+ .NET Core + CLI tools helpers
+ 
+      </p>
+    </div>
+  </div>
+  <div>
+    <h3>
+      Types and nested modules
+    </h3>
+    <table class="table outer-list fsdocs-entity-list">
+      <thead>
+        <tr>
+          <td>
+            Type/Module
+          </td>
+          <td>
+            Description
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="BuildConfiguration">
+                <a href="fake.buildreference/fake-dotnet-dotnet-buildconfigurationmodule.html">
+                  BuildConfiguration (Module)
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.BuildConfigurationModule`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.BuildConfigurationModule\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1330-1330" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ THe build configuration for a DotNet application
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="CliChannel">
+                <a href="fake.buildreference/fake-dotnet-dotnet-clichannel.html">
+                  CliChannel
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.CliChannel`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.CliChannel\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L246-246" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Specifies the source channel for the installation.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="Options">
+                <a href="fake.buildreference/fake-dotnet-dotnet-optionsmodule.html">
+                  Options (Module)
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.OptionsModule`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.OptionsModule\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L583-583" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="Versions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-versions.html">
+                  Versions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.Versions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.Versions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L332-332" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The a list of well-known versions to install
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="BuildConfiguration">
+                <a href="fake.buildreference/fake-dotnet-dotnet-buildconfiguration.html">
+                  BuildConfiguration (Type)
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.BuildConfiguration`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.BuildConfiguration\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1314-1314" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ build configuration
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="BuildOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-buildoptions.html">
+                  BuildOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.BuildOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.BuildOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1570-1570" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet build command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="CliArchitecture">
+                <a href="fake.buildreference/fake-dotnet-dotnet-cliarchitecture.html">
+                  CliArchitecture
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.CliArchitecture`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.CliArchitecture\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L224-224" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK architecture
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="CliInstallOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-cliinstalloptions.html">
+                  CliInstallOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.CliInstallOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.CliInstallOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L261-261" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK install options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="CliVersion">
+                <a href="fake.buildreference/fake-dotnet-dotnet-cliversion.html">
+                  CliVersion
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.CliVersion`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.CliVersion\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L231-231" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK version (used to specify version when installing .NET Core SDK)
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="FirstArgReplacement">
+                <a href="fake.buildreference/fake-dotnet-dotnet-firstargreplacement.html">
+                  FirstArgReplacement
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.FirstArgReplacement`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.FirstArgReplacement\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L692-692" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="InfoOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-infooptions.html">
+                  InfoOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.InfoOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.InfoOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L838-838" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet --info command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="InfoResult">
+                <a href="fake.buildreference/fake-dotnet-dotnet-inforesult.html">
+                  InfoResult
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.InfoResult`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.InfoResult\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L865-865" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet info result
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="InstallerOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-installeroptions.html">
+                  InstallerOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.InstallerOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.InstallerOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L171-171" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK installer download options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MSBuildOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-msbuildoptions.html">
+                  MSBuildOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MSBuildOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MSBuildOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1097-1097" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet restore command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="NewLanguage">
+                <a href="fake.buildreference/fake-dotnet-dotnet-newlanguage.html">
+                  NewLanguage
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.NewLanguage`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.NewLanguage\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1882-1882" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The languages supported by new command
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="NewOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-newoptions.html">
+                  NewOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.NewOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.NewOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1897-1897" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet new command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="NuGetPushOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-nugetpushoptions.html">
+                  NuGetPushOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.NuGetPushOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.NuGetPushOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1826-1826" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ nuget push parameters for <code>dotnet nuget push</code>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="Options">
+                <a href="fake.buildreference/fake-dotnet-dotnet-options.html">
+                  Options (Type)
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.Options`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.Options\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L494-494" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet cli command execution options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="PackOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-packoptions.html">
+                  PackOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.PackOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.PackOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1351-1351" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet pack command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="PublishOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-publishoptions.html">
+                  PublishOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.PublishOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.PublishOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1453-1453" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet publish command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="RestoreOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-restoreoptions.html">
+                  RestoreOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.RestoreOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.RestoreOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1231-1231" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet restore command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="TemplateInstallOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-templateinstalloptions.html">
+                  TemplateInstallOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.TemplateInstallOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.TemplateInstallOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1935-1935" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet new --install options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="TemplateUninstallOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-templateuninstalloptions.html">
+                  TemplateUninstallOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.TemplateUninstallOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.TemplateUninstallOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1952-1952" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet new --install options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="TestOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-testoptions.html">
+                  TestOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.TestOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.TestOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1660-1660" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet test command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="Verbosity">
+                <a href="fake.buildreference/fake-dotnet-dotnet-verbosity.html">
+                  Verbosity
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.Verbosity`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.Verbosity\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L484-484" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet restore verbosity
+
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="VersionOptions">
+                <a href="fake.buildreference/fake-dotnet-dotnet-versionoptions.html">
+                  VersionOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.VersionOptions`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.VersionOptions\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L905-905" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet --version command options
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="VersionResult">
+                <a href="fake.buildreference/fake-dotnet-dotnet-versionresult.html">
+                  VersionResult
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.VersionResult`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.VersionResult\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L933-933" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet info result
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>
+      Functions and values
+    </h3>
+    <table class="table outer-list fsdocs-member-list">
+      <thead>
+        <tr>
+          <td class="fsdocs-member-list-header">
+            Function or value
+          </td>
+          <td class="fsdocs-member-list-header">
+            Description
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '600', 600)" onmouseover="showTip(event, '600', 600)">
+                <p>
+                  <a id="build">
+                    <a href="#build">
+                      <code><span>DotNet.build&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="600">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.build&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-buildoptions.html">BuildOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-buildoptions.html">BuildOptions</a></span></code>
+                       - 
+                      set compile command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      project to compile
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.build`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.build\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1650-1650" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet build command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-buildoptions.html">BuildOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-buildoptions.html">BuildOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set compile command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  project to compile
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '601', 601)" onmouseover="showTip(event, '601', 601)">
+                <p>
+                  <a id="defaultSystemInstallDir">
+                    <a href="#defaultSystemInstallDir">
+                      <code><span>DotNet.defaultSystemInstallDir&#32;<span></span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="601">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.defaultSystemInstallDir&#32;<span></span></span></code>
+                  <br/>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code>string</code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:P:Fake.DotNet.DotNet.defaultSystemInstallDir`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'P:Fake.DotNet.DotNet.defaultSystemInstallDir\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L36-36" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK default install directory (set to default SDK installer paths
+ (<code>/usr/local/share/dotnet</code> or <code>C:\Program Files\dotnet</code>))
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '602', 602)" onmouseover="showTip(event, '602', 602)">
+                <p>
+                  <a id="defaultUserInstallDir">
+                    <a href="#defaultUserInstallDir">
+                      <code><span>DotNet.defaultUserInstallDir&#32;<span></span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="602">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.defaultUserInstallDir&#32;<span></span></span></code>
+                  <br/>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code>string</code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:P:Fake.DotNet.DotNet.defaultUserInstallDir`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'P:Fake.DotNet.DotNet.defaultUserInstallDir\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L26-26" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ .NET Core SDK default install directory (set to default SDK installer paths
+ (<code>%HOME/.dotnet</code> or <code>%LOCALAPPDATA%/Microsoft/dotnet</code>).
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '603', 603)" onmouseover="showTip(event, '603', 603)">
+                <p>
+                  <a id="downloadInstaller">
+                    <a href="#downloadInstaller">
+                      <code><span>DotNet.downloadInstaller&#32;<span>setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="603">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.downloadInstaller&#32;<span>setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-installeroptions.html">InstallerOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-installeroptions.html">InstallerOptions</a></span></code>
+                       - 
+                      set download installer options
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code>string</code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.downloadInstaller`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.downloadInstaller\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L194-194" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Download .NET Core SDK installer
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-installeroptions.html">InstallerOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-installeroptions.html">InstallerOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set download installer options
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '604', 604)" onmouseover="showTip(event, '604', 604)">
+                <p>
+                  <a id="exec">
+                    <a href="#exec">
+                      <code><span>DotNet.exec&#32;<span>buildOptions&#32;command&#32;args</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="604">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.exec&#32;<span>buildOptions&#32;command&#32;args</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        buildOptions
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+                       - 
+                      build common execution options
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        command
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      the sdk command to execute <code>test</code>, <code>new</code>, <code>build</code>, ...
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        args
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      command arguments
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><a href="fake.buildreference/fake-core-processresult.html">ProcessResult</a></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.exec`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.exec\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L766-766" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute raw dotnet cli command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  buildOptions
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  build common execution options
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  command
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  the sdk command to execute <code>test</code>, <code>new</code>, <code>build</code>, ...
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  args
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  command arguments
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><a href="fake.buildreference/fake-core-processresult.html">ProcessResult</a></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '605', 605)" onmouseover="showTip(event, '605', 605)">
+                <p>
+                  <a id="findPossibleDotnetCliPaths">
+                    <a href="#findPossibleDotnetCliPaths">
+                      <code><span>DotNet.findPossibleDotnetCliPaths&#32;<span>dotnetCliDir</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="605">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.findPossibleDotnetCliPaths&#32;<span>dotnetCliDir</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        dotnetCliDir
+                      </b>
+                      :
+                      <code><span>string&#32;option</span></code>
+                       - 
+                      the path to check else will probe system PATH
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span>seq&lt;string&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.findPossibleDotnetCliPaths`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.findPossibleDotnetCliPaths\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L101-101" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  dotnetCliDir
+                </span>
+                :
+                <code><span>string&#32;option</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  the path to check else will probe system PATH
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span>seq&lt;string&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '606', 606)" onmouseover="showTip(event, '606', 606)">
+                <p>
+                  <a id="getSDKVersionFromGlobalJson">
+                    <a href="#getSDKVersionFromGlobalJson">
+                      <code><span>DotNet.getSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="606">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.getSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        ()
+                      </b>
+                      :
+                      <code>unit</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code>string</code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.getSDKVersionFromGlobalJson`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.getSDKVersionFromGlobalJson\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L94-94" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Gets the DotNet SDK from the global.json. This file can exist in the working
+ directory or any of the parent directories
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  ()
+                </span>
+                :
+                <code>unit</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '607', 607)" onmouseover="showTip(event, '607', 607)">
+                <p>
+                  <a id="getVersion">
+                    <a href="#getVersion">
+                      <code><span>DotNet.getVersion&#32;<span>setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="607">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.getVersion&#32;<span>setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-versionoptions.html">VersionOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-versionoptions.html">VersionOptions</a></span></code>
+                       - 
+                      set version command parameters
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code>string</code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.getVersion`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.getVersion\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L940-940" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet --version command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-versionoptions.html">VersionOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-versionoptions.html">VersionOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set version command parameters
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
+                <p>
+                  <a id="info">
+                    <a href="#info">
+                      <code><span>DotNet.info&#32;<span>setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="608">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.info&#32;<span>setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-infooptions.html">InfoOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-infooptions.html">InfoOptions</a></span></code>
+                       - 
+                      set info command parameters
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><a href="fake.buildreference/fake-dotnet-dotnet-inforesult.html">InfoResult</a></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.info`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.info\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L876-876" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet --info command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-infooptions.html">InfoOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-infooptions.html">InfoOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set info command parameters
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><a href="fake.buildreference/fake-dotnet-dotnet-inforesult.html">InfoResult</a></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
+                <p>
+                  <a id="install">
+                    <a href="#install">
+                      <code><span>DotNet.install&#32;<span>setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="609">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.install&#32;<span>setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-cliinstalloptions.html">CliInstallOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-cliinstalloptions.html">CliInstallOptions</a></span></code>
+                       - 
+                      set installation options
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.install`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.install\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L962-962" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Install .NET Core SDK if required
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-cliinstalloptions.html">CliInstallOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-cliinstalloptions.html">CliInstallOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set installation options
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '610', 610)" onmouseover="showTip(event, '610', 610)">
+                <p>
+                  <a id="installTemplate">
+                    <a href="#installTemplate">
+                      <code><span>DotNet.installTemplate&#32;<span>templateName&#32;setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="610">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.installTemplate&#32;<span>templateName&#32;setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        templateName
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      template short name to install
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-templateinstalloptions.html">TemplateInstallOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-templateinstalloptions.html">TemplateInstallOptions</a></span></code>
+                       - 
+                      set version command parameters
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.installTemplate`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.installTemplate\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2008-2008" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet new <code>--install &lt;PATH|NUGET_ID&gt;</code> command to install a new template
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  templateName
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  template short name to install
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-templateinstalloptions.html">TemplateInstallOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-templateinstalloptions.html">TemplateInstallOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set version command parameters
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '611', 611)" onmouseover="showTip(event, '611', 611)">
+                <p>
+                  <a id="msbuild">
+                    <a href="#msbuild">
+                      <code><span>DotNet.msbuild&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="611">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.msbuild&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-msbuildoptions.html">MSBuildOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-msbuildoptions.html">MSBuildOptions</a></span></code>
+                       - 
+                      A function that overwrites the default MSBuildOptions
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      A string with the path to the project file to build.
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.msbuild`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.msbuild\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1207-1207" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Runs a MSBuild project
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-msbuildoptions.html">MSBuildOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-msbuildoptions.html">MSBuildOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  A function that overwrites the default MSBuildOptions
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  A string with the path to the project file to build.
+                </p>
+              </dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ open Fake.DotNet
+     let setMsBuildParams (defaults:MSBuild.CliArguments) =
+             { defaults with
+                 Verbosity = Some(Quiet)
+                 Targets = [&quot;Build&quot;]
+                 Properties =
+                     [
+                         &quot;Optimize&quot;, &quot;True&quot;
+                         &quot;DebugSymbols&quot;, &quot;True&quot;
+                         &quot;Configuration&quot;, &quot;Release&quot;
+                     ]
+              }
+     let setParams (defaults:DotNet.MSBuildOptions) =
+             { defaults with
+                 MSBuildParams = setMsBuildParams defaults.MSBuildParams
+              }
+
+     DotNet.msbuild setParams &quot;./MySolution.sln&quot;</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '612', 612)" onmouseover="showTip(event, '612', 612)">
+                <p>
+                  <a id="newFromTemplate">
+                    <a href="#newFromTemplate">
+                      <code><span>DotNet.newFromTemplate&#32;<span>templateName&#32;setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="612">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.newFromTemplate&#32;<span>templateName&#32;setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        templateName
+                      </b>
+                      :
+                      <code>'a</code>
+                       - 
+                      template short name to create from
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-newoptions.html">NewOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-newoptions.html">NewOptions</a></span></code>
+                       - 
+                      set version command parameters
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.DotNet.DotNet.newFromTemplate``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.newFromTemplate``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1991-1991" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet new command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  templateName
+                </span>
+                :
+                <code>'a</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  template short name to create from
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-newoptions.html">NewOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-newoptions.html">NewOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set version command parameters
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '613', 613)" onmouseover="showTip(event, '613', 613)">
+                <p>
+                  <a id="nugetPush">
+                    <a href="#nugetPush">
+                      <code><span>DotNet.nugetPush&#32;<span>setParams&#32;nupkg</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="613">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.nugetPush&#32;<span>setParams&#32;nupkg</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-nugetpushoptions.html">NuGetPushOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-nugetpushoptions.html">NuGetPushOptions</a></span></code>
+                       - 
+                      set nuget push command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        nupkg
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      nupkg to publish
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.nugetPush`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.nugetPush\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1860-1860" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet nuget push command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-nugetpushoptions.html">NuGetPushOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-nugetpushoptions.html">NuGetPushOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set nuget push command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  nupkg
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  nupkg to publish
+                </p>
+              </dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ open Fake.DotNet
+     let setNugetPushParams (defaults:NuGet.NuGetPushParams) =
+             { defaults with
+                 DisableBuffering = true
+                 ApiKey = Some &quot;abc123&quot;
+              }
+     let setParams (defaults:DotNet.NuGetPushOptions) =
+             { defaults with
+                 PushParams = setNugetPushParams defaults.PushParams
+              }
+
+     DotNet.nugetPush setParams &quot;./My.Package.nupkg&quot;</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '614', 614)" onmouseover="showTip(event, '614', 614)">
+                <p>
+                  <a id="pack">
+                    <a href="#pack">
+                      <code><span>DotNet.pack&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="614">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.pack&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-packoptions.html">PackOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-packoptions.html">PackOptions</a></span></code>
+                       - 
+                      set pack command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      project to pack
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.pack`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.pack\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1443-1443" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet pack command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-packoptions.html">PackOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-packoptions.html">PackOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set pack command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  project to pack
+                </p>
+              </dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+  let packConfiguration (defaults:DotNet.PackOptions) =
+         { defaults with
+               Configuration = DotNet.Debug
+               OutputPath = Some &quot;./packages&quot;
+               IncludeSymbols = true }
+
+     DotNet.pack packConfiguration &quot;./MyProject.csproj&quot;</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '615', 615)" onmouseover="showTip(event, '615', 615)">
+                <p>
+                  <a id="prefixProcess">
+                    <a href="#prefixProcess">
+                      <code><span>DotNet.prefixProcess&#32;<span>buildOptions&#32;firstArgs&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="615">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.prefixProcess&#32;<span>buildOptions&#32;firstArgs&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        buildOptions
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+                       - 
+                      build common execution options
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        firstArgs
+                      </b>
+                      :
+                      <code><span>string&#32;list</span></code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.DotNet.DotNet.prefixProcess``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.prefixProcess``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L784-784" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Replace the current <code>CreateProcess</code> instance to run with dotnet.exe
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  buildOptions
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  build common execution options
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  firstArgs
+                </span>
+                :
+                <code><span>string&#32;list</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '616', 616)" onmouseover="showTip(event, '616', 616)">
+                <p>
+                  <a id="publish">
+                    <a href="#publish">
+                      <code><span>DotNet.publish&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="616">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.publish&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-publishoptions.html">PublishOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-publishoptions.html">PublishOptions</a></span></code>
+                       - 
+                      set publish command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      project to publish
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.publish`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.publish\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1560-1560" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet publish command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-publishoptions.html">PublishOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-publishoptions.html">PublishOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set publish command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  project to publish
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '617', 617)" onmouseover="showTip(event, '617', 617)">
+                <p>
+                  <a id="restore">
+                    <a href="#restore">
+                      <code><span>DotNet.restore&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="617">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.restore&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-restoreoptions.html">RestoreOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-restoreoptions.html">RestoreOptions</a></span></code>
+                       - 
+                      set restore command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      project to restore packages
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.restore`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.restore\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1306-1306" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet restore command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-restoreoptions.html">RestoreOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-restoreoptions.html">RestoreOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set restore command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  project to restore packages
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '618', 618)" onmouseover="showTip(event, '618', 618)">
+                <p>
+                  <a id="setupEnv">
+                    <a href="#setupEnv">
+                      <code><span>DotNet.setupEnv&#32;<span>install</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="618">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.setupEnv&#32;<span>install</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        install
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+                       - 
+                      The SDK to use (result of <code>DotNet.install</code>)
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.setupEnv`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.setupEnv\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L798-798" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Setup the environment (<code>PATH</code> and <code>DOTNET_ROOT</code>) in such a way that started processes use the given
+ dotnet SDK installation. This is useful for example when using fable,
+ see <a href="https://github.com/fsharp/FAKE/issues/2405">issue #2405</a>
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  install
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-options.html">Options</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The SDK to use (result of <code>DotNet.install</code>)
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '619', 619)" onmouseover="showTip(event, '619', 619)">
+                <p>
+                  <a id="test">
+                    <a href="#test">
+                      <code><span>DotNet.test&#32;<span>setParams&#32;project</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="619">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.test&#32;<span>setParams&#32;project</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-dotnet-dotnet-testoptions.html">TestOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-testoptions.html">TestOptions</a></span></code>
+                       - 
+                      set test command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        project
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      project to test
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.test`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.test\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1801-1801" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet test command
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-dotnet-dotnet-testoptions.html">TestOptions</a>&#32;->&#32;<a href="fake.buildreference/fake-dotnet-dotnet-testoptions.html">TestOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set test command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  project
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  project to test
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '620', 620)" onmouseover="showTip(event, '620', 620)">
+                <p>
+                  <a id="tryGetSDKVersionFromGlobalJson">
+                    <a href="#tryGetSDKVersionFromGlobalJson">
+                      <code><span>DotNet.tryGetSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="620">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.tryGetSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        ()
+                      </b>
+                      :
+                      <code>unit</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span>string&#32;option</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.tryGetSDKVersionFromGlobalJson`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.tryGetSDKVersionFromGlobalJson\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L88-88" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Tries the DotNet SDK from the global.json. This file can exist in the working
+ directory or any of the parent directories Returns None if global.json is not found
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  ()
+                </span>
+                :
+                <code>unit</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span>string&#32;option</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '621', 621)" onmouseover="showTip(event, '621', 621)">
+                <p>
+                  <a id="uninstallTemplate">
+                    <a href="#uninstallTemplate">
+                      <code><span>DotNet.uninstallTemplate&#32;<span>templateName</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="621">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.uninstallTemplate&#32;<span>templateName</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        templateName
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      template short name to uninstall
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.uninstallTemplate`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.uninstallTemplate\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2025-2025" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet new <code>--uninstall &lt;PATH|NUGET_ID&gt;</code> command to uninstall a new template
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  templateName
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  template short name to uninstall
+                </p>
+              </dd>
+            </dl>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+        
+    </div>
+</div>
+
+<footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+    <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col justify-between lg:w-2/3">
+            <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                <div class="lg:mr-16">
+                    <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Important Links</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/getting-started.html">Getting
+                            started</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/fake-modules.html">Modules</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                            Header</a></li>
+                    </ul>
+                </div>
+                <div class="lg:mx-16">
+                    <h4 class="text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Further projects</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsprojects.github.io/Paket/">Paket</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                            Formatting</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 mx-auto w-full">
+                <p>© FAKE. All rights reserved | Version:
+                    <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                        <span>6.0.0-alpha001</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="lg:w-1/3 space-y-3">
+            <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">FAKE is a community effort</span>
+                        </span>
+            </h4>
+            <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                running F# scripts. Look at the open issues at
+                <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                send pull requests!</p>
+            <div class="block py-8">
+                <a href="/guide/contributing.html">
+                    <span
+                        class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                        <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7"></path>
+                            </svg>
+                    </span>
+                    <span>Learn more</span>
+                    </span>
+                </a>
+            </div>
+
+            <h4 class="text-lg">Get in touch</h4>
+
+            <div class="flex items-center space-x-2">
+                <a href="https://twitter.com/fsharpMake"
+                   class="block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+                <a href="https://fake.build"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Website</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+</html>

@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>FAKE - F# Make - A DSL for build tasks</title>
+    <title>FAKE Guide</title>
     <meta charset="utf-8">
-    <meta name="description" content="FAKE - F# Make - A DSL for build tasks">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guides and articles page">
     <link rel="apple-touch-icon" sizes="180x180" href="/content/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/content/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/content/favicon-16x16.png">
@@ -23,7 +23,7 @@
 
 <body class="font-fake antialiased min-h-screen text-slate-500 bg-white relative flex flex-col w-fit md:w-full">
     <header
-        class="h-20 px-4 py-4 flex justify-between items-center bg-white border-b-4 border-b-[#d4b43c] shadow-inner">
+        class="h-20 px-4 py-4 flex justify-between items-center lg:px-8 bg-white border-b border border-t-0 border-r-0 border-l-0 border-b-[#d4b43c]/50 shadow">
 
         <div class="flex items-center block">
             <a class="flex items-center gap-2" href="/index.html">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="flex items-center">
-            <div>
+            <div class="md:mr-5">
                 <ul class="flex space-x-4">
                     <li><a class="font-medium hover:text-[#d4b43c]" href="/reference/index.html">API Docs</a></li>
                     <li><a class="font-medium hover:text-[#d4b43c]" href="/guide.html">Guide</a></li>
@@ -78,178 +78,85 @@
 
     </header>
 
-    <section
-        class="flex flex-col lg:flex-row justify-center items-center min-h-screen space-x-0 lg:space-x-10 bg-gray-800">
+    <div
+        class="min-h-screen mx-auto px-4 lg:px-0 w-full mt-10 bg-[url('/content/img/homepage/shape-2.svg')] bg-no-repeat bg-right-top">
 
-        <div class="mt-10 lg:mt-0 flex flex-col justify-center items-center space-y-10">
-            <h1
-                class="text-center text-2xl md:text-4xl font-bold text-[#d4b43c] leading-6 md:leading-10 tracking-wide lg:tracking-widest">
-                A DSL FOR BUILD TASKS AND MORE
-                <br />
-                THE POWER OF F# - ANYWHERE - ANYTIME
-            </h1>
-            <div class="flex justify-between items-center space-x-5">
-                <a href="/guide.html"
-                    class="w-48 py-3 flex justify-center bg-[#d4b43c] text-white rounded shadow-md font-semibold bg-gradient-to-r from-red-800 via-yellow-600 to-[#d4b43c] hover:from-[#d4b43c]">
-                    Guide
-                </a>
-                <a href="/reference/index.html"
-                    class="w-48 py-3 flex justify-center border border-[#d4b43c] text-[#d4b43c] rounded shadow-md font-semibold hover:text-white hover:bg-[#d4b43c]">
-                    API Docs
-                </a>
-            </div>
-        </div>
+        <section class="w-full min-h-screen max-w-[88rem] mx-auto">
 
-        <div class="mt-10 lg:mt-0 z-10 shadow-lg bg-[#d4b43c] p-20 rounded-lg">
-            <img alt="main sample code to illustrate FAKE syntax" src="/content/img/homepage/code-sample.svg">
-        </div>
+            <h3 class="my-10 flex items-center text-slate-700 text-2xl bg-[#d4b43c] rounded p-4">
+                <span class="-ml-2 inline-block text-white">
+                    <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 7L16 14L9 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <line x1="5" y1="1" x2="5" y2="26" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                </span>
+                <span class="inline-block text-white">Getting Started</span>
+            </h3>
 
-        <div class="hidden lg:block absolute right-0 z-0">
-            <img alt="top section background pattern" src="/content/img/homepage/pattern.svg">
-        </div>
+            <ul class="grid auto-cols-fr gap-6" x-data="{guide: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => guide = response.guide)
+            ">
+                <template x-for="(guideItem, index) in guide">
+                    <li class="group" @click="window.location.href = guideItem.href">
+                        <div
+                            class="flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            <div>
+                                <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
+                                <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
+                                    x-text="guideItem.title"></h5>
+                            </div>
+                            <div>
+                                <p class="mt-2" x-text="guideItem.description">
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
 
-    </section>
-
-    <div class="mt-20 md:w-none px-4 lg:px-0 max-w-none max-w-[83rem]">
-
-        <section class="mt-10 lg:mt-0 flex flex-col justify-center items-center">
-
-            <div class="flex flex-col justify-center items-center">
-                <h1 class="text-4xl font-medium text-gray-900 tracking-widest">Why Use FAKE?</h1>
-                <p class="mt-4 text-lg text-center text-gray-600 tracking-widest">Fake is built on several key design
-                    principles...
-                </p>
-            </div>
-
-            <div
-                class="mt-10 lg:mt-20 w-full flex lg:flex-row flex-col justify-around items-center space-y-5 lg:space-y-0 z-10">
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate modularization feature of FAKE" width="100"
-                            src="/content/img/homepage/modularization-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Modularization</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Use the Modules you Need</p>
-                        <a href="/guide/fake-modules.html"
-                            class="text-xs underline text-gray-400 hover:text-gray-800">See Modules</a>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate extensibility feature of FAKE" width="100"
-                            src="/content/img/homepage/extensibility-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Extensibility</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Integrate your own Modules</p>
-                        <a href="/guide/fake-custom-modules.html"
-                            class="-mt-2 text-xs underline text-gray-400 hover:text-gray-800 text-center">See Custom
-                            Modules</a>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center space-x-4">
-                    <div class="flex flex-col justify-center items-center">
-                        <img alt="illustrate quick start feature of FAKE" width="100"
-                            src="/content/img/homepage/quick-start-icon.svg">
-                    </div>
-                    <div class="space-y-1">
-                        <h3 class="text-2xl text-[#d4b43c] tracking-widest">Quick Start</h3>
-                        <p class="text-sm tracking-wider text-gray-600">Get Started as Fast as Possible</p>
-                        <a href="/guide/getting-started.html"
-                            class="text-xs underline text-gray-400 hover:text-gray-800 text-center">Check Getting
-                            Started</a>
-                    </div>
-                </div>
-
-            </div>
         </section>
 
-        <div class="absolute left-0 z-10">
-            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                src="/content/img/homepage/shape.svg">
-        </div>
-    </div>
+        <section class="mt-40 w-full min-h-screen max-w-[88rem] mx-auto">
 
-    <div class="mt-40 p-10 flex flex-col justify-center bg-[#f9f9f9] shadow">
-        <section>
-            <div class="py-20 flex flex-col justify-center items-center bg-[#f9f9f9]">
-                <div class="max-w-2xl">
-                    <h3 class="text-4xl text-[#d4b43c] tracking-widest text-start">Bootstrapping</h3>
-                    <p class="mt-4 text-justify tracking-wider text-gray-600 leading-6">
-                        Every project has different needs. Therefore, FAKE supports several ways to bootstrap the build
-                        process.
-                        From an assumed installation - for example via chocolatey - to automatically updated
-                        bootstrapping scripts.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
+            <h3 class="my-10 flex items-center text-slate-700 text-2xl bg-[#d4b43c] rounded p-4">
+                <span class="-ml-2 inline-block text-white">
+                    <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 7L16 14L9 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <line x1="5" y1="1" x2="5" y2="26" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                </span>
+                <span class="inline-block text-white">Articles and Examples</span>
+            </h3>
 
-    <div class=" md:w-none min-h-screen mx-auto px-4 lg:px-0 max-w-none max-w-[83rem]">
-        <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div>
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    A Simple Build Script
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    This is a simple build script in FAKE. Build scripts can contain multiple targets which can do
-                    different things
-                    like building your app or publishing it. They are written in F# and can contain references to third
-                    party
-                    libraries by including them directly or via Paket.
-                </p>
-            </div>
-            <div class="p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300">
-                <img alt="code sample #1" src="/content/img/homepage/code-sample-1.svg">
-            </div>
-        </section>
+            <ul class="grid auto-cols-fr gap-6" x-data="{articles: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => articles = response.articles)
+            ">
+                <template x-for="(article, index) in articles">
+                    <li class="group" @click="window.location.href = article.href">
+                        <div
+                            class="flex flex-col justify-start items-start border-l group-hover:rounded group-hover:shadow group-hover:border group-hover:border-[#d4b43c] hover:cursor-pointer  px-6 py-4 w-full">
+                            <div>
+                                <span class="font-semibold text-gray-400 pr-2" x-text="'#' + (index + 1)"></span>
+                                <h5 class="inline-block text-2xl uppercase tracking-wide text-[#d4b43c]"
+                                    x-text="article.title"></h5>
+                            </div>
+                            <div>
+                                <p class="mt-2" x-text="article.description">
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
 
-        <div class="hidden md:block absolute right-0 z-0">
-            <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                src="/content/img/homepage/shape-2.svg">
-        </div>
-
-        <section class="mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div class="order-2 lg:order-1 mt-10 lg:mt-0 p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300 z-0">
-                <img alt="code sample #2" src="/content/img/homepage/code-sample-2.svg">
-            </div>
-            <div class="order-1 lg:order-2">
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    Target Dependencies
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    Targets in your build script might have dependencies on other targets like cleaning up your output
-                    folder before building your app. FAKE supports specifying dependencies between your targets.
-                    While it might look a bit strange at first, just read it from the bottom to the top.
-                </p>
-            </div>
-        </section>
-
-        <section
-            class="relative mt-40 flex justify-between items-center flex-col lg:flex-row space-y-10 lg:space-y-0 mx-10">
-            <div>
-                <h3 class="text-4xl font-medium text-gray-900 tracking-widest">
-                    Globbing
-                </h3>
-                <p class="mt-4 text-lg text-justify tracking-wider text-gray-600 leading-8 max-w-xl">
-                    In order to search for files deep down in your folder structure, FAKE supports globbing.
-                    The following build script can search for project files in a given folder path and compile them
-                    using MSBuild.
-                    To give you even more power, FAKE can exclude and include additional files.
-                </p>
-            </div>
-            <div class="hidden lg:block flex justify-center z-0">
-                <img alt="background illustration - hexagons to demonstrate FAKE's modularity"
-                    src="/content/img/homepage/shape-2.svg">
-            </div>
-            <div class="p-20 bg-[#d4b43c] rounded-lg shadow-xl shadow-gray-300">
-                <img alt="code sample #3" src="/content/img/homepage/code-sample-3.svg">
-            </div>
         </section>
     </div>
 
@@ -306,8 +213,7 @@
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
                             </li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
-                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
                         </ul>
                     </div>
                 </div>

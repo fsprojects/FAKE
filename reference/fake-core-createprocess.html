@@ -1,0 +1,4007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CreateProcess (Fake)</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - API docs page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+      x-data="{open: false}"
+      :class="{'bg-gray-100 overflow-hidden': open === true}">
+<header
+    class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+    :class="{'bg-white': open === false}">
+    <div class="flex gap-2 items-center block">
+        <a class="flex items-center gap-2" href="fake.buildindex.html">
+            <img src="fake.buildcontent/assets/img/logo.svg"
+                 alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+            <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+        </a>
+        <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+            <span>6.0.0-alpha001</span>
+        </div>
+        <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+          <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+            <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </span>
+        </button>
+    </div>
+    <div class="flex items-center pt-10 md:pt-0">
+        <div class="md:mr-5">
+            <ul class="flex space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a></li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </ul>
+        </div>
+        <div class="hidden lg:block relative ml-auto">
+            <div class="flex items-center">
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/fsharpMake"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="lg:ml-[25rem] min-w-0 lg:px-16">
+    <nav
+        class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem] 
+        w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8"
+        role="navigation"
+        aria-label="main navigation"
+        :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+        <div
+            class="sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50 lg:hidden">
+            <div class="flex gap-2 items-center">
+                <a class="flex items-center gap-2" href="fake.buildindex.html">
+                    <img src="fake.buildcontent/assets/img/logo.svg"
+                         alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28" class="w-10 h-10">
+                    <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                </a>
+            </div>
+            <button
+                class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                @click="open = false">
+        <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+          <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </span>
+            </button>
+        </div>
+
+        <ul
+            x-data="{nav: []}"
+            x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.apidocs)
+            ">
+            <template x-for="navGroup in nav">
+                <li class="mt-12 lg:mt-8">
+                    <h5 class="mb-8 lg:mb-3 font-semibold text-slate-900"
+                        x-text="navGroup.title">
+                    </h5>
+                    <ul class="space-y-6 lg:space-y-2 border-l">
+                        <template x-for="navLink in navGroup.links">
+                            <li class="group">
+                                <a
+                                    class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                                    :href="navLink.href"
+                                    :class="window.location.pathname === navLink.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                                    <span
+                                        class="invisible group-hover:text-[#d4b43c] group-hover:visible inline-block -ml-6 text-slate-300">
+                                        <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                      </span>
+                                    <span class="inline-block" x-text="navLink.title"></span>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </nav>
+    <div class="mt-16 mx-4 lg:mx-auto max-w-[80rem] px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+        <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+        <p>
+            <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                    </path>
+                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                    </path>
+                </svg>
+                <span class="underline">v5.fake.build</span>
+            </a>
+        </p>
+    </div>
+    <div id="content"
+         class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
+        <div>
+  <h2>
+    CreateProcess Module
+  </h2>
+  <dl class="fsdocs-metadata">
+    <dt>
+      Namespace: 
+      <a href="fake.buildreference/fake-core.html">
+        Fake.Core
+      </a>
+    </dt>
+    <dt>
+      Assembly: Fake.Core.Process.dll
+    </dt>
+  </dl>
+  <div class="fsdocs-xmldoc">
+    <div>
+      <p class="fsdocs-summary">
+        
+ Module for creating and modifying CreateProcess<'TRes> instances.
+ 
+      </p>
+    </div>
+    <p class="fsdocs-remarks">
+      
+ You can manage: <br /><ul><li>
+ The command (ie file to execute and arguments)
+ </li><li>
+ The working directory
+ </li><li>
+ The process environment
+ </li><li>
+ Stream redirection and pipes
+ </li><li>
+ Timeout for the process to exit
+ </li><li>
+ The result and the result transformations (<code>map</code>, <code>mapResult</code>)
+ </li></ul><br />
+ More extensions can be found in the <a href="reference/fake-core-createprocessext-createprocess.html">
+ CreateProcess Extensions</a>
+    </p>
+    <h5 class="fsdocs-example-header">
+      Example
+    </h5>
+    <p class="fsdocs-example">
+      <pre><code class="fsharp language-fsharp">
+ Command.RawCommand(&quot;file&quot;, Arguments.OfArgs [&quot;arg1&quot;; &quot;arg2&quot;])
+     |&gt; CreateProcess.fromCommand
+     |&gt; Proc.run
+     |&gt; ignore</code></pre>
+    </p>
+  </div>
+  <div>
+    <h3>
+      Functions and values
+    </h3>
+    <table class="table outer-list fsdocs-member-list">
+      <thead>
+        <tr>
+          <td class="fsdocs-member-list-header">
+            Function or value
+          </td>
+          <td class="fsdocs-member-list-header">
+            Description
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '168', 168)" onmouseover="showTip(event, '168', 168)">
+                <p>
+                  <a id="addOnExited">
+                    <a href="#addOnExited">
+                      <code><span>addOnExited&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="168">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>addOnExited&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>'a&#32;->&#32;int&#32;->&#32;'b</span></code>
+                       - 
+                      Function to add on exit event
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.addOnExited``2```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.addOnExited``2\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L741-741" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute the given function after the process has been exited and the previous result has been calculated.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>'a&#32;->&#32;int&#32;->&#32;'b</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add on exit event
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '169', 169)" onmouseover="showTip(event, '169', 169)">
+                <p>
+                  <a id="addOnFinally">
+                    <a href="#addOnFinally">
+                      <code><span>addOnFinally&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="169">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>addOnFinally&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>unit&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add as a finally clause
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.addOnFinally``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.addOnFinally``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L431-431" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute the given function when the process is cleaned up.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>unit&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add as a finally clause
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '170', 170)" onmouseover="showTip(event, '170', 170)">
+                <p>
+                  <a id="addOnSetup">
+                    <a href="#addOnSetup">
+                      <code><span>addOnSetup&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="170">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>addOnSetup&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>unit&#32;->&#32;'a</span></code>
+                       - 
+                      Function to add on setup
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.addOnSetup``2```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.addOnSetup``2\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L421-421" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute the given function before the process is started
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>unit&#32;->&#32;'a</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add on setup
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '171', 171)" onmouseover="showTip(event, '171', 171)">
+                <p>
+                  <a id="addOnStarted">
+                    <a href="#addOnStarted">
+                      <code><span>addOnStarted&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="171">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>addOnStarted&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>unit&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add on started event
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.addOnStarted``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.addOnStarted``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L441-441" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute the given function right after the process is started.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>unit&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add on started event
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '172', 172)" onmouseover="showTip(event, '172', 172)">
+                <p>
+                  <a id="addOnStartedEx">
+                    <a href="#addOnStartedEx">
+                      <code><span>addOnStartedEx&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="172">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>addOnStartedEx&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-startedprocessinfo.html">StartedProcessInfo</a>&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add on started event
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.addOnStartedEx``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.addOnStartedEx``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L452-452" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute the given function right after the process is started.
+ PID for process can be obtained from p parameter (p.Process.Id).
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-startedprocessinfo.html">StartedProcessInfo</a>&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add on started event
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '173', 173)" onmouseover="showTip(event, '173', 173)">
+                <p>
+                  <a id="appendSimpleFuncs">
+                    <a href="#appendSimpleFuncs">
+                      <code><span>appendSimpleFuncs&#32;<span>prepareState&#32;onStart&#32;onResult&#32;onDispose&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="173">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>appendSimpleFuncs&#32;<span>prepareState&#32;onStart&#32;onResult&#32;onDispose&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        prepareState
+                      </b>
+                      :
+                      <code><span>unit&#32;->&#32;'a</span></code>
+                       - 
+                      Function to override state
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        onStart
+                      </b>
+                      :
+                      <code><span>'a&#32;->&#32;<a href="https://docs.microsoft.com/dotnet/api/system.diagnostics.process">Process</a>&#32;->&#32;unit</span></code>
+                       - 
+                      Function to override start
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        onResult
+                      </b>
+                      :
+                      <code><span><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;'b&gt;</span>&#32;->&#32;'a&#32;->&#32;<span><a href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a href="fake.buildreference/fake-core-rawprocessresult.html">RawProcessResult</a>&gt;</span>&#32;->&#32;<span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;'c&gt;</span></span></code>
+                       - 
+                      Function to override result
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        onDispose
+                      </b>
+                      :
+                      <code><span>'a&#32;->&#32;unit</span></code>
+                       - 
+                      Function to override dispose
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'c&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.appendSimpleFuncs``3```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.appendSimpleFuncs``3\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L411-411" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Attaches the given functions to the current CreateProcess instance.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  prepareState
+                </span>
+                :
+                <code><span>unit&#32;->&#32;'a</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to override state
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onStart
+                </span>
+                :
+                <code><span>'a&#32;->&#32;<a href="https://docs.microsoft.com/dotnet/api/system.diagnostics.process">Process</a>&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to override start
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onResult
+                </span>
+                :
+                <code><span><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;'b&gt;</span>&#32;->&#32;'a&#32;->&#32;<span><a href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a href="fake.buildreference/fake-core-rawprocessresult.html">RawProcessResult</a>&gt;</span>&#32;->&#32;<span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;'c&gt;</span></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to override result
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onDispose
+                </span>
+                :
+                <code><span>'a&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to override dispose
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'c&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '174', 174)" onmouseover="showTip(event, '174', 174)">
+                <p>
+                  <a id="copyRedirectedProcessOutputsToStandardOutputs">
+                    <a href="#copyRedirectedProcessOutputsToStandardOutputs">
+                      <code><span>copyRedirectedProcessOutputsToStandardOutputs&#32;<span>c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="174">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>copyRedirectedProcessOutputsToStandardOutputs&#32;<span>c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The process to copy output to standard output
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.copyRedirectedProcessOutputsToStandardOutputs``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.copyRedirectedProcessOutputsToStandardOutputs``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L265-265" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Copies std-out and std-err into the corresponding <code>System.Console</code> streams (by using interceptStream).
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The process to copy output to standard output
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '175', 175)" onmouseover="showTip(event, '175', 175)">
+                <p>
+                  <a id="disableTraceCommand">
+                    <a href="#disableTraceCommand">
+                      <code><span>disableTraceCommand&#32;<span>c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="175">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>disableTraceCommand&#32;<span>c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.disableTraceCommand``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.disableTraceCommand``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L290-290" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Disable the default trace of started processes.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '176', 176)" onmouseover="showTip(event, '176', 176)">
+                <p>
+                  <a id="ensureExitCode">
+                    <a href="#ensureExitCode">
+                      <code><span>ensureExitCode&#32;<span>r</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="176">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ensureExitCode&#32;<span>r</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        r
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.ensureExitCode``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.ensureExitCode``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L777-777" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Makes sure the exit code is <code>0</code>, otherwise a detailed exception is thrown (showing the command line).
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  r
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '177', 177)" onmouseover="showTip(event, '177', 177)">
+                <p>
+                  <a id="ensureExitCodeWithMessage">
+                    <a href="#ensureExitCodeWithMessage">
+                      <code><span>ensureExitCodeWithMessage&#32;<span>msg&#32;r</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="177">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ensureExitCodeWithMessage&#32;<span>msg&#32;r</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        msg
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The message to use
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        r
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.ensureExitCodeWithMessage``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.ensureExitCodeWithMessage``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L761-761" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ throws an exception with the given message if <code>exitCode &lt;&gt; 0</code>
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  msg
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The message to use
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  r
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
+                <p>
+                  <a id="fromCommand">
+                    <a href="#fromCommand">
+                      <code><span>fromCommand&#32;<span>command</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="178">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>fromCommand&#32;<span>command</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        command
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-command.html">Command</a></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CreateProcess.fromCommand`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.fromCommand\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L139-139" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create a simple <code>CreateProcess&lt;_&gt;</code> instance from the given command.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  command
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-command.html">Command</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ Command.RawCommand(&quot;file&quot;, Arguments.OfArgs [&quot;arg1&quot;; &quot;arg2&quot;])
+     |&gt; CreateProcess.fromCommand
+     |&gt; Proc.run
+     |&gt; ignore</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '179', 179)" onmouseover="showTip(event, '179', 179)">
+                <p>
+                  <a id="fromRawCommand">
+                    <a href="#fromRawCommand">
+                      <code><span>fromRawCommand&#32;<span>command&#32;args</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="179">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>fromRawCommand&#32;<span>command&#32;args</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        command
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        args
+                      </b>
+                      :
+                      <code><span>seq&lt;string&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CreateProcess.fromRawCommand`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.fromRawCommand\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L202-202" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create a CreateProcess from the given file and arguments
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  command
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  args
+                </span>
+                :
+                <code><span>seq&lt;string&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ CreateProcess.fromRawCommand &quot;cmd&quot; [ &quot;/C&quot;;  &quot;echo test&quot; ]
+     |&gt; Proc.run
+     |&gt; ignore</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
+                <p>
+                  <a id="fromRawCommandLine">
+                    <a href="#fromRawCommandLine">
+                      <code><span>fromRawCommandLine&#32;<span>command&#32;windowsCommandLine</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="180">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>fromRawCommandLine&#32;<span>command&#32;windowsCommandLine</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        command
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        windowsCommandLine
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CreateProcess.fromRawCommandLine`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.fromRawCommandLine\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L187-187" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create a CreateProcess from the given file and arguments
+ 
+              </p>
+            </div>
+            <p class="fsdocs-remarks">
+              
+ Using BlackFox.CommandLine <br />
+ See <a href="https://github.com/vbfox/FoxSharp/tree/master/src/BlackFox.CommandLine">
+  <c>BlackFox.CommandLine</c>
+</a> for details
+ <example>
+  <code lang="fsharp">
+ open BlackFox.CommandLine
+
+     CmdLine.empty
+     |&gt; CmdLine.append "build"
+     |&gt; CmdLine.appendIf noRestore "--no-restore"
+     |&gt; CmdLine.appendPrefixIfSome "--framework" framework
+     |&gt; CmdLine.appendPrefixf "--configuration" "%A" configuration
+     |&gt; CmdLine.toString
+     |&gt; CreateProcess.fromRawCommandLine "dotnet.exe"
+     |&gt; Proc.run
+     |&gt; ignore
+ </code>
+</example>
+            </p>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  command
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  windowsCommandLine
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ CreateProcess.fromRawCommandLine &quot;cmd&quot; &quot;/C \&quot;echo test\&quot;&quot;
+     |&gt; Proc.run
+     |&gt; ignore</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
+                <p>
+                  <a id="getEnvironmentMap">
+                    <a href="#getEnvironmentMap">
+                      <code><span>getEnvironmentMap&#32;<span>c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="181">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>getEnvironmentMap&#32;<span>c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><a href="fake.buildreference/fake-core-envmap.html">EnvMap</a></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.getEnvironmentMap``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.getEnvironmentMap``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L483-483" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Retrieve the current environment map.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><a href="fake.buildreference/fake-core-envmap.html">EnvMap</a></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
+                <p>
+                  <a id="interceptStream">
+                    <a href="#interceptStream">
+                      <code><span>interceptStream&#32;<span>target&#32;s</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="182">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>interceptStream&#32;<span>target&#32;s</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        target
+                      </b>
+                      :
+                      <code><a href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></code>
+                       - 
+                      The target stream
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        s
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+                       - 
+                      The target stream specification
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CreateProcess.interceptStream`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.interceptStream\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L254-254" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Intercept the given StreamSpecification and writes the intercepted data into target.
+ Throws if the stream is not redirected (ie is Inherit).
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  target
+                </span>
+                :
+                <code><a href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The target stream
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  s
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The target stream specification
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
+                <p>
+                  <a id="map">
+                    <a href="#map">
+                      <code><span>map&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="183">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>map&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>'a&#32;->&#32;'b</span></code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.map``2```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.map``2\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L528-528" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Map the current result to a new type.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>'a&#32;->&#32;'b</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'b&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
+                <p>
+                  <a id="mapFilePath">
+                    <a href="#mapFilePath">
+                      <code><span>mapFilePath&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="184">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>mapFilePath&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-filepath.html">FilePath</a>&#32;->&#32;<a href="fake.buildreference/fake-core-filepath.html">FilePath</a></span></code>
+                       - 
+                      Function to override file path
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.mapFilePath``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.mapFilePath``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L319-319" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Map the file-path according to the given function.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-filepath.html">FilePath</a>&#32;->&#32;<a href="fake.buildreference/fake-core-filepath.html">FilePath</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to override file path
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
+                <p>
+                  <a id="mapResult">
+                    <a href="#mapResult">
+                      <code><span>mapResult&#32;<span>f&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="185">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>mapResult&#32;<span>f&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        f
+                      </b>
+                      :
+                      <code><span>'a&#32;->&#32;'b</span></code>
+                       - 
+                      Function to run result map through
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;'a&gt;</span>&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;'b&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.mapResult``2```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.mapResult``2\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L545-545" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Map only the result object and leave the exit code in the result type.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  f
+                </span>
+                :
+                <code><span>'a&#32;->&#32;'b</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to run result map through
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;'a&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;'b&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
+                <p>
+                  <a id="ofStartInfo">
+                    <a href="#ofStartInfo">
+                      <code><span>ofStartInfo&#32;<span>p</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="186">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>ofStartInfo&#32;<span>p</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        p
+                      </b>
+                      :
+                      <code><a href="https://docs.microsoft.com/dotnet/api/system.diagnostics.processstartinfo">ProcessStartInfo</a></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CreateProcess.ofStartInfo`')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.ofStartInfo\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L208-208" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create a CreateProcess from the given <code>ProcessStartInfo</code>
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  p
+                </span>
+                :
+                <code><a href="https://docs.microsoft.com/dotnet/api/system.diagnostics.processstartinfo">ProcessStartInfo</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;unit&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
+                <p>
+                  <a id="redirectOutput">
+                    <a href="#redirectOutput">
+                      <code><span>redirectOutput&#32;<span>c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="187">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>redirectOutput&#32;<span>c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;<a href="fake.buildreference/fake-core-processoutput.html">ProcessOutput</a>&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.redirectOutput``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.redirectOutput``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L556-556" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Starts redirecting the output streams and collects all data at the end.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;<span><a href="fake.buildreference/fake-core-processresult-1.html">ProcessResult</a>&lt;<a href="fake.buildreference/fake-core-processoutput.html">ProcessOutput</a>&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '188', 188)" onmouseover="showTip(event, '188', 188)">
+                <p>
+                  <a id="redirectOutputIfNotRedirected">
+                    <a href="#redirectOutputIfNotRedirected">
+                      <code><span>redirectOutputIfNotRedirected&#32;<span>c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="188">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>redirectOutputIfNotRedirected&#32;<span>c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.redirectOutputIfNotRedirected``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.redirectOutputIfNotRedirected``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L594-594" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Starts redirecting the output streams if they are not already redirected.
+ Be careful when using this function. Using redirectOutput is the preferred variant
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '189', 189)" onmouseover="showTip(event, '189', 189)">
+                <p>
+                  <a id="replaceFilePath">
+                    <a href="#replaceFilePath">
+                      <code><span>replaceFilePath&#32;<span>newFilePath&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="189">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>replaceFilePath&#32;<span>newFilePath&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        newFilePath
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+                       - 
+                      The new file path to use as a replacement
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.replaceFilePath``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.replaceFilePath``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L306-306" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Replace the file-path
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  newFilePath
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-filepath.html">FilePath</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The new file path to use as a replacement
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '190', 190)" onmouseover="showTip(event, '190', 190)">
+                <p>
+                  <a id="setEnvironmentVariable">
+                    <a href="#setEnvironmentVariable">
+                      <code><span>setEnvironmentVariable&#32;<span>envKey&#32;envVar&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="190">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>setEnvironmentVariable&#32;<span>envKey&#32;envVar&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        envKey
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The environment variable key
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        envVar
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The environment variable value
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.setEnvironmentVariable``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.setEnvironmentVariable``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L495-495" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the given environment variable.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  envKey
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The environment variable key
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  envVar
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The environment variable value
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '191', 191)" onmouseover="showTip(event, '191', 191)">
+                <p>
+                  <a id="warnOnExitCode">
+                    <a href="#warnOnExitCode">
+                      <code><span>warnOnExitCode&#32;<span>msg&#32;r</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="191">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>warnOnExitCode&#32;<span>msg&#32;r</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        msg
+                      </b>
+                      :
+                      <code>string</code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        r
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.warnOnExitCode``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.warnOnExitCode``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L803-803" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Like<code>ensureExitCode</code> but only triggers a warning instead of failing.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  msg
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  r
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '192', 192)" onmouseover="showTip(event, '192', 192)">
+                <p>
+                  <a id="withCommand">
+                    <a href="#withCommand">
+                      <code><span>withCommand&#32;<span>command&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="192">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withCommand&#32;<span>command&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        command
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-command.html">Command</a></code>
+                       - 
+                      The command to add to create process instance
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withCommand``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withCommand``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L298-298" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the command to the given one.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  command
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-command.html">Command</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The command to add to create process instance
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '193', 193)" onmouseover="showTip(event, '193', 193)">
+                <p>
+                  <a id="withEnvironment">
+                    <a href="#withEnvironment">
+                      <code><span>withEnvironment&#32;<span>env&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="193">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withEnvironment&#32;<span>env&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        env
+                      </b>
+                      :
+                      <code><span><span>(<span>string&#32;*&#32;string</span>)</span>&#32;list</span></code>
+                       - 
+                      The environment variables list to add
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withEnvironment``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withEnvironment``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L466-466" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Sets the given environment variables
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  env
+                </span>
+                :
+                <code><span><span>(<span>string&#32;*&#32;string</span>)</span>&#32;list</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The environment variables list to add
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '194', 194)" onmouseover="showTip(event, '194', 194)">
+                <p>
+                  <a id="withEnvironmentMap">
+                    <a href="#withEnvironmentMap">
+                      <code><span>withEnvironmentMap&#32;<span>env&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="194">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withEnvironmentMap&#32;<span>env&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        env
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-envmap.html">EnvMap</a></code>
+                       - 
+                      The environment variables map to add
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withEnvironmentMap``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withEnvironmentMap``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L475-475" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Sets the given environment map.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  env
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-envmap.html">EnvMap</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The environment variables map to add
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '195', 195)" onmouseover="showTip(event, '195', 195)">
+                <p>
+                  <a id="withOutputEvents">
+                    <a href="#withOutputEvents">
+                      <code><span>withOutputEvents&#32;<span>onStdOut&#32;onStdErr&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="195">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withOutputEvents&#32;<span>onStdOut&#32;onStdErr&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        onStdOut
+                      </b>
+                      :
+                      <code><span>string&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add as a standard output handler
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        onStdErr
+                      </b>
+                      :
+                      <code><span>string&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add as a standard error handler
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withOutputEvents``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withOutputEvents``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L665-665" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Calls the given functions whenever a new output-line is received.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onStdOut
+                </span>
+                :
+                <code><span>string&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add as a standard output handler
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onStdErr
+                </span>
+                :
+                <code><span>string&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add as a standard error handler
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '196', 196)" onmouseover="showTip(event, '196', 196)">
+                <p>
+                  <a id="withOutputEventsNotNull">
+                    <a href="#withOutputEventsNotNull">
+                      <code><span>withOutputEventsNotNull&#32;<span>onStdOut&#32;onStdErr&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="196">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withOutputEventsNotNull&#32;<span>onStdOut&#32;onStdErr&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        onStdOut
+                      </b>
+                      :
+                      <code><span>string&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add as a standard output handler
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        onStdErr
+                      </b>
+                      :
+                      <code><span>string&#32;->&#32;unit</span></code>
+                       - 
+                      Function to add as a standard error handler
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withOutputEventsNotNull``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withOutputEventsNotNull``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L725-725" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Like <code>withOutputEvents</code> but skips <code>null</code> objects.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onStdOut
+                </span>
+                :
+                <code><span>string&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add as a standard output handler
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  onStdErr
+                </span>
+                :
+                <code><span>string&#32;->&#32;unit</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Function to add as a standard error handler
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
+                <p>
+                  <a id="withStandardError">
+                    <a href="#withStandardError">
+                      <code><span>withStandardError&#32;<span>stdErr&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="197">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withStandardError&#32;<span>stdErr&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        stdErr
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withStandardError``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withStandardError``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L513-513" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the standard error stream.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  stdErr
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs"></dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
+                <p>
+                  <a id="withStandardInput">
+                    <a href="#withStandardInput">
+                      <code><span>withStandardInput&#32;<span>stdIn&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="198">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withStandardInput&#32;<span>stdIn&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        stdIn
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+                       - 
+                      The standard input to use
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withStandardInput``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withStandardInput``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L522-522" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the standard input stream.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  stdIn
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The standard input to use
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
+                <p>
+                  <a id="withStandardOutput">
+                    <a href="#withStandardOutput">
+                      <code><span>withStandardOutput&#32;<span>stdOut&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="199">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withStandardOutput&#32;<span>stdOut&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        stdOut
+                      </b>
+                      :
+                      <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+                       - 
+                      The standard output to use
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withStandardOutput``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withStandardOutput``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L504-504" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the standard output stream.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  stdOut
+                </span>
+                :
+                <code><a href="fake.buildreference/fake-core-streamspecification.html">StreamSpecification</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The standard output to use
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '200', 200)" onmouseover="showTip(event, '200', 200)">
+                <p>
+                  <a id="withTimeout">
+                    <a href="#withTimeout">
+                      <code><span>withTimeout&#32;<span>timeout&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="200">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withTimeout&#32;<span>timeout&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        timeout
+                      </b>
+                      :
+                      <code><a href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></code>
+                       - 
+                      The timeout amount
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withTimeout``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withTimeout``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L835-835" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the given timeout, kills the process after the specified timespan
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  timeout
+                </span>
+                :
+                <code><a href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The timeout amount
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '201', 201)" onmouseover="showTip(event, '201', 201)">
+                <p>
+                  <a id="withWorkingDirectory">
+                    <a href="#withWorkingDirectory">
+                      <code><span>withWorkingDirectory&#32;<span>workDir&#32;c</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="201">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>withWorkingDirectory&#32;<span>workDir&#32;c</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        workDir
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The working directory
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        c
+                      </b>
+                      :
+                      <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                       - 
+                      The create process instance
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('```cref:M:Fake.Core.CreateProcess.withWorkingDirectory``1```')">
+                <img src="fake.buildcontent/img/copy-md.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CreateProcess.withWorkingDirectory``1\'/>')">
+                <img src="fake.buildcontent/img/copy-xml.png" class="normal"/>
+                <img src="fake.buildcontent/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.Process/CreateProcess.fs#L282-282" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="fake.buildcontent/img/github.png" class="normal"/>
+                <img src="fake.buildcontent/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Set the working directory of the new process.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  workDir
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The working directory
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  c
+                </span>
+                :
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The create process instance
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="fake.buildreference/fake-core-createprocess-1.html">CreateProcess</a>&lt;'a&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+        
+    </div>
+</div>
+
+<footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+    <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+        <div class="flex flex-col justify-between lg:w-2/3">
+            <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                <div class="lg:mr-16">
+                    <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Important Links</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/getting-started.html">Getting
+                            started</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="/guide/fake-modules.html">Modules</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                            Header</a></li>
+                    </ul>
+                </div>
+                <div class="lg:mx-16">
+                    <h4 class="text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">Further projects</span>
+                        </span>
+                    </h4>
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsprojects.github.io/Paket/">Paket</a>
+                        </li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                                href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                            Formatting</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a></li>
+                        <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 mx-auto w-full">
+                <p>© FAKE. All rights reserved | Version:
+                    <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                        <span>6.0.0-alpha001</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="lg:w-1/3 space-y-3">
+            <h4 class="flex items-center text-slate-700 text-xl">
+                        <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                    <span class="-ml-2 inline-block text-[#d4b43c]">
+                                        <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                  </span>
+                            <span class="inline-block">FAKE is a community effort</span>
+                        </span>
+            </h4>
+            <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and Runtime for
+                running F# scripts. Look at the open issues at
+                <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                send pull requests!</p>
+            <div class="block py-8">
+                <a href="/guide/contributing.html">
+                    <span
+                        class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                        <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7"></path>
+                            </svg>
+                    </span>
+                    <span>Learn more</span>
+                    </span>
+                </a>
+            </div>
+
+            <h4 class="text-lg">Get in touch</h4>
+
+            <div class="flex items-center space-x-2">
+                <a href="https://twitter.com/fsharpMake"
+                   class="block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Twitter Account</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73"/>
+                    </svg>
+                </a>
+                <a href="https://fake.build"
+                   class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE Website</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/fsprojects/fake"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FAKE GitHub Repository</span>
+                    <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://fsharp.slack.com/"
+                   class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                    class="sr-only">FSharp Slack Workspace</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0"/>
+                        <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                              d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+</html>

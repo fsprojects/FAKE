@@ -1,0 +1,310 @@
+#content > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5.0rem;
+    min-width: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: auto;
+    min-height: inherit;
+}
+
+#content div:empty {
+    display: contents;
+}
+
+#content div div h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: rgb(15 23 42);
+}
+
+#content div h2 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: rgb(15 23 42);
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+nav::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* nav::-webkit-scrollbar-track { */
+    /* background-color: #e4e4e4; */
+    /*border-radius: 100px 100px 0px 0px;*/
+/* } */
+
+nav::-webkit-scrollbar-thumb {
+    background-color: #d4b43c80;
+    /*border-radius: 100px 100px 0px 0px;*/
+}
+
+
+table * tr {
+    box-sizing: border-box;
+    border: 1px solid #e5e7eb;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+table.pre * tr {
+    box-sizing: border-box;
+    border: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+table.pre .fssnip {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+table thead tr {
+    border-bottom-color: #d4b43c;
+    border-top: 0;
+}
+
+table tbody {
+    vertical-align: baseline;
+}
+
+table * .fsdocs-summary {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.fsdocs-summary {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: rgb(51 65 85);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.fsdocs-summary ul {
+    list-style-type: disc;
+}
+
+.fsdocs-summary ol {
+    list-style-type: decimal;
+}
+
+.fsdocs-params,
+.fsdocs-returns {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.fsdocs-metadata, .fsdocs-xmldoc {
+    margin-top: -4.5rem
+}
+
+.fsdocs-member-usage {
+    background-color: transparent;
+}
+
+.fsdocs-entity-list,
+.fsdocs-member-list {
+    width: 100%;
+}
+
+.fsdocs-summary a,
+.fsdocs-remarks a,
+.fsdocs-entity-list a {
+    color: #222;
+    text-decoration: underline;
+    font-weight: lighter;
+}
+
+.fsdocs-summary a:hover,
+.fsdocs-remarks a:hover,
+.fsdocs-entity-list a:hover {
+    color: #d4b43c;
+}
+
+.fsdocs-entity-list .anchor {
+    text-decoration: none;
+}
+
+.fsdocs-entity-list .anchor::before {
+    content: "";
+    display: block;
+    height: 50px;
+    margin: -50px 0 0;
+    visibility: hidden;
+}
+
+.fsdocs-member-list > * > tr > td,
+.fsdocs-entity-list > * > tr > td {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.fsdocs-member-list * div > code * code,
+.fsdocs-entity-list * div > code * code,
+.fsdocs-entity-list .fsdocs-params * code,
+.fsdocs-member-list .fsdocs-params * code,
+.fsdocs-entity-list .fsdocs-returns * code,
+.fsdocs-member-list .fsdocs-returns * code {
+    background-color: whitesmoke;
+    color: #ff3860;
+    font-size: 0.875em;
+    font-weight: normal;
+    padding: 0.25em 0.5em 0.25em;
+}
+
+.fsdocs-metadata {
+    border: 1px solid #ddd;
+    border-left: 3px solid #d4b43c;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+div.fsdocs-tip {
+    background-color: #f9f9f9;
+    color: #0f172a;
+    outline: #e2e8f0 solid 2px;
+}
+
+div.fsdocs-tip code {
+    color: #0f172a;
+}
+
+@media screen and (max-width: 768px) {
+    .fsdocs-member-list * .fsdocs-example-header, 
+    .fsdocs-member-list * .fsdocs-example, 
+    .fsdocs-member-list * pre {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #content > div {
+        max-width: 80rem;
+    }
+
+    .fsdocs-member-list * .fsdocs-example-header,
+    .fsdocs-member-list * .fsdocs-example,
+    .fsdocs-member-list * pre {
+        display: block;
+    }
+
+    .fsdocs-member-list * pre {
+        max-width: 30rem;
+        overflow-x: scroll;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .fsdocs-member-list * pre {
+        min-width: 16rem;
+        width: 0;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .fsdocs-member-list * pre {
+        min-width: 31rem;
+        width: 0;
+    }
+}
+
+@media screen and (min-width: 1536px) {
+    .fsdocs-member-list * pre {
+        min-width: 42rem;
+        width: 0;
+    }
+}
+
+
+/*--------------------------------------------------------------------------
+  Formatting for F# code snippets
+/*--------------------------------------------------------------------------*/
+
+/* identifier */
+
+span.i, .token.identifier {
+    color: #d1d1d1 !important;
+}
+
+/* string */
+
+span.s, .token.string {
+    color: #d4b43c !important;
+}
+
+/* keywords */
+
+/*span.k, .token.keyword {*/
+/*    color: #4e98dc !important;*/
+/*}*/
+
+/* comment */
+
+span.c, .token.comment {
+    color: #96C71D !important;
+}
+
+/* operators */
+
+span.o, .token.operator {
+    color: #af75c1 !important;
+}
+
+/* numbers */
+
+span.n, .token.number {
+    color: #96C71D !important;
+}
+
+/* line number */
+
+span.l {
+    color: #80b0b0 !important;
+}
+
+/* inactive code */
+
+span.inactive {
+    color: #808080 !important;
+}
+
+/* preprocessor */
+
+span.prep, .token.preprocessor {
+    color: #d1d1d1 !important;
+}
+
+/* fsi output */
+
+span.fsi {
+    color: #808080 !important;
+}
+
+/* omitted */
+
+span.omitted {
+    background: #3c4e52 !important;
+    border-radius: 5px !important;
+    color: #808080 !important;
+}
+
+pre {
+    border: 1px solid #d8d8d8 !important;
+    background-color: #2d2d2d !important;
+    border-radius: 5px !important;
+    color: #d1d1d1 !important;
+}
+

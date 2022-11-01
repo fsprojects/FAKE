@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-pt-32">
+
+<head>
+    <title>Contributing to FAKE
+</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body
+    class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+    x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
+    <header class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+        :class="{'bg-white': open === false}">
+        <div class="flex gap-2 items-center block">
+            <a class="flex items-center gap-2" href="fake.buildindex.html">
+                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+                    width="28" height="28" class="w-10 h-10">
+                <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+            </a>
+            <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+                <span>6.0.0-alpha001</span>
+            </div>
+            <button
+                class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="flex items-center pt-10 md:pt-0">
+            <div class="md:mr-5">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    </li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </div>
+            <button
+                class="border-slate-700 hidden md:block lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+            <div class="hidden lg:block relative ml-auto">
+                <div class="flex items-center">
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/fsharpMake"
+                        class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE Twitter
+                            Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank"
+                href="https://github.com/fsprojects/FAKE/blob/master/docs/guide/contributing.md">Edit this page</a>
+        </div>
+    </header>
+
+    <div class="lg:ml-[25rem] min-w-0 lg:px-16">
+        <nav class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem]
+         w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
+            aria-label="main navigation"
+            :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+            <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
+            lg:hidden">
+                <div class="flex gap-2 items-center">
+                    <a class="flex items-center gap-2" href="fake.buildindex.html">
+                        <img src="fake.buildcontent/assets/img/logo.svg"
+                            alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
+                            class="w-10 h-10">
+                        <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                    </a>
+                </div>
+                <button
+                    class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                    @click="open = false">
+                    <span
+                        class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                        <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Guide
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.guide)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname.startsWith(navItem.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Articles
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.articles)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname === navItem.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+        <div class="max-w-[50rem] mt-16 mx-4 lg:mx-auto px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+            <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+            <p>
+                <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                        </path>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                        </path>
+                    </svg>
+                    <span class="underline">v5.fake.build</span>
+                </a>
+            </p>
+        </div>
+        <div id="content"
+            class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+            <h1><a name="Contributing-to-FAKE" class="anchor" href="#Contributing-to-FAKE">Contributing to FAKE</a></h1>
+<p>Table of Content:</p>
+<ul>
+<li>
+<a href="#Prerequisites">Prerequisites</a>
+<ul>
+<li><a href="#Install-F">Install F#</a></li>
+<li><a href="#Install-an-Editor">Install an Editor</a></li>
+<li><a href="#Install-FAKE">Install FAKE</a></li>
+</ul>
+</li>
+<li><a href="#Creating-Pull-Requests">Creating Pull Requests</a></li>
+<li>
+<a href="#Contributing-Documentation">Contributing Documentation</a>
+<ul>
+<li><a href="#Building-the-Documentation">Building the Documentation</a></li>
+<li><a href="#Viewing-the-Documentation">Viewing the Documentation</a></li>
+</ul>
+</li>
+<li><a href="#Testing-Modules">Testing Modules</a></li>
+<li>
+<a href="#Style-Guidelines">Style Guidelines</a>
+<ul>
+<li><a href="#API-Design-Guidelines">API Design Guidelines</a></li>
+</ul>
+</li>
+<li><a href="#Considerations-Regarding-FAKE-4">Considerations Regarding FAKE 4</a></li>
+<li><a href="#Porting-Legacy-Modules-to-Current-Version-of-FAKE">Porting Legacy Modules to Current Version of FAKE</a></li>
+<li><a href="#Release-Process">Release Process</a></li>
+<li><a href="#Staging-environment">Staging environment</a></li>
+<li><a href="#Notes-for-Maintainers">Notes for Maintainers</a></li>
+</ul>
+<p>Thank you for your interest in contributing to FAKE! This guide explains everything you'll need to know to get started.</p>
+<p><strong>Before diving in</strong>, please note:</p>
+<ul>
+<li><p>You are encouraged to <strong>improve this document</strong> by sending a pull request to the FAKE project on GitHub. If you learn</p></li>
+<li><p>something while playing with FAKE, please record your <a href="https://github.com/fsprojects/FAKE/blob/master/docs/guide/contributing.md"><ins>findings here</ins></a>!</p></li>
+<li>
+<p>If you'd like to discuss a feature (a good idea!) or are looking for suggestions on how to to contribute:</p>
+<ul>
+<li><p><strong>Check the <a href="https://github.com/fsprojects/FAKE/issues"><ins>Issue list</ins></a></strong> on GitHub,</p></li>
+<li><p><strong>Visit the <a href="https://gitter.im/fsprojects/FAKE"><ins>Gitter room</ins></a></strong></p></li>
+</ul>
+</li>
+<li>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall</li>
+<li><p>be under the terms and conditions of the <strong>Apache 2.0 license</strong>. See <a href="https://github.com/fsprojects/FAKE/tree/master/License.txt"><em><ins><code>/License.txt</code></ins></em></a> for details.</p></li>
+</ul>
+<h2><a name="Prerequisites" class="anchor" href="#Prerequisites">Prerequisites</a></h2>
+<p>Before building and developing FAKE, you must:</p>
+<h3><a name="Install-F" class="anchor" href="#Install-F">Install F#</a></h3>
+<p><strong>Linux and Mac</strong> users should install the .NET Core SDK and Mono per this guide,
+"<a href="http://fsharp.org/guides/mac-linux-cross-platform/"><ins>Cross-Platform Development with F#</ins></a>".</p>
+<p><strong>Windows</strong> users can install <strong>Visual Studio</strong>. The <a href="https://www.visualstudio.com/de/vs/community/"><ins>Community Edition</ins></a>
+is freely available for open-source projects.</p>
+<blockquote>
+<p>When developing on Windows, make sure to have long paths enabled
+(<a href="https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing"><ins>instructions available here</ins></a>),
+otherwise the test-suite will fail -- although, the build should work.</p>
+</blockquote>
+<h3><a name="Install-an-Editor" class="anchor" href="#Install-an-Editor">Install an Editor</a></h3>
+<p>For FAKE development, <a href="https://code.visualstudio.com/Download"><ins>Visual Studio Code</ins></a>
+with <a href="https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp"><ins>Ionide</ins></a> is highly recommended.
+The following IDEs are also excellent choices:</p>
+<ul>
+<li>JetBrains Rider [<a href="https://www.jetbrains.com/rider/download"><ins>download</ins></a>]</li>
+<li>Visual Studio for Mac [<a href="https://visualstudio.microsoft.com/vs/mac/"><ins>download</ins></a>]</li>
+<li>Visual Studio for Windows [<a href="https://visualstudio.microsoft.com/vs/"><ins>download</ins></a>]</li>
+</ul>
+<h3><a name="Install-FAKE" class="anchor" href="#Install-FAKE">Install FAKE</a></h3>
+<p>You can quickly install and use FAKE with the dotnet SDK (we use fake-cli as local tool):</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">cd /projects/FAKE
+dotnet tool restore
+dotnet fake --version
+</code></pre></td></tr></table>
+<p>For alternative methods of installing FAKE, please see the <a href="fake.buildguide/gettingstarted.html#Install-FAKE"><ins>Getting Started guide</ins></a>.</p>
+<h2><a name="Creating-Pull-Requests" class="anchor" href="#Creating-Pull-Requests">Creating Pull Requests</a></h2>
+<ol>
+<li><p><strong>Fork</strong> the <a href="https://github.com/fsprojects/FAKE"><ins>FAKE repo on GitHub</ins></a>.</p></li>
+<li><p><strong>Clone</strong> your personal fork locally.</p></li>
+<li>
+<p><strong>Add a new git remote</strong> in order to retrieve upstream changes.</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">git remote add upstream https://github.com/fsprojects/FAKE.git
+</code></pre></td></tr></table>
+</li>
+<li>
+<p><strong>Checkout</strong> the <code>master</code> branch.</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">git checkout master
+</code></pre></td></tr></table>
+</li>
+<li>
+<p>To verify that everything works, <strong>build</strong> <code>master</code> via:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake build
+</code></pre></td></tr></table>
+</li>
+<li>
+<p>Create a new <strong>feature branch</strong>.</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">git checkout -b myfeature
+</code></pre></td></tr></table>
+</li>
+<li><p><strong>Implement</strong> your bugfix/feature.</p></li>
+<li><p>Add a bit of <strong>documentation</strong> (see the section on <a href="#Contributing-Documentation"><ins>Contributing Documentation</ins></a>).</p></li>
+<li>
+<p>Re-run the build script to <strong>confirm that all tests pass</strong>.</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake build
+</code></pre></td></tr></table>
+</li>
+<li><p><strong>Commit</strong> your changes, and <strong>push</strong> them to your fork.</p></li>
+<li>
+<p>Use GitHub's UI to <a href="https://github.com/fsprojects/FAKE/pulls"><ins>create a pull request</ins></a>. (Write "WIP" into the pull request description if it's not completely ready.)<br/><br/>If you need to rebase you can do:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">git fetch upstream
+git rebase upstream/master
+git push origin myfeature -f
+</code></pre></td></tr></table>
+</li>
+</ol>
+<p>The pull request will be updated automatically.</p>
+<h2><a name="Contributing-Documentation" class="anchor" href="#Contributing-Documentation">Contributing Documentation</a></h2>
+<p>The code for all documentation can be found in the <a href="https://github.com/fsprojects/FAKE/tree/master/docs"><ins><code>docs</code> directory on GitHub</ins></a>.
+If you find a bug or add a new feature, <strong>make sure you document it</strong>!</p>
+<p>The documentation uses the following stack:</p>
+<ul>
+<li><a href="https://tailwindcss.com/"><ins>TailwindCSS</ins></a> as a styling framework</li>
+<li><a href="https://alpinejs.dev/"><ins>AlpineJS</ins></a> as a JS framework for adding interactivity to website</li>
+<li><a href="https://fsprojects.github.io/FSharp.Formatting/"><ins>FSDocs</ins></a> to generate API documentation from FAKE modules</li>
+</ul>
+<p>TailwindCSS can be considered a pre step in build process, after that it will be handled to FSDocs. FSDocs is an
+<strong>amazing <a href="https://github.com/fsprojects/FSharp.Formatting"><ins>F# Docs</ins></a> library</strong>
+that turns Markdown files <code>*.md</code> with embedded code snippets and F# script <code>*.fsx</code> files containing embedded
+Markdown documentation into nice HTML documentation.</p>
+<p>The <code>docs</code> directory is first built using NPM by running the command <code>npm run build</code> to generate styles and other files.
+Next <code>fsdocs</code> is called to generate the complete site and API documentation. FSDocs uses template pages to generate the site.
+We have two template pages:</p>
+<ul>
+<li><code>docs/_template.html</code>: used for markdown files in <code>guide</code> and <code>articles</code> directories</li>
+<li><code>docs/reference/_template.html</code>: used in API documentation</li>
+</ul>
+<p>The two templates are 90% identical, except some styles for markdown files to use <a href="https://tailwindcss.com/docs/typography-plugin"><ins>TailwindCSS typography plugin</ins></a>.</p>
+<p>The next part is the <code>docs/data.json</code> file. This file has the navigation and content of the site. The side navigation
+for <strong>guide</strong> and <strong>API Docs</strong> is built using this file. <strong>So to add new articles or modules to FAKE, this file need
+to be updated to include the new module/article</strong>.</p>
+<p>Another part is the following. If you want to modify the styles, you can run TailwindCSS dev server by navigating
+to <code>docs</code> directory and entering the following command in a CMD:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">npm run dev
+</code></pre></td></tr></table>
+<h3><a name="Building-the-Documentation" class="anchor" href="#Building-the-Documentation">Building the Documentation</a></h3>
+<p>To build the documentation from scratch, simply run:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake build target GenerateDocs
+</code></pre></td></tr></table>
+<p>To save time, you may skip the prerequisite build steps and run the <code>GenerateDocs</code> target directly using the single target <code>-s</code> switch:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake build -s target GenerateDocs
+</code></pre></td></tr></table>
+<p>(Note: this assumes binaries are already built and have not been modified.)</p>
+<h3><a name="Viewing-the-Documentation" class="anchor" href="#Viewing-the-Documentation">Viewing the Documentation</a></h3>
+<p>Running the following target spins up a webserver on localhost and opens the newly built docs in a browser window:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake build target HostDocs
+</code></pre></td></tr></table>
+<h2><a name="Testing-Modules" class="anchor" href="#Testing-Modules">Testing Modules</a></h2>
+<p>If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a
+local nuget package and reference it in your script per the steps below:</p>
+<ol>
+<li>
+Create a local nuget package for the module you've changed.<br />
+e.g: Using dotnet cli
+</li>
+</ol>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">cd path/to/project
+    dotnet pack
+</code></pre></td></tr></table>
+<ol>
+<li><code>dotnet pack</code> will create a default nuget package with version of 1.0.0 in the <code>bin/Debug</code> of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references.</li>
+</ol>
+<p>e.g: If you wanted to test a local build of Fake.DotNet.NuGet</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">        source path/to/Fake.DotNet.NuGet/bin/Debug/</span>
+<span class="s">        source https://api.nuget.org/v3/index.json</span>
+<span class="s">        ...Other Dependencies...</span>
+<span class="s">        nuget Fake.DotNet.NuGet == 1.0.0 //&quot;</span> <span class="c">//Require version 1.0.0, which is the local build</span>
+</code></pre>
+<h2><a name="Style-Guidelines" class="anchor" href="#Style-Guidelines">Style Guidelines</a></h2>
+<p>From FAKE v6, FAKE uses <a href="https://fsprojects.github.io/fantomas/">Fantomas</a> as a code formatter and style
+guideline tool. The tool will be run automatically on codebase to check if any style guidelines are not
+being followed. To accomplish that, the target <code>CheckFormatting</code> in <code>build.fsx</code> script will be run on
+each build of the codebase to ensure all files follow guideline. If not, then build will fail with
+instructions on what should be done to follow the guideline.</p>
+<p>A useful way to ensure you are not waiting for build to fail when run it, is to add a GIT hook on pre-commit
+to run Fantomas. Please see <a href="https://fsprojects.github.io/fantomas/docs/end-users/GitHooks.html">Fantomas GIT hook documentation page</a>.
+For FAKE usage, you need to run the following command:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fantomas  src/app/ src/template/ src/test/ --recurse
+</code></pre></td></tr></table>
+<p>For development setup, we advise the following:</p>
+<ul>
+<li>When working on FAKE 5 or above, <a href="https://code.visualstudio.com/"><ins>Visual Studio Code</ins></a> with <a href="http://ionide.io/"><ins>Ionide</ins></a> helps a lot!</li>
+<li>Read the <a href="http://fsharp.org/specs/component-design-guidelines/"><ins>F# component design guidelines</ins></a>.</li>
+<li>Read the <a href="#API-Design-Guidelines"><ins>API Design Guidelines</ins></a> below.</li>
+<li>Add documentation for your feature</li>
+<li>If you add new markdown documentation, make sure to link to it from an existing site. Ideally, add it to the</li>
+<li><a href="https://github.com/fsprojects/FAKE/blob/master/help/templates/template.cshtml"><ins>menu</ins></a></li>
+<li>If you write API documentation but no extra markdown, please consider adding it to the menu as well.</li>
+</ul>
+<h3><a name="API-Design-Guidelines" class="anchor" href="#API-Design-Guidelines">API Design Guidelines</a></h3>
+<p><a href="/guide/fake-history.html"><ins>We've learned from our mistakes</ins></a> and adopted new API design guidelines.
+<strong>Please read them very carefully</strong>, and please ask if you don't understand any of the following rules:</p>
+<ul>
+<li><p><code>[&lt;AutoOpen&gt;]</code> is no longer used</p></li>
+<li>
+<p>We replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p>
+<ul>
+<li>Use Verbs as much as possible for functions</li>
+<li>In order to have a more consistent API, we propose to always use camelCase naming for functions</li>
+<li>For historic reasons, we allow constants and values in PascalCase. (They will not have a "verb" as they don't do anything)</li>
+<li><p>If we provide optional parameters (via <code>static member</code>), we use PascalCase as well (Example: <code>Shell</code>-module)</p></li>
+</ul>
+</li>
+<li>
+<p>We assume the caller is not opening the module but only the global namespaces <code>Fake.Core</code>, <code>Fake.IO</code>, ...
+and make sure the code looks nice and structured on the caller side.</p>
+</li>
+<li>
+<p>For compatibility reasons (migration from legacy), we assume the user doesn't open the global <code>Fake</code> namespace.</p>
+<p>-&gt; This means we don't add anything in there in the new API.</p>
+</li>
+<li>
+<p>Old APIs are marked as Obsolete with a link (hint) to the new API location. We use codes to make explicit</p>
+<ul>
+<li>FAKE0001 for moving part from one Module to another</li>
+<li>FAKE0002 for removed API we don't know who is using it and how =&gt; please open an issue if you use it</li>
+<li>FAKE0003 for API that is no more accessible (basically became internal) =&gt; please open an issue if you use it</li>
+<li>FAKE0004 for API not yet migrated, waiting for your contribution</li>
+</ul>
+</li>
+<li><p>Operators are opened seperatly with a separate <code>Operators</code> module</p></li>
+<li><p>We avoid the <code>Helpers</code> suffix (because we now expect users to write <code>&lt;module&gt;.&lt;function&gt;</code>)</p></li>
+<li><p>We generally use the <code>[&lt;RequireQualifiedAccess&gt;]</code> attribute on modules.</p></li>
+</ul>
+<h2><a name="Considerations-Regarding-FAKE-4" class="anchor" href="#Considerations-Regarding-FAKE-4">Considerations Regarding FAKE 4</a></h2>
+<ul>
+<li>Fake 4 (FakeLib) is in maintenance mode. Therefore new features need to be at least available as a new FAKE 5 and above module</li>
+<li>(that might mean that the old module needs to be migrated as part of the PR).</li>
+<li>
+<p>Fake 4 still allows hotfixes. Please send the PR against the <a href="https://github.com/fsprojects/FAKE/tree/hotfix_fake4"><em>hotfix_fake4 branch</em></a>.</p>
+<p>It would be helpful if a second PR against <code>master</code> is sent that merges the hotfix into <code>master</code></p>
+</li>
+<li>and adds the hotfix to the FAKE 5 and above code as well.</li>
+</ul>
+<h2><a name="Porting-Legacy-Modules-to-Current-Version-of-FAKE" class="anchor" href="#Porting-Legacy-Modules-to-Current-Version-of-FAKE">Porting Legacy Modules to Current Version of FAKE</a></h2>
+<p>As mentioned in the <a href="/guide/fake-history.html"><em>Fake 5 and above learn more</em></a> section, we could use your help porting modules to FAKE 5.
+To save you from some pitfalls, this section provides a working approach to migrating modules.</p>
+<p>Try the following:</p>
+<ul>
+<li>Copy one of the existing netcore projects and edit the project file by hand (rename)</li>
+<li>Copy the old implementation files from <code>src/app/FakeLib</code> to <code>/src/app/Fake.&lt;ModuleType&gt;.&lt;Name&gt;</code> (update project file again if required)</li>
+<li>(Optionally, there is no need for new stuff to appear in FakeLib at this point) Reference the new files in FakeLib (again updating <code>FakeLib.fsproj</code> by hand to properly reference the stuff)</li>
+<li>Open <code>Fake.sln</code>, add the project and go from there.</li>
+<li>Once stuff compiles in the (<code>Fake.sln</code>) solution you are usually good to go. Let us know if you struggle at this point (in the PR or a new issue).</li>
+<li>Add the info about the new module to the <code>dotnetAssemblyInfos</code> variable in <code>build.fsx</code>. From this point on the build script will let you know if anything is missing. Again, if you have problems let us know.</li>
+<li>Mark the old module with the <code>Obsolete</code> attribute.</li>
+<li>Test everything with a full <code>dotnet fake build</code></li>
+</ul>
+<p>These steps will ensure:</p>
+<ul>
+<li>People using the NuGet package will get the warnings to update the new API</li>
+<li>The new API is part of FakeLib (deprecated)</li>
+<li>The new API is available as separate module</li>
+</ul>
+<h2><a name="Release-Process" class="anchor" href="#Release-Process">Release Process</a></h2>
+<p>To publish a release, merge the changes to <code>master</code> branch and prepare release notes in <code>RELEASE_NOTES.md</code> file, and trigger the <code>release</code> GitHub action providing as an input the release version.
+The release process needs an admin approval, once that is approved the release action will start. FAKE release push packages to the following
+registries:</p>
+<ol>
+<li>Pushing all FAKE modules to NuGet source.</li>
+<li>Pushing FAKE as a chocolatey package.</li>
+<li>Publish site to GitHub Pages.</li>
+</ol>
+<h2><a name="Staging-environment" class="anchor" href="#Staging-environment">Staging environment</a></h2>
+<p>In order to test and preview our changes faster, we have a fully automated release process in place.
+This staging environment is based on VSTS and MyGet.</p>
+<p>If you ever need a release/bugfix, make sure to mention that in your PR. We can quickly provide a build on the following infrastructure:</p>
+<ul>
+<li>Website: <a href="https://staging.fake.build">https://staging.fake.build</a></li>
+<li>Chocolatey package: <code>choco install fake --version &lt;version&gt; --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2</code></li>
+<li>NuGet feed: <a href="https://www.myget.org/F/fake-vsts/api/v3/index.json">https://www.myget.org/F/fake-vsts/api/v3/index.json</a></li>
+<li>GitHub Releases: <a href="https://github.com/fake-staging/FAKE/releases">https://github.com/fake-staging/FAKE/releases</a> (if needed)</li>
+</ul>
+<blockquote>
+<p>Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
+Those bits should be considered for "unblocking"-purposes or testing only.</p>
+</blockquote>
+<p>The <a href="https://fakebuild.visualstudio.com/FSProjects/_releases2?definitionId=1&amp;view=mine&amp;_a=releases"><ins>release process</ins></a> is publicly available as well.</p>
+<h2><a name="Notes-for-Maintainers" class="anchor" href="#Notes-for-Maintainers">Notes for Maintainers</a></h2>
+<p>FAKE uses GitHub actions in build process. We have two GitHub actions; the <code>build_and_test</code> and <code>release</code> actions.
+The <code>build_and_test</code> action is the action triggered on PRs and pushes to <code>master</code> branch. To validate changes
+in a PR.</p>
+<p>The <code>release</code> action is responsible on release a new release of FAKE. It is triggered manually and needs an admin
+approval be it kick-off the release process. The <code>release</code> action uses API Keys to interact with services that
+packages will be pushed to. These keys are hosted in production environment in GitHub repository.</p>
+
+        </div>
+    </div>
+
+    <footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+            <div class="flex flex-col justify-between lg:w-2/3">
+                <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                    <div class="lg:mr-16">
+                        <h4 class="flex items-center text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Important Links</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/getting-started.html">Getting
+                                    started</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html">Modules</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                                    Header</a></li>
+                        </ul>
+                    </div>
+                    <div class="lg:mx-16">
+                        <h4 class="text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Further projects</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/Paket/">Paket</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                                    Formatting</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-10 mx-auto w-full">
+                    <p>© FAKE. All rights reserved | Version:
+                        <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                            <span>6.0.0-alpha001</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="lg:w-1/3 space-y-3">
+                <h4 class="flex items-center text-slate-700 text-xl">
+                    <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                        <span class="-ml-2 inline-block text-[#d4b43c]">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="inline-block">FAKE is a community effort</span>
+                    </span>
+                </h4>
+                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and
+                    Runtime for
+                    running F# scripts. Look at the open issues at
+                    <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                    send pull requests!
+                </p>
+                <div class="block py-8">
+                    <a href="/guide/contributing.html">
+                        <span
+                            class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                            <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                                <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span>Learn more</span>
+                        </span>
+                    </a>
+                </div>
+
+                <h4 class="text-lg">Get in touch</h4>
+
+                <div class="flex items-center space-x-2">
+                    <a href="https://twitter.com/fsharpMake" class="block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Twitter Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                    <a href="https://fake.build" class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Website</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+
+</html>

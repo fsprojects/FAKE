@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-pt-32">
+
+<head>
+    <title>fake-v6-release-announcement</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body
+    class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+    x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
+    <header class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+        :class="{'bg-white': open === false}">
+        <div class="flex gap-2 items-center block">
+            <a class="flex items-center gap-2" href="fake.buildindex.html">
+                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+                    width="28" height="28" class="w-10 h-10">
+                <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+            </a>
+            <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+                <span>6.0.0-alpha001</span>
+            </div>
+            <button
+                class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="flex items-center pt-10 md:pt-0">
+            <div class="md:mr-5">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    </li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </div>
+            <button
+                class="border-slate-700 hidden md:block lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+            <div class="hidden lg:block relative ml-auto">
+                <div class="flex items-center">
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/fsharpMake"
+                        class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE Twitter
+                            Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank"
+                href="https://github.com/fsprojects/FAKE/blob/master/docs/articles/fake-v6-release-announcement.md">Edit this page</a>
+        </div>
+    </header>
+
+    <div class="lg:ml-[25rem] min-w-0 lg:px-16">
+        <nav class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem]
+         w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
+            aria-label="main navigation"
+            :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+            <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
+            lg:hidden">
+                <div class="flex gap-2 items-center">
+                    <a class="flex items-center gap-2" href="fake.buildindex.html">
+                        <img src="fake.buildcontent/assets/img/logo.svg"
+                            alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
+                            class="w-10 h-10">
+                        <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                    </a>
+                </div>
+                <button
+                    class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                    @click="open = false">
+                    <span
+                        class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                        <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Guide
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.guide)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname.startsWith(navItem.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Articles
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.articles)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname === navItem.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+        <div class="max-w-[50rem] mt-16 mx-4 lg:mx-auto px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+            <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+            <p>
+                <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                        </path>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                        </path>
+                    </svg>
+                    <span class="underline">v5.fake.build</span>
+                </a>
+            </p>
+        </div>
+        <div id="content"
+            class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+            <p>FAKE v6 is finally here -- this new major release lays the foundation for future releases of FAKE
+and move a step closer to complete the transition that started in FAKE v5. We have removed the
+obsolete API's and replaced there usages with alternatives, updated dependencies, polished some
+API's, and refreshed the website!</p>
+<p><img src="fake.buildcontent/img/fakev6-release/fake-v6-hero-section.png" alt="FAKE v6 Home Page Hero Section" /></p>
+<p>The above screenshot is from the new FAKE website!</p>
+<p>FAKE v6 focuses on FAKE modules and repository. We wanted this release to lay foundation for future
+development and releases of FAKE to be much easier and streamlined. In addition, this release move one
+step closer to complete the transition that started from FAKE v5 to move FAKE codebase to a modular approach.</p>
+<p>The main points that this release addresses are the following:</p>
+<ol>
+<li>Update dependencies of repository.</li>
+<li>Remove obsolete APIs and replace their usage with alternative suggested API's,</li>
+<li>FAKE build enhancements,</li>
+<li>Update FAKE website to use new FSDocs library and give it a new fresh look,</li>
+<li>General Enhancements,</li>
+<li>Add Fantomas tool to FAKE codebase as a styling and formatter tool.</li>
+</ol>
+<p>Following sections explain each point in more details.</p>
+<h2><a name="Update-dependencies-of-repository" class="anchor" href="#Update-dependencies-of-repository">Update dependencies of repository</a></h2>
+<p>FAKE was lacking behind the tools it uses as dependencies, especially, F# compiler services and Paket.
+FAKE v6 cleans the dependencies in <code>paket.dependencies</code> and upgrade them to newer versions. However,
+not every upgrade is smooth and direct! After upgrading dependencies, including F# compiler services
+to latest major version, 41. The runner using reference assemblies for Net Standard 2.0 stopped working.</p>
+<p>As a recap, in FAKE v5 we supported .NET 6 reference assemblies in FAKE runner in addition to .NET STANDARD
+2.0, so uses can opt-in to use .NET 6 references assemblies when running scripts using FAKE runner. However,
+updating the F# compiler services dependency, broke the support for .NET STANDARD 2.0 reference assemblies in
+the runner. We tried to solve it, but with no luck. The error we get is the following:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="id">MissingMethodException</span><span class="pn">:</span> <span class="id">Method</span> <span class="id">not</span> <span class="id">found</span><span class="pn">:</span> <span class="id">&#39;</span><span class="id">Void</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Microsoft</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Core</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">PrintfFormat</span><span class="k">`</span><span class="n">5..</span><span class="id">ctor</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">String</span><span class="pn">)</span><span class="id">&#39;</span><span class="o">..</span> <span class="id">Actual</span> <span class="id">value</span> <span class="id">was</span> <span class="k">false</span> <span class="id">but</span> <span class="id">had</span> <span class="id">expected</span> <span class="id">it</span> <span class="k">to</span> <span class="id">be</span> <span class="k">true</span><span class="pn">.</span>
+</code></pre>
+<p>The error is a strange one since the <code>printfn</code> method in F# didn’t change over the years, so not finding it is a
+bit strange. We debugged it but didn’t reach a point, <strong>so we decided to drop the support for Net Standard reference
+assemblies from runner</strong>. This move has the effect of requiring that, .NET SDK v6 to exists on the machine to be able
+to use FAKE runner.</p>
+<p>By that, FAKE runner will have a minimum requirement of .NET v6 SDK. This new requirement has been added to the README
+file of the repository under a new section called <em>requirements</em>. Also, we updated the contribution guide to add the
+other possible ways that FAKE modules can be used in addition to using FAKE runner. These new approaches are being
+adopted by community to overcome some limitations on the runner. Especially, when upgrading to a new version of .NET.</p>
+<blockquote>
+<p>We choose .NET 6 reference assemblies since .NET 6 is the current LTS release of .NET</p>
+</blockquote>
+<h2><a name="Obsolete-APIs" class="anchor" href="#Obsolete-APIs">Obsolete APIs</a></h2>
+<p>A lot of modules in FAKE uses obsolete API's from other part of the codebase, especially from the process module.
+FAKE v6 removed the obsolete API's in the process module and replace their usage in other parts of the codebase with
+alternatives.</p>
+<p>Not only API's from process module were removed, but other API's that were marked with obsolete attribute as well.
+We have documented all these changes and grouped them by module. Please refer to the last section on this page
+to see the changes in each module [<ins><a href="#Modules-Changes">Modules Changes</a></ins>].</p>
+<h2><a name="FAKE-Build-Enhancements" class="anchor" href="#FAKE-Build-Enhancements">FAKE Build Enhancements</a></h2>
+<p>The build file in FAKE was cluttered by a lot of things that are now not used, so dealing with the file is somehow
+a little hard. For example, the script supports running the build on multiple CI providers, which was the case before
+we switch to GitHub actions. But now the support for other providers is not needed, hence we can remove a good amount of
+unused code. This with a long of other changes we did to the script.</p>
+<p>Another major change was to remove all the handling for <code>AssemblyInfo.fs</code> files from script and modules. In which FAKE now uses
+a <code>Directory.Build.props</code> file for build information instead of scattered <code>AssemblyInfo.fs</code> files. The main reason we did this change
+was that, when we open an <code>AssemblyInfo.fs</code> file in one of the modules, the information is old and irrelevant! - the dates and the assembly
+version. They are from the first time the module is published. The reader need to go to build script to understand what is going on
+and how new data is set. In addition, the build script modify the GIT tree to remove these files from GIT when adding the new information
+and then revert changes again once done. The <code>Directory.Build.props</code> file removes all of these steps in favor of one file that .NET
+take and use in build, and the file is always up-to-date with information from build script directly.</p>
+<p>Following points present the changes went in FAKE's <code>build.fsx</code> file and build process of FAKE in general:</p>
+<ol>
+<li>
+Added <code>Directory.Build.props</code> file at the root of the repository as a root level MSBuild properties file for projects in FAKE.sln
+This file include top level MSBuild parameters, including:
+<ol>
+<li>Property <code>SourceRoot</code> which is set root directory of FAKE repository</li>
+<li><code>SourceRevisionId</code> which is set to current date and time. Used in FAKE runner hints</li>
+<li>
+<code>IncludeSourceRevisionInInformationalVersion</code> which is set to <code>true</code>. This field is used in combination with <code>SourceRevisionId</code> 
+which is set to current date and time. So MSBuild append the value in <code>SourceRevisionId</code> to <code>Version</code> property when specified
+<ul>
+<li>
+before we used NuGet version which has build date info as well. In FAKE, we have used <code>SourceRevisionId</code> to only set build 
+time to be used in FAKE runner hints., but to be available in runtime for FAKE runner.
+<a href="https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#generateassemblyinfo"><ins>Please see this link for relation between them</ins></a>
+</li>
+</ul>
+</li>
+<li>Add the FAKE logo to output NuGet packages</li>
+<li>Add README file to output NuGet packages</li>
+</ol>
+</li>
+<li>
+Added another <code>Directory.Build.props</code> in <code>src\app</code> with specific information for FAKE source projects. This file include
+properties for NuGet pack to use, like project description, authors, logo, README, etc..
+Guidelines in <a href="https://docs.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices"><ins>this link</ins></a> were followed in the process
+</li>
+<li>Removed all the <code>AssemblyInfo.fs</code> files in projects in FAKE.sln in favor of <code>Directory.Build.props</code> files added.</li>
+<li>
+Since now we have removed <code>AssemblyInfo</code> files from FAKE projects, we need to remove any code that reference them, following are the affected places:
+<ol>
+<li>
+<p>Target module, which uses information in <code>AssemblyInfo</code> to display version of target module in FAKE. Replaced with</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">targetAssembly</span> <span class="o">=</span> <span class="id">Assembly</span><span class="pn">.</span><span class="id">GetAssembly</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="id">typeof</span><span class="pn">&lt;</span><span class="id">Target</span><span class="pn">&gt;</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="id">printfn</span> <span class="s">&quot;Target Module Version: %s&quot;</span> <span class="pn">(</span><span class="id">targetAssembly</span><span class="pn">.</span><span class="id">GetName</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">Version</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span><span class="pn">)</span>
+</code></pre>
+</li>
+<li>
+<p><code>Fake.Runtime.Environment</code> which contains a reference to <code>AssemblyInfo</code> file to display FAKE version, replaced with:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="id">fakeContextAssembly</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">GetName</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">Version</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+</code></pre>
+</li>
+<li>
+<code>Fake.Runtime.FakeRuntimeHints</code> which displays the upgrade hint for FAKE runner. Now this gets the build time of the assembly. To get assembly
+build time we have added the <code>SourceRevisionId</code>  variable in build (see point #1 b and c) above, and extract it in FAKE hint file.
+</li>
+</ol>
+</li>
+<li>
+Enhanced <code>build.fsx</code> script targets as follows:
+<ol>
+<li>
+<p>Removed targets:</p>
+<p><code>SetAssemblyInfo</code>
+<code>UnskipAssemblyInfo</code>
+<code>UnskipAndRevertAssemblyInfo</code>
+<code>Release_Staging</code></p>
+</li>
+<li>
+<p>Renamed targets:</p>
+<p><code>BootstrapTestDotNetCore</code> → <code>BootstrapFake</code>
+<code>DotNetCoreCreateChocolateyPackage</code> → <code>DotNetCreateChocolateyPackage</code><br />
+<code>DotNetCorePushChocolateyPackage</code> → <code>DotNetPushChocolateyPackage</code>
+<code>DotNetCoreCreateDebianPackage</code> → <code>DotNetCreateDebianPackage</code>
+<code>_DotNetPackage</code> → <code>DotNetCreateNuGetPackage</code>
+<code>DotNetCorePushNuGet</code> → <code>DotNetPushToNuGet</code>
+<code>PrintColors</code> → <code>BootstrapFake_PrintColors</code>
+<code>FailFast</code> → <code>BootstrapFake_FailFast</code>
+<code>_StartDnc</code> → <code>BeforeBuild</code>
+<code>_AfterBuild</code> → <code>AfterBuild</code>
+<code>FastRelease</code> → <code>GitHubRelease</code></p>
+</li>
+<li>
+New targets:
+<code>CheckFormatting</code>
+</li>
+<li>Removed <code>AssemblyInfo</code> variables and related code in favor of <code>Directory.Build.props</code></li>
+<li>Removed code for other build servers handling since now we use GitHub actions only for releases</li>
+</ol>
+</li>
+<li>Removed the Net475 target from FAKE projects, since <code>Netstandard</code> 2.0 already covers it. Please check <a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard">this link</a></li>
+<li>Update <code>Fake-choco-template</code> file to use new FAKE logo image.</li>
+</ol>
+<h2><a name="FAKE-new-Website" class="anchor" href="#FAKE-new-Website">FAKE new Website</a></h2>
+<p>During the dependency update, we faced an issue in FSDocs (formerly FSFormatting). FAKE was using 4.x version of the
+library, and currently released version is 16.x! The library has changed a lot in which a lot of the steps FAKE
+uses to generate the website were removed from the library. For instance, using Razor pages as templates, the API and
+command line usage.</p>
+<p>This push to a major re-implementation and re-design of the FAKE website from the ground up. We took the chance to do all
+of that during the update of FSDocs library!</p>
+<p>So, from FAKE v6, we now have a new module; <code>Fake.DotNet.Fsdocs</code>, and <code>Fake.DotNet.FSFormatting</code> has been removed.
+The new module uses the new API from FSDocs and it is used in generating the new website.</p>
+<p>The stack and details of the new website are added to the <a href="/guide/contributing.html#Contributing-Documentation"><ins>contribution guide page</ins></a>, please refer to that page to get
+more details new site.</p>
+<p>One other major detail is that, FSDocs now defaults to XML syntax as a documentation blocks for code.
+On the other hand, FAKE codebase uses markdown syntax. Which caused problems in generating the new site
+and F# best practice now uses XMl syntax as a documentation blocks as explained in
+<a href="https://github.com/fsharp/fslang-design/blob/main/tooling/FST-1031-xmldoc-extensions.md">Recommended XML doc extensions for F# documentation tooling</a>.
+So we took the chance once again to convert the documentation from markdown syntax to XML syntax.
+For example, a doc block like this one:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="F#">/// Creates a GitHub Release for the specified repository and tag name
+/// Creates a draft GitHub Release for the specified repository and tag name
+/// ## Parameters
+/// - `owner` - the repository's owner
+/// - `repoName` - the repository's name
+/// - `tagName` - the name of the tag to use for this release
+/// - `prerelease` - indicates whether the release will be created as a prerelease
+/// - `notes` - collection of release notes that will be inserted into the body of the release
+/// - `client` - GitHub API v3 client
+///
+/// # Sample
+/// Target.create "GitHubRelease" (fun _ -&gt;
+///            let token =
+///                match Environment.environVarOrDefault "github_token" "" with
+///                | s when not (System.String.IsNullOrWhiteSpace s) -&gt; s
+///                | _ -&gt; failwith "please set the github_token environment variable to a github personal access token with repro access."
+///
+///            let files =
+///                runtimes @ [ "portable"; "packages" ]
+///                |&gt; List.map (fun n -&gt; sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///
+///            GitHub.createClientWithToken token
+///            |&gt; GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &amp;lt;&amp;gt; None) release.Notes
+///            |&gt; GitHub.uploadFiles files
+///            |&gt; GitHub.publishDraft
+///            |&gt; Async.RunSynchronously)
+</code></pre></td></tr></table>
+<p>Is converted to the following XML syntax:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="F#">/// &lt;summary&gt;
+/// Creates a draft GitHub Release for the specified repository and tag name
+/// &lt;/summary&gt;
+///
+/// &lt;param name="owner"&gt;The repository's owner&lt;/param&gt;
+/// &lt;param name="repoName"&gt;The repository's name&lt;/param&gt;
+/// &lt;param name="tagName"&gt;The name of the tag to use for this release&lt;/param&gt;
+/// &lt;param name="prerelease"&gt;Indicates whether the release will be created as a prerelease&lt;/param&gt;
+/// &lt;param name="notes"&gt;Collection of release notes that will be inserted into the body of the release&lt;/param&gt;
+/// &lt;param name="client"&gt;GitHub API v3 client&lt;/param&gt;
+/// &lt;example&gt;
+/// &lt;code lang="fsharp"&gt;
+///         Target.create "GitHubRelease" (fun _ -&gt;
+///            let token =
+///                match Environment.environVarOrDefault "github_token" "" with
+///                | s when not (System.String.IsNullOrWhiteSpace s) -&gt; s
+///                | _ -&gt; failwith "please set the github_token environment variable to a github personal access token with repro access."
+///
+///            let files =
+///                runtimes @ [ "portable"; "packages" ]
+///                |&gt; List.map (fun n -&gt; sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///
+///            GitHub.createClientWithToken token
+///            |&gt; GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease &amp;lt;&amp;gt; None) release.Notes
+///            |&gt; GitHub.uploadFiles files
+///            |&gt; GitHub.publishDraft
+///            |&gt; Async.RunSynchronously)
+/// &lt;/code&gt;
+/// &lt;/example&gt;
+</code></pre></td></tr></table>
+<h2><a name="General-Enhancements" class="anchor" href="#General-Enhancements">General Enhancements</a></h2>
+<ol>
+<li>
+Removed the following files or directories since they are not used;
+<ol>
+<li><code>fake.sh</code> file</li>
+<li><code>release-website.cmd</code> file</li>
+<li><code>.circleci</code> directory</li>
+</ol>
+</li>
+<li>Enhance documentation pages and fix any broken links on them.</li>
+<li>Enhanced Chocolatey NuSpec file <code>Fake-choco-template.nuspec</code> by using new logo image of FAKE and referencing repository under FSProjects organization</li>
+<li>Added publishing of build artifacts to <code>build_and_test</code> GitHub workflow to be able to get artifacts, especially website for build actions.</li>
+</ol>
+<h2><a name="FAKE-now-uses-Fantomas-as-a-styling-tool" class="anchor" href="#FAKE-now-uses-Fantomas-as-a-styling-tool">FAKE now uses Fantomas as a styling tool</a></h2>
+<p>FAKE v6 adds <a href="https://fsprojects.github.io/fantomas/docs/index.html"><ins>Fantomas</ins></a> as a styling and code formatter tool.
+The tool uses the official F# style guide. Additions to FAKE repository include a new build target to check formatting of the codebase,
+the <code>CheckFormatting</code> target. More details are added to <a href="/guide/contributing.html#Style-Guidelines"><ins>contribution guide page</ins></a>,
+please refer to that page to get more details.</p>
+<h2><a name="Modules-Changes" class="anchor" href="#Modules-Changes">Modules Changes</a></h2>
+<p>Following sub-sections present changes made to FAKE modules.</p>
+<details>
+<summary>Modules Changes:</summary>
+<h3><a name="header" class="anchor" href="#header"><code>Fake.Api.HockeyApp</code></a></h3>
+<p>→ Removed the module since HockeyApp has been discontinued and now Microsoft has replaced it with AppCenter.</p>
+<h3><a name="header-1" class="anchor" href="#header-1"><code>Fake.Api.GitHub</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-2" class="anchor" href="#header-2"><code>Fake.Api.Slack</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Removed <code>System.Net.Http</code> from proj file since it was used for Net Framework. Now module uses <code>System.Net</code></p>
+<h3><a name="header-3" class="anchor" href="#header-3"><code>Fake.Azure.CloudServices</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Process.shellExec</code> with <code>CreateProcess</code> API</p>
+<h3><a name="header-4" class="anchor" href="#header-4"><code>Fake.Azure.Emulators</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API</p>
+<h3><a name="header-5" class="anchor" href="#header-5"><code>Fake.Azure.Kudu</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Enahnce code by using a type for Zip deploy parameters</p>
+<p>→ Replaced <code>Process.execWithResult</code> with <code>CreateProcess</code> API</p>
+<h3><a name="header-6" class="anchor" href="#header-6"><code>Fake.Azure.WebJobs</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>System.Net.Http</code> from proj file since it was used for Net Framework. Now module uses <code>System.Net</code></p>
+<h3><a name="header-7" class="anchor" href="#header-7"><code>Fake.Build.CMake</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Changed <code>Fake.Build.CMake.getGenerateArguments</code> and make it <code>internal</code> in favor of removing omit comment and replaced with visible to.</p>
+<h3><a name="header-8" class="anchor" href="#header-8"><code>Fake.BuildServer.AppVeyor</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.quoteIfNeeded</code> with <code>StringBuilder.appendQuotedIfNotNull</code> since <code>quoteIfNeeded</code> is deprecated</p>
+<p>→ Removed <code>PullRequestRepoName</code> environment variable since it is not defined by AppVeyor anymore</p>
+<p>→ Removed <code>PullRequestRepoBranch</code> environment variable since it is not defined by AppVeyor anymore</p>
+<h3><a name="header-9" class="anchor" href="#header-9"><code>Fake.BuildServer.Bitbucket</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Removed <code>RepoOwner</code> environment variable since it is not defined by Bitbucket anymore</p>
+<h3><a name="header-10" class="anchor" href="#header-10"><code>Fake.BuildServer.GitHubActions</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-11" class="anchor" href="#header-11"><code>Fake.BuildServer.GitLab</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-12" class="anchor" href="#header-12"><code>Fake.BuildServer.TeamCity</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-13" class="anchor" href="#header-13"><code>Fake.BuildServer.TeamFoundation</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Enhance code by adding a new type <code>LogDetailData</code> to hold internal data before logging instead of calling internal method with 10 or more parameters. Now it uses a type</p>
+<h3><a name="header-14" class="anchor" href="#header-14"><code>Fake.BuildServer.Travis</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-15" class="anchor" href="#header-15"><code>Fake.Core.CommandLineParsing</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-16" class="anchor" href="#header-16"><code>Fake.Core.Context</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>Fake.Core.Context.getFakeVar</code> since it is deprecated, alternative is <code>Fake.Core.FakeVar.getFakeVar</code></p>
+<p>→ Removed <code>Fake.Core.Context.removeFakeVar</code> since it is deprecated, alternative is <code>Fake.Core.FakeVar.removeFakeVar</code></p>
+<p>→ Removed <code>Fake.Core.Context.setFakeVar</code> since it is deprecated, alternative is <code>Fake.Core.FakeVar.setFakeVar</code></p>
+<p>→ Removed <code>Fake.Core.Context.fakeVar</code> since it is deprecated, alternative is <code>Fake.Core.FakeVar.fakeVar</code></p>
+<p>→ Removed <code>Fake.Core.Context.fakeVarAllowNoContext</code> since it is deprecated, alternative is <code>Fake.Core.FakeVar.fakeVarAllowNoContext</code></p>
+<h3><a name="header-17" class="anchor" href="#header-17"><code>Fake.Core.DependencyManager.Paket</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-18" class="anchor" href="#header-18"><code>Fake.Core.Environment</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>Fake.Core.BuildServer.verbose</code> since it is deprecated, alternative is <code>Trace.isVerbose ()</code></p>
+<p>→ Removed <code>Fake.Core.Environment.environVarsWithMode</code> since it is deprecated, alternative is <code>Fake.Core.Environment.environVars</code></p>
+<p>→ Removed <code>Fake.Core.Environment.setBuildParam</code> since it is deprecated, alternative is <code>Fake.Core.Environment.setEnvironVar</code></p>
+<p>→ Removed <code>Fake.Core.Environment.hasBuildParam</code> since it is deprecated, alternative is <code>Fake.Core.Environment.hasEnvironVar</code></p>
+<p>→ Removed <code>Fake.Core.Environment.getBuildParamOrDefault</code> since it is deprecated, alternative is <code>Fake.Core.Environment.environVarOrDefault</code></p>
+<p>→ Removed <code>Fake.Core.Environment.getBuildParam</code> since it is deprecated, alternative is <code>Fake.Core.Environment.environVarOrDefault</code></p>
+<p>→ Removed <code>Fake.Core.Environment.isDotnetCore</code> since it is deprecated, alternative is <code>Fake.Core.Environment.isDotNetCore</code></p>
+<h3><a name="header-19" class="anchor" href="#header-19"><code>Fake.Core.FakeVar</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-20" class="anchor" href="#header-20"><code>Fake.Core.Process</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>Fake.Core.ProcStartInfo.Empty</code> since it is deprecated, alternative is <code>ProcStartInfo.Create</code></p>
+<p>→ Removed <code>Fake.Core.CreateProcess.fromRawWindowsCommandLine</code> since it is deprecated, alternative is <code>Fake.Core.CreateProcess.fromRawCommandLine</code></p>
+<p>→ Removed <code>Fake.Core.Process.startProcess</code> since it is deprecated, alternative is <code>Fake.Core.Process.rawStartProcess</code></p>
+<p>→ Removed <code>Fake.Core.Process.getProc</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.execRaw</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.execWithResult</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.execSimple</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.execElevated</code> since it is deprecated, no alternative since it is not possible in .NET Core anymore</p>
+<p>→ Removed <code>Fake.Core.Process.fireAndForget</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.directExec</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.start</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.quote</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.quoteIfNeeded</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.toParam</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.UseDefaults</code> since it is deprecated, alternative is built-in <code>id</code></p>
+<p>→ Removed <code>Fake.Core.Process.stringParam</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.multipleStringParams</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.optionParam</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.boolParam</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.parametersToString</code> since it is deprecated, alternative is <code>Arguments</code> and <code>Args</code> modules/types</p>
+<p>→ Removed <code>Fake.Core.Process.findFiles</code> since it is deprecated, alternative is <code>ProcessUtils.findFiles</code></p>
+<p>→ Removed <code>Fake.Core.Process.tryFindFile</code> since it is deprecated, alternative is <code>ProcessUtils.tryFindFile</code></p>
+<p>→ Removed <code>Fake.Core.Process.findFile</code> since it is deprecated, alternative is <code>ProcessUtils.findFile</code></p>
+<p>→ Removed <code>Fake.Core.Process.findFilesOnPath</code> since it is deprecated, alternative is <code>ProcessUtils.findFilesOnPath</code></p>
+<p>→ Removed <code>Fake.Core.Process.tryFindFileOnPath</code> since it is deprecated, alternative is <code>ProcessUtils.tryFindFileOnPath</code></p>
+<p>→ Removed <code>Fake.Core.Process.appSettings</code> since it is deprecated, no alternative since it is not possible in .NET Core anymore</p>
+<p>→ Removed <code>Fake.Core.Process.tryFindTool</code> since it is deprecated, alternative is <code>ProcessUtils.tryFindTool</code></p>
+<p>→ Removed <code>Fake.Core.Process.tryFindPath</code> since it is deprecated, alternative is <code>ProcessUtils.tryFindPath</code></p>
+<p>→ Removed <code>Fake.Core.Process.findPath</code> since it is deprecated, alternative is <code>ProcessUtils.findPath</code></p>
+<p>→ Removed <code>Fake.Core.Process.asyncShellExec</code> since it is deprecated, alternative is <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.Core.Process.killProcessById</code> since it is deprecated, alternative is <code>Fake.Core.Process.killById</code></p>
+<p>→ Removed <code>Fake.Core.Process.getProcessesByName</code> since it is deprecated, alternative is <code>Fake.Core.Process.getAllByName</code></p>
+<p>→ Removed <code>Fake.Core.Process.killProcess</code> since it is deprecated, alternative is <code>Fake.Core.Process.killAllByName</code></p>
+<p>→ Removed <code>Fake.Core.Process.ProcStartInfo</code> since it is deprecated, alternative is <code>Fake.Core.ProcStartInfo</code></p>
+<p>→ Removed <code>Fake.Core.Process.ExecParams</code> since it is deprecated, alternative is <code>Fake.Core.ExecParams</code></p>
+<p>→ Removed <code>Fake.Core.Process.ProcessResult</code> since it is deprecated, alternative is <code>Fake.Core.ProcessResult</code></p>
+<p>→ Removed <code>Fake.Core.Process.ConsoleMessage</code> since it is deprecated, alternative is <code>Fake.Core.ConsoleMessage</code></p>
+<p>→ Changed implementation of  <code>shellExec</code> to use <code>CreateProcess</code> API</p>
+<p>→ Changed implementation of  <code>AsyncExec</code> to use <code>CreateProcess</code> API</p>
+<h3><a name="header-21" class="anchor" href="#header-21"><code>Fake.Core.ReleaseNotes</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-22" class="anchor" href="#header-22"><code>Fake.Core.SemVer</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-23" class="anchor" href="#header-23"><code>Fake.Core.String</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-24" class="anchor" href="#header-24"><code>Fake.Core.Target</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Removed <code>Fake.Core.TargetModule.DoNothing</code> since it is deprecated, alternative is <code>ignore</code></p>
+<p>→ Removed <code>Fake.Core.TargetModule.runAndGetContext</code> since it is deprecated, alternative is <code>Target.WithContext.run</code></p>
+<p>→ Removed <code>Fake.Core.TargetModule.Description</code> since it is deprecated, alternative is <code>Fake.Core.TargetModule.description</code></p>
+<p>→ Update target module version option to use reflection on target type to from Target module assembly instead of using informational version. Since now we use <code>Directory.Build.props</code> instead of <code>AssemblyInfo</code> files.</p>
+<h3><a name="header-25" class="anchor" href="#header-25"><code>Fake.Core.Tasks</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-26" class="anchor" href="#header-26"><code>Fake.Core.Trace</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>Fake.Core.Trace.openTag</code> since it is deprecated, alternative is <code>traceTag</code> and <code>use</code> to properly call <code>closeTag</code> in case of exceptions</p>
+<p>→ Removed <code>Fake.Core.Trace.closeTag</code> since it is deprecated, alternative is <code>traceTag</code> and <code>use</code> to properly call <code>closeTag</code> in case of exceptions</p>
+<p>→ Removed <code>Fake.Core.Trace.traceStartTarget</code> since it is deprecated, alternative is <code>traceTarget</code>  and <code>use</code> to properly call <code>traceEndTask</code> in case of exceptions</p>
+<p>→ Removed <code>Fake.Core.Trace.traceEndTarget</code> since it is deprecated, alternative is <code>traceTarget</code>  and <code>use</code> to properly call <code>traceEndTask</code> in case of exceptions</p>
+<p>→ Removed <code>Fake.Core.Trace.traceStartTask</code> since it is deprecated, alternative is <code>traceTask</code>  and <code>use</code> to properly call <code>traceEndTask</code> in case of exceptions</p>
+<p>→ Removed <code>Fake.Core.Trace.traceEndTask</code> since it is deprecated</p>
+<h3><a name="header-27" class="anchor" href="#header-27"><code>Fake.Core.UserInput</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-28" class="anchor" href="#header-28"><code>Fake.Core.Vault</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-29" class="anchor" href="#header-29"><code>Fake.Core.Xml</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Renamed <code>getChilds</code> to <code>getSubNodes</code> to match naming of related method <code>getSubNode</code></p>
+<p>→ Enabled and remove obsolete warning on <code>XslTransformer</code> , <code>XslTransform</code> &amp; <code>XmlTransform</code> for Net Standard since they are now available for Net Standard.</p>
+<h3><a name="header-30" class="anchor" href="#header-30"><code>Fake.Documentation.DocFx</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated.</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since it is deprecated.</p>
+<h3><a name="header-31" class="anchor" href="#header-31"><code>Fake.DotNet.AssemblyInfo</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>StringAttributeEx</code> since it was deprecated, alternative is <code>StringAttributeWithStatic</code></p>
+<h3><a name="header-32" class="anchor" href="#header-32"><code>Fake.DotNet.Cli</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Preview2ToolingOptions</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.LatestPreview4ToolingOptions</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.RC4_004771ToolingOptions</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.RC4_004973ToolingOptions</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_1_0_4</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_2_0_0</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_2_0_3</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_2_1_4</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_2_1_300_RC1</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.Cli.Release_2_1_300</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.DotNet.InfoOptions.Default</code> since it is deprecated, alternative is <code>Create</code></p>
+<p>→ Removed <code>Fake.DotNet.DotNet.RestoreOptions.Default</code> since it is deprecated, alternative is <code>Options.Create</code></p>
+<p>→ Replaced <code>Process.execSimple</code> in <code>install</code> API with <code>CreateProcess</code> API</p>
+<p>→ Removed <code>Fake.DotNet.DotNet.PublishOptions.Default</code> since it is deprecated, alternative is <code>PublishOptions.Create</code></p>
+<p>→ Removed <code>Fake.DotNet.DotNet.BuildOptions.Default</code> since it is deprecated, alternative is <code>BuildOptions.Create</code></p>
+<p>→ Removed <code>Fake.DotNet.DotNet.PackOptions.Default</code> since it is deprecated, alternative is <code>PackOptions.Create</code></p>
+<p>→ Removed <code>Fake.DotNet.DotNet.TestOptions.Default</code> since it is deprecated, alternative is <code>TestOptions.Create</code></p>
+<p>→ Removed <code>Fake.DotNet.DotNet.Options.Default</code> since it is deprecated, alternative is <code>Options.Create</code></p>
+<h3><a name="header-33" class="anchor" href="#header-33"><code>Fake.DotNet.Fsc</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>SourceCodeServices</code> with <code>FSharpDiagnostic</code> as a result of updating F# compiler services. And map <code>FSharpDiagnosticSeverity.Hidden</code> and <code>FSharpDiagnosticSeverity.Info</code> as warning messages</p>
+<h3><a name="header-34" class="anchor" href="#header-34"><code>Fake.DotNet.FSFormatting</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Deprecated module APIs in favor of new module <code>Fake.DotNet.Fsdocs</code> which will support newest <code>fsdocs</code> tool</p>
+<h3><a name="header-35" class="anchor" href="#header-35"><code>Fake.DotNet.Fsdocs</code></a></h3>
+<p>→ New module added</p>
+<p>→ Added <code>[Fsdocs.build](http://Fsdocs.build)</code> API to call build command of Fsdocs to process files and generate documentation</p>
+<p>→ Added <code>[Fsdocs.watch](http://Fsdocs.watch)</code> API to call watch command of Fsdocs to watch generated documentation</p>
+<h3><a name="header-36" class="anchor" href="#header-36"><code>Fake.DotNet.Fsi</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>SourceCodeServices</code> with <code>FSharpDiagnostic</code> as a result of updating F# compiler services. And map <code>FSharpDiagnosticSeverity.Hidden</code> and <code>FSharpDiagnosticSeverity.Info</code> as warning messages</p>
+<p>→ Replaced <code>Process.findPath</code> in <code>pathToFsiExe</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<p>→ Replaced <code>Process.execWithResult</code> in <code>execRaw</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<h3><a name="header-37" class="anchor" href="#header-37"><code>Fake.DotNet.FxCop</code></a></h3>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-38" class="anchor" href="#header-38"><code>Fake.DotNet.ILMerge</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-39" class="anchor" href="#header-39"><code>Fake.DotNet.Mage</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.execSimple</code> in <code>call</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<h3><a name="header-40" class="anchor" href="#header-40"><code>Fake.DotNet.MSBuild</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Removed <code>BuildException</code> since it is replaced with <code>MSBuildException</code></p>
+<p>→ Removed <code>MSBuildExeFromVsWhere</code> since it is for legacy FAKE</p>
+<p>→ Replaced <code>Process.tryFindFileOnPath</code> in <code>exactPathOrBinaryOnPath</code> with <code>ProcessUtils.tryFindFileOnPath</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.tryFindFileOnPath</code> in <code>msBuildExe</code> with <code>ProcessUtils.tryFindFileOnPath</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.tryFindFile</code> in <code>msBuildExe</code> with <code>ProcessUtils.tryFindFile</code> since it is deprecated</p>
+<p>→ Removed <code>Fake.DotNet.MSBuildParams.Empty</code> since it is deprecated, alternative is <code>Fake.DotNet.MSBuildParams.Create</code></p>
+<p>→ Changed <code>Fake.DotNet.MSBuild.msBuildExe</code> and removed obsolete attribute since it is used in other areas in FAKE</p>
+<p>→ Renamed <code>xname</code> with <code>xName</code> to follow FAKE API guideline</p>
+<p>→ Removed <code>processReferences</code> since it is deprecated</p>
+<p>→ Changed <code>Fake.DotNet.MSBuild.getProjectReferences</code> and removed obsolete attribute since it is used in other areas in FAKE. Marked it as private</p>
+<p>→ Removed <code>serializeMSBuildParams</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execWithResult</code> and <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<p>→ Enhanced code quality by extracting MSBuild execution to an internal method instead of duplicating call</p>
+<p>→ Replaced <code>Process.toParam</code> with <code>StringBuilder.appendQuotedIfNotNull</code> since <code>quoteIfNeeded</code> is deprecated</p>
+<p>→ Opened <code>buildWithRedirect</code> as a public API</p>
+<h3><a name="header-41" class="anchor" href="#header-41"><code>Fake.DotNet.NuGet</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Process.execWithResult</code> and <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-42" class="anchor" href="#header-42"><code>Fake.DotNet.Paket</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-43" class="anchor" href="#header-43"><code>Fake.DotNet.Testing.Coverlet</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-44" class="anchor" href="#header-44"><code>Fake.DotNet.Testing.DotCover</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-45" class="anchor" href="#header-45"><code>Fake.DotNet.Testing.Expecto</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-46" class="anchor" href="#header-46"><code>Fake.DotNet.Testing.MSpec</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-47" class="anchor" href="#header-47"><code>Fake.DotNet.Testing.MSTest</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Changed <code>Fake.DotNet.Testing.MSTest.msTestExe</code> by marking it as internal</p>
+<p>→ Replaced <code>Process.tryFindFile</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-48" class="anchor" href="#header-48"><code>Fake.DotNet.Testing.NUnit</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Tools.findToolFolderInSubPath</code> and <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execRaw</code> and <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-49" class="anchor" href="#header-49"><code>Fake.DotNet.Testing.OpenCover</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-50" class="anchor" href="#header-50"><code>Fake.DotNet.Testing.SpecFlow</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<p>→ Removed SpecFlow APIs for SpecFlow prior to v2.4, and replaced <code>SpecFlowNext</code> APIs with <code>SpecFlow</code></p>
+<h3><a name="header-51" class="anchor" href="#header-51"><code>Fake.DotNet.Testing.VSTest</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Changed VSTest module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<h3><a name="header-52" class="anchor" href="#header-52"><code>Fake.DotNet.Testing.XUnit2</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execWithResult</code> and <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-53" class="anchor" href="#header-53"><code>Fake.DotNet.Xamarin</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execWithResult</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-54" class="anchor" href="#header-54"><code>Fake.DotNet.Xdt</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-55" class="anchor" href="#header-55"><code>Fake.Installer.InnoSetup</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-56" class="anchor" href="#header-56"><code>Fake.Installer.Squirrel</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-57" class="anchor" href="#header-57"><code>Fake.Installer.Wix</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-58" class="anchor" href="#header-58"><code>Fake.IO.FileSystem</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced ref-cell operators with alternatives since they are deprecated</p>
+<p>→ Removed <code>FileIncludes</code> module since it is deprecated. Including its <code>Include</code> and <code>SetBaseDir</code> APIs, alternative is <code>GlobbingPattern</code> module</p>
+<p>→ Removed <code>Fake.IO.Globbing.Tools</code> module since it is deprecated and replaced with Process module. Including its <code>@@</code> operator and <code>findToolInSubPath</code>, <code>tryFindToolFolderInSubPath</code>, &amp; <code>findToolFolderInSubPath</code> APIs</p>
+<p>→ Added tracing statements - <code>Trace.traceVerbose</code> - to <code>Shell</code> module APIs</p>
+<p>→ Removed <code>Fake.IO.Shell.CopyFile</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyFile</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyFileIntoSubFolder</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyFileIntoSubFolder</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyFileWithSubfolder</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyFileWithSubfolder</code></p>
+<p>→ Removed <code>Fake.IO.Shell.Copy</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copy</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyTo</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyTo</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyCached</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyCached</code></p>
+<p>→ Removed <code>Fake.IO.Shell.Rename</code> since it is deprecated, alternative is <code>Fake.IO.Shell.rename</code></p>
+<p>→ Removed <code>Fake.IO.Shell.SilentCopy</code> since it is deprecated, alternative is <code>Fake.IO.Shell.silentCopy</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyFiles</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyFiles</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyDir</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyDir</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CleanDir</code> since it is deprecated, alternative is <code>Fake.IO.Shell.cleanDir</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CleanDirs</code> since it is deprecated, alternative is <code>Fake.IO.Shell.cleanDirs</code></p>
+<p>→ Removed <code>Fake.IO.Shell.DeleteDir</code> since it is deprecated, alternative is <code>Fake.IO.Shell.deleteDir</code></p>
+<p>→ Removed <code>Fake.IO.Shell.DeleteDirs</code> since it is deprecated, alternative is <code>Fake.IO.Shell.deleteDirs</code></p>
+<p>→ Removed <code>Fake.IO.Shell.AppendTextFilesWithEncoding</code> since it is deprecated, alternative is <code>Fake.IO.Shell.appendTextFilesWithEncoding</code></p>
+<p>→ Removed <code>Fake.IO.Shell.AppendTextFiles</code> since it is deprecated, alternative is <code>Fake.IO.Shell.appendTextFiles</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CompareFiles</code> since it is deprecated, alternative is <code>Fake.IO.Shell.compareFiles</code></p>
+<p>→ Removed <code>Fake.IO.Shell.GeneratePatchWithFindOldFileFunction</code> since it is deprecated, alternative is <code>Fake.IO.Shell.generatePatchWithFindOldFileFunction</code></p>
+<p>→ Removed <code>Fake.IO.Shell.GeneratePatch</code> since it is deprecated, alternative is <code>Fake.IO.Shell.generatePatch</code></p>
+<p>→ Removed <code>Fake.IO.Shell.TestDir</code> since it is deprecated, alternative is <code>Fake.IO.Shell.testDir</code></p>
+<p>→ Removed <code>Fake.IO.Shell.TestFile</code> since it is deprecated, alternative is <code>Fake.IO.Shell.testFile</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyRecursive</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyRecursive</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyRecursiveTo</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyRecursiveTo</code></p>
+<p>→ Removed <code>Fake.IO.Shell.CopyRecursive2</code> since it is deprecated, alternative is <code>Fake.IO.Shell.copyRecursive2</code></p>
+<p>→ Removed <code>Fake.IO.Shell.MoveFile</code> since it is deprecated, alternative is <code>Fake.IO.Shell.moveFile</code></p>
+<p>→ Removed <code>Fake.IO.Shell.WriteConfigFile</code> since it is deprecated, alternative is <code>Fake.IO.Shell.writeConfigFile</code></p>
+<p>→ Removed <code>Fake.IO.Shell.ReplaceInFiles</code> since it is deprecated, alternative is <code>Fake.IO.Shell.replaceInFiles</code></p>
+<p>→ Removed <code>Fake.IO.Shell.RegexReplaceInFileWithEncoding</code> since it is deprecated, alternative is <code>Fake.IO.Shell.regexReplaceInFileWithEncoding</code></p>
+<p>→ Removed <code>Fake.IO.Shell.RegexReplaceInFilesWithEncoding</code> since it is deprecated, alternative is <code>Fake.IO.Shell.regexReplaceInFilesWithEncoding</code></p>
+<p>→ Changed <code>Fake.IO.File.getEncoding</code> by removing case for UTF7 since it is deprecated and marked as unsafe.</p>
+<h3><a name="header-59" class="anchor" href="#header-59"><code>Fake.IO.Zip</code></a></h3>
+<h3><a name="header-60" class="anchor" href="#header-60"><code>Fake.JavaScript.Npm</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Process.tryFindFileOnPath</code> with <code>ProcessUtils.tryFindFileOnPath</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-61" class="anchor" href="#header-61"><code>Fake.JavaScript.TypeScript</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Enhanced code by extracting logic to resolve TypeScript compiler to a dedicated method</p>
+<p>→ Update TypeScript parameters default values to reflect compiler defaults, including <code>ECMAScript</code> from <code>ES3</code> to <code>ECMAScript.ESNext</code>, <code>ModuleGeneration</code> from <code>CommonJs</code> to <code>ModuleGeneration.ESNext</code></p>
+<h3><a name="header-62" class="anchor" href="#header-62"><code>Fake.JavaScript.Yarn</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-63" class="anchor" href="#header-63"><code>Fake.Net.FTP</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-64" class="anchor" href="#header-64"><code>Fake.Net.Http</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Changed internal <code>getAsync</code> to handle HTTP 404 errors gracefully and return a null string to indicate there is no content</p>
+<h3><a name="header-65" class="anchor" href="#header-65"><code>Fake.netcore</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-66" class="anchor" href="#header-66"><code>Fake.Runtime</code></a></h3>
+<p>→ Replaced <code>SourceCodeServices</code> with <code>CodeAnalysis</code> and <code>Tokenization</code> as a result of updating F# compiler services</p>
+<p>→ After upgrading F# compiler services, it will try to clean up the script directory after running the script, which will delete the <code>.fake/script.fsx</code> directory. A workaround has been impelmnted that let compiler compiles to a temporary directory, then we move the compiled assmebly to FAKE script directory, and then compiler can delete the temporary directory without affecting FAKE cache.</p>
+<p>→ Replaced ref-cell operators with alternatives since they are deprecated</p>
+<h3><a name="header-67" class="anchor" href="#header-67"><code>Fake.Sql.DacPac</code></a></h3>
+<p>→ Deleted the module since it is not pushed to NuGet and was deprecated in favor of <code>Fake.Sql.SqlPackage</code> module which is a redesign of it</p>
+<h3><a name="header-68" class="anchor" href="#header-68"><code>Fake.Sql.SqlServer</code></a></h3>
+<p>→ Deleted the module since it is not pushed to NuGet and was deprecated in favor of <code>Fake.Sql.SqlPackage</code> module which is a redesign of it</p>
+<h3><a name="header-69" class="anchor" href="#header-69"><code>Fake.Sql.SqlPackage</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-70" class="anchor" href="#header-70"><code>Fake.Testing.Common</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-71" class="anchor" href="#header-71"><code>Fake.Testing.Fixie</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Renamed <code>Fixie</code> API to <code>run</code> to follow FAKE API guidelines</p>
+<h3><a name="header-72" class="anchor" href="#header-72"><code>Fake.Testing.ReportGenerator</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-73" class="anchor" href="#header-73"><code>Fake.Testing.SonarQube</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-74" class="anchor" href="#header-74"><code>Fake.Tools.Git</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Changed <code>Branches</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>CommandHelper</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Replaced <code>Process.findPath</code> with <code>ProcessUtils.findPath</code> since it is deprecated</p>
+<p>→ Replaced <code>Process.execWithResult</code> in <code>runGitCommand</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<p>→ Replaced <code>Process.fireAndForget</code> in <code>fireAndForgetGitCommand</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<p>→ Replaced <code>Process.directExec</code> in <code>directRunGitCommand</code> with <code>CreateProcess</code> API since it is deprecated</p>
+<p>→ Changed <code>Commit</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>CommitMessage</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>FileStatus</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Information</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Merge</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Rebase</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Repository</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Fake.Tools.Git.Repository.fullclean</code> and marking it as obsolete since it is not honoring FAKE API guidelines. Alternative is <code>Fake.Tools.Git.Repository.fullClean</code></p>
+<p>→ Changed <code>Reset</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>SanityChecks</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>SHA1</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Staging</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Stash</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Changed <code>Submodule</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<h3><a name="header-75" class="anchor" href="#header-75"><code>Fake.Tools.GitVersion</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Changed <code>GitVersion</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-76" class="anchor" href="#header-76"><code>Fake.Tools.Octo</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Changed <code>Octo</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Replaced <code>Tools.findToolFolderInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-77" class="anchor" href="#header-77"><code>Fake.Tools.Pickles</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Replaced <code>Tools.findToolInSubPath</code> with <code>ProcessUtils.tryFindLocalTool</code> since it is deprecated</p>
+<h3><a name="header-78" class="anchor" href="#header-78"><code>Fake.Tools.Rsync</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Changed write patch option from <code>--write-bratch=</code> to <code>--write-batch=</code> , fix type</p>
+<p>→ Replaced <code>Process.execRaw</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-79" class="anchor" href="#header-79"><code>Fake.Tools.ServiceControl</code></a></h3>
+<p>→ Removed module since it is obsolete</p>
+<h3><a name="header-80" class="anchor" href="#header-80"><code>Fake.Tools.SignTool</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-81" class="anchor" href="#header-81"><code>Fake.Windows.Chocolatey</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<p>→ Changed <code>Choco</code> module by adding <code>RequiredQualifiedAccess</code> attribute to follow FAKE API guideline</p>
+<p>→ Replaced <code>Process.execSimple</code> with <code>CreateProcess</code> API since they are deprecated</p>
+<h3><a name="header-82" class="anchor" href="#header-82"><code>Fake.Windows.Registry</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<p>→ Add API documentation to module APIs</p>
+<h3><a name="header-83" class="anchor" href="#header-83"><code>Fake-cli</code></a></h3>
+<p>→ Removed <code>AssemblyInfo.fs</code> file</p>
+<p>→ Added Net6 target and removed net472 target</p>
+<h3><a name="header-84" class="anchor" href="#header-84"><code>Fake.Tracing.NAntXml</code></a></h3>
+<p>→ Removed module since it is deprecated and not added to FAKE solution</p>
+</details>
+<p><em>That is all to it for FAKE v6, enjoy!</em></p>
+
+        </div>
+    </div>
+
+    <footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+            <div class="flex flex-col justify-between lg:w-2/3">
+                <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                    <div class="lg:mr-16">
+                        <h4 class="flex items-center text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Important Links</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/getting-started.html">Getting
+                                    started</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html">Modules</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                                    Header</a></li>
+                        </ul>
+                    </div>
+                    <div class="lg:mx-16">
+                        <h4 class="text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Further projects</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/Paket/">Paket</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                                    Formatting</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-10 mx-auto w-full">
+                    <p>© FAKE. All rights reserved | Version:
+                        <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                            <span>6.0.0-alpha001</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="lg:w-1/3 space-y-3">
+                <h4 class="flex items-center text-slate-700 text-xl">
+                    <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                        <span class="-ml-2 inline-block text-[#d4b43c]">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="inline-block">FAKE is a community effort</span>
+                    </span>
+                </h4>
+                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and
+                    Runtime for
+                    running F# scripts. Look at the open issues at
+                    <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                    send pull requests!
+                </p>
+                <div class="block py-8">
+                    <a href="/guide/contributing.html">
+                        <span
+                            class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                            <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                                <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span>Learn more</span>
+                        </span>
+                    </a>
+                </div>
+
+                <h4 class="text-lg">Get in touch</h4>
+
+                <div class="flex items-center space-x-2">
+                    <a href="https://twitter.com/fsharpMake" class="block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Twitter Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                    <a href="https://fake.build" class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Website</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+
+</html>

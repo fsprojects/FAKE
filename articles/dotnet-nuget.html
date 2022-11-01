@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-pt-32">
+
+<head>
+    <title>Managing Dependencies using NuGet
+</title>
+    <meta charset="utf-8">
+    <meta name="description" content="FAKE - F# Make - A DSL for build tasks - guide page">
+    <link rel="apple-touch-icon" sizes="180x180" href="fake.buildcontent/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fake.buildcontent/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fake.buildcontent/favicon-16x16.png">
+    <link rel="manifest" href="fake.buildcontent/site.webmanifest">
+    <link rel="mask-icon" href="fake.buildcontent/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="author" content="Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/fsdocs-default.css">
+    <script type="text/javascript" src="fake.buildcontent/fsdocs-tips.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/style.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/prism.css">
+    <link type="text/css" rel="stylesheet" href="fake.buildcontent/assets/css/tailwind.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    
+</head>
+
+<body
+    class="font-fake antialiased min-h-screen transition duration-200 text-slate-500 lg:bg-white relative lg:flex lg:flex-col"
+    x-data="{open: false}" :class="{'bg-gray-100 overflow-hidden': open === true}">
+    <header class="sticky inset-0 flex flex-col md:flex-row lg:h-20 lg:px-8 justify-between items-center py-4 border-b lg:border 
+    lg:border-t-0 lg:border-r-0 lg:border-l-0 lg:shadow border-b-[#d4b43c]/50 mx-4 lg:mx-0"
+        :class="{'bg-white': open === false}">
+        <div class="flex gap-2 items-center block">
+            <a class="flex items-center gap-2" href="fake.buildindex.html">
+                <img src="fake.buildcontent/assets/img/logo.svg" alt="FAKE - F# Make - A DSL for build tasks and more"
+                    width="28" height="28" class="w-10 h-10">
+                <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+            </a>
+            <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
+                <span>6.0.0-alpha001</span>
+            </div>
+            <button
+                class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="flex items-center pt-10 md:pt-0">
+            <div class="md:mr-5">
+                <ul class="flex space-x-4">
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildreference/index.html">API Docs</a>
+                    </li>
+                    <li class="md:hidden">|</li>
+                    <li><a class="font-medium hover:text-[#d4b43c]" href="fake.buildguide.html">Guide</a></li>
+                </ul>
+            </div>
+            <button
+                class="border-slate-700 hidden md:block lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
+                @click="open = true">
+
+                <span class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                    <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </span>
+            </button>
+            <div class="hidden lg:block relative ml-auto">
+                <div class="flex items-center">
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/fsharpMake"
+                        class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE Twitter
+                            Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="absolute flex justify-center md:right-0 mt-[7.5rem] md:mt-[6rem] lg:mt-[6.5rem] mr-0 md:mr-8 px-10 lg:px-4 bg-[#d4b43c] text-white rounded-b shadow">
+            <a target="_blank"
+                href="https://github.com/fsprojects/FAKE/blob/master/docs/articles/dotnet-nuget.md">Edit this page</a>
+        </div>
+    </header>
+
+    <div class="lg:ml-[25rem] min-w-0 lg:px-16">
+        <nav class="fixed inset-0 transform lg:mt-20 pb-10 lg:transform-none lg:opacity-100 duration-200 z-10 min-w-[25rem]
+         w-80 bg-[#f9f9f9] overflow-y-scroll shadow-xl lg:shadow-none pl-4 pr-4 lg:pl-8 lg:pr-8" role="navigation"
+            aria-label="main navigation"
+            :class="{'translate-x-0 ease-in opacity-100': open === true, '-translate-x-full ease-out opacity-0' : open === false}">
+            <div class=" sticky inset-0 flex justify-between items-center bg-[#f9f9f9] py-4 border-b border-[#d4b43c]/50
+            lg:hidden">
+                <div class="flex gap-2 items-center">
+                    <a class="flex items-center gap-2" href="fake.buildindex.html">
+                        <img src="fake.buildcontent/assets/img/logo.svg"
+                            alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28"
+                            class="w-10 h-10">
+                        <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
+                    </a>
+                </div>
+                <button
+                    class="flex block border-r-2 border-slate-700 hover:border-[#d4b43c] text-slate-700 lg:hidden hover:text-[#d4b43c]"
+                    @click="open = false">
+                    <span
+                        class="group-hover:text-[#d4b43c] group-hover:visible inline-block -mr-2 transform rotate-180">
+                        <svg class="h-5 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Guide
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.guide)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname.startsWith(navItem.href.replace('.html', '')) ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+
+            <h5 class="mt-10 mb-8 lg:mb-3 font-semibold text-slate-900">
+                Articles
+            </h5>
+            <ul class="space-y-6 lg:space-y-2 border-l" x-data="{nav: []}" x-init="
+                fetch('/data.json')
+                .then(response => response.json())
+                .then(response => nav = response.articles)
+            ">
+                <template x-for="navItem in nav">
+                    <li class="group mt-12 lg:mt-8">
+                        <a class="flex block border-l pl-4 -ml-px border-transparent hover:border-[#d4b43c] hover:text-[#d4b43c]"
+                            :href="navItem.href"
+                            :class="window.location.pathname === navItem.href ? 'text-\[#d4b43c\]' : 'text-slate-700'">
+                            <span class=" invisible group-hover:text-[#d4b43c] group-hover:visible inline-block
+                                -ml-6 text-slate-300">
+                                <svg class="h-4 w-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span class="inline-block" x-text="navItem.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+        <div class="max-w-[50rem] mt-16 mx-4 lg:mx-auto px-4 py-4 md:flex text-justify justify-start border border-l-4 border-l-[#d4b43c]">
+            <p>Lookig for older versions of the documentation, pre FAKE v6? See&nbsp;</p>
+            <p>
+                <a target="_blank" href="https://v5.fake.build/" class="flex items-center text-slate-700 hover:text-[#d4b43c]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                        </path>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                        </path>
+                    </svg>
+                    <span class="underline">v5.fake.build</span>
+                </a>
+            </p>
+        </div>
+        <div id="content"
+            class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
+            <h1><a name="Managing-Dependencies-using-NuGet" class="anchor" href="#Managing-Dependencies-using-NuGet">Managing Dependencies using NuGet</a></h1>
+<p>If you are using a source control system like <a href="http://git-scm.com/"><em>Git</em></a> you probably don't want to store all binary dependencies in it.
+With FAKE you can use <a href="http://nuget.org/"><em>NuGet</em></a> to download all dependent packages during the build.</p>
+<p>To see the available NuGet APIs in FAKE, please see the <a href="fake.buildreference/fake-dotnet-nuget.html"><code>API-Reference</code></a> for the NuGet module.</p>
+<h2><a name="Setting-the-Stage-for-NuGet" class="anchor" href="#Setting-the-Stage-for-NuGet">Setting the Stage for NuGet</a></h2>
+<p>In order to download the packages during the build we need to add NuGet executable to our repository.
+You can download the "NuGet.exe Command Line Tool" from the <a href="https://github.com/NuGet/Home/releases"><em>release page</em></a>.</p>
+<h2><a name="Restore-packages-from-the-build-script" class="anchor" href="#Restore-packages-from-the-build-script">Restore packages from the build script</a></h2>
+<p>Modify your build script and add <strong><code>RestorePackages()</code></strong> near the beginning of the script.
+This will use the default parameters to retrieve all NuGet packages specified in <code>"./\*\*/packages.config"</code> files.</p>
+<h2><a name="Creating-NuGet-packages" class="anchor" href="#Creating-NuGet-packages">Creating NuGet packages</a></h2>
+<h3><a name="Creating-a-template" class="anchor" href="#Creating-a-template">Creating a <code>.nuspec</code> template</a></h3>
+<p>The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
+The following code shows such .nuspec file from the <a href="https://github.com/octokit/octokit.net"><em>OctoKit</em></a> project.</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&lt;?</span><span class="id">xml</span> <span class="id">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="id">encoding</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="o">?&gt;</span>
+<span class="pn">&lt;</span><span class="id">packagexmlns</span><span class="pn">:</span><span class="id">xsi</span><span class="o">=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="id">xmlns</span><span class="pn">:</span><span class="id">xsd</span><span class="o">=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="pn">&gt;</span>
+    <span class="pn">&lt;</span><span class="id">metadata</span> <span class="id">xmlns</span><span class="o">=</span><span class="s">&quot;http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd&quot;</span><span class="pn">&gt;</span>
+        <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">id</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">project</span><span class="id">@&lt;/</span><span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">id</span><span class="pn">&gt;</span>    
+        <span class="pn">&lt;</span><span class="id">version</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">build</span><span class="pn">.</span><span class="id">number</span><span class="id">@&lt;/</span><span class="id">version</span><span class="pn">&gt;</span>    
+        <span class="pn">&lt;</span><span class="id">authors</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">authors</span><span class="id">@&lt;/</span><span class="id">authors</span><span class="pn">&gt;</span>
+        <span class="pn">&lt;</span><span class="id">owners</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">authors</span><span class="id">@&lt;/</span><span class="id">owners</span><span class="pn">&gt;</span>
+        <span class="pn">&lt;</span><span class="id">summary</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">summary</span><span class="id">@&lt;/</span><span class="id">summary</span><span class="pn">&gt;</span>   
+        <span class="pn">&lt;</span><span class="id">licenseUrl</span><span class="pn">&gt;</span><span class="id">https</span><span class="pn">:</span><span class="c">//github.com/octokit/octokit.net/blob/master/LICENSE.txt&lt;/licenseUrl&gt;    </span>
+        <span class="pn">&lt;</span><span class="id">projectUrl</span><span class="pn">&gt;</span><span class="id">https</span><span class="pn">:</span><span class="c">//github.com/octokit/octokit.net&lt;/projectUrl&gt;</span>
+        <span class="pn">&lt;</span><span class="id">iconUrl</span><span class="pn">&gt;</span><span class="id">https</span><span class="pn">:</span><span class="c">//github.com/octokit/octokit.net/icon.png&lt;/iconUrl&gt;   </span>
+        <span class="pn">&lt;</span><span class="id">requireLicenseAcceptance</span><span class="pn">&gt;</span><span class="k">false</span><span class="o">&lt;/</span><span class="id">requireLicenseAcceptance</span><span class="pn">&gt;</span>    
+        <span class="pn">&lt;</span><span class="id">description</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">description</span><span class="id">@&lt;/</span><span class="id">description</span><span class="pn">&gt;</span>    
+        <span class="pn">&lt;</span><span class="id">releaseNotes</span><span class="pn">&gt;</span><span class="id">@</span><span class="id">releaseNotes</span><span class="id">@&lt;/</span><span class="id">releaseNotes</span><span class="pn">&gt;</span>
+        <span class="pn">&lt;</span><span class="id">copyright</span><span class="pn">&gt;</span><span class="id">Copyright</span> <span class="id">GitHub</span> <span class="n">2013</span><span class="o">&lt;/</span><span class="id">copyright</span><span class="pn">&gt;</span>   
+        <span class="pn">&lt;</span><span class="id">tags</span><span class="pn">&gt;</span><span class="id">GitHub</span> <span class="id">API</span> <span class="id">Octokit</span><span class="o">&lt;/</span><span class="id">tags</span><span class="pn">&gt;</span>
+        <span class="id">@</span><span class="id">dependencies</span><span class="id">@</span>
+        <span class="id">@</span><span class="id">references</span><span class="id">@</span>
+    <span class="o">&lt;/</span><span class="id">metadata</span><span class="pn">&gt;</span>
+    <span class="id">@</span><span class="id">files</span><span class="id">@</span>
+<span class="o">&lt;/</span><span class="id">package</span><span class="pn">&gt;</span>
+</code></pre>
+<p>The <code>.nuspec</code> template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
+It also contains some specific information like the copyright which is not handled by FAKE.</p>
+<p>The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><p>Placeholder</p></th>
+<th align="left"><p>replaced by (<code>NuGetParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><p><code>@build.number@</code></p></td>
+<td align="left"><p><code>Version</code></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@authors@</code></p></td>
+<td align="left"><p><code>Authors</code></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><code>@project@</code></p></td>
+<td align="left"><p><code>Project</code></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@summary@</code></p></td>
+<td align="left"><p><code>Summary</code></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><code>@description@</code></p></td>
+<td align="left"><p><code>Description</code></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@tags@</code></p></td>
+<td align="left"><p><code>Tags</code></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><code>@releaseNotes@</code></p></td>
+<td align="left"><p><code>ReleaseNotes</code></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@copyright@</code></p></td>
+<td align="left"><p><code>Copyright</code></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><code>@dependencies@</code></p></td>
+<td align="left"><p>a combination of <code>Dependencies</code> and <code>DependenciesByFramework</code></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@references@</code></p></td>
+<td align="left"><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><code>@contentFiles@</code></p></td>
+<td align="left"><p>a list of <a href="https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files"><em>contentFiles</em></a> to be included in the nuget package</p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><code>@files@</code></p></td>
+<td align="left"><p>a list of source, target, and exclude strings for files to be included in the nuget package</p></td>
+</tr>
+</tbody>
+</table>
+
+<h3><a name="Setting-up-the-build-script" class="anchor" href="#Setting-up-the-build-script">Setting up the build script</a></h3>
+<p>In the build script you need to create a target which executes the <a href="/reference/fake-dotnet-nuget.html"><em>NuGet task</em></a>:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">NuGet</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;CreatePackage&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">copyFiles</span> <span class="id">packagingOutputDirectory</span> <span class="id">allFilesToPackage</span>
+    <span class="id">NuGet</span><span class="pn">.</span><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+            <span class="id">Version</span> <span class="o">=</span> <span class="id">buildVersion</span>
+            <span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
+            <span class="id">Project</span> <span class="o">=</span> <span class="id">projectName</span>
+            <span class="id">Summary</span> <span class="o">=</span> <span class="id">projectSummary</span>
+            <span class="id">Description</span> <span class="o">=</span> <span class="id">projectDescription</span>
+            <span class="id">WorkingDir</span> <span class="o">=</span> <span class="id">packagingDirectory</span>
+            <span class="id">OutputPath</span> <span class="o">=</span> <span class="id">artifactOutputDirectory</span>
+            <span class="id">AccessKey</span> <span class="o">=</span> <span class="id">myAccessKey</span>
+            <span class="id">Publish</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span>
+        <span class="s">&quot;template.nuspec&quot;</span>
+<span class="pn">)</span>
+</code></pre>
+<p>There are a couple of interesting things happening here. In this sample FAKE created:</p>
+<ul>
+<li>a copy of the .nuspec file</li>
+<li>filled in all the specified parameters</li>
+<li>created the NuGet package</li>
+<li>pushed it to <a href="http://www.nuget.org">nuget.org</a> using the given <code>myAccessKey</code>.</li>
+</ul>
+<h3><a name="Handling-package-dependencies" class="anchor" href="#Handling-package-dependencies">Handling package dependencies</a></h3>
+<p>If your project depends on other projects it is possible to specify these dependencies in the .nuspec definition (see also <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above"><em>Nuget docs</em></a>).
+Here is a small sample which sets up dependencies for different framework versions:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">NuGet</span>
+
+<span class="id">NuGet</span><span class="pn">.</span><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+        <span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
+        <span class="c">// fallback - for all unspecified frameworks</span>
+        <span class="id">Dependencies</span> <span class="o">=</span> <span class="pn">[</span>
+            <span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+            <span class="s">&quot;Rx-Main&quot;</span><span class="pn">,</span> <span class="id">NuGet</span><span class="pn">.</span><span class="id">GetPackageVersion</span> <span class="s">&quot;./packages&quot;</span> <span class="s">&quot;Rx-Main&quot;</span><span class="pn">]</span>
+        <span class="id">DependenciesByFramework</span> <span class="o">=</span> <span class="pn">[</span>
+            <span class="pn">{</span> <span class="id">FrameworkVersion</span> <span class="o">=</span> <span class="s">&quot;net40&quot;</span>
+                <span class="id">Dependencies</span> <span class="o">=</span> <span class="pn">[</span>
+                    <span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+                    <span class="s">&quot;Rx-Main&quot;</span><span class="pn">,</span> <span class="id">NuGet</span><span class="pn">.</span><span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;Rx-Main&quot;</span>
+                    <span class="s">&quot;SignalR&quot;</span><span class="pn">,</span> <span class="id">NuGet</span><span class="pn">.</span><span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span> <span class="pn">]</span><span class="pn">}</span>
+            <span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span>
+                <span class="id">Dependencies</span> <span class="o">=</span> <span class="pn">[</span>
+                    <span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+                    <span class="s">&quot;SignalR&quot;</span><span class="pn">,</span> <span class="id">NuGet</span><span class="pn">.</span><span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span><span class="pn">]</span><span class="pn">}</span>
+        <span class="pn">]</span>
+        <span class="c">// ...</span>
+        <span class="id">Publish</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span>
+    <span class="s">&quot;template.nuspec&quot;</span>
+</code></pre>
+<h3><a name="Explicit-assembly-references" class="anchor" href="#Explicit-assembly-references">Explicit assembly references</a></h3>
+<p>If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the <code>lib</code> directory and explicitly specify which of them should be referenced (see <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above"><em>Nuget docs</em></a>) via the <code>References</code> and <code>ReferencesByFramework</code> fields.
+Here is a code snippet showing how to use these:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">NuGet</span>
+
+<span class="id">NuGet</span><span class="pn">.</span><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+         <span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
+         <span class="c">// ...</span>
+         <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;a.dll&quot;</span><span class="pn">]</span>
+         <span class="id">ReferencesByFramework</span> <span class="o">=</span>
+             <span class="pn">[</span><span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net40&quot;</span><span class="pn">;</span> <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;b.dll&quot;</span><span class="pn">]</span><span class="pn">}</span>
+              <span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span><span class="pn">;</span> <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;c.dll&quot;</span><span class="pn">]</span><span class="pn">}</span><span class="pn">]</span>
+         <span class="c">// ...</span>
+         <span class="id">Publish</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
+    <span class="s">&quot;template.nuspec&quot;</span>
+</code></pre>
+<h3><a name="Explicit-file-specifications" class="anchor" href="#Explicit-file-specifications">Explicit file specifications</a></h3>
+<p>If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
+Here is a code snippet showing how to use this:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">NuGet</span>
+
+<span class="c">// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.</span>
+<span class="c">// Note that the include paths are relative to the location of the .nuspec file</span>
+<span class="c">// See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.</span>
+<span class="id">NuGet</span><span class="pn">.</span><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+        <span class="c">// ...</span>
+        <span class="id">Files</span> <span class="o">=</span> <span class="pn">[</span>
+            <span class="pn">(</span><span class="s">@&quot;tools\**\*.*&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">None</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">None</span><span class="pn">)</span>
+            <span class="pn">(</span><span class="s">@&quot;bin\Debug\*.dll&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="id">Some</span> <span class="s">&quot;lib&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="id">Some</span> <span class="s">&quot;badfile.css;otherbadfile.css&quot;</span><span class="pn">)</span>
+        <span class="pn">]</span>
+        <span class="c">// ...</span>
+    <span class="pn">}</span><span class="pn">)</span>
+    <span class="s">&quot;template.nuspec&quot;</span>
+</code></pre>
+<h2><a name="NuGet-ContentFiles" class="anchor" href="#NuGet-ContentFiles">NuGet ContentFiles</a></h2>
+<p>ContentFiles in NuGet are static files that the NuGet client will make available to a project for inclusion in the project.  For more information see this <a href="https://blog.nuget.org/20160126/nuget-contentFiles-demystified.html"><em>blog post</em></a> explaining the difference and relationship to the Files element.</p>
+<p>The ContentFiles param supports all the documented nuspec contentFiles <a href="https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files"><em>attributes</em></a>.</p>
+<p>It takes a value of type <code>list&lt;string*string option*string option*bool option*bool option&gt;</code> where each tuple part maps respectively to the following <a href="(https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files)"><em>attributes</em></a>:</p>
+<ul>
+<li>include</li>
+<li>exclude</li>
+<li>buildAction</li>
+<li>copyToOutput</li>
+<li>flatten</li>
+</ul>
+<p>Here is a code snippet showing how to use ContentFiles:</p>
+<pre class="fssnip highlighted"><code lang="fsharp"><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+        <span class="c">// ...</span>
+        <span class="id">ContentFiles</span> <span class="o">=</span> <span class="pn">[</span>
+            <span class="pn">(</span><span class="s">@&quot;**/*.md&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="id">Some</span> <span class="s">@&quot;**/Exclude/*.md&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 8)" onmouseover="showTip(event, 'fs3', 8)" class="id">Some</span> <span class="s">@&quot;Content&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="id">None</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="id">None</span><span class="pn">)</span>
+        <span class="pn">]</span>
+        <span class="c">// ...</span>
+    <span class="pn">}</span><span class="pn">)</span>
+    <span class="s">&quot;template.nuspec&quot;</span>
+</code></pre>
+
+        </div>
+    </div>
+
+    <footer class="bg-[#f9f9f9] flex lg:border lg:border-l-0 lg:border-r-0 lg:ml-[25rem] mt-40 pb-40 pt-10 px-10">
+        <div class="flex flex-col lg:flex-row lg:space-y-0 max-w-6xl mx-auto space-y-10">
+            <div class="flex flex-col justify-between lg:w-2/3">
+                <div class="space-y-10 flex flex-col lg:flex-row lg:space-y-0">
+                    <div class="lg:mr-16">
+                        <h4 class="flex items-center text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Important Links</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/getting-started.html">Getting
+                                    started</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html">Modules</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="/guide/fake-modules.html#Declaring-FAKE-dependencies-within-the-script">FAKE
+                                    Header</a></li>
+                        </ul>
+                    </div>
+                    <div class="lg:mx-16">
+                        <h4 class="text-slate-700 text-xl">
+                            <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                                <span class="-ml-2 inline-block text-[#d4b43c]">
+                                    <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <span class="inline-block">Further projects</span>
+                            </span>
+                        </h4>
+                        <ul class="mt-3 space-y-3">
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/Paket/">Paket</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]"
+                                    href="https://fsprojects.github.io/FSharp.Formatting/">FSharp
+                                    Formatting</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
+                            </li>
+                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-10 mx-auto w-full">
+                    <p>© FAKE. All rights reserved | Version:
+                        <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
+                            <span>6.0.0-alpha001</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="lg:w-1/3 space-y-3">
+                <h4 class="flex items-center text-slate-700 text-xl">
+                    <span class="block border-l-2 border-l-[#d4b43c] flex items-center">
+                        <span class="-ml-2 inline-block text-[#d4b43c]">
+                            <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="inline-block">FAKE is a community effort</span>
+                    </span>
+                </h4>
+                <p class="text-justify">Please help with the development of FAKE, a free, fully open source DSL and
+                    Runtime for
+                    running F# scripts. Look at the open issues at
+                    <a href="https://github.com/fsprojects/FAKE/issues">GitHub</a>, discuss new features, fix bugs and
+                    send pull requests!
+                </p>
+                <div class="block py-8">
+                    <a href="/guide/contributing.html">
+                        <span
+                            class="border border-l-2 border-l-[#d4b43c] flex group hover:text-[#d4b43c] items-center px-4 py-2 rounded-r w-max pr-8">
+                            <span class="invisible group-hover:text-[#d4b43c] group-hover:visible">
+                                <svg class="h-5 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <span>Learn more</span>
+                        </span>
+                    </a>
+                </div>
+
+                <h4 class="text-lg">Get in touch</h4>
+
+                <div class="flex items-center space-x-2">
+                    <a href="https://twitter.com/fsharpMake" class="block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Twitter Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M22.75 6.73a8.058 8.058 0 0 1-2.3.633 4.005 4.005 0 0 0 1.76-2.199 8.026 8.026 0 0 1-2.542.961 4.001 4.001 0 0 0-2.918-1.25c-2.207 0-4 1.777-4 3.965 0 .308.035.613.105.906A11.409 11.409 0 0 1 4.61 5.598a3.91 3.91 0 0 0-.543 1.996c0 1.379.707 2.59 1.782 3.304a4.08 4.08 0 0 1-1.817-.496v.047c0 1.922 1.38 3.524 3.211 3.89-.336.09-.687.141-1.054.141a4.01 4.01 0 0 1-.754-.074 4.014 4.014 0 0 0 3.738 2.758 8.105 8.105 0 0 1-4.969 1.695c-.324 0-.64-.015-.953-.054a11.43 11.43 0 0 0 6.133 1.777c7.36 0 11.383-6.043 11.383-11.285 0-.172-.004-.34-.012-.512A7.863 7.863 0 0 0 22.75 6.73" />
+                        </svg>
+                    </a>
+                    <a href="https://fake.build" class="ml-2 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FAKE Website</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/fsprojects/fake"
+                        class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span class="sr-only">FAKE GitHub
+                            Repository</span>
+                        <svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://fsharp.slack.com/" class="ml-3 block text-slate-400 hover:text-[#d4b43c]"><span
+                            class="sr-only">FSharp Slack Workspace</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M15.125 3.668a1.833 1.833 0 1 0-3.668 0v5.039a1.834 1.834 0 1 0 3.668 0Zm4.582 5.039a1.83 1.83 0 0 1-1.832 1.836h-1.832V8.707a1.83 1.83 0 0 1 1.832-1.832 1.83 1.83 0 0 1 1.832 1.832Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M3.668 6.418A1.83 1.83 0 0 0 1.832 8.25a1.83 1.83 0 0 0 1.836 1.832h5.039a1.83 1.83 0 0 0 1.836-1.832 1.83 1.83 0 0 0-1.836-1.832Zm5.039-4.586c1.016 0 1.836.82 1.836 1.836V5.5H8.707a1.832 1.832 0 0 1-1.832-1.832c0-1.016.82-1.836 1.832-1.836Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M6.418 17.879c0 1.012.816 1.828 1.832 1.828a1.826 1.826 0 0 0 1.832-1.828v-5.035a1.83 1.83 0 0 0-1.832-1.832 1.83 1.83 0 0 0-1.832 1.832Zm-4.586-5.035c0-1.012.82-1.832 1.836-1.832H5.5v1.832c0 1.008-.82 1.828-1.832 1.828a1.832 1.832 0 0 1-1.836-1.828Zm0 0" />
+                            <path style="stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1"
+                                d="M17.875 15.125a1.83 1.83 0 0 0 1.832-1.832 1.83 1.83 0 0 0-1.832-1.836h-5.043c-1.012 0-1.832.82-1.832 1.836 0 1.012.82 1.832 1.832 1.832Zm-5.043 4.582A1.83 1.83 0 0 1 11 17.875v-1.832h1.832a1.83 1.83 0 0 1 1.836 1.832 1.83 1.83 0 0 1-1.836 1.832Zm0 0" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="fake.buildcontent/assets/js/prism.js"></script>
+</body>
+
+</html>
