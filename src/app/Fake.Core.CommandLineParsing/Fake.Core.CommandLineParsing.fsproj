@@ -1,14 +1,14 @@
-<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Fake.Core.CommandLineParsing</AssemblyName>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="docopt.fs/Docopt/Options.fs" />
     <Compile Include="docopt.fs/Docopt/OptionsParser.fs" />
     <Compile Include="docopt.fs/Docopt/Args.fs" />

@@ -1,0 +1,18 @@
+<Project>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
+    <PropertyGroup>
+        <DebugType>embedded</DebugType>
+        <!-- package metadata -->
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#.</Description>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://fake.build/</PackageProjectUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/fsprojects/Fake</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>Apache-2.0 OR MS-PL</PackageLicenseExpression>
+        <PackageTags>build;fake;f#</PackageTags>
+        <Authors>Steffen Forkmann;Mauricio Scheffer;Colin Bull;Matthias Dittrich</Authors>
+        <SourceLinkCreate>false</SourceLinkCreate>
+    </PropertyGroup>
+</Project>

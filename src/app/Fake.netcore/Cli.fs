@@ -6,13 +6,13 @@ open System
 open Fake.Core.CommandLineParsing
 
 let fakeArgsHint =
-  $"""
+    $"""
 {Fake.Runtime.Environment.fakeVersionStr}
 
 """
 
 let fakeUsage =
-  """
+    """
 Usage:
   fake [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
   fake [fake_opts] build [build_opts] [--] [<scriptargs>...]
@@ -49,7 +49,7 @@ Fake Build options [build_opts]:
 """
 
 let fakeAdditionalHelp =
-  """
+    """
 
  ----- SCRIPT ARGUMENTS SECTION -----
 
@@ -76,7 +76,7 @@ Target Module options [target_opts]:
     -t, --target <target>    Run the given target (ignored if a target is already provided with '[target <target>]')
     -e, --environment-variable <keyval> [*]
                              Set an environment variable. Use 'key=val'.
-                             Consider using regular arguments, see https://fake.build/core-targets.html
+                             Consider using regular arguments, see https://fake.build/guide/core-targets.html
     -s, --single-target      Run only the specified target.
     -p, --parallel <num>     Run parallel with the given number of tasks.
 

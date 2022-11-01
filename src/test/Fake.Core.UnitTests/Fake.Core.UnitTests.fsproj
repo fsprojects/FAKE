@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\app\Fake.Build.CMake\Fake.Build.CMake.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.AssemblyInfoFile\Fake.DotNet.AssemblyInfoFile.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.Fsdocs\Fake.DotNet.Fsdocs.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Fsi\Fake.DotNet.Fsi.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.ILMerge\Fake.DotNet.ILMerge.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.FxCop\Fake.DotNet.FxCop.fsproj" />
@@ -56,6 +57,7 @@
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.DotNet.AssemblyInfoFile.fs" />
     <Compile Include="Fake.DotNet.ILMerge.fs" />
+    <Compile Include="Fake.DotNet.Fsdocs.fs" />
     <Compile Include="Fake.DotNet.FxCop.fs" />
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.NuGet.fs" />

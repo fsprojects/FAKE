@@ -5,133 +5,173 @@ open Fake.Core
 open Expecto
 open FsCheck
 
-let testCaseWithProcessTracing name test = 
-    testCase name <| fun arg ->
-        Fake.ContextHelper.withFakeContext name (fun() ->
+let testCaseWithProcessTracing name test =
+    testCase name
+    <| fun arg ->
+        Fake.ContextHelper.withFakeContext name (fun () ->
             Process.setEnableProcessTracing true
             test arg)
 
-let getRawCommandLine (c:CreateProcess<'a>) =
+let getRawCommandLine (c: CreateProcess<'a>) =
     let mutable result = None
+
     let starter =
         { new IProcessStarter with
-            member x.Start (r: RawCreateProcess) =
+            member x.Start(r: RawCreateProcess) =
                 async {
                     let si = r.ToStartInfo
                     result <- Some si.Arguments
                     return System.Threading.Tasks.Task.FromResult { RawExitCode = 0 }
                 } }
-        
-    Process.Proc.startRaw starter c
+
+    let startRaw = Process.Proc.startRaw starter c
+
     match result with
     | Some args -> args
     | None -> failwithf "Expected to retrieve arguments"
 
-let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000  }
+let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000 }
 
 [<Tests>]
-let tests = 
-  testList "Fake.Core.Process.Tests" [
-    yield testPropertyWithConfig fsCheckConfig "toWindowsCommandLine is the inverse of fromWindowsCommandLine" <|
-        fun (x: NonNull<string> list) ->
-            let input = x |> List.map (fun (NonNull s) -> s)
-            let escaped = Args.toWindowsCommandLine input
-            let backAgain = Args.fromWindowsCommandLine escaped
-            Expect.sequenceEqual backAgain input (sprintf "Expect argument lists to be equal, intermediate was '%s'" escaped)
+let tests =
+    testList
+        "Fake.Core.Process.Tests"
+        [ yield
+              testPropertyWithConfig fsCheckConfig "toWindowsCommandLine is the inverse of fromWindowsCommandLine"
+              <| fun (x: NonNull<string> list) ->
+                  let input = x |> List.map (fun (NonNull s) -> s)
+                  let escaped = Args.toWindowsCommandLine input
+                  let backAgain = Args.fromWindowsCommandLine escaped
 
-    yield testCaseWithProcessTracing "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
-        try
-            Process.start(fun proc ->
-                { proc with
-                    FileName = "FileDoesntExist.exe"
-                    Arguments = "arg1 arg2" })
-                |> ignore
-            Expect.isTrue false "Expected an exception"
-        with e ->
-            let s = e.Message.Contains "FileDoesntExist.exe"
-            Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'. Error was: " + string e)
+                  Expect.sequenceEqual
+                      backAgain
+                      input
+                      (sprintf "Expect argument lists to be equal, intermediate was '%s'" escaped)
 
-    yield testCase "Test that CreateProcess.ofStartInfo works (1)" <| fun _ ->
-        let shell, command = "cmd", "/C \"echo 1&& echo 2\""
-        let cb = Process.getProcI (fun proc ->
-                    { proc with
-                        FileName = shell
-                        Arguments = command })
-        let file, args =
-            match cb.Command with
-            | ShellCommand cmd -> failwithf "Expected RawCommand"
-            | RawCommand (f, a) -> f, a
-        Expect.equal file "cmd" "Expected correct command"
-        Expect.sequenceEqual (args |> Arguments.toList) ["/C"; "echo 1&& echo 2"] "Expected correct args"
-        Expect.equal args.ToStartInfo command "Expect proper command (cmd is strange with regards to escaping)"
+          yield
+              testCaseWithProcessTracing "Test that we have a nice error message when a file doesn't exist"
+              <| fun _ ->
+                  try
+                      CreateProcess.fromRawCommand "FileDoesntExist.exe" [ "arg1"; "arg2" ]
+                      |> Proc.run
+                      |> ignore
 
-    yield testCaseWithProcessTracing "Test that we can read messages correctly" <| fun _ ->
-        let shell, command =
-            if Environment.isWindows then
-                "cmd", "/C \"echo 1&& echo 2\""
-            else
-                "sh", "-c \"echo '1'; echo '2'\""
-        let result =
-            Process.execWithResult(fun proc ->
-                    { proc with
-                        FileName = shell
-                        Arguments = command }) (TimeSpan.FromMinutes 1.)
-      
-        Expect.equal result.Messages ["1"; "2"] 
-            (sprintf "Messages are not read correctly.\n%s"
-                result.ReportString)
+                      Expect.isTrue false "Expected an exception"
+                  with e ->
+                      let s = e.Message.Contains "FileDoesntExist.exe"
 
-    yield testCase "Test that Arguments.withPrefix works" <| fun _ ->
-        let args = Arguments.ofList [ "Some" ]
-        let newArgs = Arguments.withPrefix ["--debug"; "test.exe" ] args
-        Expect.sequenceEqual (newArgs |> Arguments.toList) [ "--debug"; "test.exe"; "Some"] "expected lists to be equal"
+                      Expect.isTrue
+                          s
+                          ("Expected file-path as part of the message '"
+                           + e.Message
+                           + "'. Error was: "
+                           + string e)
 
-    yield testCase "Test we can workaround #2197" <| fun _ ->
-        let original = """-source:iisapp="C:\some\path\"""
-        let actual =
-            original
-            |> CreateProcess.fromRawCommandLine "./folder/mytool.exe"
-            |> getRawCommandLine
-        Expect.equal actual original "Expected to retrieve exact match"
+          yield
+              testCase "Test that CreateProcess.ofStartInfo works (1)"
+              <| fun _ ->
+                  let shell, command = "cmd", "/C \"echo 1&& echo 2\""
 
-    yield testCase "Test CreateProcess.ofStartInfo with different streams - reported on gitter" <| fun _ ->
-        let isRedirected s =
-            match s with
-            | StreamSpecification.Inherit -> false
-            | _ -> true
-        
-        let si = System.Diagnostics.ProcessStartInfo()
-        let actual =
-            si
-            |> CreateProcess.ofStartInfo
-        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
-        
-        let si = System.Diagnostics.ProcessStartInfo()
-        si.RedirectStandardInput <- true
-        let actual =
-            si
-            |> CreateProcess.ofStartInfo
-        Expect.isTrue (isRedirected actual.Streams.StandardInput) "Expect Std Input to be redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
-        
-        let si = System.Diagnostics.ProcessStartInfo()
-        si.RedirectStandardOutput <- true
-        let actual =
-            si
-            |> CreateProcess.ofStartInfo
-        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
-        Expect.isTrue (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+                  let cb =
+                      Process.getProcI (fun proc ->
+                          { proc with
+                              FileName = shell
+                              Arguments = command })
 
-        let si = System.Diagnostics.ProcessStartInfo()
-        si.RedirectStandardError <- true
-        let actual =
-            si
-            |> CreateProcess.ofStartInfo
-        Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
-        Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
-        Expect.isTrue (isRedirected actual.Streams.StandardError) "Expect Std Error to be redirected"
-  ]
+                  let file, args =
+                      match cb.Command with
+                      | ShellCommand cmd -> failwithf "Expected RawCommand"
+                      | RawCommand (f, a) -> f, a
+
+                  Expect.equal file "cmd" "Expected correct command"
+                  Expect.sequenceEqual (args |> Arguments.toList) [ "/C"; "echo 1&& echo 2" ] "Expected correct args"
+
+                  Expect.equal
+                      args.ToStartInfo
+                      command
+                      "Expect proper command (cmd is strange with regards to escaping)"
+
+          yield
+              testCaseWithProcessTracing "Test that we can read messages correctly"
+              <| fun _ ->
+                  let shell, command =
+                      if Environment.isWindows then
+                          "cmd", "/C \"echo 1&& echo 2\""
+                      else
+                          "sh", "-c \"echo '1'; echo '2'\""
+
+                  let results = System.Collections.Generic.List<string>()
+
+                  let errorF _ = ignore ""
+
+                  let messageF msg = results.Add msg
+
+                  CreateProcess.fromRawCommandLine shell command
+                  |> CreateProcess.withTimeout (TimeSpan.FromMinutes 1.)
+                  |> CreateProcess.redirectOutput
+                  |> CreateProcess.withOutputEventsNotNull messageF errorF
+                  |> Proc.run
+                  |> ignore
+
+                  Expect.equal
+                      (results |> List.ofSeq)
+                      [ "1"; "2" ]
+                      (sprintf "Messages are not read correctly.\n%s" (String.Join(" ", results)))
+
+          yield
+              testCase "Test that Arguments.withPrefix works"
+              <| fun _ ->
+                  let args = Arguments.ofList [ "Some" ]
+                  let newArgs = Arguments.withPrefix [ "--debug"; "test.exe" ] args
+
+                  Expect.sequenceEqual
+                      (newArgs |> Arguments.toList)
+                      [ "--debug"; "test.exe"; "Some" ]
+                      "expected lists to be equal"
+
+          yield
+              testCase "Test we can workaround #2197"
+              <| fun _ ->
+                  let original = """-source:iisapp="C:\some\path\"""
+
+                  let actual =
+                      original
+                      |> CreateProcess.fromRawCommandLine "./folder/mytool.exe"
+                      |> getRawCommandLine
+
+                  Expect.equal actual original "Expected to retrieve exact match"
+
+          yield
+              testCase "Test CreateProcess.ofStartInfo with different streams - reported on gitter"
+              <| fun _ ->
+                  let isRedirected s =
+                      match s with
+                      | StreamSpecification.Inherit -> false
+                      | _ -> true
+
+                  let si = System.Diagnostics.ProcessStartInfo()
+                  let actual = si |> CreateProcess.ofStartInfo
+                  Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+
+                  let si = System.Diagnostics.ProcessStartInfo()
+                  si.RedirectStandardInput <- true
+                  let actual = si |> CreateProcess.ofStartInfo
+                  Expect.isTrue (isRedirected actual.Streams.StandardInput) "Expect Std Input to be redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+
+                  let si = System.Diagnostics.ProcessStartInfo()
+                  si.RedirectStandardOutput <- true
+                  let actual = si |> CreateProcess.ofStartInfo
+                  Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+                  Expect.isTrue (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardError) "Expect Std Error to be NOT redirected"
+
+                  let si = System.Diagnostics.ProcessStartInfo()
+                  si.RedirectStandardError <- true
+                  let actual = si |> CreateProcess.ofStartInfo
+                  Expect.isFalse (isRedirected actual.Streams.StandardInput) "Expect Std Input to be NOT redirected"
+                  Expect.isFalse (isRedirected actual.Streams.StandardOutput) "Expect Std Output to be NOT redirected"
+                  Expect.isTrue (isRedirected actual.Streams.StandardError) "Expect Std Error to be redirected" ]

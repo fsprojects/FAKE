@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <AssemblyName>Fake.DotNet.MSBuild</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);FX_NO_SYSTEM_CONFIGURATION;NO_MSBUILD_AVAILABLE</DefineConstants>
@@ -19,7 +20,6 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="BinLog.fs" />
     <Compile Include="MSBuild.fs" />

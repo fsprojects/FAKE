@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Fake.DotNet.Fsdocs</AssemblyName>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Fsdocs.fs" />
+    <Compile Include="VisibleTo.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
+    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+
+</Project>

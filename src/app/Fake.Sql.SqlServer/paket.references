@@ -1,7 +1,0 @@
-group netcore
-
-FSharp.Core
-NETStandard.Library
-
-System.Data.SqlClient
-Microsoft.SqlServer.SqlManagementObjects

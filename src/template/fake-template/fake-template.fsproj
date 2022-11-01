@@ -5,8 +5,8 @@
         <PackProjectInputFile>$(MSBuildProjectFullPath)</PackProjectInputFile>
         <NoBuild>true</NoBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+        <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
     <PropertyGroup>
         <ExcludeFromPackage>

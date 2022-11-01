@@ -1,4 +1,4 @@
-group netcorerunner
+group fakerunner
 FSharp.Core
 
 Paket.Core

@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <AssemblyName>Fake.DotNet.Testing.NUnit</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
@@ -12,7 +13,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="Xml.fs" />
     <Compile Include="Common.fs" />

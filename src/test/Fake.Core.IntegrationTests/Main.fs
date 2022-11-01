@@ -1,15 +1,19 @@
 module Main.Tests
+
 open Expecto
+open Expecto.Impl
+open Expecto.Logging
 open Fake.ExpectoSupport
 open System
 
 [<EntryPoint>]
 let main argv =
-    let writeResults = TestResults.writeNUnitSummary ("Fake_Core_IntegrationTests.TestResults.xml", "Fake.Core.IntegrationTests")
-    let config =
-        defaultConfig
-        |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
-        |> ExpectoHelpers.setFakePrinter
-        |> ExpectoHelpers.appendSummaryHandler writeResults
+    let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
 
-    Expecto.Tests.runTestsInAssembly { config with parallel = false } argv
+    Tests.runTestsInAssembly
+        { config with
+            runInParallel = false
+            parallelWorkers = 0
+            printer = ExpectoHelpers.fakeDefaultPrinter
+            verbosity = LogLevel.Debug }
+        argv

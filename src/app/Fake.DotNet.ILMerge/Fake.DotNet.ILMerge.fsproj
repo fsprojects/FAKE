@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <AssemblyName>Fake.DotNet.ILMerge</AssemblyName>
-    <OutputType>Library</OutputType>    
+    <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);FX_NO_REMOTING;USE_ASYNC_LOCAL</DefineConstants>
@@ -19,7 +20,6 @@
   </PropertyGroup>  
   <ItemGroup>
     <Compile Include="VisibleTo.fs" />
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ILMerge.fs" />
   </ItemGroup>
   <ItemGroup>

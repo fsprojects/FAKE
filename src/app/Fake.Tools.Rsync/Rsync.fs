@@ -5,31 +5,35 @@ open Fake.IO
 open System
 open System.IO
 
-/// Helpers for running rsync tool
-///
+/// <summary>
+/// Helpers for running <a href="https://rsync.samba.org/">rsync tool</a>
+/// </summary>
+/// <remarks>
 /// Under windows you will need to add it yourself to your system or use something like cygwin/babun
+/// </remarks>
 ///
-/// ## Sample
-///
-/// > let result =
-/// >      Rsync.exec
-/// >         (Rsync.Options.WithActions
-/// >              [
-/// >                  Rsync.Compress
-/// >                  Rsync.Archive
-/// >                  Rsync.Verbose
-/// >                  Rsync.NoOption Rsync.Perms
-/// >                  Rsync.Delete
-/// >                  Rsync.Exclude ".keep"
-/// >              ]
-/// >          >> Rsync.Options.WithSources
-/// >              [ FleetMapping.server </> "build"
-/// >                FleetMapping.server </> "package.json"
-/// >                FleetMapping.server </> "yarn.lock" ]
-/// >          >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
-/// >          ""
-/// >
-/// > if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+/// <example>
+/// <code lang="fsharp">
+/// let result =
+///          Rsync.exec
+///             (Rsync.Options.WithActions
+///                  [
+///                      Rsync.Compress
+///                      Rsync.Archive
+///                      Rsync.Verbose
+///                      Rsync.NoOption Rsync.Perms
+///                      Rsync.Delete
+///                      Rsync.Exclude ".keep"
+///                  ]
+///              &gt;&gt; Rsync.Options.WithSources
+///                  [ FleetMapping.server &lt;/&gt; "build"
+///                    FleetMapping.server &lt;/&gt; "package.json"
+///                    FleetMapping.server &lt;/&gt; "yarn.lock" ]
+///              &gt;&gt; Rsync.Options.WithDestination "remote@myserver.com:deploy")
+///              ""
+///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module Rsync =
 
@@ -249,27 +253,36 @@ module Rsync =
         /// Show this help (-h works with no other options)
         | Help
 
+    /// <summary>
+    /// The rsync command options
+    /// </summary>
     type Options =
-        { /// Command working directory
-          WorkingDirectory: string
-          Actions : Action list
-          Sources : string list
-          Destination : string }
+        {
+            /// Command working directory
+            WorkingDirectory: string
+            /// Possible actions/options for rsync tool
+            Actions: Action list
+            /// The list of source directories/files
+            Sources: string list
+            /// The destination connection/location
+            Destination: string
+        }
 
-        static member Create () =
+        /// Create an rsync options type with default values
+        static member Create() =
             { WorkingDirectory = Directory.GetCurrentDirectory()
               Actions = []
               Sources = []
               Destination = "" }
 
-        static member WithActions actions options =
-            { options with Actions = actions }
+        /// Add actions to rsync
+        static member WithActions actions options = { options with Actions = actions }
 
-        static member WithSources sources options =
-            { options with Sources = sources }
+        /// Add the list of sources to rsync
+        static member WithSources sources options = { options with Sources = sources }
 
-        static member WithDestination dest options =
-            { options with Destination = dest }
+        /// Add the destination connection or location to rsync
+        static member WithDestination dest options = { options with Destination = dest }
 
     let rec private actionToString =
         function
@@ -280,7 +293,7 @@ module Rsync =
         | Archive -> "--archive"
         | NoOption action ->
             let action = actionToString action
-            "--no-" + action.TrimStart([|'-'|])
+            "--no-" + action.TrimStart([| '-' |])
         | Recursive -> "--recursive"
         | Relative -> "--relative"
         | NoImpliedDirs -> "--no-implied-dirs"
@@ -339,7 +352,7 @@ module Rsync =
         | IgnoreTimes -> "--ignore-times"
         | SizeOnly -> "--size-only"
         | ModifyWindow num -> "--modify-window=" + num
-        | TempDir dir -> "--temp-dir" + dir
+        | TempDir dir -> "--temp-dir=" + dir
         | Fuzzy -> "--fuzzy"
         | CompareDest dir -> "--compare-dest=" + dir
         | CopyDest dir -> "--copy-dest=" + dir
@@ -371,7 +384,7 @@ module Rsync =
         | PasswordFile file -> "--password-file=" + file
         | ListOnly -> "--list-only"
         | Bwlimit kbps -> "--bwlimit=" + kbps
-        | WriteBatch file -> "--write-bratch=" + file
+        | WriteBatch file -> "--write-batch=" + file
         | OnlyWriteBatch file -> "--only-write-batch=" + file
         | ReadBatch file -> "--read-batch=" + file
         | Protocol num -> "--protocol=" + string num
@@ -384,32 +397,50 @@ module Rsync =
 
     let private buildCommonArgs (param: Options) =
         (param.Actions |> List.map actionToString)
-        @ param.Sources
-        @ [ param.Destination ]
+        @ param.Sources @ [ param.Destination ]
         |> String.concat " "
 
+    /// <summary>
+    /// Run rsync tool with the provided actions/options list of directories/files sources to
+    /// given the destination.
+    /// </summary>
+    ///
+    /// <param name="buildOptions">A function to configure actions/options, sources, and destination.</param>
+    /// <param name="args">String arguments to pass to rsync</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// let result =
+    ///          Rsync.exec
+    ///             (Rsync.Options.WithActions [ Rsync.Compress ]
+    ///              &gt;&gt; Rsync.Options.WithSources [ FleetMapping.server &lt;/&gt; "build" ]
+    ///              &gt;&gt; Rsync.Options.WithDestination "remote@myserver.com:deploy")
+    ///              ""
+    ///     if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+    /// </code>
+    /// </example>
     let exec (buildOptions: Options -> Options) args =
-        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
+        let results = System.Collections.Generic.List<ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
         let errorF msg =
             Trace.traceError msg
-            results.Add (ConsoleMessage.CreateError msg)
+            results.Add(ConsoleMessage.CreateError msg)
 
         let messageF msg =
             Trace.trace msg
-            results.Add (ConsoleMessage.CreateOut msg)
+            results.Add(ConsoleMessage.CreateOut msg)
 
         let options = buildOptions (Options.Create())
         let commonOptions = buildCommonArgs options
         let cmdArgs = sprintf "%s %s " commonOptions args
 
-        let result =
-            let f (info:ProcStartInfo) =
-                { info with
-                    FileName = "rsync"
-                    WorkingDirectory = options.WorkingDirectory
-                    Arguments = cmdArgs }
+        let processResult =
+            CreateProcess.fromRawCommandLine "rsync" cmdArgs
+            |> CreateProcess.withWorkingDirectory options.WorkingDirectory
+            |> CreateProcess.withTimeout timeout
+            |> CreateProcess.redirectOutput
+            |> CreateProcess.withOutputEventsNotNull messageF errorF
+            |> Proc.run
 
-            Process.execRaw f timeout true errorF messageF
-        ProcessResult.New result (results |> List.ofSeq)
+        ProcessResult.New processResult.ExitCode (results |> List.ofSeq)

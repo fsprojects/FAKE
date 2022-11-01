@@ -230,9 +230,6 @@
     <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuild.fs">
       <Link>Fake.DotNet.MSBuild/MSBuild.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Tools.ServiceControl\ServiceControl.fs">
-      <Link>Fake.Tools.ServiceControl/ServiceControl.fs</Link>
-    </Compile>
     <Compile Include="..\..\app\Fake.Tracing.NAntXml\NAntXmlTraceListener.fs">
       <Link>Fake.Tracing.NAntXml/NAntXmlTraceListener.fs</Link>
     </Compile>

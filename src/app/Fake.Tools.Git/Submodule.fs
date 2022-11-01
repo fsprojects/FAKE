@@ -1,79 +1,99 @@
-﻿/// Contains helper functions which allow to deal with git submodules.
-module Fake.Tools.Git.Submodule
+﻿namespace Fake.Tools.Git
 
 open Fake.Core
-open Fake.Tools.Git.CommandHelper
 
-/// This record represents a git submodule binding.
-type Submodule =
-    { Name: string
-      Branch: string
-      CurrentCommit: string
-      Initialized:bool
-      SuperRepositoryDir: string
-      UpToDate: bool }
-with
-    /// Gets the current status.
-    member x.Status =
-        if not x.Initialized then "Not initialized" else
-        if not x.UpToDate then "Modified" else
-        "Up-to-date"
+/// <summary>
+/// Contains helper functions which allow to deal with git submodules.
+/// </summary>
+[<RequireQualifiedAccess>]
+module Submodule =
 
-    /// Gets the remote path from the config.
-    member x.GetRemotePath() =
-        x.Name.Trim()
-          |> sprintf "config -f .gitmodules --get submodule.%s.url"
-          |> runSimpleGitCommand x.SuperRepositoryDir
+    /// <summary>
+    /// This record represents a git submodule binding.
+    /// </summary>
+    type Submodule =
+        { Name: string
+          Branch: string
+          CurrentCommit: string
+          Initialized: bool
+          SuperRepositoryDir: string
+          UpToDate: bool }
 
-   /// Gets the local path from the config.
-    member x.GetLocalPath() =
-        x.Name.Trim()
-          |> sprintf  "config -f .gitmodules --get submodule.%s.path"
-          |> runSimpleGitCommand x.SuperRepositoryDir
+        /// Gets the current status.
+        member x.Status =
+            if not x.Initialized then "Not initialized"
+            else if not x.UpToDate then "Modified"
+            else "Up-to-date"
 
-let internal trimChars (s:string) = s.Trim [| '('; ')'; ' ' |]
+        /// Gets the remote path from the config.
+        member x.GetRemotePath() =
+            x.Name.Trim()
+            |> sprintf "config -f .gitmodules --get submodule.%s.url"
+            |> CommandHelper.runSimpleGitCommand x.SuperRepositoryDir
 
-/// Gets all submodules from the given repository directory.
-let getSubModules repositoryDir =
-    let ok,submodules,errors = runGitCommand repositoryDir "submodule status"
+        /// Gets the local path from the config.
+        member x.GetLocalPath() =
+            x.Name.Trim()
+            |> sprintf "config -f .gitmodules --get submodule.%s.path"
+            |> CommandHelper.runSimpleGitCommand x.SuperRepositoryDir
 
-    submodules
-      |> Seq.filter (fun submodule -> submodule.Length >= 43)
-      |> Set.ofSeq  // remove duplicates
-      |> Seq.map (fun submodule ->
+    let internal trimChars (s: string) = s.Trim [| '('; ')'; ' ' |]
+
+    /// <summary>
+    /// Gets all submodules from the given repository directory.
+    /// </summary>
+    ///
+    /// <param name="repositoryDir">The path of the target directory.</param>
+    let getSubModules repositoryDir =
+        let _, submodules, _ = CommandHelper.runGitCommand repositoryDir "submodule status"
+
+        submodules
+        |> Seq.filter (fun submodule -> submodule.Length >= 43)
+        |> Set.ofSeq // remove duplicates
+        |> Seq.map (fun submodule ->
             let n = submodule.Substring(42).Trim()
-            let name,branch =
+
+            let name, branch =
                 if n.Contains "(" then
-                    n.Substring(0, n.IndexOf "(") |> trimChars,
-                    n.Substring(n.IndexOf "(") |> trimChars
+                    n.Substring(0, n.IndexOf "(") |> trimChars, n.Substring(n.IndexOf "(") |> trimChars
                 else
-                    n,null
-            {  Branch = branch;
-               CurrentCommit = submodule.Substring(1, 40).Trim();
-               Initialized = submodule.[0] <> '-';
-               Name = name;
-               SuperRepositoryDir = repositoryDir;
-               UpToDate = submodule.[0] <> '+' })
+                    n, null
 
-/// Inits a submodule with the given name in a subfolder of the given super repository.
-/// ## Parameters
-///
-///  - `superRepositoryDir` - The super repository.
-///  - `name` - The name of the new repository.
-let init superRepositoryDir name =
-    if String.isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
-      |> gitCommand superRepositoryDir
+            { Branch = branch
+              CurrentCommit = submodule.Substring(1, 40).Trim()
+              Initialized = submodule[0] <> '-'
+              Name = name
+              SuperRepositoryDir = repositoryDir
+              UpToDate = submodule[0] <> '+' })
 
-/// Adds a submodule to the given super repository.
-/// ## Parameters
-///
-///  - `superRepositoryDir` - The super repository.
-///  - `remotePath` - The path to the remote repository of the submodule.
-///  - `localPath` - The local path to the submodule.
-///  - `branch` - The branch to  clone. (can be null)
-let add superRepositoryDir remotePath localPath branch =
-    sprintf "submodule add \"%s\" \"%s\" %s"
-      (remotePath |> fixPath)
-      (localPath |> fixPath)
-      (if String.isNullOrEmpty branch then "" else " \"" + branch.Trim() + "\"")
-      |> gitCommand superRepositoryDir
+    /// <summary>
+    /// Inits a submodule with the given name in a subfolder of the given super repository.
+    /// </summary>
+    ///
+    /// <param name="superRepositoryDir">The super repository.</param>
+    /// <param name="name">The name of the new repository.</param>
+    let init superRepositoryDir name =
+        if String.isNullOrEmpty name then
+            "submodule update --init"
+        else
+            "submodule update --init \"" + name.Trim() + "\""
+        |> CommandHelper.gitCommand superRepositoryDir
+
+    /// <summary>
+    /// Adds a submodule to the given super repository.
+    /// </summary>
+    ///
+    /// <param name="superRepositoryDir">The super repository.</param>
+    /// <param name="remotePath">The path to the remote repository of the submodule.</param>
+    /// <param name="localPath">The local path to the submodule.</param>
+    /// <param name="branch">The branch to  clone. (can be null)</param>
+    let add superRepositoryDir remotePath localPath branch =
+        sprintf
+            "submodule add \"%s\" \"%s\" %s"
+            (remotePath |> CommandHelper.fixPath)
+            (localPath |> CommandHelper.fixPath)
+            (if String.isNullOrEmpty branch then
+                 ""
+             else
+                 " \"" + branch.Trim() + "\"")
+        |> CommandHelper.gitCommand superRepositoryDir

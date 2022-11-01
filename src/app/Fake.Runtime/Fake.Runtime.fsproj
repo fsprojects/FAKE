@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
     <NoWarn>FS3186</NoWarn>
@@ -14,7 +14,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="YaafFSharpScripting.fs" />
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ThisAssemblyInfo.fs" />
     <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
     <Compile Include="Profile.fs" />

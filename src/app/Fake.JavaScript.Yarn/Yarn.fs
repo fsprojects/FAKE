@@ -5,14 +5,18 @@ open Fake.IO
 open System
 open System.IO
 
+/// <summary>
 /// Helpers for running the yarn tool
+/// </summary>
 ///
-/// ## Sample
-///
-///     Yarn.install (fun o ->
-///                     { o with
-///                         WorkingDirectory = "./src/FAKESimple.Web/"
-///                     })
+/// <example>
+/// <code lang="fsharp">
+/// Yarn.install (fun o ->
+///         { o with
+///             WorkingDirectory = "./src/FAKESimple.Web/"
+///         })
+/// </code>
+/// </example>
 [<RequireQualifiedAccess>]
 module Yarn =
 
@@ -28,21 +32,21 @@ module Yarn =
 
     /// Arguments for the Yarn install command
     type InstallArgs =
-    | Standard
-    | Flat
-    | Force
-    | Har
-    | NoLockFile
-    | Production
-    | PureLockFile
-    | FrozenLockFile
+        | Standard
+        | Flat
+        | Force
+        | Har
+        | NoLockFile
+        | Production
+        | PureLockFile
+        | FrozenLockFile
 
     /// The list of supported Yarn commands. The `Custom` alternative
     /// can be used for other commands not in the list until they are
     /// implemented
     type YarnCommand =
-    | Install of InstallArgs
-    | Custom of string
+        | Install of InstallArgs
+        | Custom of string
 
     /// The Yarn parameter type
     type YarnParams =
@@ -58,7 +62,8 @@ module Yarn =
           WorkingDirectory = "."
           Timeout = TimeSpan.MaxValue }
 
-    let private parseInstallArgs = function
+    let private parseInstallArgs =
+        function
         | Standard -> ""
         | Flat -> " --flat"
         | Force -> " --force"
@@ -68,13 +73,15 @@ module Yarn =
         | PureLockFile -> " --pure-lockfile"
         | FrozenLockFile -> " --frozen-lockfile"
 
-    let private parse = function
+    let private parse =
+        function
         | Install installArgs -> sprintf "install%s" (installArgs |> parseInstallArgs)
         | Custom str -> str
 
     let private run yarnParams command =
         let yarnPath = Path.GetFullPath(yarnParams.YarnFilePath)
         let arguments = command |> parse
+
         arguments
         |> CreateProcess.fromRawCommandLine yarnPath
         |> CreateProcess.withWorkingDirectory yarnParams.WorkingDirectory
@@ -85,101 +92,147 @@ module Yarn =
 
     let private yarn setParams = defaultYarnParams |> setParams |> run
 
-    /// Run `yarn install`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install</c>
+    /// </summary>
     ///
-    ///     Yarn.install (fun o ->
-    ///                     { o with
-    ///                         WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                     })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.install (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let install setParams = yarn setParams <| Install Standard
 
-    /// Run `yarn install --production`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --production</c>
+    /// </summary>
     ///
-    ///     Yarn.installProduction (fun o ->
-    ///                               { o with
-    ///                                   WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                               })
-
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installProduction (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installProduction setParams = yarn setParams <| Install Production
-    /// Run `yarn install --force`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+
+    /// <summary>
+    /// Run <c>yarn install --force</c>
+    /// </summary>
     ///
-    ///     Yarn.installForced (fun o ->
-    ///                           { o with
-    ///                               WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                           })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installForced (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installForced setParams = yarn setParams <| Install Force
 
-    /// Run `yarn install --flat`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --flat</c>
+    /// </summary>
     ///
-    ///     Yarn.installFlat (fun o ->
-    ///                         { o with
-    ///                             WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                         })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installFlat (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installFlat setParams = yarn setParams <| Install Flat
 
-    /// Run `yarn install --har`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --har</c>
+    /// </summary>
     ///
-    ///     Yarn.installHar (fun o ->
-    ///                        { o with
-    ///                            WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                        })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installHar (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installHar setParams = yarn setParams <| Install Har
 
-    /// Run `yarn install --no-lockfile`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --no-lockfile</c>
+    /// </summary>
     ///
-    ///     Yarn.installNoLock (fun o ->
-    ///                           { o with
-    ///                               WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                           })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installNoLock (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installNoLock setParams = yarn setParams <| Install NoLockFile
 
-    /// Run `yarn install --pure-lockfile`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --pure-lockfile</c>
+    /// </summary>
     ///
-    ///     Yarn.installPureLock (fun o ->
-    ///                             { o with
-    ///                                 WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                             })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installPureLock (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let installPureLock setParams = yarn setParams <| Install PureLockFile
 
-    /// Run `yarn install --frozen-lockfile`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn install --frozen-lockfile</c>
+    /// </summary>
     ///
-    ///     Yarn.installFrozenLockFile (fun o ->
-    ///                             { o with
-    ///                                 WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                             })
-    let installFrozenLockFile setParams = yarn setParams <| Install FrozenLockFile
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.installFrozenLockFile (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
+    let installFrozenLockFile setParams =
+        yarn setParams <| Install FrozenLockFile
 
-    /// Run `yarn <command>`
-    /// ## Parameters
-    /// - 'setParams' - set command parameters
-    /// ## Sample
+    /// <summary>
+    /// Run <c>yarn &lt;command&gt;</c>
+    /// </summary>
     ///
-    ///     Yarn.exec "someCommand" (fun o ->
-    ///                                { o with
-    ///                                    WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                                })
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Yarn.exec "someCommand" (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
     let exec command setParams = yarn setParams <| Custom command

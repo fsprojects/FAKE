@@ -1,0 +1,674 @@
+{
+    "apidocs": [
+        {
+            "title": "Core",
+            "links": [
+                {
+                    "title": "Core",
+                    "href": "/reference/fake-core.html"
+                },
+                {
+                    "title": "BuildServer",
+                    "href": "/reference/fake-core-buildserver.html"
+                },
+                {
+                    "title": "ChangeLog",
+                    "href": "/reference/fake-core-changelog.html"
+                },
+                {
+                    "title": "Command Line Parsing",
+                    "href": "/reference/fake-core-commandlineparsing.html"
+                },
+                {
+                    "title": "Context",
+                    "href": "/reference/fake-core-context.html"
+                },
+                {
+                    "title": "Environment",
+                    "href": "/reference/fake-core-environment.html"
+                },
+                {
+                    "title": "Fake Var",
+                    "href": "/reference/fake-core-fakevar.html"
+                },
+                {
+                    "title": "Process",
+                    "href": "/reference/fake-core-process.html"
+                },
+                {
+                    "title": "Release Notes",
+                    "href": "/reference/fake-core-releasenotes.html"
+                },
+                {
+                    "title": "SemVer",
+                    "href": "/reference/fake-core-semver.html"
+                },
+                {
+                    "title": "String",
+                    "href": "/reference/fake-core-string.html"
+                },
+                {
+                    "title": "Targets",
+                    "href": "/reference/fake-core-target.html"
+                },
+                {
+                    "title": "Tasks",
+                    "href": "/reference/fake-core-taskrunner.html"
+                },
+                {
+                    "title": "Trace",
+                    "href": "/reference/fake-core-trace.html"
+                },
+                {
+                    "title": "User Input",
+                    "href": "/reference/fake-core-userinput.html"
+                },
+                {
+                    "title": "Vault",
+                    "href": "/reference/fake-core-vault.html"
+                },
+                {
+                    "title": "Xml",
+                    "href": "/reference/fake-core-xml.html"
+                }
+            ]
+        },
+        {
+            "title": "IO",
+            "links": [
+                {
+                    "title": "IO",
+                    "href": "/reference/fake-io.html"
+                },
+                {
+                    "title": "Change Watcher",
+                    "href": "/reference/fake-io-changewatcher.html"
+                },
+                {
+                    "title": "Globbing",
+                    "href": "/reference/fake-io-globbing-operators.html"
+                },
+                {
+                    "title": "Zip",
+                    "href": "/reference/fake-io-zip.html"
+                }
+            ]
+        },
+        {
+            "title": "Build Server",
+            "links": [
+                {
+                    "title": "Build Server",
+                    "href": "/reference/fake-buildserver.html"
+                },
+                {
+                    "title": "AppVeyor",
+                    "href": "/reference/fake-buildserver-appveyor.html"
+                },
+                {
+                    "title": "Azure DevOps",
+                    "href": "/reference/fake-buildserver-teamfoundation.html"
+                },
+                {
+                    "title": "GitLab",
+                    "href": "/reference/fake-buildserver-gitlab.html"
+                },
+                {
+                    "title": "GitHub Actions",
+                    "href": "/reference/fake-buildserver-githubactions.html"
+                },
+                {
+                    "title": "TeamCity",
+                    "href": "/reference/fake-buildserver-teamcity.html"
+                },
+                {
+                    "title": "Travis",
+                    "href": "/reference/fake-buildserver-travis.html"
+                },
+                {
+                    "title": "Bitbucket",
+                    "href": "/reference/fake-buildserver-bitbucketpipelines.html"
+                }
+            ]
+        },
+        {
+            "title": "DotNet",
+            "links": [
+                {
+                    "title": "DotNet",
+                    "href": "/reference/fake-dotnet.html"
+                },
+                {
+                    "title": "Cli",
+                    "href": "/reference/fake-dotnet-dotnet.html"
+                },
+                {
+                    "title": "AssemblyInfo File",
+                    "href": "/reference/fake-dotnet-assemblyinfo.html"
+                },
+                {
+                    "title": "F# Compiler",
+                    "href": "/reference/fake-dotnet-fsc.html"
+                },
+                {
+                    "title": "F# Interactive",
+                    "href": "/reference/fake-dotnet-fsi.html"
+                },
+                {
+                    "title": "FxCop",
+                    "href": "/reference/fake-dotnet-fxcop.html"
+                },
+                {
+                    "title": "MSBuild",
+                    "href": "/reference/fake-dotnet-msbuild.html"
+                },
+                {
+                    "title": "ILMerge",
+                    "href": "/reference/fake-dotnet-ilmerge.html"
+                },
+                {
+                    "title": "Testing - NUnit",
+                    "href": "/reference/fake-dotnet-testing-nunit3.html"
+                },
+                {
+                    "title": "Testing - MSpec",
+                    "href": "/reference/fake-dotnet-testing-mspec.html"
+                },
+                {
+                    "title": "Testing - MSTest",
+                    "href": "/reference/fake-dotnet-testing-mstest.html"
+                },
+                {
+                    "title": "Testing - XUnit2",
+                    "href": "/reference/fake-dotnet-testing-xunit2.html"
+                },
+                {
+                    "title": "Testing - Expecto",
+                    "href": "/reference/fake-dotnet-testing-expecto.html"
+                },
+                {
+                    "title": "Testing - VSTest",
+                    "href": "/reference/fake-dotnet-testing-vstest.html"
+                },
+                {
+                    "title": "Testing - SpecFlow",
+                    "href": "/reference/fake-dotnet-testing-specflow.html"
+                },
+                {
+                    "title": "Testing - OpenCover",
+                    "href": "/reference/fake-dotnet-testing-opencover.html"
+                },
+                {
+                    "title": "Testing - DotCover",
+                    "href": "/reference/fake-dotnet-testing-dotcover.html"
+                },
+                {
+                    "title": "Testing - Coverlet",
+                    "href": "/reference/fake-dotnet-testing-coverlet.html"
+                },
+                {
+                    "title": "NuGet",
+                    "href": "/reference/fake-dotnet-nuget.html"
+                },
+                {
+                    "title": "Mage",
+                    "href": "/reference/fake-dotnet-mage.html"
+                },
+                {
+                    "title": "Paket",
+                    "href": "/reference/fake-dotnet-paket.html"
+                },
+                {
+                    "title": "XML Transforms",
+                    "href": "/reference/fake-dotnet-xdt.html"
+                },
+                {
+                    "title": "Xamarin",
+                    "href": "/reference/fake-dotnet-xamarin.html"
+                }
+            ]
+        },
+        {
+            "title": "API",
+            "links": [
+                {
+                    "title": "API",
+                    "href": "/reference/fake-api.html"
+                },
+                {
+                    "title": "Slack",
+                    "href": "/reference/fake-api-slack.html"
+                },
+                {
+                    "title": "GitHub",
+                    "href": "/reference/fake-api-github.html"
+                }
+            ]
+        },
+        {
+            "title": "Azure",
+            "links": [
+                {
+                    "title": "Azure",
+                    "href": "/reference/fake-azure.html"
+                },
+                {
+                    "title": "Cloud Services",
+                    "href": "/reference/fake-azure-cloudservices.html"
+                },
+                {
+                    "title": "Emulators",
+                    "href": "/reference/fake-azure-emulators.html"
+                },
+                {
+                    "title": "Kudu",
+                    "href": "/reference/fake-azure-kudu.html"
+                },
+                {
+                    "title": "WebJobs",
+                    "href": "/reference/fake-azure-webjobs.html"
+                }
+            ]
+        },
+        {
+            "title": "Build",
+            "links": [
+                {
+                    "title": "Build",
+                    "href": "/reference/fake-build.html"
+                },
+                {
+                    "title": "CMake",
+                    "href": "/reference/fake-build-cmake.html"
+                }
+            ]
+        },
+        {
+            "title": "Documentation",
+            "links": [
+                {
+                    "title": "Documentation",
+                    "href": "/reference/fake-documentation.html"
+                },
+                {
+                    "title": "DocFx",
+                    "href": "/reference/fake-documentation-docfx.html"
+                }
+            ]
+        },
+        {
+            "title": "Installer",
+            "links": [
+                {
+                    "title": "Installer",
+                    "href": "/reference/fake-installer.html"
+                },
+                {
+                    "title": "InnoSetup",
+                    "href": "/reference/fake-installer-innosetup.html"
+                },
+                {
+                    "title": "Squirrel",
+                    "href": "/reference/fake-installer-squirrel.html"
+                },
+                {
+                    "title": "Wix",
+                    "href": "/reference/fake-installer-wix.html"
+                }
+            ]
+        },
+        {
+            "title": "JavaScript",
+            "links": [
+                {
+                    "title": "JavaScript",
+                    "href": "/reference/fake-javascript.html"
+                },
+                {
+                    "title": "Npm",
+                    "href": "/reference/fake-javascript-npm.html"
+                },
+                {
+                    "title": "Yarn",
+                    "href": "/reference/fake-javascript-yarn.html"
+                },
+                {
+                    "title": "TypeScript",
+                    "href": "/reference/fake-javascript-typescript.html"
+                }
+            ]
+        },
+        {
+            "title": "Network",
+            "links": [
+                {
+                    "title": "Network",
+                    "href": "/reference/fake-net.html"
+                },
+                {
+                    "title": "Http",
+                    "href": "/reference/fake-net-http.html"
+                },
+                {
+                    "title": "SSH",
+                    "href": "/reference/fake-net-ssh.html"
+                },
+                {
+                    "title": "FTP",
+                    "href": "/reference/fake-net-ftp.html"
+                }
+            ]
+        },
+        {
+            "title": "SQL",
+            "links": [
+                {
+                    "title": "SQL",
+                    "href": "/reference/fake-sql.html"
+                },
+                {
+                    "title": "SQL Package",
+                    "href": "/reference/fake-sql-sqlpackage.html"
+                }
+            ]
+        },
+        {
+            "title": "Testing",
+            "links": [
+                {
+                    "title": "Testing",
+                    "href": "/reference/fake-testing.html"
+                },
+                {
+                    "title": "SonarQube",
+                    "href": "/reference/fake-testing-sonarqube.html"
+                },
+                {
+                    "title": "ReportGenerator",
+                    "href": "/reference/fake-testing-reportgenerator.html"
+                },
+                {
+                    "title": "Fixie",
+                    "href": "/reference/fake-testing-fixie.html"
+                }
+            ]
+        },
+        {
+            "title": "Tools",
+            "links": [
+                {
+                    "title": "Tools",
+                    "href": "/reference/fake-tools.html"
+                },
+                {
+                    "title": "Git",
+                    "href": "/reference/fake-tools-git.html"
+                },
+                {
+                    "title": "GitVersion",
+                    "href": "/reference/fake-tools-gitversion.html"
+                },
+                {
+                    "title": "Pickles",
+                    "href": "/reference/fake-tools-pickles.html"
+                },
+                {
+                    "title": "Octo",
+                    "href": "/reference/fake-tools-octo.html"
+                },
+                {
+                    "title": "Rsync",
+                    "href": "/reference/fake-tools-rsync.html"
+                },
+                {
+                    "title": "SignTool",
+                    "href": "/reference/fake-tools-signtool.html"
+                }
+            ]
+        },
+        {
+            "title": "Windows",
+            "links": [
+                {
+                    "title": "Windows",
+                    "href": "/reference/fake-windows.html"
+                },
+                {
+                    "title": "Chocolatey",
+                    "href": "/reference/fake-windows-choco.html"
+                },
+                {
+                    "title": "Registry",
+                    "href": "/reference/fake-windows-registry.html"
+                }
+            ]
+        },
+        {
+            "title": "External Modules",
+            "links": [
+                {
+                    "title": "BlackFox.Fake.BuildTask",
+                    "href": "https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md"
+                },
+                {
+                    "title": "Xake",
+                    "href": "https://github.com/xakebuild/Xake"
+                }
+            ]
+        }
+    ],
+    "guide": [
+        {
+            "title": "What is FAKE?",
+            "description": "Get to know FAKE, the F# Make Tool",
+            "href": "/guide/what-is-fake.html"
+        },
+        {
+            "title": "FAKE History",
+            "description": "A brief look into FAKE history, current position, and future",
+            "href": "/guide/fake-history.html"
+        },
+        {
+            "title": "Getting Started",
+            "description": "Build your first deployment script using FAKE",
+            "href": "/guide/getting-started.html"
+        },
+        {
+            "title": "Target Module",
+            "description": "Use the targets module to organize and run targets",
+            "href": "/guide/core-targets.html"
+        },
+        {
+            "title": "Command Line",
+            "description": "Get to know the FAKE command line interface and the available options",
+            "href": "/guide/commandline.html"
+        },
+        {
+            "title": "Command Line Parsing",
+            "description": "FAKE command arguments parsing",
+            "href": "/guide/core-commandlineparsing.html"
+        },
+        {
+            "title": "Contributing",
+            "description": "See FAKE Contribution guide",
+            "href": "/guide/contributing.html"
+        },
+        {
+            "title": "Process Module",
+            "description": "Use the process module to run processes and executables",
+            "href": "/guide/core-process.html"
+        },
+        {
+            "title": "Fake Debugging",
+            "description": "Debug your build scripts",
+            "href": "/guide/fake-debugging.html"
+        },
+        {
+            "title": "Trace Module",
+            "description": "Debug and add tracing info to your build",
+            "href": "/guide/core-trace.html"
+        },
+        {
+            "title": "Caching in FAKE",
+            "description": "See how FAKE runner cache your build script for faster quick start",
+            "href": "/guide/fake-cache.html"
+        },
+        {
+            "title": "build Server",
+            "description": "See the different build servers supported in FAKE",
+            "href": "/guide/buildserver.html"
+        },
+        {
+            "title": "dotnet-cli",
+            "description": "TBD",
+            "href": "/guide/dotnet-cli.html"
+        },
+        {
+            "title": "FAKE Completion",
+            "description": "Add command line completion",
+            "href": "/guide/fake-completion.html"
+        },
+        {
+            "title": "Migrate to FAKE 5 and above",
+            "description": "See migration guide from legacy FAKE",
+            "href": "/guide/fake-migrate-to-fake-5.html"
+        },
+        {
+            "title": "FAKE Modules",
+            "description": "How FAKE modules are organized",
+            "href": "/guide/fake-modules.html"
+        },
+        {
+            "title": "FAKE Template",
+            "description": "Scaffold your build script quickly using FAKE template",
+            "href": "/guide/fake-template.html"
+        },
+        {
+            "title": "FAKE Custom Modules",
+            "description": "Define your own custom modules by extending FAKE",
+            "href": "/guide/fake-custom-modules.html"
+        },
+        {
+            "title": "FAKE Supporters",
+            "description": "List of FAKE supports",
+            "href": "/guide/help-supporters.html"
+        },
+        {
+            "title": "FAKE Users",
+            "description": "Who is using FAKE?",
+            "href": "/guide/help-users.html"
+        },
+        {
+            "title": "Release Notes",
+            "description": "FAKE release notes",
+            "href": "/guide/RELEASE_NOTES.html"
+        }
+    ],
+    "articles": [
+        {
+            "title": "FAKE v6 Release Announcement",
+            "description": "Announcing FAKE v6!",
+            "href": "/articles/fake-v6-release-announcement.html"
+        },
+        {
+            "title": "Managing Dependencies using NuGet",
+            "description": "Install, restore and manage all of your build dependencies using NuGet",
+            "href": "/articles/dotnet-nuget.html"
+        },
+        {
+            "title": "Sending Notifications to a Slack Webhook",
+            "description": "learn how to create slack webhook integration and send a notification to it from your build",
+            "href": "/articles/api-slack.html"
+        },
+        {
+            "title": "Securing Build Tracing and Parameters using FAKE Vault Module",
+            "description": "Secure sensitive information from the build logs",
+            "href": "/articles/core-vault.html"
+        },
+        {
+            "title": "Generating `AssemblyInfo` Files",
+            "description": "Using `AssemblyInfo` task is used in order to set specific version information to .NET assemblies.",
+            "href": "/articles/dotnet-assemblyinfo.html"
+        },
+        {
+            "title": "Analyze your Code Coverage with Coverlet",
+            "description": "Run code coverage analysis as part of your build using Coverlet",
+            "href": "/articles/dotnet-testing-coverlet.html"
+        },
+        {
+            "title": "Analyze your Code Coverage with OpenCover",
+            "description": "Run code coverage analysis as part of your build using OpenCover",
+            "href": "/articles/dotnet-testing-opencover.html"
+        },
+        {
+            "title": "Make BDD with Gherkin and SpecFlow",
+            "description": "Execute acceptance tests in .NET projects",
+            "href": "/articles/dotnet-testing-specflow.html"
+        },
+        {
+            "title": "Sign Files using SignTool",
+            "description": "Digitally signs files, verifies signatures in files, or time stamps files",
+            "href": "/articles/fake-signtool.html"
+        },
+        {
+            "title": "Releasifying NuGet Packages with Squirrel",
+            "description": "Use an installation tool with an auto-update system for Windows desktop apps",
+            "href": "/articles/installer-squirrel.html"
+        },
+        {
+            "title": "Deploying and Installing Software with FAKE Wix Module",
+            "description": "Create MSI setups using the Wix Toolset",
+            "href": "/articles/installer-wix.html"
+        },
+        {
+            "title": "Compiling TypeScript applications",
+            "description": "Run and compile TypeScript Apps as part of your build process",
+            "href": "/articles/javascript-typescript.html"
+        },
+        {
+            "title": "Downloading Files Over HTTP",
+            "description": "Download files over HTTP",
+            "href": "/articles/net-http.html"
+        },
+        {
+            "title": "Packaging and Deploying SQL Databases",
+            "description": "Create a SQL DACPAC and also deploy it to a SQL Server using the MSDeploy executable",
+            "href": "/articles/sql-sqlpackage.html"
+        },
+        {
+            "title": "Running Unit Tests using Fixie",
+            "description": "Run unit tests using the Fixie testing framework",
+            "href": "/articles/testing-fixie.html"
+        },
+        {
+            "title": "Generating Testing Reports using FAKE",
+            "description": "Convert XML reports generated by OpenCover, PartCover, dotCover, Visual Studio, NCover or Cobertura into human readable reports in various formats",
+            "href": "/articles/testing-reportgenerator.html"
+        },
+        {
+            "title": "Analyze your code with SonarQube",
+            "description": "Run an analysis of your code as part of your build using SonarQube",
+            "href": "/articles/testing-sonarqube.html"
+        },
+        {
+            "title": "Generate semantic version number from Git with GitVersion",
+            "description": "Generates a Semantic Version number based on your Git history",
+            "href": "/articles/tools-gitversion.html"
+        },
+        {
+            "title": "tools-octo",
+            "description": "Use Octo to release and manage your releases",
+            "href": "/articles/tools-octo.html"
+        },
+        {
+            "title": "Convert Gherkin to HTML with Pickles",
+            "description": "Documentation generation using Pickles",
+            "href": "/articles/tools-pickles.html"
+        },
+        {
+            "title": "Using Chocolatey",
+            "description": "Manage the distribution of your libraries using Chocolatey",
+            "href": "/articles/windows-chocolatey.html"
+        }
+    ]
+}

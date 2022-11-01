@@ -1,8 +1,15 @@
-// Some common definition for testing data
+/// <namespacedoc>
+/// <summary>
+/// Testing namespace contains tasks to run tests and test tools, like Fixie, ReportGenerator
+/// </summary>
+/// </namespacedoc>
+///
+/// <summary>
+/// Some common definition for testing data
+/// </summary>
 module Fake.Testing.Common
 
 open Fake.Core
-open System
 
 /// Option which allows to specify if a test runner error should break the build.
 type TestRunnerErrorLevel =

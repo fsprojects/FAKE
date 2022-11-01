@@ -5,6 +5,7 @@ nuget Fake.IO.FileSystem
 nuget Fake.Core.Target //"
 //#endif
 #load ".fake/(build.fsx)/intellisense.fsx"
+
 open Fake.Core
 open Fake.DotNet
 open Fake.IO
@@ -14,21 +15,12 @@ open Fake.Core.TargetOperators
 
 Target.initEnvironment ()
 
-Target.create "Clean" (fun _ ->
-    !! "src/**/bin"
-    ++ "src/**/obj"
-    |> Shell.cleanDirs 
-)
+Target.create "Clean" (fun _ -> !! "src/**/bin" ++ "src/**/obj" |> Shell.cleanDirs)
 
-Target.create "Build" (fun _ ->
-    !! "src/**/*.*proj"
-    |> Seq.iter (DotNet.build id)
-)
+Target.create "Build" (fun _ -> !! "src/**/*.*proj" |> Seq.iter (DotNet.build id))
 
 Target.create "All" ignore
 
-"Clean"
-  ==> "Build"
-  ==> "All"
+"Clean" ==> "Build" ==> "All"
 
 Target.runOrDefault "All"

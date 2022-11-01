@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0"
- xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
@@ -20,7 +19,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Cli.fs" />
     <Compile Include="Program.fs" />
     <!-- Note: This resource should be moved to Paket.Core... -->

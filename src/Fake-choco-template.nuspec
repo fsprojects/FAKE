@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package>
   <metadata>
     <version>@build.number@</version>
     <authors>fsprojects</authors>
     <projectUrl>https://fake.build</projectUrl>
-    <projectSourceUrl>https://github.com/fsharp/FAKE</projectSourceUrl>
-    <docsUrl>https://fake.build/fake-gettingstarted.html</docsUrl>
-    <bugTrackerUrl>https://github.com/fsharp/FAKE/issues</bugTrackerUrl>
-    <iconUrl>https://cdn.rawgit.com/fsharp/FAKE/515c78f15ea1829857dc757a5bcf48b3f85e0286/help/pics/logo.png</iconUrl>
-    <licenseUrl>https://github.com/fsharp/FAKE/blob/master/License.txt</licenseUrl>
+    <projectSourceUrl>https://github.com/fsprojects/FAKE</projectSourceUrl>
+    <docsUrl>https://fake.build/guide/gettingstarted.html</docsUrl>
+    <bugTrackerUrl>https://github.com/fsprojects/FAKE/issues</bugTrackerUrl>
+    <iconUrl>https://raw.githubusercontent.com/fsprojects/FAKE/c85e4e538d6614ec7591ad263b1b056344d3b9e3/help/content/assets/img/logo.png</iconUrl>
+    <licenseUrl>https://github.com/fsprojects/FAKE/blob/master/License.txt</licenseUrl>
     <id>fake</id>
     <title>FAKE - F# Make</title>
     <owners>fsprojects</owners>
@@ -22,9 +21,8 @@ If you need more than the default functionality you can either write F# or simpl
     <summary>A DSL for build tasks</summary>
     <tags>fake make dotnet csharp fsharp foss cross-platform automation scripting</tags>
     <releaseNotes>@releaseNotes@</releaseNotes>
-    <packageSourceUrl>https://github.com/fsharp/FAKE</packageSourceUrl>
+    <packageSourceUrl>https://github.com/fsprojects/FAKE</packageSourceUrl>
     @dependencies@
   </metadata>
   @files@
-    <!--<file src="..\nuget\dotnetcore\Fake.netcore\win7-x86\**" target="bin" />-->
 </package>

@@ -1,4 +1,4 @@
-group netcorerunner
+group fakerunner
 
 YoloDev.Expecto.TestSdk
 Microsoft.TestPlatform.TestHost

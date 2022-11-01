@@ -4,7 +4,9 @@ Thumbs.db
 #Ignore files build by Visual Studio
 .fsdocs/
 output/
-docs/
+tmp/watch
+docs/.nojekyll
+docs/CNAME
 docsBuild/
 report/
 test/
@@ -47,7 +49,6 @@ tools/Microsoft.AspNet.Razor
 tools/RazorEngine
 !tools/FAKE/tools/FakeLib.dll
 !tools/FAKE/tools/FakeLib.pdb
-.gitignore
 !integrationtests/.gitignore
 _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
@@ -82,6 +83,7 @@ project.lock.json
 
 /fake-dotnetcore
 /fake-dotnetcore*.zip
+/build.fsx.lock
 /testbuild.fsx
 /testbuild.fsx.lock
 /src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.dll

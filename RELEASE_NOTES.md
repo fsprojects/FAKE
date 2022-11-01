@@ -1,5 +1,13 @@
 # Release Notes
 
+## 6.0.0-alpha001 - tbd
+* ENHANCEMENT: Update dependencies of repsoitory, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: Remove obsolete APIs and replace their usage with alternative suggested API's, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: FAKE build enhancements, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: Update FAKE website to use new FSDocs library and give it a new fresh look, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: General Enhancements, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+* ENHANCEMENT: Add Fantomas tool to FAKE codebase as a styling and formatter tool, thanks @yazeedobaid - https://fake.build/articles/fake-v6-release-announcement.html
+
 ## 5.23.1 - 2022-10-21
 * BUGFIX: On Unix like OSs, look for sqlpackage in directories specified in $PATH, thanks @nickgravgaard - https://github.com/fsprojects/FAKE/pull/2700
 * BUGFIX: Core.Process: only set StandardEncoding if output/err is redirected, thanks @knocte - https://github.com/fsprojects/FAKE/pull/2672

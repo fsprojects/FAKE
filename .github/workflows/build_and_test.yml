@@ -12,10 +12,6 @@ jobs:
                 os: [ubuntu-latest, windows-latest, macOS-latest]
         steps:
             - uses: actions/checkout@v2
-            - name: Setup .NETCORE 3.1
-              uses: actions/setup-dotnet@v1
-              with:
-                  dotnet-version: '3.1.201'
             - name: Setup .NET 6
               uses: actions/setup-dotnet@v1
               with:
@@ -36,3 +32,8 @@ jobs:
               run: dotnet tool install fake-cli --add-source "./src/app/fake-cli/bin/Debug" --version 1.0.0-1
             - name: Build
               run: dotnet fake build --parallel 3
+            - name: publish build artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                  name: fake-artifacts
+                  path: release/artifacts

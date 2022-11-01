@@ -1,0 +1,32 @@
+.fsdocs-params {
+    font-size: x-large;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.fsdocs-member-list,
+.fsdocs-entity-list {
+    border: 1px solid #ddd;
+    border-left: 3px solid #d4b43c;
+}
+
+.fsdocs-member-list > * > tr > td,
+.fsdocs-entity-list > * > tr > td {
+    padding:10px !important;
+}
+
+.fsdocs-metadata {
+    border: 1px solid #ddd;
+    border-left: 3px solid #d4b43c;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+

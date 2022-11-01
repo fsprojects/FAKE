@@ -13,7 +13,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="AssemblyInfo.fs" />
         <Compile Include="..\Fake.netcore\Cli.fs" />
         <Compile Include="..\Fake.netcore\Program.fs" />
         <!-- Note: This resource should be moved to Paket.Core... -->

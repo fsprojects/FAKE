@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <AssemblyName>Fake.Testing.ReportGenerator</AssemblyName>
     <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
@@ -12,7 +13,6 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="VisibleTo.fs" />
     <Compile Include="ReportGenerator.fs" />
   </ItemGroup>
@@ -20,7 +20,6 @@
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
-    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
