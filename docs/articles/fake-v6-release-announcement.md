@@ -1,6 +1,6 @@
 FAKE v6 is finally here -- this new major release lays the foundation for future releases of FAKE
 and move a step closer to complete the transition that started in FAKE v5. We have removed the
-obsolete API's and replaced there usages with alternatives, updated dependencies, polished some
+obsolete API's and replaced their usages with alternatives, updated dependencies, polished some
 API's, and refreshed the website!
 
 ![FAKE v6 Home Page Hero Section](/content/img/fakev6-release/fake-v6-hero-section.png)
@@ -55,7 +55,7 @@ adopted by community to overcome some limitations on the runner. Especially, whe
 ## Obsolete APIs
 
 A lot of modules in FAKE uses obsolete API's from other part of the codebase, especially from the process module.
-FAKE v6 removed the obsolete API's in the process module and replace their usage in other parts of the codebase with
+FAKE v6 removed the obsolete API's in the process module and replaced their usage in other parts of the codebase with
 alternatives.
 
 Not only API's from process module were removed, but other API's that were marked with obsolete attribute as well.
