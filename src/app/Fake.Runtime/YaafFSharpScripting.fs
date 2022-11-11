@@ -825,7 +825,7 @@ type internal IFsiSession =
     /// Evaluate the given script.
     abstract member EvalScriptWithOutput: string -> InteractionResult
     /// Gets the currently build dynamic assembly.
-    abstract member DynamicAssembly: System.Reflection.Assembly
+    abstract member DynamicAssemblies: System.Reflection.Assembly[]
 
 [<AutoOpen>]
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
@@ -949,9 +949,14 @@ module internal Extensions =
 
         // Try to get the AssemblyBuilder
         member x.DynamicAssemblyBuilder =
-            match x.DynamicAssembly with
-            | :? System.Reflection.Emit.AssemblyBuilder as builder -> builder
-            | _ -> failwith "The DynamicAssembly property is no AssemblyBuilder!"
+            x.DynamicAssemblies
+            |> Seq.tryPick (fun a ->
+                match a with
+                | :? System.Reflection.Emit.AssemblyBuilder as builder -> Some builder
+                | _ -> None)
+            |> function
+                | Some builder -> builder
+                | None -> failwith "The DynamicAssemblies property does not contain an AssemblyBuilder!"
 
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
 module Shell =
@@ -1584,7 +1589,7 @@ module internal Helper =
                     let i, r = evalExpression text
                     i, r |> Option.map (fun r -> r.ReflectionValue, r.ReflectionType)
 
-                member __.DynamicAssembly = fsiSession.DynamicAssembly
+                member __.DynamicAssemblies = fsiSession.DynamicAssemblies
                 member __.Dispose() = (fsiSession :> IDisposable).Dispose() }
         // This works around a FCS bug, I would expect "fsi" to be defined already...
         // This is probably not the case because we do not have any type with the correct signature loaded
