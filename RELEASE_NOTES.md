@@ -1,5 +1,9 @@
 # Release Notes
 
+## 6.0.0-alpha003 - 2022-11-11
+* ENHANCEMENT: Fix typos in website, thanks @CaptnCodr - https://github.com/fsprojects/FAKE/pull/2712
+* BUGFIX: Update Paket.Core to support .NET 7, thanks @mk185147 and @michalkovy - https://github.com/fsprojects/FAKE/issues/2708
+
 ## 6.0.0-alpha002 - 2022-11-02
 * ENHANCEMENT: Fix website assets loading
 
