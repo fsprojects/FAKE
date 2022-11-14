@@ -16,7 +16,7 @@ Feel free to open the PR and ask for help
   > Note: Consider using the `CreateProcess` API which can be tested more easily, see https://github.com/fsharp/FAKE/pull/2131/files#diff-4fb4a77e110fbbe8210205dfe022389b for an example (the changes in the `DotNet.Testing.NUnit` module)
   
 - [ ] boy scout rule: "leave the code behind in a better state than you found it" (fix warnings, obsolete members or code-style in the places you worked in)     
-- [ ] (if new module) the module has been linked from the "Modules" menu, edit `help/templates/template.cshtml`, linking to the API-reference is fine.
-- [ ] (if new module) the module is in the correct namespace
+- [ ] (if new module) the module has been linked from the "side navigation" menu, edit `docs/data.json`.
+- [ ] (if new module) the module is in the correct namespace.
 - [ ] (if new module) the module is added to Fake.sln (`dotnet sln Fake.sln add src/app/Fake.*/Fake.*.fsproj`)
 - [ ] Fake [API guideline](https://fake.build/guide/contributing.html#API-Design-Guidelines) is honored
