@@ -886,7 +886,10 @@ module MSBuild =
         fun (exePath: string) (callMsbuildExe: string -> string) ->
             let getFromCall () =
                 try
-                    let result = callMsbuildExe "/version /nologo"
+                    let result =
+                        match Environment.isUnix with
+                        | true -> callMsbuildExe "--version --nologo"
+                        | false -> callMsbuildExe "/version /nologo"
 
                     let line =
                         if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then
