@@ -132,6 +132,9 @@ module Paket =
 
             /// API key for the URL (default: value of the NUGET_KEY environment variable)
             ApiKey: string
+
+            /// Ignore any HTTP409 (Conflict) errors and treat as success (default: false)
+            IgnoreConflicts: bool
         }
 
     /// Paket push default parameters
@@ -143,7 +146,8 @@ module Paket =
           EndPoint = null
           WorkingDir = "./temp"
           DegreeOfParallelism = 8
-          ApiKey = null }
+          ApiKey = null
+          IgnoreConflicts = false }
 
     /// <summary>
     /// Paket restore packages type
@@ -206,6 +210,7 @@ module Paket =
             |> Arguments.appendNotEmpty "--url" parameters.PublishUrl
             |> Arguments.appendNotEmpty "--endpoint" parameters.EndPoint
             |> Arguments.appendNotEmpty "--api-key" parameters.ApiKey
+            |> Arguments.appendIf parameters.IgnoreConflicts "--ignoreConflicts"
             |> Arguments.append [ file ]
             |> startPaket parameters.ToolType parameters.ToolPath parameters.WorkingDir parameters.TimeOut
         | Pack parameters ->
