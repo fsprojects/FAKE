@@ -5,7 +5,7 @@
     <authors>fsprojects</authors>
     <projectUrl>https://fake.build</projectUrl>
     <projectSourceUrl>https://github.com/fsprojects/FAKE</projectSourceUrl>
-    <docsUrl>https://fake.build/guide/gettingstarted.html</docsUrl>
+    <docsUrl>https://fake.build/guide/getting-started.html</docsUrl>
     <bugTrackerUrl>https://github.com/fsprojects/FAKE/issues</bugTrackerUrl>
     <iconUrl>https://raw.githubusercontent.com/fsprojects/FAKE/c85e4e538d6614ec7591ad263b1b056344d3b9e3/help/content/assets/img/logo.png</iconUrl>
     <licenseUrl>https://github.com/fsprojects/FAKE/blob/master/License.txt</licenseUrl>
