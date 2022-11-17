@@ -28,5 +28,5 @@ Please provide a description of any known workarounds.
 * Branch
 * .NET Runtime, CoreCLR or Mono Version
 * Indications of severity
-* Version of FAKE (4.X, 5.X)
+* Version of FAKE (4.X, 5.X, 6.x)
 * (if performance issue) Performance information, links to performance testing scripts
