@@ -20,12 +20,6 @@ jobs:
               uses: actions/setup-dotnet@v1
               with:
                   dotnet-version: '6.0.101'
-            - uses: actions/cache@v2
-              with:
-                  path: ~/.nuget/packages
-                  key: windows-latest-nuget-${{ hashFiles('**/paket.lock') }}
-                  restore-keys: |
-                      windows-latest-nuget
             - name: Restore dotnet tools
               run: dotnet tool restore
             - name: remove current fake runner tool

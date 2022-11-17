@@ -2,6 +2,10 @@
 source release/dotnetcore
 source https://api.nuget.org/v3/index.json
 nuget FSharp.Core
+nuget Microsoft.Build 17.3.2
+nuget Microsoft.Build.Framework 17.3.2
+nuget Microsoft.Build.Tasks.Core 17.3.2
+nuget Microsoft.Build.Utilities.Core 17.3.2
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
@@ -569,7 +573,7 @@ Target.create "GenerateDocs" (fun _ ->
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-        let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=release --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+        let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s" (docsDomain @@ "content/img/logo.svg") simpleVersion
         DotNet.exec id "fsdocs" command |> ignore
 
         // Fsdocs.build (fun p -> { p with
@@ -620,7 +624,7 @@ Target.create "HostDocs" (fun _ ->
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=release --parameters root %s fsdocs-logo-src %s fsdocs-fake-version %s" docsDomain (docsDomain @@ "content/img/logo.svg") simpleVersion
+        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s" (docsDomain @@ "content/img/logo.svg") simpleVersion
         DotNet.exec id "fsdocs" command |> ignore
 
         // Fsdocs.watch id
@@ -1007,10 +1011,11 @@ Target.create "GitHubRelease" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
 
-    Git.Staging.stageAll gitDirectory
-    Git.Commit.exec gitDirectory (sprintf "Bump version to %s" simpleVersion)
-    let branch = Git.Information.getBranchName gitDirectory
-    Git.Branches.pushBranch gitDirectory "origin" branch
+    // Git.Staging.stageAll gitDirectory
+    // Git.Commit.exec gitDirectory (sprintf "Bump version to %s" simpleVersion)
+    // let branch = "bump-version-to-" + simpleVersion
+    // Git.Branches.checkoutNewBranch gitDirectory "origin" branch
+    // Git.Branches.pushBranch gitDirectory "origin" branch
 
     Git.Branches.tag gitDirectory simpleVersion
     Git.Branches.pushTag gitDirectory url simpleVersion
