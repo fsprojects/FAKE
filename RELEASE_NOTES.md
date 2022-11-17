@@ -1,5 +1,9 @@
 # Release Notes
 
+## 6.0.0-alpha004 - 2022-11-17
+* BUGFIX: Fix build by pinning Microsoft.build packages now that .NET 7 is out and fix links in website, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2721
+* BUGFIX: Fix docs URL in Choco template., thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2718
+
 ## 6.0.0-alpha003 - 2022-11-11
 * ENHANCEMENT: Fix typos in website, thanks @CaptnCodr - https://github.com/fsprojects/FAKE/pull/2712
 * BUGFIX: Update Paket.Core to support .NET 7, thanks @mk185147 and @michalkovy - https://github.com/fsprojects/FAKE/issues/2708
