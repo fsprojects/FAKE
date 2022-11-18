@@ -1039,9 +1039,9 @@ Target.create "GitHubRelease" (fun _ ->
     Git.Branches.pushBranch gitDirectory "origin" branch
 
     // when we release the GitHub module, this will be replaced with GitHub.createPullRequest API
-    let pullRequest = new NewPullRequest((sprintf "Bump version to %s" simpleVersion), "bump-version-to-6.0.0-alpha004", "master")
+    let pullRequest = new NewPullRequest(bumpVersionMessage, branch, "master")
     let pullRequestTask (client: GitHubClient) =
-        client.PullRequest.Create("fsprojects", "FAKE", pullRequest) |> Async.AwaitTask |> Async.RunSynchronously
+        client.PullRequest.Create(githubReleaseUser, gitName, pullRequest) |> Async.AwaitTask |> Async.RunSynchronously
         
     GitHub.createClientWithToken token
     |> Async.RunSynchronously
