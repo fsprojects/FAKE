@@ -445,3 +445,24 @@ module GitHub =
 
             ()
         }
+
+    /// <summary>
+    /// Create a pull request on the specified repository.
+    /// </summary>
+    ///
+    /// <param name="owner">The owner of the repository - GitHub handle</param>
+    /// <param name="repoName">The repository name</param>
+    /// <param name="pullRequest">The pull request information, including source and destination branches</param>
+    /// <param name="client">The GitHub client to use for communication</param>
+    /// <example>
+    /// <code lang="fsharp">
+    /// let pullRequest = new PullRequest("Bump FAKE runner version", "version-branch", "master")
+    ///
+    /// GitHub.createClientWithToken token
+    /// |> GitHub.createPullRequest "fsprojects" "fake" pullRequest
+    /// |> Async.RunSynchronously
+    /// </code>
+    /// </example>
+    let createPullRequest owner repoName (pullRequest: NewPullRequest) (client: Async<GitHubClient>) =
+        retryWithArg 5 client
+        <| fun client' -> async { return Async.AwaitTask <| client'.PullRequest.Create(owner, repoName, pullRequest) }
