@@ -50,4 +50,20 @@ let tests =
 
               let cmd = args |> Arguments.toStartInfo
               Expect.stringContains (file.ToLower()) "paket" "Expected paket"
-              Expect.equal cmd "push testfile" "expected push command line" ]
+              Expect.equal cmd "push testfile" "expected push command line"
+          testCase "Test push --ignoreConflicts is not missing"
+          <| fun _ ->
+              let cp =
+                  Paket.createProcess (
+                      Paket.StartType.PushFile({ Paket.PaketPushDefaults() with IgnoreConflicts = true }, "testfile")
+                  )
+
+              let file, args =
+                  match cp.Command with
+                  | RawCommand (file, args) -> file, args
+                  | _ -> failwithf "expected RawCommand"
+                  |> ArgumentHelper.checkIfMono
+
+              let cmd = args |> Arguments.toStartInfo
+              Expect.stringContains (file.ToLower()) "paket" "Expected paket"
+              Expect.equal cmd "push --ignoreConflicts testfile" "expected push command line" ]
