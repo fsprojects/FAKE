@@ -42,7 +42,7 @@
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
         </a>
         <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-            <span>6.0.0-alpha004</span>
+            <span>6.0.0-beta001</span>
         </div>
         <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
                 @click="open = true">
@@ -763,6 +763,169 @@
             <div>
               <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
                 <p>
+                  <a id="createPullRequest">
+                    <a href="#createPullRequest">
+                      <code><span>GitHub.createPullRequest&#32;<span>owner&#32;repoName&#32;pullRequest&#32;client</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="9">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>GitHub.createPullRequest&#32;<span>owner&#32;repoName&#32;pullRequest&#32;client</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        owner
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The owner of the repository - GitHub handle
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        repoName
+                      </b>
+                      :
+                      <code>string</code>
+                       - 
+                      The repository name
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        pullRequest
+                      </b>
+                      :
+                      <code><a href="https://docs.microsoft.com/dotnet/api/octokit.newpullrequest">NewPullRequest</a></code>
+                       - 
+                      The pull request information, including source and destination branches
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        client
+                      </b>
+                      :
+                      <code><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<a href="https://docs.microsoft.com/dotnet/api/octokit.githubclient">GitHubClient</a>&gt;</span></code>
+                       - 
+                      The GitHub client to use for communication
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                  <span>
+                    Returns: 
+                    <code><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<a href="https://docs.microsoft.com/dotnet/api/octokit.pullrequest">PullRequest</a>&gt;</span>&gt;</span></code>
+                  </span>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Api.GitHub.createPullRequest`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Api.GitHub.createPullRequest\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Api.GitHub/GitHub.fs#L466-466" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Create a pull request on the specified repository.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  owner
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The owner of the repository - GitHub handle
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  repoName
+                </span>
+                :
+                <code>string</code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The repository name
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  pullRequest
+                </span>
+                :
+                <code><a href="https://docs.microsoft.com/dotnet/api/octokit.newpullrequest">NewPullRequest</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The pull request information, including source and destination branches
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  client
+                </span>
+                :
+                <code><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<a href="https://docs.microsoft.com/dotnet/api/octokit.githubclient">GitHubClient</a>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  The GitHub client to use for communication
+                </p>
+              </dd>
+            </dl>
+            <dl class="fsdocs-returns">
+              <dt>
+                <span class="fsdocs-return-name">
+                  Returns: 
+                </span>
+                <code><span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<span><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-control-fsharpasync-1">Async</a>&lt;<a href="https://docs.microsoft.com/dotnet/api/octokit.pullrequest">PullRequest</a>&gt;</span>&gt;</span></code>
+              </dt>
+              <dd class="fsdocs-return-docs"></dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ let pullRequest = new PullRequest(&quot;Bump FAKE runner version&quot;, &quot;version-branch&quot;, &quot;master&quot;)
+
+ GitHub.createClientWithToken token
+ |&gt; GitHub.createPullRequest &quot;fsprojects&quot; &quot;fake&quot; pullRequest
+ |&gt; Async.RunSynchronously</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+                <p>
                   <a id="createRelease">
                     <a href="#createRelease">
                       <code><span>GitHub.createRelease&#32;<span>owner&#32;repoName&#32;tagName&#32;setParams&#32;client</span></span></code>
@@ -770,7 +933,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="9">
+              <div class="fsdocs-tip" id="10">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.createRelease&#32;<span>owner&#32;repoName&#32;tagName&#32;setParams&#32;client</span></span></code>
@@ -935,7 +1098,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+              <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
                 <p>
                   <a id="downloadAsset">
                     <a href="#downloadAsset">
@@ -944,7 +1107,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="10">
+              <div class="fsdocs-tip" id="11">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.downloadAsset&#32;<span>id&#32;destination&#32;release</span></span></code>
@@ -1065,7 +1228,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+              <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
                 <p>
                   <a id="downloadAssets">
                     <a href="#downloadAssets">
@@ -1074,7 +1237,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="11">
+              <div class="fsdocs-tip" id="12">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.downloadAssets&#32;<span>destination&#32;release</span></span></code>
@@ -1173,7 +1336,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
+              <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
                 <p>
                   <a id="draftNewRelease">
                     <a href="#draftNewRelease">
@@ -1182,7 +1345,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="12">
+              <div class="fsdocs-tip" id="13">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.draftNewRelease&#32;<span>owner&#32;repoName&#32;tagName&#32;prerelease&#32;notes&#32;client</span></span></code>
@@ -1369,7 +1532,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+              <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
                 <p>
                   <a id="getLastRelease">
                     <a href="#getLastRelease">
@@ -1378,7 +1541,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="13">
+              <div class="fsdocs-tip" id="14">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.getLastRelease&#32;<span>owner&#32;repoName&#32;client</span></span></code>
@@ -1499,7 +1662,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+              <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
                 <p>
                   <a id="getReleaseByTag">
                     <a href="#getReleaseByTag">
@@ -1508,7 +1671,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="14">
+              <div class="fsdocs-tip" id="15">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.getReleaseByTag&#32;<span>owner&#32;repoName&#32;tagName&#32;client</span></span></code>
@@ -1651,7 +1814,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+              <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
                 <p>
                   <a id="publishDraft">
                     <a href="#publishDraft">
@@ -1660,7 +1823,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="15">
+              <div class="fsdocs-tip" id="16">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.publishDraft&#32;<span>release</span></span></code>
@@ -1737,7 +1900,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+              <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
                 <p>
                   <a id="uploadFile">
                     <a href="#uploadFile">
@@ -1746,7 +1909,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="16">
+              <div class="fsdocs-tip" id="17">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.uploadFile&#32;<span>fileName&#32;release</span></span></code>
@@ -1845,7 +2008,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+              <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
                 <p>
                   <a id="uploadFiles">
                     <a href="#uploadFiles">
@@ -1854,7 +2017,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="17">
+              <div class="fsdocs-tip" id="18">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>GitHub.uploadFiles&#32;<span>fileNames&#32;release</span></span></code>
@@ -2021,7 +2184,7 @@
             <div class="mt-10 mx-auto w-full">
                 <p>© FAKE. All rights reserved | Version:
                     <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                        <span>6.0.0-alpha004</span>
+                        <span>6.0.0-beta001</span>
                     </a>
                 </p>
             </div>
