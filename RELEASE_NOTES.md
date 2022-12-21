@@ -1,5 +1,10 @@
 # Release Notes
 
+## 6.0.0-beta001 - 2022-12-21
+* BUGFIX: Error detecting msbuild version on Linux, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/issues/2709
+* ENHANCEMENT: Add ignoreConflicts parameter to paket push, thanks @gdziadkiewicz - https://github.com/fsprojects/FAKE/pull/2720
+* ENHANCEMENT: Add GitHub API to create a pull request, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2724
+
 ## 6.0.0-alpha004 - 2022-11-17
 * BUGFIX: Fix build by pinning Microsoft.build packages now that .NET 7 is out and fix links in website, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2721
 * BUGFIX: Fix docs URL in Choco template., thanks @yazeedobaid - https://github.com/fsprojects/FAKE/pull/2718
