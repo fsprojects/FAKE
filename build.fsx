@@ -59,6 +59,8 @@ open Fake.Core.TargetOperators
 open System.Net.Http
 open Microsoft.Deployment.DotNet.Releases
 open Fake.JavaScript
+open Octokit
+open Octokit.Internal
 
 // ****************************************************************************************************
 // ------------------------------------------- Definitions -------------------------------------------
@@ -1011,12 +1013,6 @@ Target.create "GitHubRelease" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
 
-    // Git.Staging.stageAll gitDirectory
-    // Git.Commit.exec gitDirectory (sprintf "Bump version to %s" simpleVersion)
-    // let branch = "bump-version-to-" + simpleVersion
-    // Git.Branches.checkoutNewBranch gitDirectory "origin" branch
-    // Git.Branches.pushBranch gitDirectory "origin" branch
-
     Git.Branches.tag gitDirectory simpleVersion
     Git.Branches.pushTag gitDirectory url simpleVersion
 
@@ -1033,7 +1029,24 @@ Target.create "GitHubRelease" (fun _ ->
     |> GitHub.draftNewRelease githubReleaseUser gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
-    |> Async.RunSynchronously)
+    |> Async.RunSynchronously
+    
+    let bumpVersionMessage = (sprintf "Bump version to %s" simpleVersion)
+    let branch = "bump-version-to-" + simpleVersion
+    Git.Staging.stageAll ".config"
+    Git.Commit.exec gitDirectory bumpVersionMessage
+    Git.Branches.checkoutNewBranch gitDirectory "master" branch
+    Git.Branches.pushBranch gitDirectory "origin" branch
+
+    // when we release the GitHub module, this will be replaced with GitHub.createPullRequest API
+    let pullRequest = new NewPullRequest(bumpVersionMessage, branch, "master")
+    let pullRequestTask (client: GitHubClient) =
+        client.PullRequest.Create(githubReleaseUser, gitName, pullRequest) |> Async.AwaitTask |> Async.RunSynchronously
+        
+    GitHub.createClientWithToken token
+    |> Async.RunSynchronously
+    |> pullRequestTask
+    |> ignore)
 
 // ----------------------------------------------------------------------------------------------------
 // Artifact targets; Preparing artifacts for release from existing artifacts
