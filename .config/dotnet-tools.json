@@ -14,12 +14,6 @@
         "paket"
       ]
     },
-    "fake-cli": {
-      "version": "6.0.0-alpha004",
-      "commands": [
-        "fake"
-      ]
-    },
     "fantomas": {
       "version": "5.0.5",
       "commands": [
@@ -30,6 +24,12 @@
       "version": "16.0.1",
       "commands": [
         "fsdocs"
+      ]
+    },
+    "fake-cli": {
+      "version": "6.0.0-beta001",
+      "commands": [
+        "fake"
       ]
     }
   }
