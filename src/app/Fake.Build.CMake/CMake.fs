@@ -204,10 +204,8 @@ module CMake =
             CreateProcess.fromRawCommandLine cmakeExe arguments
             |> CreateProcess.withWorkingDirectory binaryDir
             |> CreateProcess.withTimeout (timeout)
-            |> Proc.run
 
-        if result.ExitCode <> 0 then
-            failwithf $"CMake failed with exit code %i{result.ExitCode}."
+        result
 
     let internal getGenerateArguments parameters =
         // CMake expects an existing source directory.
