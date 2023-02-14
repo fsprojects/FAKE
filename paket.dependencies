@@ -1,4 +1,3 @@
-version 5.5
 source https://api.nuget.org/v3/index.json
 content: none
 
@@ -107,13 +106,11 @@ group netcore
     nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
     nuget MSBuild.StructuredLogger
-        nuget Microsoft.Build
-        nuget Microsoft.Build.Framework
-        nuget Microsoft.Build.Tasks.Core
-        nuget Microsoft.Build.Utilities.Core
+    nuget Microsoft.Build
+    nuget Microsoft.Build.Framework
+    nuget Microsoft.Build.Tasks.Core
+    nuget Microsoft.Build.Utilities.Core
     nuget BlackFox.VsWhere
-
-
     nuget System.Runtime.Loader
     nuget System.Collections.Immutable
     nuget System.Data.SqlClient
