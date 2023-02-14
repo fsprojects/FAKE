@@ -1,4 +1,3 @@
-version 5.5
 source https://api.nuget.org/v3/index.json
 content: none
 
