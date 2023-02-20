@@ -1,5 +1,8 @@
 # Release Notes
 
+## 6.0.0 - 2023-02-20
+* ENHANCEMENT: Site UI fixes and documentation link fixes.
+
 ## 6.0.0-beta001 - 2022-12-21
 * BUGFIX: Error detecting msbuild version on Linux, thanks @yazeedobaid - https://github.com/fsprojects/FAKE/issues/2709
 * ENHANCEMENT: Add ignoreConflicts parameter to paket push, thanks @gdziadkiewicz - https://github.com/fsprojects/FAKE/pull/2720
