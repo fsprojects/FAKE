@@ -4,12 +4,13 @@
         <OutputType>Exe</OutputType>
         <ToolCommandName>fake</ToolCommandName>
         <TargetFramework>net6.0</TargetFramework>
+        <RollForward>Major</RollForward>
         <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
         <!-- Debian packaging -->
         <Prefix>/opt/fake</Prefix>
         <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/debian-postinst.sh'))</PostInstallScript>
         <NoWarn>FS3186</NoWarn>
-      <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
     </PropertyGroup>
 
     <ItemGroup>
