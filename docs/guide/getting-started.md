@@ -12,7 +12,7 @@ Table of Content:
     * [Minimal Example](#Minimal-Example)
     * [Compiling and Building your .NET Application](#Compiling-and-Building-your-NET-Application)
         * [Getting Started](#Getting-Started)
-        * [Cleaning the Last Build Output](#Cleaning-the-Last-Build-Output)
+        * [Cleaning Output From a Previous Build](#Cleaning-Output-From-a-Previous-Build)
         * [Compiling the Application](#Compiling-the-Application)
         * [Compiling Test Projects](#Compiling-Test-Projects)
         * [Running the Tests with NUnit](#Running-the-Tests-with-NUnit)
@@ -28,28 +28,27 @@ your C# or F# projects, and finally how to automatically run NUnit tests on your
 
 > If you are interested in what FAKE actually is, see our [<ins>FAQ</ins>](/guide/what-is-fake.html).
 
-But before going into these details, let's first discuss the possible ways you can use to run FAKE.
+But before going into these details, let's first discuss the possible ways you can run FAKE.
 
 
 ## Different ways to run FAKE
 FAKE is built with modularity in mind, in which it doesn't constrain you with one way to write or run your build
-scripts. Over the years, FAKE evolves and allowed users to consume and run FAKE in multiple ways, the currently
-used ways are:
+scripts. Over the years, FAKE evolved and allowed users to consume and run FAKE in multiple ways, namely:
 
-* Run FAKE using FAKE runner
-* Run FAKE using F# interactive (FSI)
+* Run FAKE using the FAKE runner
+* Run FAKE using FSI (F# interactive)
 * Run FAKE using a dedicated build project
 
 Let's discuss each approach.
 
-### Run FAKE using FAKE runner
+### Run FAKE using the FAKE runner
 
-The simplest way to run a build script is to use the FAKE runner. The FAKE runner was the de-facto for running build
-scripts in FAKE, because it offers multiple features that were not possible before, including automatic resolution
-of dependencies using NuGet or Paket dependency managers and caching which makes FAKE super fast, among others.
+The simplest way to run a build script is to use the FAKE runner. The FAKE runner was the de-facto standard for running build
+scripts in FAKE, because it offers multiple features that were not possible before, including, but not limited to, automatic resolution
+of dependencies using the NuGet or Paket dependency managers and caching, which makes FAKE super fast.
 
-Assuming you have already installed FAKE runner (please see [<ins>Install FAKE Runner</ins>](#Install-FAKE-Runner) section below
-on how to install FAKE runner). To get started with FAKE runner, create an F# interactive script (`build.fsx`):
+Here, we're assuming you have already installed the FAKE runner (please see [<ins>Install FAKE Runner</ins>](#Install-FAKE-Runner) section below
+on how to install the FAKE runner). To get started with the FAKE runner, create an F# interactive script (e.g.: `build.fsx`):
 
 ```fsharp
 #r "paket:
@@ -68,19 +67,19 @@ Target.runOrDefault "Hello"
 ```
 
 Next, in a command line interface, navigate to the script directory and enter the following command (assuming
-you installed FAKE runner as a global .Net tool):
+you installed the FAKE runner as a global [.NET tool](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)):
 
 ```shell
 fake build
 ```
 
-You should see the message `hello from FAKE!` printed on the screen! You have ran your first script in FAKE!
+You should see the message `hello from FAKE!` printed on the screen! You just ran your first script in FAKE!
 
-The above script uses Paket dependency manager to resolve and download FAKE's tagret module, which allows you
+The above script uses the Paket dependency manager to resolve and download FAKE's target module, which allows you
 to define targets and organize your script. You can check [<ins>targets module documentation</ins>](/guide/core-targets.html) 
-for more info. After resolving the target module, the script open the module and define a tagret named `hello` 
+for more information. After resolving the target module, the script opens the module and defines a target named `hello` 
 which prints a message to standard output. Finally, the final statement in the script is the entry point of your
-script which designate the `Hello` target as the default target to run.
+script which designates the `Hello` target as the default target to run.
 
 The automatic resolution of dependencies, caching and many other features are provided by the FAKE runner under the hood
 to make running your script a breeze.
@@ -88,16 +87,16 @@ to make running your script a breeze.
 
 ### Run FAKE using F# interactive (FSI)
 
-Next, let's discuss the second way, which it utilizing FSI to run our script. FAKE runner was written to provide
+Next, let's discuss the second way, which is utilizing FSI to run our script. The FAKE runner was written to provide
 features that were not available back then in FSI, including the dependencies resolution using a dependency manager
-such as NuGet or Paket. However, FSI has evolved as well and now it offers these capabilities.
+such as NuGet or Paket. However, FSI has evolved as well and now it offers these capabilities too.
 
-From the previous way, note that the script is just a plain F# interactive file! Nothing special about it! However,
-to successfully run this script using FSI we need to tell FSI that it need to use Paket dependency manager to resolve
-the dependency we specified (FAKE's tagret module). Paket has step-by-step guide on how to let FSI knows about it, please
-see [<ins>Paket's F# Interactive Integration Guide</ins>](https://fsprojects.github.io/Paket/fsi-integration.html).
+Note that in the previous way the script is just a plain F# interactive file, nothing special about it! However,
+to actually successfully run this script using FSI we need to tell FSI that it needs to use the Paket dependency manager to resolve
+the dependency we specified (FAKE's target module). Paket has a
+[step-by-step guide on how to let FSI know about it](https://fsprojects.github.io/Paket/fsi-integration.html).
 
-After configuring Paket, now you are ready to run your script, enter the following command to run it:
+After configuring Paket, you are ready to run your script. Enter the following command to do so:
 
 ```shell
 dotnet si build.fsx --compilertool:"~/.nuget/packages/fsharp.dependencymanager.paket/6.0.0-alpha055/lib/netstandard2.0"
@@ -109,25 +108,26 @@ dotnet si build.fsx --compilertool:"~/.nuget/packages/fsharp.dependencymanager.p
 The last method we will discuss is using a dedicated build project to host your build script and its
 dependencies. The steps you need to take include:
 
-* Create a new fsharp console project (`build.fsproj`)
-* Put your existing build script in the project (`build.fs`)
-* Include your dependencies in the project using paket or nuget
+* Create a new fsharp console project (e.g.: `build.fsproj`)
+* Add your build script to the project (e.g.: `build.fs`)
+* Add your dependencies to the project using Paket or NuGet
 * Add an `[<EntryPoint>]` to your script
-* Call your project using dotnet run. Probably from a `build.cmd` or `build.sh` file
+* Call your project using `dotnet run`. Probably from a `build.cmd` or `build.sh` file
 
-This method utilize .Net project managment and dependecy resolution and offers you possibility to stay
-within project based approach. The build project is a normal .Net console application that you can manage
-dependencies to it using .Net command line, and run it also using .Net command line.
+This method utilizes the standard .NET project management and dependency resolution and offers you the possibility to remain
+in a familiar project-based build approach. That being the case, you can use the dotnet CLI as usual to add/remove dependencies
+(packages) and to run the project.
 
-The advantages of this approach is that, it saves you from cases in which FAKE runner or FSI may encouner
-running your build script. Specifically, dependency resolution and when upgrading to a newer version of
-.Net SDk. This approach is becoming incresingly adopted in FAKE community. Some of the projects that are
+The advantage of this approach is that it is in sync with the latest .NET SDK features which, in a given moment, might be not yet
+handled by the available FAKE runner or FSI versions, making it easier to migrate a project to a newer .NET version. For example, one such feature
+could be related to dependency (packages) resolution.
+This approach is becoming increasingly popular in the FAKE community. Some of the projects that are
 using this approach are:
 
 * [<ins>TheAngryByrd/MiniScaffold</ins>](https://github.com/TheAngryByrd/MiniScaffold)
 * [<ins>CompositionalIT/SAFE-Dojo</ins>](https://github.com/CompositionalIT/SAFE-Dojo)
 
-You can examine these two repository to get to know the approach and how to implement it in your projects.
+You can examine these two repositories to get to know the approach and how to implement it in your own projects.
 
 > Thanks to [<ins>@baronfel</ins>](https://github.com/baronfel) and [<ins>@aboy021</ins>](https://github.com/aboy021) for
 > proposing this solution and discussing it in this StackOverflow question: 
@@ -199,7 +199,7 @@ There are various ways to install FAKE:
 
 4. Download the portable zip.
    We distribute a .NET Core version of FAKE without the .NET Core runtime.
-   This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.
+   This version assumes an existing .NET SDK installation while the non-portable installation doesn't.
 
    Just use the `-portable` version of [<ins>the downloads</ins>](https://github.com/fsharp/FAKE/releases), extract it
    and execute.
@@ -208,8 +208,8 @@ There are various ways to install FAKE:
     dotnet fake.dll
     ```
 
-   The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
-   The disadvantage is that you need to have a dotnet sdk installed and that you need to prefix all calls
+   The advantage of this method is that it is portable (i.e. distributes the same binaries) and requires less bandwidth.
+   The disadvantage is that you need to have a .NET SDK installed and that you need to prefix all calls
    with `dotnet /full/path/to/fake.dll <args>` which is equal to `fake <args>` in other installation methods.
 
 5. Download the runtime specific zip.
@@ -227,13 +227,13 @@ There are various ways to install FAKE:
    ```shell
    fake --help
    ```
-   This is basically it. You can now execute fake commands.
+   This is basically it. You can now execute FAKE commands.
 
 
-### One note on Intellisense
+### One note on _Intellisense_
 
-This section is to clarify when and how the intellisense updates when you add new modules (short form: Delete
-the `<script>.fsx.lock` file and re-run fake to update all files).
+This section is to clarify how to get _intellisense_ support updated after adding new modules (TL; DR: delete
+the `<script>.fsx.lock` file and re-run FAKE to update all files).
 
 > We recommend [<ins>Visual Studio Code</ins>](https://code.visualstudio.com/) with
 > the [<ins>Ionide extension</ins>](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp)
@@ -247,11 +247,10 @@ the `<script>.fsx.lock` file and re-run fake to update all files).
   #load "./.fake/myscript.fsx/intellisense.fsx"
   ```
 
-  Where you can add all the [<ins>fake modules</ins>](/guide/fake-modules.html) you need (work through the
-  example below if you see
-  this the first time).
+  In this script, you can add all the [<ins>FAKE modules</ins>](/guide/fake-modules.html) you want or need (work through the
+  examples in the next section if this is new to you).
 
-* run the script to restore your dependencies and setup the intellisense support: `fake run myscript.fsx`.
+* just run the script to restore your dependencies and get _intellisense_ support: `fake run myscript.fsx`.
   This might take some seconds depending on your internet connection
 
 > The warning `FS0988: Main module of program is empty: nothing will happen when it is run` indicates that you have not
@@ -259,16 +258,16 @@ the `<script>.fsx.lock` file and re-run fake to update all files).
 
 * now open the script in VS Code with ionide-fsharp extension or Visual Studio.
 
-> If you change your dependencies you need to delete `myscript.fsx.lock` and run the script again for
-> intellisense to update. Intellisense is shown for the full framework while the script is run as
-> `netcoreapp20` therefore intellisense might show APIs which are not actually usable.
+Now if you change your dependencies, you'll need to delete `myscript.fsx.lock` and run the script again in order for
+_intellisense_ to update. Keep in mind that _intellisense_ will show suggestions for the whole framework while the script is run as
+`netcoreapp20`, therefore _intellisense_ might show APIs which are not actually usable.
 
 
 ## Examples
 
-This section offer detailed steps to write a FAKE script to compile, test and run a .Net application. We will start
-with a meinimal example as a refresh for FAKE syntax and script structure. Then discuss the .Net application build
-script, and finally, we will close this section with some advanced examples of FAKE scripts. Let's dive in.
+This section offers detailed steps to write a FAKE script to compile, test and run a .NET application. We'll start
+with a minimal example as a refresher for the FAKE syntax and script structure. Then discuss the .NET application build
+script, and, finally, we'll close this section with some advanced examples of FAKE scripts. Let's dive in.
 
 ### Minimal Example
 
@@ -306,11 +305,11 @@ Target.runOrDefault "Deploy"
 ```
 
 This is the minimal FAKE script, which has the following major parts:
-1. The `#r` directive at the top define the dependencies the project need.
-2. The `// *** Define Targets ***` section define targets using FAKE target module. These targets will hold your build logic.
-3. The `// *** Define Dependencies ***` section define the dependencies between your targets. In this example we have specified
-that to run `Deploy`, `Build` must be run first, and to run `Build`, `Clean` must be run first. So order is `Clean` then `Build`
-then `Deploy`.
+1. The `#r` directive at the top defines the dependencies the project needs.
+2. The `// *** Define Targets ***` section defines targets using the FAKE target module. These targets will hold your build logic.
+3. The `// *** Define Dependencies ***` section defines the dependencies between your targets. In this example we have specified
+that in order to run `Deploy`, `Build` must be run first, but in order to run `Build`, `Clean` must be run first. So the order is first
+`Clean` then `Build` then `Deploy`.
 4. The final statements designate the `Deploy` target as the default target to run.
 
 Run this file by executing:
@@ -321,12 +320,12 @@ fake run build.fsx
 
 ### Compiling and Building your .NET Application
 
-This example will guide you by adding a fake script to your existing .NET application.
+This example will guide you through adding a FAKE script to your existing .NET application.
 
 #### Getting Started
 
-Initially we need to create a file called `build.fsx` where all our build-logic will reside.
-Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:
+Initially we need to create a file called `build.fsx` where all our build logic will reside.
+Create a new file with Visual Studio or Visual Studio Code (with Ionide) and paste in the following content:
 
 ```fsharp
 #r "paket:
@@ -334,12 +333,12 @@ nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 ```
 
-This is all we need for now to declare that we need the `Fake.Core.Target` module and want to enable intellisense.
+This is all we need for now to declare that we need the `Fake.Core.Target` module and want to enable _intellisense_.
 
-Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and we will
-have intellisense enabled (you might need to reopen the script file on some editors).
+Now run `fake run build.fsx` to make FAKE prepare our environment. Now our IDE can load the dependencies and we will
+have _intellisense_ enabled (you might need to reopen/reload the script file on some editors other than VS Code).
 
-Now that we have setup our basic environment to edit the script file we can add our first target:
+Now that we have set up our basic environment to edit the script file we can define our first target:
 
 ```fsharp
 #r "paket:
@@ -358,17 +357,17 @@ Target.runOrDefault "Default"
 ```
 
 As you can see the code is really simple. The first few lines (`nuget Fake.Core.Target` and `open Fake.Core`) load the
-fake modules we need and this is vital for all build scripts to support creating and running targets. The `#load` line
-is optional but a good way to make the IDE aware of all the modules (for intellisense and IDE support)
+FAKE modules we need and this is vital for all build scripts to support creating and running targets. The `#load` line
+is optional but a good way to make the IDE aware of all the modules (for _intellisense_ and IDE support)
 
-After this header the *Default* target is defined. A target definition contains two important parts. The first is the
-name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
+After this header, the *Default* target is defined. A target definition contains two important parts: the first one is the
+name of the target (here "Default") and the second one is an action (here, a simple trace logging of "Hello world").
 
-The last line runs the "Default" target - which means it executes the defined action of the target.
+The last line runs the "Default" target -- which means it executes the defined action of the target.
 
-Try running your new target via `fake run build.fsx` or the shortcut for a file called `build.fsx`: `fake build`
+Try running your new target with `fake run build.fsx` or the shortcut for a file called `build.fsx`: `fake build`
 
-#### Cleaning the Last Build Output
+#### Cleaning Output From a Previous Build
 
 A typical first step in most build scenarios is to clean the output of the last build. We can achieve this in two steps:
 
@@ -384,9 +383,9 @@ nuget Fake.Core.Target //"
 Now we need to remove the `build.fsx.lock` file and run `fake build` in order to restore the newly
 added `Fake.IO.FileSystem` module.
 
-Since we now can rely on intellisense we can easily discover the various modules and functions in `Fake.IO`, for example
-the `Shell` module provides various functions you expect from regular shell scripting, we will use `Shell.cleanDir`
-which will ensure the given directory is empty by deleting everything within or creating the directory if required:
+Since we now can rely on _intellisense_ we can easily discover the various modules and functions in `Fake.IO`, for example
+the `Shell` module provides various functions you expect from regular shell scripting. We will use `Shell.cleanDir`
+which will ensure the given directory is empty by deleting everything in it or creating the directory if it doesn't exist yet:
 
 ```fsharp
 #r "paket:
@@ -419,7 +418,7 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Default"
 ```
 
-> You can explore the APIs for example by writing `Fake.IO.` and waiting for intellisense (or pressing
+> You can explore the APIs for example by writing `Fake.IO.` and waiting for _intellisense_ suggestions (or pressing
 `Ctrl+Space`). You can remove `Fake.IO` once you put `open Fake.IO` on top.
 
 We introduced some new concepts in this snippet. At first we defined a global property called `buildDir` with the
@@ -428,8 +427,8 @@ relative path of a temporary build folder.
 In the `Clean` target we use the `Shell.cleanDir` task to clean up this build directory. As explained above this simply
 deletes all files in the folder or creates the directory if necessary.
 
-In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *
-Clean* is a prerequisite of *Default* and will run before the *Default* target is executed:
+In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words,
+*Clean* is a prerequisite of *Default* and will run before the *Default* target is executed:
 
 ![alt text](/content/img/gettingstarted/afterclean.png "We introduced a Clean target")
 
@@ -440,9 +439,9 @@ with MSBuild.
 
 Again we need a new module for this, namely `Fake.DotNet.MSBuild`.
 
-Just like before add the required module on top via `nuget Fake.DotNet.MSBuild`, delete the `build.fsx.lock` file and
-run the script.
-Now edit the script so it looks like this:
+Just like before, add the required module to the top of the script with `nuget Fake.DotNet.MSBuild`, delete the `build.fsx.lock`
+file and run the script again.
+Edit the script so that it looks like this:
 
 ```fsharp
 #r "paket:
@@ -487,12 +486,12 @@ Target.runOrDefault "Default"
 We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build
 output will be copied to `buildDir`.
 
-In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern (
+In order to find the right project files, FAKE scans the folder *src/app/* and all subfolders with the given pattern (
 the `!!` operator was imported from `Fake.IO.FileSystem` via `open Fake.IO.Globbing.Operators`). Therefore a similar
 FileSet definition like in NAnt or MSBuild (see [<ins>project page</ins>](https://github.com/fsharp/FAKE) for details)
 is used.
 
-In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs
+In addition, the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs
 *Clean* as a prerequisite.
 
 This means the execution order is: Clean ==> BuildApp ==> Default.
@@ -552,8 +551,8 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Default"
 ```
 
-This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we put
-the target into our build order.
+This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we
+inserted this target into our build pipeline.
 
 #### Running the Tests with NUnit
 
@@ -621,8 +620,7 @@ Target.runOrDefault "Default"
 Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE
 automatically tries to locate the runner in one of your subfolders. See
 the [<ins>NUnit3 task documentation</ins>](/reference/fake-dotnet-testing-nunit3.html) if you need to specify the
-tool path
-explicitly.
+tool path explicitly.
 
 The mysterious part **`(fun p -> ...)`** simply overrides the default parameters of the NUnit task and allows to specify
 concrete parameters.
@@ -639,7 +637,7 @@ You can check these repositories for advanced usage of FAKE:
 
 ## Runtime Assemblies in FAKE Runner
 
-FAKE runner uses **.Net6** runtime assemblies when compiling and running a script.
+FAKE runner uses **.NET6** runtime assemblies when compiling and running a script.
 
 ## Get to Know FAKE CLI
 
@@ -648,16 +646,13 @@ commands and options
 
 ## What's Next?
 
-* Add more modules specific to your application and discover the Fake-APIs
-* look at the [<ins>FAQ</ins>](//articles/what-is-fake.html) for some commonly asked questions.
-* look at some of the samples in [<ins>FakeBuild</ins>](https://github.com/FakeBuild)
-* look at [<ins>FAKEs own build script</ins>](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples
-  across the F#
-  ecosystem.
-* Add fake build scripts to your projects and let us know.
-* Automate stuff with FAKE and use standalone scripts.
-* Write your own modules and let us know - we love to add them to the navigation or announce them
-  on [<ins>twitter</ins>](https://twitter.com/fsharpMake).
+* Add more modules specific to your application and discover the FAKE APIs
+* Read the [<ins>FAQ</ins>](//articles/what-is-fake.html) for some commonly asked questions
+* Take a look at some of the samples in [<ins>FakeBuild</ins>](https://github.com/FakeBuild)
+* Check out [<ins>FAKEs own build script</ins>](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples
+  across the F# ecosystem
+* Add FAKE build scripts to your own projects and let us know
+* Automate stuff with FAKE and use standalone scripts
+* Write your own modules and let us know -- we love to add them to the navigation or announce them
+  on [<ins>twitter</ins>](https://twitter.com/fsharpMake)
 * Contribute :)
-
-
