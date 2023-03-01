@@ -32,11 +32,17 @@ module Fsdocs =
             /// Save images referenced in docs
             SaveImages: bool option
 
-            /// Don't add line numbers, default is to add line number.
-            NoLineNumbers: bool option
+            /// Add line numbers
+            LineNumbers: bool option
 
             /// Additional substitution parameters for templates
             Parameters: seq<string * string> option
+
+            /// Disable project cracking.
+            IgnoreProjects : bool option
+
+            ///  In API doc generation qualify the output by the collection name, e.g. 'reference/FSharp.Core/...' instead of 'reference/...' .
+            Qualify : bool option
 
             /// The tool will also generate documentation for non-public members
             NoPublic: bool option
@@ -80,8 +86,10 @@ module Fsdocs =
               NoApiDocs = None
               Eval = None
               SaveImages = None
-              NoLineNumbers = None
+              LineNumbers = None
               Parameters = None
+              IgnoreProjects = None
+              Qualify = None
               NoPublic = None
               NoDefaultContent = None
               Clean = None
@@ -135,8 +143,10 @@ module Fsdocs =
         |> StringBuilder.appendIfSome buildParams.NoApiDocs (fun _ -> "--noapidocs")
         |> StringBuilder.appendIfSome buildParams.Eval (fun _ -> "--eval")
         |> StringBuilder.appendIfSome buildParams.SaveImages (fun _ -> "--saveimages")
-        |> StringBuilder.appendIfSome buildParams.NoLineNumbers (fun _ -> "--nolinenumbers")
+        |> StringBuilder.appendIfSome buildParams.LineNumbers (fun _ -> "--linenumbers")
         |> StringBuilder.appendIfSome buildParams.Parameters (fun parameters -> buildSubstitutionParameters parameters)
+        |> StringBuilder.appendIfSome buildParams.IgnoreProjects (fun _ -> "--ignoreprojects")
+        |> StringBuilder.appendIfSome buildParams.Qualify (fun _ -> "--qualify")
         |> StringBuilder.appendIfSome buildParams.NoPublic (fun _ -> "--nonpublic")
         |> StringBuilder.appendIfSome buildParams.NoDefaultContent (fun _ -> "--nodefaultcontent")
         |> StringBuilder.appendIfSome buildParams.Clean (fun _ -> "--clean")

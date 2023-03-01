@@ -76,15 +76,35 @@ let tests =
               "expected to call 'build --saveimages' command with saveimages parameter"
               |> Expect.equal cmd "--saveimages"
 
-          testCase "It append nolinenumbers parameter when its value is overriden"
+          testCase "It append linenumbers parameter when its value is overriden"
           <| fun _ ->
               let buildParams: Fsdocs.BuildCommandParams =
-                  { Fsdocs.BuildCommandParams.Default with NoLineNumbers = Some(true) }
+                  { Fsdocs.BuildCommandParams.Default with LineNumbers = Some(true) }
 
               let cmd = Fsdocs.buildBuildCommandParams buildParams
 
-              "expected to call 'build --nolinenumbers' command with nolinenumbers parameter"
-              |> Expect.equal cmd "--nolinenumbers"
+              "expected to call 'build --linenumbers' command with linenumbers parameter"
+              |> Expect.equal cmd "--linenumbers"
+
+          testCase "It append ignoreprojects parameter when its value is overriden"
+          <| fun _ ->
+              let buildParams: Fsdocs.BuildCommandParams =
+                  { Fsdocs.BuildCommandParams.Default with IgnoreProjects = Some(true) }
+
+              let cmd = Fsdocs.buildBuildCommandParams buildParams
+
+              "expected to call 'build --ignoreprojects' command with ignoreprojects parameter"
+              |> Expect.equal cmd "--ignoreprojects"
+
+          testCase "It append qualify parameter when its value is overriden"
+          <| fun _ ->
+              let buildParams: Fsdocs.BuildCommandParams =
+                  { Fsdocs.BuildCommandParams.Default with Qualify = Some(true) }
+
+              let cmd = Fsdocs.buildBuildCommandParams buildParams
+
+              "expected to call 'build --qualify' command with qualify parameter"
+              |> Expect.equal cmd "--qualify"
 
           testCase "It append parameters parameter when its value is overriden"
           <| fun _ ->
