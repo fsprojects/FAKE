@@ -32,11 +32,17 @@ module Fsdocs =
             /// Save images referenced in docs
             SaveImages: bool option
 
-            /// Don't add line numbers, default is to add line number.
-            NoLineNumbers: bool option
+            /// Add line numbers
+            LineNumbers: bool option
 
             /// Additional substitution parameters for templates
             Parameters: seq<string * string> option
+
+            /// Disable project cracking.
+            IgnoreProjects: bool option
+
+            ///  In API doc generation qualify the output by the collection name, e.g. 'reference/FSharp.Core/...' instead of 'reference/...' .
+            Qualify: bool option
 
             /// The tool will also generate documentation for non-public members
             NoPublic: bool option
@@ -80,8 +86,10 @@ module Fsdocs =
               NoApiDocs = None
               Eval = None
               SaveImages = None
-              NoLineNumbers = None
+              LineNumbers = None
               Parameters = None
+              IgnoreProjects = None
+              Qualify = None
               NoPublic = None
               NoDefaultContent = None
               Clean = None
@@ -109,6 +117,9 @@ module Fsdocs =
 
             /// Port to serve content for <c>http://localhost</c> serving.
             Port: int option
+
+            /// Build Commands
+            BuildCommandParams: BuildCommandParams option
         }
 
         /// Parameter default values.
@@ -116,7 +127,8 @@ module Fsdocs =
             { NoServer = None
               NoLaunch = None
               Open = None
-              Port = None }
+              Port = None
+              BuildCommandParams = None }
 
     let internal buildBuildCommandParams (buildParams: BuildCommandParams) =
         let buildSubstitutionParameters (subParameters: seq<string * string>) =
@@ -130,13 +142,15 @@ module Fsdocs =
         System.Text.StringBuilder()
         |> StringBuilder.appendIfSome buildParams.Input (sprintf "--input %s")
         |> StringBuilder.appendIfSome buildParams.Projects (fun projects ->
-            sprintf "--projects %s" (projects |> String.concat ","))
+            sprintf "--projects %s" (projects |> String.concat " "))
         |> StringBuilder.appendIfSome buildParams.Output (sprintf "--output %s")
         |> StringBuilder.appendIfSome buildParams.NoApiDocs (fun _ -> "--noapidocs")
         |> StringBuilder.appendIfSome buildParams.Eval (fun _ -> "--eval")
         |> StringBuilder.appendIfSome buildParams.SaveImages (fun _ -> "--saveimages")
-        |> StringBuilder.appendIfSome buildParams.NoLineNumbers (fun _ -> "--nolinenumbers")
+        |> StringBuilder.appendIfSome buildParams.LineNumbers (fun _ -> "--linenumbers")
         |> StringBuilder.appendIfSome buildParams.Parameters (fun parameters -> buildSubstitutionParameters parameters)
+        |> StringBuilder.appendIfSome buildParams.IgnoreProjects (fun _ -> "--ignoreprojects")
+        |> StringBuilder.appendIfSome buildParams.Qualify (fun _ -> "--qualify")
         |> StringBuilder.appendIfSome buildParams.NoPublic (fun _ -> "--nonpublic")
         |> StringBuilder.appendIfSome buildParams.NoDefaultContent (fun _ -> "--nodefaultcontent")
         |> StringBuilder.appendIfSome buildParams.Clean (fun _ -> "--clean")
@@ -156,6 +170,7 @@ module Fsdocs =
         |> StringBuilder.appendIfSome watchParams.NoLaunch (fun _ -> "--nolaunch")
         |> StringBuilder.appendIfSome watchParams.Open (sprintf "--open %s")
         |> StringBuilder.appendIfSome watchParams.Port (sprintf "--port %i")
+        |> StringBuilder.appendIfSome watchParams.BuildCommandParams buildBuildCommandParams
         |> StringBuilder.toText
         |> String.trim
 
