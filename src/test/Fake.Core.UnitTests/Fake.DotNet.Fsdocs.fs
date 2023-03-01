@@ -34,7 +34,7 @@ let tests =
               "expected to call 'build --projects src/app/Fake.Api.GitHub/Fake.Api.GitHub.fsproj,src/app/Fake.DotNet.Fsdocs/Fake.DotNet.Fsdocs.fsproj' command with projects parameter"
               |> Expect.equal
                   cmd
-                  "--projects src/app/Fake.Api.GitHub/Fake.Api.GitHub.fsproj,src/app/Fake.DotNet.Fsdocs/Fake.DotNet.Fsdocs.fsproj"
+                  "--projects src/app/Fake.Api.GitHub/Fake.Api.GitHub.fsproj src/app/Fake.DotNet.Fsdocs/Fake.DotNet.Fsdocs.fsproj"
 
           testCase "It append output parameter when its value is overriden"
           <| fun _ ->

@@ -130,7 +130,7 @@ module Fsdocs =
         System.Text.StringBuilder()
         |> StringBuilder.appendIfSome buildParams.Input (sprintf "--input %s")
         |> StringBuilder.appendIfSome buildParams.Projects (fun projects ->
-            sprintf "--projects %s" (projects |> String.concat ","))
+            sprintf "--projects %s" (projects |> String.concat " "))
         |> StringBuilder.appendIfSome buildParams.Output (sprintf "--output %s")
         |> StringBuilder.appendIfSome buildParams.NoApiDocs (fun _ -> "--noapidocs")
         |> StringBuilder.appendIfSome buildParams.Eval (fun _ -> "--eval")
