@@ -101,7 +101,7 @@ module private MSBuildExeFromVsWhere =
     open System.Diagnostics
 
     let private getAllVsPath () =
-        VsInstances.getWithPackage "Microsoft.Component.MSBuild" false
+        VsInstances.getWithPackage "Microsoft.Component.MSBuild" true
         |> List.map (fun vs -> vs.InstallationPath)
 
     let private getAllMsBuildPaths vsPath =
@@ -113,7 +113,11 @@ module private MSBuildExeFromVsWhere =
             |> Seq.choose (fun exe ->
                 if File.Exists(exe) then
                     let v = FileVersionInfo.GetVersionInfo(exe)
-                    Some(v.FileMajorPart, Path.GetDirectoryName(exe))
+
+                    Some
+                        {| IsPreRelease = v.IsPreRelease
+                           FileMajorPart = v.FileMajorPart
+                           Path = Path.GetDirectoryName(exe) |}
                 else
                     None)
             |> List.ofSeq
@@ -124,11 +128,12 @@ module private MSBuildExeFromVsWhere =
         lazy
             (getAllVsPath ()
              |> List.collect getAllMsBuildPaths
-             |> List.groupBy fst
+             |> List.sortBy (fun x -> x.IsPreRelease)
+             |> List.groupBy (fun x -> x.FileMajorPart)
              |> List.sortByDescending fst
              |> List.map (fun (v, dirs) ->
                  { Version = sprintf "%d.0" v
-                   Paths = dirs |> List.map snd }))
+                   Paths = dirs |> List.map (fun x -> x.Path) }))
 
     let getOrdered () : MSBuildEntry list = all.Value
 
