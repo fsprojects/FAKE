@@ -53,10 +53,7 @@ module internal AppVeyorInternal =
                 // because otherwise there might be recursive failure...
                 eprintfn "AppVeyor 'AddMessage' failed: %O" e
 
-    let internal quoteString str =
-        StringBuilder()
-        |> StringBuilder.appendQuotedIfNotNull Some str
-        |> StringBuilder.toText
+    let internal quoteString str = sprintf "\"%s\"" str
 
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
