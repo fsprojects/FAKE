@@ -685,7 +685,7 @@ module MSBuild =
                     value
 
             a, fileName |> Path.getFullName)
-            
+
     let internal quoteString str = sprintf "\"%s\"" str
 
     let rec private getProjectReferences (projectFileName: string) =
