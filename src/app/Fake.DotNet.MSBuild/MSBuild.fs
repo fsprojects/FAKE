@@ -1031,7 +1031,7 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %A" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath (Args.toWindowsCommandLine args)
 
         let results = System.Collections.Generic.List<ConsoleMessage>()
 
@@ -1100,7 +1100,7 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %A" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath (Args.toWindowsCommandLine args)
 
         let processResult =
             CreateProcess.fromRawCommand msBuildParams.ToolPath args
