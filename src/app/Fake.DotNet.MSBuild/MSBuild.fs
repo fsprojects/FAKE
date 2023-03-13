@@ -873,9 +873,14 @@ module MSBuild =
         |> Seq.choose id
         |> Seq.map (fun (k, v) -> "/" + k + (if String.isNullOrEmpty v then "" else ":" + v))
         |> Seq.toList
-
+        
     /// [omit]
     let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
+        let p = MSBuildParams.Create() |> setParams
+        p, fromCliArguments p.CliArguments |> Args.toWindowsCommandLine
+
+    /// [omit]
+    let buildArgs2 (setParams: MSBuildParams -> MSBuildParams) =
         let p = MSBuildParams.Create() |> setParams
         p, fromCliArguments p.CliArguments
 
@@ -1011,7 +1016,7 @@ module MSBuild =
     /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
     /// <param name="project">A string with the path to the project file to build.</param>
     let buildWithRedirect setParams project =
-        let msBuildParams, argsString = buildArgs setParams
+        let msBuildParams, argsString = buildArgs2 setParams
 
         let args = project :: argsString
 
@@ -1080,7 +1085,7 @@ module MSBuild =
     /// </example>
     let build setParams project =
         use __ = Trace.traceTask "MSBuild" project
-        let msBuildParams, argsString = buildArgs setParams
+        let msBuildParams, argsString = buildArgs2 setParams
 
         let args = project :: argsString
 
