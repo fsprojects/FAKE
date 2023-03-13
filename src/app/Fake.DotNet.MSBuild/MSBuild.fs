@@ -686,8 +686,6 @@ module MSBuild =
 
             a, fileName |> Path.getFullName)
 
-    let internal quoteString str = sprintf "\"%s\"" str
-
     let rec private getProjectReferences (projectFileName: string) =
         match projectFileName.EndsWith ".sln" with
         | true -> Set.empty
