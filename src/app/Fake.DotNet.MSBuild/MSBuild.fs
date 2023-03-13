@@ -874,7 +874,7 @@ module MSBuild =
           yield! properties ]
         |> Seq.choose id
         |> Seq.map (fun (k, v) -> "/" + k + (if String.isNullOrEmpty v then "" else ":" + v))
-        |> Args.toWindowsCommandLine
+        |> Seq.toArray
 
     /// [omit]
     let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
@@ -885,13 +885,13 @@ module MSBuild =
     let internal getVersion =
         let cache = System.Collections.Concurrent.ConcurrentDictionary<string, Version>()
 
-        fun (exePath: string) (callMsbuildExe: string -> string) ->
+        fun (exePath: string) (callMsbuildExe: string array -> string) ->
             let getFromCall () =
                 try
                     let result =
                         match Environment.isUnix with
-                        | true -> callMsbuildExe "--version --nologo"
-                        | false -> callMsbuildExe "/version /nologo"
+                        | true -> callMsbuildExe [|"--version"; "--nologo"|]
+                        | false -> callMsbuildExe [|"/version"; "/nologo"|]
 
                     let line =
                         if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then
@@ -911,15 +911,15 @@ module MSBuild =
 
     let internal addBinaryLogger
         (exePath: string)
-        (callMsbuildExe: string -> string)
-        (args: string)
+        (callMsbuildExe: string array -> string)
+        (args: string array)
         (disableFakeBinLogger: bool)
         =
 #if !NO_MSBUILD_BINLOG
         if disableFakeBinLogger then
             None, args
         else
-            let argList = Args.fromWindowsCommandLine args |> Seq.toList
+            let argList = args |> Seq.toList
             let path = Path.GetTempFileName()
             File.Delete(path)
             let path = path + ".binlog"
@@ -927,7 +927,7 @@ module MSBuild =
             let v = getVersion exePath callMsbuildExe
 
             if v >= versionToUseBinLog then
-                Some path, Args.toWindowsCommandLine (argList @ [ "/bl:" + path ])
+                Some path, Seq.toArray (argList @ [ "/bl:" + path ])
             elif v >= versionToUseStructuredLogger then
                 let assemblyPath =
                     let currentPath = MSBuildBinLog.structuredLogAssemblyPath
@@ -939,7 +939,7 @@ module MSBuild =
                         Path.Combine(libFolder, "net46", "StructuredLogger.dll")
 
                 Some path,
-                Args.toWindowsCommandLine (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
+                Seq.toArray (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
             else
                 Trace.traceFAKE
                     "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning."
@@ -995,7 +995,7 @@ module MSBuild =
         let messageF msg = results.Add msg
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
             |> CreateProcess.redirectOutput
@@ -1016,7 +1016,7 @@ module MSBuild =
     let buildWithRedirect setParams project =
         let msBuildParams, argsString = buildArgs setParams
 
-        let args = quoteString (project + " " + argsString)
+        let args = [| yield project; yield! argsString |]
 
         let binlogPath, args =
             addBinaryLogger
@@ -1031,7 +1031,7 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %A" wd msBuildParams.ToolPath args
 
         let results = System.Collections.Generic.List<ConsoleMessage>()
 
@@ -1042,7 +1042,7 @@ module MSBuild =
             results.Add(ConsoleMessage.CreateOut msg)
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
             |> CreateProcess.withWorkingDirectory msBuildParams.WorkingDirectory
@@ -1085,7 +1085,7 @@ module MSBuild =
         use __ = Trace.traceTask "MSBuild" project
         let msBuildParams, argsString = buildArgs setParams
 
-        let args = quoteString (project + " " + argsString)
+        let args = [| yield project; yield! argsString |]
 
         let binlogPath, args =
             addBinaryLogger
@@ -1100,10 +1100,10 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %A" wd msBuildParams.ToolPath args
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withWorkingDirectory msBuildParams.WorkingDirectory
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
