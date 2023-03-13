@@ -874,7 +874,7 @@ module MSBuild =
           yield! properties ]
         |> Seq.choose id
         |> Seq.map (fun (k, v) -> "/" + k + (if String.isNullOrEmpty v then "" else ":" + v))
-        |> Seq.toArray
+        |> Seq.toList
 
     /// [omit]
     let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
@@ -885,13 +885,13 @@ module MSBuild =
     let internal getVersion =
         let cache = System.Collections.Concurrent.ConcurrentDictionary<string, Version>()
 
-        fun (exePath: string) (callMsbuildExe: string array -> string) ->
+        fun (exePath: string) (callMsbuildExe: string list -> string) ->
             let getFromCall () =
                 try
                     let result =
                         match Environment.isUnix with
-                        | true -> callMsbuildExe [|"--version"; "--nologo"|]
-                        | false -> callMsbuildExe [|"/version"; "/nologo"|]
+                        | true -> callMsbuildExe ["--version"; "--nologo"]
+                        | false -> callMsbuildExe ["/version"; "/nologo"]
 
                     let line =
                         if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then
@@ -911,8 +911,8 @@ module MSBuild =
 
     let internal addBinaryLogger
         (exePath: string)
-        (callMsbuildExe: string array -> string)
-        (args: string array)
+        (callMsbuildExe: string list -> string)
+        (args: string list)
         (disableFakeBinLogger: bool)
         =
 #if !NO_MSBUILD_BINLOG
@@ -927,7 +927,7 @@ module MSBuild =
             let v = getVersion exePath callMsbuildExe
 
             if v >= versionToUseBinLog then
-                Some path, Seq.toArray (argList @ [ "/bl:" + path ])
+                Some path, (argList @ [ "/bl:" + path ])
             elif v >= versionToUseStructuredLogger then
                 let assemblyPath =
                     let currentPath = MSBuildBinLog.structuredLogAssemblyPath
@@ -939,7 +939,7 @@ module MSBuild =
                         Path.Combine(libFolder, "net46", "StructuredLogger.dll")
 
                 Some path,
-                Seq.toArray (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
+                (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
             else
                 Trace.traceFAKE
                     "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning."
@@ -1016,7 +1016,7 @@ module MSBuild =
     let buildWithRedirect setParams project =
         let msBuildParams, argsString = buildArgs setParams
 
-        let args = [| yield project; yield! argsString |]
+        let args = project :: argsString
 
         let binlogPath, args =
             addBinaryLogger
@@ -1085,7 +1085,7 @@ module MSBuild =
         use __ = Trace.traceTask "MSBuild" project
         let msBuildParams, argsString = buildArgs setParams
 
-        let args = [| yield project; yield! argsString |]
+        let args = project :: argsString
 
         let binlogPath, args =
             addBinaryLogger
