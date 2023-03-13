@@ -772,10 +772,7 @@ module DotNet =
         let options = setOptions buildOptions
 
         let cmdArgs =
-            buildCommand
-                (command |> Args.fromWindowsCommandLine |> Seq.toList)
-                args
-                options
+            buildCommand (command |> Args.fromWindowsCommandLine |> Seq.toList) args options
 
         run cmdArgs options
 
@@ -945,7 +942,7 @@ module DotNet =
     let getVersion setParams =
         use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
         let param = VersionOptions.Create() |> setParams
-        let args = ["--version"]
+        let args = [ "--version" ]
         let result = exec (fun _ -> param.Common) "" args
 
         if not result.OK then

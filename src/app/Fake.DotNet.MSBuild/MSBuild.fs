@@ -890,8 +890,8 @@ module MSBuild =
                 try
                     let result =
                         match Environment.isUnix with
-                        | true -> callMsbuildExe ["--version"; "--nologo"]
-                        | false -> callMsbuildExe ["/version"; "/nologo"]
+                        | true -> callMsbuildExe [ "--version"; "--nologo" ]
+                        | false -> callMsbuildExe [ "/version"; "/nologo" ]
 
                     let line =
                         if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then
@@ -938,8 +938,7 @@ module MSBuild =
                     else
                         Path.Combine(libFolder, "net46", "StructuredLogger.dll")
 
-                Some path,
-                (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
+                Some path, (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
             else
                 Trace.traceFAKE
                     "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning."
