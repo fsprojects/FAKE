@@ -56,7 +56,7 @@ module internal AppVeyorInternal =
 
     /// Adds quotes around the string
     /// [omit]
-    let private quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
+    let private quote (str: string) = "\"" + str.Replace("\"", "\\\"") + "\""
 
     /// Adds quotes around the string if needed
     /// [omit]
