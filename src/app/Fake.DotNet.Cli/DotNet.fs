@@ -768,7 +768,16 @@ module DotNet =
     /// <param name="buildOptions">build common execution options</param>
     /// <param name="command">the sdk command to execute <c>test</c>, <c>new</c>, <c>build</c>, ...</param>
     /// <param name="args">command arguments</param>
-    let exec (buildOptions: Options -> Options) (command: string) (args: string list) =
+    let exec (buildOptions: Options -> Options) (command: string) (args: string) =
+        let options = setOptions buildOptions
+
+        let cmdArgs =
+            buildCommand (command |> Args.fromWindowsCommandLine |> Seq.toList) (Args.fromWindowsCommandLine args |> Seq.toList) options
+
+        run cmdArgs options
+
+    /// the 'exec' above with args as a single string is public and therefore can't be changed, create a second overload with takes a string list
+    let private exec2 (buildOptions: Options -> Options) (command: string) (args: string list) =
         let options = setOptions buildOptions
 
         let cmdArgs =
@@ -878,7 +887,7 @@ module DotNet =
     let info setParams =
         use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
         let param = InfoOptions.Create() |> setParams
-        let args = [ "--info" ] // project (buildPackArgs param)
+        let args = "--info" // project (buildPackArgs param)
         let result = exec (fun _ -> param.Common) "" args
 
         let rawOutput =
@@ -942,7 +951,7 @@ module DotNet =
     let getVersion setParams =
         use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
         let param = VersionOptions.Create() |> setParams
-        let args = [ "--version" ]
+        let args = "--version"
         let result = exec (fun _ -> param.Common) "" args
 
         if not result.OK then
@@ -1132,7 +1141,7 @@ module DotNet =
         // used for detection
         let callMsBuildExe args =
             let result =
-                exec
+                exec2
                     (fun _ ->
                         { RedirectOutput = true
                           PrintRedirectedOutput = true
@@ -1160,7 +1169,7 @@ module DotNet =
         let binLogPath, args =
             addBinaryLogger msBuildArgs.DisableInternalBinLog (args @ argString) common
 
-        let result = exec (fun _ -> common) command args
+        let result = exec2 (fun _ -> common) command args
         MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
 
     let internal tryExecWithBinLog project common command args msBuildArgs =
@@ -1169,7 +1178,7 @@ module DotNet =
         let binLogPath, args =
             addBinaryLogger msBuildArgs.DisableInternalBinLog (args @ argString) common
 
-        let result = exec (fun _ -> common) command args
+        let result = exec2 (fun _ -> common) command args
 
         try
             MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
@@ -1869,7 +1878,7 @@ module DotNet =
         |> Option.iter (fun key -> TraceSecrets.register "<SymbolApiKey>" key)
 
         let args = nupkg :: buildNugetPushArgs pushParams
-        let result = exec (fun _ -> param.Common) "nuget push" args
+        let result = exec2 (fun _ -> param.Common) "nuget push" args
 
         if result.OK then
             __.MarkSuccess()
@@ -1992,7 +2001,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:new" "dotnet new command"
         let param = NewOptions.Create() |> setParams
         let args = (buildNewArgs param)
-        let result = exec (fun _ -> param.Common) $"new {templateName}" args
+        let result = exec2 (fun _ -> param.Common) $"new {templateName}" args
 
         if not result.OK then
             failwithf $"dotnet new failed with code %i{result.ExitCode}"
@@ -2009,7 +2018,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:new" "dotnet new --install command"
         let param = TemplateInstallOptions.Create(templateName) |> setParams
         let args = (buildTemplateInstallArgs param)
-        let result = exec (fun _ -> param.Common) "new" args
+        let result = exec2 (fun _ -> param.Common) "new" args
 
         if not result.OK then
             failwithf $"dotnet new --install failed with code %i{result.ExitCode}"
@@ -2026,7 +2035,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:new" "dotnet new --uninstall command"
         let param = TemplateUninstallOptions.Create(templateName)
         let args = (buildTemplateUninstallArgs param)
-        let result = exec (fun _ -> param.Common) "new" args
+        let result = exec2 (fun _ -> param.Common) "new" args
 
         // If the process returns error (exit code != 0) then check to see if a message is
         // that the template was not found.  If this message exists, assume the process
