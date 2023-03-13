@@ -873,7 +873,7 @@ module MSBuild =
         |> Seq.choose id
         |> Seq.map (fun (k, v) -> "/" + k + (if String.isNullOrEmpty v then "" else ":" + v))
         |> Seq.toList
-        
+
     /// [omit]
     let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
         let p = MSBuildParams.Create() |> setParams

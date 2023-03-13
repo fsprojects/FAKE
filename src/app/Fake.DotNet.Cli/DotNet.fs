@@ -772,7 +772,10 @@ module DotNet =
         let options = setOptions buildOptions
 
         let cmdArgs =
-            buildCommand (command |> Args.fromWindowsCommandLine |> Seq.toList) (Args.fromWindowsCommandLine args |> Seq.toList) options
+            buildCommand
+                (command |> Args.fromWindowsCommandLine |> Seq.toList)
+                (Args.fromWindowsCommandLine args |> Seq.toList)
+                options
 
         run cmdArgs options
 
