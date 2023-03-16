@@ -49,6 +49,7 @@ module Npm =
         | RunSilent of string
         | RunTest of string
         | Test
+        | CleanInstall
         | Custom of string
 
     /// The Npm parameter type
@@ -80,6 +81,7 @@ module Npm =
         | RunTest str -> sprintf "run --silent %s" str
         | Custom str -> str
         | Test -> "test --silent"
+        | CleanInstall -> "ci"
 
     /// Runs the given process and returns the process result.
     let private execute npmParams command =
@@ -220,6 +222,22 @@ module Npm =
     /// </code>
     /// </example>
     let test setParams = npm setParams Test
+
+    /// <summary>
+    /// Run <c>npm ci</c>.
+    /// </summary>
+    ///
+    /// <param name="setParams">Set command parameters</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// Npm.cleanInstall (fun o ->
+    ///         { o with
+    ///             WorkingDirectory = "./src/FAKESimple.Web/"
+    ///         })
+    /// </code>
+    /// </example>
+    let cleanInstall setParams = npm setParams CleanInstall
 
     /// <summary>
     /// Run <c>npm &lt;command&gt;</c>. Used to run any command.
