@@ -875,12 +875,14 @@ module MSBuild =
         |> Seq.toList
 
     /// [omit]
-    let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
+    let buildArgs (setParams: MSBuildParams -> MSBuildParams) : MSBuildParams * string =
         let p = MSBuildParams.Create() |> setParams
         p, fromCliArguments p.CliArguments |> Args.toWindowsCommandLine
 
-    /// [omit]
-    let buildArgs2 (setParams: MSBuildParams -> MSBuildParams) =
+    /// <summary>
+    ///   similar to 'buildArgs' but returns a string list instead of a single string for the arguments
+    /// </summary>
+    let private buildArgsToList (setParams: MSBuildParams -> MSBuildParams) : MSBuildParams * string list =
         let p = MSBuildParams.Create() |> setParams
         p, fromCliArguments p.CliArguments
 
@@ -1016,9 +1018,9 @@ module MSBuild =
     /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
     /// <param name="project">A string with the path to the project file to build.</param>
     let buildWithRedirect setParams project =
-        let msBuildParams, argsString = buildArgs2 setParams
+        let msBuildParams, argsList = buildArgsToList setParams
 
-        let args = project :: argsString
+        let args = project :: argsList
 
         let binlogPath, args =
             addBinaryLogger
@@ -1085,9 +1087,9 @@ module MSBuild =
     /// </example>
     let build setParams project =
         use __ = Trace.traceTask "MSBuild" project
-        let msBuildParams, argsString = buildArgs2 setParams
+        let msBuildParams, argsList = buildArgsToList setParams
 
-        let args = project :: argsString
+        let args = project :: argsList
 
         let binlogPath, args =
             addBinaryLogger

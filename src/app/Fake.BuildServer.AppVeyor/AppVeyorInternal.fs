@@ -5,7 +5,6 @@ open System.Text
 open Fake.Core
 open Fake.IO
 open Fake.Net
-open Fake.Core
 
 /// [omit]
 module internal AppVeyorInternal =
@@ -54,18 +53,8 @@ module internal AppVeyorInternal =
                 // because otherwise there might be recursive failure...
                 eprintfn "AppVeyor 'AddMessage' failed: %O" e
 
-    /// Adds quotes around the string
-    /// [omit]
-    let private quote (str: string) = "\"" + str.Replace("\"", "\\\"") + "\""
-
-    /// Adds quotes around the string if needed
-    /// [omit]
-    let private quoteIfNeeded str =
-        if String.isNullOrEmpty str then ""
-        elif str.Contains " " then quote str
-        else str
-
-    let private quoteString str = quoteIfNeeded str
+    /// quote and escape the single argument, if required.
+    let private quoteString str = Args.toWindowsCommandLine [str]
 
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
