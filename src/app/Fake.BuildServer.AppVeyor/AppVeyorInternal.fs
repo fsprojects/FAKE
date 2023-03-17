@@ -54,7 +54,7 @@ module internal AppVeyorInternal =
                 eprintfn "AppVeyor 'AddMessage' failed: %O" e
 
     /// quote and escape the single argument, if required.
-    let private quoteString str = Args.toWindowsCommandLine [str]
+    let private quoteString str = Args.toWindowsCommandLine [ str ]
 
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
