@@ -99,7 +99,7 @@ the dependency we specified (FAKE's target module). Paket has a
 After configuring Paket, you are ready to run your script. Enter the following command to do so:
 
 ```shell
-dotnet si build.fsx --compilertool:"~/.nuget/packages/fsharp.dependencymanager.paket/6.0.0-alpha055/lib/netstandard2.0"
+dotnet fsi build.fsx --compilertool:"~/.nuget/packages/fsharp.dependencymanager.paket/6.0.0-alpha055/lib/netstandard2.0"
 ```
 
 
