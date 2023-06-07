@@ -67,6 +67,8 @@ module GitHub =
             /// Is not used if the tag already exists.
             /// If left unspecified, and the tag does not already exist, the default branch is used instead.
             TargetCommitish: string
+            /// Indicates whether to auto-generate release notes of the release
+            GenerateReleaseNotes: bool
         }
 
     let private timeout = TimeSpan.FromMinutes 20.
@@ -216,7 +218,8 @@ module GitHub =
                       Body = ""
                       Draft = true
                       Prerelease = false
-                      TargetCommitish = "" }
+                      TargetCommitish = ""
+                      GenerateReleaseNotes = false }
                     |> setParams
 
                 let data = NewRelease(tagName)
@@ -225,6 +228,7 @@ module GitHub =
                 data.Draft <- p.Draft
                 data.Prerelease <- p.Prerelease
                 data.TargetCommitish <- p.TargetCommitish
+                data.GenerateReleaseNotes <- p.GenerateReleaseNotes
 
                 let! release = Async.AwaitTask <| client'.Repository.Release.Create(owner, repoName, data)
 
