@@ -66,11 +66,12 @@ module DotNet =
                 let content = File.ReadAllText globalJson.FullName
                 let json = JObject.Parse content
                 let sdk = json.Item("sdk") :?> JObject
+
                 match sdk.Property("version") with
                 | null -> None
                 | version ->
                     let versionValue = version.Value.ToString()
-                    let _ = Version.Parse (versionValue)
+                    let _ = Version.Parse(versionValue)
                     Some versionValue
             with exn ->
                 failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
