@@ -1,13 +1,77 @@
-# EditorConfig is awesome:
-http://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
+###############################
+# Core EditorConfig Options   #
+###############################
+# All files
+[*]                            # Do not apply to all files not to break something
+guidelines = 80 dashed, 100
+# Either crlf | lf, default is system-dependent (when not specified at all)
+# end_of_line=crlf
+# Remove whitespace at the end of any line
 
-[*]
-insert_final_newline = true
-indent_style = space
-indent_size = 4
+# Code files
+[*.{cs,csx,fs,fsi,fsx}]
+trim_trailing_whitespace = true
+insert_final_newline     = true
+indent_style             = space # default=space
+indent_size              = 4     # default=4
+charset                  = utf-8
 
-[*.fsproj]
-indent_size = 2
+# Project files and app specific XML files
+[*.{csproj,fsproj,shproj,projitems,props,xaml}]
+trim_trailing_whitespace = true
+insert_final_newline     = true
+indent_style             = space
+indent_size              = 2
+
+# XML configuration files
+[{app.config,nuget.config,packages.config,web.config}]
+trim_trailing_whitespace = true
+insert_final_newline     = true
+indent_style             = space
+indent_size              = 2
+
+# XML files
+[*.xml]
+trim_trailing_whitespace = false # do not trim as it affects CData
+insert_final_newline     = true
+indent_style             = space
+indent_size              = 2
+
+# JSON and YAML files
+[*.{json,yml,yaml}]
+trim_trailing_whitespace = true
+insert_final_newline     = true
+indent_style             = space
+indent_size              = 2
+
+# Proto files
+[*.proto]
+trim_trailing_whitespace = true
+insert_final_newline     = true
+indent_style             = space
+indent_size              = 4
+
+###############################
+# F# Coding Conventions       #
+###############################
+# filetypes that need to be formatted by Fantomas:
+[*.{fs,fsx}]
+
+# files to be ignored for Fantomas may go into this file, if present:
+# .fantomasignore
+
+# indentation size, default=space
+# indent_style             = space
+
+# indentation size, default=4
+# indent_size = 4
+
+# line length before it gets broken down into multiple lines
+# default 120
+# max_line_length=120
+
+# Either crlf | lf, default is system-dependent (when not specified at all)
+# end_of_line=crlf
+
+
