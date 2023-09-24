@@ -539,12 +539,13 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "CheckFormatting" (fun _ ->
     let dotnetOptions = (fun (buildOptions:DotNet.Options) -> { buildOptions with RedirectOutput = false})
     let result =
-     DotNet.exec id "fantomas" "src/app/ src/template/ src/test/ --recurse --check"
+        DotNet.exec id "fantomas" "src/app/ src/template/ src/test/ --check"
 
     if result.ExitCode = 0 then
         Trace.log "No files need formatting"
     elif result.ExitCode = 99 then
-        failwith "Some files need formatting, please run \"dotnet fantomas  src/app/ src/template/ src/test/ --recurse\" to resolve this."
+        failwith
+            "Some files need formatting, please run \"dotnet fantomas  src/app/ src/template/ src/test/\" to resolve this."
     else
         failwith "Errors while formatting"
 )
