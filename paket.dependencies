@@ -25,6 +25,7 @@ group fakerunner
     nuget FSharp.Core
     nuget FSharp.Compiler.Service
     nuget Microsoft.Deployment.DotNet.Releases
+    nuget NuGet.Packaging
     nuget Paket.Core
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
