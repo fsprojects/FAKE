@@ -1,4 +1,4 @@
-﻿/// Contains tasks which allow to run FSharp.Formatting for generating documentation.
+/// Contains tasks which allow to run FSharp.Formatting for generating documentation.
 [<System.Obsolete("This module is deprecated. Please use fsdocs module instead")>]
 module Fake.DotNet.FSFormatting
 
@@ -79,17 +79,18 @@ let createDocs p =
         arguments.ProjectParameters
         |> Seq.map (fun (k, v) -> [ k; v ])
         |> Seq.concat
-        |> Seq.append (
-            [ "literate"; "--processdirectory" ]
-            @ layoutroots
-              @ [ "--inputdirectory"
-                  source
-                  "--templatefile"
-                  template
-                  "--outputDirectory"
-                  outputDir ]
-                @ fsiEval @ [ "--replacements" ]
-        )
+        |> Seq.append
+            [ yield! [ "literate"; "--processdirectory" ]
+              yield! layoutroots
+              yield!
+                  [ "--inputdirectory"
+                    source
+                    "--templatefile"
+                    template
+                    "--outputDirectory"
+                    outputDir ]
+              yield! fsiEval
+              yield! [ "--replacements" ] ]
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> String.separated " "
 
@@ -145,16 +146,16 @@ let createDocsForDlls (p: MetadataFormatArguments -> MetadataFormatArguments) dl
     projectParameters
     |> Seq.map (fun (k, v) -> [ k; v ])
     |> Seq.concat
-    |> Seq.append (
-        [ "metadataformat"; "--generate"; "--outdir"; outputDir ]
-        @ layoutroots
-          @ libdirs
-            @ [ "--sourceRepo"
+    |> Seq.append
+        [ yield! [ "metadataformat"; "--generate"; "--outdir"; outputDir ]
+          yield! layoutroots
+          yield! libdirs
+          yield!
+              [ "--sourceRepo"
                 sourceRepo
                 "--sourceFolder"
                 arguments.Source
-                "--parameters" ]
-    )
+                "--parameters" ] ]
     |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
     |> String.separated " "
     |> fun prefix -> sprintf "%s --dllfiles %s" prefix (String.separated " " (dllFiles |> Seq.map (sprintf "\"%s\"")))

@@ -16,10 +16,7 @@ type FileStatus =
 /// <summary>
 /// Capture file change operation, see <c>FileStatus</c>
 /// </summary>
-type FileChange =
-    { FullPath: string
-      Name: string
-      Status: FileStatus }
+type FileChange = { FullPath: string; Name: string; Status: FileStatus }
 
 /// <summary>
 /// This module contains helpers to react to file system events.
@@ -44,10 +41,7 @@ module ChangeWatcher =
     type Options = { IncludeSubdirectories: bool }
 
     let private handleWatcherEvents (status: FileStatus) (onChange: FileChange -> unit) (e: FileSystemEventArgs) =
-        onChange
-            { FullPath = e.FullPath
-              Name = e.Name
-              Status = status }
+        onChange { FullPath = e.FullPath; Name = e.Name; Status = status }
 
     /// <summary>
     /// Watches for changes in the matching files.
@@ -125,10 +119,7 @@ module ChangeWatcher =
                           Name = e.OldName
                           Status = Deleted }
 
-                    acumChanges
-                        { FullPath = e.FullPath
-                          Name = e.Name
-                          Status = Created })
+                    acumChanges { FullPath = e.FullPath; Name = e.Name; Status = Created })
 
                 watcher)
 

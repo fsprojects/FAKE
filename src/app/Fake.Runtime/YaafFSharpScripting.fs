@@ -163,9 +163,7 @@ module internal CompilerServiceExtensions =
               yield!
                   try
                       Path.GetDirectoryName(
-                          typeof<FSharp.Compiler.Interactive.Shell.Settings.InteractiveSettings>
-                              .Assembly
-                              .Location
+                          typeof<FSharp.Compiler.Interactive.Shell.Settings.InteractiveSettings>.Assembly.Location
                       )
                       |> Seq.singleton
                   with :? NotSupportedException ->
@@ -263,7 +261,7 @@ module internal CompilerServiceExtensions =
             // ".NETFramework,Version=v4.5.1"
             let frameworkName =
                 match targetFramework with
-                | Some (h :: _) -> Some(h.Value :?> string)
+                | Some(h :: _) -> Some(h.Value :?> string)
                 | _ -> None
 
             match frameworkName with
@@ -439,7 +437,7 @@ module internal CompilerServiceExtensions =
             else
                 let frameworkVersion =
                     match FSharpAssemblyHelper.findAssemblyVersion assembly with
-                    | Some (_, ver) -> ver
+                    | Some(_, ver) -> ver
                     | _ -> FSharpAssemblyHelper.defaultFrameworkVersion
 
                 FSharpAssemblyHelper.getProjectReferenceFromFile frameworkVersion loc
@@ -514,10 +512,7 @@ module internal CompilerServiceExtensions =
         /// Gets a string that can be used in F# source code to reference the current type instance.
         member x.FSharpFullNameWithTypeArgs = x.FSharpFullName + x.FSharpParamList
 
-type OutputData =
-    { FsiOutput: string
-      ScriptOutput: string
-      Merged: string }
+type OutputData = { FsiOutput: string; ScriptOutput: string; Merged: string }
 
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
 type InteractionResult =
@@ -723,18 +718,18 @@ type internal FsiEvaluationException =
           input = info.GetString("Input")
           // TODO: do this properly?
           arguments =
-              match info.GetString("FSI_Arguments") with
-              | null -> None
-              | v -> v |> String.splitUnescape '\\' ";" |> Seq.toList |> Some
+            match info.GetString("FSI_Arguments") with
+            | null -> None
+            | v -> v |> String.splitUnescape '\\' ";" |> Seq.toList |> Some
           result =
-              { Output =
-                  { FsiOutput = info.GetString("Result_Output_FsiOutput")
-                    ScriptOutput = info.GetString "Result_Output_ScriptOutput"
-                    Merged = info.GetString "Result_Output_Merged" }
-                Error =
-                  { FsiOutput = info.GetString("Result_Error_FsiOutput")
-                    ScriptOutput = info.GetString "Result_Error_ScriptOutput"
-                    Merged = info.GetString "Result_Error_Merged" } } }
+            { Output =
+                { FsiOutput = info.GetString("Result_Output_FsiOutput")
+                  ScriptOutput = info.GetString "Result_Output_ScriptOutput"
+                  Merged = info.GetString "Result_Output_Merged" }
+              Error =
+                { FsiOutput = info.GetString("Result_Error_FsiOutput")
+                  ScriptOutput = info.GetString "Result_Error_ScriptOutput"
+                  Merged = info.GetString "Result_Error_Merged" } } }
 
     override x.GetObjectData(info, _) =
         info.AddValue("Input", x.input)
@@ -853,7 +848,7 @@ module internal Extensions =
 
         member x.EvalExpressionWithOutput<'a> text =
             match x.TryEvalExpressionWithOutput text with
-            | int, Some (value, _) ->
+            | int, Some(value, _) ->
                 match value with
                 | :? 'a as v -> int, v
                 | o ->
@@ -1216,6 +1211,7 @@ type internal FsiOptions =
                 | _, "--nologo" -> { parsed with NoLogo = true }, state
                 | _, StartsWith "--nowarn:" warns ->
                     let noWarns = warns.Split([| ',' |]) |> Seq.map int |> Seq.toList
+
                     { parsed with NoWarns = noWarns @ parsed.NoWarns }, state
                 | _, FsiBoolArg "--optimize" enabled ->
                     let cont (arg: string) =
@@ -1230,7 +1226,9 @@ type internal FsiOptions =
                                 | unknown -> failwithf "Unknown optimization option %s" unknown)
                             |> Seq.toList
 
-                        { parsed with Optimize = (enabled, optList) :: parsed.Optimize }, (false, box None)
+                        { parsed with
+                            Optimize = (enabled, optList) :: parsed.Optimize },
+                        (false, box None)
 
                     { parsed with Optimize = (enabled, []) :: parsed.Optimize }, (false, Some cont)
                 | _, "--quiet" -> { parsed with Quiet = true }, state
@@ -1461,9 +1459,7 @@ module internal Helper =
                     local.Clear() |> ignore
                     data)
 
-            { FsiOutput = fsi
-              ScriptOutput = std
-              Merged = merged }
+            { FsiOutput = fsi; ScriptOutput = std; Merged = merged }
 
     let consoleCapture out err f =
         let defOut = Console.Out
@@ -1478,16 +1474,8 @@ module internal Helper =
             Console.SetError defErr
 
     let getSession
-        (
-            fsi: obj,
-            options: FsiOptions,
-            reportGlobal,
-            liveOut,
-            liveOutFsi,
-            liveErr,
-            liveErrFsi,
-            preventStdOut
-        ) =
+        (fsi: obj, options: FsiOptions, reportGlobal, liveOut, liveOutFsi, liveErr, liveErrFsi, preventStdOut)
+        =
         // Intialize output and input streams
         let out = new OutStreamHelper(reportGlobal, liveOut, liveOutFsi)
         let err = new OutStreamHelper(reportGlobal, liveErr, liveErrFsi)

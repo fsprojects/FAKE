@@ -21,37 +21,39 @@ type XUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 [<CLIMutable>]
 type XUnitParams =
-    { /// The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.
-      ToolPath : string
-      /// The file name of the config file (optional).
-      ConfigFile : string
-      /// If set to true a HTML output file will be generated.
-      HtmlOutput : bool
-      /// If set to true a HTML output file will be generated in NUnit format.
-      NUnitXmlOutput : bool
-      /// If set to true XML output will be generated.
-      XmlOutput : bool
-      /// The working directory (optional).
-      WorkingDir : string
-      /// If set to true xUnit will run in ShadowCopy mode.
-      ShadowCopy : bool
-      /// If set to true xUnit will generate verbose output.
-      Verbose : bool
-      /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
-      TimeOut : TimeSpan
-      /// The output directory. It's the current directoy if nothing else is specified.
-      OutputDir : string
-      /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
-      ErrorLevel : XUnitErrorLevel
-      /// Include named traits with comma separated values
-      IncludeTraits : (string * string) option
-      /// Exclude named traits with comma separated values
-      ExcludeTraits : (string * string) option }
+    {
+        /// The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.
+        ToolPath: string
+        /// The file name of the config file (optional).
+        ConfigFile: string
+        /// If set to true a HTML output file will be generated.
+        HtmlOutput: bool
+        /// If set to true a HTML output file will be generated in NUnit format.
+        NUnitXmlOutput: bool
+        /// If set to true XML output will be generated.
+        XmlOutput: bool
+        /// The working directory (optional).
+        WorkingDir: string
+        /// If set to true xUnit will run in ShadowCopy mode.
+        ShadowCopy: bool
+        /// If set to true xUnit will generate verbose output.
+        Verbose: bool
+        /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
+        TimeOut: TimeSpan
+        /// The output directory. It's the current directoy if nothing else is specified.
+        OutputDir: string
+        /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
+        ErrorLevel: XUnitErrorLevel
+        /// Include named traits with comma separated values
+        IncludeTraits: (string * string) option
+        /// Exclude named traits with comma separated values
+        ExcludeTraits: (string * string) option
+    }
 
 /// DEPRECATED.
 /// The xUnit default parameters
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
-let emptyTrait : (string * string) option = None
+let emptyTrait: (string * string) option = None
 
 /// DEPRECATED.
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
@@ -79,14 +81,14 @@ let buildXUnitArgs parameters assembly =
     let name = fi.Name
 
     let dir =
-        if isNullOrEmpty parameters.OutputDir then String.Empty
-        else Path.GetFullPath parameters.OutputDir
+        if isNullOrEmpty parameters.OutputDir then
+            String.Empty
+        else
+            Path.GetFullPath parameters.OutputDir
 
-    let traits includeExclude (name, values : string) =
+    let traits includeExclude (name, values: string) =
         values.Split([| ',' |], System.StringSplitOptions.RemoveEmptyEntries)
-        |> Seq.collect (fun value ->
-               [| includeExclude
-                  sprintf "\"%s=%s\"" name value |])
+        |> Seq.collect (fun value -> [| includeExclude; sprintf "\"%s=%s\"" name value |])
         |> String.concat " "
 
     new StringBuilder()
@@ -128,17 +130,22 @@ let xUnit setParams assemblies =
 
     let runTests assembly =
         let args = buildXUnitArgs parameters assembly
-        0 = ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
+
+        0 = ExecProcess
+                (fun info ->
+                    info.FileName <- parameters.ToolPath
+                    info.WorkingDirectory <- parameters.WorkingDir
+                    info.Arguments <- args)
+                parameters.TimeOut
 
     let failedTests =
         [ for asm in List.ofSeq assemblies do
-                if runTests asm |> not then yield asm ]
+              if runTests asm |> not then
+                  yield asm ]
 
     if not (List.isEmpty failedTests) then
         sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
         |> match parameters.ErrorLevel with
-            | Error | FailOnFirstError -> failwith
-            | DontFailBuild -> traceImportant
+           | Error
+           | FailOnFirstError -> failwith
+           | DontFailBuild -> traceImportant

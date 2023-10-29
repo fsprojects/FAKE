@@ -43,15 +43,15 @@ type TraceData =
         match x with
         | ImportantMessage _
         | ErrorMessage _ -> Some true
-        | LogMessage (_, newLine)
-        | TraceMessage (_, newLine) -> Some newLine
+        | LogMessage(_, newLine)
+        | TraceMessage(_, newLine) -> Some newLine
 
     member x.Message =
         match x with
         | ImportantMessage text
         | ErrorMessage text
-        | LogMessage (text, _)
-        | TraceMessage (text, _) -> Some text
+        | LogMessage(text, _)
+        | TraceMessage(text, _) -> Some text
 
 /// Defines a TraceListener interface
 type ITraceListener =
@@ -99,8 +99,8 @@ type ConsoleTraceListener(colorMap) =
             match msg with
             | ImportantMessage text
             | ErrorMessage text -> writeText true color true text
-            | LogMessage (text, newLine)
-            | TraceMessage (text, newLine) -> writeText false color newLine text
+            | LogMessage(text, newLine)
+            | TraceMessage(text, newLine) -> writeText false color newLine text
 
 /// The default TraceListener for Console.
 let defaultConsoleTraceListener = ConsoleTraceListener(colorMap) :> ITraceListener

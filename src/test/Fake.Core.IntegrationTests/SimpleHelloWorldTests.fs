@@ -17,16 +17,10 @@ type Declaration =
       Column: int
       ErrorDetail: string }
 
-    static member Empty =
-        { File = ""
-          Line = 0
-          Column = 1
-          ErrorDetail = "" }
+    static member Empty = { File = ""; Line = 0; Column = 1; ErrorDetail = "" }
 
 /// a target dependency, either a hard or a soft dependency.
-type Dependency =
-    { Name: string
-      Declaration: Declaration }
+type Dependency = { Name: string; Declaration: Declaration }
 
 /// a FAKE target, its description and its relations to other targets (dependencies), including the
 /// declaration lines of the target and the dependencies.
@@ -278,9 +272,7 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'OtherScriptTarget'"
-                      { Declaration.Empty with
-                          File = otherScriptFile
-                          Line = 4 }
+                      { Declaration.Empty with File = otherScriptFile; Line = 4 }
                       scriptTarget.Declaration
 
                   Expect.equal

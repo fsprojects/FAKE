@@ -148,4 +148,5 @@ module Coverlet =
     /// <param name="param">The coverlet parameters</param>
     /// <param name="options">DotNet test cli command options</param>
     let withDotNetTestOptions (param: CoverletParams -> CoverletParams) (options: DotNet.TestOptions) =
-        { options with MSBuildParams = withMSBuildArguments param options.MSBuildParams }
+        { options with
+            MSBuildParams = withMSBuildArguments param options.MSBuildParams }

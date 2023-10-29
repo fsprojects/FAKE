@@ -1,4 +1,4 @@
-﻿/// Contains helpers which allow to upload a whole folder/specific file into a FTP Server. 
+﻿/// Contains helpers which allow to upload a whole folder/specific file into a FTP Server.
 /// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
 /// Assumes direct network connectivity to destination FTP server (not via a proxy).
 /// Does not support FTPS and SFTP.
@@ -11,36 +11,58 @@ open System.Net
 open System.Text.RegularExpressions
 
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-type FtpServerInfo = 
-    { Server : string
-      Request : FtpWebRequest }
+type FtpServerInfo = { Server: string; Request: FtpWebRequest }
 
 /// Gets a connection to the FTP server
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let getServerInfo (serverNameIp : string) (user : string) (password : string) ftpMethod = 
+let getServerInfo (serverNameIp: string) (user: string) (password: string) ftpMethod =
     let ftpRequest = (WebRequest.Create serverNameIp) :?> FtpWebRequest
     ftpRequest.Credentials <- new NetworkCredential(user, password)
     ftpRequest.Method <- ftpMethod
-    { Server = serverNameIp
-      Request = ftpRequest }
+    { Server = serverNameIp; Request = ftpRequest }
 
 /// Writes given byte array into the given stream
-let rec private writeChunkToReqStream (chunk : byte []) (reqStrm : Stream) (br : BinaryReader) = 
-    if chunk.Length <> 0 then 
+let rec private writeChunkToReqStream (chunk: byte[]) (reqStrm: Stream) (br: BinaryReader) =
+    if chunk.Length <> 0 then
         reqStrm.Write(chunk, 0, chunk.Length)
         writeChunkToReqStream (br.ReadBytes 1024) reqStrm br
 
-let inline private getSubstring (fromPos : int) (str : string) (toPos : int) = str.Substring(fromPos, toPos)
-let inline private lastSlashPos (str : string) = str.LastIndexOf(@"/") + 1
+let inline private getSubstring (fromPos: int) (str: string) (toPos: int) = str.Substring(fromPos, toPos)
+let inline private lastSlashPos (str: string) = str.LastIndexOf(@"/") + 1
 
 ///Partial validation for folder name, based on http://msdn.microsoft.com/en-us/library/aa365247.aspx
-let inline private dirNameIsValid (dirName : string) = 
+let inline private dirNameIsValid (dirName: string) =
     let invalidChars = [ "<"; ">"; ":"; "\""; "/"; "\\"; "|"; "?"; "*" ]
-    let invalidNames = 
-        [ "CON"; "PRN"; "AUX"; "NUL"; "COM1"; "COM2"; "COM3"; "COM4"; "COM5"; "COM6"; "COM7"; "COM8"; "COM9"; "LPT1"; 
-          "LPT2"; "LPT3"; "LPT4"; "LPT5"; "LPT6"; "LPT7"; "LPT8"; "LPT9" ]
+
+    let invalidNames =
+        [ "CON"
+          "PRN"
+          "AUX"
+          "NUL"
+          "COM1"
+          "COM2"
+          "COM3"
+          "COM4"
+          "COM5"
+          "COM6"
+          "COM7"
+          "COM8"
+          "COM9"
+          "LPT1"
+          "LPT2"
+          "LPT3"
+          "LPT4"
+          "LPT5"
+          "LPT6"
+          "LPT7"
+          "LPT8"
+          "LPT9" ]
+
     let invalid1 = List.exists (fun s -> s = dirName.ToUpper()) invalidNames
-    let invalid2 = List.exists (fun s -> dirName.ToUpper().StartsWith(sprintf "%s." s)) invalidNames
+
+    let invalid2 =
+        List.exists (fun s -> dirName.ToUpper().StartsWith(sprintf "%s." s)) invalidNames
+
     let invalid3 = dirName.EndsWith(" ")
     let invalid4 = dirName.EndsWith(".")
     let invalid5 = List.exists (fun s -> dirName.Contains(s)) invalidChars
@@ -48,7 +70,8 @@ let inline private dirNameIsValid (dirName : string) =
 
 /// Checks to see if the `ftp content` string containts the string `Given_Folder_Name`
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"\s+%s\s+" fname))
+let inline regexCheck fname ftpContents =
+    Regex.IsMatch(ftpContents, (sprintf @"\s+%s\s+" fname))
 
 /// Gets the contents/listing of files and folders in a given FTP server folder
 /// ## Parameters
@@ -57,11 +80,12 @@ let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
+let getFtpDirContents (server: string) (user: string) (pwd: string) (dirPath: string) =
     logfn "Getting FTP dir contents for %s" dirPath
+
     dirPath
     |> fun d -> getServerInfo (sprintf "%s/%s" server d) user pwd WebRequestMethods.Ftp.ListDirectoryDetails
-    |> fun si -> 
+    |> fun si ->
         use response = (si.Request.GetResponse() :?> FtpWebResponse)
         use responseStream = response.GetResponseStream()
         use reader = new StreamReader(responseStream)
@@ -75,13 +99,14 @@ let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath 
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
+let uploadAFile (server: string) (user: string) (pwd: string) (destPath: string) (srcPath: string) =
     logfn "Uploading %s to %s" srcPath destPath
     let fl = new FileInfo(srcPath)
-    if (fl.Length <> 0L) then 
+
+    if (fl.Length <> 0L) then
         destPath
         |> fun d -> getServerInfo (sprintf "%s/%s" server d) user pwd WebRequestMethods.Ftp.UploadFile
-        |> fun si -> 
+        |> fun si ->
             use fs = new FileStream(srcPath, FileMode.Open, FileAccess.Read)
             use br = new BinaryReader(fs, new System.Text.UTF8Encoding())
             use reqStrm = si.Request.GetRequestStream()
@@ -92,7 +117,7 @@ let uploadAFile (server : string) (user : string) (pwd : string) (destPath : str
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
-let private checkInExistingDirList server user pwd destPath fname = 
+let private checkInExistingDirList server user pwd destPath fname =
     destPath
     |> lastSlashPos
     |> getSubstring 0 destPath
@@ -106,7 +131,7 @@ let private checkInExistingDirList server user pwd destPath fname =
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let isFolderPresent server user pwd (destPath : string) = 
+let isFolderPresent server user pwd (destPath: string) =
     destPath
     |> lastSlashPos
     |> destPath.Substring
@@ -119,12 +144,13 @@ let isFolderPresent server user pwd (destPath : string) =
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
+let createAFolder (server: string) (user: string) (pwd: string) (destPath: string) =
     logfn "Creating folder %s" destPath
-    if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
+
+    if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then
         destPath
         |> fun d -> getServerInfo (sprintf "%s/%s" server d) user pwd WebRequestMethods.Ftp.MakeDirectory
-        |> fun si -> 
+        |> fun si ->
             use response = (si.Request.GetResponse() :?> FtpWebResponse)
             logfn "Create folder status: %s" (response.StatusDescription)
 
@@ -136,15 +162,17 @@ let createAFolder (server : string) (user : string) (pwd : string) (destPath : s
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
+let rec uploadAFolder server user pwd (srcPath: string) (rootDir: string) =
     logfn "Uploading folder %s" srcPath
     let dirInfo = new DirectoryInfo(srcPath)
-    if dirInfo.Exists && dirNameIsValid rootDir then 
-        dirInfo.GetFileSystemInfos() |> Seq.iter (fun fsi -> upload server user pwd fsi rootDir)
 
-and private upload server user pwd (fsi : FileSystemInfo) (rootDir : string) = 
+    if dirInfo.Exists && dirNameIsValid rootDir then
+        dirInfo.GetFileSystemInfos()
+        |> Seq.iter (fun fsi -> upload server user pwd fsi rootDir)
+
+and private upload server user pwd (fsi: FileSystemInfo) (rootDir: string) =
     match fsi.GetType().ToString() with
-    | "System.IO.DirectoryInfo" -> 
+    | "System.IO.DirectoryInfo" ->
         createAFolder server user pwd rootDir
         createAFolder server user pwd (sprintf "%s/%s" rootDir fsi.Name)
         uploadAFolder server user pwd fsi.FullName (sprintf "%s/%s" rootDir fsi.Name)
@@ -158,26 +186,29 @@ and private upload server user pwd (fsi : FileSystemInfo) (rootDir : string) =
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let deleteAFile (server : string) (user : string) (pwd : string) (destPath : string) = 
+let deleteAFile (server: string) (user: string) (pwd: string) (destPath: string) =
     logfn "Deleting %s" destPath
+
     destPath
     |> fun p -> getServerInfo (sprintf "%s/%s" server p) user pwd WebRequestMethods.Ftp.DeleteFile
-    |> fun si -> 
+    |> fun si ->
         use response = (si.Request.GetResponse() :?> FtpWebResponse)
         logfn "Delete file %s status: %s" destPath response.StatusDescription
 
-let private getFolderContents (server : string) (user : string) (pwd : string) (destPath : string) =
+let private getFolderContents (server: string) (user: string) (pwd: string) (destPath: string) =
     getServerInfo (sprintf "%s/%s" server destPath) user pwd WebRequestMethods.Ftp.ListDirectory
-    |> fun si -> 
+    |> fun si ->
         use response = (si.Request.GetResponse() :?> FtpWebResponse)
         use responseStream = response.GetResponseStream()
         use reader = new StreamReader(responseStream)
-        [ while not reader.EndOfStream do yield reader.ReadLine() ]
 
-let private deleteEmptyFolder (server : string) (user : string) (pwd : string) (destPath : string) =
+        [ while not reader.EndOfStream do
+              yield reader.ReadLine() ]
+
+let private deleteEmptyFolder (server: string) (user: string) (pwd: string) (destPath: string) =
     destPath
     |> fun p -> getServerInfo (sprintf "%s/%s" server p) user pwd WebRequestMethods.Ftp.RemoveDirectory
-    |> fun si -> 
+    |> fun si ->
         use response = (si.Request.GetResponse() :?> FtpWebResponse)
         logfn "Delete folder %s status: %s" destPath response.StatusDescription
 
@@ -188,7 +219,7 @@ let private deleteEmptyFolder (server : string) (user : string) (pwd : string) (
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 [<System.Obsolete("Use the Fake.Net.FTP module instead.")>]
-let rec deleteAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
+let rec deleteAFolder (server: string) (user: string) (pwd: string) (destPath: string) =
     logfn "Deleting %s" destPath
     let folderContents = getFolderContents server user pwd destPath
 
@@ -197,9 +228,9 @@ let rec deleteAFolder (server : string) (user : string) (pwd : string) (destPath
     else
         folderContents
         |> List.iter (fun entry ->
-                        try
-                            deleteAFile server user pwd (Path.Combine(destPath, entry))
-                        with
-                        | _ -> deleteAFolder server user pwd (Path.Combine(destPath, entry)))
+            try
+                deleteAFile server user pwd (Path.Combine(destPath, entry))
+            with _ ->
+                deleteAFolder server user pwd (Path.Combine(destPath, entry)))
 
         deleteEmptyFolder server user pwd destPath

@@ -12,16 +12,17 @@ open Microsoft.Web.XmlTransform
 type FakeXmlTransformationLogger() =
     interface IXmlTransformationLogger with
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-        member x.EndSection(message, messageArgs) = 
+        member x.EndSection(message, messageArgs) =
             postMessage <| LogMessage(String.Format(message, messageArgs), true)
             postMessage <| CloseTag("XDT")
+
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-        member x.EndSection(``type``, message, messageArgs) = 
+        member x.EndSection(``type``, message, messageArgs) =
             match ``type`` with
-            | MessageType.Verbose -> 
+            | MessageType.Verbose ->
                 postMessage <| TraceMessage(String.Format(message, messageArgs), true)
                 postMessage <| CloseTag("XDT")
-            | _ -> 
+            | _ ->
                 postMessage <| LogMessage(String.Format(message, messageArgs), true)
                 postMessage <| CloseTag("XDT")
 
@@ -36,12 +37,13 @@ type FakeXmlTransformationLogger() =
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.LogError(file, lineNumber, linePosition, message, messageArgs) =
-            postMessage <| ErrorMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+            postMessage
+            <| ErrorMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+
             postMessage <| ErrorMessage(String.Format(message, messageArgs))
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-        member x.LogErrorFromException(ex) =
-            postMessage <| ErrorMessage(string ex)
+        member x.LogErrorFromException(ex) = postMessage <| ErrorMessage(string ex)
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.LogErrorFromException(ex, file) =
@@ -50,7 +52,9 @@ type FakeXmlTransformationLogger() =
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.LogErrorFromException(ex, file, lineNumber, linePosition) =
-            postMessage <| ErrorMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+            postMessage
+            <| ErrorMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+
             postMessage <| ErrorMessage(string ex)
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
@@ -74,47 +78,62 @@ type FakeXmlTransformationLogger() =
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.LogWarning(file, lineNumber, linePosition, message, messageArgs) =
-            postMessage <| ImportantMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+            postMessage
+            <| ImportantMessage(sprintf "File: %s:%d:%d" file lineNumber linePosition)
+
             postMessage <| ImportantMessage(String.Format(message, messageArgs))
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.StartSection(message, messageArgs) =
-            postMessage <| OpenTag("XDT","StartSection")
+            postMessage <| OpenTag("XDT", "StartSection")
             postMessage <| LogMessage(String.Format(message, messageArgs), true)
 
         [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
         member x.StartSection(``type``, message, messageArgs) =
             match ``type`` with
-            | MessageType.Verbose -> 
-                postMessage <| OpenTag("XDT","StartSectionVerbose")
+            | MessageType.Verbose ->
+                postMessage <| OpenTag("XDT", "StartSectionVerbose")
                 postMessage <| TraceMessage(String.Format(message, messageArgs), true)
-            | _ -> 
-                postMessage <| OpenTag("XDT","StartSectionNormal")
+            | _ ->
+                postMessage <| OpenTag("XDT", "StartSectionNormal")
                 postMessage <| LogMessage(String.Format(message, messageArgs), true)
 
 /// Reads XML file (typically a config file), makes changes according to XDT transform syntax, saves result.
 [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-let TransformFile (inXmlFile:string) (transformFile:string) (outXmlFile:string) =
-    if not <| File.Exists inXmlFile then postMessage <| ErrorMessage(sprintf "XML file %s does not exist." inXmlFile)
-    if not <| File.Exists transformFile then postMessage <| ImportantMessage(sprintf "XML Document Transform file %s does not exist." transformFile)
-    use xdtStream = new FileStream(Path.GetFullPath transformFile, FileMode.Open, FileAccess.Read)
+let TransformFile (inXmlFile: string) (transformFile: string) (outXmlFile: string) =
+    if not <| File.Exists inXmlFile then
+        postMessage <| ErrorMessage(sprintf "XML file %s does not exist." inXmlFile)
+
+    if not <| File.Exists transformFile then
+        postMessage
+        <| ImportantMessage(sprintf "XML Document Transform file %s does not exist." transformFile)
+
+    use xdtStream =
+        new FileStream(Path.GetFullPath transformFile, FileMode.Open, FileAccess.Read)
+
     let fakeLogger = new FakeXmlTransformationLogger()
     use xdt = new XmlTransformation(xdtStream, fakeLogger)
     let xml = new XmlDocument()
     xml.Load(Path.GetFullPath inXmlFile)
-    if not <| xdt.Apply(xml) then new InvalidOperationException(sprintf "Unable to transform %s with %s." inXmlFile transformFile) |> raise
+
+    if not <| xdt.Apply(xml) then
+        new InvalidOperationException(sprintf "Unable to transform %s with %s." inXmlFile transformFile)
+        |> raise
+
     xml.Save(outXmlFile)
 
 /// Modifies an XML file in place using an XDT file named by inserting a .configName in between the filename and .extension.
 [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-let TransformFileWithConfigName (configName:string) (xmlFile:string) =
+let TransformFileWithConfigName (configName: string) (xmlFile: string) =
     let xdt = Path.ChangeExtension(xmlFile, configName + (Path.GetExtension(xmlFile)))
+
     if File.Exists xdt then
         TransformFile xmlFile xdt xmlFile
     else
-        postMessage <| ImportantMessage(sprintf "No %s config file found for '%s'. Skipping." configName xmlFile)
+        postMessage
+        <| ImportantMessage(sprintf "No %s config file found for '%s'. Skipping." configName xmlFile)
 
 /// Modifies XML files in place using an XDT file named by inserting a .configName in between each filename and .extension.
 [<System.Obsolete("Use Fake.Core.Xdt instead (open Fake.Core and use 'Xdt.<name>' instead of directly calling Xdt<name> - ie add a dot)")>]
-let TransformFilesWithConfigName (configName:string) (files:FileIncludes) = 
+let TransformFilesWithConfigName (configName: string) (files: FileIncludes) =
     Seq.iter (TransformFileWithConfigName configName) files

@@ -39,9 +39,7 @@ let defaultTests =
                         ToolPath = "ToolPath-1"
                         ToolType = ToolType.FullFramework
                         WorkingDirectory = "WorkingDirectory-1"
-                        Server =
-                          { ServerUrl = "ServerUrl"
-                            ApiKey = "ApiKey" }
+                        Server = { ServerUrl = "ServerUrl"; ApiKey = "ApiKey" }
                         Timeout = System.TimeSpan.MaxValue } }
 
               let actual =
@@ -141,9 +139,7 @@ let defaultTests =
                         ToolPath = "ToolPath-1"
                         ToolType = ToolType.FullFramework
                         WorkingDirectory = "WorkingDirectory-1"
-                        Server =
-                          { ServerUrl = "ServerUrl"
-                            ApiKey = "ApiKey" }
+                        Server = { ServerUrl = "ServerUrl"; ApiKey = "ApiKey" }
                         Timeout = System.TimeSpan.MaxValue } }
 
               let actual =
@@ -187,9 +183,7 @@ let defaultTests =
                         ToolPath = "ToolPath-1"
                         ToolType = ToolType.FullFramework
                         WorkingDirectory = "WorkingDirectory-1"
-                        Server =
-                          { ServerUrl = "ServerUrl"
-                            ApiKey = "ApiKey" }
+                        Server = { ServerUrl = "ServerUrl"; ApiKey = "ApiKey" }
                         Timeout = System.TimeSpan.MaxValue } }
 
               let actual =
@@ -219,9 +213,7 @@ let defaultTests =
                         ToolPath = "ToolPath-1"
                         ToolType = ToolType.FullFramework
                         WorkingDirectory = "WorkingDirectory-1"
-                        Server =
-                          { ServerUrl = "ServerUrl"
-                            ApiKey = "ApiKey" }
+                        Server = { ServerUrl = "ServerUrl"; ApiKey = "ApiKey" }
                         Timeout = System.TimeSpan.MaxValue } }
 
               let actual =

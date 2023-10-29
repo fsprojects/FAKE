@@ -12,78 +12,74 @@ open System.Net
 /// Data describing a deployment to Raygun
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RaygunDeploymentData =
-  {
-    /// Application API key
-    /// Required, no sensible default
-    apiKey: string
+    {
+        /// Application API key
+        /// Required, no sensible default
+        apiKey: string
 
-    /// Version string describing deployed version
-    /// Should be the same as reported by the application
-    /// to raygun when posting an error
-    /// Required, no sensible default
-    version : string
+        /// Version string describing deployed version
+        /// Should be the same as reported by the application
+        /// to raygun when posting an error
+        /// Required, no sensible default
+        version: string
 
-    /// Name of person responsible for deployment
-    /// Optional, defaults to empty string
-    ownerName : string
+        /// Name of person responsible for deployment
+        /// Optional, defaults to empty string
+        ownerName: string
 
-    /// Email address of person responsible for deployment
-    /// Optional, defaults to empty string
-    emailAddress : string
+        /// Email address of person responsible for deployment
+        /// Optional, defaults to empty string
+        emailAddress: string
 
-    /// Release notes
-    /// Optional, defaults to empty string
-    comment: string
+        /// Release notes
+        /// Optional, defaults to empty string
+        comment: string
 
-    /// Hash code (or other commit identifier) from
-    /// source control system
-    /// Optional, Defaults to current git hash if executed from a git repository
-    ///           else defaults to empty string
-    scmIdentifier : string
+        /// Hash code (or other commit identifier) from
+        /// source control system
+        /// Optional, Defaults to current git hash if executed from a git repository
+        ///           else defaults to empty string
+        scmIdentifier: string
 
-    /// Datetime of the deployment
-    /// Optional, Defaults to System.DateTime.UtcNow
-    createdAt: System.DateTime
+        /// Datetime of the deployment
+        /// Optional, Defaults to System.DateTime.UtcNow
+        createdAt: System.DateTime
     }
 
 /// Connection configuration
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RaygunConnectionSettings =
     {
-      /// Endpoint to connect to
-      /// Required, Defaults to: https://app.raygun.io/deployments
-      endPoint : string
+        /// Endpoint to connect to
+        /// Required, Defaults to: https://app.raygun.io/deployments
+        endPoint: string
 
-      /// Raygun user access token for allowing API
-      /// access. (Creatd under User -> My settings in the web application)
-      /// Required, no sensible default
-      externalToken: string
-     }
+        /// Raygun user access token for allowing API
+        /// access. (Creatd under User -> My settings in the web application)
+        /// Required, no sensible default
+        externalToken: string
+    }
 
 let private gitHash =
     try
-        getCurrentHash()
-    with
-    | _ -> ""
+        getCurrentHash ()
+    with _ ->
+        ""
 
 let private endPoint = @"https://app.raygun.io/deployments"
 
 let private defaultData =
-    {
-      apiKey = ""
+    { apiKey = ""
       version = ""
       ownerName = ""
       emailAddress = ""
       comment = ""
       scmIdentifier = gitHash
-      createdAt = System.DateTime.UtcNow
-    }
+      createdAt = System.DateTime.UtcNow }
 
 let private defaultSettings =
-    {
-      endPoint = @"https://app.raygun.io/deployments"
-      externalToken = ""
-    }
+    { endPoint = @"https://app.raygun.io/deployments"
+      externalToken = "" }
 
 let private createQueryStringCollection token =
     let collection = (new System.Collections.Specialized.NameValueCollection())
@@ -102,11 +98,14 @@ let private serialize data = JsonConvert.SerializeObject(data)
 /// * settings : Function that sets the raygun connection settings.
 /// * data : Function that sets the deployment data
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let ReportDeployment (settings:RaygunConnectionSettings->RaygunConnectionSettings) (data:RaygunDeploymentData->RaygunDeploymentData) =
+let ReportDeployment
+    (settings: RaygunConnectionSettings -> RaygunConnectionSettings)
+    (data: RaygunDeploymentData -> RaygunDeploymentData)
+    =
     use __ = traceStartTaskUsing "Raygun.io" "Report new deployment"
     let settings = defaultSettings |> settings
     let data = defaultData |> data
     use client = (new WebClient())
     client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
     client.QueryString <- createQueryStringCollection settings.externalToken
-    client.UploadString(settings.endPoint,"POST", (serialize data)) |> ignore
+    client.UploadString(settings.endPoint, "POST", (serialize data)) |> ignore

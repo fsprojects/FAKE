@@ -10,12 +10,15 @@ let private DefaultBufferSize = 32768
 
 /// A description of a file to be added to an archive.
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-type ArchiveFileSpec = { InputFile : FileInfo; ArchiveEntryPath : string }
+type ArchiveFileSpec = { InputFile: FileInfo; ArchiveEntryPath: string }
 
-type private ExtractEntrySpec = { OutputFile : FileInfo; ArchiveEntryPath : string; EntrySize : int64 }
+type private ExtractEntrySpec =
+    { OutputFile: FileInfo
+      ArchiveEntryPath: string
+      EntrySize: int64 }
 
-let private copyStreamBuffered bufferSize (outStream : #Stream) (inStream : #Stream) length =
-    let rec doCopy buffer (outStream : #Stream) (inStream : #Stream) length =
+let private copyStreamBuffered bufferSize (outStream: #Stream) (inStream: #Stream) length =
+    let rec doCopy buffer (outStream: #Stream) (inStream: #Stream) length =
         if length > 0L then
             let count = inStream.Read(buffer, 0, buffer.Length)
             outStream.Write(buffer, 0, count)
@@ -24,64 +27,69 @@ let private copyStreamBuffered bufferSize (outStream : #Stream) (inStream : #Str
     let buffer = Array.zeroCreate<byte> bufferSize
     doCopy buffer outStream inStream length
 
-let private copyFileBuffered bufferSize (outStream : #Stream) (inStream : #Stream) =
+let private copyFileBuffered bufferSize (outStream: #Stream) (inStream: #Stream) =
     inStream.Seek(0L, SeekOrigin.Begin) |> ignore
     copyStreamBuffered bufferSize outStream inStream inStream.Length
-    
-let private addEntry prepareEntry afterEntry (outStream : #Stream) { InputFile = inFile; ArchiveEntryPath = entryPath } =
+
+let private addEntry prepareEntry afterEntry (outStream: #Stream) { InputFile = inFile; ArchiveEntryPath = entryPath } =
     use inStream = inFile.OpenRead()
     let entryName = prepareEntry inFile entryPath
     copyFileBuffered DefaultBufferSize outStream inStream
     afterEntry outStream
 
-let private extractEntry (inStream : #Stream) entry =
+let private extractEntry (inStream: #Stream) entry =
     entry.OutputFile.Directory |> ensureDirExists
     use outStream = entry.OutputFile.Create()
     copyStreamBuffered DefaultBufferSize outStream inStream entry.EntrySize
 
-let private createArchiveStream (streamCreator : Stream -> #Stream) (archiveFile : FileInfo) =
-    archiveFile.Create() :> Stream
-    |> streamCreator
+let private createArchiveStream (streamCreator: Stream -> #Stream) (archiveFile: FileInfo) =
+    archiveFile.Create() :> Stream |> streamCreator
 
-let private openArchiveStream (streamCreator : Stream -> #Stream) (archiveFile : FileInfo) =
-    archiveFile.OpenRead() :> Stream
-    |> streamCreator
+let private openArchiveStream (streamCreator: Stream -> #Stream) (archiveFile: FileInfo) =
+    archiveFile.OpenRead() :> Stream |> streamCreator
 
-let private createArchive streamCreator addEntry (archiveFile : FileInfo) items =
+let private createArchive streamCreator addEntry (archiveFile: FileInfo) items =
     use stream = streamCreator archiveFile
     Seq.iter (addEntry stream) items
     tracefn "Archive successfully created %s" archiveFile.FullName
 
-let rec private extractEntries getNextEntry (inStream : #Stream) =
+let rec private extractEntries getNextEntry (inStream: #Stream) =
     match getNextEntry inStream with
-    | Some entry -> 
+    | Some entry ->
         extractEntry inStream entry
         extractEntries getNextEntry inStream
     | None -> ()
 
 /// Constructs a file specification which will archive the file at the root.
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-let archiveFileSpec (file : FileInfo) =
+let archiveFileSpec (file: FileInfo) =
     { InputFile = file; ArchiveEntryPath = file.Name }
 
 /// Constructs a file specification which will archive the file with a path relative to the `baseDir`.
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-let archiveFileSpecWithBaseDir (baseDir : DirectoryInfo) (file : FileInfo) =
-    if not baseDir.Exists then failwithf "Directory not found: %s" baseDir.FullName
-    if not <| isInFolder baseDir file then failwithf "File not in base directory: (BaseDir: %s, File: %s)" baseDir.FullName file.FullName
+let archiveFileSpecWithBaseDir (baseDir: DirectoryInfo) (file: FileInfo) =
+    if not baseDir.Exists then
+        failwithf "Directory not found: %s" baseDir.FullName
+
+    if not <| isInFolder baseDir file then
+        failwithf "File not in base directory: (BaseDir: %s, File: %s)" baseDir.FullName file.FullName
+
     let entryPath = replace (baseDir.FullName + directorySeparator) "" file.FullName
-    { InputFile = file; ArchiveEntryPath = replace directorySeparator "/" entryPath }
+
+    { InputFile = file
+      ArchiveEntryPath = replace directorySeparator "/" entryPath }
 
 let private doCompression compressor archivePath fileSpecGenerator =
-    Seq.map fileSpecGenerator
-    >> compressor archivePath
+    Seq.map fileSpecGenerator >> compressor archivePath
 
 let private buildFileSpec flatten baseDir =
-    (if flatten then archiveFileSpec else archiveFileSpecWithBaseDir baseDir)
+    (if flatten then
+         archiveFileSpec
+     else
+         archiveFileSpecWithBaseDir baseDir)
 
-let private allFilesInDirectory (baseDir : DirectoryInfo) =
-    !! (baseDir.FullName @@ "**" @@ "*")
-    |> Seq.map fileInfo
+let private allFilesInDirectory (baseDir: DirectoryInfo) =
+    !!(baseDir.FullName @@ "**" @@ "*") |> Seq.map fileInfo
 
 /// Provides validation of comression levels used for the zip and gzip compression algorithms.
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
@@ -98,7 +106,7 @@ module CompressionLevel =
 
     /// Constructs a `CompressionLevel`. Level is clipped to a value between 0 and 9.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let create level = CompressionLevel (clipLevel level)
+    let create level = CompressionLevel(clipLevel level)
 
     /// Retrieves the numeric compression level.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
@@ -108,10 +116,10 @@ module CompressionLevel =
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
 module Zip =
     open ICSharpCode.SharpZipLib.Zip
-    
+
     /// The zip archive compression parameters.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    type ZipCompressionParams = { Comment : string option; Level : CompressionLevel.T }
+    type ZipCompressionParams = { Comment: string option; Level: CompressionLevel.T }
 
     /// The default zip archive compression parameters
     /// ## Defaults
@@ -122,15 +130,15 @@ module Zip =
 
     /// Adds a file, specified by an `ArchiveFileSpec`, to a `ZipOutputStream`.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let addZipEntry (outStream : ZipOutputStream) =
-        let prepareEntry (fileInfo : FileInfo) itemSpec =
+    let addZipEntry (outStream: ZipOutputStream) =
+        let prepareEntry (fileInfo: FileInfo) itemSpec =
             let entry = new ZipEntry(ZipEntry.CleanName itemSpec)
             entry.DateTime <- fileInfo.LastWriteTime
             entry.Size <- fileInfo.Length
             outStream.PutNextEntry(entry)
             entry.Name
-        let afterEntry (outStream : ZipOutputStream) =
-            outStream.CloseEntry()
+
+        let afterEntry (outStream: ZipOutputStream) = outStream.CloseEntry()
         addEntry prepareEntry afterEntry outStream
 
     /// Wraps an output stream with a zip compressor.
@@ -138,7 +146,11 @@ module Zip =
     let compressStream { Level = level; Comment = comment } inner =
         let zipStream = new ZipOutputStream(inner)
         zipStream.SetLevel <| CompressionLevel.value level
-        match comment with | Some c -> zipStream.SetComment <| c | _ -> ()
+
+        match comment with
+        | Some c -> zipStream.SetComment <| c
+        | _ -> ()
+
         zipStream
 
     /// Wraps an input stream with a zip decompressor.
@@ -150,7 +162,7 @@ module Zip =
     ///  - `zipParams` - The zip compression parameters.
     ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let createFile zipParams (file : FileInfo) =
+    let createFile zipParams (file: FileInfo) =
         tracefn "Creating zip archive: %s (%A)" file.FullName zipParams.Level
         createArchiveStream (compressStream zipParams) file
 
@@ -164,18 +176,22 @@ module Zip =
     ///  - `extractDir` - The directory into which the archived files will be extracted.
     ///  - `archiveFile` - The archive to be extracted.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let Extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
-        let rec getNextEntry (stream : ZipInputStream) =
+    let Extract (extractDir: DirectoryInfo) (archiveFile: FileInfo) =
+        let rec getNextEntry (stream: ZipInputStream) =
             let entry = stream.GetNextEntry()
+
             match entry with
             | null -> None
             | _ when not entry.IsFile -> getNextEntry stream
             | _ ->
                 let outFile = extractDir.FullName @@ entry.Name |> fileInfo
-                Some { OutputFile = outFile; ArchiveEntryPath = entry.Name; EntrySize = entry.Size }
 
-        openArchiveStream extractStream archiveFile
-        |> extractEntries getNextEntry 
+                Some
+                    { OutputFile = outFile
+                      ArchiveEntryPath = entry.Name
+                      EntrySize = entry.Size }
+
+        openArchiveStream extractStream archiveFile |> extractEntries getNextEntry
         logfn "Extracted %s" archiveFile.FullName
 
     /// Creates a zip archive with the given files.
@@ -214,7 +230,7 @@ module Zip =
     ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressDir setParams flatten (baseDir : DirectoryInfo) archiveFile =
+    let CompressDir setParams flatten (baseDir: DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> Compress setParams flatten baseDir archiveFile
 
     /// Creates a zip archive containing all the files in a directory.
@@ -222,7 +238,7 @@ module Zip =
     ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
+    let CompressDirWithDefaults (baseDir: DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> CompressWithDefaults baseDir archiveFile
 
 /// Operations and tasks for working with gzip compressed files.
@@ -232,7 +248,7 @@ module GZip =
 
     /// The gzip archive compression parameters.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    type GZipCompressionParams = { Level : CompressionLevel.T }
+    type GZipCompressionParams = { Level: CompressionLevel.T }
 
     /// The default gzip archive compression parameters
     /// ## Defaults
@@ -256,7 +272,7 @@ module GZip =
     ///  - `gzipParams` - The gzip compression parameters.
     ///  - `file` - The `FileInfo` describing the location to which the compressed file should be written. Will be overwritten if it exists.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let createFile gzipParams (file : FileInfo) =
+    let createFile gzipParams (file: FileInfo) =
         tracefn "Creating gz archive: %s (%A)" file.FullName gzipParams.Level
         createArchiveStream (compressStream gzipParams) file
 
@@ -265,9 +281,14 @@ module GZip =
     ///  - `outFile` - The extracted output file. If existing, will be overwritten.
     ///  - `file` - The compressed file.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let ExtractFile outFile (file : FileInfo) =
+    let ExtractFile outFile (file: FileInfo) =
         use inStream = openArchiveStream extractStream file
-        extractEntry inStream { OutputFile = outFile; ArchiveEntryPath = file.FullName; EntrySize = inStream.Length }
+
+        extractEntry
+            inStream
+            { OutputFile = outFile
+              ArchiveEntryPath = file.FullName
+              EntrySize = inStream.Length }
 
     /// Compresses a file using gzip.
     /// ## Parameters
@@ -275,18 +296,28 @@ module GZip =
     ///  - `outFile` - The compressed output file. If existing, will be overwritten.
     ///  - `file` - The file to be compressed.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressFile setParams outFile (file : FileInfo) =
+    let CompressFile setParams outFile (file: FileInfo) =
         use inStream = file.OpenRead()
-        createArchive (setParams GZipCompressionDefaults |> createFile) (copyFileBuffered DefaultBufferSize) outFile (Seq.singleton inStream)
+
+        createArchive
+            (setParams GZipCompressionDefaults |> createFile)
+            (copyFileBuffered DefaultBufferSize)
+            outFile
+            (Seq.singleton inStream)
 
     /// Compresses a file using gzip.
     /// ## Parameters
     ///  - `outFile` - The compressed output file. If existing, will be overwritten.
     ///  - `file` - The file to be compressed.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressFileWithDefaults outFile (file : FileInfo) =
+    let CompressFileWithDefaults outFile (file: FileInfo) =
         use inStream = file.OpenRead()
-        createArchive (createFile GZipCompressionDefaults) (copyFileBuffered DefaultBufferSize) outFile (Seq.singleton inStream)
+
+        createArchive
+            (createFile GZipCompressionDefaults)
+            (copyFileBuffered DefaultBufferSize)
+            outFile
+            (Seq.singleton inStream)
 
 /// Operations and tasks for working with gzip compressed files.
 [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
@@ -305,7 +336,7 @@ module BZip2 =
     /// ## Parameters
     ///  - `file` - The `FileInfo` describing the location to which the compressed file should be written. Will be overwritten if it exists.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let createFile (file : FileInfo) =
+    let createFile (file: FileInfo) =
         tracefn "Creating bz2 archive: %s" file.FullName
         createArchiveStream compressStream file
 
@@ -314,16 +345,21 @@ module BZip2 =
     ///  - `outFile` - The extracted output file. If existing, will be overwritten.
     ///  - `file` - The compressed file.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let ExtractFile outFile (file : FileInfo) =
+    let ExtractFile outFile (file: FileInfo) =
         use inStream = openArchiveStream extractStream file
-        extractEntry inStream { OutputFile = outFile; ArchiveEntryPath = file.FullName; EntrySize = inStream.Length }
+
+        extractEntry
+            inStream
+            { OutputFile = outFile
+              ArchiveEntryPath = file.FullName
+              EntrySize = inStream.Length }
 
     /// Compresses a file using bzip2.
     /// ## Parameters
     ///  - `outFile` - The compressed output file. If existing, will be overwritten.
     ///  - `file` - The file to be compressed.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressFile outFile (file : FileInfo) =
+    let CompressFile outFile (file: FileInfo) =
         use inStream = file.OpenRead()
         createArchive createFile (copyFileBuffered DefaultBufferSize) outFile (Seq.singleton inStream)
 
@@ -334,15 +370,15 @@ module Tar =
 
     /// Adds a file, specified by an `ArchiveFileSpec`, to a `TarOutputStream`.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let addEntry (outStream : TarOutputStream) =
-        let prepareEntry (fileInfo : FileInfo) itemSpec =
+    let addEntry (outStream: TarOutputStream) =
+        let prepareEntry (fileInfo: FileInfo) itemSpec =
             let entry = TarEntry.CreateTarEntry itemSpec
             entry.ModTime <- fileInfo.LastWriteTime
             entry.Size <- fileInfo.Length
             outStream.PutNextEntry(entry)
             entry.Name
-        let afterEntry (outStream : TarOutputStream) =
-            outStream.CloseEntry()
+
+        let afterEntry (outStream: TarOutputStream) = outStream.CloseEntry()
         addEntry prepareEntry afterEntry outStream
 
     /// Wraps an output stream with a tar container store.
@@ -357,7 +393,7 @@ module Tar =
     /// ## Parameters
     ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let createFile (file : FileInfo) =
+    let createFile (file: FileInfo) =
         tracefn "Creating tar archive: %s" file.FullName
         createArchiveStream storeStream file
 
@@ -366,23 +402,29 @@ module Tar =
     let store file items =
         createArchive createFile addEntry file items
 
-    let rec private getNextEntry (extractDir : DirectoryInfo) (stream : TarInputStream) =
+    let rec private getNextEntry (extractDir: DirectoryInfo) (stream: TarInputStream) =
         let entry = stream.GetNextEntry()
+
         match entry with
         | null -> None
         | _ when entry.IsDirectory -> getNextEntry extractDir stream
         | _ ->
             let outFile = extractDir.FullName @@ entry.Name |> fileInfo
-            Some { OutputFile = outFile; ArchiveEntryPath = entry.Name; EntrySize = entry.Size }
+
+            Some
+                { OutputFile = outFile
+                  ArchiveEntryPath = entry.Name
+                  EntrySize = entry.Size }
 
     /// Extracts a tar archive to a given directory.
     /// ## Parameters
     ///  - `targetDir` - The directory into which the archived files will be extracted.
     ///  - `archiveFile` - The archive to be extracted.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let Extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
+    let Extract (extractDir: DirectoryInfo) (archiveFile: FileInfo) =
         openArchiveStream extractStream archiveFile
         |> extractEntries (getNextEntry extractDir)
+
         logfn "Extracted %s" archiveFile.FullName
 
     /// Creates a tar archive with the given files.
@@ -409,8 +451,7 @@ module Tar =
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     ///  - `files` - A sequence of files to store.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let StoreWithDefaults baseDir archiveFile files =
-        Store false baseDir archiveFile files
+    let StoreWithDefaults baseDir archiveFile files = Store false baseDir archiveFile files
 
     /// Creates a tar archive containing all the files in a directory.
     /// ## Parameters
@@ -418,7 +459,7 @@ module Tar =
     ///  - `baseDir` - The base directory to be archived. This directory will be the root of the resulting archive.
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressDir flatten (baseDir : DirectoryInfo) archiveFile =
+    let CompressDir flatten (baseDir: DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> Store flatten baseDir archiveFile
 
     /// Creates a tar.gz archive containing all the files in a directory.
@@ -426,7 +467,7 @@ module Tar =
     ///  - `baseDir` - The base directory to be archived. This directory will be the root of the resulting archive.
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-    let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
+    let CompressDirWithDefaults (baseDir: DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> StoreWithDefaults baseDir archiveFile
 
     /// Operations and tasks for working with tar archives compressed with GZip.
@@ -434,7 +475,8 @@ module Tar =
     module GZip =
         /// Wraps an output stream with a tar.gz compressor.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let compressStream gzipParams = GZip.compressStream gzipParams >> storeStream
+        let compressStream gzipParams =
+            GZip.compressStream gzipParams >> storeStream
 
         /// Wraps an input stream with a tar.gz decompressor.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
@@ -445,10 +487,10 @@ module Tar =
         ///  - `gzipParams` - The gzip compression parameters.
         ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let createFile (gzipParams : GZip.GZipCompressionParams) (file : FileInfo) =
+        let createFile (gzipParams: GZip.GZipCompressionParams) (file: FileInfo) =
             tracefn "Creating tar.gz archive: %s (%A)" file.FullName gzipParams.Level
             createArchiveStream (compressStream gzipParams) file
-    
+
         /// Constructs a function that will create a tar.gz archive from a set of files.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
         let compress gzipParam =
@@ -462,6 +504,7 @@ module Tar =
         let Extract extractDir archiveFile =
             openArchiveStream extractStream archiveFile
             |> extractEntries (getNextEntry extractDir)
+
             logfn "Extracted %s" archiveFile.FullName
 
         /// Creates a tar.gz archive with the given files.
@@ -473,7 +516,11 @@ module Tar =
         ///  - `files` - A sequence of files to compress.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
         let Compress setParams flatten baseDir archiveFile files =
-            doCompression (setParams GZip.GZipCompressionDefaults |> compress) archiveFile (buildFileSpec flatten baseDir) files
+            doCompression
+                (setParams GZip.GZipCompressionDefaults |> compress)
+                archiveFile
+                (buildFileSpec flatten baseDir)
+                files
 
         /// Creates a tar.gz archive with the given archive file specifications.
         /// ## Parameters
@@ -500,7 +547,7 @@ module Tar =
         ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
         ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let CompressDir setParams flatten (baseDir : DirectoryInfo) archiveFile =
+        let CompressDir setParams flatten (baseDir: DirectoryInfo) archiveFile =
             allFilesInDirectory baseDir |> Compress setParams flatten baseDir archiveFile
 
         /// Creates a tar.gz archive containing all the files in a directory.
@@ -508,7 +555,7 @@ module Tar =
         ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
         ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
+        let CompressDirWithDefaults (baseDir: DirectoryInfo) archiveFile =
             allFilesInDirectory baseDir |> CompressWithDefaults baseDir archiveFile
 
     /// Operations and tasks for working with tar archives compressed with BZip2.
@@ -526,14 +573,13 @@ module Tar =
         /// ## Parameters
         ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let createFile (file : FileInfo) =
+        let createFile (file: FileInfo) =
             tracefn "Creating tar.bz2 archive: %s" file.FullName
             createArchiveStream compressStream file
 
         /// Constructs a function that will create a tar.bz2 archive from a set of files.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let compress =
-            createArchive createFile addEntry
+        let compress = createArchive createFile addEntry
 
         /// Extracts a tar.bz2 archive to a given directory.
         /// ## Parameters
@@ -543,6 +589,7 @@ module Tar =
         let extract extractDir archiveFile =
             openArchiveStream extractStream archiveFile
             |> extractEntries (getNextEntry extractDir)
+
             logfn "Extracted %s" archiveFile.FullName
 
         /// Creates a tar.bz2 archive with the given files.
@@ -578,7 +625,7 @@ module Tar =
         ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
         ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let CompressDir flatten (baseDir : DirectoryInfo) archiveFile =
+        let CompressDir flatten (baseDir: DirectoryInfo) archiveFile =
             allFilesInDirectory baseDir |> Compress flatten baseDir archiveFile
 
         /// Creates a tar.bz2 archive containing all the files in a directory.
@@ -586,5 +633,5 @@ module Tar =
         ///  - `baseDir` - The base directory to be compressed. This directory will be the root of the resulting archive.
         ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
         [<System.Obsolete("Please use Fake.IO.Zip instead and extend it via Pull Request if required")>]
-        let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
+        let CompressDirWithDefaults (baseDir: DirectoryInfo) archiveFile =
             allFilesInDirectory baseDir |> CompressWithDefaults baseDir archiveFile

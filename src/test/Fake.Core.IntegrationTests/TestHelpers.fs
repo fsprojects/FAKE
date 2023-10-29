@@ -149,7 +149,7 @@ type Ctx =
 let handleAndFormat f =
     try
         f Ctx.Default
-    with FakeExecutionFailed (result) ->
+    with FakeExecutionFailed(result) ->
         // Try to improve error output
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
@@ -160,7 +160,7 @@ let handleAndFormat f =
             Expect.isTrue
                 (sprintf "fake.exe (silent mode) failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr)
                 false
-        with FakeExecutionFailed (verboseResult) ->
+        with FakeExecutionFailed(verboseResult) ->
             let verboseStdOut = String.Join("\n", verboseResult.Messages).Trim()
             let verboseStdErr = String.Join("\n", verboseResult.Errors)
 
@@ -184,7 +184,7 @@ let expectFailure msg f =
         f Ctx.Default
         Expect.isTrue msg false
         failwithf "%s" msg
-    with FakeExecutionFailed (result) ->
+    with FakeExecutionFailed(result) ->
         result
 
 

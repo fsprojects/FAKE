@@ -9,7 +9,7 @@ open System.Security.Principal
 /// ## Parameters
 ///  - `identity` - The windows identity of the user in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let isAdmin identity = 
+let isAdmin identity =
     let principal = new WindowsPrincipal(identity)
     principal.IsInRole WindowsBuiltInRole.Administrator
 
@@ -19,12 +19,12 @@ let isAdmin identity =
 ///
 /// ## Sample
 ///
-///     Target "Install" (fun _ -> 
+///     Target "Install" (fun _ ->
 ///          requiresAdmin (fun _ -> installMSI())
 ///      )
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let requiresAdmin f = 
-    if isAdmin(WindowsIdentity.GetCurrent()) then
-        f()
+let requiresAdmin f =
+    if isAdmin (WindowsIdentity.GetCurrent()) then
+        f ()
     else
         invalidOp "Administrator privileges are required to run this function."

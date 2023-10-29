@@ -10,16 +10,16 @@ open System.Text
 /// The NCover parameter type.
 [<CLIMutable>]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type NCoverParams = 
-    { ProjectName : string
-      ToolPath : string
-      TestRunnerExe : string
-      TimeOut : TimeSpan
-      WorkingDir : string }
+type NCoverParams =
+    { ProjectName: string
+      ToolPath: string
+      TestRunnerExe: string
+      TimeOut: TimeSpan
+      WorkingDir: string }
 
 /// NCover default parameters.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let NCoverDefaults = 
+let NCoverDefaults =
     { ProjectName = String.Empty
       ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe"
       TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
@@ -33,36 +33,42 @@ let NCoverDefaults =
 ///  - `assemblies` - The test assemblies, which should be inspected.
 ///  - `excludeAssemblies` - These assemblies are excluded.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let NCover setParams (assemblies : string seq) (excludeAssemblies : string seq) = 
+let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
     let param = setParams NCoverDefaults
-    
-    let commandLineCommands = 
+
+    let commandLineCommands =
         let args = ref (new StringBuilder())
-        let append (s : string) = args := (!args).Append(s).Append(" ")
-        let appendQuoted (s : string) = args := (!args).Append("\"").Append(s).Append("\" ")
-        param.TestRunnerExe
-        |> FullName
-        |> appendQuoted
+        let append (s: string) = args := (!args).Append(s).Append(" ")
+
+        let appendQuoted (s: string) =
+            args := (!args).Append("\"").Append(s).Append("\" ")
+
+        param.TestRunnerExe |> FullName |> appendQuoted
         Seq.iter appendQuoted assemblies
-        if excludeAssemblies
-           |> Seq.isEmpty
-           |> not
-        then 
+
+        if excludeAssemblies |> Seq.isEmpty |> not then
             append "//eas"
             Seq.iter appendQuoted excludeAssemblies
+
         append "//p"
         appendQuoted param.ProjectName
         append "//ssp \"Registry, SymbolServer, BuildPath, ExecutingDir\""
         append "//w"
-        param.WorkingDir
-        |> FullName
-        |> trimSeparator
-        |> appendQuoted
+        param.WorkingDir |> FullName |> trimSeparator |> appendQuoted
         (!args).ToString()
+
     tracefn "NCover command\n%s %s" param.ToolPath commandLineCommands
-    let ok = 
-        execProcess (fun info -> 
-            info.FileName <- param.ToolPath
-            if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
-            info.Arguments <- commandLineCommands) param.TimeOut
-    if not ok then failwithf "NCover reported errors."
+
+    let ok =
+        execProcess
+            (fun info ->
+                info.FileName <- param.ToolPath
+
+                if param.WorkingDir <> String.Empty then
+                    info.WorkingDirectory <- param.WorkingDir
+
+                info.Arguments <- commandLineCommands)
+            param.TimeOut
+
+    if not ok then
+        failwithf "NCover reported errors."

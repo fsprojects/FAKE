@@ -63,17 +63,17 @@ type Command =
     member x.CommandLine =
         match x with
         | ShellCommand s -> s
-        | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
+        | RawCommand(f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
 
     member x.Arguments =
         match x with
         | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Arguments for ShellCommand"
-        | RawCommand (_, arg) -> arg
+        | RawCommand(_, arg) -> arg
 
     member x.Executable =
         match x with
         | ShellCommand _ -> raise <| NotImplementedException "Cannot retrieve Executable for ShellCommand"
-        | RawCommand (f, _) -> f
+        | RawCommand(f, _) -> f
 
 /// <summary>
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
@@ -163,12 +163,12 @@ type internal RawCreateProcess =
             p.UseShellExecute <- true
             p.FileName <- s
             p.Arguments <- null
-        | RawCommand (filename, args) ->
+        | RawCommand(filename, args) ->
             p.UseShellExecute <- false
             p.FileName <- filename
             p.Arguments <- args.ToStartInfo
 
-        let setEnv key var = p.Environment[ key ] <- var
+        let setEnv key var = p.Environment[key] <- var
 
         x.Environment
         |> Option.iter (fun env ->
@@ -254,7 +254,7 @@ module internal RawProc =
                                 async {
                                     match parameter with
                                     | Inherit -> return failwithf "Unexpected value"
-                                    | UseStream (shouldClose, stream) ->
+                                    | UseStream(shouldClose, stream) ->
                                         if isInputStream then
                                             do!
                                                 stream.CopyToAsync(processStream, 81920, tok.Token)

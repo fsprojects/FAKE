@@ -238,10 +238,10 @@ module CMake =
                 "-D "
                 + option.Name
                 + match option.Value with
-                  | CMakeBoolean (value) -> ":BOOL=" + if value then "ON" else "OFF"
-                  | CMakeString (value) -> ":STRING=\"" + value + "\""
-                  | CMakeDirPath (value) -> FormatCMakePath value |> sprintf ":PATH=\"%s\""
-                  | CMakeFilePath (value) -> FormatCMakePath value |> sprintf ":FILEPATH=\"%s\"")
+                  | CMakeBoolean(value) -> ":BOOL=" + if value then "ON" else "OFF"
+                  | CMakeString(value) -> ":STRING=\"" + value + "\""
+                  | CMakeDirPath(value) -> FormatCMakePath value |> sprintf ":PATH=\"%s\""
+                  | CMakeFilePath(value) -> FormatCMakePath value |> sprintf ":FILEPATH=\"%s\"")
 
         let cacheEntriesToRemove =
             argsIfNotEmpty "-U \"%s\"" parameters.CacheEntriesToRemove

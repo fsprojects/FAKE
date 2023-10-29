@@ -185,8 +185,7 @@ type Arguments =
 
     /// Create a new arguments object from the given list of arguments
     static member OfArgs(args: string seq) =
-        { Args = args |> Seq.toArray
-          Original = None }
+        { Args = args |> Seq.toArray; Original = None }
 
     /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     /// Same as `OfWindowsCommandLine`.
@@ -280,7 +279,6 @@ module Arguments =
 
     /// Create a arguments instance from a list.
     let ofList (a: string list) =
-        { Args = a |> Seq.toArray
-          Original = None }
+        { Args = a |> Seq.toArray; Original = None }
 
 #endif

@@ -11,33 +11,33 @@ open System.Xml.Linq
 
 /// Represents a `.NET` assembly that may be used in COM interop projects
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type InteropAssemblyData = 
+type InteropAssemblyData =
     {
         /// Assembly name
-        Name:string
-        
+        Name: string
+
         /// Path to the assembly file
-        Path:string 
-        
+        Path: string
+
         /// Assembly version
-        Version:string 
-        
+        Version: string
+
         /// Guid from the `System.Runtime.Interopservice.GuidAttribute` of the assembly
-        Guid:System.Guid
+        Guid: System.Guid
     }
 
 /// Represents an executable to create an _application manifest_ for
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type InteropApplicationData = 
+type InteropApplicationData =
     {
         /// Path of the executable binary file
-        ExecutablePath:string
-        
+        ExecutablePath: string
+
         /// Version of the executable
-        Version:String
+        Version: String
 
         /// Dependent `.NET` assemblies of the executable
-        Dependencies:InteropAssemblyData seq 
+        Dependencies: InteropAssemblyData seq
     }
 
 /// Represents status of attempted parsing
@@ -53,14 +53,15 @@ type private ILparsingResult =
 
 /// Path to `mt.exe`
 /// ref: https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx
-let private  mtToolPath = !! (sdkBasePath + "/**/mt.exe") -- (sdkBasePath + "/**/x64/*.*") 
-                          |> getNewestTool
+let private mtToolPath =
+    !!(sdkBasePath + "/**/mt.exe") -- (sdkBasePath + "/**/x64/*.*") |> getNewestTool
 
 /// Path to `ildasm.exe
 /// .net fx dissasembly tool
 /// ref: https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx
-let private ildasmPath = !! (sdkBasePath + "/**/ildasm.exe") -- (sdkBasePath + "/**/x64/*.*")
-                         |> getNewestTool
+let private ildasmPath =
+    !!(sdkBasePath + "/**/ildasm.exe") -- (sdkBasePath + "/**/x64/*.*")
+    |> getNewestTool
 
 /// XLM namespace of manifest files
 let private manifestNamespace = "urn:schemas-microsoft-com:asm.v1"
@@ -70,55 +71,63 @@ let private nsXn s = XName.Get(s, manifestNamespace)
 /// create XName from string __without__ manifest namespace
 let private xn s = XName.Get(s)
 
-let private setAssemblyIdAttributeValue attributeName attributeValue (manifest:XContainer) = 
-     manifest.Descendants(nsXn "assemblyIdentity")
-         .Single()
-         .Attribute(xn attributeName)
-         .SetValue(attributeValue)
+let private setAssemblyIdAttributeValue attributeName attributeValue (manifest: XContainer) =
+    manifest
+        .Descendants(nsXn "assemblyIdentity")
+        .Single()
+        .Attribute(xn attributeName)
+        .SetValue(attributeValue)
 
-let private getAssemblyIdAttributeValue attributeName (manifest:XContainer) = 
-     manifest.Descendants(nsXn "assemblyIdentity")
-         .Single()
-         .Attribute(xn attributeName)
-         .Value
+let private getAssemblyIdAttributeValue attributeName (manifest: XContainer) =
+    manifest
+        .Descendants(nsXn "assemblyIdentity")
+        .Single()
+        .Attribute(xn attributeName)
+        .Value
 
 let private setAssemblyName manifest name =
-     manifest |> setAssemblyIdAttributeValue "name" name
+    manifest |> setAssemblyIdAttributeValue "name" name
 
 let private setAssemblyVersion manifest version =
     manifest |> setAssemblyIdAttributeValue "version" version
 
-let private copyAssemblyIdAttributeValue attributeName toManifest fromManifest = 
-    toManifest 
-    |> setAssemblyIdAttributeValue attributeName 
-        (fromManifest |> getAssemblyIdAttributeValue attributeName)
+let private copyAssemblyIdAttributeValue attributeName toManifest fromManifest =
+    toManifest
+    |> setAssemblyIdAttributeValue attributeName (fromManifest |> getAssemblyIdAttributeValue attributeName)
 
-let private copyAssemblyIdName   = 
-    copyAssemblyIdAttributeValue "name" 
+let private copyAssemblyIdName = copyAssemblyIdAttributeValue "name"
 
-let private copyAssemblyIdVersion = 
-    copyAssemblyIdAttributeValue "version" 
+let private copyAssemblyIdVersion = copyAssemblyIdAttributeValue "version"
 
-let private copyElements ((toManifest:XContainer), toElement) ((fromManifest:XContainer), elementName) = 
-    toManifest.Element(nsXn toElement).Add(fromManifest.Descendants(nsXn elementName))
+let private copyElements ((toManifest: XContainer), toElement) ((fromManifest: XContainer), elementName) =
+    toManifest
+        .Element(nsXn toElement)
+        .Add(fromManifest.Descendants(nsXn elementName))
 
-let private copyClrClasses toManifest fromManifest = 
+let private copyClrClasses toManifest fromManifest =
     (fromManifest, "clrClass") |> copyElements (toManifest, "assembly")
 
 /// Embeds a manifest file in a binary using `mt.exe`
-let private embedManiFestAsync workingDir (asyncData: Async<string*string>) =
+let private embedManiFestAsync workingDir (asyncData: Async<string * string>) =
     async {
         let! (manifestPath, binaryPath) = asyncData
-        let! embedManifestResult = asyncShellExec {defaultParams with 
-                                                    Program = mtToolPath
-                                                    WorkingDirectory = workingDir
-                                                    CommandLine = (sprintf "-manifest \"%s\" -outputResource:\"%s\" -nologo -verbose" manifestPath binaryPath)}
-        if embedManifestResult <> 0 then failwith (sprintf "Embedding SxS manifest from %s into %s failed" manifestPath binaryPath)
+
+        let! embedManifestResult =
+            asyncShellExec
+                { defaultParams with
+                    Program = mtToolPath
+                    WorkingDirectory = workingDir
+                    CommandLine =
+                        (sprintf "-manifest \"%s\" -outputResource:\"%s\" -nologo -verbose" manifestPath binaryPath) }
+
+        if embedManifestResult <> 0 then
+            failwith (sprintf "Embedding SxS manifest from %s into %s failed" manifestPath binaryPath)
+
         return ()
     }
-        
+
 /// Created and embeds assembly Side-by-side interop manifests for provided assemblies
-/// 
+///
 /// ## Parameters
 ///  - `workingDir` - somewhere to put any temp files created
 ///  - `assemblies` - .net assemblies to create manifests for
@@ -126,41 +135,55 @@ let private embedManiFestAsync workingDir (asyncData: Async<string*string>) =
 /// ## Process
 ///
 /// This function will use `mt.exe` (ref: https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx)
-/// to create a manifest for each assembly. This created manifest is unfortunately _not_ a valid 
+/// to create a manifest for each assembly. This created manifest is unfortunately _not_ a valid
 /// interop Side-by-Side manifest, but it has the important `clrClass` elements, + `version` and `name`info that would be the most
 /// difficult to create through other means.
 /// The important info is then put into a valid base manifest and embedded into the assembly as a resource.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
-     use __ = traceStartTaskUsing "AddEmbeddedAssemblyManifest" (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length)) 
-     let createManifestPath assembly =
-            workingDir @@ ((Path.GetFileNameWithoutExtension assembly) + ".manifest")
+    use __ =
+        traceStartTaskUsing
+            "AddEmbeddedAssemblyManifest"
+            (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length))
 
-     let assemblyManifestBase = 
-            """
+    let createManifestPath assembly =
+        workingDir @@ ((Path.GetFileNameWithoutExtension assembly) + ".manifest")
+
+    let assemblyManifestBase =
+        """
             <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
             <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
                 <assemblyIdentity name="assemblyName" version="1.0.0.0" type="win32"/>
             </assembly>
-            """.Trim()
+            """
+            .Trim()
 
-     let createManiFestBaseAsync assembly =
+    let createManiFestBaseAsync assembly =
         async {
             let manifestPath = createManifestPath assembly
-            let! createBaseManifestResult = asyncShellExec {defaultParams with
-                                                                    Program = mtToolPath
-                                                                    WorkingDirectory = workingDir
-                                                                    CommandLine = (sprintf "-managedassemblyname:\"%s\" -out:\"%s\" -nodependency -nologo -verbose" assembly manifestPath)
-                                                            }
-            if createBaseManifestResult <> 0 then failwith (sprintf "Failed generating base manifest for %s" assembly)
+
+            let! createBaseManifestResult =
+                asyncShellExec
+                    { defaultParams with
+                        Program = mtToolPath
+                        WorkingDirectory = workingDir
+                        CommandLine =
+                            (sprintf
+                                "-managedassemblyname:\"%s\" -out:\"%s\" -nodependency -nologo -verbose"
+                                assembly
+                                manifestPath) }
+
+            if createBaseManifestResult <> 0 then
+                failwith (sprintf "Failed generating base manifest for %s" assembly)
+
             return (assembly, manifestPath)
         }
-      
-     let createManifestAsync (asyncData: Async<string * string>) =
+
+    let createManifestAsync (asyncData: Async<string * string>) =
         async {
             let! (assembly, manifestPath) = asyncData
             let createdManifest = manifestPath |> XDocument.Load
-            let assemblyManifest = assemblyManifestBase |> XDocument.Parse 
+            let assemblyManifest = assemblyManifestBase |> XDocument.Parse
             createdManifest |> copyAssemblyIdName assemblyManifest
             createdManifest |> copyAssemblyIdVersion assemblyManifest
             createdManifest |> copyClrClasses assemblyManifest
@@ -168,13 +191,13 @@ let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
             return (manifestPath, assembly)
         }
 
-     assemblies 
-     |> Seq.map (createManiFestBaseAsync >> createManifestAsync >> embedManiFestAsync workingDir )
-     |> Async.Parallel
-     |> Async.RunSynchronously
-     |> ignore
+    assemblies
+    |> Seq.map (createManiFestBaseAsync >> createManifestAsync >> embedManiFestAsync workingDir)
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> ignore
 
-/// Gets `name`, `path', `version` and interop `Guid` for those of the provided assemblies that have 
+/// Gets `name`, `path', `version` and interop `Guid` for those of the provided assemblies that have
 /// all of the required information.
 ///
 /// ## Parameters
@@ -182,7 +205,7 @@ let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
 ///  - `assemblies` - assemblies to get data from
 ///
 /// ## Purpose
-/// 
+///
 /// In order to create _application_ interop side-by-side manifests we need to know some metadata
 /// about the assemblies that may be referenced from COM executables.
 /// For the manifest we need the _assembly version_ and _ assembly name_. And in addition to that
@@ -196,10 +219,11 @@ let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
 /// to create the smallest dissasembly I could (Really only need the manifest part), and the parse the IL file to get the metadata
 /// (If anyone knows a cleaner / better way, pls improve on the code)
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let GetInteropAssemblyData workingDir assemblies = 
-    let toChars (s:string) = s.ToCharArray () |> Seq.ofArray
-    let replace (oldVal:Char) (newVal:Char) (s:string) = (s.Replace(oldVal, newVal))
-    let getValueBetween startChar endChar (line:string) = 
+let GetInteropAssemblyData workingDir assemblies =
+    let toChars (s: string) = s.ToCharArray() |> Seq.ofArray
+    let replace (oldVal: Char) (newVal: Char) (s: string) = (s.Replace(oldVal, newVal))
+
+    let getValueBetween startChar endChar (line: string) =
         line
         |> toChars
         |> Seq.skipWhile (fun c -> c <> startChar)
@@ -207,66 +231,80 @@ let GetInteropAssemblyData workingDir assemblies =
         |> Seq.takeWhile (fun c -> c <> endChar)
         |> String.Concat
 
-    let getGuid assembly (customDataLines: string[])= 
+    let getGuid assembly (customDataLines: string[]) =
         match customDataLines |> Array.tryFind (fun l -> l.Contains("GuidAttribute")) with
-        | None      -> None
-        | Some data ->  try 
-                            match data |> getValueBetween '\'' '\'' |> Guid.TryParse with
-                            | (true, guid) -> Some(guid)
-                            | (false, _ )  -> None
-                        with
-                        | :? System.ArgumentException as ex -> None 
+        | None -> None
+        | Some data ->
+            try
+                match data |> getValueBetween '\'' '\'' |> Guid.TryParse with
+                | (true, guid) -> Some(guid)
+                | (false, _) -> None
+            with :? System.ArgumentException as ex ->
+                None
 
     let tryGetInteropInfo (assembly, (lines: string seq)) =
-        let assemblyData = 
-            lines 
+        let assemblyData =
+            lines
             |> Seq.skipWhile (fun l -> not (l.Contains(".assembly") && not (l.Contains("extern"))))
             |> Seq.takeWhile (fun l -> l <> "}")
-        if assemblyData.Count() = 0 then 
-              Failed (sprintf "Did not find assemblydata section for %s" assembly)
+
+        if assemblyData.Count() = 0 then
+            Failed(sprintf "Did not find assemblydata section for %s" assembly)
         else
-            let customData = (assemblyData |> Seq.filter (fun l -> let trimmed = l.Trim()
-                                                                   trimmed.StartsWith(".custom") || 
-                                                                   trimmed.StartsWith("="))
-                                           |> String.Concat
-                              ).Split([|".custom"|], StringSplitOptions.RemoveEmptyEntries)
-                                           
-            let versionLine = assemblyData |> Seq.tryFind(fun l -> l.Trim().StartsWith(".ver"))
-            let assyName = (assemblyData |> Seq.head).Replace(".assembly","").Trim()
-            
-            
+            let customData =
+                (assemblyData
+                 |> Seq.filter (fun l ->
+                     let trimmed = l.Trim()
+                     trimmed.StartsWith(".custom") || trimmed.StartsWith("="))
+                 |> String.Concat)
+                    .Split([| ".custom" |], StringSplitOptions.RemoveEmptyEntries)
+
+            let versionLine = assemblyData |> Seq.tryFind (fun l -> l.Trim().StartsWith(".ver"))
+            let assyName = (assemblyData |> Seq.head).Replace(".assembly", "").Trim()
+
+
             match (versionLine, getGuid assembly customData, String.IsNullOrWhiteSpace assyName) with
             | _, _, true -> Failed(sprintf "No assembly name found for %s" assembly)
             | None, _, _ -> Failed(sprintf "No version info found for %s" assembly)
             | _, None, _ -> Failed(sprintf "No guid attribute found for %s" assembly)
-            | Some version, Some guid, false -> Success({
-                                                                Name = assyName
-                                                                Path = assembly
-                                                                Guid = guid
-                                                                Version = version.Replace(".ver","").Trim().Replace(":",".")
-                                                              })
+            | Some version, Some guid, false ->
+                Success(
+                    { Name = assyName
+                      Path = assembly
+                      Guid = guid
+                      Version = version.Replace(".ver", "").Trim().Replace(":", ".") }
+                )
+
     let tryGetInteropInfoAsync asyncData =
         async {
             let! (assembly, (lines: string[])) = asyncData
             return tryGetInteropInfo (assembly, lines)
         }
 
-    let getRawAssemblyDataAsync assembly = 
+    let getRawAssemblyDataAsync assembly =
         async {
             let ilName = workingDir @@ ((Path.GetFileNameWithoutExtension assembly) + ".il")
-            let! dissasembleResult = 
-                asyncShellExec {defaultParams with 
-                                    Program = ildasmPath
-                                    WorkingDirectory = workingDir
-                                    CommandLine = (sprintf "\"%s\" /output:\"%s\" /pubonly /caverbal /item:non_items_please /nobar /utf8" assembly ilName)}
-            if dissasembleResult <> 0 then failwith (sprintf "Failed using ildasm to get metadata for %s" assembly)
-            let! lines = async {return File.ReadAllLines ilName}
+
+            let! dissasembleResult =
+                asyncShellExec
+                    { defaultParams with
+                        Program = ildasmPath
+                        WorkingDirectory = workingDir
+                        CommandLine =
+                            (sprintf
+                                "\"%s\" /output:\"%s\" /pubonly /caverbal /item:non_items_please /nobar /utf8"
+                                assembly
+                                ilName) }
+
+            if dissasembleResult <> 0 then
+                failwith (sprintf "Failed using ildasm to get metadata for %s" assembly)
+
+            let! lines = async { return File.ReadAllLines ilName }
             return (assembly, lines)
         }
-        
-     
 
-    assemblies 
+
+    assemblies
     // To Avoid rerunning the complete chain for every operation
     // a list is better.
     |> List.ofSeq
@@ -274,13 +312,16 @@ let GetInteropAssemblyData workingDir assemblies =
     |> Async.Parallel
     |> Async.RunSynchronously
     |> List.ofArray
-    |> List.filter (fun l -> match l with
-                             | Failed error -> traceImportant error
-                                               false
-                             | Success data -> true)
-    |> List.map (fun l -> match l with 
-                          | Failed _ -> failwith "This should not be happening"
-                          | Success data -> data)
+    |> List.filter (fun l ->
+        match l with
+        | Failed error ->
+            traceImportant error
+            false
+        | Success data -> true)
+    |> List.map (fun l ->
+        match l with
+        | Failed _ -> failwith "This should not be happening"
+        | Success data -> data)
 
 /// Creates and adds _application interop side-by-side manifests_ to provided executables
 ///
@@ -288,15 +329,20 @@ let GetInteropAssemblyData workingDir assemblies =
 ///  - `workingdir` - somewhere to put any temporary files
 ///  - `applications` - Metadata about executables to create manifests for.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let public AddEmbeddedApplicationManifest workingDir (applications: InteropApplicationData seq) = 
-    use __ = traceStartTaskUsing "AddEmbeddedApplicationManifest" (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))
-    let applicationManifestBase = 
+let public AddEmbeddedApplicationManifest workingDir (applications: InteropApplicationData seq) =
+    use __ =
+        traceStartTaskUsing
+            "AddEmbeddedApplicationManifest"
+            (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))
+
+    let applicationManifestBase =
         """
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
             <assemblyIdentity name="application.exe" version="1.0.0.0" type="win32" processorArchitecture="x86"/>
         </assembly>
-        """.Trim() 
+        """
+            .Trim()
 
     let dependencyBase =
         ("""
@@ -308,10 +354,14 @@ let public AddEmbeddedApplicationManifest workingDir (applications: InteropAppli
                 </dependentAssembly>
             </dependency>
         </assembly>
-        """.Trim() |> XDocument.Parse).Descendants(nsXn "dependency").Single()
-    
+        """
+            .Trim()
+         |> XDocument.Parse)
+            .Descendants(nsXn "dependency")
+            .Single()
 
-    let createDependencyElements (dependencies:InteropAssemblyData seq) =
+
+    let createDependencyElements (dependencies: InteropAssemblyData seq) =
         let createDependencyElement (dependency: InteropAssemblyData) =
             let dependencyElement = (new XElement(dependencyBase))
             dependency.Name |> setAssemblyName dependencyElement
@@ -324,20 +374,24 @@ let public AddEmbeddedApplicationManifest workingDir (applications: InteropAppli
         let appManifest = applicationManifestBase |> XDocument.Parse
         application.ExecutablePath |> Path.GetFileName |> setAssemblyName appManifest
         application.Version |> setAssemblyVersion appManifest
-        appManifest.Element(nsXn "assembly").Add(application.Dependencies |> createDependencyElements)
-        let appManifestPath = workingDir @@ ((Path.GetFileName application.ExecutablePath) + ".manifest")
+
+        appManifest
+            .Element(nsXn "assembly")
+            .Add(application.Dependencies |> createDependencyElements)
+
+        let appManifestPath =
+            workingDir @@ ((Path.GetFileName application.ExecutablePath) + ".manifest")
+
         appManifest.Save(appManifestPath)
         (appManifestPath, application.ExecutablePath)
-    
-    let createManifestAsync (application: InteropApplicationData) =
-        async {
-            return createManifest application
-        }
 
-    applications 
-    |> Seq.map (fun a -> 
+    let createManifestAsync (application: InteropApplicationData) =
+        async { return createManifest application }
+
+    applications
+    |> Seq.map (fun a ->
         tracefn "Creating manifest for %s" (Path.GetFileNameWithoutExtension a.ExecutablePath)
-        a |> (createManifestAsync >> embedManiFestAsync workingDir) )
+        a |> (createManifestAsync >> embedManiFestAsync workingDir))
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore

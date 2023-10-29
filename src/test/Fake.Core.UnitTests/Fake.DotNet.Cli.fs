@@ -47,7 +47,10 @@ let tests =
 
           testCase "Test that the dotnet publish self-contained works as expected"
           <| fun _ ->
-              let param = { DotNet.PublishOptions.Create() with SelfContained = Some false }
+              let param =
+                  { DotNet.PublishOptions.Create() with
+                      SelfContained = Some false }
+
               let cli = param |> DotNet.buildPublishArgs |> Args.toWindowsCommandLine
 
               let expected = "--configuration Release --self-contained=false"
@@ -66,7 +69,8 @@ let tests =
           testCase "Test that the dotnet publish manifest works as expected"
           <| fun _ ->
               let param =
-                  { DotNet.PublishOptions.Create() with Manifest = Some [ "Path1"; "Path2" ] }
+                  { DotNet.PublishOptions.Create() with
+                      Manifest = Some [ "Path1"; "Path2" ] }
 
               let cli = param |> DotNet.buildPublishArgs |> Args.toWindowsCommandLine
 

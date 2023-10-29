@@ -2,6 +2,7 @@
 module Fake.Testing.NUnit3
 
 #nowarn "44"
+
 open System
 open System.Text
 open System.IO
@@ -13,7 +14,8 @@ type NUnit3ProcessModel =
     | DefaultProcessModel
     | SingleProcessModel
     | SeparateProcessModel
-    | MultipleProcessModel with
+    | MultipleProcessModel
+
     member x.ParamString =
         match x with
         | DefaultProcessModel -> ""
@@ -31,7 +33,8 @@ type NUnit3DomainModel =
     /// A test domain is created - this is how NUnit worked prior to version 2.4
     | SingleDomainModel
     /// A separate test domain is created for each assembly
-    | MultipleDomainModel with
+    | MultipleDomainModel
+
     member x.ParamString =
         match x with
         | DefaultDomainModel -> ""
@@ -65,7 +68,8 @@ type NUnit3Runtime =
     | Mono35
     | Mono40
     /// NUnit should use runtime specified by this value
-    | Other of string with
+    | Other of string
+
     member x.ParamString =
         match x with
         | Default -> ""
@@ -100,6 +104,7 @@ type NUnit3TraceLevel =
     | Warning
     | Info
     | Verbose
+
     member x.ParamString =
         match x with
         | Default -> ""
@@ -116,6 +121,7 @@ type LabelsLevel =
     | Off
     | On
     | All
+
     member x.ParamString =
         match x with
         | Default -> ""
@@ -129,89 +135,90 @@ type LabelsLevel =
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 [<CLIMutable>]
 type NUnit3Params =
-    { /// The path to the NUnit3 console runner: `nunit3-console.exe`
-      ToolPath : string
+    {
+        /// The path to the NUnit3 console runner: `nunit3-console.exe`
+        ToolPath: string
 
-      /// The name (or path) of a file containing a list of tests to run or explore, one per line.
-      Testlist : string
+        /// The name (or path) of a file containing a list of tests to run or explore, one per line.
+        Testlist: string
 
-      /// An expression indicating which tests to run. It may specify test names, classes, methods,
-      /// catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~.
-      /// See [NUnit documentation](https://github.com/nunit/docs/wiki/Test-Selection-Language) for a full description of the syntax.
-      Where : string
+        /// An expression indicating which tests to run. It may specify test names, classes, methods,
+        /// catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~.
+        /// See [NUnit documentation](https://github.com/nunit/docs/wiki/Test-Selection-Language) for a full description of the syntax.
+        Where: string
 
-      /// Name of a project configuration to load (e.g.: Debug)
-      Config : string
+        /// Name of a project configuration to load (e.g.: Debug)
+        Config: string
 
-      /// Controls how NUnit loads tests in processes. See [NUnit3ProcessModel](fake-testing-nunit3-nunit3processmodel.html)
-      ProcessModel : NUnit3ProcessModel
+        /// Controls how NUnit loads tests in processes. See [NUnit3ProcessModel](fake-testing-nunit3-nunit3processmodel.html)
+        ProcessModel: NUnit3ProcessModel
 
-      /// Number of agents that may be allowed to run simultaneously assuming you are not running inprocess.
-      /// If not specified, all agent processes run tests at the same time, whatever the number of assemblies.
-      /// This setting is used to control running your assemblies in parallel.
-      Agents : int option
+        /// Number of agents that may be allowed to run simultaneously assuming you are not running inprocess.
+        /// If not specified, all agent processes run tests at the same time, whatever the number of assemblies.
+        /// This setting is used to control running your assemblies in parallel.
+        Agents: int option
 
-      /// Controls how NUnit loads tests in processes. See: [NUnit3ProcessModel](fake-testing-nunit3-nunit3domainmodel.html).
-      Domain : NUnit3DomainModel
+        /// Controls how NUnit loads tests in processes. See: [NUnit3ProcessModel](fake-testing-nunit3-nunit3domainmodel.html).
+        Domain: NUnit3DomainModel
 
-      /// Allows you to specify the version of the runtime to be used in executing tests.
-      /// Default value is runtime under which the assembly was built. See: [NUnit3Runtime](fake-testing-nunit3-nunit3runtime.html).
-      Framework : NUnit3Runtime
+        /// Allows you to specify the version of the runtime to be used in executing tests.
+        /// Default value is runtime under which the assembly was built. See: [NUnit3Runtime](fake-testing-nunit3-nunit3runtime.html).
+        Framework: NUnit3Runtime
 
-      /// Run tests in a 32-bit process on 64-bit systems.
-      Force32bit : bool
+        /// Run tests in a 32-bit process on 64-bit systems.
+        Force32bit: bool
 
-      /// Dispose each test runner after it has finished running its tests
-      DisposeRunners : bool
+        /// Dispose each test runner after it has finished running its tests
+        DisposeRunners: bool
 
-      /// The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.
-      TimeOut : TimeSpan
+        /// The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.
+        TimeOut: TimeSpan
 
-      /// Set the random seed used to generate test cases
-      Seed : int
+        /// Set the random seed used to generate test cases
+        Seed: int
 
-      /// Specify the NUMBER of worker threads to be used in running tests.
-      /// This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute.
-      /// If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
-      Workers : int option
+        /// Specify the NUMBER of worker threads to be used in running tests.
+        /// This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute.
+        /// If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
+        Workers: int option
 
-      /// Causes execution of the test run to terminate immediately on the first test failure or error.
-      StopOnError : bool
+        /// Causes execution of the test run to terminate immediately on the first test failure or error.
+        StopOnError: bool
 
-      /// Path of the directory to use for output files.
-      WorkingDir : string
+        /// Path of the directory to use for output files.
+        WorkingDir: string
 
-      /// File path to contain text output from the tests.
-      OutputDir : string
+        /// File path to contain text output from the tests.
+        OutputDir: string
 
-      /// File path to contain error output from the tests.
-      ErrorDir : string
+        /// File path to contain error output from the tests.
+        ErrorDir: string
 
-      /// Output specs for saving the test results. Default value is TestResult.xml
-      /// Passing empty list does not save any result (--noresult option in NUnit)
-      /// For more information, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
-      ResultSpecs : string list
+        /// Output specs for saving the test results. Default value is TestResult.xml
+        /// Passing empty list does not save any result (--noresult option in NUnit)
+        /// For more information, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
+        ResultSpecs: string list
 
-      /// Tells .NET to copy loaded assemblies to the shadowcopy directory.
-      ShadowCopy : bool
+        /// Tells .NET to copy loaded assemblies to the shadowcopy directory.
+        ShadowCopy: bool
 
-      /// Turns on use of TeamCity service messages.
-      TeamCity : bool
+        /// Turns on use of TeamCity service messages.
+        TeamCity: bool
 
-      /// Specify whether to write test case names to the output.
-      Labels: LabelsLevel
+        /// Specify whether to write test case names to the output.
+        Labels: LabelsLevel
 
-      /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
-      ErrorLevel : NUnit3ErrorLevel
+        /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
+        ErrorLevel: NUnit3ErrorLevel
 
-      /// Controls the trace logs NUnit3 will output, defaults to Off
-      TraceLevel : NUnit3TraceLevel
+        /// Controls the trace logs NUnit3 will output, defaults to Off
+        TraceLevel: NUnit3TraceLevel
 
-      /// Skips assemblies that do not contain tests or assemblies that contain the NUnit.Framework.NonTestAssemblyAttribute without raising an error
-      SkipNonTestAssemblies : bool
+        /// Skips assemblies that do not contain tests or assemblies that contain the NUnit.Framework.NonTestAssemblyAttribute without raising an error
+        SkipNonTestAssemblies: bool
 
-      /// A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons
-      Params : string
+        /// A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons
+        Params: string
     }
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
@@ -243,8 +250,7 @@ type NUnit3Params =
 /// ## Defaults
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnit3Defaults =
-    {
-      ToolPath = findToolInSubPath  "nunit3-console.exe" (currentDirectory @@ "tools" @@ "Nunit")
+    { ToolPath = findToolInSubPath "nunit3-console.exe" (currentDirectory @@ "tools" @@ "Nunit")
       Testlist = ""
       Where = ""
       Config = ""
@@ -254,39 +260,38 @@ let NUnit3Defaults =
       Framework = NUnit3Runtime.Default
       Force32bit = false
       DisposeRunners = false
-      TimeOut = TimeSpan.FromMilliseconds((float)Int32.MaxValue)
+      TimeOut = TimeSpan.FromMilliseconds((float) Int32.MaxValue)
       Seed = -1
       Workers = None
       StopOnError = false
       WorkingDir = ""
       OutputDir = ""
       ErrorDir = ""
-      ResultSpecs = [currentDirectory @@ "TestResult.xml"]
+      ResultSpecs = [ currentDirectory @@ "TestResult.xml" ]
       ShadowCopy = false
       TeamCity = false
       Labels = LabelsLevel.Default
       ErrorLevel = NUnit3ErrorLevel.Error
-      TraceLevel= NUnit3TraceLevel.Default
+      TraceLevel = NUnit3TraceLevel.Default
       SkipNonTestAssemblies = false
-      Params = ""
-    }
+      Params = "" }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let getWorkingDir parameters =
-    Seq.find isNotNullOrEmpty [ parameters.WorkingDir
-                                environVar ("teamcity.build.workingDir")
-                                "." ]
+    Seq.find isNotNullOrEmpty [ parameters.WorkingDir; environVar ("teamcity.build.workingDir"); "." ]
     |> Path.GetFullPath
-    
+
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let buildNUnit3Args parameters assemblies =
     let appendResultString results sb =
         match results, sb with
         | [], sb -> append "--noresult" sb
         | x, sb when x = NUnit3Defaults.ResultSpecs -> sb
-        | results, sb -> (sb, results) ||> Seq.fold (fun builder str -> append (sprintf "--result=%s" str) builder)
+        | results, sb ->
+            (sb, results)
+            ||> Seq.fold (fun builder str -> append (sprintf "--result=%s" str) builder)
 
     new StringBuilder()
     |> append "--noheader"
@@ -301,7 +306,9 @@ let buildNUnit3Args parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.TraceLevel.ParamString "--trace="
     |> appendIfTrue parameters.Force32bit "--x86"
     |> appendIfTrue parameters.DisposeRunners "--dispose-runners"
-    |> appendIfTrue (parameters.TimeOut <> NUnit3Defaults.TimeOut) (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
+    |> appendIfTrue
+        (parameters.TimeOut <> NUnit3Defaults.TimeOut)
+        (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
     |> appendIfTrue (parameters.Seed >= 0) (sprintf "--seed=%i" parameters.Seed)
     |> appendIfSome parameters.Workers (sprintf "--workers=%i")
     |> appendIfTrue parameters.StopOnError "--stoponerror"
@@ -315,23 +322,30 @@ let buildNUnit3Args parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.Params "--params="
     |> appendFileNamesIfNotNull assemblies
     |> toText
-    
+
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
+let NUnit3 (setParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnit" details
     let parameters = NUnit3Defaults |> setParams
     let assemblies = assemblies |> Seq.toArray
-    if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
+
+    if Array.isEmpty assemblies then
+        failwith "NUnit: cannot run tests (the assembly list is empty)."
+
     let tool = parameters.ToolPath
     let args = buildNUnit3Args parameters assemblies
     trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
+
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- tool
-            info.WorkingDirectory <- getWorkingDir parameters
-            info.Arguments <- args) processTimeout
+        ExecProcess
+            (fun info ->
+                info.FileName <- tool
+                info.WorkingDirectory <- getWorkingDir parameters
+                info.Arguments <- args)
+            processTimeout
+
     let errorDescription error =
         match error with
         | OK -> "OK"
@@ -341,9 +355,11 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     match parameters.ErrorLevel with
     | NUnit3ErrorLevel.DontFailBuild ->
         match result with
-        | OK | TestsFailed -> ()
+        | OK
+        | TestsFailed -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
-    | NUnit3ErrorLevel.Error | FailOnFirstError ->
+    | NUnit3ErrorLevel.Error
+    | FailOnFirstError ->
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))

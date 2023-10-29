@@ -103,7 +103,7 @@ let retrieveHints
             let paketCoreVersionString = paketVersion
 
             match prepareInfo._Section with
-            | FakeHeader.PaketDependencies (_, d, _, _) ->
+            | FakeHeader.PaketDependencies(_, d, _, _) ->
                 match getBootstrapperArgs d.DependenciesFile with
                 | None ->
                     { Important = false
@@ -157,6 +157,7 @@ let retrieveHints
     /// [omit]
     let getLinkerTime (assembly: Assembly) =
         let buildVersionMetadataPrefix = "+build"
+
         let attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
 
         match attribute.InformationalVersion <> null with

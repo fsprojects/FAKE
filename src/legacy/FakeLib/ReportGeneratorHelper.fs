@@ -26,27 +26,29 @@ type ReportGeneratorLogVerbosity =
 /// ReportGenerator parameters, for more details see: https://github.com/danielpalme/ReportGenerator.
 [<CLIMutable>]
 type ReportGeneratorParams =
-    { /// (Required) Path to the ReportGenerator exe file.
-      ExePath : string
-      /// (Required) The directory where the generated report should be saved.
-      TargetDir : string
-      /// The output formats and scope.
-      ReportTypes : ReportGeneratorReportType list
-      /// Optional directories which contain the corresponding source code.
-      SourceDirs : string list
-      /// Optional directory for storing persistent coverage information.
-      /// Can be used in future reports to show coverage evolution.
-      HistoryDir : string
-      /// Optional list of assemblies that should be included or excluded
-      /// in the report. Exclusion filters take precedence over inclusion
-      /// filters. Wildcards are allowed.
-      Filters : string list
-      /// The verbosity level of the log messages.
-      LogVerbosity : ReportGeneratorLogVerbosity
-      /// The directory where the ReportGenerator process will be started.
-      WorkingDir : string
-      /// The timeout for the ReportGenerator process.
-      TimeOut : TimeSpan }
+    {
+        /// (Required) Path to the ReportGenerator exe file.
+        ExePath: string
+        /// (Required) The directory where the generated report should be saved.
+        TargetDir: string
+        /// The output formats and scope.
+        ReportTypes: ReportGeneratorReportType list
+        /// Optional directories which contain the corresponding source code.
+        SourceDirs: string list
+        /// Optional directory for storing persistent coverage information.
+        /// Can be used in future reports to show coverage evolution.
+        HistoryDir: string
+        /// Optional list of assemblies that should be included or excluded
+        /// in the report. Exclusion filters take precedence over inclusion
+        /// filters. Wildcards are allowed.
+        Filters: string list
+        /// The verbosity level of the log messages.
+        LogVerbosity: ReportGeneratorLogVerbosity
+        /// The directory where the ReportGenerator process will be started.
+        WorkingDir: string
+        /// The timeout for the ReportGenerator process.
+        TimeOut: TimeSpan
+    }
 
 [<System.Obsolete("Open Fake.Testing instead (FAKE0001 - package: Fake.Testing.ReportGenerator, module: ReportGenerator, function: ReportGeneratorDefaultParams)")>]
 /// ReportGenerator default parameters
@@ -64,7 +66,7 @@ let ReportGeneratorDefaultParams =
 [<System.Obsolete("Open Fake.Testing instead (FAKE0001 - package: Fake.Testing.ReportGenerator, module: ReportGenerator, function: buildReportGeneratorArgs (now private))")>]
 /// Builds the report generator command line arguments from the given parameters and reports
 /// [omit]
-let buildReportGeneratorArgs parameters (reports : string seq) =
+let buildReportGeneratorArgs parameters (reports: string seq) =
     let reportTypes = parameters.ReportTypes |> List.map (fun rt -> rt.ToString())
     let sourceDirs = sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs))
     let filters = sprintf "-filters:%s" (String.Join(";", parameters.Filters))
@@ -89,7 +91,7 @@ let buildReportGeneratorArgs parameters (reports : string seq) =
 ///
 ///      ReportGenerator (fun p -> { p with TargetDir = "c:/reports/" }) [ "c:/opencover.xml" ]
 [<System.Obsolete("Open Fake.Testing instead (FAKE0001 - package: Fake.Testing.ReportGenerator, module: ReportGenerator, function: generateReports)")>]
-let ReportGenerator setParams (reports : string list) =
+let ReportGenerator setParams (reports: string list) =
     let taskName = "ReportGenerator"
     let description = "Generating reports"
     use __ = traceStartTaskUsing taskName description
@@ -97,9 +99,17 @@ let ReportGenerator setParams (reports : string list) =
 
     let processArgs = buildReportGeneratorArgs param reports
     tracefn "ReportGenerator command\n%s %s" param.ExePath processArgs
+
     let ok =
-        execProcess (fun info ->
-            info.FileName <- param.ExePath
-            if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
-            info.Arguments <- processArgs) param.TimeOut
-    if not ok then failwithf "ReportGenerator reported errors."
+        execProcess
+            (fun info ->
+                info.FileName <- param.ExePath
+
+                if param.WorkingDir <> String.Empty then
+                    info.WorkingDirectory <- param.WorkingDir
+
+                info.Arguments <- processArgs)
+            param.TimeOut
+
+    if not ok then
+        failwithf "ReportGenerator reported errors."

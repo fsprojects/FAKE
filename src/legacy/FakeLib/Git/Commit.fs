@@ -9,7 +9,4 @@ open Fake
 /// Commits all files in the given repository with the given message
 [<System.Obsolete("Use Fake.Tools.Git.Commit instead")>]
 let Commit repositoryDir message =
-    sprintf "commit -m \"%s\"" message
-    |> runSimpleGitCommand repositoryDir
-    |> trace
-
+    sprintf "commit -m \"%s\"" message |> runSimpleGitCommand repositoryDir |> trace

@@ -181,8 +181,7 @@ let tryReadPaketDependenciesFromScript
                 else
                     "framework: netstandard2.0,net6.0" + "\n" + p
 
-        { Header = PaketInline
-          Section = fixDefaults paketCode }
+        { Header = PaketInline; Section = fixDefaults paketCode }
         |> writeFixedPaketDependencies cacheDir
         |> Some
     else

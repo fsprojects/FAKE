@@ -13,7 +13,8 @@ let tests =
               let cmd =
                   SonarQube.getSonarQubeCallParams
                       SonarQube.Begin
-                      { SonarQube.SonarQubeDefaults with Organization = Some "test space" }
+                      { SonarQube.SonarQubeDefaults with
+                          Organization = Some "test space" }
                   |> Arguments.toStartInfo
 
               Expect.equal

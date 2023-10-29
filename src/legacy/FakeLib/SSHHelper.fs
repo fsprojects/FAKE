@@ -6,21 +6,22 @@ module Fake.SSHHelper
 /// The SSH parameter type.
 [<CLIMutable>]
 [<System.Obsolete("Use the Fake.Net.SSH module instead.")>]
-type SSHParams = 
-    { /// Path of the scp.exe 
-      ToolPath : string
-      /// Path of the private key file (optional)
-      PrivateKeyPath : string 
-      /// remote User
-      RemoteUser : string
-      RemoteHost : string
-      RemotePort : string
-      }
+type SSHParams =
+    {
+        /// Path of the scp.exe
+        ToolPath: string
+        /// Path of the private key file (optional)
+        PrivateKeyPath: string
+        /// remote User
+        RemoteUser: string
+        RemoteHost: string
+        RemotePort: string
+    }
 
 
 /// The SSH default parameters
 [<System.Obsolete("Use the Fake.Net.SSH module instead.")>]
-let SSHDefaults : SSHParams = 
+let SSHDefaults: SSHParams =
     { ToolPath = if isMono then "ssh" else "ssh.exe"
       RemoteUser = "fake"
       RemoteHost = "localhost"
@@ -38,20 +39,31 @@ let SSHDefaults : SSHParams =
 ///
 ///     SSH (fun p -> { p with ToolPath = "tools/ssh.exe" }) command
 [<System.Obsolete("Use the Fake.Net.SSH module instead.")>]
-let SSH setParams command = 
-    let (p : SSHParams) = setParams SSHDefaults
+let SSH setParams command =
+    let (p: SSHParams) = setParams SSHDefaults
+
     let target =
         if p.RemotePort = "22" then
             sprintf "%s@%s" p.RemoteUser p.RemoteHost
         else
             sprintf "%s@%s:%s" p.RemoteUser p.RemoteHost p.RemotePort
 
-    let privateKey = if isNullOrEmpty p.PrivateKeyPath then "" else sprintf "-i \"%s\"" p.PrivateKeyPath
+    let privateKey =
+        if isNullOrEmpty p.PrivateKeyPath then
+            ""
+        else
+            sprintf "-i \"%s\"" p.PrivateKeyPath
+
     let args = sprintf "%s %s %s" privateKey target (toParam command)
 
     tracefn "%s %s" p.ToolPath args
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- p.ToolPath
-            info.Arguments <- args) System.TimeSpan.MaxValue
-    if result <> 0 then failwithf "Error during SSH. Target: %s Command: %s" target command
+
+    let result =
+        ExecProcess
+            (fun info ->
+                info.FileName <- p.ToolPath
+                info.Arguments <- args)
+            System.TimeSpan.MaxValue
+
+    if result <> 0 then
+        failwithf "Error during SSH. Target: %s Command: %s" target command

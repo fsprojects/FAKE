@@ -76,9 +76,7 @@ type internal StringLike =
     | StringItem of string
     | StringKeyword of StringKeyword
 
-type internal PreprocessorDirective =
-    { Token: Token
-      Strings: StringLike list }
+type internal PreprocessorDirective = { Token: Token; Strings: StringLike list }
 
 let internal handleRawString (s: string) =
     if s.StartsWith("\"") then
@@ -143,7 +141,7 @@ let internal findProcessorDirectives { Tokens = tokens } =
             match items, collectDirective, token.TokenInfo with
             | h :: rest, true, Some _ -> (token :: h) :: rest, true
             | _, true, None -> items, false
-            | _, false, Some (tok) when tok.TokenName = "HASH" -> [ token ] :: items, true
+            | _, false, Some(tok) when tok.TokenName = "HASH" -> [ token ] :: items, true
             | _, false, _ -> items, false
             | _ -> failwithf "Unknown state %A" (items, collectDirective, token))
         ([], false)
@@ -177,7 +175,7 @@ let internal findInterestingItems { Tokens = tokens } =
                 None, Reference(Some "")
             else
                 None, Reference None
-        | Reference (Some s) -> // read string
+        | Reference(Some s) -> // read string
             if
                 tok.TokenInfo.IsNone
                 || (tok.TokenInfo.IsSome && tok.TokenInfo.Value.TokenName = "STRING_TEXT")

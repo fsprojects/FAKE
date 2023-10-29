@@ -10,16 +10,13 @@ let WaitForMessageFiles files timeOut =
     let files = Seq.cache files
     tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
 
-    let time = 
-        TaskRunnerHelper.waitFor 
-            (fun _ -> allFilesExist files) 
-            timeOut 
-            100 
-            (fun _ -> failwith "MessageFile timeout") 
+    let time =
+        TaskRunnerHelper.waitFor (fun _ -> allFilesExist files) timeOut 100 (fun _ -> failwith "MessageFile timeout")
+
     System.Threading.Thread.Sleep 100
     time
-  
+
 /// Waits for another application to create a output file.
 /// If the timeout is reached an exception will be raised.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let WaitForMessageFile file timeOut = WaitForMessageFiles [file] timeOut
+let WaitForMessageFile file timeOut = WaitForMessageFiles [ file ] timeOut

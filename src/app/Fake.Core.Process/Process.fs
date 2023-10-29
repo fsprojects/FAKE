@@ -48,8 +48,7 @@ type ProcessResult =
             | _ -> None)
 
     static member New exitCode results =
-        { ExitCode = exitCode
-          Results = results }
+        { ExitCode = exitCode; Results = results }
 
 module private ProcStartInfoData =
     let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
@@ -204,7 +203,7 @@ type ProcStartInfo =
 
                 x.Environment
                 |> Map.remove defaultEnvVar
-                |> Map.iter (fun var key -> p.Environment[ var ] <- key)
+                |> Map.iter (fun var key -> p.Environment[var] <- key)
 
 #if FX_ERROR_DIALOG
         if p.ErrorDialog then
@@ -580,6 +579,7 @@ module Process =
                     |> Async.Start
 
                     stateNeedsDispose <- false
+
                     return { Result = output; Raw = exitCode }
                 finally
                     if stateNeedsDispose && not (isNull state) then

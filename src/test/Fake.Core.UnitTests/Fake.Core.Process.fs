@@ -73,15 +73,12 @@ let tests =
                   let shell, command = "cmd", "/C \"echo 1&& echo 2\""
 
                   let cb =
-                      Process.getProcI (fun proc ->
-                          { proc with
-                              FileName = shell
-                              Arguments = command })
+                      Process.getProcI (fun proc -> { proc with FileName = shell; Arguments = command })
 
                   let file, args =
                       match cb.Command with
                       | ShellCommand cmd -> failwithf "Expected RawCommand"
-                      | RawCommand (f, a) -> f, a
+                      | RawCommand(f, a) -> f, a
 
                   Expect.equal file "cmd" "Expected correct command"
                   Expect.sequenceEqual (args |> Arguments.toList) [ "/C"; "echo 1&& echo 2" ] "Expected correct args"

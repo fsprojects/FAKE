@@ -8,9 +8,7 @@ open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open Fake.Runtime
 
-type Script =
-    { HashContent: string
-      Location: string }
+type Script = { HashContent: string; Location: string }
 
 let getAllScriptContents (pathsAndContents: seq<Script>) =
     pathsAndContents |> Seq.map (fun s -> s.HashContent)
@@ -56,7 +54,7 @@ let getAllScripts
                     match l with
                     | FSharpParser.StringLike.StringKeyword FSharpParser.SourceDirectory :: _ -> Some(".")
                     | FSharpParser.StringLike.StringKeyword FSharpParser.SourceFile :: _ -> Some(scriptName)
-                    | FSharpParser.StringLike.StringKeyword (FSharpParser.Unknown s) :: _ ->
+                    | FSharpParser.StringLike.StringKeyword(FSharpParser.Unknown s) :: _ ->
                         printfn
                             "FAKE-CACHING: Unknown special key '%s' in preprocessor directive: %A"
                             s

@@ -61,22 +61,22 @@ type ArgumentStreamPosition =
     override x.ToString() =
         match x with
         | ArgumentPos p -> sprintf "ArgumentPos(%d)" p
-        | ShortArgumentPartialPos (p, part) -> sprintf "ArgumentPos(%d, %d)" p part
+        | ShortArgumentPartialPos(p, part) -> sprintf "ArgumentPos(%d, %d)" p part
 
     member x.ArgIndex =
         match x with
-        | ShortArgumentPartialPos (p, _)
+        | ShortArgumentPartialPos(p, _)
         | ArgumentPos p -> p
 
     member x.InnerIndex =
         match x with
-        | ShortArgumentPartialPos (_, i) -> i
+        | ShortArgumentPartialPos(_, i) -> i
         | ArgumentPos _ -> 0
 
     member x.IsEndOf(argv: string array) =
         match x with
         | ArgumentPos x -> x >= argv.Length
-        | ShortArgumentPartialPos (x, innerPos) ->
+        | ShortArgumentPartialPos(x, innerPos) ->
             if x >= argv.Length then
                 true
             else if x = argv.Length - 1 then
@@ -100,7 +100,7 @@ type ArgumentStreamPosition =
                         ShortArgumentPartialPos(x + 1, 1)
                 else
                     ArgumentPos(argv.Length)
-            | ShortArgumentPartialPos (x, i) ->
+            | ShortArgumentPartialPos(x, i) ->
                 let c = argv.[x]
 
                 if i + 1 < c.Length then
@@ -121,7 +121,7 @@ type ArgumentStreamPosition =
         let res =
             match x with
             | ArgumentPos x
-            | ShortArgumentPartialPos (x, _) ->
+            | ShortArgumentPartialPos(x, _) ->
                 if x + 1 < argv.Length then
                     let next = argv.[x + 1]
 
@@ -134,9 +134,7 @@ type ArgumentStreamPosition =
         //printfn "%A -> NextArg(%A) -> %A" x argv res
         res
 
-type IArgumentStreamState<'TUserState> =
-    interface
-    end
+type IArgumentStreamState<'TUserState> = interface end
 
 type IArgumentStream<'TUserState> =
     abstract CurrentState: IArgumentStreamState<'TUserState>
@@ -187,7 +185,7 @@ type ArgumentStream<'TUserState> private (argv: string array, initState: 'TUserS
     let current () =
         match pos with
         | ArgumentPos x -> if x < argv.Length then Some argv.[x] else None
-        | ShortArgumentPartialPos (x, i) ->
+        | ShortArgumentPartialPos(x, i) ->
             if x < argv.Length then
                 Some(sprintf "-%c" argv.[x].[i])
             else
@@ -195,15 +193,12 @@ type ArgumentStream<'TUserState> private (argv: string array, initState: 'TUserS
 
     let currentFull () =
         match pos with
-        | ShortArgumentPartialPos (x, _)
+        | ShortArgumentPartialPos(x, _)
         | ArgumentPos x -> if x < argv.Length then Some argv.[x] else None
 
     interface IArgumentStream<'TUserState> with
         member x.CurrentState =
-            { Pos = pos
-              StateTag = stateTag
-              UserState = state }
-            :> IArgumentStreamState<'TUserState>
+            { Pos = pos; StateTag = stateTag; UserState = state } :> IArgumentStreamState<'TUserState>
 
         member x.Position = pos
 
@@ -266,11 +261,11 @@ type ArgumentStream<'TUserState> private (argv: string array, initState: 'TUserS
 
 module ArgumentStream =
     let create (argv: string array) (initState: 'TUserState) =
-        ArgumentStream<'TUserState>.Create (argv, initState) :> IArgumentStream<_>
+        ArgumentStream<'TUserState>.Create(argv, initState) :> IArgumentStream<_>
 
     let clone (stream: IArgumentStream<_>) =
         let clone =
-            ArgumentStream<'TUserState>.Create (stream.Argv, stream.UserState) :> IArgumentStream<_>
+            ArgumentStream<'TUserState>.Create(stream.Argv, stream.UserState) :> IArgumentStream<_>
 
         clone.RestoreState(
             { Pos = stream.Position
@@ -293,6 +288,7 @@ module ArgumentStream =
         { new IArgumentStream<'un> with
             member x.CurrentState =
                 let innerState = inner.CurrentState
+
                 { Inner = innerState; State = newState } :> IArgumentStreamState<'un>
 
             member x.Position = inner.Position
@@ -500,7 +496,7 @@ module ArgParser =
                         Reply(reply.Status, error)
                 else
                     match resultForEmptySequence with
-                    | Some _ (* if we bind f here, fsc won't be able to inline it *)  when
+                    | Some _ (* if we bind f here, fsc won't be able to inline it *) when
                         reply.Status = Error && stateTag = stream.StateTag
                         ->
                         Reply(
@@ -513,16 +509,14 @@ module ArgParser =
                     | _ -> Reply(reply.Status, reply.Error)
 
     let many p =
-        Inline.Many((fun x -> [ x ]), (fun xs x -> x :: xs), List.rev, p, resultForEmptySequence = fun () -> [])
+        Inline.Many((fun x -> [ x ]), (fun xs x -> x :: xs), List.rev, p, resultForEmptySequence = (fun () -> []))
 
     let many1 p =
         Inline.Many((fun x -> [ x ]), (fun xs x -> x :: xs), List.rev, p)
 
     let pseq (ps: seq<ArgumentParser<_, _>>) : ArgumentParser<_, _> = Seq.fold (>>.) (preturn Map.empty) ps
 
-    type internal UnorderedState<'u, 'a> =
-        { InnerState: 'u
-          AppliedParsers: int list }
+    type internal UnorderedState<'u, 'a> = { InnerState: 'u; AppliedParsers: int list }
 
     let internal mapParserToUnorderedState i (p: ArgumentParser<'u, _>) : ArgumentParser<UnorderedState<'u, _>, _> =
         fun innerStream ->
@@ -536,7 +530,8 @@ module ArgParser =
 
             if reply.Status = Ok then
                 innerStream.UserState <-
-                    { innerStream.UserState with AppliedParsers = i :: innerStream.UserState.AppliedParsers }
+                    { innerStream.UserState with
+                        AppliedParsers = i :: innerStream.UserState.AppliedParsers }
 
             reply
 
@@ -544,8 +539,7 @@ module ArgParser =
         fun (stream: IArgumentStream<_>) ->
             let newStream =
                 ArgumentStream.map
-                    { InnerState = stream.UserState
-                      AppliedParsers = [] }
+                    { InnerState = stream.UserState; AppliedParsers = [] }
                     (fun _ s -> s.InnerState)
                     stream
 
@@ -648,18 +642,18 @@ module ArgParser =
         | None, _
         | Some DocoptResult.NoResult, _ -> Map.add key newItem map
         | _, DocoptResult.NoResult -> map
-        | Some (DocoptResult.Argument arg1), DocoptResult.Argument arg2 ->
+        | Some(DocoptResult.Argument arg1), DocoptResult.Argument arg2 ->
             Map.add key (DocoptResult.Arguments [ arg1; arg2 ]) map
-        | Some (DocoptResult.Argument arg1), DocoptResult.Arguments argList ->
+        | Some(DocoptResult.Argument arg1), DocoptResult.Arguments argList ->
             Map.add key (DocoptResult.Arguments(arg1 :: argList)) map
-        | Some (DocoptResult.Arguments argList1), DocoptResult.Argument arg2 ->
+        | Some(DocoptResult.Arguments argList1), DocoptResult.Argument arg2 ->
             Map.add key (DocoptResult.Arguments(argList1 @ [ arg2 ])) map
-        | Some (DocoptResult.Arguments argList1), DocoptResult.Arguments argList2 ->
+        | Some(DocoptResult.Arguments argList1), DocoptResult.Arguments argList2 ->
             Map.add key (DocoptResult.Arguments(argList1 @ argList2)) map
-        | Some (DocoptResult.Flag), DocoptResult.Flag -> Map.add key (DocoptResult.Flags 2) map
-        | Some (DocoptResult.Flags n1), DocoptResult.Flag -> Map.add key (DocoptResult.Flags(n1 + 1)) map
-        | Some (DocoptResult.Flag), DocoptResult.Flags n2 -> Map.add key (DocoptResult.Flags(n2 + 1)) map
-        | Some (DocoptResult.Flags n1), DocoptResult.Flags n2 -> Map.add key (DocoptResult.Flags(n1 + n2)) map
+        | Some(DocoptResult.Flag), DocoptResult.Flag -> Map.add key (DocoptResult.Flags 2) map
+        | Some(DocoptResult.Flags n1), DocoptResult.Flag -> Map.add key (DocoptResult.Flags(n1 + 1)) map
+        | Some(DocoptResult.Flag), DocoptResult.Flags n2 -> Map.add key (DocoptResult.Flags(n2 + 1)) map
+        | Some(DocoptResult.Flags n1), DocoptResult.Flags n2 -> Map.add key (DocoptResult.Flags(n1 + n2)) map
         | Some v, _ -> failwithf "Cannot add value %O as %s -> %O already exists in the result map" newItem key v
 
     let saveInMap key f =
@@ -703,7 +697,7 @@ module ArgParser =
         if flag.HasArgument then
             let chooseCmd arg =
                 match arg with
-                | Some (arg: string) when arg.StartsWith(flag.FullLong + "=") ->
+                | Some(arg: string) when arg.StartsWith(flag.FullLong + "=") ->
                     Some(arg.Substring(flag.FullLong.Length + 1))
                 | _ -> None
 
@@ -728,13 +722,13 @@ module ArgParser =
             // When we have a argument we know we can consume the complete argument
             let chooseCmd (stream: IArgumentStream<_>) =
                 match stream.Peek(), stream.PeekFull() with
-                | Some (arg: string), Some (fullarg) when arg.StartsWith flag.FullShort ->
+                | Some(arg: string), Some(fullarg) when arg.StartsWith flag.FullShort ->
                     let oldPos = stream.Position
                     stream.SkipFull()
 
                     let result =
                         match oldPos with
-                        | ShortArgumentPartialPos (_, i) when i + 1 < fullarg.Length ->
+                        | ShortArgumentPartialPos(_, i) when i + 1 < fullarg.Length ->
                             // Parameter for short switch is in current argument
                             Some(fullarg.Substring(i + 1))
                         | _ -> None
@@ -760,7 +754,7 @@ module ArgParser =
         else
             let chooseCmd arg =
                 match arg with
-                | Some (arg: string) when arg = flag.FullShort -> Some arg
+                | Some(arg: string) when arg = flag.FullShort -> Some arg
                 | _ -> None
 
             chooseParser (sprintf "ShortFlag '%s'" flag.FullShort) chooseCmd
@@ -789,7 +783,7 @@ module ArgParser =
         let p =
             match ast with
             | UsageAst.Eps -> preturn Map.empty
-            | UsageAst.Ano (_, o') ->
+            | UsageAst.Ano(_, o') ->
                 // Annotations are always optional
                 pOptions true o' <|> preturn Map.empty
             //pzero <?> "Option annotation is not supported yet"
@@ -798,17 +792,17 @@ module ArgParser =
             //o'.
             //pzero <?> "Short options are not supported yet"
             | UsageAst.Lop o' -> pOption true o'
-            | UsageAst.Sqb (UsageAst.Seq asts') when ast.ContainsOnlyOptions ->
+            | UsageAst.Sqb(UsageAst.Seq asts') when ast.ContainsOnlyOptions ->
                 asts'
                 |> Seq.map getParser
                 |> Seq.toList
                 |> punorderedseq false true
                 >>= updateUserState (fun _ state -> state)
-            | UsageAst.Sqb (UsageAst.Sop o') -> pOptions true o' <|> preturn Map.empty
+            | UsageAst.Sqb(UsageAst.Sop o') -> pOptions true o' <|> preturn Map.empty
             | UsageAst.Sqb ast' -> getParser ast' <|> preturn Map.empty
             | UsageAst.Arg name' -> parg name' >>= saveInMap (name') (DocoptResult.Argument)
             | UsageAst.XorEmpty -> preturn Map.empty
-            | UsageAst.Xor (l', r') -> choiceBest [ getParser l'; getParser r' ]
+            | UsageAst.Xor(l', r') -> choiceBest [ getParser l'; getParser r' ]
             | UsageAst.Seq asts' when ast.ContainsOnlyOptions ->
                 asts'
                 |> Seq.map getParser
@@ -818,7 +812,7 @@ module ArgParser =
             | UsageAst.Req ast' -> getParser ast'
             | UsageAst.Seq asts' -> asts' |> Seq.map getParser |> pseq
             | UsageAst.Cmd cmd' -> pcmd cmd' >>= saveInMap cmd' (fun _ -> DocoptResult.Flag)
-            | UsageAst.Ell (UsageAst.Sqb ast') ->
+            | UsageAst.Ell(UsageAst.Sqb ast') ->
                 // Allow zero matches
                 many (getParser ast') >>= updateUserState (fun _ state -> state)
             | UsageAst.Ell ast' ->
@@ -865,16 +859,18 @@ type UsageParser(usageStrings': string array, sections: (string * SafeOptions) l
                 UsageAstBuilder.Arg(arg')
             elif
                 (match last'.Content with
-                 | Some (UsageAstBuilder.Sop opts) -> opts.Last.HasArgument
+                 | Some(UsageAstBuilder.Sop opts) -> opts.Last.HasArgument
                  | _ -> false)
                 || (match last'.Content with
-                    | Some (UsageAstBuilder.Lop opt) -> opt.HasArgument
+                    | Some(UsageAstBuilder.Lop opt) -> opt.HasArgument
                     | _ -> false)
             then
                 UsageAstBuilder.Eps
             else
                 UsageAstBuilder.Arg(arg')
-            |> UsageAstCell.FromBuilder in pupperArg <|> plowerArg >>= updateUserState filterArg
+            |> UsageAstCell.FromBuilder in
+
+        pupperArg <|> plowerArg >>= updateUserState filterArg
 
     let pano (title, so: SafeOptions) =
         skipString (sprintf "[%s]" title)
@@ -907,7 +903,7 @@ type UsageParser(usageStrings': string array, sections: (string * SafeOptions) l
                 UsageAstBuilder.Eps
             else
                 match last'.Content with
-                | Some (UsageAstBuilder.Sop list) ->
+                | Some(UsageAstBuilder.Sop list) ->
                     last'.Content <- Some(UsageAstBuilder.Sop(list.AddRange(sops |> List.ofSeq)))
                     UsageAstBuilder.Eps
                 | _ -> UsageAstBuilder.Sop(SafeOptions(sops |> Seq.toList))
@@ -975,7 +971,7 @@ type UsageParser(usageStrings': string array, sections: (string * SafeOptions) l
 
         let makeEll (ast': UsageAstCell) =
             match ast'.Content with
-            | Some (UsageAstBuilder.Seq seq) ->
+            | Some(UsageAstBuilder.Seq seq) ->
                 let cell = seq |> List.last
 
                 cell.Content <-
@@ -1019,8 +1015,8 @@ type UsageParser(usageStrings': string array, sections: (string * SafeOptions) l
                         let line = line.Substring(index) in
 
                         match runParserOnString pusageLine { Content = None } "" line with
-                        | Success (ast, _, _) -> ast.Build()
-                        | Failure (err, _, _) -> raise (UsageException(err))
+                        | Success(ast, _, _) -> ast.Build()
+                        | Failure(err, _, _) -> raise (UsageException(err))
             }
 
     do
