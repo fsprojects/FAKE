@@ -25,7 +25,7 @@ type KnownTags =
         | Compilation n
         | TestSuite n
         | Test n
-        | Other (_, n) -> n
+        | Other(_, n) -> n
 
     member x.Type =
         match x with
@@ -36,7 +36,7 @@ type KnownTags =
         | Compilation _ -> "compilation"
         | TestSuite _ -> "testsuite"
         | Test _ -> "test"
-        | Other (t, _) -> t
+        | Other(t, _) -> t
 
 // Note: Adding new cases to this type is not considered a breaking change!
 /// The list of DotNet coverage tools supported
@@ -126,9 +126,9 @@ type TestStatus =
 module TestStatus =
     let inline mapMessage f (t: TestStatus) =
         match t with
-        | TestStatus.Failed (message, details, Some (expected, actual)) ->
+        | TestStatus.Failed(message, details, Some(expected, actual)) ->
             TestStatus.Failed(f message, f details, Some(f expected, f actual))
-        | TestStatus.Failed (message, details, None) -> TestStatus.Failed(f message, f details, None)
+        | TestStatus.Failed(message, details, None) -> TestStatus.Failed(f message, f details, None)
         | _ -> t
 
 // Note: Adding new cases to this type is not considered a breaking change!
@@ -162,8 +162,8 @@ type TraceData =
         match x with
         | ImportantMessage _
         | ErrorMessage _ -> Some true
-        | LogMessage (_, newLine)
-        | TraceMessage (_, newLine) -> Some newLine
+        | LogMessage(_, newLine)
+        | TraceMessage(_, newLine) -> Some newLine
         | BuildNumber _
         | TestStatus _
         | TestOutput _
@@ -176,9 +176,9 @@ type TraceData =
         match x with
         | ImportantMessage text
         | ErrorMessage text
-        | LogMessage (text, _)
-        | TraceMessage (text, _)
-        | BuildState (_, Some text) -> Some text
+        | LogMessage(text, _)
+        | TraceMessage(text, _)
+        | BuildState(_, Some text) -> Some text
         | BuildNumber _
         | TestStatus _
         | TestOutput _
@@ -200,14 +200,14 @@ module TraceData =
         match t with
         | TraceData.ImportantMessage text -> TraceData.ImportantMessage(f text)
         | TraceData.ErrorMessage text -> TraceData.ErrorMessage(f text)
-        | TraceData.LogMessage (text, d) -> TraceData.LogMessage(f text, d)
-        | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage(f text, d)
-        | TraceData.TestStatus (testName, status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
-        | TraceData.TestOutput (testName, out, err) -> TraceData.TestOutput(testName, f out, f err)
-        | TraceData.OpenTag (tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
-        | TraceData.OpenTag (tag, None) -> TraceData.OpenTag((mapKnownTags f tag), None)
-        | TraceData.CloseTag (tag, time, status) -> TraceData.CloseTag((mapKnownTags f tag), time, status)
-        | TraceData.BuildState (tag, Some message) -> TraceData.BuildState(tag, Some(f message))
+        | TraceData.LogMessage(text, d) -> TraceData.LogMessage(f text, d)
+        | TraceData.TraceMessage(text, d) -> TraceData.TraceMessage(f text, d)
+        | TraceData.TestStatus(testName, status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
+        | TraceData.TestOutput(testName, out, err) -> TraceData.TestOutput(testName, f out, f err)
+        | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
+        | TraceData.OpenTag(tag, None) -> TraceData.OpenTag((mapKnownTags f tag), None)
+        | TraceData.CloseTag(tag, time, status) -> TraceData.CloseTag((mapKnownTags f tag), time, status)
+        | TraceData.BuildState(tag, Some message) -> TraceData.BuildState(tag, Some(f message))
         | _ -> t
 
     let internal repl (oldStr: string) (repl: string) (s: string) = s.Replace(oldStr, repl)
@@ -303,30 +303,30 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
             match msg with
             | TraceData.ImportantMessage text
             | TraceData.ErrorMessage text -> write importantMessagesToStdErr color true text
-            | TraceData.LogMessage (text, newLine)
-            | TraceData.TraceMessage (text, newLine) -> write false color newLine text
-            | TraceData.OpenTag (KnownTags.Target _ as tag, description)
-            | TraceData.OpenTag (KnownTags.FailureTarget _ as tag, description)
-            | TraceData.OpenTag (KnownTags.FinalTarget _ as tag, description) ->
+            | TraceData.LogMessage(text, newLine)
+            | TraceData.TraceMessage(text, newLine) -> write false color newLine text
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FailureTarget _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FinalTarget _ as tag, description) ->
                 let color2 = colorMap (TraceData.TraceMessage("", true))
 
                 match description with
                 | Some d -> write false color2 true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
                 | _ -> write false color2 true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-            | TraceData.OpenTag (tag, description) ->
+            | TraceData.OpenTag(tag, description) ->
                 match description with
                 | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
                 | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-            | TraceData.CloseTag (tag, time, status) ->
+            | TraceData.CloseTag(tag, time, status) ->
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
-            | TraceData.ImportData (typ, path) -> write false color true (sprintf "Import data '%O': %s" typ path)
-            | TraceData.BuildState (state, None) -> write false color true (sprintf "Changing BuildState to: %A" state)
-            | TraceData.BuildState (state, Some message) ->
+            | TraceData.ImportData(typ, path) -> write false color true (sprintf "Import data '%O': %s" typ path)
+            | TraceData.BuildState(state, None) -> write false color true (sprintf "Changing BuildState to: %A" state)
+            | TraceData.BuildState(state, Some message) ->
                 write false color true (sprintf "Changing BuildState to: %A - %s" state message)
-            | TraceData.TestOutput (test, out, err) ->
+            | TraceData.TestOutput(test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
             | TraceData.BuildNumber number -> write false color true (sprintf "Build Number: %s" number)
-            | TraceData.TestStatus (test, status) -> write false color true (sprintf "Test '%s' status: %A" test status)
+            | TraceData.TestStatus(test, status) -> write false color true (sprintf "Test '%s' status: %A" test status)
 
 
 type TraceSecret = { Value: string; Replacement: string }
@@ -350,10 +350,7 @@ module TraceSecrets =
         if not <| String.IsNullOrEmpty(secret) then
             getAll ()
             |> List.filter (fun s -> s.Value <> secret)
-            |> fun l ->
-                { Value = secret
-                  Replacement = replacement }
-                :: l
+            |> fun l -> { Value = secret; Replacement = replacement } :: l
             |> setTraceSecrets
 
     let guardMessage (s: string) =

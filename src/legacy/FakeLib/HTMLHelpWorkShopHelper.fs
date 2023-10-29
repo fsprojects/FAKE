@@ -14,12 +14,21 @@ open System
 let CompileHTMLHelpProject helpCompiler projectFile =
     use __ = traceStartTaskUsing "HTMLHelpWorkshop" projectFile
     let fi = new IO.FileInfo(projectFile)
-    if not fi.Exists then invalidArg "projectFile" "Projectfile doesn't exist."
-    if ExecProcess (fun info ->
-        info.FileName <- helpCompiler
-        info.Arguments <- fi.FullName |> toParam ) System.TimeSpan.MaxValue <> 1 
-    then failwith "Error in HTML Help Workshop"
+
+    if not fi.Exists then
+        invalidArg "projectFile" "Projectfile doesn't exist."
+
+    if
+        ExecProcess
+            (fun info ->
+                info.FileName <- helpCompiler
+                info.Arguments <- fi.FullName |> toParam)
+            System.TimeSpan.MaxValue
+        <> 1
+    then
+        failwith "Error in HTML Help Workshop"
 
     let name = fi.Name.Split('.').[0]
+
     [ fi.Directory.FullName @@ sprintf "%s.chm" name
-      fi.Directory.FullName @@ sprintf "%s.hh" name]         
+      fi.Directory.FullName @@ sprintf "%s.hh" name ]

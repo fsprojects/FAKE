@@ -875,7 +875,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -945,7 +946,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
 
     /// <summary>
@@ -1009,10 +1011,7 @@ module DotNet =
                         try
                             let result =
                                 getVersion (fun opt ->
-                                    opt.WithCommon(fun c ->
-                                        { c with
-                                            DotNetCliPath = dotnet
-                                            Version = None }))
+                                    opt.WithCommon(fun c -> { c with DotNetCliPath = dotnet; Version = None }))
 
                             result = version
                         with e ->
@@ -1034,10 +1033,7 @@ module DotNet =
         | Some dotnet, passVersion ->
             Trace.traceVerbose "Suitable dotnet installation found, skipping .NET SDK installer."
 
-            (fun opt ->
-                { opt with
-                    DotNetCliPath = dotnet
-                    Version = passVersion })
+            (fun opt -> { opt with DotNetCliPath = dotnet; Version = passVersion })
         | _ ->
 
             let passVersion = if fromGlobalJson then None else checkVersion
@@ -1107,10 +1103,7 @@ module DotNet =
             let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
             Trace.tracefn ".NET Core SDK installed to %s" exe
 
-            (fun opt ->
-                { opt with
-                    DotNetCliPath = exe
-                    Version = passVersion })
+            (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion })
 
     /// <summary>
     /// dotnet restore command options
@@ -1138,7 +1131,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1299,7 +1293,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1423,7 +1418,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1546,7 +1542,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1641,7 +1638,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1786,7 +1784,8 @@ module DotNet =
 
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+            { x with
+                Common = x.Common.WithRedirectOutput shouldRedirect }
 
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f = { x with Common = f x.Common }
@@ -1851,6 +1850,7 @@ module DotNet =
               PushParams = NuGet.NuGetPushParams.Create() }
 
         member this.WithCommon(common: Options) = { this with Common = common }
+
         member this.WithPushParams(options: NuGet.NuGetPushParams) = { this with PushParams = options }
 
     /// <summary>

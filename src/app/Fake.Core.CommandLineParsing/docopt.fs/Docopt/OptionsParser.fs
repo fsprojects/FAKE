@@ -170,7 +170,7 @@ type OptionsParser(soptChars': string) =
             match state.ArgName, newa' with
             | _, None -> state
             | None, _ -> { state with ArgName = newa' }
-            | Some (l), Some (r) -> { state with ArgName = Some(String.Concat(l, " or ", r)) }
+            | Some(l), Some(r) -> { state with ArgName = Some(String.Concat(l, " or ", r)) }
 
         match stream.Peek() with
         | ' ' -> stream.Skip()
@@ -186,21 +186,9 @@ type OptionsParser(soptChars': string) =
             match r.Status with
             | Ok ->
                 match r.Result with
-                | "[!]" ->
-                    Reply
-                        { state with
-                            IsRequired = true
-                            AllowMultiple = false }
-                | "[*]" ->
-                    Reply
-                        { state with
-                            IsRequired = false
-                            AllowMultiple = true }
-                | "[+]" ->
-                    Reply
-                        { state with
-                            IsRequired = true
-                            AllowMultiple = true }
+                | "[!]" -> Reply { state with IsRequired = true; AllowMultiple = false }
+                | "[*]" -> Reply { state with IsRequired = false; AllowMultiple = true }
+                | "[+]" -> Reply { state with IsRequired = true; AllowMultiple = true }
                 | _ -> Reply(Error, ErrorMessageList(ExpectedString "[!], [*] or [+]"))
             | _ -> Reply(Error, r.Error)
         //``expecting hyphen 1`` stream' state
@@ -235,7 +223,7 @@ type OptionsParser(soptChars': string) =
                         match dflt with
                         | Some dfltVal -> Val(dfltVal)
                         | None -> Nil
-                    | Success (r, _, _) -> Opt(r)
+                    | Success(r, _, _) -> Opt(r)
             } in
 
         let options = ResizeArray<_>() in
@@ -244,10 +232,10 @@ type OptionsParser(soptChars': string) =
         let action =
             function
             | Nil -> ()
-            | Opt (opt) ->
+            | Opt(opt) ->
                 lastOpt.Value <- Some opt
                 options.Add(opt)
-            | Val (str) ->
+            | Val(str) ->
                 match lastOpt.Value with // In order to parse defaults from follow-up lines...
                 | Some lastOptCopy -> lastOptCopy.DefaultValue <- Some str
                 | None -> () in

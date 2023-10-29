@@ -184,7 +184,7 @@ module ReleaseNotes =
 
         let rec loop releaseNotes text =
             match findNextNotesBlock text with
-            | Some (header, (notes, rest)) ->
+            | Some(header, (notes, rest)) ->
                 let assemblyVer, nugetVer = parseVersions header
                 let date = parseDate header
 

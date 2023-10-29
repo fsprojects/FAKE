@@ -45,8 +45,7 @@ module SignTool =
 
         /// Options default values.
         static member Create(serverUrl) =
-            { ServerUrl = serverUrl
-              Algorithm = None }
+            { ServerUrl = serverUrl; Algorithm = None }
 
     /// <summary>
     /// Specifies parameters to use when using a certificate from a file.

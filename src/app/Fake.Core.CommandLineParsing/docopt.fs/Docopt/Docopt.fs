@@ -63,19 +63,15 @@ module DocHelper =
     let cut (doc': string) =
         let folder (usages', (sections': OptionBuilder list), last') =
             function
-            | Usage (ustr) when String.IsNullOrWhiteSpace ustr -> (usages', sections', Last.Usage)
-            | Usage (ustr) -> (ustr :: usages', sections', Last.Usage)
-            | Options (sectionName, ostr) ->
-                (usages',
-                 { Title = sectionName
-                   Lines = [ ostr ] }
-                 :: sections',
-                 Last.Options)
+            | Usage(ustr) when String.IsNullOrWhiteSpace ustr -> (usages', sections', Last.Usage)
+            | Usage(ustr) -> (ustr :: usages', sections', Last.Usage)
+            | Options(sectionName, ostr) ->
+                (usages', { Title = sectionName; Lines = [ ostr ] } :: sections', Last.Options)
             //match sections' with
             //| options' :: sections' -> (usages', (ostr::options')::sections', Last.Options)
             //| [] -> (usages', [{ Title = sectionName; Lines = [ostr] }], Last.Options)
             | Newline -> (usages', sections', Last.Nothing)
-            | Other (line) ->
+            | Other(line) ->
                 match last' with
                 | Last.Usage when String.IsNullOrWhiteSpace line -> (usages', sections', Last.Usage)
                 | Last.Usage -> (line :: usages', sections', Last.Usage)

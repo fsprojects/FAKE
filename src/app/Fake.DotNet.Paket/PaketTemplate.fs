@@ -241,7 +241,7 @@ module internal Rendering =
 
     let inline renderPaketFileInfo fileInfo =
         match fileInfo with
-        | Include (source, target) -> sprintf "%s ==> %s" source target
+        | Include(source, target) -> sprintf "%s ==> %s" source target
         | Exclude file -> sprintf "!%s" file
 
     let inline appendPaketFileInfos (fileInfos: PaketFileInfo seq) (sb: StringBuilder) =

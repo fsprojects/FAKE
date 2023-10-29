@@ -158,7 +158,7 @@ module internal InternalStreams =
                         let! msg = inbox.Receive()
 
                         match msg with
-                        | Enqueue (item, reply) ->
+                        | Enqueue(item, reply) ->
                             try
                                 if waitingQueue.Count > 0 then
                                     let waiting = waitingQueue.Dequeue()

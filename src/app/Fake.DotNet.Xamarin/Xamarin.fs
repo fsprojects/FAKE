@@ -460,7 +460,8 @@ module Xamarin =
         let createPackageAbiSpecificApk param (targets: AndroidAbiTarget list) transformVersion =
             let manifestPath =
                 (param.ProjectPath |> Path.GetDirectoryName)
-                @@ @"Properties" @@ "AndroidManifest.xml"
+                @@ @"Properties"
+                @@ "AndroidManifest.xml"
 
             seq {
                 for t in targets do

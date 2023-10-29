@@ -100,10 +100,7 @@ type ResultCoreCacheInfo =
 
     member x.AsCacheInfo =
         match x.MaybeCompiledAssembly with
-        | Some c ->
-            Some
-                { CompiledAssembly = c
-                  Warnings = x.Warnings }
+        | Some c -> Some { CompiledAssembly = c; Warnings = x.Warnings }
         | None -> None
 
 and CoreCacheInfo =

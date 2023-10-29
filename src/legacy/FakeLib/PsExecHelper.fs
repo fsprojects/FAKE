@@ -15,11 +15,15 @@ let private formatArgs host username password exe inputs =
 /// - `inputs` - The command-line arguments to pass to the remote process.
 /// - `timeOut` - The timeout for PsExec.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let execRemote host username password exe inputs timeout = 
-    let args = formatArgs host username password exe inputs 
+let execRemote host username password exe inputs timeout =
+    let args = formatArgs host username password exe inputs
+
     let exitCode =
-        ExecProcess (fun info ->  
-            info.FileName <- "PsExec.exe"
-            info.Arguments <- args) timeout
-    if exitCode <> 0
-    then failwithf "Failed to execute %s as user %s on host %s with args %s" exe username host inputs
+        ExecProcess
+            (fun info ->
+                info.FileName <- "PsExec.exe"
+                info.Arguments <- args)
+            timeout
+
+    if exitCode <> 0 then
+        failwithf "Failed to execute %s as user %s on host %s with args %s" exe username host inputs

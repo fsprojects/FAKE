@@ -77,9 +77,7 @@ module Changelog =
     /// <summary>
     /// Holds cleared and original text versions of log entry
     /// </summary>
-    type ChangeText =
-        { CleanedText: string
-          OriginalText: string option }
+    type ChangeText = { CleanedText: string; OriginalText: string option }
 
     /// Type of change on log entry
     type Change =
@@ -106,7 +104,7 @@ module Changelog =
             | Removed s -> sprintf "Removed: %s" s.CleanedText
             | Fixed s -> sprintf "Fixed: %s" s.CleanedText
             | Security s -> sprintf "Security: %s" s.CleanedText
-            | Custom (h, s) -> sprintf "%s: %s" h s.CleanedText
+            | Custom(h, s) -> sprintf "%s: %s" h s.CleanedText
 
         /// Create a new change type changelog entry
         static member New(header: string, line: string) : Change =
@@ -140,7 +138,7 @@ module Changelog =
         | Removed c -> "\n### Removed", (bullet c)
         | Fixed c -> "\n### Fixed", (bullet c)
         | Security c -> "\n### Security", (bullet c)
-        | Custom (h, c) -> (sprintf "\n### %s" h), (bullet c)
+        | Custom(h, c) -> (sprintf "\n### %s" h), (bullet c)
 
     let private makeDescriptionText text =
         match text with
@@ -231,17 +229,11 @@ module Changelog =
         /// Create a new unreleased changelog entry
         static member New(description, changes) =
             match description with
-            | Some _ ->
-                Some
-                    { Description = description
-                      Changes = changes }
+            | Some _ -> Some { Description = description; Changes = changes }
             | None ->
                 match changes with
                 | [] -> None
-                | _ ->
-                    Some
-                        { Description = description
-                          Changes = changes }
+                | _ -> Some { Description = description; Changes = changes }
 
     let internal nugetRegex =
         String.getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
@@ -466,7 +458,7 @@ module Changelog =
 
             let rec categoryLoop (changes: Change list) (text: string list) : Change list =
                 match findNextCategoryBlock text with
-                | Some (header, (changeLines, rest)) ->
+                | Some(header, (changeLines, rest)) ->
                     categoryLoop
                         ((changeLines |> List.rev |> List.map (fun line -> Change.New(header, line)))
                          |> List.append changes)
@@ -475,7 +467,7 @@ module Changelog =
 
             let rec loop changeLogEntries text =
                 match findNextChangesBlock text with
-                | Some (header, (changes, rest)) ->
+                | Some(header, (changes, rest)) ->
                     let assemblyVer, nugetVer = parseVersions header
                     let date = parseDate header
                     let changeLines = categoryLoop [] (changes |> List.rev)
@@ -511,7 +503,7 @@ module Changelog =
 
             let unreleased =
                 match findUnreleasedBlock text with
-                | Some (changes, _) ->
+                | Some(changes, _) ->
                     let unreleasedChanges = categoryLoop [] (changes |> List.rev)
 
                     let description =

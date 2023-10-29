@@ -10,28 +10,31 @@ open System.Xml
 open System.Text
 
 let private executeCommand command args =
-    ExecProcessAndReturnMessages (fun p ->
-        p.FileName <- command
-        p.Arguments <- args
-    ) TimeSpan.MaxValue
-    |>  fun result ->
-             let output = String.Join (Environment.NewLine, result.Messages)
-             tracefn "Process output: \r\n%A" output
-             if result.ExitCode <> 0 then failwithf "%s exited with error %d" command result.ExitCode
+    ExecProcessAndReturnMessages
+        (fun p ->
+            p.FileName <- command
+            p.Arguments <- args)
+        TimeSpan.MaxValue
+    |> fun result ->
+        let output = String.Join(Environment.NewLine, result.Messages)
+        tracefn "Process output: \r\n%A" output
+
+        if result.ExitCode <> 0 then
+            failwithf "%s exited with error %d" command result.ExitCode
 
 /// The package restore paramater type
 [<CLIMutable>]
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
-type XamarinComponentRestoreParams = {
-    /// Path to xamarin-component.exe, defaults to checking tools/xpkg
-    ToolPath: string
-}
+type XamarinComponentRestoreParams =
+    {
+        /// Path to xamarin-component.exe, defaults to checking tools/xpkg
+        ToolPath: string
+    }
 
 /// The default package restore parameters
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
-let XamarinComponentRestoreDefaults = {
-    ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg")
-}
+let XamarinComponentRestoreDefaults =
+    { ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg") }
 
 /// Restores NuGet packages and Xamarin Components for a project or solution
 /// ## Parameters
@@ -41,67 +44,63 @@ let RestoreComponents setParams projectFile =
     let restoreComponents project param =
         executeCommand param.ToolPath ("restore " + project)
 
-    XamarinComponentRestoreDefaults
-    |> setParams
-    |> restoreComponents projectFile
+    XamarinComponentRestoreDefaults |> setParams |> restoreComponents projectFile
 
 /// The iOS build paramater type
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 [<CLIMutable>]
-type iOSBuildParams = {
-    /// (Required) Path to solution or project file
-    ProjectPath: string
-    /// Build target, defaults to Build
-    Target: string
-    /// Build configuration, defaults to 'Debug'
-    Configuration: string
-    /// Build platform, defaults to 'iPhoneSimulator'
-    Platform: string
-    /// Output path for build, defaults to project settings
-    OutputPath: string
-    /// Indicates if an IPA file should be generated
-    BuildIpa: bool
-    /// Additional MSBuild properties, defaults to empty list
-    Properties: (string * string) list
-    MaxCpuCount : int option option
-    NoLogo : bool
-    NodeReuse : bool
-    RestorePackagesFlag : bool
-    ToolsVersion : string option
-    Verbosity : MSBuildVerbosity option
-    NoConsoleLogger : bool
-    FileLoggers : MSBuildFileLoggerConfig list option
-    BinaryLoggers : string list option
-    DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
-}
+type iOSBuildParams =
+    {
+        /// (Required) Path to solution or project file
+        ProjectPath: string
+        /// Build target, defaults to Build
+        Target: string
+        /// Build configuration, defaults to 'Debug'
+        Configuration: string
+        /// Build platform, defaults to 'iPhoneSimulator'
+        Platform: string
+        /// Output path for build, defaults to project settings
+        OutputPath: string
+        /// Indicates if an IPA file should be generated
+        BuildIpa: bool
+        /// Additional MSBuild properties, defaults to empty list
+        Properties: (string * string) list
+        MaxCpuCount: int option option
+        NoLogo: bool
+        NodeReuse: bool
+        RestorePackagesFlag: bool
+        ToolsVersion: string option
+        Verbosity: MSBuildVerbosity option
+        NoConsoleLogger: bool
+        FileLoggers: MSBuildFileLoggerConfig list option
+        BinaryLoggers: string list option
+        DistributedLoggers: (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
+    }
 
 /// The default iOS build parameters
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
-let iOSBuildDefaults = {
-    ProjectPath = ""
-    Target = "Build"
-    Configuration = "Debug"
-    Platform = "iPhoneSimulator"
-    OutputPath = ""
-    BuildIpa = false
-    Properties = []
-    MaxCpuCount = Some None
-    NoLogo = false
-    NodeReuse = false
-    ToolsVersion = None
-    Verbosity = None
-    NoConsoleLogger = false
-    RestorePackagesFlag = false
-    FileLoggers = None
-    BinaryLoggers = None
-    DistributedLoggers = None
-}
+let iOSBuildDefaults =
+    { ProjectPath = ""
+      Target = "Build"
+      Configuration = "Debug"
+      Platform = "iPhoneSimulator"
+      OutputPath = ""
+      BuildIpa = false
+      Properties = []
+      MaxCpuCount = Some None
+      NoLogo = false
+      NodeReuse = false
+      ToolsVersion = None
+      Verbosity = None
+      NoConsoleLogger = false
+      RestorePackagesFlag = false
+      FileLoggers = None
+      BinaryLoggers = None
+      DistributedLoggers = None }
 
 
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
-type AndroidAbiTargetConfig = {
-    SuffixAndExtension: string
-}
+type AndroidAbiTargetConfig = { SuffixAndExtension: string }
 
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidAbiTarget =
@@ -119,13 +118,13 @@ type AndroidPackageAbiParam =
 
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AllAndroidAbiTargets =
-    AndroidPackageAbiParam.SpecificAbis
-        ( [ AndroidAbiTarget.X86({ SuffixAndExtension="-x86.apk"; })
-            AndroidAbiTarget.ArmEabi({ SuffixAndExtension="-armeabi.apk"; })
-            AndroidAbiTarget.ArmEabiV7a({ SuffixAndExtension="-armeabi-v7a.apk"; })
-            AndroidAbiTarget.Arm64V8a({ SuffixAndExtension="-arm64-v8a.apk"; })
-            AndroidAbiTarget.X86And64({ SuffixAndExtension="-x86_64.apk"; })
-          ] )
+    AndroidPackageAbiParam.SpecificAbis(
+        [ AndroidAbiTarget.X86({ SuffixAndExtension = "-x86.apk" })
+          AndroidAbiTarget.ArmEabi({ SuffixAndExtension = "-armeabi.apk" })
+          AndroidAbiTarget.ArmEabiV7a({ SuffixAndExtension = "-armeabi-v7a.apk" })
+          AndroidAbiTarget.Arm64V8a({ SuffixAndExtension = "-arm64-v8a.apk" })
+          AndroidAbiTarget.X86And64({ SuffixAndExtension = "-x86_64.apk" }) ]
+    )
 
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
@@ -136,12 +135,21 @@ type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSBuild setParams =
     let validateParams param =
-        if param.ProjectPath = "" then failwith "You must specify a project to package"
-        let exists parameter = param.Properties |> List.exists (fun (key, _) -> key.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+        if param.ProjectPath = "" then
+            failwith "You must specify a project to package"
 
-        if exists("Configuration") then failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
-        if exists("Platform") then failwith "Cannot specify build platform via additional parameters. Use Platform field instead."
-        if exists("BuildIpa") then failwith "Cannot specify build IPA via additional parameters. Use BuildIpa field instead."
+        let exists parameter =
+            param.Properties
+            |> List.exists (fun (key, _) -> key.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+
+        if exists ("Configuration") then
+            failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
+
+        if exists ("Platform") then
+            failwith "Cannot specify build platform via additional parameters. Use Platform field instead."
+
+        if exists ("BuildIpa") then
+            failwith "Cannot specify build IPA via additional parameters. Use BuildIpa field instead."
 
         param
 
@@ -149,7 +157,11 @@ let iOSBuild setParams =
         let msBuildParams =
             { buildParams with
                 Targets = [ iOSBuildParams.Target ]
-                Properties = [ "Configuration", iOSBuildParams.Configuration; "Platform", iOSBuildParams.Platform; "BuildIpa", iOSBuildParams.BuildIpa.ToString() ] @ iOSBuildParams.Properties
+                Properties =
+                    [ "Configuration", iOSBuildParams.Configuration
+                      "Platform", iOSBuildParams.Platform
+                      "BuildIpa", iOSBuildParams.BuildIpa.ToString() ]
+                    @ iOSBuildParams.Properties
                 MaxCpuCount = iOSBuildParams.MaxCpuCount
                 NoLogo = iOSBuildParams.NoLogo
                 NodeReuse = iOSBuildParams.NodeReuse
@@ -159,72 +171,69 @@ let iOSBuild setParams =
                 RestorePackagesFlag = iOSBuildParams.RestorePackagesFlag
                 FileLoggers = iOSBuildParams.FileLoggers
                 BinaryLoggers = iOSBuildParams.BinaryLoggers
-                DistributedLoggers = iOSBuildParams.DistributedLoggers
-            }
+                DistributedLoggers = iOSBuildParams.DistributedLoggers }
 
         let msBuildParams =
-            if isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
+            if isNullOrEmpty iOSBuildParams.OutputPath then
+                msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
-                }
+                    Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties }
 
         msBuildParams
 
     let buildProject param =
-        build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath
+        |> ignore
 
-    iOSBuildDefaults
-    |> setParams
-    |> validateParams
-    |> buildProject
+    iOSBuildDefaults |> setParams |> validateParams |> buildProject
 
 /// The Android packaging parameter type
 [<CLIMutable>]
-type AndroidPackageParams = {
-    /// (Required) Path to the Android project file (not the solution file!)
-    ProjectPath: string
-    /// Build configuration, defaults to 'Release'
-    Configuration: string
-    /// Output path for build, defaults to 'bin/Release'
-    OutputPath: string
-    /// Additional MSBuild properties, defaults to empty list
-    Properties: (string * string) list
-    /// Build an APK Targetting One ABI (used to reduce the size of the APK and support different CPU architectures)
-    PackageAbiTargets: AndroidPackageAbiParam
-    /// Used for multiple APK packaging to set different version code par ABI
-    VersionStepper:IncrementerVersion option
-    MaxCpuCount : int option option
-    NoLogo : bool
-    NodeReuse : bool
-    RestorePackagesFlag : bool
-    ToolsVersion : string option
-    Verbosity : MSBuildVerbosity option
-    NoConsoleLogger : bool
-    FileLoggers : MSBuildFileLoggerConfig list option
-    BinaryLoggers : string list option
-    DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
-}
+type AndroidPackageParams =
+    {
+        /// (Required) Path to the Android project file (not the solution file!)
+        ProjectPath: string
+        /// Build configuration, defaults to 'Release'
+        Configuration: string
+        /// Output path for build, defaults to 'bin/Release'
+        OutputPath: string
+        /// Additional MSBuild properties, defaults to empty list
+        Properties: (string * string) list
+        /// Build an APK Targetting One ABI (used to reduce the size of the APK and support different CPU architectures)
+        PackageAbiTargets: AndroidPackageAbiParam
+        /// Used for multiple APK packaging to set different version code par ABI
+        VersionStepper: IncrementerVersion option
+        MaxCpuCount: int option option
+        NoLogo: bool
+        NodeReuse: bool
+        RestorePackagesFlag: bool
+        ToolsVersion: string option
+        Verbosity: MSBuildVerbosity option
+        NoConsoleLogger: bool
+        FileLoggers: MSBuildFileLoggerConfig list option
+        BinaryLoggers: string list option
+        DistributedLoggers: (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
+    }
 
 /// The default Android packaging parameters
-let AndroidPackageDefaults = {
-    ProjectPath = ""
-    Configuration = "Release"
-    OutputPath = "bin/Release"
-    Properties = []
-    PackageAbiTargets = AndroidPackageAbiParam.OneApkForAll
-    VersionStepper = None
-    MaxCpuCount = Some None
-    NoLogo = false
-    NodeReuse = false
-    ToolsVersion = None
-    Verbosity = None
-    NoConsoleLogger = false
-    RestorePackagesFlag = false
-    FileLoggers = None
-    BinaryLoggers = None
-    DistributedLoggers = None
-}
+let AndroidPackageDefaults =
+    { ProjectPath = ""
+      Configuration = "Release"
+      OutputPath = "bin/Release"
+      Properties = []
+      PackageAbiTargets = AndroidPackageAbiParam.OneApkForAll
+      VersionStepper = None
+      MaxCpuCount = Some None
+      NoLogo = false
+      NodeReuse = false
+      ToolsVersion = None
+      Verbosity = None
+      NoConsoleLogger = false
+      RestorePackagesFlag = false
+      FileLoggers = None
+      BinaryLoggers = None
+      DistributedLoggers = None }
 
 /// Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files
 /// ## Parameters
@@ -232,10 +241,14 @@ let AndroidPackageDefaults = {
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidBuildPackages setParams =
     let validateParams param =
-        if param.ProjectPath = "" then failwith "You must specify a project to package"
-        if param.Properties
+        if param.ProjectPath = "" then
+            failwith "You must specify a project to package"
+
+        if
+            param.Properties
             |> List.exists (fun (key, _) -> key.Equals("Configuration", StringComparison.OrdinalIgnoreCase))
-            then failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
+        then
+            failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
 
         param
 
@@ -243,7 +256,9 @@ let AndroidBuildPackages setParams =
         let msBuildParams =
             { buildParams with
                 Targets = [ "PackageForAndroid" ]
-                Properties = [ "Configuration", androidBuildParams.Configuration ] @ androidBuildParams.Properties
+                Properties =
+                    [ "Configuration", androidBuildParams.Configuration ]
+                    @ androidBuildParams.Properties
                 MaxCpuCount = androidBuildParams.MaxCpuCount
                 NoLogo = androidBuildParams.NoLogo
                 NodeReuse = androidBuildParams.NodeReuse
@@ -253,19 +268,20 @@ let AndroidBuildPackages setParams =
                 RestorePackagesFlag = androidBuildParams.RestorePackagesFlag
                 FileLoggers = androidBuildParams.FileLoggers
                 BinaryLoggers = androidBuildParams.BinaryLoggers
-                DistributedLoggers = androidBuildParams.DistributedLoggers
-            }
+                DistributedLoggers = androidBuildParams.DistributedLoggers }
 
         let msBuildParams =
-            if isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
+            if isNullOrEmpty androidBuildParams.OutputPath then
+                msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
-                }
+                    Properties =
+                        [ "OutputPath", FullName androidBuildParams.OutputPath ]
+                        @ msBuildParams.Properties }
 
         msBuildParams
 
-    let buildPackages param (abi:string option) (manifestFile:string option) =
+    let buildPackages param (abi: string option) (manifestFile: string option) =
         let applyBuildParams msbuildParam =
             let result = applyAndroidBuildParamsToMSBuildParams param msbuildParam
 
@@ -273,20 +289,25 @@ let AndroidBuildPackages setParams =
                 { result with
                     Properties =
                         match (abi, manifestFile) with
-                        | Some a, Some m -> let manifest = @"Properties" @@ System.IO.Path.GetFileName(m)
-                                            [ "AndroidSupportedAbis", a
-                                              "AndroidManifest", manifest ] @ result.Properties
-                        | Some a, None   -> [ "AndroidSupportedAbis", a ] @ result.Properties
-                        | _, _           -> result.Properties
-                }
+                        | Some a, Some m ->
+                            let manifest = @"Properties" @@ System.IO.Path.GetFileName(m)
+                            [ "AndroidSupportedAbis", a; "AndroidManifest", manifest ] @ result.Properties
+                        | Some a, None -> [ "AndroidSupportedAbis", a ] @ result.Properties
+                        | _, _ -> result.Properties }
 
             result
 
-        build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath |> ignore
+        build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath
+        |> ignore
 
-    let rewriteManifestFile (manifestFile:string) outfile (transformVersion:IncrementerVersion) target =
+    let rewriteManifestFile (manifestFile: string) outfile (transformVersion: IncrementerVersion) target =
         let manifest = XDocument.Load(manifestFile)
-        let vc = manifest.Element("manifest" |> XName.Get).Attributes() |> Seq.filter(fun a -> a.Name.LocalName = "versionCode") |> Seq.exactlyOne
+
+        let vc =
+            manifest.Element("manifest" |> XName.Get).Attributes()
+            |> Seq.filter (fun a -> a.Name.LocalName = "versionCode")
+            |> Seq.exactlyOne
+
         let v = transformVersion (Convert.ToInt32(vc.Value)) target
         vc.Value <- v.ToString()
         use fs = new FileStream(outfile, FileMode.OpenOrCreate)
@@ -301,33 +322,41 @@ let AndroidBuildPackages setParams =
         |> Seq.last
 
     let createPackage param =
-        build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath
+        |> ignore
 
         [ mostRecentFileInDirMatching param.OutputPath ]
 
     let buildSpecificApk param manifestFile name transformVersion target =
-        let specificManifest = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-" + name + ".xml")
+        let specificManifest =
+            (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-" + name + ".xml")
+
         rewriteManifestFile manifestFile specificManifest transformVersion target
         // workaround for xamarin bug: https://bugzilla.xamarin.com/show_bug.cgi?id=30571
-        let backupFn = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-original.xml")
+        let backupFn =
+            (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-original.xml")
+
         CopyFile backupFn manifestFile
         CopyFile manifestFile specificManifest
+
         try
             //buildPackages param (Some name) (Some specificManifest) // to uncomment after xamarin fix there bug
             buildPackages param (Some name) None
         finally
             CopyFile manifestFile backupFn
 
-    let translateAbi = function
-                       | AndroidAbiTarget.X86 _ -> "x86"
-                       | AndroidAbiTarget.ArmEabi _ -> "armeabi"
-                       | AndroidAbiTarget.ArmEabiV7a _ -> "armeabi-v7a"
-                       | AndroidAbiTarget.Arm64V8a _ -> "arm64-v8a"
-                       | AndroidAbiTarget.X86And64 _ -> "X86_64"
-                       | _ -> ""
+    let translateAbi =
+        function
+        | AndroidAbiTarget.X86 _ -> "x86"
+        | AndroidAbiTarget.ArmEabi _ -> "armeabi"
+        | AndroidAbiTarget.ArmEabiV7a _ -> "armeabi-v7a"
+        | AndroidAbiTarget.Arm64V8a _ -> "arm64-v8a"
+        | AndroidAbiTarget.X86And64 _ -> "X86_64"
+        | _ -> ""
 
-    let createTargetPackage param (manifestFile:string) (target:AndroidAbiTarget) transformVersion =
+    let createTargetPackage param (manifestFile: string) (target: AndroidAbiTarget) transformVersion =
         let name = target |> translateAbi
+
         match target with
         | AndroidAbiTarget.X86 c
         | AndroidAbiTarget.ArmEabi c
@@ -336,30 +365,40 @@ let AndroidBuildPackages setParams =
         | AndroidAbiTarget.X86And64 c -> buildSpecificApk param manifestFile name transformVersion target
         | _ -> buildPackages param None None
 
-    let createPackageAbiSpecificApk param (targets:AndroidAbiTarget list) transformVersion =
-        let manifestPath = (param.ProjectPath |> Path.GetDirectoryName) @@ @"Properties" @@ "AndroidManifest.xml"
-        seq { for t in targets do
+    let createPackageAbiSpecificApk param (targets: AndroidAbiTarget list) transformVersion =
+        let manifestPath =
+            (param.ProjectPath |> Path.GetDirectoryName)
+            @@ @"Properties"
+            @@ "AndroidManifest.xml"
+
+        seq {
+            for t in targets do
                 createTargetPackage param manifestPath t transformVersion
                 let apk = mostRecentFileInDirMatching param.OutputPath
                 let name = t |> translateAbi
+
                 if name.Length > 0 then
                     let apkname = Path.GetFileNameWithoutExtension(apk.Name) + "-" + name + ".apk"
-                    yield apk.CopyTo (param.OutputPath @@ apkname)
+                    yield apk.CopyTo(param.OutputPath @@ apkname)
                 else
                     yield apk
-            } |> Seq.toList
+        }
+        |> Seq.toList
 
     let param = AndroidPackageDefaults |> setParams |> validateParams
 
-    let transformVersion = match param.VersionStepper with
-                           | Some f -> f
-                           | None -> (fun v t -> match t with
-                                                 | AndroidAbiTarget.X86 c -> v + 1
-                                                 | AndroidAbiTarget.X86And64 c -> v + 2
-                                                 | AndroidAbiTarget.ArmEabi c -> v + 3
-                                                 | AndroidAbiTarget.ArmEabiV7a c -> v + 4
-                                                 | AndroidAbiTarget.Arm64V8a c -> v + 5
-                                                 | _ -> v)
+    let transformVersion =
+        match param.VersionStepper with
+        | Some f -> f
+        | None ->
+            (fun v t ->
+                match t with
+                | AndroidAbiTarget.X86 c -> v + 1
+                | AndroidAbiTarget.X86And64 c -> v + 2
+                | AndroidAbiTarget.ArmEabi c -> v + 3
+                | AndroidAbiTarget.ArmEabiV7a c -> v + 4
+                | AndroidAbiTarget.Arm64V8a c -> v + 5
+                | _ -> v)
 
     match param.PackageAbiTargets with
     | AndroidPackageAbiParam.OneApkForAll -> param |> createPackage
@@ -375,33 +414,33 @@ let AndroidPackage setParams =
 
 // Parameters for signing and aligning an Android package
 [<CLIMutable>]
-type AndroidSignAndAlignParams = {
-    /// (Required) Path to keystore used to sign the app
-    KeystorePath: string
-    /// (Required) Password for keystore
-    KeystorePassword: string
-    /// (Required) Alias for keystore
-    KeystoreAlias: string
-    /// Specifies the name of the signature algorithm to use to sign the JAR file.
-    SignatureAlgorithm: string
-    /// Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file.
-    MessageDigestAlgorithm: string
-    /// Path to jarsigner tool, defaults to assuming it is in your path
-    JarsignerPath: string
-    /// Path to zipalign tool, defaults to assuming it is in your path
-    ZipalignPath: string
-}
+type AndroidSignAndAlignParams =
+    {
+        /// (Required) Path to keystore used to sign the app
+        KeystorePath: string
+        /// (Required) Password for keystore
+        KeystorePassword: string
+        /// (Required) Alias for keystore
+        KeystoreAlias: string
+        /// Specifies the name of the signature algorithm to use to sign the JAR file.
+        SignatureAlgorithm: string
+        /// Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file.
+        MessageDigestAlgorithm: string
+        /// Path to jarsigner tool, defaults to assuming it is in your path
+        JarsignerPath: string
+        /// Path to zipalign tool, defaults to assuming it is in your path
+        ZipalignPath: string
+    }
 
 /// The default Android signing and aligning parameters
-let AndroidSignAndAlignDefaults = {
-    KeystorePath = ""
-    KeystorePassword = ""
-    KeystoreAlias = ""
-    SignatureAlgorithm = "SHA1withRSA"
-    MessageDigestAlgorithm = "SHA1"
-    JarsignerPath = "jarsigner"
-    ZipalignPath = "zipalign"
-}
+let AndroidSignAndAlignDefaults =
+    { KeystorePath = ""
+      KeystorePassword = ""
+      KeystoreAlias = ""
+      SignatureAlgorithm = "SHA1withRSA"
+      MessageDigestAlgorithm = "SHA1"
+      JarsignerPath = "jarsigner"
+      ZipalignPath = "zipalign" }
 
 /// Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file
 /// ## Parameters
@@ -410,23 +449,46 @@ let AndroidSignAndAlignDefaults = {
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidSignAndAlign setParams apkFile =
     let validateParams param =
-        if param.KeystorePath = "" then failwith "You must specify a keystore to use"
-        if param.KeystorePassword = "" then failwith "You must provide the keystore's password"
-        if param.KeystoreAlias = "" then failwith "You must provide the keystore's alias"
+        if param.KeystorePath = "" then
+            failwith "You must specify a keystore to use"
+
+        if param.KeystorePassword = "" then
+            failwith "You must provide the keystore's password"
+
+        if param.KeystoreAlias = "" then
+            failwith "You must provide the keystore's alias"
 
         param
 
-    let quotesSurround (s:string) = if EnvironmentHelper.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
+    let quotesSurround (s: string) =
+        if EnvironmentHelper.isMono then
+            sprintf "'%s'" s
+        else
+            sprintf "\"%s\"" s
 
-    let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
+    let signAndAlign (file: FileInfo) (param: AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
-        let jarsignerArgs = String.Format("-sigalg {0} -digestalg {1} -keystore {2} -storepass {3} -signedjar {4} {5} {6}",
-                                param.SignatureAlgorithm, param.MessageDigestAlgorithm, quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), quotesSurround(file.FullName), param.KeystoreAlias)
+
+        let jarsignerArgs =
+            String.Format(
+                "-sigalg {0} -digestalg {1} -keystore {2} -storepass {3} -signedjar {4} {5} {6}",
+                param.SignatureAlgorithm,
+                param.MessageDigestAlgorithm,
+                quotesSurround (param.KeystorePath),
+                param.KeystorePassword,
+                quotesSurround (fullSignedFilePath),
+                quotesSurround (file.FullName),
+                param.KeystoreAlias
+            )
 
         executeCommand param.JarsignerPath jarsignerArgs
 
-        let fullAlignedFilePath = Regex.Replace(fullSignedFilePath, "-Signed.apk$", "-SignedAndAligned.apk")
-        let zipalignArgs = String.Format("-f -v 4 {0} {1}", quotesSurround(fullSignedFilePath), quotesSurround(fullAlignedFilePath))
+        let fullAlignedFilePath =
+            Regex.Replace(fullSignedFilePath, "-Signed.apk$", "-SignedAndAligned.apk")
+
+        let zipalignArgs =
+            String.Format("-f -v 4 {0} {1}", quotesSurround (fullSignedFilePath), quotesSurround (fullAlignedFilePath))
+
         executeCommand param.ZipalignPath zipalignArgs
 
         fileInfo fullAlignedFilePath
@@ -446,25 +508,25 @@ let AndroidSignAndAlignPackages setParams apkFiles =
 
 /// The iOS archive paramater type
 [<CLIMutable>]
-type iOSArchiveParams = {
-    /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
-    /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.
-    SolutionPath: string
-    /// Project name within a solution file
-    ProjectName: string
-    /// Build configuration, defaults to 'Debug|iPhoneSimulator'
-    Configuration: string
-    /// Path to mdtool, defaults to Xamarin Studio's usual path
-    MDToolPath: string
-}
+type iOSArchiveParams =
+    {
+        /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
+        /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.
+        SolutionPath: string
+        /// Project name within a solution file
+        ProjectName: string
+        /// Build configuration, defaults to 'Debug|iPhoneSimulator'
+        Configuration: string
+        /// Path to mdtool, defaults to Xamarin Studio's usual path
+        MDToolPath: string
+    }
 
 /// The default iOS archive parameters
-let iOSArchiveDefaults = {
-    SolutionPath = ""
-    ProjectName = ""
-    Configuration = "Debug|iPhoneSimulator"
-    MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool"
-}
+let iOSArchiveDefaults =
+    { SolutionPath = ""
+      ProjectName = ""
+      Configuration = "Debug|iPhoneSimulator"
+      MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool" }
 
 /// Archive a project using Xamarin's iOS archive tools
 /// ## Parameters
@@ -472,10 +534,15 @@ let iOSArchiveDefaults = {
 [<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSArchive setParams =
     let archiveProject param =
-        let projectNameArg = if param.ProjectName <> "" then String.Format("-p:{0} ", param.ProjectName) else ""
-        let args = String.Format(@"-v archive ""-c:{0}"" {1}{2}", param.Configuration, projectNameArg, param.SolutionPath)
+        let projectNameArg =
+            if param.ProjectName <> "" then
+                String.Format("-p:{0} ", param.ProjectName)
+            else
+                ""
+
+        let args =
+            String.Format(@"-v archive ""-c:{0}"" {1}{2}", param.Configuration, projectNameArg, param.SolutionPath)
+
         executeCommand param.MDToolPath args
 
-    iOSArchiveDefaults
-        |> setParams
-        |> archiveProject
+    iOSArchiveDefaults |> setParams |> archiveProject

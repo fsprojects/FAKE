@@ -184,7 +184,4 @@ module internal AppVeyorInternal =
     /// Push multiple artifacts
     let PushArtifacts paths =
         for path in paths do
-            PushArtifact(fun p ->
-                { p with
-                    Path = path
-                    FileName = Path.GetFileName(path) })
+            PushArtifact(fun p -> { p with Path = path; FileName = Path.GetFileName(path) })

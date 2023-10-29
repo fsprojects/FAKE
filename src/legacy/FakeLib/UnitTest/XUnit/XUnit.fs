@@ -4,6 +4,7 @@
 module Fake.Testing.XUnit
 
 #nowarn "44"
+
 open System
 open System.IO
 open System.Text
@@ -13,30 +14,32 @@ open Fake
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 [<CLIMutable>]
 type XUnitParams =
-    { /// The path to the xUnit console runner: `xunit.console.clr4.exe`
-      ToolPath : string
-      /// The output path of the xUnit HTML report.
-      HtmlOutputPath : string option
-      /// The output path of the xUnit XML report (in the NUnit style).
-      NUnitXmlOutputPath : string option
-      /// The output path of the xUnit XML report.
-      XmlOutputPath : string option
-      /// The working directory for running the xunit console rnner.
-      WorkingDir : string option
-      /// Run xUnit with shadow copy enabled.
-      ShadowCopy : bool
-      /// Run xUnit without reporting test progress.
-      Silent : bool
-      /// Maximum time to allow xUnit to run before being killed.
-      TimeOut : TimeSpan
-      /// Test runner error level.
-      ErrorLevel : TestRunnerErrorLevel
-      /// List of traits to include.
-      IncludeTraits : (string * string) list
-      /// List of traits to exclude.
-      ExcludeTraits : (string * string) list
-      /// Forces TeamCity mode (normally auto-detected)
-      ForceTeamCity : bool }
+    {
+        /// The path to the xUnit console runner: `xunit.console.clr4.exe`
+        ToolPath: string
+        /// The output path of the xUnit HTML report.
+        HtmlOutputPath: string option
+        /// The output path of the xUnit XML report (in the NUnit style).
+        NUnitXmlOutputPath: string option
+        /// The output path of the xUnit XML report.
+        XmlOutputPath: string option
+        /// The working directory for running the xunit console rnner.
+        WorkingDir: string option
+        /// Run xUnit with shadow copy enabled.
+        ShadowCopy: bool
+        /// Run xUnit without reporting test progress.
+        Silent: bool
+        /// Maximum time to allow xUnit to run before being killed.
+        TimeOut: TimeSpan
+        /// Test runner error level.
+        ErrorLevel: TestRunnerErrorLevel
+        /// List of traits to include.
+        IncludeTraits: (string * string) list
+        /// List of traits to exclude.
+        ExcludeTraits: (string * string) list
+        /// Forces TeamCity mode (normally auto-detected)
+        ForceTeamCity: bool
+    }
 
 /// The xUnit default parameters.
 ///
@@ -68,14 +71,15 @@ let XUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       ForceTeamCity = false
       Silent = false }
-      
+
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let internal buildXUnitArgs assembly parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
+
     let appendTraits traitsList traitFlag sb =
-        traitsList |>
-        Seq.fold (fun sb traitPair -> sb |> appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
+        traitsList
+        |> Seq.fold (fun sb traitPair -> sb |> appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
 
     new StringBuilder()
     |> appendFileNamesIfNotNull [ assembly ]
@@ -88,28 +92,28 @@ let internal buildXUnitArgs assembly parameters =
     |> appendTraits parameters.IncludeTraits "/trait"
     |> appendTraits parameters.ExcludeTraits "/-trait"
     |> toText
-    
+
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 module internal ResultHandling =
-    let (|OK|TestsFailed|FatalError|) = function
+    let (|OK|TestsFailed|FatalError|) =
+        function
         | 0 -> OK
         | errorCode when errorCode < 0 -> FatalError errorCode
         | x -> TestsFailed x
 
-    let buildErrorMessage = function
+    let buildErrorMessage =
+        function
         | OK -> None
-        | TestsFailed failedTestCount ->
-            Some (sprintf "xUnit reported %d failed tests" failedTestCount)
-        | FatalError errorCode ->
-            Some (sprintf "xUnit reported a fatal error (Error Code %d)" errorCode)
+        | TestsFailed failedTestCount -> Some(sprintf "xUnit reported %d failed tests" failedTestCount)
+        | FatalError errorCode -> Some(sprintf "xUnit reported a fatal error (Error Code %d)" errorCode)
 
-    let failBuildWithMessage = function
+    let failBuildWithMessage =
+        function
         | DontFailBuild -> traceImportant
         | _ -> failwith
 
     let failBuildIfXUnitReportedError errorLevel =
-        buildErrorMessage
-        >> Option.iter (failBuildWithMessage errorLevel)
+        buildErrorMessage >> Option.iter (failBuildWithMessage errorLevel)
 
     let consolidateErrorMessages errorLevel =
         Seq.map (fun (a, result) -> a, buildErrorMessage result)
@@ -119,20 +123,22 @@ module internal ResultHandling =
     let failBuildIfXUnitReportedErrors errorLevel =
         consolidateErrorMessages errorLevel
         >> function
-        | [] -> ()
-        | messages ->
-            ( "Errors reported by xUnit runner:"
-              :: ( messages |> List.map (fun (a, msg) -> sprintf "\t%s: %s" a msg) ) )
-            |> toLines
-            |> failBuildWithMessage errorLevel
+            | [] -> ()
+            | messages ->
+                ("Errors reported by xUnit runner:"
+                 :: (messages |> List.map (fun (a, msg) -> sprintf "\t%s: %s" a msg)))
+                |> toLines
+                |> failBuildWithMessage errorLevel
 
 
 let internal runXUnitForOneAssembly parameters assembly =
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-            info.Arguments <- parameters |> buildXUnitArgs assembly) parameters.TimeOut
+        ExecProcess
+            (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
+                info.Arguments <- parameters |> buildXUnitArgs assembly)
+            parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
 
@@ -165,6 +171,7 @@ let xUnitSingle setParams assembly =
 let internal overrideAssemblyReportParams assembly p =
     let prependAssemblyName path =
         (directory path) @@ ((filename assembly) + "." + (filename path))
+
     { p with
         HtmlOutputPath = Option.map prependAssemblyName p.HtmlOutputPath
         NUnitXmlOutputPath = Option.map prependAssemblyName p.NUnitXmlOutputPath

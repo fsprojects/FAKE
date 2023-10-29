@@ -12,7 +12,7 @@ open System
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
 let DefaultZipLevel = 7
 
-let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : string) (itemSpec : string) =
+let private addZipEntry (stream: ZipOutputStream) (buffer: byte[]) (item: string) (itemSpec: string) =
     let info = fileInfo item
     let itemSpec = ZipEntry.CleanName itemSpec
     logfn "Adding File %s" itemSpec
@@ -23,20 +23,26 @@ let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : str
     stream.PutNextEntry(entry)
     let length = ref stream2.Length
     stream2.Seek(0L, SeekOrigin.Begin) |> ignore
+
     while !length > 0L do
         let count = stream2.Read(buffer, 0, buffer.Length)
         stream.Write(buffer, 0, count)
         length := !length - (int64 count)
 
-let private createZip fileName comment level (items : (string * string) seq) =
+let private createZip fileName comment level (items: (string * string) seq) =
     use stream = new ZipOutputStream(File.Create(fileName))
     let zipLevel = min (max 0 level) 9
     tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
     stream.SetLevel zipLevel
-    if not (String.IsNullOrEmpty comment) then stream.SetComment comment
+
+    if not (String.IsNullOrEmpty comment) then
+        stream.SetComment comment
+
     let buffer = Array.create 32768 0uy
+
     for item, itemSpec in items do
         addZipEntry stream buffer item itemSpec
+
     stream.Finish()
     tracefn "Zip successfully created %s" fileName
 
@@ -50,22 +56,33 @@ let private createZip fileName comment level (items : (string * string) seq) =
 ///  - `files` - A sequence with files to zip.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
 let CreateZip workingDir fileName comment level flatten files =
-    let workingDir = 
+    let workingDir =
         let dir = directoryInfo workingDir
-        if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
+
+        if not dir.Exists then
+            failwithf "Directory not found: %s" dir.FullName
+
         dir.FullName
 
-    let items = seq {
-        for item in files do
-            let info = fileInfo item
-            if info.Exists then 
-                let itemSpec = 
-                    if flatten then info.Name
-                    else if not (String.IsNullOrEmpty(workingDir)) 
-                            && info.FullName.StartsWith(workingDir, true, Globalization.CultureInfo.InvariantCulture) then 
-                        info.FullName.Remove(0, workingDir.Length)
-                    else info.FullName
-                yield item, itemSpec }
+    let items =
+        seq {
+            for item in files do
+                let info = fileInfo item
+
+                if info.Exists then
+                    let itemSpec =
+                        if flatten then
+                            info.Name
+                        else if
+                            not (String.IsNullOrEmpty(workingDir))
+                            && info.FullName.StartsWith(workingDir, true, Globalization.CultureInfo.InvariantCulture)
+                        then
+                            info.FullName.Remove(0, workingDir.Length)
+                        else
+                            info.FullName
+
+                    yield item, itemSpec
+        }
 
     createZip fileName comment level items
 
@@ -75,14 +92,15 @@ let CreateZip workingDir fileName comment level flatten files =
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence with files to zip.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipLevel false files
+let Zip workingDir fileName files =
+    CreateZip workingDir fileName "" DefaultZipLevel false files
 
 /// Creates a zip file with the given file.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `targetFileName` - The file to zip.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let ZipFile fileName targetFileName = 
+let ZipFile fileName targetFileName =
     let fi = fileInfo targetFileName
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [ fi.FullName ]
 
@@ -91,19 +109,22 @@ let ZipFile fileName targetFileName =
 ///  - `target` - The target directory.
 ///  - `fileName` - The file name of the zip file.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let Unzip target (fileName : string) = 
+let Unzip target (fileName: string) =
     use zipFile = new ZipFile(fileName)
+
     for entry in zipFile do
         match entry with
-        | :? ZipEntry as zipEntry -> 
+        | :? ZipEntry as zipEntry ->
             let unzipPath = Path.Combine(target, zipEntry.Name)
             let directoryPath = Path.GetDirectoryName(unzipPath)
             // create directory if needed
-            if directoryPath.Length > 0 then Directory.CreateDirectory(directoryPath) |> ignore
+            if directoryPath.Length > 0 then
+                Directory.CreateDirectory(directoryPath) |> ignore
             // unzip the file
             let zipStream = zipFile.GetInputStream(zipEntry)
             let buffer = Array.create 32768 0uy
-            if unzipPath.EndsWith "/" |> not then 
+
+            if unzipPath.EndsWith "/" |> not then
                 use unzippedFileStream = File.Create(unzipPath)
                 StreamUtils.Copy(zipStream, unzippedFileStream, buffer)
         | _ -> ()
@@ -113,10 +134,13 @@ let Unzip target (fileName : string) =
 ///  - `fileToUnzip` - The file inside the archive.
 ///  - `zipFileName` - The file name of the zip file.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) = 
+let UnzipSingleFileInMemory fileToUnzip (zipFileName: string) =
     use zf = new ZipFile(zipFileName)
     let ze = zf.GetEntry fileToUnzip
-    if ze = null then raise <| ArgumentException(fileToUnzip, "not found in zip")
+
+    if ze = null then
+        raise <| ArgumentException(fileToUnzip, "not found in zip")
+
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
@@ -126,16 +150,16 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 ///  - `predicate` - The predictae for the searched file in the archive.
 ///  - `zipFileName` - The file name of the zip file.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) = 
+let UnzipFirstMatchingFileInMemory predicate (zipFileName: string) =
     use zf = new ZipFile(zipFileName)
-    
-    let ze = 
-        seq { 
+
+    let ze =
+        seq {
             for ze in zf do
                 yield ze :?> ZipEntry
         }
         |> Seq.find predicate
-    
+
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
@@ -147,18 +171,25 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) seq) =
-    let items = seq {
-        for path, incl in files do
-            for file in incl do
-                let info = fileInfo file
-                if info.Exists then
-                    let baseFull = (Path.GetFullPath incl.BaseDirectory).TrimEnd [|'/';'\\'|]
-                    let path =
-                        if String.IsNullOrEmpty path then ""
-                        else sprintf "%s%c" (path.TrimEnd [|'/';'\\'|]) Path.DirectorySeparatorChar
-                    let spec = sprintf "%s%s" path (info.FullName.Substring (baseFull.Length+1))
-                    yield file, spec }
+let CreateZipOfIncludes fileName comment level (files: (string * FileIncludes) seq) =
+    let items =
+        seq {
+            for path, incl in files do
+                for file in incl do
+                    let info = fileInfo file
+
+                    if info.Exists then
+                        let baseFull = (Path.GetFullPath incl.BaseDirectory).TrimEnd [| '/'; '\\' |]
+
+                        let path =
+                            if String.IsNullOrEmpty path then
+                                ""
+                            else
+                                sprintf "%s%c" (path.TrimEnd [| '/'; '\\' |]) Path.DirectorySeparatorChar
+
+                        let spec = sprintf "%s%s" path (info.FullName.Substring(baseFull.Length + 1))
+                        yield file, spec
+        }
 
     createZip fileName comment level items
 
@@ -190,4 +221,5 @@ let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) 
 ///     )
 ///
 [<System.Obsolete("Use Fake.IO.Zip instead")>]
-let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files
+let ZipOfIncludes fileName files =
+    CreateZipOfIncludes fileName "" DefaultZipLevel files

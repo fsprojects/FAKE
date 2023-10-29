@@ -52,6 +52,7 @@ module TeamFoundation =
     let write action properties message =
         // https://github.com/Microsoft/vsts-task-lib/blob/3a7905b99d698a535d9f5a477efc124894b8d2ae/node/taskcommand.ts
         let ensurePropVal (s: string) =
+            // TODO: Rewrite to stringBuffer
             s
                 .Replace("\r", "%0D")
                 .Replace("\n", "%0A")
@@ -99,10 +100,11 @@ module TeamFoundation =
         let typ = if isWarning then "warning" else "error"
 
         let parameters =
-            toList "type" (Some typ)
-            @ toList "sourcepath" sourcePath
-              @ toList "linenumber" lineNumber
-                @ toList "columnnumber" columnNumber @ toList "code" code
+            [ yield! toList "type" (Some typ)
+              yield! toList "sourcepath" sourcePath
+              yield! toList "linenumber" lineNumber
+              yield! toList "columnnumber" columnNumber
+              yield! toList "code" code ]
 
         write "task.logissue" parameters message
 
@@ -180,16 +182,16 @@ module TeamFoundation =
 
     let internal logDetailRaw logDetailData =
         let parameters =
-            toList "id" (Some(string logDetailData.id))
-            @ toList "parentid" (logDetailData.parentId |> Option.map string)
-              @ toList "type" logDetailData.typ
-                @ toList "name" logDetailData.name
-                  @ toList "order" (logDetailData.order |> Option.map string)
-                    @ toList "starttime" (logDetailData.startTime |> Option.map string)
-                      @ toList "finishtime" (logDetailData.finishTime |> Option.map string)
-                        @ toList "progress" (logDetailData.progress |> Option.map string)
-                          @ toList "state" (logDetailData.state |> Option.map string)
-                            @ toList "result" (logDetailData.result |> Option.map string)
+            [ yield! toList "id" (Some(string logDetailData.id))
+              yield! toList "parentid" (logDetailData.parentId |> Option.map string)
+              yield! toList "type" logDetailData.typ
+              yield! toList "name" logDetailData.name
+              yield! toList "order" (logDetailData.order |> Option.map string)
+              yield! toList "starttime" (logDetailData.startTime |> Option.map string)
+              yield! toList "finishtime" (logDetailData.finishTime |> Option.map string)
+              yield! toList "progress" (logDetailData.progress |> Option.map string)
+              yield! toList "state" (logDetailData.state |> Option.map string)
+              yield! toList "result" (logDetailData.result |> Option.map string) ]
 
         write "task.logdetail" parameters logDetailData.message
 
@@ -365,9 +367,9 @@ module TeamFoundation =
                 match msg with
                 | TraceData.ErrorMessage text -> logIssue false None None None None text
                 | TraceData.ImportantMessage text -> logIssue true None None None None text
-                | TraceData.LogMessage (text, newLine)
-                | TraceData.TraceMessage (text, newLine) -> writeConsole false color newLine text
-                | TraceData.OpenTag (tag, descr) ->
+                | TraceData.LogMessage(text, newLine)
+                | TraceData.TraceMessage(text, newLine) -> writeConsole false color newLine text
+                | TraceData.OpenTag(tag, descr) ->
                     let id = Guid.NewGuid()
 
                     let parentId =
@@ -381,7 +383,7 @@ module TeamFoundation =
                     match descr with
                     | Some d -> createLogDetail id parentId tag.Type tag.Name order d
                     | _ -> createLogDetail id parentId tag.Type tag.Name order null
-                | TraceData.CloseTag (tag, time, state) ->
+                | TraceData.CloseTag(tag, time, state) ->
                     ignore time
 
                     let id, rest =
@@ -400,7 +402,7 @@ module TeamFoundation =
                         | TagStatus.Success -> LogDetailResult.Succeeded
 
                     setLogDetailFinished id result
-                | TraceData.BuildState (state, _) ->
+                | TraceData.BuildState(state, _) ->
                     let vsoState, msg =
                         match state with
                         | TagStatus.Success -> "Succeeded", "OK"
@@ -408,17 +410,17 @@ module TeamFoundation =
                         | TagStatus.Failed -> "Failed", "ERROR"
 
                     setBuildState vsoState msg
-                | TraceData.ImportData (ImportData.Junit _, path) -> publishTests "JUnit" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.Nunit _, path) -> publishTests "NUnit" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.Mstest _, path) -> publishTests "VSTest" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.Xunit _, path) -> publishTests "XUnit" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
+                | TraceData.ImportData(ImportData.Junit _, path) -> publishTests "JUnit" [ path ] false "" "" "" true
+                | TraceData.ImportData(ImportData.Nunit _, path) -> publishTests "NUnit" [ path ] false "" "" "" true
+                | TraceData.ImportData(ImportData.Mstest _, path) -> publishTests "VSTest" [ path ] false "" "" "" true
+                | TraceData.ImportData(ImportData.Xunit _, path) -> publishTests "XUnit" [ path ] false "" "" "" true
+                | TraceData.ImportData(ImportData.BuildArtifactWithName name, path) ->
                     publishArtifactIfOk name (Some name) path
-                | TraceData.ImportData (typ, path) -> publishArtifactIfOk typ.Name (Some "fake-artifacts") path
-                | TraceData.TestOutput (test, out, err) ->
+                | TraceData.ImportData(typ, path) -> publishArtifactIfOk typ.Name (Some "fake-artifacts") path
+                | TraceData.TestOutput(test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number -> setBuildNumber number
-                | TraceData.TestStatus (test, status) ->
+                | TraceData.TestStatus(test, status) ->
                     writeConsole false color true (sprintf "Test '%s' status: %A" test status)
 
     /// [omit]

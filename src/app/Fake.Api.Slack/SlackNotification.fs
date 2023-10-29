@@ -81,10 +81,7 @@ module Slack =
           Fields = Array.empty }
 
     /// The default parameters for Slack notification attachment fields
-    let NotificationAttachmentFieldDefaults =
-        { Title = ""
-          Value = ""
-          Short = false }
+    let NotificationAttachmentFieldDefaults = { Title = ""; Value = ""; Short = false }
 
     let private lowerCaseContractResolver =
         { new Newtonsoft.Json.Serialization.DefaultContractResolver() with

@@ -21,7 +21,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfMono
 
@@ -51,7 +51,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfMono
 

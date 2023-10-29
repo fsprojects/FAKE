@@ -168,7 +168,8 @@ module FxCop =
     let internal createArgs fxparams assemblies =
         let param =
             if fxparams.ApplyOutXsl && (String.IsNullOrWhiteSpace fxparams.OutputXslFileName) then
-                { fxparams with OutputXslFileName = fxparams.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
+                { fxparams with
+                    OutputXslFileName = fxparams.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
             else
                 fxparams
 

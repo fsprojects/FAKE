@@ -142,10 +142,7 @@ module Vault =
     /// <summary>
     /// The vault which stores the encrypts values
     /// </summary>
-    type Vault =
-        internal
-            { Key: KeyInfo
-              Variables: Map<string, Variable> }
+    type Vault = internal { Key: KeyInfo; Variables: Map<string, Variable> }
 
     /// <summary>
     /// Read a vault from the given encrypted variables
@@ -178,8 +175,7 @@ module Vault =
 
         File.WriteAllText(keyFile, Convert.ToBase64String(key))
 
-        { KeyFile = keyFile
-          Iv = Convert.ToBase64String(iv) }
+        { KeyFile = keyFile; Iv = Convert.ToBase64String(iv) }
 
     /// An empty vault without any variables
     let empty =

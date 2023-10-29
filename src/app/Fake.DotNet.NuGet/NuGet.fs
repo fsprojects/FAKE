@@ -24,13 +24,9 @@ module NuGet =
 
     type NugetReferences = string list
 
-    type NugetFrameworkReferences =
-        { FrameworkVersion: string
-          References: NugetReferences }
+    type NugetFrameworkReferences = { FrameworkVersion: string; References: NugetReferences }
 
-    type NugetFrameworkAssemblyReferences =
-        { FrameworkVersions: string list
-          AssemblyName: string }
+    type NugetFrameworkAssemblyReferences = { FrameworkVersions: string list; AssemblyName: string }
 
     /// Specifies that the package contains sources and symbols.
     type NugetSymbolPackage =
@@ -738,7 +734,9 @@ module NuGet =
                 |> TraceSecrets.guardMessage
                 |> failwith
         with _ when parameters.PublishTrials > 0 ->
-            publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
+            publish
+                { parameters with
+                    PublishTrials = parameters.PublishTrials - 1 }
 
     /// <summary>
     /// Creates a new NuGet package based on the given .nuspec or project file.
@@ -1176,17 +1174,17 @@ module NuGet =
 
     /// [omit]
     let extractFeedPackageFromJson (data: JObject) isLatestVersion =
-        { Id = data[ "id" ].ToString()
-          Version = data[ "version" ].ToString()
-          Description = data[ "description" ].ToString()
-          Summary = data[ "summary" ].ToString()
+        { Id = data["id"].ToString()
+          Version = data["version"].ToString()
+          Description = data["description"].ToString()
+          Summary = data["summary"].ToString()
           IsLatestVersion = isLatestVersion
           Authors = String.Join(",", data["authors"] :?> JArray)
           Owners = String.Join(",", data["authors"] :?> JArray)
           Tags = String.Join(",", data["tags"] :?> JArray)
-          ProjectUrl = data[ "projectUrl" ].ToString()
-          LicenseUrl = data[ "licenseUrl" ].ToString()
-          Title = data[ "title" ].ToString() }
+          ProjectUrl = data["projectUrl"].ToString()
+          LicenseUrl = data["licenseUrl"].ToString()
+          Title = data["title"].ToString() }
 
     /// <summary>
     /// Gets a Package information from NuGet feed by package id.
@@ -1204,12 +1202,12 @@ module NuGet =
 
         let versionExists =
             packageVersions
-            |> List.exists (fun listedVersion -> listedVersion[ "version" ].ToString() = version)
+            |> List.exists (fun listedVersion -> listedVersion["version"].ToString() = version)
 
         if not versionExists then
             failwithf "Requested %s for package %s is not registered on NuGet" version packageName
 
-        let isLatest = (data[ "version" ].ToString() = version)
+        let isLatest = (data["version"].ToString() = version)
         // set the requested version instead of latest.
         data["version"] <- JValue version
         extractFeedPackageFromJson data isLatest

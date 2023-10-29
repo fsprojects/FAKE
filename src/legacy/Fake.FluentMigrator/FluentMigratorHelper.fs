@@ -15,26 +15,23 @@ let private horizontalRule = "".PadRight(79, '-')
 type internal FakeAnnouncer() =
     inherit Announcer()
 
-    override this.Say message =
-        base.Say(sprintf "[+] %s" message);
+    override this.Say message = base.Say(sprintf "[+] %s" message)
 
     override this.Heading message =
         trace horizontalRule
         trace message
         trace horizontalRule
 
-    override this.Emphasize message = 
+    override this.Emphasize message =
         traceImportant (sprintf "[+] %s" message)
 
-    override this.Error message =
-        traceError (sprintf "!!! %s" message)
+    override this.Error message = traceError (sprintf "!!! %s" message)
 
-    override this.Write (message, escaped) =
-        log message
+    override this.Write(message, escaped) = log message
 
 /// MS SQL Server driver version
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type SqlServerVersion = 
+type SqlServerVersion =
     | Default
     | V2000
     | V2005
@@ -93,152 +90,151 @@ type DatabaseTask =
 
 /// Fluent Migrator options
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type MigrationOptions = {
-    Namespace: Option<string * bool>;
-    Profile: string;
-    Tags: seq<string>;
-    Timeout: int;
-    Context: System.Object;
-    TransactionPerSession: bool;
-    ProviderSwitches: string;
-    WorkingDirectory: string;
-    Verbose: bool
-}
+type MigrationOptions =
+    { Namespace: Option<string * bool>
+      Profile: string
+      Tags: seq<string>
+      Timeout: int
+      Context: System.Object
+      TransactionPerSession: bool
+      ProviderSwitches: string
+      WorkingDirectory: string
+      Verbose: bool }
 
 /// Default migration options
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let DefaultMigrationOptions = {
-    Namespace = None;
-    Profile = null;
-    Tags = [];
-    Timeout = 30;
-    Context = null;
-    TransactionPerSession = false;
-    ProviderSwitches = null;
-    WorkingDirectory = null;
-    Verbose = false;
-}
+let DefaultMigrationOptions =
+    { Namespace = None
+      Profile = null
+      Tags = []
+      Timeout = 30
+      Context = null
+      TransactionPerSession = false
+      ProviderSwitches = null
+      WorkingDirectory = null
+      Verbose = false }
 
 let private getProviderName provider =
     match provider with
-        | SqlServer(SqlServerVersion.Default) -> "sqlserver"
-        | SqlServer(V2000) -> "sqlserver2000"
-        | SqlServer(V2005) -> "sqlserver2005"
-        | SqlServer(V2008) -> "sqlserver2008"
-        | SqlServer(V2012) -> "sqlserver2012"
-        | SqlServer(V2014) -> "sqlserver2014"
-        | SqlServer(CE) -> "sqlserverce"
-        | Oracle(OracleVersion.Default) -> "oracle"
-        | Oracle(Managed) -> "oraclemanaged"
-        | Oracle(DotConnect) -> "dotconnectoracle"
-        | DB2 -> "db2"
-        | Firebird -> "firebird"
-        | HANA -> "hana"
-        | Jet -> "jet"
-        | MySql -> "mysql"
-        | PostgreSQL -> "postgres"
-        | SQLite -> "sqlite"
+    | SqlServer(SqlServerVersion.Default) -> "sqlserver"
+    | SqlServer(V2000) -> "sqlserver2000"
+    | SqlServer(V2005) -> "sqlserver2005"
+    | SqlServer(V2008) -> "sqlserver2008"
+    | SqlServer(V2012) -> "sqlserver2012"
+    | SqlServer(V2014) -> "sqlserver2014"
+    | SqlServer(CE) -> "sqlserverce"
+    | Oracle(OracleVersion.Default) -> "oracle"
+    | Oracle(Managed) -> "oraclemanaged"
+    | Oracle(DotConnect) -> "dotconnectoracle"
+    | DB2 -> "db2"
+    | Firebird -> "firebird"
+    | HANA -> "hana"
+    | Jet -> "jet"
+    | MySql -> "mysql"
+    | PostgreSQL -> "postgres"
+    | SQLite -> "sqlite"
 
 let private validate assemblies =
-    if ((assemblies = null) || (Seq.isEmpty assemblies))
-        then invalidOp "At least one migration assembly should be specified"
+    if ((assemblies = null) || (Seq.isEmpty assemblies)) then
+        invalidOp "At least one migration assembly should be specified"
 
-let private createAnnouncer outputFileName verbose provider = 
+let private createAnnouncer outputFileName verbose provider =
     let fakeAnnouncer = new FakeAnnouncer()
     fakeAnnouncer.ShowSql <- verbose
     fakeAnnouncer.ShowElapsedTime <- verbose
+
     if (String.IsNullOrEmpty(outputFileName)) then
         ((fakeAnnouncer :> IAnnouncer), null)
     else
         let sw = new StreamWriter(outputFileName)
-        let fileAnnouncer = 
+
+        let fileAnnouncer =
             match provider with
-                | SqlServer(_) -> (new TextWriterWithGoAnnouncer(sw) :> TextWriterAnnouncer)
-                | _ -> (new TextWriterAnnouncer(sw)) 
+            | SqlServer(_) -> (new TextWriterWithGoAnnouncer(sw) :> TextWriterAnnouncer)
+            | _ -> (new TextWriterAnnouncer(sw))
+
         fileAnnouncer.ShowElapsedTime <- false
         fileAnnouncer.ShowSql <- true
         ((new CompositeAnnouncer(fakeAnnouncer, fileAnnouncer) :> IAnnouncer), sw)
 
-let private getModeFromTask task = 
+let private getModeFromTask task =
     match task with
-        | MigrateUp(mode, _)
-        | MigrateDown(mode, _)  
-        | Rollback(mode, _) -> Some(mode)
-        | _ -> None
+    | MigrateUp(mode, _)
+    | MigrateDown(mode, _)
+    | Rollback(mode, _) -> Some(mode)
+    | _ -> None
 
-let private getProviderFromConnection connection = 
+let private getProviderFromConnection connection =
     match connection with
-        | ConnectionString(_, provider)
-        | ConnectionStringFromConfig(_, _, provider) ->
-            provider
+    | ConnectionString(_, provider)
+    | ConnectionStringFromConfig(_, _, provider) -> provider
 
 let private getProviderFromMode mode =
-    match mode with 
-        | Execute(connection)
-        | ExecuteAndScript(connection, _)
-        | Preview(connection) -> getProviderFromConnection connection
-        | Script(_, _, provider) -> provider
+    match mode with
+    | Execute(connection)
+    | ExecuteAndScript(connection, _)
+    | Preview(connection) -> getProviderFromConnection connection
+    | Script(_, _, provider) -> provider
 
 let private getProviderFromTask task =
     match task with
-        | MigrateUp(mode, _)
-        | MigrateDown(mode, _)  
-        | Rollback(mode, _) -> getProviderFromMode mode
-        | ListAppliedMigrations(connection) -> getProviderFromConnection connection
+    | MigrateUp(mode, _)
+    | MigrateDown(mode, _)
+    | Rollback(mode, _) -> getProviderFromMode mode
+    | ListAppliedMigrations(connection) -> getProviderFromConnection connection
 
-let private setupConnection (context: IRunnerContext) connection = 
+let private setupConnection (context: IRunnerContext) connection =
     match connection with
-        | ConnectionString(connectionString, _) -> 
-            context.Connection <- connectionString
-        | ConnectionStringFromConfig(name, configPath, _) ->
-            context.Connection <- name
-            context.ConnectionStringConfigPath <- configPath
+    | ConnectionString(connectionString, _) -> context.Connection <- connectionString
+    | ConnectionStringFromConfig(name, configPath, _) ->
+        context.Connection <- name
+        context.ConnectionStringConfigPath <- configPath
 
 let private setupConnectionForMode (context: IRunnerContext) mode =
-    match mode with 
-        | Execute(connection)
-        | ExecuteAndScript(connection, _) ->
-            setupConnection context connection
-        | Preview(connection) -> 
-            setupConnection context connection
-            context.PreviewOnly <- true
-        | Script(startVersion, _, _) ->
-            context.NoConnection <- true
-            context.StartVersion <- startVersion
+    match mode with
+    | Execute(connection)
+    | ExecuteAndScript(connection, _) -> setupConnection context connection
+    | Preview(connection) ->
+        setupConnection context connection
+        context.PreviewOnly <- true
+    | Script(startVersion, _, _) ->
+        context.NoConnection <- true
+        context.StartVersion <- startVersion
 
-let private toRunnerContext task assemblies options = 
+let private toRunnerContext task assemblies options =
     validate assemblies
     let provider = getProviderFromTask task
-    let announcerFactory = 
+
+    let announcerFactory =
         match getModeFromTask task with
-            | Some(ExecuteAndScript(_, outputFileName)) ->
-                createAnnouncer outputFileName
-            | Some(Script(_, outputFileName, _)) ->
-                createAnnouncer outputFileName
-            | _ ->
-                createAnnouncer null
+        | Some(ExecuteAndScript(_, outputFileName)) -> createAnnouncer outputFileName
+        | Some(Script(_, outputFileName, _)) -> createAnnouncer outputFileName
+        | _ -> createAnnouncer null
+
     let announcer = announcerFactory options.Verbose provider
     let context = new RunnerContext(fst announcer)
     context.Database <- getProviderName provider
+
     match task with
-        | MigrateUp(mode, None) ->
-            context.Task <- "migrate"
-            setupConnectionForMode context mode
-        | MigrateUp(mode, Some(version)) -> 
-            context.Task <- "migrate"
-            setupConnectionForMode context mode
-            context.Version <- version
-        | MigrateDown(mode, version) ->
-            context.Task <- "migrate:down"
-            setupConnectionForMode context mode
-            context.Version <- version
-        | Rollback(mode, steps) -> 
-            context.Task <- "rollback"
-            setupConnectionForMode context mode
-            context.Steps <- steps
-        | ListAppliedMigrations(connection) -> 
-            context.Task <- "ListAppliedMigrations"
-            setupConnection context connection
+    | MigrateUp(mode, None) ->
+        context.Task <- "migrate"
+        setupConnectionForMode context mode
+    | MigrateUp(mode, Some(version)) ->
+        context.Task <- "migrate"
+        setupConnectionForMode context mode
+        context.Version <- version
+    | MigrateDown(mode, version) ->
+        context.Task <- "migrate:down"
+        setupConnectionForMode context mode
+        context.Version <- version
+    | Rollback(mode, steps) ->
+        context.Task <- "rollback"
+        setupConnectionForMode context mode
+        context.Steps <- steps
+    | ListAppliedMigrations(connection) ->
+        context.Task <- "ListAppliedMigrations"
+        setupConnection context connection
+
     context.Targets <- Seq.toArray assemblies
     context.Tags <- Seq.toList options.Tags
     context.ApplicationContext <- options.Context
@@ -247,11 +243,13 @@ let private toRunnerContext task assemblies options =
     context.Timeout <- Nullable options.Timeout
     context.TransactionPerSession <- options.TransactionPerSession
     context.WorkingDirectory <- options.WorkingDirectory
+
     match options.Namespace with
-        | Some(name, nested) -> 
-            context.Namespace <- name
-            context.NestedNamespaces <- nested
-        | None -> ()
+    | Some(name, nested) ->
+        context.Namespace <- name
+        context.NestedNamespaces <- nested
+    | None -> ()
+
     (context, (snd announcer))
 
 /// Executes the specified task using configuration options
@@ -262,11 +260,13 @@ let private toRunnerContext task assemblies options =
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ExecuteDatabaseTask task (assemblies: seq<string>) options =
     let (context, writer) = toRunnerContext task assemblies options
+
     try
         let executor = new TaskExecutor(context)
         executor.Execute()
     finally
-        if (writer <> null) then writer.Dispose()
+        if (writer <> null) then
+            writer.Dispose()
 
 /// Migrates database up to the specified version
 /// ## Parameters
@@ -275,7 +275,7 @@ let ExecuteDatabaseTask task (assemblies: seq<string>) options =
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let MigrateUp version connection assemblies options = 
+let MigrateUp version connection assemblies options =
     let task = MigrateUp(Execute(connection), Some(version))
     ExecuteDatabaseTask task assemblies options
 
@@ -285,7 +285,7 @@ let MigrateUp version connection assemblies options =
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let MigrateToLatest connection assemblies options = 
+let MigrateToLatest connection assemblies options =
     let task = DatabaseTask.MigrateUp(Execute(connection), None)
     ExecuteDatabaseTask task assemblies options
 
@@ -316,7 +316,7 @@ let Rollback steps connection assemblies options =
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let RollbackLatest connection assemblies options = 
+let RollbackLatest connection assemblies options =
     Rollback 1 connection assemblies options
 
 /// Lists all migrations which were applied to the database

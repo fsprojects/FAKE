@@ -19,7 +19,7 @@ let runCreateProcess setParams =
 
     let file, args =
         match cp.Command with
-        | RawCommand (file, args) -> file, args
+        | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
 
@@ -66,7 +66,9 @@ let tests =
           testCase "Test that ReportType Cobertura works"
           <| fun _ ->
               let expectedPath, commandLine =
-                  runCreateProcess (fun p -> { p with ReportTypes = [ ReportGenerator.ReportType.Cobertura ] })
+                  runCreateProcess (fun p ->
+                      { p with
+                          ReportTypes = [ ReportGenerator.ReportType.Cobertura ] })
 
               Expect.equal
                   commandLine
@@ -87,7 +89,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfMono
 
@@ -112,7 +114,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
 
               Expect.equal file path "Expected globaltool.exe"
@@ -133,7 +135,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 
@@ -153,7 +155,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 
@@ -177,7 +179,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 

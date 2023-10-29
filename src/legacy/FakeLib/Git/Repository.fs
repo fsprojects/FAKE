@@ -5,6 +5,7 @@
 module Fake.Git.Repository
 
 #nowarn "44"
+
 open Fake
 open System.IO
 
@@ -13,9 +14,10 @@ open System.IO
 ///
 ///  - `workingDir` - The working directory.
 ///  - `repoUrl` - The URL to the origin.
-///  - `toPath` - Specifes the new target subfolder. 
+///  - `toPath` - Specifes the new target subfolder.
 [<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
-let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
+let clone workingDir repoUrl toPath =
+    gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
 /// Clones a single branch of a git repository.
 /// ## Parameters
@@ -35,7 +37,7 @@ let cloneSingleBranch workingDir repoUrl branchName toPath =
 ///
 ///  - `repositoryDir` - The path of the target directory.
 ///  - `bare` - If the new directory is a bare directory.
-///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. 
+///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository.
 [<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let init repositoryDir bare shared =
     match bare, shared with
@@ -51,28 +53,32 @@ let init repositoryDir bare shared =
 [<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let fullclean repositoryDir =
     let di = directoryInfo repositoryDir
+
     if di.Exists then
         logfn "Deleting contents of %s" repositoryDir
         // delete all files
         Directory.GetFiles(repositoryDir, "*.*", SearchOption.TopDirectoryOnly)
-          |> Seq.iter (fun file -> 
-                let fi = fileInfo file
-                fi.IsReadOnly <- false
-                fi.Delete())
-    
+        |> Seq.iter (fun file ->
+            let fi = fileInfo file
+            fi.IsReadOnly <- false
+            fi.Delete())
+
         // deletes all subdirectories
         let rec deleteDirs actDir =
             let di = directoryInfo actDir
-            if di.Name = ".git" then () else
-            try
-                Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
-                Directory.Delete(actDir,true)
-            with exn -> ()
-    
-        Directory.GetDirectories repositoryDir 
-          |> Seq.iter deleteDirs      
+
+            if di.Name = ".git" then
+                ()
+            else
+                try
+                    Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
+                    Directory.Delete(actDir, true)
+                with exn ->
+                    ()
+
+        Directory.GetDirectories repositoryDir |> Seq.iter deleteDirs
     else
         CreateDir repositoryDir
-    
+
     // set writeable
-    File.SetAttributes(repositoryDir,FileAttributes.Normal)        
+    File.SetAttributes(repositoryDir, FileAttributes.Normal)

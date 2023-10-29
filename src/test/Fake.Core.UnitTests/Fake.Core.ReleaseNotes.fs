@@ -145,13 +145,11 @@ let tests =
                     "* Fix various bugs in the FAKE runner."
                     "" ]
 
-              Expect.throwsC
-                  (fun () -> ignore <| ReleaseNotes.parse releaseNotesLines)
-                  (fun e ->
-                      Expect.stringContains
-                          e.Message
-                          "files containing only top level headers are not allowed"
-                          "Expected nice error message")
+              Expect.throwsC (fun () -> ignore <| ReleaseNotes.parse releaseNotesLines) (fun e ->
+                  Expect.stringContains
+                      e.Message
+                      "files containing only top level headers are not allowed"
+                      "Expected nice error message")
 
           // https://semver.org
           testList

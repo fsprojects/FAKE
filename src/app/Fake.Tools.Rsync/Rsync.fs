@@ -397,7 +397,8 @@ module Rsync =
 
     let private buildCommonArgs (param: Options) =
         (param.Actions |> List.map actionToString)
-        @ param.Sources @ [ param.Destination ]
+        @ param.Sources
+        @ [ param.Destination ]
         |> String.concat " "
 
     /// <summary>

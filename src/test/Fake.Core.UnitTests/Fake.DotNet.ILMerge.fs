@@ -47,7 +47,8 @@ let testCases =
           testCase "Test that duplicate types can be allowed"
           <| fun _ ->
               let p =
-                  { ILMerge.Params.Create() with AllowDuplicateTypes = ILMerge.AllPublicTypes }
+                  { ILMerge.Params.Create() with
+                      AllowDuplicateTypes = ILMerge.AllPublicTypes }
 
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
@@ -59,7 +60,10 @@ let testCases =
                   "Duplicates should be allowed"
           testCase "Test that assembly attributes may be multiplied"
           <| fun _ ->
-              let p = { ILMerge.Params.Create() with AllowMultipleAssemblyLevelAttributes = true }
+              let p =
+                  { ILMerge.Params.Create() with
+                      AllowMultipleAssemblyLevelAttributes = true }
+
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
               let args = ILMerge.getArguments dummy dummy2 p
@@ -110,7 +114,10 @@ let testCases =
                   "Attribute copying should be allowed"
           testCase "Test that types may be made internal"
           <| fun _ ->
-              let p = { ILMerge.Params.Create() with Internalize = ILMerge.Internalize }
+              let p =
+                  { ILMerge.Params.Create() with
+                      Internalize = ILMerge.Internalize }
+
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
               let args = ILMerge.getArguments dummy dummy2 p
@@ -173,6 +180,7 @@ let testCases =
           testCase "Test that WinEXE merge may be allowed"
           <| fun _ ->
               let p = { ILMerge.Params.Create() with TargetKind = ILMerge.WinExe }
+
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
               let args = ILMerge.getArguments dummy dummy2 p
@@ -227,15 +235,13 @@ let testCases =
               let dummy = Guid.NewGuid().ToString()
               let dummy2 = Guid.NewGuid().ToString()
 
-              Expect.throwsC
-                  (fun () -> ILMerge.run p dummy dummy2)
-                  (fun ex ->
-                      Expect.equal (ex.GetType()) typeof<NotSupportedException> "Exception type should be as expected"
+              Expect.throwsC (fun () -> ILMerge.run p dummy dummy2) (fun ex ->
+                  Expect.equal (ex.GetType()) typeof<NotSupportedException> "Exception type should be as expected"
 
-                      Expect.equal
-                          ex.Message
-                          "ILMerge is currently not supported on mono"
-                          "Exception message should be as expected") ]
+                  Expect.equal
+                      ex.Message
+                      "ILMerge is currently not supported on mono"
+                      "Exception message should be as expected") ]
 
 [<Tests>]
 let tests = testList "Fake.DotNet.ILMerge.Tests" testCases
