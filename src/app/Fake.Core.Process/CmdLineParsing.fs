@@ -140,7 +140,7 @@ type FilePath = string
 module Args =
     /// <summary>
     /// Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if
-    /// needed (currently always but this might change).
+    /// needed.
     /// </summary>
     ///
     /// <param name="args">The arguments list</param>

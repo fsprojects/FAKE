@@ -686,11 +686,6 @@ module MSBuild =
 
             a, fileName |> Path.getFullName)
 
-    let internal quoteString str =
-        StringBuilder()
-        |> StringBuilder.appendQuotedIfNotNull Some str
-        |> StringBuilder.toText
-
     let rec private getProjectReferences (projectFileName: string) =
         match projectFileName.EndsWith ".sln" with
         | true -> Set.empty
@@ -877,10 +872,17 @@ module MSBuild =
           yield! properties ]
         |> Seq.choose id
         |> Seq.map (fun (k, v) -> "/" + k + (if String.isNullOrEmpty v then "" else ":" + v))
-        |> Args.toWindowsCommandLine
+        |> Seq.toList
 
     /// [omit]
-    let buildArgs (setParams: MSBuildParams -> MSBuildParams) =
+    let buildArgs (setParams: MSBuildParams -> MSBuildParams) : MSBuildParams * string =
+        let p = MSBuildParams.Create() |> setParams
+        p, fromCliArguments p.CliArguments |> Args.toWindowsCommandLine
+
+    /// <summary>
+    ///   similar to 'buildArgs' but returns a string list instead of a single string for the arguments
+    /// </summary>
+    let private buildArgsToList (setParams: MSBuildParams -> MSBuildParams) : MSBuildParams * string list =
         let p = MSBuildParams.Create() |> setParams
         p, fromCliArguments p.CliArguments
 
@@ -888,13 +890,13 @@ module MSBuild =
     let internal getVersion =
         let cache = System.Collections.Concurrent.ConcurrentDictionary<string, Version>()
 
-        fun (exePath: string) (callMsbuildExe: string -> string) ->
+        fun (exePath: string) (callMsbuildExe: string list -> string) ->
             let getFromCall () =
                 try
                     let result =
                         match Environment.isUnix with
-                        | true -> callMsbuildExe "--version --nologo"
-                        | false -> callMsbuildExe "/version /nologo"
+                        | true -> callMsbuildExe [ "--version"; "--nologo" ]
+                        | false -> callMsbuildExe [ "/version"; "/nologo" ]
 
                     let line =
                         if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then
@@ -914,15 +916,15 @@ module MSBuild =
 
     let internal addBinaryLogger
         (exePath: string)
-        (callMsbuildExe: string -> string)
-        (args: string)
+        (callMsbuildExe: string list -> string)
+        (args: string list)
         (disableFakeBinLogger: bool)
         =
 #if !NO_MSBUILD_BINLOG
         if disableFakeBinLogger then
             None, args
         else
-            let argList = Args.fromWindowsCommandLine args |> Seq.toList
+            let argList = args |> Seq.toList
             let path = Path.GetTempFileName()
             File.Delete(path)
             let path = path + ".binlog"
@@ -930,7 +932,7 @@ module MSBuild =
             let v = getVersion exePath callMsbuildExe
 
             if v >= versionToUseBinLog then
-                Some path, Args.toWindowsCommandLine (argList @ [ "/bl:" + path ])
+                Some path, (argList @ [ "/bl:" + path ])
             elif v >= versionToUseStructuredLogger then
                 let assemblyPath =
                     let currentPath = MSBuildBinLog.structuredLogAssemblyPath
@@ -941,8 +943,7 @@ module MSBuild =
                     else
                         Path.Combine(libFolder, "net46", "StructuredLogger.dll")
 
-                Some path,
-                Args.toWindowsCommandLine (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
+                Some path, (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
             else
                 Trace.traceFAKE
                     "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning."
@@ -998,7 +999,7 @@ module MSBuild =
         let messageF msg = results.Add msg
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
             |> CreateProcess.redirectOutput
@@ -1017,9 +1018,9 @@ module MSBuild =
     /// <param name="setParams">A function that overwrites the default MSBuildParams</param>
     /// <param name="project">A string with the path to the project file to build.</param>
     let buildWithRedirect setParams project =
-        let msBuildParams, argsString = buildArgs setParams
+        let msBuildParams, argsList = buildArgsToList setParams
 
-        let args = quoteString (project + " " + argsString)
+        let args = project :: argsList
 
         let binlogPath, args =
             addBinaryLogger
@@ -1034,7 +1035,7 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath (Args.toWindowsCommandLine args)
 
         let results = System.Collections.Generic.List<ConsoleMessage>()
 
@@ -1045,7 +1046,7 @@ module MSBuild =
             results.Add(ConsoleMessage.CreateOut msg)
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
             |> CreateProcess.withWorkingDirectory msBuildParams.WorkingDirectory
@@ -1086,9 +1087,9 @@ module MSBuild =
     /// </example>
     let build setParams project =
         use __ = Trace.traceTask "MSBuild" project
-        let msBuildParams, argsString = buildArgs setParams
+        let msBuildParams, argsList = buildArgsToList setParams
 
-        let args = quoteString (project + " " + argsString)
+        let args = project :: argsList
 
         let binlogPath, args =
             addBinaryLogger
@@ -1103,10 +1104,10 @@ module MSBuild =
             else
                 sprintf "%s>" msBuildParams.WorkingDirectory
 
-        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+        Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath (Args.toWindowsCommandLine args)
 
         let processResult =
-            CreateProcess.fromRawCommandLine msBuildParams.ToolPath args
+            CreateProcess.fromRawCommand msBuildParams.ToolPath args
             |> CreateProcess.withWorkingDirectory msBuildParams.WorkingDirectory
             |> CreateProcess.withTimeout TimeSpan.MaxValue
             |> CreateProcess.withEnvironment (msBuildParams.Environment |> Map.toList)
