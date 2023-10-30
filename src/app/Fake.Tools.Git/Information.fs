@@ -85,7 +85,7 @@ module Information =
     /// </summary>
     ///
     /// <param name="repositoryDir">The git repository.</param>
-    let getShortSHA1 repositoryDir =
+    let getCurrentShortSHA1 repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir "rev-parse --short HEAD"
         msg |> String.separated ""
     /// <summary>
