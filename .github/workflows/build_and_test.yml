@@ -11,9 +11,9 @@ jobs:
             matrix:
                 os: [ubuntu-latest, windows-latest, macOS-latest]
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Setup .NET 6
-              uses: actions/setup-dotnet@v1
+              uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: '6.0.101'
             - name: Restore dotnet tools
@@ -27,7 +27,7 @@ jobs:
             - name: Build
               run: dotnet fake build --parallel 3
             - name: publish build artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: fake-artifacts
                   path: release/artifacts
