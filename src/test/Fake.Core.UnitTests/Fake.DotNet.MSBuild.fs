@@ -16,7 +16,7 @@ let tests =
                     $"%s{expected} /clp:ForceConsoleColor".Trim()
                 else
                     expected.Trim()
-                    
+
             let expected =
                 if Environment.isUnix then
                     $"{expected} /p:RestorePackages=False".Trim()
