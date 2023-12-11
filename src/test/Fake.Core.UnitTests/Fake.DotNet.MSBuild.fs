@@ -12,6 +12,12 @@ let tests =
             let _, cmdLine = MSBuild.buildArgs changeBuildArgs
 
             let expected =
+                if BuildServer.ansiColorSupport then
+                    $"%s{expected} /clp:ForceConsoleColor".Trim()
+                else
+                    expected.Trim()
+                    
+            let expected =
                 if Environment.isUnix then
                     $"{expected} /p:RestorePackages=False".Trim()
                 else
