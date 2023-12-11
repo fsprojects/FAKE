@@ -21,7 +21,7 @@ let tests =
                 if Environment.isUnix then
                     $"{expected} /p:RestorePackages=False".Trim()
                 else
-                    $"{expected} /m /nodeReuse:False /p:RestorePackages=False".Trim()
+                    $"/m /nodeReuse:False {expected} /p:RestorePackages=False".Trim()
 
             Expect.equal cmdLine expected $"Expected a given cmdLine '{expected}', but got '{cmdLine}'."
 
