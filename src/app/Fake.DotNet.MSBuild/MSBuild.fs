@@ -44,8 +44,8 @@ type MSBuildVerbosity =
 /// <li>The primary output of that build (which is hyperlinked).</li>
 /// <li>Any diagnostics generated for that project.</li>
 /// </ul>
-/// This option is available starting in .NET 8.
 /// </summary>
+/// <remarks>This option is available starting in .NET 8.</remarks>
 [<RequireQualifiedAccess>]
 type MSBuildTerminalLoggerOption =
     | On
