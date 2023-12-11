@@ -1,5 +1,8 @@
 # Release Notes
 
+## 6.1.0 - 2023-mm-dd
+* ENHANCEMENT: Support for /tl:[auto:on:off] msbuild flag, thanks @smoothdeveloper - 
+
 ## 6.0.0 - 2023-02-20
 * ENHANCEMENT: Site UI fixes and documentation link fixes.
 

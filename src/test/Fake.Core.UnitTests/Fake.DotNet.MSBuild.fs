@@ -6,6 +6,19 @@ open Expecto
 
 [<Tests>]
 let tests =
+    let flagsTestCase name changeBuildArgs expected =
+        testCase name
+        <| fun _ ->
+            let _, cmdLine = MSBuild.buildArgs changeBuildArgs
+
+            let expected =
+                if Environment.isUnix then
+                    $"{expected} /p:RestorePackages=False".Trim()
+                else
+                    $"{expected} /m /nodeReuse:False /p:RestorePackages=False".Trim()
+
+            Expect.equal cmdLine expected $"Expected a given cmdLine '{expected}', but got '{cmdLine}'."
+
     testList
         "Fake.DotNet.MSBuild.Tests"
         [ testCase "Test that we can create simple msbuild cmdline"
@@ -37,4 +50,18 @@ let tests =
                   else
                       "/restore /m /nodeReuse:False /p:RestorePackages=False"
 
-              Expect.equal cmdLine expected "Expected a given cmdline." ]
+              Expect.equal cmdLine expected "Expected a given cmdline."
+
+          flagsTestCase "/tl:auto doesn't ouput anything (1)" id ""
+          flagsTestCase
+              "/tl:auto doesn't ouput anything (2)"
+              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.Auto })
+              ""
+          flagsTestCase
+              "/tl:on does ouput"
+              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.On })
+              "/tl:on"
+          flagsTestCase
+              "/tl:off does ouput"
+              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.Off })
+              "/tl:off" ]
