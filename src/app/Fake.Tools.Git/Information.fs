@@ -80,6 +80,7 @@ module Information =
             match Environment.environVarOrNone "BUILD_SOURCEVERSION" with
             | None -> reraise ()
             | Some s -> s
+
     /// <summary>
     /// Returns the short SHA1 of the current <c>HEAD</c>
     /// </summary>
@@ -88,6 +89,7 @@ module Information =
     let getCurrentShortSHA1 repositoryDir =
         let _, msg, _ = CommandHelper.runGitCommand repositoryDir "rev-parse --short HEAD"
         msg |> String.separated ""
+
     /// <summary>
     /// Shows the git status
     /// </summary>
