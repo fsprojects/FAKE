@@ -855,10 +855,9 @@ module MSBuild =
 
         [ yield restoreFlag
           yield targets
-          if not Environment.isUnix then
-              yield maxCpu
-              yield noLogo
-              yield nodeReuse
+          yield maxCpu
+          yield noLogo
+          yield nodeReuse
           yield tools
           yield verbosity
           yield noConsoleLogger
