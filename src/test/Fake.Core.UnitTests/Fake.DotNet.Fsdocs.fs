@@ -12,7 +12,8 @@ let tests =
               [ testCase "It append input parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Input = Some("docs-new") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Input = Some("docs-new") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -41,7 +42,8 @@ let tests =
                 testCase "It append output parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Output = Some("site") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Output = Some("site") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -51,7 +53,8 @@ let tests =
                 testCase "It append noapidocs parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoApiDocs = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoApiDocs = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -71,7 +74,8 @@ let tests =
                 testCase "It append saveimages parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SaveImages = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SaveImages = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -81,7 +85,8 @@ let tests =
                 testCase "It append linenumbers parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with LineNumbers = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            LineNumbers = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -91,7 +96,8 @@ let tests =
                 testCase "It append ignoreprojects parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with IgnoreProjects = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            IgnoreProjects = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -101,7 +107,8 @@ let tests =
                 testCase "It append qualify parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Qualify = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Qualify = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -130,7 +137,8 @@ let tests =
                 testCase "It append nonpublic parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoPublic = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoPublic = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -140,7 +148,8 @@ let tests =
                 testCase "It append nodefaultcontent parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoDefaultContent = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoDefaultContent = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -150,7 +159,8 @@ let tests =
                 testCase "It append clean parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Clean = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Clean = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -160,7 +170,8 @@ let tests =
                 testCase "It append version parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Version = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Version = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -170,7 +181,8 @@ let tests =
                 testCase "It append properties parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Properties = Some("Configuration=Release") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Properties = Some("Configuration=Release") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -180,7 +192,8 @@ let tests =
                 testCase "It append fscoptions parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with FscOptions = Some("-r:MyAssembly.dll") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            FscOptions = Some("-r:MyAssembly.dll") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -190,7 +203,8 @@ let tests =
                 testCase "It append strict parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Strict = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Strict = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -200,7 +214,8 @@ let tests =
                 testCase "It append sourcefolder parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SourceFolder = Some("src/app") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SourceFolder = Some("src/app") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -210,7 +225,8 @@ let tests =
                 testCase "It append sourcerepo parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SourceRepository = Some("FAKE") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SourceRepository = Some("FAKE") }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -220,7 +236,8 @@ let tests =
                 testCase "It append mdcomments parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with MdComments = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            MdComments = Some(true) }
 
                     let cmd = Fsdocs.buildBuildCommandParams buildParams
 
@@ -262,7 +279,9 @@ let tests =
                 testCase "It append noserver parameter when its value is overriden"
                 <| fun _ ->
                     let cmd =
-                        Fsdocs.buildWatchCommandParams { Fsdocs.WatchCommandParams.Default with NoServer = Some(true) }
+                        Fsdocs.buildWatchCommandParams
+                            { Fsdocs.WatchCommandParams.Default with
+                                NoServer = Some(true) }
 
                     "expected to call 'watch --noserver' command with noserver parameter"
                     |> Expect.equal cmd "--noserver"
@@ -270,7 +289,9 @@ let tests =
                 testCase "It append nolaunch parameter when its value is overriden"
                 <| fun _ ->
                     let cmd =
-                        Fsdocs.buildWatchCommandParams { Fsdocs.WatchCommandParams.Default with NoLaunch = Some(true) }
+                        Fsdocs.buildWatchCommandParams
+                            { Fsdocs.WatchCommandParams.Default with
+                                NoLaunch = Some(true) }
 
                     "expected to call 'watch --nolaunch' command with nolaunch parameter"
                     |> Expect.equal cmd "--nolaunch"
@@ -279,7 +300,8 @@ let tests =
                 <| fun _ ->
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with Open = Some("http://localhost:/apidocs/index.html") }
+                            { Fsdocs.WatchCommandParams.Default with
+                                Open = Some("http://localhost:/apidocs/index.html") }
 
                     "expected to call 'watch --open http://localhost:/apidocs/index.html' command with open parameter"
                     |> Expect.equal cmd "--open http://localhost:/apidocs/index.html"
@@ -308,11 +330,13 @@ let tests =
                 testCase "It append input parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Input = Some("docs-new") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Input = Some("docs-new") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --input docs-new' command with input parameter"
                     |> Expect.equal cmd "--input docs-new"
@@ -331,7 +355,8 @@ let tests =
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --projects src/app/Fake.Api.GitHub/Fake.Api.GitHub.fsproj,src/app/Fake.DotNet.Fsdocs/Fake.DotNet.Fsdocs.fsproj' command with projects parameter"
                     |> Expect.equal
@@ -341,11 +366,13 @@ let tests =
                 testCase "It append output parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Output = Some("site") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Output = Some("site") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --output site' command with output parameter"
                     |> Expect.equal cmd "--output site"
@@ -353,11 +380,13 @@ let tests =
                 testCase "It append noapidocs parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoApiDocs = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoApiDocs = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --noapidocs' command with noapidocs parameter"
                     |> Expect.equal cmd "--noapidocs"
@@ -369,7 +398,8 @@ let tests =
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --eval' command with eval parameter"
                     |> Expect.equal cmd "--eval"
@@ -377,11 +407,13 @@ let tests =
                 testCase "It append saveimages parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SaveImages = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SaveImages = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --saveimages' command with saveimages parameter"
                     |> Expect.equal cmd "--saveimages"
@@ -389,11 +421,13 @@ let tests =
                 testCase "It append linenumbers parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with LineNumbers = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            LineNumbers = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --linenumbers' command with linenumbers parameter"
                     |> Expect.equal cmd "--linenumbers"
@@ -401,11 +435,13 @@ let tests =
                 testCase "It append ignoreprojects parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with IgnoreProjects = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            IgnoreProjects = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --ignoreprojects' command with ignoreprojects parameter"
                     |> Expect.equal cmd "--ignoreprojects"
@@ -413,11 +449,13 @@ let tests =
                 testCase "It append qualify parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Qualify = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Qualify = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --qualify' command with qualify parameter"
                     |> Expect.equal cmd "--qualify"
@@ -436,7 +474,8 @@ let tests =
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --parameters root http://127.0.0.1:5500/ fsdocs-logo-src http://127.0.0.1:5500/img/logo.svg' command with parameters parameter"
                     |> Expect.equal
@@ -446,11 +485,13 @@ let tests =
                 testCase "It append nonpublic parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoPublic = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoPublic = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --nonpublic' command with nonpublic parameter"
                     |> Expect.equal cmd "--nonpublic"
@@ -458,11 +499,13 @@ let tests =
                 testCase "It append nodefaultcontent parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with NoDefaultContent = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            NoDefaultContent = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --nodefaultcontent' command with nodefaultcontent parameter"
                     |> Expect.equal cmd "--nodefaultcontent"
@@ -470,11 +513,13 @@ let tests =
                 testCase "It append clean parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Clean = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Clean = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --clean' command with clean parameter"
                     |> Expect.equal cmd "--clean"
@@ -482,11 +527,13 @@ let tests =
                 testCase "It append version parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Version = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Version = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --version' command with version parameter"
                     |> Expect.equal cmd "--version"
@@ -494,11 +541,13 @@ let tests =
                 testCase "It append properties parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Properties = Some("Configuration=Release") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Properties = Some("Configuration=Release") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --properties Configuration=Release' command with properties parameter"
                     |> Expect.equal cmd "--properties Configuration=Release"
@@ -506,11 +555,13 @@ let tests =
                 testCase "It append fscoptions parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with FscOptions = Some("-r:MyAssembly.dll") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            FscOptions = Some("-r:MyAssembly.dll") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --fscoptions Configuration=Release' command with fscoptions parameter"
                     |> Expect.equal cmd "--fscoptions -r:MyAssembly.dll"
@@ -518,11 +569,13 @@ let tests =
                 testCase "It append strict parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with Strict = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            Strict = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --strict' command with strict parameter"
                     |> Expect.equal cmd "--strict"
@@ -530,11 +583,13 @@ let tests =
                 testCase "It append sourcefolder parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SourceFolder = Some("src/app") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SourceFolder = Some("src/app") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --sourcefolder src/app' command with sourcefolder parameter"
                     |> Expect.equal cmd "--sourcefolder src/app"
@@ -542,11 +597,13 @@ let tests =
                 testCase "It append sourcerepo parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with SourceRepository = Some("FAKE") }
+                        { Fsdocs.BuildCommandParams.Default with
+                            SourceRepository = Some("FAKE") }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --sourcerepo FAKE' command with sourcerepo parameter"
                     |> Expect.equal cmd "--sourcerepo FAKE"
@@ -554,11 +611,13 @@ let tests =
                 testCase "It append mdcomments parameter when its value is overriden"
                 <| fun _ ->
                     let buildParams: Fsdocs.BuildCommandParams =
-                        { Fsdocs.BuildCommandParams.Default with MdComments = Some(true) }
+                        { Fsdocs.BuildCommandParams.Default with
+                            MdComments = Some(true) }
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --mdcomments' command with mdcomments parameter"
                     |> Expect.equal cmd "--mdcomments"
@@ -581,13 +640,13 @@ let tests =
 
                     let cmd =
                         Fsdocs.buildWatchCommandParams
-                            { Fsdocs.WatchCommandParams.Default with BuildCommandParams = Some(buildParams) }
+                            { Fsdocs.WatchCommandParams.Default with
+                                BuildCommandParams = Some(buildParams) }
 
                     "expected to call 'watch --saveimages --parameters root http://127.0.0.1:5500/ fsdocs-logo-src http://127.0.0.1:5500/img/logo.svg --nodefaultcontent --clean --strict' command with multiple parameters"
                     |> Expect.equal
                         cmd
                         "--saveimages --parameters root http://127.0.0.1:5500/ fsdocs-logo-src http://127.0.0.1:5500/img/logo.svg --nodefaultcontent --clean --strict" ]
-
 
 
           ]

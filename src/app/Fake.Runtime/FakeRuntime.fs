@@ -14,9 +14,7 @@ open Fake.Runtime.SdkAssemblyResolver
 open Paket
 open System
 
-type AssemblyData =
-    { IsReferenceAssembly: bool
-      Info: Runners.AssemblyInfo }
+type AssemblyData = { IsReferenceAssembly: bool; Info: Runners.AssemblyInfo }
 
 [<RequireQualifiedAccess>]
 type DependencyFile =
@@ -497,14 +495,16 @@ let paketCachingProvider
             { context with
                 Config =
                     { context.Config with
-                        CompileOptions = { context.Config.CompileOptions with FsiOptions = newAdditionalArgs }
+                        CompileOptions =
+                            { context.Config.CompileOptions with
+                                FsiOptions = newAdditionalArgs }
                         RuntimeOptions =
                             { context.Config.RuntimeOptions with
                                 _RuntimeDependencies =
                                     runtimeAssemblies @ context.Config.RuntimeOptions.RuntimeDependencies
                                 _NativeLibraries = nativeLibraries @ context.Config.RuntimeOptions.NativeLibraries }
 
-                     } },
+                    } },
             let assemblyPath, warningsFile =
                 context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
 
@@ -526,7 +526,7 @@ let paketCachingProvider
 
 let internal restoreDependencies config cacheDir section =
     match section with
-    | FakeHeader.PaketDependencies (_, paketDependencies, paketDependenciesFile, group) ->
+    | FakeHeader.PaketDependencies(_, paketDependencies, paketDependenciesFile, group) ->
         paketCachingProvider config cacheDir paketDependencies paketDependenciesFile group
 
 let internal tryFindGroupFromDepsFile scriptDir =
@@ -622,7 +622,7 @@ let tryPrepareFakeScript (config: FakeConfig) : TryPrepareInfo =
     let writeToCache (section: FakeHeader.FakeSection option) =
         let content =
             match section with
-            | Some (FakeHeader.PaketDependencies (headerType, p, _, group)) ->
+            | Some(FakeHeader.PaketDependencies(headerType, p, _, group)) ->
                 let s =
                     match headerType with
                     | FakeHeader.PaketInline -> "paket-inline"
@@ -697,8 +697,8 @@ let tryPrepareFakeScript (config: FakeConfig) : TryPrepareInfo =
           _Section = section
           _DependencyType =
             match section with
-            | FakeHeader.PaketDependencies (FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
-            | FakeHeader.PaketDependencies (FakeHeader.PaketDependenciesRef, _, _, _) ->
+            | FakeHeader.PaketDependencies(FakeHeader.PaketInline, _, _, _) -> PreparedDependencyType.PaketInline
+            | FakeHeader.PaketDependencies(FakeHeader.PaketDependenciesRef, _, _, _) ->
                 PreparedDependencyType.PaketDependenciesRef }
         |> Prepared
     | None -> NoHeader(cacheDir, (fun () -> actions |> List.rev |> List.iter (fun f -> f ())))
@@ -707,7 +707,7 @@ let tryPrepareFakeScript (config: FakeConfig) : TryPrepareInfo =
 let prepareFakeScript (config: FakeConfig) : PrepareInfo =
     match tryPrepareFakeScript config with
     | Prepared s -> s
-    | NoHeader (cacheDir, saveCache) ->
+    | NoHeader(cacheDir, saveCache) ->
         saveCache ()
 
         let defaultPaketCode =
@@ -766,7 +766,7 @@ let createConfig
 #else
             Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
 #endif
-         }
+        }
 
     // Make sure to not access forward-writer, see https://github.com/fsharp/FAKE/issues/2503
     let redirectWriter =
@@ -774,6 +774,7 @@ let createConfig
         |> Option.map (fun (onOutMsg, onErrMsg) ->
             let out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
             let err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
+
             { Out = out; Err = err })
 
     let tokenized =
@@ -785,9 +786,7 @@ let createConfig
       Runners.FakeConfig.ScriptFilePath = Path.GetFullPath scriptPath
       Runners.FakeConfig.ScriptTokens = tokenized
       Runners.FakeConfig.CompileOptions = { FsiOptions = newFsiOptions }
-      Runners.FakeConfig.RuntimeOptions =
-        { _RuntimeDependencies = []
-          _NativeLibraries = [] }
+      Runners.FakeConfig.RuntimeOptions = { _RuntimeDependencies = []; _NativeLibraries = [] }
       Runners.FakeConfig.UseSimpleRestore = false
       Runners.FakeConfig.UseCache = useCache
       Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup

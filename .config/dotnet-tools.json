@@ -9,19 +9,19 @@
       ]
     },
     "paket": {
-      "version": "7.1.5",
+      "version": "7.2.1",
       "commands": [
         "paket"
       ]
     },
     "fantomas": {
-      "version": "5.0.5",
+      "version": "6.2.1",
       "commands": [
         "fantomas"
       ]
     },
     "fsdocs-tool": {
-      "version": "16.0.1",
+      "version": "19.1.0",
       "commands": [
         "fsdocs"
       ]

@@ -12,7 +12,7 @@ open Microsoft.Win32
 
 /// The FxCop error reporting level
 [<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.ErrorLevel instead")>]
-type FxCopErrorLevel = 
+type FxCopErrorLevel =
     | Warning = 5
     | CriticalWarning = 4
     | Error = 3
@@ -23,48 +23,50 @@ type FxCopErrorLevel =
 /// Parameter type for the FxCop tool
 [<CLIMutable>]
 [<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.Params instead")>]
-type FxCopParams = 
-    { ApplyOutXsl : bool
-      DirectOutputToConsole : bool
-      DependencyDirectories : string seq
-      ImportFiles : string seq
-      RuleLibraries : string seq
-      Rules : string seq
-      CustomRuleset : string
-      IgnoreGeneratedCode : bool
-      ConsoleXslFileName : string
-      ReportFileName : string
-      OutputXslFileName : string
-      PlatformDirectory : string
-      ProjectFile : string
-      IncludeSummaryReport : bool
-      UseGACSwitch : bool
-      TypeList : string seq
-      SaveResultsInProjectFile : bool
-      WorkingDir : string
-      Verbose : bool
-      FailOnError : FxCopErrorLevel
-      TimeOut : TimeSpan
-      ToolPath : string
-      ForceOutput : bool
-      CustomDictionary : string }
+type FxCopParams =
+    { ApplyOutXsl: bool
+      DirectOutputToConsole: bool
+      DependencyDirectories: string seq
+      ImportFiles: string seq
+      RuleLibraries: string seq
+      Rules: string seq
+      CustomRuleset: string
+      IgnoreGeneratedCode: bool
+      ConsoleXslFileName: string
+      ReportFileName: string
+      OutputXslFileName: string
+      PlatformDirectory: string
+      ProjectFile: string
+      IncludeSummaryReport: bool
+      UseGACSwitch: bool
+      TypeList: string seq
+      SaveResultsInProjectFile: bool
+      WorkingDir: string
+      Verbose: bool
+      FailOnError: FxCopErrorLevel
+      TimeOut: TimeSpan
+      ToolPath: string
+      ForceOutput: bool
+      CustomDictionary: string }
 
 /// This checks the result file with some XML queries for errors
 /// [omit]
 [<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.checkForErrors instead.")>]
-let checkForErrors resultFile = 
+let checkForErrors resultFile =
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let FxCopCriticalWarnings = 0
-    
-    let getErrorValue s = 
-        let found, value = 
+
+    let getErrorValue s =
+        let found, value =
             XMLRead_Int false resultFile String.Empty String.Empty (sprintf "string(count(//Issue[@Level='%s']))" s)
+
         value
+
     getErrorValue "CriticalError", getErrorValue "Error", getErrorValue "CriticalWarning", getErrorValue "Warning"
 
 /// FxCop Default parameters
 [<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.Params.Create() instead")>]
-let FxCopDefaults = 
+let FxCopDefaults =
     { ApplyOutXsl = false
       DirectOutputToConsole = true
       DependencyDirectories = Seq.empty
@@ -86,29 +88,36 @@ let FxCopDefaults =
       Verbose = true
       FailOnError = FxCopErrorLevel.DontFailBuild
       TimeOut = TimeSpan.FromMinutes 5.
-      ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
+      ToolPath =
+        ProgramFilesX86
+        @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
       ForceOutput = false
       CustomDictionary = String.Empty }
 
 /// Run FxCop on a group of assemblies.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.FxCop', open 'Fake.DotNet' and use FxCop.Run instead")>]
-let FxCop setParams (assemblies : string seq) = 
+let FxCop setParams (assemblies: string seq) =
     let param = setParams FxCopDefaults
     use __ = traceStartTaskUsing "FxCop" ""
-    let param = 
-        if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then 
-            { param with OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
-        else param
-    
-    let commandLineCommands = 
+
+    let param =
+        if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then
+            { param with
+                OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
+        else
+            param
+
+    let commandLineCommands =
         let args = ref (new StringBuilder())
-        
-        let append predicate (s : string) = 
-            if predicate then args := (!args).Append(s)
-        
-        let appendFormat (format : string) (value : string) = 
-            if value <> String.Empty then args := (!args).AppendFormat(format, value)
-        
+
+        let append predicate (s: string) =
+            if predicate then
+                args := (!args).Append(s)
+
+        let appendFormat (format: string) (value: string) =
+            if value <> String.Empty then
+                args := (!args).AppendFormat(format, value)
+
         let appendItems format items = items |> Seq.iter (appendFormat format)
         append param.ApplyOutXsl "/aXsl "
         append param.DirectOutputToConsole "/c "
@@ -122,8 +131,10 @@ let FxCop setParams (assemblies : string seq) =
         appendFormat "/plat:\"{0}\" " param.PlatformDirectory
         appendFormat "/p:\"{0}\" " param.ProjectFile
         appendFormat "/ruleset:=\"{0}\" " param.CustomRuleset
+
         for item in param.RuleLibraries do
             appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)
+
         appendItems "/rid:{0} " param.Rules
         append param.IgnoreGeneratedCode "/ignoregeneratedcode "
         append param.IncludeSummaryReport "/s "
@@ -133,22 +144,41 @@ let FxCop setParams (assemblies : string seq) =
         append param.UseGACSwitch "/gac "
         appendFormat "/dic:\"{0}\" " param.CustomDictionary
         (!args).ToString()
-    
+
     tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands
-    let ok = 
-        0 = ExecProcess (fun info -> 
-                info.FileName <- param.ToolPath
-                if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
-                info.Arguments <- commandLineCommands) param.TimeOut
-    if param.ReportFileName <> String.Empty then sendTeamCityFXCopImport param.ReportFileName
+
+    let ok =
+        0 = ExecProcess
+                (fun info ->
+                    info.FileName <- param.ToolPath
+
+                    if param.WorkingDir <> String.Empty then
+                        info.WorkingDirectory <- param.WorkingDir
+
+                    info.Arguments <- commandLineCommands)
+                param.TimeOut
+
+    if param.ReportFileName <> String.Empty then
+        sendTeamCityFXCopImport param.ReportFileName
     // test if FxCop test failed
-    if not ok && (param.FailOnError >= FxCopErrorLevel.ToolError) then failwith "FxCop test failed."
-    if param.FailOnError <> FxCopErrorLevel.DontFailBuild && param.ReportFileName <> String.Empty then 
-        let criticalErrors, errors, criticalWarnings, warnings = checkForErrors param.ReportFileName
-        if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then 
+    if not ok && (param.FailOnError >= FxCopErrorLevel.ToolError) then
+        failwith "FxCop test failed."
+
+    if
+        param.FailOnError <> FxCopErrorLevel.DontFailBuild
+        && param.ReportFileName <> String.Empty
+    then
+        let criticalErrors, errors, criticalWarnings, warnings =
+            checkForErrors param.ReportFileName
+
+        if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then
             failwithf "FxCop found %d critical errors." criticalErrors
-        if errors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then failwithf "FxCop found %d errors." errors
-        if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then 
+
+        if errors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
+            failwithf "FxCop found %d errors." errors
+
+        if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then
             failwithf "FxCop found %d critical warnings." criticalWarnings
-        if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then 
+
+        if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then
             failwithf "FxCop found %d warnings." warnings

@@ -4,6 +4,7 @@
 module Fake.PaketTemplate
 
 #nowarn "44"
+
 open System
 open System.Text
 
@@ -11,14 +12,14 @@ open System.Text
 type PaketTemplateType =
     | File
     | Project
-    
+
 [<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketFileInfo =
     /// Include a file and store it into a targed
     | Include of string * string
     /// Explicitely exclude a file
     | Exclude of string
-    
+
 [<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependencyVersion =
     /// A specific version string
@@ -27,7 +28,7 @@ type PaketDependencyVersion =
     | CURRENTVERSION
     /// Use the currently locked version as dependency
     | LOCKEDVERSION
-    
+
 [<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependencyVersionInfo =
     /// For example ~> 2.0
@@ -38,7 +39,7 @@ type PaketDependencyVersionInfo =
 
     /// no explicit version
     | AnyVersion
-    
+
 [<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependency = string * PaketDependencyVersionInfo
 
@@ -46,63 +47,65 @@ type PaketDependency = string * PaketDependencyVersionInfo
 [<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 [<CLIMutable>]
 type PaketTemplateParams =
-    { /// The file path to the `paket.template` file
-      /// if omitted, a `paket.template` file will be created in the current directory
-      TemplateFilePath : string option
-      /// The type of the template (`File` or `Project`)
-      TemplateType : PaketTemplateType
-      /// The NuGet Package ID
-      /// If omitted, `paket` will use reflection to determine the assembly name.
-      Id : string option
-      /// The package version.
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyInformationalVersionAttribute` or if that is missing the `AssemblyVersionAttribute`.
-      Version : string option
-      /// The package description
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyDescriptionAttribute`.
-      Description : string list
-      /// The title of the package
-      /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyTitleAttribute`.
-      Title : string option
-      /// a list of authors for the nuget package.
-      /// If omitted, `paket`will use reflection to obtain the value of the `AssemblyCompanyAttribute`.
-      Authors : string list
-      /// A list of package owners
-      Owners : string list
-      /// the release notes (line by line)
-      ReleaseNotes : string list
-      /// a short summary (line by line)
-      Summary : string list
-      /// The package language
-      Language : string option
-      /// URL to the license of the package
-      LicenseUrl : string option
-      /// URL to the where the project of the package is hosted
-      ProjectUrl : string option
-      /// URL to an icon
-      IconUrl : string option
-      /// the copyright information
-      Copyright : string option
-      /// a list of tags
-      Tags : string list
-      /// The included or excluded files (use this if the `TemplateType` is `File`)
-      Files : PaketFileInfo list
-      /// A list of references
-      References : string list
-      /// A list of referenced framework assemblies
-      /// if omitted all used Framework assemblies will be used by `paket`
-      FrameworkAssemblies : string list
-      /// A list of dependencies to other packages
-      Dependencies : PaketDependency list
-      /// A list of excluded dependencies
-      ExcludedDependencies : string list
-      /// If set to `true` this will tell `nuget`/`paket` to prompt the user for
-      /// the acceptance of the provided license
-      RequireLicenseAcceptance : bool option
-      /// If set to `true` this will tell `nuget`/`paket` that this is a development dependency
-      DevelopmentDependency : bool option
-      /// With the `IncludePDBs` switch you can tell `paket` to pack pdbs into the package.
-      /// this only works for paket.template files of type 'Project'.
-      IncludePDBs : bool option}
+    {
+        /// The file path to the `paket.template` file
+        /// if omitted, a `paket.template` file will be created in the current directory
+        TemplateFilePath: string option
+        /// The type of the template (`File` or `Project`)
+        TemplateType: PaketTemplateType
+        /// The NuGet Package ID
+        /// If omitted, `paket` will use reflection to determine the assembly name.
+        Id: string option
+        /// The package version.
+        /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyInformationalVersionAttribute` or if that is missing the `AssemblyVersionAttribute`.
+        Version: string option
+        /// The package description
+        /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyDescriptionAttribute`.
+        Description: string list
+        /// The title of the package
+        /// If omitted, `paket` will use reflection to obtain the value of the `AssemblyTitleAttribute`.
+        Title: string option
+        /// a list of authors for the nuget package.
+        /// If omitted, `paket`will use reflection to obtain the value of the `AssemblyCompanyAttribute`.
+        Authors: string list
+        /// A list of package owners
+        Owners: string list
+        /// the release notes (line by line)
+        ReleaseNotes: string list
+        /// a short summary (line by line)
+        Summary: string list
+        /// The package language
+        Language: string option
+        /// URL to the license of the package
+        LicenseUrl: string option
+        /// URL to the where the project of the package is hosted
+        ProjectUrl: string option
+        /// URL to an icon
+        IconUrl: string option
+        /// the copyright information
+        Copyright: string option
+        /// a list of tags
+        Tags: string list
+        /// The included or excluded files (use this if the `TemplateType` is `File`)
+        Files: PaketFileInfo list
+        /// A list of references
+        References: string list
+        /// A list of referenced framework assemblies
+        /// if omitted all used Framework assemblies will be used by `paket`
+        FrameworkAssemblies: string list
+        /// A list of dependencies to other packages
+        Dependencies: PaketDependency list
+        /// A list of excluded dependencies
+        ExcludedDependencies: string list
+        /// If set to `true` this will tell `nuget`/`paket` to prompt the user for
+        /// the acceptance of the provided license
+        RequireLicenseAcceptance: bool option
+        /// If set to `true` this will tell `nuget`/`paket` that this is a development dependency
+        DevelopmentDependency: bool option
+        /// With the `IncludePDBs` switch you can tell `paket` to pack pdbs into the package.
+        /// this only works for paket.template files of type 'Project'.
+        IncludePDBs: bool option
+    }
 
 /// The default parameters for the generation of the `paket.template`
 ///
@@ -160,12 +163,11 @@ let DefaultPaketTemplateParams =
       IncludePDBs = None }
 
 module internal Rendering =
-    let inline appendWithName name value (sb: StringBuilder) =
-        sb.Append(sprintf "%s %s\n" name value)
+    let inline appendWithName name value (sb: StringBuilder) = sb.Append(sprintf "%s %s\n" name value)
 
     let inline appendWithNameIfSome name value sb =
         match value with
-        | Some v when (v |> isNullOrWhiteSpace |> not)-> sb |> appendWithName name v
+        | Some v when (v |> isNullOrWhiteSpace |> not) -> sb |> appendWithName name v
         | _ -> sb
 
     let inline appendBoolWithNameIfSome name value (sb: StringBuilder) =
@@ -181,8 +183,9 @@ module internal Rendering =
     let inline appendListWithName name lines (sb: StringBuilder) =
         match lines with
         | [] -> sb
-        | singleLine::[] -> sb |> appendWithName name singleLine
-        | _ -> lines
+        | singleLine :: [] -> sb |> appendWithName name singleLine
+        | _ ->
+            lines
             |> Seq.fold (fun s line -> s |> appendIndented line) (sb.Append(sprintf "%s\n" name))
 
     let inline appendCommaListWithName name values sb =
@@ -192,11 +195,12 @@ module internal Rendering =
 
     let inline renderPaketFileInfo fileInfo =
         match fileInfo with
-        | Include (source, target) -> sprintf "%s ==> %s" source target
+        | Include(source, target) -> sprintf "%s ==> %s" source target
         | Exclude file -> sprintf "!%s" file
 
-    let inline appendPaketFileInfos (fileInfos : PaketFileInfo seq) (sb : StringBuilder) =
-        sb |> appendListWithName "files" (fileInfos |> Seq.map renderPaketFileInfo |> Seq.toList)
+    let inline appendPaketFileInfos (fileInfos: PaketFileInfo seq) (sb: StringBuilder) =
+        sb
+        |> appendListWithName "files" (fileInfos |> Seq.map renderPaketFileInfo |> Seq.toList)
 
     let inline renderPaketDependencyVersion version =
         match version with
@@ -213,7 +217,7 @@ module internal Rendering =
     let inline renderPaketDependency (package, versionInfo) =
         match package with
         | p when (p |> isNullOrWhiteSpace) -> None
-        | _ -> Some (sprintf "%s%s" package (renderPaketDependencyVersionInfo versionInfo))
+        | _ -> Some(sprintf "%s%s" package (renderPaketDependencyVersionInfo versionInfo))
 
     let inline appendDependencies dependencies sb =
         let dependencyStrings =
@@ -227,10 +231,13 @@ module internal Rendering =
 
     let inline createLines p =
         let sb = StringBuilder()
+
         sb
-        |> appendWithName "type" (match p.TemplateType with
-                                  | File -> "file"
-                                  | Project -> "project")
+        |> appendWithName
+            "type"
+            (match p.TemplateType with
+             | File -> "file"
+             | Project -> "project")
         |> appendWithNameIfSome "id" p.Id
         |> appendWithNameIfSome "version" p.Version
         |> appendWithNameIfSome "title" p.Title
@@ -285,8 +292,10 @@ module internal Rendering =
 let PaketTemplate setParams =
     use __ = traceStartTaskUsing "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
-    let filePath = match parameters.TemplateFilePath with
-                   | Some v -> v
-                   | _ -> "paket.template"
+
+    let filePath =
+        match parameters.TemplateFilePath with
+        | Some v -> v
+        | _ -> "paket.template"
 
     WriteStringToFile false filePath (Rendering.createLines parameters)

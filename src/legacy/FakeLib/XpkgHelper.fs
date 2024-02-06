@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
 module Fake.XpkgHelper
 
@@ -8,35 +8,33 @@ open System.Text
 
 /// Parameter type for xpkg tasks
 [<CLIMutable>]
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
-type xpkgParams = 
-    { ToolPath : string
-      WorkingDir : string
-      TimeOut : TimeSpan
-      Package : string
-      Version : string
-      OutputPath : string
-      Project : string
-      Summary : string
-      Publisher : string
-      Website : string
-      Details : string
-      License : string
-      GettingStarted : string
-      Icons : string list
-      Libraries : (string * string) list
-      Samples : (string * string) list }
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+type xpkgParams =
+    { ToolPath: string
+      WorkingDir: string
+      TimeOut: TimeSpan
+      Package: string
+      Version: string
+      OutputPath: string
+      Project: string
+      Summary: string
+      Publisher: string
+      Website: string
+      Details: string
+      License: string
+      GettingStarted: string
+      Icons: string list
+      Libraries: (string * string) list
+      Samples: (string * string) list }
 
 /// Creates xpkg default parameters
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
-let XpkgDefaults() = 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+let XpkgDefaults () =
     { ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
       WorkingDir = "./"
       TimeOut = TimeSpan.FromMinutes 5.
       Package = null
-      Version = 
-          if not isLocalBuild then buildVersion
-          else "0.1.0.0"
+      Version = if not isLocalBuild then buildVersion else "0.1.0.0"
       OutputPath = "./xpkg"
       Project = null
       Summary = null
@@ -49,13 +47,14 @@ let XpkgDefaults() =
       Libraries = []
       Samples = [] }
 
-let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
+let private getPackageFileName parameters =
+    sprintf "%s-%s.xam" parameters.Package parameters.Version
 
 /// Creates a new xpkg package based on the package file name
 ///
 /// ## Sample
 ///
-///     Target "PackageXamarinDistribution" (fun _ -> 
+///     Target "PackageXamarinDistribution" (fun _ ->
 ///          xpkgPack (fun p ->
 ///              {p with
 ///                  ToolPath = xpkgExecutable;
@@ -77,14 +76,14 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 ///              }
 ///          )
 ///      )
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
-let xpkgPack setParams = 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+let xpkgPack setParams =
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters
     use __ = traceStartTaskUsing "xpkgPack" packageFileName
     let fullPath = parameters.OutputPath @@ packageFileName
-    
-    let commandLineBuilder = 
+
+    let commandLineBuilder =
         new StringBuilder()
         |> append "create"
         |> append (sprintf "\"%s\"" fullPath)
@@ -95,44 +94,58 @@ let xpkgPack setParams =
         |> appendQuotedIfNotNull parameters.Details "--details="
         |> appendQuotedIfNotNull parameters.License "--license="
         |> appendQuotedIfNotNull parameters.GettingStarted "--getting-started="
+
     parameters.Icons
     |> List.map (fun icon -> sprintf " --icon=\"%s\"" icon)
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
+
     parameters.Libraries
     |> List.map (fun (platform, library) -> sprintf " --library=\"%s\":\"%s\"" platform library)
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
+
     parameters.Samples
     |> List.map (fun (sample, solution) -> sprintf " --sample=\"%s\":\"%s\"" sample solution)
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
+
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-    if result = 0 then ()
-    else failwithf "Create xpkg package failed. Process finished with exit code %d." result
+
+    let result =
+        ExecProcess
+            (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args)
+            parameters.TimeOut
+
+    if result = 0 then
+        ()
+    else
+        failwithf "Create xpkg package failed. Process finished with exit code %d." result
 
 /// Validates a xpkg package based on the package file name
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
-let xpkgValidate setParams = 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+let xpkgValidate setParams =
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters
     use __ = traceStartTaskUsing "xpkgValidate" packageFileName
     let fullPath = parameters.OutputPath @@ packageFileName
-    
-    let commandLineBuilder = 
-        new StringBuilder()
-        |> append "validate"
-        |> append (sprintf "\"%s\"" fullPath)
-    
+
+    let commandLineBuilder =
+        new StringBuilder() |> append "validate" |> append (sprintf "\"%s\"" fullPath)
+
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-    if result = 0 then ()
-    else failwithf "Validate xpkg package failed. Process finished with exit code %d." result
+
+    let result =
+        ExecProcess
+            (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args)
+            parameters.TimeOut
+
+    if result = 0 then
+        ()
+    else
+        failwithf "Validate xpkg package failed. Process finished with exit code %d." result

@@ -185,7 +185,9 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             // in which FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH is set.
             match this.ResolveDotNetRoot() with
             | Some root ->
-                options.WithCommon(fun common -> { common with DotNetCliPath = root </> this.DotNetBinaryName })
+                options.WithCommon(fun common ->
+                    { common with
+                        DotNetCliPath = root </> this.DotNetBinaryName })
             | None -> options
 
         let sdkVersion = DotNet.getVersion versionOptions |> ReleaseVersion

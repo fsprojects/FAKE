@@ -166,13 +166,9 @@ module SqlPackage =
           { Profile = NullOrEmptyString
             DropObjectsNotInSource = None } -> "/p:DropObjectsNotInSource=false"
         | Timeout, { Timeout = Some timeout }
-        | Timeout,
-          { Profile = NullOrEmptyString
-            Timeout = Some timeout } -> sprintf "/p:CommandTimeout=%d" timeout
+        | Timeout, { Profile = NullOrEmptyString; Timeout = Some timeout } -> sprintf "/p:CommandTimeout=%d" timeout
         | RecreateDb, { RecreateDb = Some value } -> sprintf "/p:CreateNewDatabase=%b" value
-        | RecreateDb,
-          { Profile = NullOrEmptyString
-            RecreateDb = None } -> "/p:CreateNewDatabase=false"
+        | RecreateDb, { Profile = NullOrEmptyString; RecreateDb = None } -> "/p:CreateNewDatabase=false"
         | AdditionalSqlPackageProperties, _ when not (String.isNullOrEmpty (additionalParameters)) ->
             sprintf "%s" additionalParameters
         | Variables, _ when not (String.isNullOrEmpty (variables)) -> sprintf "%s" variables

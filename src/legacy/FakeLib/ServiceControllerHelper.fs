@@ -20,14 +20,16 @@ let private friendlyName host name =
 ///  - `name` - The name to check for.
 ///  - `service` - The service in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let isService name (service : ServiceController) = service.DisplayName = name || service.ServiceName = name
+let isService name (service: ServiceController) =
+    service.DisplayName = name || service.ServiceName = name
 
 /// Returns sequence of remote services with given name.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the services in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let getRemoteServices host name = ServiceController.GetServices(host) |> Seq.filter (isService name)
+let getRemoteServices host name =
+    ServiceController.GetServices(host) |> Seq.filter (isService name)
 
 /// Returns sequence of local services with given name.
 /// ## Parameters
@@ -40,7 +42,8 @@ let getServices name = getRemoteServices localhost name
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let getRemoteService host name = getRemoteServices host name |> Seq.tryPick Some
+let getRemoteService host name =
+    getRemoteServices host name |> Seq.tryPick Some
 
 /// Returns the first local service with given name or None.
 /// ## Parameters
@@ -53,7 +56,8 @@ let getService name = getRemoteService localhost name
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let checkRemoteServiceExists host name = getRemoteService host name |> Option.isSome
+let checkRemoteServiceExists host name =
+    getRemoteService host name |> Option.isSome
 
 /// Returns whether a local service with the given name exists.
 /// ## Parameters
@@ -69,7 +73,7 @@ let checkServiceExists name = checkRemoteServiceExists localhost name
 let getRemoteServiceStatus host name =
     match getRemoteService host name with
     | Some sc -> sc.Status
-    | None -> 
+    | None ->
         ServiceController.GetServices()
         |> Seq.map (fun s -> s.ServiceName)
         |> separated "\r\n"
@@ -87,10 +91,11 @@ let getServiceStatus name = getRemoteServiceStatus localhost name
 ///  - `name` - The name of the services in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let startRemoteService host name =
-    getRemoteServices host name |> Seq.iter (fun s ->
-                                       if s.Status <> ServiceControllerStatus.Running then
-                                           tracefn "Starting Service %s" (friendlyName host name)
-                                           s.Start())
+    getRemoteServices host name
+    |> Seq.iter (fun s ->
+        if s.Status <> ServiceControllerStatus.Running then
+            tracefn "Starting Service %s" (friendlyName host name)
+            s.Start())
 
 /// Starts all local services with given name.
 /// ## Parameters
@@ -104,10 +109,11 @@ let startService name = startRemoteService localhost name
 ///  - `name` - The name of the services in question.
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let stopRemoteService host name =
-    getRemoteServices host name |> Seq.iter (fun s ->
-                                            if s.Status <> ServiceControllerStatus.Stopped then
-                                                tracefn "Stopping Service %s" (friendlyName host name)
-                                                s.Stop())
+    getRemoteServices host name
+    |> Seq.iter (fun s ->
+        if s.Status <> ServiceControllerStatus.Stopped then
+            tracefn "Stopping Service %s" (friendlyName host name)
+            s.Stop())
 
 /// Stops all local services with given name.
 /// ## Parameters
@@ -123,9 +129,12 @@ let stopService name = stopRemoteService localhost name
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureRemoteServiceHasStarted host name timeout =
     let endTime = DateTime.Now.Add timeout
-    while DateTime.Now <= endTime && (getRemoteServiceStatus host name <> ServiceControllerStatus.Running) do
+
+    while DateTime.Now <= endTime
+          && (getRemoteServiceStatus host name <> ServiceControllerStatus.Running) do
         tracefn "Waiting for %s to start (Timeout: %A)" name timeout
         Thread.Sleep 1000
+
     if getRemoteServiceStatus host name <> ServiceControllerStatus.Running then
         failwithf "The service %s has not been started (check the logs for errors)" name
 
@@ -145,17 +154,19 @@ let ensureServiceHasStarted name timeout =
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureRemoteServiceHasStopped host name timeout =
     let endTime = DateTime.Now.Add timeout
+
     let getRemoteServiceStatus host name =
-        try 
+        try
             getRemoteServiceStatus host name
-        with
-        | exn -> 
+        with exn ->
             tracefn "Service %s was not found." name
             ServiceControllerStatus.Stopped
 
-    while DateTime.Now <= endTime && (getRemoteServiceStatus host name <> ServiceControllerStatus.Stopped) do
+    while DateTime.Now <= endTime
+          && (getRemoteServiceStatus host name <> ServiceControllerStatus.Stopped) do
         tracefn "Waiting for %s to stop (Timeout: %A)" name timeout
         Thread.Sleep 1000
+
     if getRemoteServiceStatus host name <> ServiceControllerStatus.Stopped then
         failwithf "The service %s has not stopped (check the logs for errors)" name
 

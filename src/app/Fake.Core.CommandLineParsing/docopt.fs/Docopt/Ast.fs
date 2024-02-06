@@ -67,7 +67,7 @@ type UsageAst =
         | Req ast -> ast.ContainsOnlyOptions
         | Arg _ -> false
         | XorEmpty -> true
-        | Xor (l, r) -> l.ContainsOnlyOptions && r.ContainsOnlyOptions
+        | Xor(l, r) -> l.ContainsOnlyOptions && r.ContainsOnlyOptions
         | Seq asts -> asts |> Seq.forall (fun t -> t.ContainsOnlyOptions)
         | Cmd _ -> false
         | Ell ast -> ast.ContainsOnlyOptions
@@ -118,14 +118,14 @@ and UsageAstCell =
         | Some c ->
             match c with
             | UsageAstBuilder.Eps -> UsageAst.Eps
-            | UsageAstBuilder.Ano (title, o') -> UsageAst.Ano(title, o')
+            | UsageAstBuilder.Ano(title, o') -> UsageAst.Ano(title, o')
             | UsageAstBuilder.Sop o' -> UsageAst.Sop o'
             | UsageAstBuilder.Lop o' -> UsageAst.Lop o'
             | UsageAstBuilder.Sqb ast' -> UsageAst.Sqb(ast'.Build())
             | UsageAstBuilder.Req ast' -> UsageAst.Req(ast'.Build())
             | UsageAstBuilder.Arg name' -> UsageAst.Arg name'
             | UsageAstBuilder.XorEmpty -> UsageAst.XorEmpty
-            | UsageAstBuilder.Xor (l', r') -> UsageAst.Xor(l'.Build(), r'.Build())
+            | UsageAstBuilder.Xor(l', r') -> UsageAst.Xor(l'.Build(), r'.Build())
             | UsageAstBuilder.Seq asts' -> UsageAst.Seq(asts' |> Seq.map (fun ast -> ast.Build()) |> Seq.toList)
             | UsageAstBuilder.Cmd cmd' -> UsageAst.Cmd cmd'
             | UsageAstBuilder.Ell ast' -> UsageAst.Ell(ast'.Build())

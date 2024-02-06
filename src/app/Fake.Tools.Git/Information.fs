@@ -177,9 +177,9 @@ module Information =
             let tmp = (shortlog "").Split(' ') |> Seq.head |> (fun s -> s.Split('m'))
 
             if tmp |> Array.length > 2 then
-                tmp[ 1 ].Substring(0, 6)
+                tmp[1].Substring(0, 6)
             else
-                tmp[ 0 ].Substring(0, 6)
+                tmp[0].Substring(0, 6)
         with _ when BuildServer.buildServer = TeamFoundation ->
             match Environment.environVarOrNone "BUILD_SOURCEVERSION" with
             | None -> reraise ()

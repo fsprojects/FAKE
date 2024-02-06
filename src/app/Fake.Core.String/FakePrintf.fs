@@ -50,7 +50,6 @@ type internal FormatOptions =
           ShowIEnumerable = true }
 
 
-
 type internal PrintfFormat<'Printer, 'State, 'Residue, 'Result>(value: string) =
     member x.Value = value
 
@@ -1023,11 +1022,11 @@ module internal PrintfImpl =
         | 'g'
         | 'G' -> basicFloatToString ty spec
         | 'A' ->
-            let mi = typeof<ObjectPrinter>.GetMethod ("GenericToString", NonPublicStatics)
+            let mi = typeof<ObjectPrinter>.GetMethod("GenericToString", NonPublicStatics)
             let mi = mi.MakeGenericMethod(ty)
             mi.Invoke(null, [| box spec |])
         | 'O' ->
-            let mi = typeof<ObjectPrinter>.GetMethod ("ObjectToString", NonPublicStatics)
+            let mi = typeof<ObjectPrinter>.GetMethod("ObjectToString", NonPublicStatics)
             let mi = mi.MakeGenericMethod(ty)
             mi.Invoke(null, [| box spec |])
         | _ -> raise (ArgumentException(sprintf "Bad format specifier:%c" spec.TypeChar))
@@ -1133,7 +1132,8 @@ module internal PrintfImpl =
         let buildSpecialChained (spec: FormatSpecifier, argTys: Type[], prefix: string, tail: obj, retTy) =
             if spec.TypeChar = 'a' then
                 let mi =
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod ("LittleAChained", NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>
+                        .GetMethod("LittleAChained", NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1144,7 +1144,7 @@ module internal PrintfImpl =
                 mi.Invoke(null, args)
             elif spec.TypeChar = 't' then
                 let mi =
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod ("TChained", NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod("TChained", NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1168,7 +1168,7 @@ module internal PrintfImpl =
                             "StarChained"
 
                     let name = prefix + (string n)
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod (name, NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod(name, NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1187,7 +1187,8 @@ module internal PrintfImpl =
         let buildSpecialFinal (spec: FormatSpecifier, argTys: Type[], prefix: string, suffix: string) =
             if spec.TypeChar = 'a' then
                 let mi =
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod ("LittleAFinal", NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>
+                        .GetMethod("LittleAFinal", NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1197,7 +1198,7 @@ module internal PrintfImpl =
                 mi.Invoke(null, args)
             elif spec.TypeChar = 't' then
                 let mi =
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod ("TFinal", NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod("TFinal", NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1220,7 +1221,7 @@ module internal PrintfImpl =
                             "StarFinal"
 
                     let name = prefix + (string n)
-                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod (name, NonPublicStatics)
+                    typeof<Specializations<'S, 'Re, 'Res>>.GetMethod(name, NonPublicStatics)
 #if DEBUG
                 verifyMethodInfoWasTaken mi
 #else
@@ -1239,8 +1240,8 @@ module internal PrintfImpl =
 
         let buildPlainFinal (args: obj[], argTypes: Type[]) =
             let mi =
-                typeof<Specializations<'S, 'Re, 'Res>>.GetMethod
-                    ("Final" + (let x = argTypes.Length in x.ToString()), NonPublicStatics)
+                typeof<Specializations<'S, 'Re, 'Res>>
+                    .GetMethod("Final" + (let x = argTypes.Length in x.ToString()), NonPublicStatics)
 #if DEBUG
             verifyMethodInfoWasTaken mi
 #else
@@ -1250,8 +1251,8 @@ module internal PrintfImpl =
 
         let buildPlainChained (args: obj[], argTypes: Type[]) =
             let mi =
-                typeof<Specializations<'S, 'Re, 'Res>>.GetMethod
-                    ("Chained" + (let x = (argTypes.Length - 1) in x.ToString()), NonPublicStatics)
+                typeof<Specializations<'S, 'Re, 'Res>>
+                    .GetMethod("Chained" + (let x = (argTypes.Length - 1) in x.ToString()), NonPublicStatics)
 #if DEBUG
             verifyMethodInfoWasTaken mi
 #else

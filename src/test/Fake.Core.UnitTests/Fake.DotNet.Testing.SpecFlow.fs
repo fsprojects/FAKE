@@ -10,11 +10,12 @@ let runCreateProcess setParams =
     let _, cp =
         "projectfile.csproj"
         |> SpecFlow.createProcess (fun param ->
-            { setParams param with ToolPath = Path.Combine("specflow", "specflow.exe") })
+            { setParams param with
+                ToolPath = Path.Combine("specflow", "specflow.exe") })
 
     let file, args =
         match cp.Command with
-        | RawCommand (file, args) -> file, args
+        | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
 

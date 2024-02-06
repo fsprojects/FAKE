@@ -57,53 +57,55 @@ type XUnit2ErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards c
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 [<CLIMutable>]
 type XUnit2Params =
-    { /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
-      ToolPath : string
-      /// The file name of the config file (optional).
-      ConfigFile : string
-      /// set parallelization based on option
-      ///   none - turn off all parallelization
-      ///   collections - only parallelize collections
-      ///   assemblies - only parallelize assemblies
-      ///   all - parallelize assemblies & collections
-      Parallel : ParallelOption
-      /// maximum thread count for collection parallelization
-      /// 0 - run with unbounded thread count
-      /// >0 - limit task thread pool size to 'count'
-      MaxThreads : int
-      /// Output running test count
-      Silent : bool
-      /// Shadow copy
-      ShadowCopy : bool
-      /// forces TeamCity mode (normally auto-detected)
-      Teamcity : bool
-      /// forces AppVeyor CI mode (normally auto-detected)
-      Appveyor : bool
-      // wait for input after completion
-      Wait : bool
-      /// The working directory (optional).
-      WorkingDir : string
-      /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
-      TimeOut : TimeSpan
-      /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
-      ErrorLevel : XUnit2ErrorLevel
-      /// Include named traits with comma separated values
-      IncludeTraits : (string * string) option
-      /// Exclude named traits with comma separated values
-      ExcludeTraits : (string * string) option
-      /// output results to xUnit.net v2 style XML file
-      XmlOutput : bool
-      /// output results to xUnit.net v1 style XML file
-      XmlOutputV1 : bool
-      /// output results to HTML file
-      HtmlOutput : bool
-      /// output directory
-      OutputDir : string }
+    {
+        /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
+        ToolPath: string
+        /// The file name of the config file (optional).
+        ConfigFile: string
+        /// set parallelization based on option
+        ///   none - turn off all parallelization
+        ///   collections - only parallelize collections
+        ///   assemblies - only parallelize assemblies
+        ///   all - parallelize assemblies & collections
+        Parallel: ParallelOption
+        /// maximum thread count for collection parallelization
+        /// 0 - run with unbounded thread count
+        /// >0 - limit task thread pool size to 'count'
+        MaxThreads: int
+        /// Output running test count
+        Silent: bool
+        /// Shadow copy
+        ShadowCopy: bool
+        /// forces TeamCity mode (normally auto-detected)
+        Teamcity: bool
+        /// forces AppVeyor CI mode (normally auto-detected)
+        Appveyor: bool
+        // wait for input after completion
+        Wait: bool
+        /// The working directory (optional).
+        WorkingDir: string
+        /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
+        TimeOut: TimeSpan
+        /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
+        ErrorLevel: XUnit2ErrorLevel
+        /// Include named traits with comma separated values
+        IncludeTraits: (string * string) option
+        /// Exclude named traits with comma separated values
+        ExcludeTraits: (string * string) option
+        /// output results to xUnit.net v2 style XML file
+        XmlOutput: bool
+        /// output results to xUnit.net v1 style XML file
+        XmlOutputV1: bool
+        /// output results to HTML file
+        HtmlOutput: bool
+        /// output directory
+        OutputDir: string
+    }
 
 /// DEPRECATED.
 /// The xUnit default parameters
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
-let empty2Trait : (string * string) option = None
+let empty2Trait: (string * string) option = None
 
 /// DEPRECATED.
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
@@ -136,18 +138,17 @@ let buildXUnit2Args parameters assembly =
     let name = fi.Name
 
     let dir =
-        if isNullOrEmpty parameters.OutputDir then String.Empty
-        else Path.GetFullPath parameters.OutputDir
+        if isNullOrEmpty parameters.OutputDir then
+            String.Empty
+        else
+            Path.GetFullPath parameters.OutputDir
 
-    let traits includeExclude (name, values : string) =
+    let traits includeExclude (name, values: string) =
         values.Split([| ',' |], System.StringSplitOptions.RemoveEmptyEntries)
-        |> Seq.collect (fun value ->
-               [| includeExclude
-                  sprintf "\"%s=%s\"" name value |])
+        |> Seq.collect (fun value -> [| includeExclude; sprintf "\"%s=%s\"" name value |])
         |> String.concat " "
 
-    let parallelOptionsText =
-        parameters.Parallel.ToString().ToLower()
+    let parallelOptionsText = parameters.Parallel.ToString().ToLower()
 
     new StringBuilder()
     |> appendFileNamesIfNotNull [ assembly ]
@@ -195,17 +196,22 @@ let xUnit2 setParams assemblies =
 
     let runTests assembly =
         let args = buildXUnit2Args parameters assembly
-        0 = ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
+
+        0 = ExecProcess
+                (fun info ->
+                    info.FileName <- parameters.ToolPath
+                    info.WorkingDirectory <- parameters.WorkingDir
+                    info.Arguments <- args)
+                parameters.TimeOut
 
     let failedTests =
         [ for asm in List.ofSeq assemblies do
-                if runTests asm |> not then yield asm ]
+              if runTests asm |> not then
+                  yield asm ]
 
     if not (List.isEmpty failedTests) then
         sprintf "xUnit2 failed for the following assemblies: %s" (separated ", " failedTests)
         |> match parameters.ErrorLevel with
-            | Error | FailOnFirstError -> failwith
-            | DontFailBuild -> traceImportant
+           | Error
+           | FailOnFirstError -> failwith
+           | DontFailBuild -> traceImportant

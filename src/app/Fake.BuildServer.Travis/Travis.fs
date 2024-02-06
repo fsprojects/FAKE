@@ -26,21 +26,21 @@ module Travis =
                 match msg with
                 | TraceData.ImportantMessage text
                 | TraceData.ErrorMessage text -> write true color true text
-                | TraceData.LogMessage (text, newLine)
-                | TraceData.TraceMessage (text, newLine) -> write false color newLine text
-                | TraceData.OpenTag (tag, descr) ->
+                | TraceData.LogMessage(text, newLine)
+                | TraceData.TraceMessage(text, newLine) -> write false color newLine text
+                | TraceData.OpenTag(tag, descr) ->
                     match descr with
                     | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
                     | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-                | TraceData.CloseTag (tag, time, state) ->
+                | TraceData.CloseTag(tag, time, state) ->
                     write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
-                | TraceData.ImportData (typ, path) -> write false color true (sprintf "Import data '%O': %s" typ path)
-                | TraceData.TestOutput (test, out, err) ->
+                | TraceData.ImportData(typ, path) -> write false color true (sprintf "Import data '%O': %s" typ path)
+                | TraceData.TestOutput(test, out, err) ->
                     write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number -> write false color true (sprintf "Build Number: %s" number)
-                | TraceData.TestStatus (test, status) ->
+                | TraceData.TestStatus(test, status) ->
                     write false color true (sprintf "Test '%s' status: %A" test status)
-                | TraceData.BuildState (state, _) -> write false color true (sprintf "Build State: %A" state)
+                | TraceData.BuildState(state, _) -> write false color true (sprintf "Build State: %A" state)
 
     /// [omit]
     let defaultTraceListener = TravisTraceListener() :> ITraceListener

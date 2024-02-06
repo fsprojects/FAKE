@@ -25,7 +25,9 @@ let tests =
                   DotNet.install (fun option ->
                       { option with
                           InstallerOptions =
-                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                              fun o ->
+                                  { option.InstallerOptions o with
+                                      CustomDownloadDir = Some installerDir }
                           ForceInstall = true
                           WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
                           CustomInstallDir = Some preparedDir
@@ -67,7 +69,9 @@ let tests =
                   DotNet.install (fun option ->
                       { option with
                           InstallerOptions =
-                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                              fun o ->
+                                  { option.InstallerOptions o with
+                                      CustomDownloadDir = Some installerDir }
                           ForceInstall = true
                           WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101"
                           CustomInstallDir = Some preparedDir
@@ -108,7 +112,9 @@ let tests =
               DotNet.install (fun option ->
                   { option with
                       InstallerOptions =
-                          fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                          fun o ->
+                              { option.InstallerOptions o with
+                                  CustomDownloadDir = Some installerDir }
                       ForceInstall = true
                       WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60101-rollforward"
                       CustomInstallDir = Some preparedDir
@@ -139,7 +145,9 @@ let tests =
                   DotNet.install (fun option ->
                       { option with
                           InstallerOptions =
-                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                              fun o ->
+                                  { option.InstallerOptions o with
+                                      CustomDownloadDir = Some installerDir }
                           ForceInstall = true
                           WorkingDirectory = scenarioTempPath "core-reference-assemblies-net60100"
                           CustomInstallDir = Some preparedDir

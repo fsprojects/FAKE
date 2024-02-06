@@ -205,7 +205,7 @@ module Paket =
 
     let internal createProcess (runType: StartType) =
         match runType with
-        | PushFile (parameters, file) ->
+        | PushFile(parameters, file) ->
             Arguments.OfArgs [ "push" ]
             |> Arguments.appendNotEmpty "--url" parameters.PublishUrl
             |> Arguments.appendNotEmpty "--endpoint" parameters.EndPoint

@@ -97,15 +97,12 @@ let private getFakeRuntimeAsTask () =
 let getFakeRuntime () : Async<string> =
     getFakeRuntimeAsTask () |> Async.AwaitTask
 
-type Declaration =
-    { File: string; Line: int; Column: int }
+type Declaration = { File: string; Line: int; Column: int }
 
 type FakeContext = { DotNetRuntime: string }
 
 /// a target dependency, either a hard or a soft dependency.
-type Dependency =
-    { Name: string
-      Declaration: Declaration }
+type Dependency = { Name: string; Declaration: Declaration }
 
 /// a FAKE target, its description and its relations to other targets (dependencies), including the declaration lines of the target and the dependencies.
 type Target =
@@ -125,8 +122,8 @@ type internal DebugTraceListener(printer) =
             | ErrorMessage text ->
                 //writeText true color true text
                 printer true text
-            | LogMessage (text, newLine)
-            | TraceMessage (text, newLine) ->
+            | LogMessage(text, newLine)
+            | TraceMessage(text, newLine) ->
                 //writeText false color newLine text
                 printer false text
 
@@ -172,7 +169,8 @@ let getProjectOptions { Config = config; Prepared = prepared } : string[] =
 
     "--simpleresolution"
     :: "--targetprofile:netstandard"
-       :: "--nowin32manifest" :: CompileRunner.fcsDependencyManagerOptions
+    :: "--nowin32manifest"
+    :: CompileRunner.fcsDependencyManagerOptions
     @ args
     |> List.toArray
 
@@ -186,13 +184,9 @@ type GetTargetsWarningOrErrorType =
     /// Most likely due to missing `Target.runOrDefault`
     | EmptyInfoFile = 5
 
-type WarningOrError =
-    { Type: GetTargetsWarningOrErrorType
-      Message: string }
+type WarningOrError = { Type: GetTargetsWarningOrErrorType; Message: string }
 
-type GetTargetsResult =
-    { WarningsAndErrors: WarningOrError[]
-      Targets: Target[] }
+type GetTargetsResult = { WarningsAndErrors: WarningOrError[]; Targets: Target[] }
 
 let private runProcess (log: bool -> string -> unit) (workingDir: string) (exePath: string) (args: string) =
     let psi = System.Diagnostics.ProcessStartInfo()
@@ -278,9 +272,7 @@ let private getTargetsLegacy (file: string) (ctx: FakeContext) : Async<GetTarget
                         None)
                 |> Seq.toArray
 
-            return
-                { WarningsAndErrors = [||]
-                  Targets = targets }
+            return { WarningsAndErrors = [||]; Targets = targets }
     }
 
 let private getTargetsJson (file: string) (ctx: FakeContext) : Async<GetTargetsResult> =
@@ -360,9 +352,7 @@ let private getTargetsJson (file: string) (ctx: FakeContext) : Async<GetTargetsR
                     let jTargets = jobj.["targets"] :?> JArray
                     let targets = jTargets |> Seq.map parseTarget |> Seq.toArray
 
-                    return
-                        { WarningsAndErrors = [||]
-                          Targets = targets }
+                    return { WarningsAndErrors = [||]; Targets = targets }
         finally
             try
                 File.Delete resultsFile
@@ -442,7 +432,9 @@ let getTargets (file: string) (ctx: FakeContext) : Async<GetTargetsResult> =
                             else
                                 [||]
 
-                        return { resp with WarningsAndErrors = [| yield! resp.WarningsAndErrors; yield! warnings |] }
+                        return
+                            { resp with
+                                WarningsAndErrors = [| yield! resp.WarningsAndErrors; yield! warnings |] }
                 }
                 |> Async.StartAsTask
 

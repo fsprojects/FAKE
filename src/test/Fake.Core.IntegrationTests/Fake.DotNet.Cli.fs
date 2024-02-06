@@ -22,7 +22,9 @@ let tests =
                   DotNet.install (fun option ->
                       { option with
                           InstallerOptions =
-                              fun o -> { option.InstallerOptions o with CustomDownloadDir = Some installerDir }
+                              fun o ->
+                                  { option.InstallerOptions o with
+                                      CustomDownloadDir = Some installerDir }
                           ForceInstall = true
                           CustomInstallDir = Some preparedDir
                           Channel = DotNet.CliChannel.LTS

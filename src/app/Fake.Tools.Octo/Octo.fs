@@ -281,8 +281,8 @@ module Octo =
     /// Maps a command to string input for the octopus tools cli.
     let internal commandLine command =
         match command with
-        | CreateRelease (opts, None) -> "create-release" :: (releaseCommandLine opts)
-        | CreateRelease (opts, Some dopts) ->
+        | CreateRelease(opts, None) -> "create-release" :: (releaseCommandLine opts)
+        | CreateRelease(opts, Some dopts) ->
             "create-release"
             :: (List.append (releaseCommandLine opts) (deployCommandLine dopts))
         | DeployRelease opts -> "deploy-release" :: (deployCommandLine opts)

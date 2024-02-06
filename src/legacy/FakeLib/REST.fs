@@ -11,7 +11,7 @@ open System.Text
 
 /// Option type for the HTTP verb
 [<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
-type PostMethod = 
+type PostMethod =
     | GET
     | POST
 
@@ -23,18 +23,21 @@ type PostMethod =
 ///  - `password` - The password to use with the request.
 ///  - `url` - The URL to perform the GET operation.
 [<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
-let ExecuteGetCommand (userName : string) (password : string) (url : string) = 
+let ExecuteGetCommand (userName: string) (password: string) (url: string) =
     use client = new WebClient()
-    if userName <> null || password <> null then client.Credentials <- new NetworkCredential(userName, password)
-    try 
+
+    if userName <> null || password <> null then
+        client.Credentials <- new NetworkCredential(userName, password)
+
+    try
         use stream = client.OpenRead(url)
         use reader = new StreamReader(stream)
         reader.ReadToEnd()
-    with exn -> 
+    with exn ->
         // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
         null
 
-/// Executes an HTTP POST command and retrives the information.    
+/// Executes an HTTP POST command and retrives the information.
 /// This function will automatically include a "source" parameter if the "Source" property is set.
 /// It returns the response of the request, or null if we got 404 or nothing.
 /// ## Parameters
@@ -45,15 +48,18 @@ let ExecuteGetCommand (userName : string) (password : string) (url : string) =
 ///  - `password` - The password to use with the request.
 ///  - `data` - The data to post.
 [<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
-let ExecutePostCommand headerF (url : string) userName password (data : string) = 
+let ExecutePostCommand headerF (url: string) userName password (data: string) =
     System.Net.ServicePointManager.Expect100Continue <- false
     let request = WebRequest.Create url
+
     if String.IsNullOrEmpty userName && String.IsNullOrEmpty password then
         ()
     else
-        if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
+        if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then
             invalidArg userName "You have to specify username and password for post operations."
+
         request.Credentials <- new NetworkCredential(userName, password)
+
     request.ContentType <- "application/x-www-form-urlencoded"
     request.Method <- "POST"
     headerF request.Headers
@@ -74,4 +80,5 @@ let ExecutePostCommand headerF (url : string) userName password (data : string) 
 ///  - `password` - The password to use with the request.
 ///  - `data` - The data to post.
 [<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
-let ExecutePost url userName password data = ExecutePostCommand ignore url userName password data
+let ExecutePost url userName password data =
+    ExecutePostCommand ignore url userName password data

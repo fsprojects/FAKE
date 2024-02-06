@@ -111,6 +111,7 @@ let testCases =
           testCase "Test that console output can be switched off"
           <| fun _ ->
               let p2 = { FxCop.Params.Create() with DirectOutputToConsole = false }
+
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p2 [ dummy ]
 
@@ -136,7 +137,10 @@ let testCases =
                   "No summary expected"
           testCase "Test project file update can be enabled"
           <| fun _ ->
-              let p4 = { FxCop.Params.Create() with SaveResultsInProjectFile = true }
+              let p4 =
+                  { FxCop.Params.Create() with
+                      SaveResultsInProjectFile = true }
+
               let dummy = Guid.NewGuid().ToString()
               let args = FxCop.createArgs p4 [ dummy ]
 
@@ -364,15 +368,13 @@ let testCases =
           <| fun _ ->
               let p = FxCop.Params.Create()
 
-              Expect.throwsC
-                  (fun () -> FxCop.run p [])
-                  (fun ex ->
-                      Expect.equal (ex.GetType()) typeof<NotSupportedException> "Exception type should be as expected"
+              Expect.throwsC (fun () -> FxCop.run p []) (fun ex ->
+                  Expect.equal (ex.GetType()) typeof<NotSupportedException> "Exception type should be as expected"
 
-                      Expect.equal
-                          ex.Message
-                          "FxCop is currently not supported on mono"
-                          "Exception message should be as expected") ]
+                  Expect.equal
+                      ex.Message
+                      "FxCop is currently not supported on mono"
+                      "Exception message should be as expected") ]
 
 [<Tests>]
 let tests = testList "Fake.DotNet.FxCop.Tests" testCases

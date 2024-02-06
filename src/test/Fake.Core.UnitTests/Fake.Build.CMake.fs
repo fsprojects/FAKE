@@ -21,9 +21,7 @@ let tests =
                     Platform = "platform"
                     Caches = [ "cache1" ]
                     InstallDirectory = "install-directory"
-                    Variables =
-                      [ { Name = "var1"
-                          Value = CMake.CMakeString("v1") } ]
+                    Variables = [ { Name = "var1"; Value = CMake.CMakeString("v1") } ]
                     CacheEntriesToRemove = [ "cache1" ]
                     Timeout = TimeSpan.MaxValue
                     AdditionalArgs = "additional-arg" }
@@ -56,9 +54,7 @@ let tests =
                     Platform = ""
                     Caches = [ "cache1" ]
                     InstallDirectory = "install-directory"
-                    Variables =
-                      [ { Name = "var1"
-                          Value = CMake.CMakeString("v1") } ]
+                    Variables = [ { Name = "var1"; Value = CMake.CMakeString("v1") } ]
                     CacheEntriesToRemove = [ "cache1" ]
                     Timeout = TimeSpan.MaxValue
                     AdditionalArgs = "additional-arg" }
@@ -88,12 +84,9 @@ let tests =
                     Caches = [ "" ]
                     InstallDirectory = ""
                     Variables =
-                      [ { Name = "var1-str"
-                          Value = CMake.CMakeString("v1") }
-                        { Name = "var2-bool"
-                          Value = CMake.CMakeBoolean(true) }
-                        { Name = "var3-dirPath"
-                          Value = CMake.CMakeDirPath("v3") }
+                      [ { Name = "var1-str"; Value = CMake.CMakeString("v1") }
+                        { Name = "var2-bool"; Value = CMake.CMakeBoolean(true) }
+                        { Name = "var3-dirPath"; Value = CMake.CMakeDirPath("v3") }
                         { Name = "var4-filePath"
                           Value = CMake.CMakeFilePath("v4") } ]
                     CacheEntriesToRemove = [ "" ]

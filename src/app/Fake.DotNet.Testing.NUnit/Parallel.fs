@@ -27,9 +27,7 @@ module Parallel =
         { WorseReturnCode: int
           Messages: string list }
 
-        static member Empty =
-            { WorseReturnCode = Int32.MaxValue
-              Messages = [] }
+        static member Empty = { WorseReturnCode = Int32.MaxValue; Messages = [] }
 
     /// <summary>
     /// Runs NUnit in parallel on a group of assemblies.

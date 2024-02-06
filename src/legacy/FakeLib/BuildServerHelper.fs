@@ -5,7 +5,7 @@ module Fake.BuildServerHelper
 
 /// The server type option.
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-type BuildServer = 
+type BuildServer =
     | TeamFoundation
     | TeamCity
     | CCNet
@@ -19,7 +19,7 @@ type BuildServer =
 
 /// The trace mode option.
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-type TraceMode = 
+type TraceMode =
     | Console
     | Xml
 
@@ -29,8 +29,8 @@ type TraceMode =
 let mutable verbose = hasBuildParam "verbose"
 
 /// A constant label for local builds
-/// [omit]         
-[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]   
+/// [omit]
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let localBuildLabel = "LocalBuild"
 
 /// Defines the XML output file - used for build servers like CruiseControl.NET.
@@ -46,8 +46,7 @@ let bambooBuildNumber = environVar "bamboo_buildNumber"
 /// Checks if we are on Bamboo
 /// [omit]
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-let isBambooBuild =
-    isNotNullOrEmpty bambooBuildNumber
+let isBambooBuild = isNotNullOrEmpty bambooBuildNumber
 
 /// Checks if we are on Team Foundation
 /// [omit]
@@ -74,7 +73,8 @@ let travisBuildNumber = environVar "TRAVIS_BUILD_NUMBER"
 /// Checks if we are on GitLab CI
 /// [omit]
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-let isGitlabCI = getEnvironmentVarAsBool "GITLAB_CI" || environVar "CI_SERVER_NAME" = "GitLab CI"
+let isGitlabCI =
+    getEnvironmentVarAsBool "GITLAB_CI" || environVar "CI_SERVER_NAME" = "GitLab CI"
 
 /// Build number retrieved from GitLab CI
 /// [omit]
@@ -98,22 +98,33 @@ let appVeyorBuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
 /// The current build server
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-let buildServer = 
-    if hasBuildParam "JENKINS_HOME" then Jenkins
-    elif hasBuildParam "TEAMCITY_VERSION" then TeamCity
-    elif not (isNullOrEmpty ccBuildLabel) then CCNet
-    elif not (isNullOrEmpty travisBuildNumber) then Travis
-    elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
-    elif isGitlabCI then GitLabCI
-    elif isTFBuild then TeamFoundation
-    elif isBambooBuild then Bamboo
-    elif hasBuildParam "BITBUCKET_COMMIT" then BitbucketPipelines
-    else LocalBuild
+let buildServer =
+    if hasBuildParam "JENKINS_HOME" then
+        Jenkins
+    elif hasBuildParam "TEAMCITY_VERSION" then
+        TeamCity
+    elif not (isNullOrEmpty ccBuildLabel) then
+        CCNet
+    elif not (isNullOrEmpty travisBuildNumber) then
+        Travis
+    elif not (isNullOrEmpty appVeyorBuildVersion) then
+        AppVeyor
+    elif isGitlabCI then
+        GitLabCI
+    elif isTFBuild then
+        TeamFoundation
+    elif isBambooBuild then
+        Bamboo
+    elif hasBuildParam "BITBUCKET_COMMIT" then
+        BitbucketPipelines
+    else
+        LocalBuild
 
 /// The current build version as detected from the current build server.
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
-let buildVersion = 
+let buildVersion =
     let getVersion = getBuildParamOrDefault "buildVersion"
+
     match buildServer with
     | Jenkins -> getVersion jenkinsBuildNumber
     | TeamCity -> getVersion tcBuildNumber

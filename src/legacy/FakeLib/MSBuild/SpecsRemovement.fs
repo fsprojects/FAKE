@@ -10,41 +10,44 @@ open System.Xml.Linq
 /// Converts a MSBuildProject to XML
 /// [omit]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let normalize (project:MSBuildProject) =
-    "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-        project.ToString(SaveOptions.DisableFormatting) 
+let normalize (project: MSBuildProject) =
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    + project.ToString(SaveOptions.DisableFormatting)
 
 /// [omit]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let removeFilteredElement elementName filterF (doc:XDocument) =
+let removeFilteredElement elementName filterF (doc: XDocument) =
     let references =
         doc
-          .Descendants(xname "Project")
-          .Descendants(xname "ItemGroup")
-          .Descendants(xname elementName)
-         |> Seq.filter(fun e -> 
-                let a = e.Attribute(XName.Get "Include")
-                a <> null && filterF elementName a.Value)
+            .Descendants(xname "Project")
+            .Descendants(xname "ItemGroup")
+            .Descendants(xname elementName)
+        |> Seq.filter (fun e ->
+            let a = e.Attribute(XName.Get "Include")
+            a <> null && filterF elementName a.Value)
+
     references.Remove()
     doc
 
 /// [omit]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let removeAssemblyReference filterF (doc:XDocument)=
+let removeAssemblyReference filterF (doc: XDocument) =
     removeFilteredElement "Reference" filterF doc
 
 /// [omit]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let removeFiles filterF (doc:XDocument) =
+let removeFiles filterF (doc: XDocument) =
     removeFilteredElement "Compile" filterF doc
-      |> removeFilteredElement "None" filterF
-      |> removeFilteredElement "Content" filterF
+    |> removeFilteredElement "None" filterF
+    |> removeFilteredElement "Content" filterF
 
 /// [omit]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let createFileName projectFileName =
-    let fi = fileInfo projectFileName            
-    fi.Directory.FullName @@ (fi.Name.Replace(fi.Extension,"") + "_Spliced" + fi.Extension)
+    let fi = fileInfo projectFileName
+
+    fi.Directory.FullName
+    @@ (fi.Name.Replace(fi.Extension, "") + "_Spliced" + fi.Extension)
 
 /// Removes test data and test files from a given MSBuild project and recursivly from all MSBuild project dependencies.
 /// ## Parameters
@@ -55,17 +58,19 @@ let createFileName projectFileName =
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
     let processedProjects = new System.Collections.Generic.HashSet<_>()
-    let rec removeTestsFromProject assemblyFilterF fileFilterF projectFileName =        
+
+    let rec removeTestsFromProject assemblyFilterF fileFilterF projectFileName =
         let targetFileName = createFileName projectFileName
 
         if not <| processedProjects.Contains projectFileName then
             processedProjects.Add projectFileName |> ignore
+
             projectFileName
-              |> loadProject
-              |> removeAssemblyReference assemblyFilterF
-              |> removeFiles fileFilterF     
-              |> processReferences "ProjectReference" (removeTestsFromProject assemblyFilterF fileFilterF) projectFileName
-              |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
+            |> loadProject
+            |> removeAssemblyReference assemblyFilterF
+            |> removeFiles fileFilterF
+            |> processReferences "ProjectReference" (removeTestsFromProject assemblyFilterF fileFilterF) projectFileName
+            |> fun doc -> doc.Save(targetFileName, SaveOptions.DisableFormatting)
 
         targetFileName
 
@@ -73,16 +78,18 @@ let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
 
 /// All references to nunit.*.dlls
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let AllNUnitReferences elementName (s:string) = s.StartsWith "nunit"
+let AllNUnitReferences elementName (s: string) = s.StartsWith "nunit"
 
 /// All Spec.cs or Spec.fs files
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let AllSpecFiles elementName (s:string) = s.EndsWith "Specs.cs" || s.EndsWith "Specs.fs"
+let AllSpecFiles elementName (s: string) =
+    s.EndsWith "Specs.cs" || s.EndsWith "Specs.fs"
 
 /// All Spec.cs or Spec.fs files and all files containing TestData
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let AllSpecAndTestDataFiles elementName (s:string) =
-    AllSpecFiles elementName s || ((elementName = "Content" || elementName = "None") && s.Contains("TestData"))
+let AllSpecAndTestDataFiles elementName (s: string) =
+    AllSpecFiles elementName s
+    || ((elementName = "Content" || elementName = "None") && s.Contains("TestData"))
 
 /// A Convention which matches nothing
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]

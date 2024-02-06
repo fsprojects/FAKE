@@ -7,7 +7,7 @@ open System
 
 /// Option type to configure ILMerge's processing of duplicate types.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.AllowDuplicateTypes instead")>]
-type AllowDuplicateTypes = 
+type AllowDuplicateTypes =
     /// No duplicates of public types allowed
     | NoDuplicateTypes
     /// All public types are allowed to be duplicated and renamed
@@ -17,14 +17,14 @@ type AllowDuplicateTypes =
 
 /// Option type to configure ILMerge's processing of internal types.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.InternalizeTypes instead")>]
-type InternalizeTypes = 
+type InternalizeTypes =
     | NoInternalize
     | Internalize
     | InternalizeExcept of string
 
 /// Option type to configure ILMerge's target output.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.TargetKind instead")>]
-type TargetKind = 
+type TargetKind =
     | Library
     | Exe
     | WinExe
@@ -32,47 +32,49 @@ type TargetKind =
 /// Parameter type for ILMerge
 [<CLIMutable>]
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.Params instead")>]
-type ILMergeParams = 
-    { /// Path to ILMerge.exe
-      ToolPath : string
-      /// Version to use for the merged assembly
-      Version : string
-      TimeOut : TimeSpan
-      /// Assemblies to merge with the primary assembly
-      Libraries : string seq
-      /// Duplicate types policy
-      AllowDuplicateTypes : AllowDuplicateTypes
-      /// Assembly-level attributes names that have the same type are copied over into the target directory
-      AllowMultipleAssemblyLevelAttributes : bool
-      /// Wild cards in file names are expanded and all matching files will be used as input.
-      AllowWildcards : bool
-      AllowZeroPeKind : bool
-      /// Path to an assembly that will be used to get all of the assembly-level attributes
-      AttributeFile : string
-      /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
-      Closed : bool
-      CopyAttributes : bool
-      /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
-      DebugInfo : bool
-      Internalize : InternalizeTypes
-      FileAlignment : int option
-      KeyFile : string
-      // DelaySign
-      LogFile : string
-      // PublicKeyTokens
-      /// Directories to be used to search for input assemblies
-      SearchDirectories : string seq
-      /// v1 or v1.1 or v2 or v4 or version,platform
-      TargetPlatform : string
-      TargetKind : TargetKind
-      /// True -> types with the same name are all merged into a single type in the target assembly.
-      UnionMerge : bool
-      /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
-      XmlDocs : bool }
+type ILMergeParams =
+    {
+        /// Path to ILMerge.exe
+        ToolPath: string
+        /// Version to use for the merged assembly
+        Version: string
+        TimeOut: TimeSpan
+        /// Assemblies to merge with the primary assembly
+        Libraries: string seq
+        /// Duplicate types policy
+        AllowDuplicateTypes: AllowDuplicateTypes
+        /// Assembly-level attributes names that have the same type are copied over into the target directory
+        AllowMultipleAssemblyLevelAttributes: bool
+        /// Wild cards in file names are expanded and all matching files will be used as input.
+        AllowWildcards: bool
+        AllowZeroPeKind: bool
+        /// Path to an assembly that will be used to get all of the assembly-level attributes
+        AttributeFile: string
+        /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
+        Closed: bool
+        CopyAttributes: bool
+        /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
+        DebugInfo: bool
+        Internalize: InternalizeTypes
+        FileAlignment: int option
+        KeyFile: string
+        // DelaySign
+        LogFile: string
+        // PublicKeyTokens
+        /// Directories to be used to search for input assemblies
+        SearchDirectories: string seq
+        /// v1 or v1.1 or v2 or v4 or version,platform
+        TargetPlatform: string
+        TargetKind: TargetKind
+        /// True -> types with the same name are all merged into a single type in the target assembly.
+        UnionMerge: bool
+        /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
+        XmlDocs: bool
+    }
 
 /// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.Params.Create() instead")>]
-let ILMergeDefaults : ILMergeParams = 
+let ILMergeDefaults: ILMergeParams =
     { ToolPath = findToolInSubPath "ilmerge.exe" (currentDirectory @@ "tools" @@ "ILMerge")
       Version = ""
       TimeOut = TimeSpan.FromMinutes 5.
@@ -98,8 +100,8 @@ let ILMergeDefaults : ILMergeParams =
 /// Builds the arguments for the ILMerge task
 /// [omit]
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.getArguments instead")>]
-let getArguments outputFile primaryAssembly parameters = 
-    let stringParams = 
+let getArguments outputFile primaryAssembly parameters =
+    let stringParams =
         [ "out", outputFile
           "ver", parameters.Version
           "attr", parameters.AttributeFile
@@ -108,24 +110,24 @@ let getArguments outputFile primaryAssembly parameters =
           "target", (sprintf "%A" parameters.TargetKind).ToLower()
           "targetplatform", parameters.TargetPlatform ]
         |> List.map stringParam
-    
+
     let fileAlign = optionParam ("align", parameters.FileAlignment)
-    
-    let allowDup = 
+
+    let allowDup =
         match parameters.AllowDuplicateTypes with
         | NoDuplicateTypes -> [ None ]
         | AllPublicTypes -> [ Some("allowDup", null) ]
         | DuplicateTypes types -> multipleStringParams "allowDup" types
-    
+
     let libDirs = multipleStringParams "lib" parameters.SearchDirectories
-    
-    let internalize = 
+
+    let internalize =
         match parameters.Internalize with
         | NoInternalize -> None
         | Internalize -> Some("internalize", null)
         | InternalizeExcept excludeFile -> Some("internalize", quote excludeFile)
-    
-    let flags = 
+
+    let flags =
         [ "allowMultiple", parameters.AllowMultipleAssemblyLevelAttributes
           "wildcards", parameters.AllowWildcards
           "zeroPeKind", parameters.AllowZeroPeKind
@@ -135,11 +137,14 @@ let getArguments outputFile primaryAssembly parameters =
           "ndebug", not parameters.DebugInfo
           "xmldocs", parameters.XmlDocs ]
         |> List.map boolParam
-    
-    let allParameters = stringParams @ [ fileAlign; internalize ] @ flags @ allowDup @ libDirs
-                        |> parametersToString "/" ":"
-    let libraries = primaryAssembly :: (parameters.Libraries |> Seq.toList)
-                    |> separated " "
+
+    let allParameters =
+        stringParams @ [ fileAlign; internalize ] @ flags @ allowDup @ libDirs
+        |> parametersToString "/" ":"
+
+    let libraries =
+        primaryAssembly :: (parameters.Libraries |> Seq.toList) |> separated " "
+
     allParameters + " " + libraries
 
 /// Uses ILMerge to merge .NET assemblies.
@@ -149,12 +154,18 @@ let getArguments outputFile primaryAssembly parameters =
 ///  - `outputFile` - Output file path for the merged assembly.
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
 [<System.Obsolete("Please use nuget 'Fake.DotNet.ILMerge', open 'Fake.DotNet' and use ILMerge.run instead")>]
-let ILMerge setParams outputFile primaryAssembly = 
+let ILMerge setParams outputFile primaryAssembly =
     use __ = traceStartTaskUsing "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults
     let args = getArguments outputFile primaryAssembly parameters
-    if 0 <> ExecProcess (fun info -> 
+
+    if
+        0
+        <> ExecProcess
+            (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- null
-                info.Arguments <- args) parameters.TimeOut
-    then failwithf "ILMerge %s failed." args
+                info.Arguments <- args)
+            parameters.TimeOut
+    then
+        failwithf "ILMerge %s failed." args

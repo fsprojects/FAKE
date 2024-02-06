@@ -4,6 +4,7 @@
 module Fake.NUnitCommon
 
 #nowarn "44"
+
 open System
 open System.IO
 open System.Text
@@ -14,20 +15,22 @@ type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 
 /// Process model for nunit to use, see [Project Editor](http://www.nunit.org/index.php?p=projectEditor&r=2.6.4)
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-type NUnitProcessModel = 
+type NUnitProcessModel =
     | DefaultProcessModel
     | SingleProcessModel
     | SeparateProcessModel
-    | MultipleProcessModel with 
+    | MultipleProcessModel
+
     member x.ParamString =
         match x with
         | DefaultProcessModel -> ""
         | SingleProcessModel -> "Single"
-        | SeparateProcessModel -> "Separate" 
+        | SeparateProcessModel -> "Separate"
         | MultipleProcessModel -> "Multiple"
+
 /// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-type NUnitDomainModel = 
+type NUnitDomainModel =
     /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
     /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
@@ -35,7 +38,8 @@ type NUnitDomainModel =
     /// A test domain is created - this is how NUnit worked prior to version 2.4
     | SingleDomainModel
     /// A separate test domain is created for each assembly
-    | MultipleDomainModel with
+    | MultipleDomainModel
+
     member x.ParamString =
         match x with
         | DefaultDomainModel -> ""
@@ -49,69 +53,70 @@ type NUnitDomainModel =
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 [<CLIMutable>]
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-type NUnitParams = 
-    { 
-      /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.
-      IncludeCategory : string
+type NUnitParams =
+    {
+        /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.
+        IncludeCategory: string
 
-      /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be excluded in a test run. Multiple categories may be specified on either option, by using commas to separate them.
-      ExcludeCategory : string
+        /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be excluded in a test run. Multiple categories may be specified on either option, by using commas to separate them.
+        ExcludeCategory: string
 
-      /// The path to the NUnit console runner: `nunit-console.exe`
-      ToolPath : string
+        /// The path to the NUnit console runner: `nunit-console.exe`
+        ToolPath: string
 
-      /// NUnit console runner name. ( `nunit-console.exe`)
-      ToolName : string
+        /// NUnit console runner name. ( `nunit-console.exe`)
+        ToolName: string
 
-      /// Suppresses use of a separate thread for running the tests and uses the main thread instead.
-      DontTestInNewThread : bool
+        /// Suppresses use of a separate thread for running the tests and uses the main thread instead.
+        DontTestInNewThread: bool
 
-      /// Causes execution of the test run to terminate immediately on the first test failure or error.
-      StopOnError : bool
-      
-      /// Gives ability to not error if an assembly with no tests is passed into nunit
-      SkipNonTestAssemblies : bool
+        /// Causes execution of the test run to terminate immediately on the first test failure or error.
+        StopOnError: bool
 
-      /// The output path of the nUnit XML report.
-      OutputFile : string
+        /// Gives ability to not error if an assembly with no tests is passed into nunit
+        SkipNonTestAssemblies: bool
 
-      /// Redirects output created by the tests from standard output (console) to the file specified as value.
-      Out : string
+        /// The output path of the nUnit XML report.
+        OutputFile: string
 
-      /// Redirects error output created by the tests from standard error output (console) to the file specified as value.
-      ErrorOutputFile : string
+        /// Redirects output created by the tests from standard output (console) to the file specified as value.
+        Out: string
 
-      /// Allows you to specify the version of the runtime to be used in executing tests.
-      Framework : string
+        /// Redirects error output created by the tests from standard error output (console) to the file specified as value.
+        ErrorOutputFile: string
 
-      /// Controls how NUnit loads tests in processes. See: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).
-      ProcessModel : NUnitProcessModel
+        /// Allows you to specify the version of the runtime to be used in executing tests.
+        Framework: string
 
-      /// Causes an identifying label to be displayed at the start of each test case.
-      ShowLabels : bool
+        /// Controls how NUnit loads tests in processes. See: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).
+        ProcessModel: NUnitProcessModel
 
-      /// The working directory.
-      WorkingDir : string
+        /// Causes an identifying label to be displayed at the start of each test case.
+        ShowLabels: bool
 
-      /// The path to a custom XSLT transform file to be used to process the XML report.
-      XsltTransformFile : string
+        /// The working directory.
+        WorkingDir: string
 
-      /// The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.
-      TimeOut : TimeSpan
+        /// The path to a custom XSLT transform file to be used to process the XML report.
+        XsltTransformFile: string
 
-      /// Disables shadow copying of the assembly in order to provide improved performance.
-      DisableShadowCopy : bool
+        /// The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.
+        TimeOut: TimeSpan
 
-      /// See [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).
-      Domain : NUnitDomainModel
-      
-      /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
-      ErrorLevel : NUnitErrorLevel 
-      
-      /// Default: ""
-      Fixture: string}
+        /// Disables shadow copying of the assembly in order to provide improved performance.
+        DisableShadowCopy: bool
 
-/// The [NUnitParams](fake-nunitcommon-nunitparams.html) default parameters. 
+        /// See [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).
+        Domain: NUnitDomainModel
+
+        /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
+        ErrorLevel: NUnitErrorLevel
+
+        /// Default: ""
+        Fixture: string
+    }
+
+/// The [NUnitParams](fake-nunitcommon-nunitparams.html) default parameters.
 ///
 /// ## Defaults
 /// - `IncludeCategory` - `""`
@@ -135,8 +140,9 @@ type NUnitParams =
 /// - `ErrorLevel` - `Error`
 /// - `Fixture` - `""`
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let NUnitDefaults = 
+let NUnitDefaults =
     let toolname = "nunit-console.exe"
+
     { IncludeCategory = ""
       ExcludeCategory = ""
       ToolPath = findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "Nunit")
@@ -155,13 +161,13 @@ let NUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
       Domain = DefaultDomainModel
-      ErrorLevel = Error 
-      Fixture = ""}
+      ErrorLevel = Error
+      Fixture = "" }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let buildNUnitdArgs parameters assemblies = 
+let buildNUnitdArgs parameters assemblies =
     new StringBuilder()
     |> append "-nologo"
     |> appendIfTrue parameters.DisableShadowCopy "-noshadow"
@@ -185,16 +191,14 @@ let buildNUnitdArgs parameters assemblies =
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let getWorkingDir parameters = 
-    Seq.find isNotNullOrEmpty [ parameters.WorkingDir
-                                environVar ("teamcity.build.workingDir")
-                                "." ]
+let getWorkingDir parameters =
+    Seq.find isNotNullOrEmpty [ parameters.WorkingDir; environVar ("teamcity.build.workingDir"); "." ]
     |> Path.GetFullPath
 
-/// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
+/// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise.
 /// Zero means that all tests passed.
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let (|OK|TestsFailed|FatalError|) errorCode = 
+let (|OK|TestsFailed|FatalError|) errorCode =
     match errorCode with
     | 0 -> OK
     | -1 -> FatalError "InvalidArg"

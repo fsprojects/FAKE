@@ -28,7 +28,8 @@ let tests =
           testCase "Test that Definitions alone adds the -d flags"
           <| fun _ ->
               let cmdList =
-                  { Fsi.FsiParams.Create() with Definitions = [ "DEBUG"; "GUBED" ] }
+                  { Fsi.FsiParams.Create() with
+                      Definitions = [ "DEBUG"; "GUBED" ] }
                   |> Fsi.FsiParams.ToArgsList
 
               Expect.contains

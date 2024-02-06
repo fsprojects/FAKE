@@ -160,8 +160,7 @@ module private MSBuildExe =
                 @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
                 @"\MSBuild\15.0\Bin"
                 @"\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin" ] }
-          { Version = "14.0"
-            Paths = [ @"\MSBuild\14.0\Bin" ] }
+          { Version = "14.0"; Paths = [ @"\MSBuild\14.0\Bin" ] }
           { Version = "12.0"
             Paths = [ @"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64" ] } ]
 
@@ -259,12 +258,12 @@ module private MSBuildExe =
                 false
             else
                 match Mono.monoVersion with
-                | Some (_, Some (version)) when version >= monoVersionToUseMSBuildOn -> true
+                | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
                 | _ -> false
 
         let preferMSBuildOnMono =
             match Environment.monoVersion with
-            | Some (_, Some (version)) when version >= monoVersionToUseMSBuildOn -> true
+            | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
             | _ -> false
 
         let foundExe =
@@ -609,7 +608,7 @@ module MSBuild =
                 x.Properties
                 |> Seq.tryFind (fun (p, _) -> p = "RestorePackages")
                 |> (function
-                | Some (_, v) -> Boolean.Parse v
+                | Some(_, v) -> Boolean.Parse v
                 | None -> false)
             ToolsVersion = x.ToolsVersion
             Verbosity = x.Verbosity

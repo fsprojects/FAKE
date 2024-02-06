@@ -4,6 +4,7 @@
 module Fake.NUnitParallel
 
 #nowarn "44"
+
 open System
 open System.IO
 open System.Text
@@ -11,108 +12,139 @@ open System.Xml.Linq
 open System.Linq
 
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-type private NUnitParallelResult = 
-    { AssemblyName : string
-      ErrorOut : StringBuilder
-      StandardOut : StringBuilder
-      ReturnCode : int
-      OutputFile : string }
-      
+type private NUnitParallelResult =
+    { AssemblyName: string
+      ErrorOut: StringBuilder
+      StandardOut: StringBuilder
+      ReturnCode: int
+      OutputFile: string }
+
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-type private AggFailedResult = 
-    { WorseReturnCode : int
-      Messages : string list }
-    static member Empty = 
-        { WorseReturnCode = Int32.MaxValue
-          Messages = [] }
+type private AggFailedResult =
+    { WorseReturnCode: int
+      Messages: string list }
+
+    static member Empty = { WorseReturnCode = Int32.MaxValue; Messages = [] }
 
 /// Runs NUnit in parallel on a group of assemblies.
 /// ## Parameters
-/// 
+///
 ///  - `setParams` - Function used to manipulate the default [NUnitParams](fake-nunitcommon-nunitparams.html) value.
 ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
-/// 
+///
 /// ## Sample usage
 ///
 ///     Target "Test" (fun _ ->
-///         !! (testDir + @"\Test.*.dll") 
+///         !! (testDir + @"\Test.*.dll")
 ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) = 
+let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
     let tool = parameters.ToolPath @@ parameters.ToolName
-    
-    let runSingleAssembly parameters name outputFile = 
+
+    let runSingleAssembly parameters name outputFile =
         let args = buildNUnitdArgs { parameters with OutputFile = outputFile } [ name ]
         let errout = StringBuilder()
         let stdout = StringBuilder()
         tracefn "Run NUnit tests from %s." name
         let stopwatch = System.Diagnostics.Stopwatch.StartNew()
-        
-        let result = 
-            ExecProcessWithLambdas (fun info -> 
-                info.FileName <- tool
-                info.WorkingDirectory <- getWorkingDir parameters
-                info.Arguments <- args) parameters.TimeOut true (fun e -> errout.Append(e) |> ignore) 
+
+        let result =
+            ExecProcessWithLambdas
+                (fun info ->
+                    info.FileName <- tool
+                    info.WorkingDirectory <- getWorkingDir parameters
+                    info.Arguments <- args)
+                parameters.TimeOut
+                true
+                (fun e -> errout.Append(e) |> ignore)
                 (fun s -> stdout.Append(s) |> ignore)
+
         stopwatch.Stop()
         tracefn "NUnit tests from %s finished in %O with result code %d." name stopwatch.Elapsed result
+
         { AssemblyName = name
           ErrorOut = errout
           StandardOut = stdout
           ReturnCode = result
           OutputFile = outputFile }
+
     enableProcessTracing <- false
-    let testRunResults = 
-        assemblies.AsParallel().WithDegreeOfParallelism(Environment.ProcessorCount)
-                  .Select(fun asm -> runSingleAssembly parameters asm (Path.GetTempFileName())) |> Seq.toList
+
+    let testRunResults =
+        assemblies
+            .AsParallel()
+            .WithDegreeOfParallelism(Environment.ProcessorCount)
+            .Select(fun asm -> runSingleAssembly parameters asm (Path.GetTempFileName()))
+        |> Seq.toList
+
     enableProcessTracing <- true
     // Read all valid results
-    let docs = 
+    let docs =
         testRunResults
         |> List.filter (fun x -> x.ReturnCode >= 0)
         |> List.map (fun x -> x.OutputFile)
         |> List.map (File.ReadAllText >> XDocument.Parse)
+
     match docs with
     | [] -> ()
-    | _ -> 
+    | _ ->
         File.WriteAllText(getWorkingDir parameters @@ parameters.OutputFile, sprintf "%O" (NUnitMerge.mergeXDocs docs))
         sendTeamCityNUnitImport parameters.OutputFile
     // Make sure we delete the temp files
-    testRunResults
-    |> List.map (fun x -> x.OutputFile)
-    |> List.iter File.Delete
+    testRunResults |> List.map (fun x -> x.OutputFile) |> List.iter File.Delete
     // Report results
-    let formatErrorMessages r = 
-        [ if r.ReturnCode < 0 then 
-              yield sprintf "NUnit test run for %s returned error code %d, output to stderr was:" r.AssemblyName 
-                        r.ReturnCode
+    let formatErrorMessages r =
+        [ if r.ReturnCode < 0 then
+              yield
+                  sprintf
+                      "NUnit test run for %s returned error code %d, output to stderr was:"
+                      r.AssemblyName
+                      r.ReturnCode
+
               yield sprintf "%O" r.ErrorOut
-          else 
-              yield sprintf "NUnit test run for %s reported failed tests, check output file %s for details." 
-                        r.AssemblyName parameters.OutputFile ]
+          else
+              yield
+                  sprintf
+                      "NUnit test run for %s reported failed tests, check output file %s for details."
+                      r.AssemblyName
+                      parameters.OutputFile ]
+
     match List.filter (fun r -> r.ReturnCode <> 0) testRunResults with
     | [] -> ()
-    | failedResults -> 
-        let aggResult = 
-            List.fold (fun acc x -> 
-                { acc with WorseReturnCode = min acc.WorseReturnCode x.ReturnCode
-                           Messages = acc.Messages @ formatErrorMessages x }) AggFailedResult.Empty failedResults
+    | failedResults ->
+        let aggResult =
+            List.fold
+                (fun acc x ->
+                    { acc with
+                        WorseReturnCode = min acc.WorseReturnCode x.ReturnCode
+                        Messages = acc.Messages @ formatErrorMessages x })
+                AggFailedResult.Empty
+                failedResults
 
-        let fail() = 
+        let fail () =
             List.iter traceError aggResult.Messages
-            raise (FailedTestsException (sprintf "NUnitParallel test runs failed (%d of %d assemblies are failed)." 
-                    (List.length failedResults) (List.length testRunResults)))
+
+            raise (
+                FailedTestsException(
+                    sprintf
+                        "NUnitParallel test runs failed (%d of %d assemblies are failed)."
+                        (List.length failedResults)
+                        (List.length testRunResults)
+                )
+            )
 
         match parameters.ErrorLevel with
-        | DontFailBuild -> 
+        | DontFailBuild ->
             match aggResult.WorseReturnCode with
-            | OK | TestsFailed -> ()
-            | _ -> fail()
-        | Error | FailOnFirstError -> 
+            | OK
+            | TestsFailed -> ()
+            | _ -> fail ()
+        | Error
+        | FailOnFirstError ->
             match aggResult.WorseReturnCode with
             | OK -> ()
-            | _ -> fail()
+            | _ -> fail ()
