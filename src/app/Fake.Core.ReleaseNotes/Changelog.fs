@@ -108,6 +108,16 @@ module Changelog =
             | Security s -> sprintf "Security: %s" s.CleanedText
             | Custom (h, s) -> sprintf "%s: %s" h s.CleanedText
 
+        member x.ChangeText() =
+            match x with
+            | Added (changeText)
+            | Changed (changeText)
+            | Deprecated (changeText)
+            | Removed (changeText)
+            | Fixed (changeText)
+            | Security (changeText)
+            | Custom (_, changeText) -> changeText
+
         /// Create a new change type changelog entry
         static member New(header: string, line: string) : Change =
             let text =
@@ -268,6 +278,32 @@ module Changelog =
             assemblyVersion, nugetVersion
 
     /// <summary>
+    /// A version or "Unreleased"
+    /// </summary>
+    type ReferenceVersion =
+        | SemVerRef of SemVerInfo
+        | UnreleasedRef
+
+        override x.ToString() =
+            match x with
+            | SemVerRef (semVerInfo) -> semVerInfo.ToString()
+            | UnreleasedRef -> "Unreleased"
+
+    /// <summary>
+    /// A reference from a version to a repository URL (e.g. a tag or a compare link)
+    /// </summary>
+    /// <code>
+    /// [Unreleased]: https://github.com/user/MyCoolNewLib.git/compare/v0.1.0...HEAD
+    /// [0.1.0]: https://github.com/user/MyCoolNewLib.git/releases/tag/v0.1.0
+    /// </code>
+    type Reference =
+        { SemVer: ReferenceVersion
+          RepoUrl: Uri }
+
+        override x.ToString() =
+            sprintf "[%s]: %s" (x.SemVer.ToString()) (x.RepoUrl.ToString())
+
+    /// <summary>
     /// Holds data for a changelog file, which include changelog entries an other metadata
     /// </summary>
     type Changelog =
@@ -283,17 +319,21 @@ module Changelog =
 
             /// The change log entries
             Entries: ChangelogEntry list
+
+            /// The references to repository URLs
+            References: Reference list
         }
 
         /// the latest change log entry
         member x.LatestEntry = x.Entries |> Seq.head
 
         /// Create a new changelog record from given data
-        static member New(header, description, unreleased, entries) =
+        static member New(header, description, unreleased, entries, references) =
             { Header = header
               Description = description
               Unreleased = unreleased
-              Entries = entries }
+              Entries = entries
+              References = references }
 
         /// Promote an unreleased changelog entry to a released one
         member x.PromoteUnreleased(assemblyVersion: string, nugetVersion: string) : Changelog =
@@ -311,7 +351,7 @@ module Changelog =
                     )
 
                 let unreleased' = Some { Description = None; Changes = [] }
-                Changelog.New(x.Header, x.Description, unreleased', newEntry :: x.Entries)
+                Changelog.New(x.Header, x.Description, unreleased', newEntry :: x.Entries, x.References)
 
         /// Promote an unreleased changelog entry to a released one using version number
         member x.PromoteUnreleased(version: string) : Changelog =
@@ -346,7 +386,10 @@ module Changelog =
                 | "" -> "Changelog"
                 | h -> h
 
-            (sprintf "# %s\n\n%s\n\n%s" header description entries)
+            let references =
+                x.References |> List.map (fun reference -> reference.ToString()) |> joinLines
+
+            (sprintf "# %s\n\n%s\n\n%s\n\n%s" header description entries references)
             |> fixMultipleNewlines
             |> String.trim
 
@@ -358,8 +401,9 @@ module Changelog =
     /// <param name="description">the descriptive text for changelog</param>
     /// <param name="unreleased">the unreleased list of changelog entries</param>
     /// <param name="entries">the list of changelog entries</param>
-    let createWithCustomHeader header description unreleased entries =
-        Changelog.New(header, description, unreleased, entries)
+    /// <param name="references">the list of references</param>
+    let createWithCustomHeader header description unreleased entries references =
+        Changelog.New(header, description, unreleased, entries, references)
 
     /// <summary>
     /// Create a changelog with given data
@@ -368,8 +412,9 @@ module Changelog =
     /// <param name="description">the descriptive text for changelog </param>
     /// <param name="unreleased">the unreleased list of changelog entries</param>
     /// <param name="entries">the list of changelog entries</param>
-    let create description unreleased entries =
-        createWithCustomHeader "Changelog" description unreleased entries
+    /// <param name="references">the list of references</param>
+    let create description unreleased entries references =
+        createWithCustomHeader "Changelog" description unreleased entries references
 
     /// <summary>
     /// Create a changelog with given entries and default values for other data including
@@ -377,7 +422,7 @@ module Changelog =
     /// </summary>
     ///
     /// <param name="entries">the list of changelog entries</param>
-    let fromEntries entries = create None None entries
+    let fromEntries entries = create None None entries []
 
     let internal isMainHeader line : bool = "# " <* line
     let internal isVersionHeader line : bool = "## " <* line
@@ -538,7 +583,43 @@ module Changelog =
                     | h :: _ -> h
                     | _ -> "Changelog"
 
-            Changelog.New(header, description, unreleased, entries)
+            // Move references from last changelog entry into references.
+            let entriesWithoutReferences, references =
+                let referenceRegex =
+                    $"""^\[(({nugetRegex.ToString()})|Unreleased)\]: +(http[s]://.+)$"""
+                    |> String.getRegEx
+
+                match entries with
+                | [] -> [], []
+                | entries ->
+                    let front, lastChange = entries |> List.splitAt (List.length entries - 1)
+                    let last = List.head lastChange
+
+                    let refChanges, trueChanges =
+                        last.Changes
+                        |> List.partition (fun (change: Change) ->
+                            referenceRegex.Match(change.ChangeText().CleanedText).Success)
+
+                    let references =
+                        refChanges
+                        |> List.map (fun change ->
+                            let referenceMatch = referenceRegex.Match(change.ChangeText().CleanedText)
+                            let version = referenceMatch.Groups[1].Value
+                            let uri = referenceMatch.Groups[6].Value
+
+                            { SemVer =
+                                if version = "Unreleased" then
+                                    UnreleasedRef
+                                else
+                                    SemVerRef(SemVer.parse version)
+                              RepoUrl = Uri(uri) })
+
+                    let newLastEntry =
+                        ChangelogEntry.New(last.AssemblyVersion, last.NuGetVersion, trueChanges)
+
+                    front @ [ newLastEntry ], references
+
+            Changelog.New(header, description, unreleased, entriesWithoutReferences, references)
 
     /// <summary>
     /// Parses a Changelog text file and returns the latest changelog.
