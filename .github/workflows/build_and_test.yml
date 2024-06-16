@@ -15,7 +15,7 @@ jobs:
             - name: Setup .NET 6
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: '6.0.101'
+                  dotnet-version: '6.0.300'
             - name: Restore dotnet tools
               run: dotnet tool restore
             - name: remove current fake runner tool
