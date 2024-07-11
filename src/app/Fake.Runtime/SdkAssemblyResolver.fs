@@ -218,7 +218,8 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             version
 
         | None ->
-            failwithf $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()}"
+            failwithf
+                $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. 8.0 )"
 
     member this.SdkReferenceAssemblies() =
 
@@ -336,7 +337,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         ) =
         if this.LogLevel.PrintVerbose then
             let versions =
-                String.Join(", and", this.SdkVersions |> List.map (fun v -> $" .Net{v.Major}"))
+                String.Join(", and", this.SdkVersions |> List.map (fun v -> $" .NET{v.Major}"))
 
             Trace.tracefn $"Using{versions} assemblies"
 
