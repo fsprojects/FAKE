@@ -12,10 +12,13 @@ jobs:
                 os: [ubuntu-latest, windows-latest, macOS-latest]
         steps:
             - uses: actions/checkout@v4
+            - name: Fix Mac .NET issue
+              if: matrix.os == 'macOS-latest'
+              run: export COMPlus_ReadyToRun=0
             - name: Setup .NET 6
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: '6.0.101'
+                  dotnet-version: '6.0.424'
             - name: Restore dotnet tools
               run: dotnet tool restore
             - name: remove current fake runner tool
