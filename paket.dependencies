@@ -51,6 +51,7 @@ group fakemodule
     nuget DotNet.Xdt
     nuget FSharp.Core
     nuget FSharp.Compiler.Service
+    nuget Mono.Unix
     nuget System.Reactive
     nuget FParsec
     nuget Octokit
@@ -59,7 +60,6 @@ group fakemodule
     nuget NuGet.Protocol
     nuget NuGet.Packaging
     nuget Mono.Cecil prerelease
-    nuget Mono.Posix.NETStandard
     nuget FSharp.Control.Reactive
     nuget MSBuild.StructuredLogger
         nuget Microsoft.Build
