@@ -36,10 +36,7 @@ let tests =
                           Properties = [ "OutputPath", "C:\\Test\\" ] })
 
               let expected =
-                  if Environment.isUnix then
-                      "/p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"
-                  else
-                      "/m /nodeReuse:False /p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"
+                  "/m /nodeReuse:False /p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"
 
               Expect.equal cmdLine expected "Expected a given cmdline."
           testCase "Test that /restore is included #2160"
@@ -50,11 +47,7 @@ let tests =
                           ConsoleLogParameters = []
                           DoRestore = true })
 
-              let expected =
-                  if Environment.isUnix then
-                      "/restore /p:RestorePackages=False"
-                  else
-                      "/restore /m /nodeReuse:False /p:RestorePackages=False"
+              let expected = "/restore /m /nodeReuse:False /p:RestorePackages=False"
 
               Expect.equal cmdLine expected "Expected a given cmdline."
 
