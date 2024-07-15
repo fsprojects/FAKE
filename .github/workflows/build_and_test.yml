@@ -27,7 +27,7 @@ jobs:
             - name: Build
               run: dotnet fake build --parallel 3
             - name: publish build artifacts
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
-                  name: fake-artifacts
+                  name: fake-artifacts-${{ matrix.os }}
                   path: release/artifacts
