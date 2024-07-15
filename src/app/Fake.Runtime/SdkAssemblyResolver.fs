@@ -33,20 +33,36 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
     let RuntimeResolverResolveMethod =
         Environment.environVarOrDefault "FAKE_SDK_RESOLVER_RUNTIME_VERSION_RESOLVE_METHOD" ""
 
+    // Defaults still .NET 6.0 but could be overriden with .NET 8.0 or even comma-separated "6.0,8.0"
+    let RuntimeAssemblyVersions =
+        let versions =
+            Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION" "6.0"
+
+        versions.Split([| ','; ';' |]) |> Array.toList
+
     member this.LogLevel = logLevel
 
-    member this.SdkVersionRaw = "6.0"
+    member this.SdkVersionRaws = RuntimeAssemblyVersions
 
-    member this.SdkVersion = ReleaseVersion("6.0.0")
+    member this.SdkVersions =
+        RuntimeAssemblyVersions |> List.map (fun v -> ReleaseVersion(v + ".0"))
 
-    member this.PaketFrameworkIdentifier =
-        FrameworkIdentifier.DotNetFramework(FrameworkVersion.TryParse(this.SdkVersion.Major.ToString()).Value)
+    member this.PaketFrameworkIdentifiers =
+        this.SdkVersions
+        |> List.map (fun thisSdk ->
+            FrameworkIdentifier.DotNetFramework(FrameworkVersion.TryParse(thisSdk.Major.ToString()).Value))
+
+    member this.SdkVersionRaw = RuntimeAssemblyVersions |> Seq.head
+    member this.SdkVersion = this.SdkVersions |> Seq.head
+    member this.PaketFrameworkIdentifier = this.PaketFrameworkIdentifiers |> Seq.head
 
     member this.SdkVersionFromGlobalJson = DotNet.tryGetSDKVersionFromGlobalJson ()
 
     member this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() =
         match this.SdkVersionFromGlobalJson with
-        | Some version -> ReleaseVersion(version).Major.Equals(this.SdkVersion.Major)
+        | Some version ->
+            this.SdkVersions
+            |> List.exists (fun thisSdk -> ReleaseVersion(version).Major.Equals thisSdk.Major)
         | None -> false
 
     member this.DotNetBinaryName = if Environment.isUnix then "dotnet" else "dotnet.exe"
@@ -133,7 +149,9 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 |> Async.AwaitTask
                 |> Async.RunSynchronously
                 |> List.ofSeq
-                |> List.find (fun product -> product.ProductVersion.Equals(this.SdkVersionRaw))
+                |> List.find (fun product ->
+                    this.SdkVersionRaws
+                    |> List.exists (fun raws -> product.ProductVersion.Equals raws))
 
             sdkVersionReleases.GetReleasesAsync()
             |> Async.AwaitTask
@@ -200,32 +218,42 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             version
 
         | None ->
-            failwithf $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()}"
+            failwithf
+                $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. 8.0 )"
 
     member this.SdkReferenceAssemblies() =
 
-        let referenceAssembliesPath =
-            this.ResolveDotNetRoot()
-            |> Option.map (fun dotnetRoot ->
-                dotnetRoot
-                </> "packs"
-                </> "Microsoft.NETCore.App.Ref"
-                </> this.ResolveSdkRuntimeVersion()
-                </> "ref"
-                </> "net" + this.SdkVersionRaw)
+        let referenceAssembliesPaths =
+            this.SdkVersionRaws
+            |> List.choose (fun rawVersion ->
+                this.ResolveDotNetRoot()
+                |> Option.map (fun dotnetRoot ->
+                    dotnetRoot
+                    </> "packs"
+                    </> "Microsoft.NETCore.App.Ref"
+                    </> this.ResolveSdkRuntimeVersion()
+                    </> "ref"
+                    </> "net" + rawVersion))
 
-        match referenceAssembliesPath with
-        | None -> failwithf "Could not find referenced assemblies, please check installed SDK and runtime versions"
-        | Some referenceAssembliesPath ->
+        if Seq.isEmpty referenceAssembliesPaths then
+            failwithf "Could not find referenced assemblies, please check installed SDK and runtime versions"
+        else
             if this.LogLevel.PrintVerbose then
-                Trace.tracefn $"Resolved referenced SDK path: {referenceAssembliesPath}"
+                let paths = String.Join(",", referenceAssembliesPaths)
+                Trace.tracefn $"Resolved referenced SDK paths: {paths}"
 
-            if Directory.Exists referenceAssembliesPath then
-                Directory.GetFiles(referenceAssembliesPath, "*.dll") |> Seq.toList
-            else
+            let referenceAssembliesPath =
+                referenceAssembliesPaths
+                |> List.tryFind (fun referenceAssembliesPath -> Directory.Exists referenceAssembliesPath)
+
+            match referenceAssembliesPath with
+            | Some pathFound -> Directory.GetFiles(pathFound, "*.dll") |> Seq.toList
+            | None ->
+                let paths = String.Join(",", referenceAssembliesPaths)
+
                 failwithf
                     "Could not find referenced assemblies in path: '%s', please check installed SDK and runtime versions"
-                    referenceAssembliesPath
+                    paths
 
     member this.NetStandard20ReferenceAssemblies
         (
@@ -308,6 +336,9 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             paketDependenciesFile: Lazy<Paket.DependenciesFile>
         ) =
         if this.LogLevel.PrintVerbose then
-            Trace.tracefn $"Using .Net {this.SdkVersion.Major} assemblies"
+            let versions =
+                String.Join(", and", this.SdkVersions |> List.map (fun v -> $" .NET{v.Major}"))
+
+            Trace.tracefn $"Using{versions} assemblies"
 
         this.SdkReferenceAssemblies()
