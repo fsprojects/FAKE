@@ -197,7 +197,7 @@ module Context =
     /// <summary>
     /// Creates and sets the FAKE execution context from command line arguments.
     /// </summary>
-    let setExecutionContextFromCommandLineArgs scriptFile: unit =
+    let setExecutionContextFromCommandLineArgs scriptFile : unit =
         System.Environment.GetCommandLineArgs()
         |> Array.skip 2 // skip fsi & scriptFile
         |> Array.toList
