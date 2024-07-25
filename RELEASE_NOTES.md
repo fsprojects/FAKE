@@ -3,6 +3,7 @@
 ## 6.0.1 - 2024-07-11
 * BUGFIX: MSBuild.build adds a bad string at the end of properties, thanks @0x53A - https://github.com/fsprojects/FAKE/issues/2738
 * ENHANCEMENT: Added shorthash to git functions, thanks @voronoipotato - https://github.com/fsprojects/FAKE/pull/2752
+* ENHANCEMENT: Support for `/tl:[auto:on:off]` msbuild flag, thanks @smoothdeveloper - https://github.com/fsprojects/FAKE/pull/2768
 * ENHANCEMENT: Fixes for usage in .NET 8.0 enviroment projects.
 
 ## 6.0.0 - 2023-02-20
