@@ -10,7 +10,7 @@ type Token =
 type TokenizedScript = private { Tokens: Token list }
 
 let internal getTokenized (filePath: string) defines lines =
-    let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
+    let tokenizer = FSharpSourceTokenizer(defines, Some filePath, None, None)
 
     /// Tokenize a single line of F# code
     let rec tokenizeLine (tokenizer: FSharpLineTokenizer) state =

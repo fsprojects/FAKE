@@ -1,3 +1,7 @@
+// First do this and ignore the result: dotnet build --configuration Release
+// Then to build do: dotnet fake run build.fsx -e configuration=Release
+// And to release do: dotnet fake run build.fsx -e configuration=Release -t Release
+
 #r "paket:
 source release/dotnetcore
 source https://api.nuget.org/v3/index.json
