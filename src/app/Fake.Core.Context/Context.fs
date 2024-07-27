@@ -193,3 +193,14 @@ module Context =
             invalidOp
                 "no Fake Execution context was found. You can initialize one via Fake.Core.Context.setExecutionContext"
         | RuntimeContext.Fake e -> e
+
+    /// <summary>
+    /// Creates and sets the FAKE execution context from command line arguments.
+    /// </summary>
+    let setExecutionContextFromCommandLineArgs scriptFile : unit =
+        System.Environment.GetCommandLineArgs()
+        |> Array.skip 2 // skip fsi & scriptFile
+        |> Array.toList
+        |> FakeExecutionContext.Create false scriptFile
+        |> RuntimeContext.Fake
+        |> setExecutionContext

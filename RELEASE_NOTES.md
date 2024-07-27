@@ -5,6 +5,7 @@
 * ENHANCEMENT: Added shorthash to git functions, thanks @voronoipotato - https://github.com/fsprojects/FAKE/pull/2752
 * ENHANCEMENT: Support for `/tl:[auto:on:off]` msbuild flag, thanks @smoothdeveloper - https://github.com/fsprojects/FAKE/pull/2768
 * ENHANCEMENT: Fixes for usage in .NET 8.0 enviroment projects.
+* ENHANCEMENT: Add Context.setExecutionContextFromCommandLineArgs, thanks @cataggar - https://github.com/fsprojects/FAKE/pull/2750
 
 ## 6.0.0 - 2023-02-20
 * ENHANCEMENT: Site UI fixes and documentation link fixes.
