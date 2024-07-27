@@ -885,10 +885,9 @@ module MSBuild =
 
         [ yield restoreFlag
           yield targets
-          if not Environment.isUnix then
-              yield maxCpu
-              yield noLogo
-              yield nodeReuse
+          yield maxCpu
+          yield noLogo
+          yield nodeReuse
           yield
               (match p.TerminalLogger with
                | MSBuildTerminalLoggerOption.Off -> Some("tl", "off")
