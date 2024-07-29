@@ -6,16 +6,17 @@ open Expecto
 
 [<Tests>]
 let tests =
-    let flagsTestCase name changeBuildArgs expected =
+    let flagsTestCase name changeBuildArgs (expected:string) =
         testCase name
         <| fun _ ->
             let _, cmdLine = MSBuild.buildArgs changeBuildArgs
 
             let expected =
+                let trimmed = expected.Trim()
                 if BuildServer.ansiColorSupport then
-                    $"%s{expected} /clp:ForceConsoleColor".Trim()
+                    $"%s{trimmed} /clp:ForceConsoleColor".Trim()
                 else
-                    expected.Trim()
+                    trimmed
 
             let expected = $"/m /nodeReuse:False {expected} /p:RestorePackages=False".Trim()
 
