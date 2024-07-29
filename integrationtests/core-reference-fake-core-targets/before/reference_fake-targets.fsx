@@ -5,7 +5,8 @@ source ../../../release/dotnetcore
 
 nuget Fake.Core.Target prerelease
 nuget System.Reactive.Compatibility
-nuget FSharp.Core prerelease"
+nuget FSharp.Core prerelease
+nuget Paket.Core prerelease"
 #endif
 
 printfn "before load"

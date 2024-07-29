@@ -5,6 +5,7 @@
 #r "paket: //source https://ci.appveyor.com/nuget/paket"
 #r "paket: nuget Fake.Runtime prerelease"
 #r "paket: nuget FSharp.Core prerelease"
+#r "paket: nuget Paket.Core prerelease"
 #endif
 
 // Issue https://github.com/fsharp/FAKE/issues/2121

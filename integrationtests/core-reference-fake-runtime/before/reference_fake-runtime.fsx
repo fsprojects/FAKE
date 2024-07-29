@@ -6,7 +6,8 @@ source ../../../release/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Runtime prerelease
-nuget FSharp.Core prerelease"
+nuget FSharp.Core prerelease
+nuget Paket.Core prerelease"
 #endif
 #load ".fake/reference_fake-runtime.fsx/intellisense.fsx"
 

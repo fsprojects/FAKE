@@ -55,7 +55,7 @@ group fakemodule
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core 8.1.0-alpha004
+    nuget Paket.Core prerelease
     nuget NuGet.Protocol
     nuget NuGet.Packaging
     nuget Mono.Cecil prerelease

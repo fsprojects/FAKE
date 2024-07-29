@@ -3,7 +3,8 @@ storage: none
 source https://api.nuget.org/v3/index.json
 source ../../../release/dotnetcore
 nuget Fake.Runtime prerelease
-nuget FSharp.Core prerelease"
+nuget FSharp.Core prerelease
+nuget Paket.Core prerelease"
 
 open Fake.Runtime
 

@@ -6,3 +6,4 @@ source ../../../release/dotnetcore
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease
 nuget Microsoft.NETCore.App
+nuget Paket.Core prerelease
