@@ -241,9 +241,7 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'Start'"
-                      { Declaration.Empty with
-                          File = scriptFile
-                          Line = 37 }
+                      { Declaration.Empty with File = scriptFile; Line = 37 }
                       startTarget.Declaration
 
                   Expect.equal "Expected correct hard dependencies of 'Start'" [] startTarget.HardDependencies
@@ -253,18 +251,13 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'TestTarget'"
-                      { Declaration.Empty with
-                          File = scriptFile
-                          Line = 39 }
+                      { Declaration.Empty with File = scriptFile; Line = 39 }
                       testTarget.Declaration
 
                   Expect.equal
                       "Expected correct hard dependencies of 'TestTarget'"
                       [ { Name = "Start"
-                          Declaration =
-                            { Declaration.Empty with
-                                File = scriptFile
-                                Line = 46 } } ]
+                          Declaration = { Declaration.Empty with File = scriptFile; Line = 46 } } ]
                       testTarget.HardDependencies
 
                   Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
