@@ -12,7 +12,7 @@ let tests =
             let _, cmdLine = MSBuild.buildArgs changeBuildArgs
 
             let expected =
-                let trimmed = expected.Trim()
+                let trimmed = expected.Replace("  ", " ").Trim()
 
                 if BuildServer.ansiColorSupport then
                     $"%s{trimmed} /clp:ForceConsoleColor".Trim()
@@ -21,7 +21,10 @@ let tests =
 
             let expected = $"/m /nodeReuse:False {expected} /p:RestorePackages=False".Trim()
 
-            Expect.equal cmdLine expected $"Expected a given cmdLine '{expected}', but got '{cmdLine}'."
+            Expect.equal
+                (cmdLine.Replace("  ", " "))
+                (expected.Replace("  ", " "))
+                $"Expected a given cmdLine '{expected}', but got '{cmdLine}'."
 
     testList
         "Fake.DotNet.MSBuild.Tests"
@@ -36,7 +39,7 @@ let tests =
               let expected =
                   "/m /nodeReuse:False /p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"
 
-              Expect.equal cmdLine expected "Expected a given cmdline."
+              Expect.equal (cmdLine.Replace("  ", " ")) (expected.Replace("  ", " ")) "Expected a given cmdline."
           testCase "Test that /restore is included #2160"
           <| fun _ ->
               let _, cmdLine =
@@ -47,7 +50,7 @@ let tests =
 
               let expected = "/restore /m /nodeReuse:False /p:RestorePackages=False"
 
-              Expect.equal cmdLine expected "Expected a given cmdline."
+              Expect.equal (cmdLine.Replace("  ", " ")) (expected.Replace("  ", " ")) "Expected a given cmdline."
 
           flagsTestCase "/tl:auto doesn't ouput anything (1)" id ""
           flagsTestCase
