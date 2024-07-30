@@ -127,7 +127,7 @@ nuget Fake.Core.SemVer prerelease //"
                   Fake.Runtime.FSharpParser.getTokenized
                       "testfile.fsx"
                       [ "BOOTSTRAP"; "DOTNETCORE"; "FAKE" ]
-                      (scriptText.Split([| '\r'; '\n' |]))
+                      (scriptText.Replace("\r\n", "\n").Split([| '\r'; '\n' |]))
                   |> Fake.Runtime.FSharpParser.findInterestingItems
 
               let expected =
@@ -152,7 +152,7 @@ nuget Fake.Core.SemVer prerelease //"
                   Fake.Runtime.FSharpParser.getTokenized
                       "testfile.fsx"
                       [ "DOTNETCORE"; "FAKE" ]
-                      (scriptText.Split([| '\r'; '\n' |]))
+                      (scriptText.Replace("\r\n", "\n").Split([| '\r'; '\n' |]))
                   |> Fake.Runtime.FSharpParser.findInterestingItems
 
               let expected = []
@@ -193,7 +193,7 @@ nuget Fake.Core.SemVer prerelease //"
                       Fake.Runtime.FSharpParser.getTokenized
                           "build.fsx"
                           [ "DOTNETCORE"; "FAKE" ]
-                          (scriptText.Split([| '\r'; '\n' |]))
+                          (scriptText.Replace("\r\n", "\n").Split([| '\r'; '\n' |]))
 
                   let scripts = HashGeneration.getAllScripts true [] tokens (tmpDir </> "build.fsx")
 
@@ -245,7 +245,7 @@ printfn "other.fsx"
                       Fake.Runtime.FSharpParser.getTokenized
                           "test.fsx"
                           [ "DOTNETCORE"; "FAKE" ]
-                          (testScript.Split([| '\r'; '\n' |]))
+                          (testScript.Replace("\r\n", "\n").Split([| '\r'; '\n' |]))
 
                   let scripts = HashGeneration.getAllScripts true [] tokens testScriptPath
                   let expected = [ testScriptPath; fileScriptPath; otherScriptPath ]
@@ -272,7 +272,7 @@ printfn "other.fsx"
                       Fake.Runtime.FSharpParser.getTokenized
                           "test.fsx"
                           [ "DOTNETCORE"; "FAKE" ]
-                          (testScript.Split([| '\r'; '\n' |]))
+                          (testScript.Replace("\r\n", "\n").Split([| '\r'; '\n' |]))
 
                   try
                       let scripts = HashGeneration.getAllScripts true [] tokens testScriptPath

@@ -97,7 +97,12 @@ let prepare scenario =
     let scenarioPath = scenarioTempPath scenario
 
     if Directory.Exists scenarioPath then
-        Directory.Delete(scenarioPath, true)
+        try
+            Directory.Delete(scenarioPath, true)
+        with _ -> // Maybe locked. Let's sleep and retry.
+            System.Threading.Thread.Sleep 5000
+            Directory.Delete(scenarioPath, true)
+            ()
 
     Directory.ensure scenarioPath
 
