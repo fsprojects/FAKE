@@ -141,7 +141,7 @@ let docsDomain =
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apiKey = releaseSecret "<nugetkey>" "NUGET_KEY"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
-let githubToken = releaseSecret "<githubtoken>" "TOKEN_GITHUB"
+let githubToken = releaseSecret "<githubtoken>" "GITHUB_TOKEN"
 
 do Environment.setEnvironVar "COREHOST_TRACE" "0"
 
