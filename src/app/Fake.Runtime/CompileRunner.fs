@@ -79,7 +79,7 @@ let tryRunCached (c: CoreCacheInfo) (context: FakeContext) : RunResult =
 
                 match
                     types
-                    |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
+                    |> Seq.filter (fun t -> not (isNull t) && parseName t.FullName |> Option.isSome)
                     |> Seq.map (fun t ->
                         t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
                     |> Seq.filter (isNull >> not)
@@ -241,7 +241,12 @@ let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
 
     if returnCode = 0 then
         // here we will move the result of compilation to FAKE script directory instead of temporary directory
-        File.Move(compilerAssemblyTempPath, wishPath)
+        try
+            File.Move(compilerAssemblyTempPath, wishPath)
+        with :? System.IO.IOException ->
+            traceError ("Moving to destination " + wishPath)
+            reraise ()
+
         File.Move(compilerPdbTempPath, pdbWishPath)
 
         use execContext =
