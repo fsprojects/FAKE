@@ -40,7 +40,7 @@ let simplePropertyTest propValue =
             "Expected to find property value in msbuild output"
 
         Expect.stringContains lines "$Property2: ''" "Expected to find empty Property2"
-    | Choice2Of2 (e, result) ->
+    | Choice2Of2(e, result) ->
         let lines =
             String.Join(
                 "\n",
@@ -90,7 +90,7 @@ let simplPathTest pathCased propValue =
                 (sprintf "$PATH: '%s'" (expected va))
                 "Expected to find property value in msbuild output"
 
-    | Choice2Of2 (e, result) ->
+    | Choice2Of2(e, result) ->
         let lines =
             String.Join(
                 "\n",

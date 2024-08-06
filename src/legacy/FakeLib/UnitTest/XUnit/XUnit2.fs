@@ -4,6 +4,7 @@
 module Fake.Testing.XUnit2
 
 #nowarn "44"
+
 open System
 open System.IO
 open System.Linq
@@ -75,7 +76,9 @@ type ParallelMode =
     | Assemblies
     /// Parallelize assemblies and collections.
     | All
-    static member internal ToArgument = function
+
+    static member internal ToArgument =
+        function
         | NoParallelization -> "none"
         | Collections -> "collections"
         | Assemblies -> "assemblies"
@@ -89,8 +92,10 @@ type CollectionConcurrencyMode =
     /// Does not limit the number of concurrently executing collections.
     | Unlimited
     /// Limits the number of concurrently executing collections to `count`.
-    | MaxThreads of count : int
-    static member internal ToArgument = function
+    | MaxThreads of count: int
+
+    static member internal ToArgument =
+        function
         | Default -> None
         | Unlimited -> Some 0
         | MaxThreads count -> Some count
@@ -99,49 +104,50 @@ type CollectionConcurrencyMode =
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 [<CLIMutable>]
 type XUnit2Params =
-    { /// The path to the xUnit console runner: `xunit.console.exe`
-      ToolPath : string
-      /// Do not use app domains to run test code.
-      NoAppDomain : bool
-      /// The xUnit parallelization mode.
-      Parallel : ParallelMode
-      /// The xUnit thread limiting strategy.
-      MaxThreads : CollectionConcurrencyMode
-      /// The output path of the xUnit HTML report.
-      HtmlOutputPath : string option
-      /// The output path of the xUnit XML report.
-      XmlOutputPath : string option
-      /// The output path of the xUnit XML report (in the xUnit v1 style).
-      XmlV1OutputPath : string option
-      /// The output path of the NUnit XML report.
-      NUnitXmlOutputPath : string option
-      /// The working directory for running the xunit console runner.
-      WorkingDir : string option
-      /// Run xUnit with shadow copy enabled.
-      ShadowCopy : bool
-      /// Run xUnit without reporting test progress.
-      Silent : bool
-      /// Maximum time to allow xUnit to run before being killed.
-      TimeOut : TimeSpan
-      /// Test runner error level.
-      ErrorLevel : TestRunnerErrorLevel
-      /// List of traits to include.
-      IncludeTraits : (string * string) list
-      /// List of traits to exclude.
-      ExcludeTraits : (string * string) list
-      /// Forces TeamCity mode (normally auto-detected).
-      ForceTeamCity : bool
-      /// Forces AppVeyor CI mode (normally auto-detected).
-      ForceAppVeyor : bool
-      /// Waits for input after completion.
-      Wait : bool
-      /// Run xUnit against a specific namespace
-      Namespace : string option
-      /// Run xUnit against a specific class
-      Class : string option
-      /// Run xUnit against a specific method
-      Method : string option
-  }
+    {
+        /// The path to the xUnit console runner: `xunit.console.exe`
+        ToolPath: string
+        /// Do not use app domains to run test code.
+        NoAppDomain: bool
+        /// The xUnit parallelization mode.
+        Parallel: ParallelMode
+        /// The xUnit thread limiting strategy.
+        MaxThreads: CollectionConcurrencyMode
+        /// The output path of the xUnit HTML report.
+        HtmlOutputPath: string option
+        /// The output path of the xUnit XML report.
+        XmlOutputPath: string option
+        /// The output path of the xUnit XML report (in the xUnit v1 style).
+        XmlV1OutputPath: string option
+        /// The output path of the NUnit XML report.
+        NUnitXmlOutputPath: string option
+        /// The working directory for running the xunit console runner.
+        WorkingDir: string option
+        /// Run xUnit with shadow copy enabled.
+        ShadowCopy: bool
+        /// Run xUnit without reporting test progress.
+        Silent: bool
+        /// Maximum time to allow xUnit to run before being killed.
+        TimeOut: TimeSpan
+        /// Test runner error level.
+        ErrorLevel: TestRunnerErrorLevel
+        /// List of traits to include.
+        IncludeTraits: (string * string) list
+        /// List of traits to exclude.
+        ExcludeTraits: (string * string) list
+        /// Forces TeamCity mode (normally auto-detected).
+        ForceTeamCity: bool
+        /// Forces AppVeyor CI mode (normally auto-detected).
+        ForceAppVeyor: bool
+        /// Waits for input after completion.
+        Wait: bool
+        /// Run xUnit against a specific namespace
+        Namespace: string option
+        /// Run xUnit against a specific class
+        Class: string option
+        /// Run xUnit against a specific method
+        Method: string option
+    }
 
 /// The xUnit2 default parameters.
 ///
@@ -195,9 +201,10 @@ let XUnit2Defaults =
 let buildXUnit2Args assemblies parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
+
     let appendTraits traitsList traitFlag sb =
-        traitsList |>
-        Seq.fold (fun sb traitPair -> sb |> appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
+        traitsList
+        |> Seq.fold (fun sb traitPair -> sb |> appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
 
     new StringBuilder()
     |> appendFileNamesIfNotNull assemblies
@@ -227,29 +234,32 @@ let buildXUnit2Args assemblies parameters =
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 let internal discoverNoAppDomainExists parameters =
     let helpText =
-        ExecProcessAndReturnMessages (fun info ->
-            info.FileName <- parameters.ToolPath ) (TimeSpan.FromMinutes 1.)
-    let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
-    {parameters with NoAppDomain = canSetNoAppDomain}
+        ExecProcessAndReturnMessages (fun info -> info.FileName <- parameters.ToolPath) (TimeSpan.FromMinutes 1.)
+
+    let canSetNoAppDomain =
+        helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
+
+    { parameters with NoAppDomain = canSetNoAppDomain }
 
 [<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 module internal ResultHandling =
-    let (|OK|Failure|) = function
+    let (|OK|Failure|) =
+        function
         | 0 -> OK
         | x -> Failure x
 
-    let buildErrorMessage = function
+    let buildErrorMessage =
+        function
         | OK -> None
-        | Failure errorCode ->
-            Some (sprintf "xUnit2 reported an error (Error Code %d)" errorCode)
+        | Failure errorCode -> Some(sprintf "xUnit2 reported an error (Error Code %d)" errorCode)
 
-    let failBuildWithMessage = function
+    let failBuildWithMessage =
+        function
         | DontFailBuild -> traceImportant
-        | _ -> (fun m -> raise(FailedTestsException m))
+        | _ -> (fun m -> raise (FailedTestsException m))
 
     let failBuildIfXUnitReportedError errorLevel =
-        buildErrorMessage
-        >> Option.iter (failBuildWithMessage errorLevel)
+        buildErrorMessage >> Option.iter (failBuildWithMessage errorLevel)
 
 /// Runs xUnit v2 unit tests in the given assemblies via the given xUnit2 runner.
 /// Will fail if the runner terminates with non-zero exit code.
@@ -275,14 +285,17 @@ let xUnit2 setParams assemblies =
     let parametersFirst = setParams XUnit2Defaults
 
     let parameters =
-        if parametersFirst.NoAppDomain
-        then discoverNoAppDomainExists parametersFirst
-        else parametersFirst
+        if parametersFirst.NoAppDomain then
+            discoverNoAppDomainExists parametersFirst
+        else
+            parametersFirst
 
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-            info.Arguments <- parameters |> buildXUnit2Args assemblies) parameters.TimeOut
+        ExecProcess
+            (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
+                info.Arguments <- parameters |> buildXUnit2Args assemblies)
+            parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result

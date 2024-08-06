@@ -72,9 +72,7 @@ and [<NoComparison; NoEquality>] TargetContext =
             | Some er -> Some(er, tres.Target)
             | None -> None)
 
-and [<NoComparison; NoEquality>] TargetParameter =
-    { TargetInfo: Target
-      Context: TargetContext }
+and [<NoComparison; NoEquality>] TargetParameter = { TargetInfo: Target; Context: TargetContext }
 
 /// [omit]
 and [<NoComparison; NoEquality>] Target =
@@ -95,9 +93,7 @@ type internal DeclarationInfo =
       Column: int
       ErrorDetail: string }
 
-type internal Dependency =
-    { Name: string
-      Declaration: DeclarationInfo }
+type internal Dependency = { Name: string; Declaration: DeclarationInfo }
 
 [<NoComparison>]
 [<NoEquality>]
@@ -132,17 +128,12 @@ type BuildFailedException =
     val private info: TargetContext option
     inherit Exception
 
-    new(msg: string, inner: exn) =
-        { inherit Exception(msg, inner)
-          info = None }
+    new(msg: string, inner: exn) = { inherit Exception(msg, inner); info = None }
 
-    new(info: TargetContext, msg: string, inner: exn) =
-        { inherit Exception(msg, inner)
-          info = Some info }
+    new(info: TargetContext, msg: string, inner: exn) = { inherit Exception(msg, inner); info = Some info }
 #if !NETSTANDARD1_6
     new(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) =
-        { inherit Exception(info, context)
-          info = None }
+        { inherit Exception(info, context); info = None }
 #endif
     member x.Info = x.info
 
@@ -283,7 +274,7 @@ module Target =
     /// <param name="text">The description of the next target</param>
     let description text =
         match getLastDescription () with
-        | Some (v: string) ->
+        | Some(v: string) ->
             failwithf "You can't set the description for a target twice. There is already a description: %A" v
         | None -> setLastDescription text
 
@@ -368,9 +359,7 @@ module Target =
                 if not context.IsRunningFinalTargets then
                     context.CancellationToken.ThrowIfCancellationRequested()
 
-                target.Function
-                    { TargetInfo = target
-                      Context = context }
+                target.Function { TargetInfo = target; Context = context }
 
                 None
             with e ->
@@ -396,7 +385,8 @@ module Target =
         else
             t.MarkSuccess()
 
-        { context with PreviousTargets = context.PreviousTargets @ [ result ] }
+        { context with
+            PreviousTargets = context.PreviousTargets @ [ result ] }
 
     /// <summary>
     /// This simply runs the function of a target without doing anything (like tracing, stop watching or adding
@@ -481,10 +471,7 @@ module Target =
 
             getTargetDict().[targetName] <-
                 { target with
-                    Dependencies =
-                        { Name = dependentTargetName
-                          Declaration = decl }
-                        :: target.Dependencies
+                    Dependencies = { Name = dependentTargetName; Declaration = decl } :: target.Dependencies
                     SoftDependencies =
                         target.SoftDependencies
                         |> List.filter (fun d ->
@@ -512,10 +499,7 @@ module Target =
 
             getTargetDict().[targetName] <-
                 { target with
-                    SoftDependencies =
-                        { Name = dependentTargetName
-                          Declaration = decl }
-                        :: target.SoftDependencies }
+                    SoftDependencies = { Name = dependentTargetName; Declaration = decl } :: target.SoftDependencies }
 
     /// <summary>
     /// Adds the dependency to the list of dependencies.
@@ -917,7 +901,8 @@ module Target =
                 targets
                 |> List.filter (fun tres -> not (known.ContainsKey(String.toLower tres.Target.Name)))
 
-            { ctx1 with PreviousTargets = ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets }
+            { ctx1 with
+                PreviousTargets = ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets }
 
         // Centralized handling of target context and next target logic...
         [<NoComparison>]
@@ -945,7 +930,7 @@ module Target =
                             let! msg = inbox.Receive()
 
                             match msg with
-                            | GetNextTarget (newCtx, reply) ->
+                            | GetNextTarget(newCtx, reply) ->
                                 let failwithf pf =
                                     // handle reply before throwing.
                                     let tcs = TaskCompletionSource<TargetContext * Target option>()
@@ -1070,7 +1055,7 @@ module Target =
                             let! msg = inbox.Receive()
 
                             match msg with
-                            | GetNextTarget (_, reply) ->
+                            | GetNextTarget(_, reply) ->
                                 reply.Reply(async { return raise <| exn ("mailbox failed", e) })
                 }
 
@@ -1437,7 +1422,7 @@ module Target =
             writeInfoFile file
             None
         | NoAction -> None
-        | ExecuteTarget (target, arguments, parallelJobs, singleTarget) ->
+        | ExecuteTarget(target, arguments, parallelJobs, singleTarget) ->
             if not allowAdditionalArgs && arguments <> [] then
                 failwithf
                     "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault"
@@ -1513,7 +1498,7 @@ module Target =
     /// </remarks>
     let getArguments () =
         initAndProcess (function
-            | ExecuteTarget (_, args, _, _) -> args |> List.toArray |> Some
+            | ExecuteTarget(_, args, _, _) -> args |> List.toArray |> Some
             | _ -> None)
 
     /// <summary>

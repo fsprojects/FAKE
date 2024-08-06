@@ -9,27 +9,29 @@ open Fake
 [<System.Obsolete("Use Fake.Tools.Git.Rebase instead")>]
 let start repositoryDir onTopOfBranch =
     try
-        sprintf "rebase %s" onTopOfBranch
-            |> gitCommand repositoryDir
-    with
-    | _ -> failwithf "Rebaseing on %s failed." onTopOfBranch
+        sprintf "rebase %s" onTopOfBranch |> gitCommand repositoryDir
+    with _ ->
+        failwithf "Rebaseing on %s failed." onTopOfBranch
 
-/// Restore the original branch and abort the rebase operation. 
+/// Restore the original branch and abort the rebase operation.
 [<System.Obsolete("Use Fake.Tools.Git.Rebase instead")>]
-let abort repositoryDir = gitCommand repositoryDir "rebase --abort"
+let abort repositoryDir =
+    gitCommand repositoryDir "rebase --abort"
 
-/// Restart the rebasing process after having resolved a merge conflict. 
+/// Restart the rebasing process after having resolved a merge conflict.
 [<System.Obsolete("Use Fake.Tools.Git.Rebase instead")>]
-let continueRebase repositoryDir = gitCommand repositoryDir "rebase --continue"
+let continueRebase repositoryDir =
+    gitCommand repositoryDir "rebase --continue"
 
-/// Restart the rebasing process by skipping the current patch. 
+/// Restart the rebasing process by skipping the current patch.
 [<System.Obsolete("Use Fake.Tools.Git.Rebase instead")>]
-let skip repositoryDir = gitCommand repositoryDir "rebase --skip"
+let skip repositoryDir =
+    gitCommand repositoryDir "rebase --skip"
 
 /// rebase failed ==> fallback on merge
 /// [omit]
 [<System.Obsolete("Use Fake.Tools.Git.Rebase instead")>]
-let rollBackAndUseMerge repositoryDir onTopOfBranch =    
+let rollBackAndUseMerge repositoryDir onTopOfBranch =
     abort repositoryDir
     merge repositoryDir "" onTopOfBranch
     true
@@ -41,8 +43,13 @@ let rollBackAndUseMerge repositoryDir onTopOfBranch =
 let rebaseOrFallbackOnMerge repositoryDir onTopOfBranch =
     try
         start repositoryDir onTopOfBranch
-        if not (isInTheMiddleOfConflictedMerge repositoryDir) &&
-            not (isInTheMiddleOfRebase repositoryDir) then false else
+
+        if
+            not (isInTheMiddleOfConflictedMerge repositoryDir)
+            && not (isInTheMiddleOfRebase repositoryDir)
+        then
+            false
+        else
+            rollBackAndUseMerge repositoryDir onTopOfBranch
+    with _ ->
         rollBackAndUseMerge repositoryDir onTopOfBranch
-    with
-    | _ -> rollBackAndUseMerge repositoryDir onTopOfBranch

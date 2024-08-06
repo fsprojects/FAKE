@@ -8,11 +8,13 @@ open Expecto
 
 let runCreateProcess setParams =
     let cp =
-        Pickles.createProcess (fun param -> { setParams param with ToolPath = Path.Combine("pickles", "pickles.exe") })
+        Pickles.createProcess (fun param ->
+            { setParams param with
+                ToolPath = Path.Combine("pickles", "pickles.exe") })
 
     let file, args =
         match cp.Command with
-        | RawCommand (file, args) -> file, args
+        | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
 
@@ -60,6 +62,8 @@ let tests =
           testCase "Test that output file format is ommitted if it is HTML"
           <| fun _ ->
               let expectedPath, commandLine =
-                  runCreateProcess (fun param -> { param with OutputFileFormat = Pickles.DocumentationFormat.HTML })
+                  runCreateProcess (fun param ->
+                      { param with
+                          OutputFileFormat = Pickles.DocumentationFormat.HTML })
 
               Expect.equal commandLine (sprintf "%s " expectedPath) "expected proper command line" ]

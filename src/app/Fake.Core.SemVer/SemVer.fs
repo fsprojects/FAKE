@@ -86,8 +86,8 @@ type PreRelease =
         else
             let getName fromList =
                 match fromList with
-                | AlphaNumeric (a) :: _ -> a
-                | _ :: AlphaNumeric (a) :: _ -> a // fallback to 2nd
+                | AlphaNumeric(a) :: _ -> a
+                | _ :: AlphaNumeric(a) :: _ -> a // fallback to 2nd
                 | _ -> ""
 
             let parse (segment: string) =
@@ -115,10 +115,7 @@ type PreRelease =
                     let list = multiple |> Array.map parse |> List.ofArray
                     getName list, list
 
-            Some
-                { Origin = str
-                  Name = name
-                  Values = values }
+            Some { Origin = str; Name = name; Values = values }
 
     member x.Equals(y) = x.Origin = y.Origin
 

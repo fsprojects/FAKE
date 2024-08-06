@@ -341,14 +341,14 @@ module Fsc =
             | LinkResource rinfo -> argp "linkresource" <| resourceStr rinfo
             | Debug on -> stogl "g" on
             | DebugType dt -> argp "debug" <| string dt
-            | Optimize (on, opts) ->
+            | Optimize(on, opts) ->
                 match opts with
                 | [] -> stogl "O" on
                 | _ -> toglls "O" on opts
             | Tailcalls on -> togl "tailcalls" on
             | CrossOptimize on -> togl "crossoptimize" on
             | WarnAsError on -> togl "warnaserror" on
-            | WarnAsErrors (on, warningCodes) -> toglls "warnaserror" on warningCodes
+            | WarnAsErrors(on, warningCodes) -> toglls "warnaserror" on warningCodes
             | Warn lvl ->
                 argp "warn"
                 <| string (

@@ -101,9 +101,7 @@ module internal Cache =
             let warnings = warningsFileName context
             let warningText = File.ReadAllText warnings
 
-            Some
-                { CompiledAssembly = cachedDll
-                  Warnings = warningText }
+            Some { CompiledAssembly = cachedDll; Warnings = warningText }
         else
             None
 
@@ -214,7 +212,9 @@ module internal Cache =
                     { context with
                         Config =
                             { context.Config with
-                                CompileOptions = { context.Config.CompileOptions with FsiOptions = newAdditionalArgs }
+                                CompileOptions =
+                                    { context.Config.CompileOptions with
+                                        FsiOptions = newAdditionalArgs }
                                 RuntimeOptions =
                                     { context.Config.RuntimeOptions with
                                         _RuntimeDependencies =
@@ -286,7 +286,7 @@ let findInAssemblyList (name: AssemblyName) (runtimeDependencies: AssemblyInfo l
             |> Seq.map (fun r -> AssemblyName(r.FullName), r)
             |> Seq.tryFind (fun (n, _) -> n.Name = name.Name && (emptyToken || n.GetPublicKeyToken() = token))
         with
-        | Some (otherName, info) ->
+        | Some(otherName, info) ->
             // Then the version matches or is null and the public token is null we still accept this as perfect match
             Some((emptyToken && (emptyVersion || otherName.Version = name.Version)), info)
         | _ -> None
@@ -368,11 +368,11 @@ let findAndLoadInRuntimeDeps
                 tracefn "Could not find assembly in the default load-context: %s" strName
 
             match runtimeDependencies |> findInAssemblyList name with
-            | Some (perfectMatch, a) -> perfectMatch, loadAssembly loadContext logLevel a
+            | Some(perfectMatch, a) -> perfectMatch, loadAssembly loadContext logLevel a
             | None -> false, None
 
     match result with
-    | Some (location, a) ->
+    | Some(location, a) ->
         if logLevel.PrintVerbose then
             if isPerfectMatch then
                 tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
@@ -394,7 +394,11 @@ let findAndLoadInRuntimeDepsCached =
     let assemblyCache =
         System.Collections.Concurrent.ConcurrentDictionary<_, Assembly>()
 
-    fun (loadContext: AssemblyLoadContext) (name: AssemblyName) (logLevel: Trace.VerboseLevel) (runtimeDependencies: AssemblyInfo list) ->
+    fun
+        (loadContext: AssemblyLoadContext)
+        (name: AssemblyName)
+        (logLevel: Trace.VerboseLevel)
+        (runtimeDependencies: AssemblyInfo list) ->
         let mutable wasCalled = false
 
         let result =
@@ -474,7 +478,11 @@ let findUnmanagedInRuntimeDeps
 let resolveUnmanagedDependencyCached =
     let libCache = System.Collections.Concurrent.ConcurrentDictionary<_, string>()
 
-    fun (loadFromPath: string -> nativeint) (unmanagedDllName: string) (logLevel: Trace.VerboseLevel) (nativeLibraries: NativeLibrary list) ->
+    fun
+        (loadFromPath: string -> nativeint)
+        (unmanagedDllName: string)
+        (logLevel: Trace.VerboseLevel)
+        (nativeLibraries: NativeLibrary list) ->
         let mutable wasCalled = false
 
         let path =
@@ -514,11 +522,7 @@ This can happen for various reasons:
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
 type FakeLoadContext
-    (
-        printDetails: Trace.VerboseLevel,
-        dependencies: AssemblyInfo list,
-        nativeLibraries: NativeLibrary list
-    ) =
+    (printDetails: Trace.VerboseLevel, dependencies: AssemblyInfo list, nativeLibraries: NativeLibrary list) =
     // Mark as Collectible once supported: https://docs.microsoft.com/en-us/dotnet/standard/assembly/unloadability-howto?view=netcore-3.0
     inherit AssemblyLoadContext()
     let allReferences = dependencies
@@ -584,9 +588,7 @@ let prepareContext (config: FakeConfig) (cache: ICachingProvider) =
                 |> Seq.map (Path.readPathFromCache config.ScriptFilePath)
                 |> Seq.map (fun line ->
                     if File.Exists line then
-                        Some
-                            { HashContent = File.ReadAllText line
-                              Location = line }
+                        Some { HashContent = File.ReadAllText line; Location = line }
                     else
                         None)
                 |> Seq.toList

@@ -47,18 +47,18 @@ module internal TeamCityWriter =
     let private sendToTeamCity (message: TeamCityMessage) =
         let content =
             match message with
-            | OneParamMultiLine (fmt, param1) -> sprintf fmt (encapsulateSpecialChars param1)
-            | OneParamSingleLine (fmt, param1) -> sprintf fmt (singleLine param1)
-            | TwoParamMultiLine (fmt, param1, param2) ->
+            | OneParamMultiLine(fmt, param1) -> sprintf fmt (encapsulateSpecialChars param1)
+            | OneParamSingleLine(fmt, param1) -> sprintf fmt (singleLine param1)
+            | TwoParamMultiLine(fmt, param1, param2) ->
                 sprintf fmt (encapsulateSpecialChars param1) (encapsulateSpecialChars param2)
-            | TwoParamSingleLineBoth (fmt, param1, param2) -> sprintf fmt (singleLine param1) (singleLine param2)
-            | TwoParamSingleLineParam1 (fmt, param1, param2) ->
+            | TwoParamSingleLineBoth(fmt, param1, param2) -> sprintf fmt (singleLine param1) (singleLine param2)
+            | TwoParamSingleLineParam1(fmt, param1, param2) ->
                 sprintf fmt (singleLine param1) (encapsulateSpecialChars param2)
-            | ThreeParamSingleLineAll (fmt, param1, param2, param3) ->
+            | ThreeParamSingleLineAll(fmt, param1, param2, param3) ->
                 sprintf fmt (singleLine param1) (singleLine param2) (singleLine param3)
-            | ThreeParamSingleLineParam1 (fmt, param1, param2, param3) ->
+            | ThreeParamSingleLineParam1(fmt, param1, param2, param3) ->
                 sprintf fmt (singleLine param1) (encapsulateSpecialChars param2) (encapsulateSpecialChars param3)
-            | FiveParamSingleLineParam1 (fmt, param1, param2, param3, param4, param5) ->
+            | FiveParamSingleLineParam1(fmt, param1, param2, param3, param4, param5) ->
                 sprintf
                     fmt
                     (singleLine param1)
@@ -394,7 +394,7 @@ module internal TeamCityBuildParameters =
             |> JavaPropertiesFile.parseTextReader
             |> Seq.choose (function
                 | JavaPropertiesFile.Comment _ -> None
-                | JavaPropertiesFile.KeyValue (k, v) -> Some(k, v))
+                | JavaPropertiesFile.KeyValue(k, v) -> Some(k, v))
             |> Map.ofSeq
         | _ -> Map.empty
 

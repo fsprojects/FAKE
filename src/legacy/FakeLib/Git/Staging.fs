@@ -9,7 +9,7 @@ open Fake
 /// Adds a file to the staging area
 [<System.Obsolete("Use Fake.Tools.Git.Staging instead")>]
 let StageFile repositoryDir file =
-    file 
+    file
     |> fixPath
     |> sprintf "update-index --add \"%s\""
     |> runGitCommand repositoryDir
@@ -17,6 +17,4 @@ let StageFile repositoryDir file =
 /// Adds all files to the staging area
 [<System.Obsolete("Use Fake.Tools.Git.Staging instead")>]
 let StageAll repositoryDir =
-    "add . --all"
-    |> runSimpleGitCommand repositoryDir
-    |> trace
+    "add . --all" |> runSimpleGitCommand repositoryDir |> trace

@@ -119,9 +119,7 @@ module CreateProcess =
                 async {
                     let! raw = Async.AwaitTaskWithoutAggregate t
 
-                    return
-                        { ExitCode = raw.RawExitCode
-                          Result = () }
+                    return { ExitCode = raw.RawExitCode; Result = () }
                 } }
 
     /// <summary>
@@ -239,7 +237,7 @@ module CreateProcess =
     let internal interceptStreamFallback onInherit target (s: StreamSpecification) =
         match s with
         | Inherit -> onInherit ()
-        | UseStream (close, stream) ->
+        | UseStream(close, stream) ->
             let combined = Stream.CombineWrite(stream, target)
             UseStream(close, combined)
         | CreatePipe pipe -> CreatePipe(StreamRef.Map (fun s -> Stream.InterceptStream(s, target)) pipe)
@@ -308,7 +306,7 @@ module CreateProcess =
             InternalCommand =
                 match c.Command with
                 | ShellCommand _s -> failwith "Expected RawCommand"
-                | RawCommand (_, c) -> RawCommand(newFilePath, c) }
+                | RawCommand(_, c) -> RawCommand(newFilePath, c) }
 
     /// <summary>
     /// Map the file-path according to the given function.
@@ -322,7 +320,7 @@ module CreateProcess =
             f (
                 match c.Command with
                 | ShellCommand _s -> failwith "Expected RawCommand"
-                | RawCommand (file, _) -> f file
+                | RawCommand(file, _) -> f file
             )
         )
 
@@ -493,7 +491,8 @@ module CreateProcess =
     /// <param name="envVar">The environment variable value</param>
     /// <param name="c">The create process instance</param>
     let setEnvironmentVariable envKey (envVar: string) (c: CreateProcess<_>) =
-        { c with InternalEnvironment = getEnvironmentMap c |> IMap.add envKey envVar |> Some }
+        { c with
+            InternalEnvironment = getEnvironmentMap c |> IMap.add envKey envVar |> Some }
 
     /// <summary>
     /// Set the standard output stream.
@@ -502,7 +501,8 @@ module CreateProcess =
     /// <param name="stdOut">The standard output to use</param>
     /// <param name="c">The create process instance</param>
     let withStandardOutput stdOut (c: CreateProcess<_>) =
-        { c with Streams = { c.Streams with StandardOutput = stdOut } }
+        { c with
+            Streams = { c.Streams with StandardOutput = stdOut } }
 
     /// <summary>
     /// Set the standard error stream.
@@ -511,7 +511,8 @@ module CreateProcess =
     /// <param name="stdOut">The standard error to use</param>
     /// <param name="c">The create process instance</param>
     let withStandardError stdErr (c: CreateProcess<_>) =
-        { c with Streams = { c.Streams with StandardError = stdErr } }
+        { c with
+            Streams = { c.Streams with StandardError = stdErr } }
 
     /// <summary>
     /// Set the standard input stream.
@@ -520,7 +521,8 @@ module CreateProcess =
     /// <param name="stdIn">The standard input to use</param>
     /// <param name="c">The create process instance</param>
     let withStandardInput stdIn (c: CreateProcess<_>) =
-        { c with Streams = { c.Streams with StandardInput = stdIn } }
+        { c with
+            Streams = { c.Streams with StandardInput = stdIn } }
 
     /// <summary>
     /// Map the current result to a new type.
@@ -543,10 +545,7 @@ module CreateProcess =
     ///
     /// <param name="f">Function to run result map through</param>
     let mapResult f (c: CreateProcess<ProcessResult<_>>) =
-        c
-        |> map (fun r ->
-            { ExitCode = r.ExitCode
-              Result = f r.Result })
+        c |> map (fun r -> { ExitCode = r.ExitCode; Result = f r.Result })
 
     /// <summary>
     /// Starts redirecting the output streams and collects all data at the end.
@@ -575,11 +574,10 @@ module CreateProcess =
                     errMem.Position <- 0L
                     let stdErr = (new StreamReader(errMem)).ReadToEnd()
                     let stdOut = (new StreamReader(outMem)).ReadToEnd()
+
                     let r = { Output = stdOut; Error = stdErr }
 
-                    return
-                        { ExitCode = exitCode.RawExitCode
-                          Result = r }
+                    return { ExitCode = exitCode.RawExitCode; Result = r }
                 })
             (fun (outMem, errMem) ->
                 outMem.Dispose()
@@ -822,9 +820,7 @@ module CreateProcess =
 
             data)
 
-    type internal TimeoutState =
-        { Stopwatch: Stopwatch
-          mutable HasExited: bool }
+    type internal TimeoutState = { Stopwatch: Stopwatch; mutable HasExited: bool }
 
     /// <summary>
     /// Set the given timeout, kills the process after the specified timespan
@@ -835,9 +831,7 @@ module CreateProcess =
     let withTimeout (timeout: TimeSpan) (c: CreateProcess<_>) =
         c
         |> appendSimpleFuncs
-            (fun _ ->
-                { Stopwatch = Stopwatch.StartNew()
-                  HasExited = false })
+            (fun _ -> { Stopwatch = Stopwatch.StartNew(); HasExited = false })
             (fun state proc ->
                 state.Stopwatch.Restart()
 

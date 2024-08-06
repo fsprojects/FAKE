@@ -17,16 +17,10 @@ type Declaration =
       Column: int
       ErrorDetail: string }
 
-    static member Empty =
-        { File = ""
-          Line = 0
-          Column = 1
-          ErrorDetail = "" }
+    static member Empty = { File = ""; Line = 0; Column = 1; ErrorDetail = "" }
 
 /// a target dependency, either a hard or a soft dependency.
-type Dependency =
-    { Name: string
-      Declaration: Declaration }
+type Dependency = { Name: string; Declaration: Declaration }
 
 /// a FAKE target, its description and its relations to other targets (dependencies), including the
 /// declaration lines of the target and the dependencies.
@@ -247,9 +241,7 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'Start'"
-                      { Declaration.Empty with
-                          File = scriptFile
-                          Line = 37 }
+                      { Declaration.Empty with File = scriptFile; Line = 37 }
                       startTarget.Declaration
 
                   Expect.equal "Expected correct hard dependencies of 'Start'" [] startTarget.HardDependencies
@@ -259,18 +251,13 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'TestTarget'"
-                      { Declaration.Empty with
-                          File = scriptFile
-                          Line = 39 }
+                      { Declaration.Empty with File = scriptFile; Line = 39 }
                       testTarget.Declaration
 
                   Expect.equal
                       "Expected correct hard dependencies of 'TestTarget'"
                       [ { Name = "Start"
-                          Declaration =
-                            { Declaration.Empty with
-                                File = scriptFile
-                                Line = 46 } } ]
+                          Declaration = { Declaration.Empty with File = scriptFile; Line = 46 } } ]
                       testTarget.HardDependencies
 
                   Expect.equal "Expected correct description of 'TestTarget'" "" testTarget.Description
@@ -278,9 +265,7 @@ let tests =
 
                   Expect.equal
                       "Expected correct declaration of 'OtherScriptTarget'"
-                      { Declaration.Empty with
-                          File = otherScriptFile
-                          Line = 4 }
+                      { Declaration.Empty with File = otherScriptFile; Line = 4 }
                       scriptTarget.Declaration
 
                   Expect.equal

@@ -46,8 +46,7 @@ module FTP =
         ftpRequest.Credentials <- NetworkCredential(user, password)
         ftpRequest.Method <- ftpMethod
 
-        { Server = serverNameIp
-          Request = ftpRequest }
+        { Server = serverNameIp; Request = ftpRequest }
 
     /// Writes given byte array into the given stream
     let rec private writeChunkToReqStream (chunk: byte[]) (requestStream: Stream) (br: BinaryReader) =

@@ -6,15 +6,17 @@ module Fake.SCPHelper
 /// The SCP parameter type.
 [<CLIMutable>]
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-type SCPParams = 
-    { /// Path of the scp.exe 
-      ToolPath : string
-      /// Path of the private key file (optional)
-      PrivateKeyPath : string }
+type SCPParams =
+    {
+        /// Path of the scp.exe
+        ToolPath: string
+        /// Path of the private key file (optional)
+        PrivateKeyPath: string
+    }
 
 /// The SCP default parameters
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let SCPDefaults : SCPParams = 
+let SCPDefaults: SCPParams =
     { ToolPath = if isMono then "scp" else "scp.exe"
       PrivateKeyPath = null }
 
@@ -29,23 +31,35 @@ let SCPDefaults : SCPParams =
 ///
 ///     SCP (fun p -> { p with ToolPath = "tools/scp.exe" }) source target
 [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let SCP setParams source target = 
-    let (p : SCPParams) = setParams SCPDefaults
+let SCP setParams source target =
+    let (p: SCPParams) = setParams SCPDefaults
     let source = FullName source
-    let recursiveFlag,sourceArg,workingDir =
+
+    let recursiveFlag, sourceArg, workingDir =
         if isDirectory source then
-            "-r",".",source
+            "-r", ".", source
         else
             let fi = fileInfo source
-            "",fi.Name,fi.Directory.FullName
+            "", fi.Name, fi.Directory.FullName
 
-    let privateKey = if isNullOrEmpty p.PrivateKeyPath then "" else sprintf "-i \"%s\"" p.PrivateKeyPath
-    let args = sprintf "%s %s %s %s" recursiveFlag privateKey (toParam sourceArg) (toParam target)
+    let privateKey =
+        if isNullOrEmpty p.PrivateKeyPath then
+            ""
+        else
+            sprintf "-i \"%s\"" p.PrivateKeyPath
+
+    let args =
+        sprintf "%s %s %s %s" recursiveFlag privateKey (toParam sourceArg) (toParam target)
 
     tracefn "%s %s" p.ToolPath args
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- p.ToolPath
-            info.WorkingDirectory <- workingDir
-            info.Arguments <- args) System.TimeSpan.MaxValue
-    if result <> 0 then failwithf "Error during SCP. Source: %s Target: %s" source target
+
+    let result =
+        ExecProcess
+            (fun info ->
+                info.FileName <- p.ToolPath
+                info.WorkingDirectory <- workingDir
+                info.Arguments <- args)
+            System.TimeSpan.MaxValue
+
+    if result <> 0 then
+        failwithf "Error during SCP. Source: %s Target: %s" source target

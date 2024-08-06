@@ -22,17 +22,17 @@ type EventBoundary =
 
     static member GetTime(b: EventBoundary) =
         match b with
-        | Start (dt) -> dt
-        | End (dt) -> dt
+        | Start(dt) -> dt
+        | End(dt) -> dt
 
     static member IsEndBoundary(b: EventBoundary) =
         match b with
-        | End (_) -> true
+        | End(_) -> true
         | _ -> false
 
     static member IsStartBoundary(b: EventBoundary) =
         match b with
-        | Start (_) -> true
+        | Start(_) -> true
         | _ -> false
 
 type Event =
@@ -41,10 +41,8 @@ type Event =
       End: EventBoundary }
 
 let private getNextSpan
-    (
-        startIndex: int,
-        boundaries: EventBoundary array
-    ) : (TimeSpan * (int * EventBoundary array)) option =
+    (startIndex: int, boundaries: EventBoundary array)
+    : (TimeSpan * (int * EventBoundary array)) option =
     let mutable i = startIndex
 
     while (i < boundaries.Length) && EventBoundary.IsEndBoundary(boundaries.[i]) do
@@ -59,8 +57,8 @@ let private getNextSpan
 
         while (boundaryStartCount > 0) && (i < boundaries.Length) do
             match boundaries.[i] with
-            | Start (_) -> boundaryStartCount <- boundaryStartCount + 1
-            | End (_) -> boundaryStartCount <- boundaryStartCount - 1
+            | Start(_) -> boundaryStartCount <- boundaryStartCount + 1
+            | End(_) -> boundaryStartCount <- boundaryStartCount - 1
 
             i <- i + 1
 
@@ -84,11 +82,7 @@ let events = System.Collections.Concurrent.ConcurrentBag<Event>()
 let trackEvent cat =
     let now = DateTime.Now
 
-    events.Add(
-        { Category = cat
-          Start = Start(now)
-          End = End(now) }
-    )
+    events.Add({ Category = cat; Start = Start(now); End = End(now) })
 
 let startCategory cat =
     let cw = Stopwatch.StartNew()
@@ -102,11 +96,7 @@ let startCategory cat =
                 let start = now - cw.Elapsed
                 cw.Stop()
 
-                events.Add(
-                    { Category = cat
-                      Start = Start(start)
-                      End = End(now) }
-                ) }
+                events.Add({ Category = cat; Start = Start(start); End = End(now) }) }
 
 let startCategoryF cat f =
     let cw = Stopwatch.StartNew()
@@ -115,11 +105,7 @@ let startCategoryF cat f =
     let now = DateTime.Now
     let start = now - cw.Elapsed
 
-    events.Add(
-        { Category = cat
-          Start = Start(start)
-          End = End(now) }
-    )
+    events.Add({ Category = cat; Start = Start(start); End = End(now) })
 
     res
 
@@ -241,7 +227,11 @@ let print includePaket realTime =
                         Paket.Logging.tracefn "   - Number of downloads: %d" num
                     | Paket.Profile.Category.NuGetRequest ->
                         let avg = TimeSpan.FromTicks(elapsed.Ticks / int64 num)
-                        Paket.Logging.tracefn "   - Average Request Time: %s" (Paket.Utils.TimeSpanToReadableString avg)
+
+                        Paket.Logging.tracefn
+                            "   - Average Request Time: %s"
+                            (Paket.Utils.TimeSpanToReadableString avg)
+
                         Paket.Logging.tracefn "   - Number of Requests: %d" num
                     | Paket.Profile.Category.Other ->
                         Paket.Logging.tracefn "   - Other: %s" (Paket.Utils.TimeSpanToReadableString elapsed))

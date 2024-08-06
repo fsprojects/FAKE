@@ -120,8 +120,7 @@ let private handleCoreCaching (context: FakeContext) (session: IFsiSession) fsiE
         // Caching errors are not critical, and we shouldn't throw in a finally clause.
         traceFAKE "CACHING ERROR - please open a issue on FAKE and /cc @matthid\n\nError: %O" ex
 #endif
-        { MaybeCompiledAssembly = None
-          Warnings = fsiErrorOutput }
+        { MaybeCompiledAssembly = None; Warnings = fsiErrorOutput }
 
 
 /// public, because it is used by test code

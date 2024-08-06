@@ -435,13 +435,13 @@ module Shell =
         | Overwrite -> DirectoryInfo.copyRecursiveTo true dirInfo outputDirInfo
         | NoOverwrite -> DirectoryInfo.copyRecursiveTo false dirInfo outputDirInfo
         | Skip -> copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
-        | IncludePattern (pattern) ->
+        | IncludePattern(pattern) ->
             copyRecursiveWithFilter
             <| fun d f -> d.FullName @@ f.Name |> (Glob.isMatch pattern)
-        | ExcludePattern (pattern) ->
+        | ExcludePattern(pattern) ->
             copyRecursiveWithFilter
             <| fun d f -> d.FullName @@ f.Name |> (Glob.isMatch pattern) |> not
-        | Filter (f) -> copyRecursiveWithFilter f
+        | Filter(f) -> copyRecursiveWithFilter f
 
     ///<summary>
     /// Moves a single file to the target and overwrites the existing file.
@@ -470,7 +470,7 @@ module Shell =
         let fi = FileSystemInfo.ofPath fileName
 
         match fi with
-        | FileSystemInfo.Directory (d, _) ->
+        | FileSystemInfo.Directory(d, _) ->
             let targetName = target @@ fi.Name
             d.MoveTo(targetName)
         | FileSystemInfo.File _ -> failwithf "moveDir only works on directories but '%s' was a file." fileName

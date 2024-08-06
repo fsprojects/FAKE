@@ -115,9 +115,11 @@ let releaseSecret replacement name =
                 match getVarOrDefaultFromVault name "default_unset" with
                 | "default_unset" -> failwithf "variable '%s' is not set" name
                 | s -> s
+
             if BuildServer.buildServer <> BuildServer.TeamFoundation then
                 // on TFS/VSTS the build will take care of this.
                 TraceSecrets.register replacement env
+
             env
 
     secrets <- secret :: secrets
@@ -134,10 +136,12 @@ let chocoSource =
     getVarOrDefaultFromVault "CHOCO_SOURCE" "https://push.chocolatey.org/"
 
 let artifactsDir = getVarOrDefaultFromVault "ARTIFACTS_DIRECTORY" ""
+
 let docsDomain =
     match BuildServer.isLocalBuild with
     | true -> "http://127.0.0.1:8083/"
     | false -> getVarOrDefaultFromVault "DOCS_DOMAIN" "fake.build"
+
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 let apiKey = releaseSecret "<nugetkey>" "NUGET_KEY"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
@@ -213,7 +217,9 @@ let version =
 
             let d = System.DateTime.Now
             let newLocalVersionNumber = currentVer + 1I
-            [ PreReleaseSegment.AlphaNumeric("local." + newLocalVersionNumber.ToString()) ], d.ToString("yyyy-MM-dd-HH-mm")
+
+            [ PreReleaseSegment.AlphaNumeric("local." + newLocalVersionNumber.ToString()) ],
+            d.ToString("yyyy-MM-dd-HH-mm")
 
     let semVer = SemVer.parse release.NugetVersion
 
@@ -224,11 +230,7 @@ let version =
 
             match String.IsNullOrWhiteSpace toAdd with
             | true -> None
-            | false ->
-                Some
-                    { Name = ""
-                      Values = source
-                      Origin = toAdd }
+            | false -> Some { Name = ""; Values = source; Origin = toAdd }
         | Some p ->
             let toAdd = String.Join(".", source |> Seq.map segToString)
             let toAdd = if String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
@@ -454,9 +456,14 @@ let rec nugetPush tries nugetPackage =
     try
         if not <| String.IsNullOrEmpty apiKey.Value then
             let quoteString str = sprintf "\"%s\"" str
-            
-            let args = sprintf "push %s %s -Source %s" (quoteString nugetPackage) (quoteString apiKey.Value) (quoteString nugetSource)
-            
+
+            let args =
+                sprintf
+                    "push %s %s -Source %s"
+                    (quoteString nugetPackage)
+                    (quoteString apiKey.Value)
+                    (quoteString nugetSource)
+
             let errors = System.Collections.Generic.List<string>()
             let results = System.Collections.Generic.List<string>()
 
@@ -474,22 +481,24 @@ let rec nugetPush tries nugetPackage =
                 |> CreateProcess.redirectOutput
                 |> CreateProcess.withOutputEventsNotNull errorF messageF
                 |> Proc.run
-            
+
             if processResult.ExitCode <> 0 then
                 if
                     not ignore_conflict
                     || not (errors |> Seq.exists (fun err -> err.Contains "409"))
                 then
                     let msgs =
-                        errors |> Seq.map (fun c -> "(Err) " + c)
-                        |> Seq.append results |> Seq.map (fun c -> c)
+                        errors
+                        |> Seq.map (fun c -> "(Err) " + c)
+                        |> Seq.append results
+                        |> Seq.map (fun c -> c)
 
                     let msg = String.Join("\n", msgs)
 
                     failwithf "failed to push package %s (code %d): \n%s" nugetPackage processResult.ExitCode msg
                 else
                     Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!"
-            
+
         else
             Trace.traceFAKE "could not push '%s', because api key was not set" nugetPackage
     with exn when tries > 1 ->
@@ -525,9 +534,7 @@ Target.create "Clean" (fun _ ->
         Shell.rm ("paket-files" </> "paket.restore.cached")
         callPaket "." "restore"
 
-    Shell.cleanDirs
-        [ nugetDncDir
-          collectedArtifactsDir ]
+    Shell.cleanDirs [ nugetDncDir; collectedArtifactsDir ]
 
     // Clean Data for tests
     cleanForTests ())
@@ -537,32 +544,33 @@ Target.create "CheckReleaseSecrets" (fun _ ->
         secret.Force() |> ignore)
 
 Target.create "CheckFormatting" (fun _ ->
-    let dotnetOptions = (fun (buildOptions:DotNet.Options) -> { buildOptions with RedirectOutput = false})
-    let result =
-     DotNet.exec id "fantomas" "src/app/ src/template/ src/test/ --recurse --check"
+    let dotnetOptions =
+        (fun (buildOptions: DotNet.Options) -> { buildOptions with RedirectOutput = false })
+
+    let result = DotNet.exec id "fantomas" "src/app/ src/template/ src/test/ --check"
 
     if result.ExitCode = 0 then
         Trace.log "No files need formatting"
     elif result.ExitCode = 99 then
-        failwith "Some files need formatting, please run \"dotnet fantomas  src/app/ src/template/ src/test/ --recurse\" to resolve this."
+        failwith
+            "Some files need formatting, please run \"dotnet fantomas  src/app/ src/template/ src/test/\" to resolve this."
     else
-        failwith "Errors while formatting"
-)
+        failwith "Errors while formatting")
 
 // ----------------------------------------------------------------------------------------------------
 // Documentation targets.
 
 Target.create "GenerateDocs" (fun _ ->
     let source = "./docs"
-    
+
     Shell.cleanDir ".fsdocs"
     Directory.ensure "output"
 
     let projInfo =
         seq {
-          ("root", docsDomain)
-          ("fsdocs-logo-src", docsDomain @@ "content/img/logo.svg")
-          ("fsdocs-fake-version", simpleVersion)
+            ("root", docsDomain)
+            ("fsdocs-logo-src", docsDomain @@ "content/img/logo.svg")
+            ("fsdocs-fake-version", simpleVersion)
         }
 
     File.writeString false "./output/.nojekyll" ""
@@ -571,26 +579,31 @@ Target.create "GenerateDocs" (fun _ ->
 
     try
         Npm.install (fun o -> { o with WorkingDirectory = "./docs" })
-        
+
         Npm.run "build" (fun o -> { o with WorkingDirectory = "./docs" })
 
-        Shell.copy "./output" [source </> "robots.txt"]
+        Shell.copy "./output" [ source </> "robots.txt" ]
 
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-        let command = sprintf "build --clean --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s" (docsDomain @@ "content/img/logo.svg") simpleVersion
+        let command =
+            sprintf
+                "build --clean --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s"
+                (docsDomain @@ "content/img/logo.svg")
+                simpleVersion
+
         DotNet.exec id "fsdocs" command |> ignore
 
-        // Fsdocs.build (fun p -> { p with
-        //                             Input = Some(source)
-        //                             SaveImages = Some(true)
-        //                             Clean = Some(true)
-        //                             Parameters = Some projInfo
-        //                             Properties = Some "Configuration=debug"
-        //                             //Strict = Some(true)
-        // })
-        
+    // Fsdocs.build (fun p -> { p with
+    //                             Input = Some(source)
+    //                             SaveImages = Some(true)
+    //                             Clean = Some(true)
+    //                             Parameters = Some projInfo
+    //                             Properties = Some "Configuration=debug"
+    //                             //Strict = Some(true)
+    // })
+
     finally
         // clean up
         Shell.rm (source </> "guide/RELEASE_NOTES.md")
@@ -600,19 +613,31 @@ Target.create "GenerateDocs" (fun _ ->
 
 
     // validate site generation and ensure all components are generated successfully.
-    if DirectoryInfo.ofPath("./output/guide").GetFiles().Length = 0 then failwith "site generation failed due to missing guide directory"
-    if DirectoryInfo.ofPath("./output/reference").GetFiles().Length = 0 then failwith "site generation failed due to missing reference directory"
-    if DirectoryInfo.ofPath("./output/articles").GetFiles().Length = 0 then failwith "site generation failed due to missing articles directory"
-    if not (File.exists("./output/data.json")) then failwith "site generation failed due to missing data.json file"
-    if not (File.exists("./output/guide/RELEASE_NOTES.html")) then failwith "site generation failed due to missing RELEASE_NOTES.html file"
-    if not (File.exists("./output/guide.html")) then failwith "site generation failed due to missing guide.html file"
-    if not (File.exists("./output/index.html")) then failwith "site generation failed due to missing index.html file"
+    if DirectoryInfo.ofPath("./output/guide").GetFiles().Length = 0 then
+        failwith "site generation failed due to missing guide directory"
+
+    if DirectoryInfo.ofPath("./output/reference").GetFiles().Length = 0 then
+        failwith "site generation failed due to missing reference directory"
+
+    if DirectoryInfo.ofPath("./output/articles").GetFiles().Length = 0 then
+        failwith "site generation failed due to missing articles directory"
+
+    if not (File.exists ("./output/data.json")) then
+        failwith "site generation failed due to missing data.json file"
+
+    if not (File.exists ("./output/guide/RELEASE_NOTES.html")) then
+        failwith "site generation failed due to missing RELEASE_NOTES.html file"
+
+    if not (File.exists ("./output/guide.html")) then
+        failwith "site generation failed due to missing guide.html file"
+
+    if not (File.exists ("./output/index.html")) then
+        failwith "site generation failed due to missing index.html file"
 
     // prepare artifact
     Directory.ensure "temp"
-    
-    !!("output" </> "**/*")
-    |> Zip.zip docsDir "temp/docs.zip"
+
+    !!("output" </> "**/*") |> Zip.zip docsDir "temp/docs.zip"
     publish "temp/docs.zip")
 
 Target.create "HostDocs" (fun _ ->
@@ -625,15 +650,20 @@ Target.create "HostDocs" (fun _ ->
 
         Shell.copy (source @@ "guide") [ "RELEASE_NOTES.md" ]
 
-        Shell.copy "./output" [source </> "robots.txt"]
-        
+        Shell.copy "./output" [ source </> "robots.txt" ]
+
         // renaming node_modules directory so that fsdocs skip it when generating site.
         Directory.Move("./docs/node_modules", "./docs/.node_modules")
 
-        let command = sprintf "watch --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s" (docsDomain @@ "content/img/logo.svg") simpleVersion
+        let command =
+            sprintf
+                "watch --input ./docs --saveimages --properties Configuration=release --parameters fsdocs-logo-src %s fsdocs-fake-version %s"
+                (docsDomain @@ "content/img/logo.svg")
+                simpleVersion
+
         DotNet.exec id "fsdocs" command |> ignore
 
-        // Fsdocs.watch id
+    // Fsdocs.watch id
 
     finally
         // clean up
@@ -641,7 +671,7 @@ Target.create "HostDocs" (fun _ ->
 
         // renaming node_modules directory back after fsdocs generated site.
         Directory.Move("./docs/.node_modules", "./docs/node_modules")
-    
+
 )
 
 // ----------------------------------------------------------------------------------------------------
@@ -662,7 +692,7 @@ Target.create "TemplateIntegrationTests" (fun _ ->
         targetDir
         "bin/Release/net6.0/Fake.DotNet.Cli.IntegrationTests.dll"
         "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
-    
+
     Shell.rm_rf (root </> "test"))
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -726,14 +756,16 @@ Target.create "BootstrapFake" (fun _ ->
 
 
             let processResult =
-                CreateProcess.fromRawCommandLine fileName (sprintf "run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target)
+                CreateProcess.fromRawCommandLine
+                    fileName
+                    (sprintf "run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target)
                 |> CreateProcess.withWorkingDirectory "."
                 |> CreateProcess.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 |> CreateProcess.withTimeout timeout
                 |> Proc.run
-                
+
             processResult.ExitCode
-            
+
         let result = executeTarget "BootstrapFake_PrintColors"
 
         if result <> 0 then
@@ -970,11 +1002,7 @@ Target.create "DotNetPushChocolateyPackage" (fun _ ->
             { p with ToolPath = altToolPath }
 
     path
-    |> Choco.push (fun p ->
-        { p with
-            Source = chocoSource
-            ApiKey = chocoKey.Value }
-        |> changeToolPath))
+    |> Choco.push (fun p -> { p with Source = chocoSource; ApiKey = chocoKey.Value } |> changeToolPath))
 
 Target.create "DotNetPushToNuGet" (fun _ ->
     !!(appDir </> "*/*.fsproj") -- (appDir </> "Fake.netcore/*.fsproj")
@@ -1034,7 +1062,7 @@ Target.create "GitHubRelease" (fun _ ->
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
-    
+
     let bumpVersionMessage = (sprintf "Bump version to %s" simpleVersion)
     let branch = "bump-version-to-" + simpleVersion
     Git.Staging.stageAll ".config"
@@ -1044,9 +1072,12 @@ Target.create "GitHubRelease" (fun _ ->
 
     // when we release the GitHub module, this will be replaced with GitHub.createPullRequest API
     let pullRequest = new NewPullRequest(bumpVersionMessage, branch, "master")
+
     let pullRequestTask (client: GitHubClient) =
-        client.PullRequest.Create(githubReleaseUser, gitName, pullRequest) |> Async.AwaitTask |> Async.RunSynchronously
-        
+        client.PullRequest.Create(githubReleaseUser, gitName, pullRequest)
+        |> Async.AwaitTask
+        |> Async.RunSynchronously
+
     GitHub.createClientWithToken token
     |> Async.RunSynchronously
     |> pullRequestTask

@@ -415,7 +415,6 @@ module Environment =
     let getNuGetPackagesCacheFolder () = nugetPackagesFolder.Value
 
 
-
 #if !NETSTANDARD
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
     /// <summary>
@@ -426,8 +425,7 @@ module Environment =
 
         try
             let matches =
-                Registry
-                    .LocalMachine
+                Registry.LocalMachine
                     .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
                     .GetSubKeyNames()
                 |> Seq.filter (fun keyname -> Regex.IsMatch(keyname, @"^v\d"))
@@ -489,7 +487,8 @@ module Environment =
           AgentVersion =
             sprintf
                 "%A"
-                ((System.Reflection.Assembly.GetAssembly(typedefof<MachineDetails>)).GetName()
+                ((System.Reflection.Assembly.GetAssembly(typedefof<MachineDetails>))
+                    .GetName()
                     .Version)
           DriveInfo = getDrivesInfo () }
 #endif

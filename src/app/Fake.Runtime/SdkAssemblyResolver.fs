@@ -203,7 +203,9 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             // in which FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH is set.
             match this.ResolveDotNetRoot() with
             | Some root ->
-                options.WithCommon(fun common -> { common with DotNetCliPath = root </> this.DotNetBinaryName })
+                options.WithCommon(fun common ->
+                    { common with
+                        DotNetCliPath = root </> this.DotNetBinaryName })
             | None -> options
 
         let sdkVersion = DotNet.getVersion versionOptions |> ReleaseVersion
@@ -331,10 +333,8 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         Directory.GetFiles(sdkDir, "*.dll") |> Seq.toList
 
     member this.ResolveSdkReferenceAssemblies
-        (
-            groupName: Domain.GroupName,
-            paketDependenciesFile: Lazy<Paket.DependenciesFile>
-        ) =
+        (groupName: Domain.GroupName, paketDependenciesFile: Lazy<Paket.DependenciesFile>)
+        =
         if this.LogLevel.PrintVerbose then
             let versions =
                 String.Join(", and", this.SdkVersions |> List.map (fun v -> $" .NET{v.Major}"))

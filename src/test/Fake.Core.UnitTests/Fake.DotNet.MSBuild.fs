@@ -55,13 +55,19 @@ let tests =
           flagsTestCase "/tl:auto doesn't ouput anything (1)" id ""
           flagsTestCase
               "/tl:auto doesn't ouput anything (2)"
-              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.Auto })
+              (fun args ->
+                  { args with
+                      TerminalLogger = MSBuildTerminalLoggerOption.Auto })
               ""
           flagsTestCase
               "/tl:on does ouput"
-              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.On })
+              (fun args ->
+                  { args with
+                      TerminalLogger = MSBuildTerminalLoggerOption.On })
               "/tl:on"
           flagsTestCase
               "/tl:off does ouput"
-              (fun args -> { args with TerminalLogger = MSBuildTerminalLoggerOption.Off })
+              (fun args ->
+                  { args with
+                      TerminalLogger = MSBuildTerminalLoggerOption.Off })
               "/tl:off" ]

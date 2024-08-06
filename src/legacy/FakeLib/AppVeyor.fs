@@ -133,69 +133,82 @@ type AppVeyorEnvironment =
 
     /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
-    static member Configuration  = environVar "CONFIGURATION"
+    static member Configuration = environVar "CONFIGURATION"
 
     /// The job name
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member JobName = environVar "APPVEYOR_JOB_NAME"
-    
+
     /// The Job Number
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member JobNumber = environVar "APPVEYOR_JOB_NUMBER"
-    
+
     /// set to true to disable cache restore
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member CacheSkipRestore = environVar "APPVEYOR_CACHE_SKIP_RESTORE"
-    
+
     /// set to true to disable cache update
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member CacheSkipSave = environVar "APPVEYOR_CACHE_SKIP_SAVE"
-    
+
     /// Current build worker image the build is running on, e.g. Visual Studio 2015
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member BuildWorkerImage = environVar "APPVEYOR_BUILD_WORKER_IMAGE"
-    
+
     /// Artifact upload timeout in seconds. Default is 600 (10 minutes)
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member ArtifactUploadTimeout = environVar "APPVEYOR_ARTIFACT_UPLOAD_TIMEOUT"
-    
+
     /// Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
     static member FileDownloadTimeout = environVar "APPVEYOR_FILE_DOWNLOAD_TIMEOUT"
-    
+
     /// Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
-    static member RepositoryShallowCloneTimeout = environVar "APPVEYOR_REPOSITORY_SHALLOW_CLONE_TIMEOUT"
-    
+    static member RepositoryShallowCloneTimeout =
+        environVar "APPVEYOR_REPOSITORY_SHALLOW_CLONE_TIMEOUT"
+
     /// Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)
     [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.Environment instead")>]
-    static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
-    
+    static member CacheEntryUploadDownloadTimeout =
+        environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
+
 let private sendToAppVeyor args =
-    ExecProcess (fun info ->
-        info.FileName <- "appveyor"
-        info.Arguments <- args) (System.TimeSpan.MaxValue)
+    ExecProcess
+        (fun info ->
+            info.FileName <- "appveyor"
+            info.Arguments <- args)
+        (System.TimeSpan.MaxValue)
     |> ignore
 
 let private add msg category =
     if not <| isNullOrEmpty msg then
         let enableProcessTracingPreviousValue = enableProcessTracing
         enableProcessTracing <- false
-        sprintf "AddMessage %s -Category %s" (quoteIfNeeded msg) (quoteIfNeeded category) |> sendToAppVeyor
+
+        sprintf "AddMessage %s -Category %s" (quoteIfNeeded msg) (quoteIfNeeded category)
+        |> sendToAppVeyor
+
         enableProcessTracing <- enableProcessTracingPreviousValue
-let private addNoCategory msg = sprintf "AddMessage %s" (quoteIfNeeded msg) |> sendToAppVeyor
+
+let private addNoCategory msg =
+    sprintf "AddMessage %s" (quoteIfNeeded msg) |> sendToAppVeyor
 
 // Add trace listener to track messages
 if buildServer = BuildServer.AppVeyor then
     { new ITraceListener with
-          member this.Write msg =
-              match msg with
-              | ErrorMessage x -> add x "Error"
-              | ImportantMessage x -> add x "Warning"
-              | LogMessage(x, _) -> add x "Information"
-              | TraceMessage(x, _) ->
-                  if not enableProcessTracing then addNoCategory x
-              | StartMessage | FinishedMessage | OpenTag(_, _) | CloseTag _ -> () }
+        member this.Write msg =
+            match msg with
+            | ErrorMessage x -> add x "Error"
+            | ImportantMessage x -> add x "Warning"
+            | LogMessage(x, _) -> add x "Information"
+            | TraceMessage(x, _) ->
+                if not enableProcessTracing then
+                    addNoCategory x
+            | StartMessage
+            | FinishedMessage
+            | OpenTag(_, _)
+            | CloseTag _ -> () }
     |> listeners.Add
 
 /// Finishes the test suite.
@@ -209,31 +222,38 @@ let StartTestSuite testSuiteName = () // Nothing in API yet
 /// Starts the test case.
 [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', install the build-server and use 'use dis = Trace.traceTag (KnownTags.Test name)' instead")>]
 let StartTestCase testSuiteName testCaseName =
-    sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
+    sendToAppVeyor
+    <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
 
 /// Reports a failed test.
 [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', install the build-server and use 'Trace.testStatus testName (TestStatus.Failed(message, details, None))' instead")>]
 let TestFailed testSuiteName testCaseName message details =
-    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s" (testSuiteName + " - " + testCaseName)
-        (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
+    sendToAppVeyor
+    <| sprintf
+        "UpdateTest \"%s\" -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s"
+        (testSuiteName + " - " + testCaseName)
+        (EncapsulateSpecialChars message)
+        (EncapsulateSpecialChars details)
 
 /// Ignores the test case.
 [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', install the build-server and use 'Trace.testStatus testName (TestStatus.Ignore(message))' instead")>]
-let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
+let IgnoreTestCase testSuiteName testCaseName message =
+    sendToAppVeyor
+    <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
 /// Reports a succeeded test.
 [<System.Obsolete("please remove this call, success is implicit.")>]
-let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
+let TestSucceeded testSuiteName testCaseName =
+    sendToAppVeyor
+    <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
 
 /// Finishes the test case.
 [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', install the build-server and use 'use dis = Trace.traceTag (KnownTags.Test name)' instead")>]
-let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
-    let duration =
-        duration.TotalMilliseconds
-        |> round
-        |> string
+let FinishTestCase testSuiteName testCaseName (duration: System.TimeSpan) =
+    let duration = duration.TotalMilliseconds |> round |> string
 
-    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
+    sendToAppVeyor
+    <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
 
 /// Union type representing the available test result formats accepted by AppVeyor.
 [<System.Obsolete("This type should no longer be required (use 'Fake.BuildServer.AppVeyor').")>]
@@ -246,23 +266,27 @@ type TestResultsType =
 
 /// Uploads a test result file to make them visible in Test tab of the build console.
 [<System.Obsolete("This should no longer be required (install 'Fake.BuildServer.AppVeyor') and use 'Trace.publish (ImportData.<type>) file'.")>]
-let UploadTestResultsFile (testResultsType : TestResultsType) file =
+let UploadTestResultsFile (testResultsType: TestResultsType) file =
     if buildServer = BuildServer.AppVeyor then
         let resultsType = (sprintf "%A" testResultsType).ToLower()
-        let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
+
+        let url =
+            sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
+
         use wc = new System.Net.WebClient()
+
         try
             wc.UploadFile(url, file) |> ignore
             printfn "Successfully uploaded test results %s" file
-        with
-        | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+        with ex ->
+            printfn "An error occurred while uploading %s:\r\n%O" file ex
 
 /// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
 [<System.Obsolete("This should no longer be required (install 'Fake.BuildServer.AppVeyor') and use 'Trace.publish (ImportData.<type>) file'.")>]
-let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
+let UploadTestResultsXml (testResultsType: TestResultsType) outputDir =
     if buildServer = BuildServer.AppVeyor then
         System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
-        |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
+        |> Seq.map (fun file -> async { UploadTestResultsFile testResultsType file })
         |> Async.Parallel
         |> Async.RunSynchronously
         |> ignore
@@ -274,7 +298,9 @@ let SetVariable name value =
 
 /// Type of artifact that is pushed
 [<System.Obsolete("This type should no longer be required (use 'Fake.BuildServer.AppVeyor').")>]
-type ArtifactType = Auto | WebDeployPackage
+type ArtifactType =
+    | Auto
+    | WebDeployPackage
 
 /// AppVeyor parameters for artifact push as [described](https://www.appveyor.com/docs/build-worker-api/#push-artifact)
 [<System.Obsolete("This type should no longer be required (use 'Fake.BuildServer.AppVeyor').")>]
@@ -295,12 +321,10 @@ type PushArtifactParams =
 
 [<System.Obsolete("This should no longer be required (use 'Fake.BuildServer.AppVeyor').")>]
 let defaultPushArtifactParams =
-    {
-        Path = ""
-        FileName = ""
-        DeploymentName = ""
-        Type = Auto
-    }
+    { Path = ""
+      FileName = ""
+      DeploymentName = ""
+      Type = Auto }
 
 let private appendArgIfNotNullOrEmpty value name builder =
     if (isNotNullOrEmpty value) then
@@ -310,9 +334,10 @@ let private appendArgIfNotNullOrEmpty value name builder =
 
 /// Push an artifact
 [<System.Obsolete("This should no longer be required (install 'Fake.BuildServer.AppVeyor') and use 'Trace.publish ImportData.BuildArtifact file'.")>]
-let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
+let PushArtifact (setParams: PushArtifactParams -> PushArtifactParams) =
     if buildServer = BuildServer.AppVeyor then
         let parameters = setParams defaultPushArtifactParams
+
         new System.Text.StringBuilder()
         |> append "PushArtifact"
         |> append parameters.Path
@@ -327,28 +352,30 @@ let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
 let PushArtifacts paths =
     if buildServer = BuildServer.AppVeyor then
         for path in paths do
-            PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
+            PushArtifact(fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
 
 /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
 [<System.Obsolete("This should no longer be required (use 'Fake.BuildServer.AppVeyor').")>]
 [<CLIMutable>]
 type UpdateBuildParams =
-    { /// Build version; must be unique for the current project
-      Version : string
-      /// Commit message
-      Message : string
-      /// Commit hash
-      CommitId : string
-      /// Commit date
-      Committed : DateTime option
-      /// Commit author name
-      AuthorName : string
-      /// Commit author email address
-      AuthorEmail : string
-      /// Committer name
-      CommitterName : string
-      /// Committer email address
-      CommitterEmail : string }
+    {
+        /// Build version; must be unique for the current project
+        Version: string
+        /// Commit message
+        Message: string
+        /// Commit hash
+        CommitId: string
+        /// Commit date
+        Committed: DateTime option
+        /// Commit author name
+        AuthorName: string
+        /// Commit author email address
+        AuthorEmail: string
+        /// Committer name
+        CommitterName: string
+        /// Committer email address
+        CommitterEmail: string
+    }
 
 let private defaultUpdateBuildParams =
     { Version = ""
@@ -362,7 +389,7 @@ let private defaultUpdateBuildParams =
 
 /// Update build details
 [<System.Obsolete("please use nuget 'Fake.BuildServer.AppVeyor', open Fake.BuildServer and use AppVeyor.updateBuild instead")>]
-let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
+let UpdateBuild (setParams: UpdateBuildParams -> UpdateBuildParams) =
     if buildServer = BuildServer.AppVeyor then
         let parameters = setParams defaultUpdateBuildParams
 
@@ -387,4 +414,4 @@ let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
 /// Update build version. This must be unique for the current project.
 [<System.Obsolete("This should no longer be required (install 'Fake.BuildServer.AppVeyor') and use 'Trace.setBuildNumber version'.")>]
 let UpdateBuildVersion version =
-    UpdateBuild (fun p -> { p with Version = version })
+    UpdateBuild(fun p -> { p with Version = version })

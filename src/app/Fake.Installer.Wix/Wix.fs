@@ -850,11 +850,7 @@ module Wix =
         parameters
 
     /// Defaults for directories
-    let internal DirDefaults =
-        { Id = ""
-          Name = ""
-          Files = []
-          Components = [] }
+    let internal DirDefaults = { Id = ""; Name = ""; Files = []; Components = [] }
 
     /// Use this for generating directories
     let internal generateDirectory (setParams: Dir -> Dir) =
@@ -1639,10 +1635,7 @@ module Wix =
             + "\"/>"
 
     /// Default value for WiX Variable
-    let internal VariableDefaults =
-        { Id = ""
-          Overridable = YesOrNo.No
-          Value = "" }
+    let internal VariableDefaults = { Id = ""; Overridable = YesOrNo.No; Value = "" }
 
     /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
     type Script =

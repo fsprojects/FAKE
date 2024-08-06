@@ -67,11 +67,8 @@ module internal AsyncExtensions =
 
         /// Like StartAsTask but gives the computation time to so some regular cancellation work
         static member StartAsTaskProperCancel
-            (
-                computation: Async<_>,
-                ?taskCreationOptions,
-                ?cancellationToken: CancellationToken
-            ) : Task<_> =
+            (computation: Async<_>, ?taskCreationOptions, ?cancellationToken: CancellationToken)
+            : Task<_> =
             startAsTaskHelper Async.Start computation cancellationToken taskCreationOptions
 
         static member StartImmediateAsTask(computation, ?taskCreationOptions, ?cancellationToken) =

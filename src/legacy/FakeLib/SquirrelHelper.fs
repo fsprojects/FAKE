@@ -15,37 +15,38 @@ open System.Text
 type SquirrelParams =
     {
         /// The output directory for the generated installer
-        ReleaseDir : string
+        ReleaseDir: string
 
         /// The working directory.
-        WorkingDir : string option
+        WorkingDir: string option
 
         /// The full path to an optional setup.exe template
-        BootstrapperExe : string option
+        BootstrapperExe: string option
 
         /// The full path to an optional animated gif to be displayed during installation
-        LoadingGif : string option
+        LoadingGif: string option
 
         /// The full path to an optional icon, which will be used for the generated installer.
-        SetupIcon : string option
+        SetupIcon: string option
 
         /// Do not create an MSI file
-        NoMsi : bool
+        NoMsi: bool
 
         /// The path to Squirrel: `squirrel.exe`
-        ToolPath : string
+        ToolPath: string
 
         /// Maximum time to allow Squirrel to run before being killed.
-        TimeOut : TimeSpan
+        TimeOut: TimeSpan
 
         /// Sign the installer with signtool.exe
-        SignExecutable : bool option
+        SignExecutable: bool option
 
         /// The code signing certificate to be used for signing
-        SigningKeyFile : string option
+        SigningKeyFile: string option
 
         /// The secret key for the code signing certificate
-        SigningSecret : string option }
+        SigningSecret: string option
+    }
 
 /// The Squirrel default parameters.
 ///
@@ -65,25 +66,25 @@ type SquirrelParams =
 [<System.Obsolete("FAKE0001 Use the Fake.Installer.Squirrel module instead")>]
 let SquirrelDefaults =
     let toolname = "Squirrel.exe"
-    {
-        ReleaseDir = ""
-        WorkingDir = None
-        BootstrapperExe = None
-        LoadingGif = None
-        SetupIcon = None
-        NoMsi = false
-        ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
-        TimeOut = TimeSpan.FromMinutes 10.
-        SignExecutable = None
-        SigningKeyFile = None
-        SigningSecret = None }
 
-let private createSigningArgs (parameters : SquirrelParams) =
+    { ReleaseDir = ""
+      WorkingDir = None
+      BootstrapperExe = None
+      LoadingGif = None
+      SetupIcon = None
+      NoMsi = false
+      ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
+      TimeOut = TimeSpan.FromMinutes 10.
+      SignExecutable = None
+      SigningKeyFile = None
+      SigningSecret = None }
+
+let private createSigningArgs (parameters: SquirrelParams) =
     new StringBuilder()
     |> appendWithoutQuotes "--signWithParams=\""
     |> appendWithoutQuotes "/a"
     |> appendIfSome parameters.SigningKeyFile (sprintf "/f %s")
-    |> appendIfSome parameters.SigningSecret  (sprintf "/p %s")
+    |> appendIfSome parameters.SigningSecret (sprintf "/p %s")
     |> appendWithoutQuotes "\""
     |> toText
 
@@ -99,18 +100,17 @@ let internal buildSquirrelArgs parameters nugetPackage =
     |> toText
 
 module internal ResultHandling =
-    let (|OK|Failure|) = function
+    let (|OK|Failure|) =
+        function
         | 0 -> OK
         | x -> Failure x
 
-    let buildErrorMessage = function
+    let buildErrorMessage =
+        function
         | OK -> None
-        | Failure errorCode ->
-            Some (sprintf "Squirrel reported an error (Error Code %d)" errorCode)
+        | Failure errorCode -> Some(sprintf "Squirrel reported an error (Error Code %d)" errorCode)
 
-    let failBuildIfSquirrelReportedError =
-        buildErrorMessage
-        >> Option.iter failwith
+    let failBuildIfSquirrelReportedError = buildErrorMessage >> Option.iter failwith
 
 /// Creates a Squirrel installer for given NuGet package
 /// Will fail if Squirrel terminates with non-zero exit code.
@@ -133,9 +133,11 @@ let SquirrelPack setParams nugetPackage =
     trace args
 
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-            info.Arguments <- args) parameters.TimeOut
+        ExecProcess
+            (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
+                info.Arguments <- args)
+            parameters.TimeOut
 
     ResultHandling.failBuildIfSquirrelReportedError result

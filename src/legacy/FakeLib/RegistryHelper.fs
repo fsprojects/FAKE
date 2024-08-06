@@ -53,41 +53,52 @@ let get32BitKey name =
 
 /// Gets a 64-bit registry key
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
-let getRegistryKey64 baseKey subKey (writePermission : bool) =
+let getRegistryKey64 baseKey subKey (writePermission: bool) =
     (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
 
 /// Gets a registry key and falls back to 32 bit if the 64bit key is not there
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
-let getRegistryKey baseKey subKey (writePermission : bool) =
+let getRegistryKey baseKey subKey (writePermission: bool) =
     let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
-    if x64BitKey <> null then x64BitKey else
-    (get32BitKey baseKey).OpenSubKey(subKey, writePermission)  // fall back to 32 bit
+
+    if x64BitKey <> null then
+        x64BitKey
+    else
+        (get32BitKey baseKey).OpenSubKey(subKey, writePermission) // fall back to 32 bit
 
 /// Gets a registry value as string
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
 let getRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey false
+
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
+
     let value = key.GetValue name
+
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
+
     value.ToString()
 
 /// Gets a registry value as string
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
 let getRegistryValue64 baseKey subKey name =
     use key = getRegistryKey64 baseKey subKey false
+
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
+
     let value = key.GetValue name
+
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
+
     value.ToString()
 
 /// Sets a registry value
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
-let setRegistryValue<'T> baseKey subKey name (value : 'T) =
+let setRegistryValue<'T> baseKey subKey name (value: 'T) =
     use key = getRegistryKey baseKey subKey true
     key.SetValue(name, value)
 
@@ -105,9 +116,8 @@ let getRegistryValueNames baseKey subKey =
 
 /// Returns whether or not a registry value name exists for a key
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]
-let valueExistsForKey = fun baseKey subKey name ->
-    getRegistryValueNames baseKey subKey
-    |> Seq.exists (fun n -> n = name)
+let valueExistsForKey =
+    fun baseKey subKey name -> getRegistryValueNames baseKey subKey |> Seq.exists (fun n -> n = name)
 
 /// Create a registry subKey
 [<System.Obsolete("FAKE0001 Use the Fake.Windows.Registry module instead")>]

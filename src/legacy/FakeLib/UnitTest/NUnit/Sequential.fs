@@ -4,45 +4,57 @@
 module Fake.NUnitSequential
 
 #nowarn "44"
+
 /// Runs NUnit on a group of assemblies.
 /// ## Parameters
-/// 
+///
 ///  - `setParams` - Function used to manipulate the default [NUnitParams](fake-nunitcommon-nunitparams.html) value.
 ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
-/// 
+///
 /// ## Sample usage
 ///
 ///     Target "Test" (fun _ ->
-///         !! (testDir + @"\Test.*.dll") 
+///         !! (testDir + @"\Test.*.dll")
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
-let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
+let NUnit (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnit" details
     let parameters = NUnitDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
-    if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
+
+    if Array.isEmpty assemblies then
+        failwith "NUnit: cannot run tests (the assembly list is empty)."
+
     let tool = parameters.ToolPath @@ parameters.ToolName
     let args = buildNUnitdArgs parameters assemblies
     trace (tool + " " + args)
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- tool
-            info.WorkingDirectory <- getWorkingDir parameters
-            info.Arguments <- args) parameters.TimeOut
+
+    let result =
+        ExecProcess
+            (fun info ->
+                info.FileName <- tool
+                info.WorkingDirectory <- getWorkingDir parameters
+                info.Arguments <- args)
+            parameters.TimeOut
+
     sendTeamCityNUnitImport parameters.OutputFile
-    let errorDescription error = 
+
+    let errorDescription error =
         match error with
         | OK -> "OK"
         | TestsFailed -> sprintf "NUnit test failed (%d)." error
         | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
+
     match parameters.ErrorLevel with
-    | DontFailBuild -> 
+    | DontFailBuild ->
         match result with
-        | OK | TestsFailed -> ()
+        | OK
+        | TestsFailed -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
-    | Error | FailOnFirstError -> 
+    | Error
+    | FailOnFirstError ->
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))

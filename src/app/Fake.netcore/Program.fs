@@ -128,9 +128,9 @@ let runOrBuild (args: RunArguments) =
             //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
 
             //Use --fsiargs approach.
-            | Some (script), fsArgs, _ ->
+            | Some(script), fsArgs, _ ->
                 match fsiArgs |> Array.tryFindIndex (fun arg -> not (arg.StartsWith "-")) with
-                | Some (i) ->
+                | Some(i) ->
                     let fsxPath = fsiArgs.[i]
 
                     if script <> fsxPath then
@@ -150,7 +150,7 @@ let runOrBuild (args: RunArguments) =
                 let args = x :: xs |> Array.ofList
                 //Find first arg that does not start with - (as these are fsi options that precede the fsx).
                 match args |> Array.tryFindIndex (fun arg -> not (arg.StartsWith "-")) with
-                | Some (i) ->
+                | Some(i) ->
                     let fsxPath = args.[i]
 
                     if fsxPath.EndsWith(".fsx", StringComparison.OrdinalIgnoreCase) then

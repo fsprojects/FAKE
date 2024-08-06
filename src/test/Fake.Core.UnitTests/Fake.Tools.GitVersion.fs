@@ -9,7 +9,8 @@ open Expecto
 
 let rawCreateProcess setParams =
     Fake.Tools.GitVersion.createProcess (fun param ->
-        { param with ToolPath = Path.Combine("gitversion", "GitVersion.exe") }
+        { param with
+            ToolPath = Path.Combine("gitversion", "GitVersion.exe") }
         |> setParams)
 
 let runCreateProcess setParams =
@@ -17,7 +18,7 @@ let runCreateProcess setParams =
 
     let file, args =
         match cp.Command with
-        | RawCommand (file, args) -> file, args
+        | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
         |> ArgumentHelper.checkIfMono
 
@@ -48,7 +49,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfMono
 
@@ -67,7 +68,7 @@ let tests =
 
               let file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
 
               Expect.equal file path "Expected globaltool.exe"
@@ -82,7 +83,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 
@@ -96,7 +97,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 
@@ -115,7 +116,7 @@ let tests =
 
               let dotnet, file, args =
                   match cp.Command with
-                  | RawCommand (file, args) -> file, args
+                  | RawCommand(file, args) -> file, args
                   | _ -> failwithf "expected RawCommand"
                   |> ArgumentHelper.checkIfDotNet
 

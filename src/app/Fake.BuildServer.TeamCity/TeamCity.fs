@@ -295,7 +295,7 @@ module TeamCity =
                               let filePath = split[0]
 
                               let modificationType =
-                                  match split[ 1 ].ToUpperInvariant() with
+                                  match split[1].ToUpperInvariant() with
                                   | "CHANGED" -> FileChanged
                                   | "ADDED" -> FileAdded
                                   | "REMOVED" -> FileRemoved
@@ -401,42 +401,42 @@ module TeamCity =
                 let color = ConsoleWriter.colorMap msg
 
                 match msg with
-                | TraceData.OpenTag (KnownTags.Test name, _) -> startTestCase name
-                | TraceData.TestOutput (testName, out, err) ->
+                | TraceData.OpenTag(KnownTags.Test name, _) -> startTestCase name
+                | TraceData.TestOutput(testName, out, err) ->
                     if not (String.IsNullOrEmpty out) then
                         reportTestOutput testName out
 
                     if not (String.IsNullOrEmpty err) then
                         reportTestError testName err
-                | TraceData.TestStatus (testName, TestStatus.Ignored message) -> ignoreTestCase testName message
-                | TraceData.TestStatus (testName, TestStatus.Failed (message, detail, None)) ->
+                | TraceData.TestStatus(testName, TestStatus.Ignored message) -> ignoreTestCase testName message
+                | TraceData.TestStatus(testName, TestStatus.Failed(message, detail, None)) ->
                     testFailed testName message detail
-                | TraceData.TestStatus (testName, TestStatus.Failed (message, detail, Some (expected, actual))) ->
+                | TraceData.TestStatus(testName, TestStatus.Failed(message, detail, Some(expected, actual))) ->
                     comparisonFailure testName message detail expected actual
-                | TraceData.BuildState (TagStatus.Success, _) -> reportBuildStatus "SUCCESS" "{build.status.text}"
-                | TraceData.BuildState (TagStatus.Warning, None) -> warning "Setting build state to warning."
-                | TraceData.BuildState (TagStatus.Warning, Some message) -> warning message
-                | TraceData.BuildState (TagStatus.Failed, None) ->
+                | TraceData.BuildState(TagStatus.Success, _) -> reportBuildStatus "SUCCESS" "{build.status.text}"
+                | TraceData.BuildState(TagStatus.Warning, None) -> warning "Setting build state to warning."
+                | TraceData.BuildState(TagStatus.Warning, Some message) -> warning message
+                | TraceData.BuildState(TagStatus.Failed, None) ->
                     reportBuildStatus "FAILURE" "Failure - {build.status.text}"
-                | TraceData.BuildState (TagStatus.Failed, Some message) ->
+                | TraceData.BuildState(TagStatus.Failed, Some message) ->
                     reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" message)
-                | TraceData.CloseTag (KnownTags.Test name, time, _) -> finishTestCase name time
-                | TraceData.OpenTag (KnownTags.TestSuite name, _) -> startTestSuite name
-                | TraceData.CloseTag (KnownTags.TestSuite name, _, _) -> finishTestSuite name
-                | TraceData.OpenTag (tag, description) ->
+                | TraceData.CloseTag(KnownTags.Test name, time, _) -> finishTestCase name time
+                | TraceData.OpenTag(KnownTags.TestSuite name, _) -> startTestSuite name
+                | TraceData.CloseTag(KnownTags.TestSuite name, _, _) -> finishTestSuite name
+                | TraceData.OpenTag(tag, description) ->
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
-                | TraceData.CloseTag (tag, _, _) -> TeamCityWriter.sendCloseBlock tag.Name
+                | TraceData.CloseTag(tag, _, _) -> TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text -> warning text
                 | TraceData.ErrorMessage text -> error text
-                | TraceData.LogMessage (text, newLine)
-                | TraceData.TraceMessage (text, newLine) -> ConsoleWriter.write false color newLine text
-                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) -> publishNamedArtifact name path
-                | TraceData.ImportData (ImportData.BuildArtifact, path) -> publishArtifact path
-                | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->
+                | TraceData.LogMessage(text, newLine)
+                | TraceData.TraceMessage(text, newLine) -> ConsoleWriter.write false color newLine text
+                | TraceData.ImportData(ImportData.BuildArtifactWithName name, path) -> publishNamedArtifact name path
+                | TraceData.ImportData(ImportData.BuildArtifact, path) -> publishArtifact path
+                | TraceData.ImportData(ImportData.DotNetCoverage tool, path) ->
                     Import.sendDotNetCoverageForTool path tool
-                | TraceData.ImportData (typ, path) -> TeamCityWriter.sendImportData typ.TeamCityName path
+                | TraceData.ImportData(typ, path) -> TeamCityWriter.sendImportData typ.TeamCityName path
                 | TraceData.BuildNumber number -> setBuildNumber number
 
     /// [omit]

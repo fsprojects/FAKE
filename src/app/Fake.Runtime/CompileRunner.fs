@@ -15,9 +15,7 @@ open System.IO
 open Yaaf.FSharp.Scripting
 open FSharp.Compiler.CodeAnalysis
 
-type Marker =
-    class
-    end
+type Marker = class end
 
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
@@ -166,7 +164,9 @@ let compile (context: FakeContext) outDll =
             FullPaths = true
             ScriptArgs =
                 "--simpleresolution"
-                :: targetProfile :: "--nowin32manifest" :: fcsDependencyManagerOptions
+                :: targetProfile
+                :: "--nowin32manifest"
+                :: fcsDependencyManagerOptions
                 @ "-o" :: outDll :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs }
     // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
     let fixReferences (s: string list) =
@@ -194,7 +194,9 @@ let compile (context: FakeContext) outDll =
         else
             resultList
 
-    let options = { options with References = fixReferences options.References }
+    let options =
+        { options with
+            References = fixReferences options.References }
 
     let args = options.AsArgs |> Seq.toList |> List.filter (fun arg -> arg <> "--")
 

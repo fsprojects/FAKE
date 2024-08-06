@@ -117,7 +117,9 @@ module GlobbingPatternExtensions =
 
         /// Sets a directory as BaseDirectory.
         member this.SetBaseDirectory(dir: string) =
-            { this.Pattern with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) } :> IGlobbingPattern
+            { this.Pattern with
+                BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) }
+            :> IGlobbingPattern
 
         /// Checks if a particular file is matched
         member this.IsMatch(path: string) =
@@ -156,10 +158,7 @@ module GlobbingPattern =
 
     /// Start an empty globbing pattern from the specified directory
     let createFrom (dir: string) =
-        { BaseDirectory = dir
-          Includes = []
-          Excludes = [] }
-        :> IGlobbingPattern
+        { BaseDirectory = dir; Includes = []; Excludes = [] } :> IGlobbingPattern
 
     /// Sets a directory as baseDirectory for fileIncludes.
     let setBaseDir (dir: string) (fileIncludes: IGlobbingPattern) = fileIncludes.SetBaseDirectory dir

@@ -284,31 +284,31 @@ module AppVeyor =
                 let color = ConsoleWriter.colorMap msg
 
                 match msg with
-                | TraceData.OpenTag (KnownTags.Test name, _) ->
+                | TraceData.OpenTag(KnownTags.Test name, _) ->
                     AppVeyorInternal.StartTestCase (getCurrentTestSuite ()) name
-                | TraceData.TestOutput (_, out, err) -> currentTestOutput <- Some(out, err)
-                | TraceData.TestStatus (_, status) -> currentTestResult <- Some status
-                | TraceData.CloseTag (KnownTags.Test name, time, _) ->
+                | TraceData.TestOutput(_, out, err) -> currentTestOutput <- Some(out, err)
+                | TraceData.TestStatus(_, status) -> currentTestResult <- Some status
+                | TraceData.CloseTag(KnownTags.Test name, time, _) ->
                     let outcome, msg, detail =
                         match currentTestResult with
                         | None -> "Passed", "", ""
-                        | Some (TestStatus.Ignored msg) -> "Ignored", msg, ""
-                        | Some (TestStatus.Failed (message, detail, None)) -> "Failed", message, detail
-                        | Some (TestStatus.Failed (message, detail, Some (expected, actual))) ->
+                        | Some(TestStatus.Ignored msg) -> "Ignored", msg, ""
+                        | Some(TestStatus.Failed(message, detail, None)) -> "Failed", message, detail
+                        | Some(TestStatus.Failed(message, detail, Some(expected, actual))) ->
                             "Failed", sprintf "%s: Expected '%s' but was '%s'" message expected actual, detail
 
                     let stdOut, stdErr =
                         match currentTestOutput with
-                        | Some (out, err) -> out, err
+                        | Some(out, err) -> out, err
                         | None -> "", ""
 
                     AppVeyorInternal.UpdateTestEx (getCurrentTestSuite ()) name outcome msg detail stdOut stdErr
                     AppVeyorInternal.FinishTestCase (getCurrentTestSuite ()) name time
-                | TraceData.OpenTag (KnownTags.TestSuite name, _) -> currentTestSuite <- Some name
-                | TraceData.CloseTag (KnownTags.TestSuite _, _, _) -> currentTestSuite <- None
-                | TraceData.BuildState (state, _) ->
+                | TraceData.OpenTag(KnownTags.TestSuite name, _) -> currentTestSuite <- Some name
+                | TraceData.CloseTag(KnownTags.TestSuite _, _, _) -> currentTestSuite <- None
+                | TraceData.BuildState(state, _) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
-                | TraceData.OpenTag (tag, descr) ->
+                | TraceData.OpenTag(tag, descr) ->
                     match descr with
                     | Some d ->
                         ConsoleWriter.writeAnsiColor
@@ -317,7 +317,7 @@ module AppVeyor =
                             true
                             (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
                     | _ -> ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-                | TraceData.CloseTag (tag, time, state) ->
+                | TraceData.CloseTag(tag, time, state) ->
                     ConsoleWriter.writeAnsiColor
                         false
                         color
@@ -329,25 +329,23 @@ module AppVeyor =
                 | TraceData.ErrorMessage text ->
                     ConsoleWriter.writeAnsiColor false color true text
                     AppVeyorInternal.AddMessage AppVeyorInternal.MessageCategory.Error "" text
-                | TraceData.LogMessage (text, newLine)
-                | TraceData.TraceMessage (text, newLine) -> ConsoleWriter.writeAnsiColor false color newLine text
-                | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit, path) ->
+                | TraceData.LogMessage(text, newLine)
+                | TraceData.TraceMessage(text, newLine) -> ConsoleWriter.writeAnsiColor false color newLine text
+                | TraceData.ImportData(ImportData.Nunit NunitDataVersion.Nunit, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.NUnit path
-                | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit3, path) ->
+                | TraceData.ImportData(ImportData.Nunit NunitDataVersion.Nunit3, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.NUnit3 path
-                | TraceData.ImportData (ImportData.Mstest, path) ->
+                | TraceData.ImportData(ImportData.Mstest, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.MsTest path
-                | TraceData.ImportData (ImportData.Xunit, path) ->
+                | TraceData.ImportData(ImportData.Xunit, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.Xunit path
-                | TraceData.ImportData (ImportData.Junit, path) ->
+                | TraceData.ImportData(ImportData.Junit, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.JUnit path
-                | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
-                | TraceData.ImportData (ImportData.BuildArtifact, path) ->
+                | TraceData.ImportData(ImportData.BuildArtifactWithName _, path)
+                | TraceData.ImportData(ImportData.BuildArtifact, path) ->
                     AppVeyorInternal.PushArtifact(fun parms ->
-                        { parms with
-                            Path = path
-                            FileName = Path.GetFileName path })
-                | TraceData.ImportData (typ, path) ->
+                        { parms with Path = path; FileName = Path.GetFileName path })
+                | TraceData.ImportData(typ, path) ->
                     AppVeyorInternal.PushArtifact(fun parms ->
                         { parms with
                             Path = path

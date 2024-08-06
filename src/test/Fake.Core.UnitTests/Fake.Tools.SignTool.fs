@@ -36,10 +36,7 @@ let private expectAndRemove args expected message =
         // remove the expected value from args
         .Replace(expecteds, " ")
         // also remove the just-added space at the end
-        .Substring(
-            0,
-            argss.Length - expecteds.Length
-        )
+        .Substring(0, argss.Length - expecteds.Length)
 
 let private expectIfOption c (o: bool option) m args =
     if o.IsSome && o.Value then
@@ -94,7 +91,8 @@ type SignToolArbitrary =
                 } }
 
 let private signtoolTestConfig =
-    { FsCheckConfig.defaultConfig with arbitrary = [ typeof<SignToolArbitrary> ] }
+    { FsCheckConfig.defaultConfig with
+        arbitrary = [ typeof<SignToolArbitrary> ] }
 
 
 let private checkVerbosity verbosity args =
@@ -216,7 +214,9 @@ let tests =
                   signFiles
                   (fun () -> SignTool.signInternal testRunner testSigntoolexeLocator signOptions signFiles)
                   (fun args ->
-                      Expect.isFalse (args.Contains(" /t ")) "Expected arguments not to contain time stamping option /t"
+                      Expect.isFalse
+                          (args.Contains(" /t "))
+                          "Expected arguments not to contain time stamping option /t"
 
                       Expect.isFalse
                           (args.Contains(" /tr "))
@@ -393,7 +393,8 @@ let tests =
 
               let certificate =
                   SignTool.SignCertificate.File
-                      { SignTool.CertificateFromFile.Create("certificate.pfx") with Password = Some password }
+                      { SignTool.CertificateFromFile.Create("certificate.pfx") with
+                          Password = Some password }
 
               let signOptions = SignTool.SignOptions.Create(certificate)
               let _ = signInternal testRunner testSigntoolexeLocator signOptions [ "testfile1" ]
@@ -415,7 +416,8 @@ let tests =
 
               let certificate =
                   SignTool.SignCertificate.File
-                      { SignTool.CertificateFromFile.Create("certificate.pfx") with Password = Some password }
+                      { SignTool.CertificateFromFile.Create("certificate.pfx") with
+                          Password = Some password }
 
               let signOptions = SignTool.SignOptions.Create(certificate)
 

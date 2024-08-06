@@ -91,7 +91,9 @@ module OpenCover =
                 String.Empty
             else
                 Environment.environVar "LOCALAPPDATA"
-                @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
+                @@ "Apps"
+                @@ "OpenCover"
+                @@ "OpenCover.Console.exe"
           TestRunnerExePath =
             if Environment.isMono then
                 String.Empty

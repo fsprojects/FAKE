@@ -158,10 +158,7 @@ module Kudu =
 
             let response =
                 client
-                    .PostAsync(
-                        zipDeployParams.Url.AbsoluteUri + "api/zipdeploy",
-                        content
-                    )
+                    .PostAsync(zipDeployParams.Url.AbsoluteUri + "api/zipdeploy", content)
                     .Result
 
             response.StatusCode

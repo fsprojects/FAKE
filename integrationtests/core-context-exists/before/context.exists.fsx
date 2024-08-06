@@ -10,5 +10,5 @@ nuget Fake.Core.Context prerelease"
 #load ".fake/context.exists.fsx/intellisense.fsx"
 
 printfn "loading context"
-let context = Fake.Core.Context.forceFakeContext()
+let context = Fake.Core.Context.forceFakeContext ()
 printfn "got: %A" context
