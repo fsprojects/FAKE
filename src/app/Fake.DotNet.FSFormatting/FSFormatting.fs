@@ -77,8 +77,7 @@ let createDocs p =
 
     let command =
         arguments.ProjectParameters
-        |> Seq.map (fun (k, v) -> [ k; v ])
-        |> Seq.concat
+        |> Seq.collect (fun (k, v) -> [ k; v ])
         |> Seq.append (
             [ "literate"; "--processdirectory" ]
             @ layoutroots
@@ -143,8 +142,7 @@ let createDocsForDlls (p: MetadataFormatArguments -> MetadataFormatArguments) dl
 
 
     projectParameters
-    |> Seq.map (fun (k, v) -> [ k; v ])
-    |> Seq.concat
+    |> Seq.collect (fun (k, v) -> [ k; v ])
     |> Seq.append (
         [ "metadataformat"; "--generate"; "--outdir"; outputDir ]
         @ layoutroots

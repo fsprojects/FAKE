@@ -172,7 +172,7 @@ module String =
     /// Removes all trailing .0 from a version string
     /// </summary>
     let rec NormalizeVersion (version: string) =
-        if version = null then
+        if isNull version then
             ""
         else
             let elements = version.Split [| '.' |]

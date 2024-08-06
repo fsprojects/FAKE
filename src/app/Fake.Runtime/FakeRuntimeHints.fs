@@ -159,7 +159,7 @@ let retrieveHints
         let buildVersionMetadataPrefix = "+build"
         let attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
 
-        match attribute.InformationalVersion <> null with
+        match not (isNull attribute.InformationalVersion) with
         | true ->
             let mutable value = attribute.InformationalVersion
             let index = value.IndexOf(buildVersionMetadataPrefix)

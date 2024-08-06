@@ -307,7 +307,7 @@ module NuGet =
             |> String.toLines
 
         let getGroup items toTags =
-            if items = [] then
+            if List.isEmpty items then
                 ""
             else
                 sprintf "<group>%s</group>" (items |> toTags)
@@ -330,7 +330,7 @@ module NuGet =
         let getFrameworkAssemblyTags references =
             references
             |> Seq.map (fun x ->
-                if x.FrameworkVersions = [] then
+                if List.isEmpty x.FrameworkVersions then
                     sprintf "<frameworkAssembly assemblyName=\"%s\" />" x.AssemblyName
                 else
                     sprintf
@@ -340,7 +340,7 @@ module NuGet =
             |> String.toLines
 
         let frameworkAssembliesXml =
-            if parameters.FrameworkAssemblies = [] then
+            if List.isEmpty parameters.FrameworkAssemblies then
                 ""
             else
                 sprintf
@@ -417,7 +417,7 @@ module NuGet =
                 XText(notEncodedText).ToString().Replace("�", "&szlig;")
 
         let toSingleLine (text: string) =
-            if text = null then
+            if isNull text then
                 null
             else
                 text.Replace("\r", "").Replace("\n", "").Replace("  ", " ")
