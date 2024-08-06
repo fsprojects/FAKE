@@ -222,28 +222,34 @@ module private JavaPropertiesFile =
         | KeyValue of key: string * value: string
 
     module private Parser =
-        type CharReader = unit -> char option
+        type CharReader = unit -> char voption
 
+        [<return: Struct>]
         let inline (|IsWhitespace|_|) c =
             match c with
-            | Some c -> if c = ' ' || c = '\t' || c = '\u00ff' then Some c else None
-            | None -> None
+            | ValueSome c ->
+                if c = ' ' || c = '\t' || c = '\u00ff' then
+                    ValueSome c
+                else
+                    ValueNone
+            | ValueNone -> ValueNone
 
         type IsEof =
             | Yes = 1y
             | No = 0y
 
-        let rec readToFirstChar (c: char option) (reader: CharReader) =
+        let rec readToFirstChar (c: char voption) (reader: CharReader) =
             match c with
             | IsWhitespace _ -> readToFirstChar (reader ()) reader
-            | Some '\r'
-            | Some '\n' -> None, IsEof.No
-            | Some _ -> c, IsEof.No
-            | None -> None, IsEof.Yes
+            | ValueSome '\r'
+            | ValueSome '\n' -> ValueNone, IsEof.No
+            | ValueSome _ -> c, IsEof.No
+            | ValueNone -> ValueNone, IsEof.Yes
 
+        [<return: Struct>]
         let inline (|EscapeSequence|_|) c =
             match c with
-            | Some c ->
+            | ValueSome c ->
                 if
                     c = 'r'
                     || c = 'n'
@@ -254,10 +260,10 @@ module private JavaPropertiesFile =
                     || c = '''
                     || c = '\\'
                 then
-                    Some c
+                    ValueSome c
                 else
-                    None
-            | None -> None
+                    ValueNone
+            | ValueNone -> ValueNone
 
         let inline isHex c =
             (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')
@@ -270,7 +276,9 @@ module private JavaPropertiesFile =
             | 't' -> '\t'
             | 'u' ->
                 match reader (), reader (), reader (), reader () with
-                | Some c1, Some c2, Some c3, Some c4 when isHex c1 && isHex c2 && isHex c3 && isHex c4 ->
+                | ValueSome c1, ValueSome c2, ValueSome c3, ValueSome c4 when
+                    isHex c1 && isHex c2 && isHex c3 && isHex c4
+                    ->
                     let hex = String([| c1; c2; c3; c4 |])
 
                     let value =
@@ -280,89 +288,89 @@ module private JavaPropertiesFile =
                 | _ -> failwith "Invalid unicode escape"
             | _ -> c
 
-        let inline readKey (c: char option) (reader: CharReader) (buffer: StringBuilder) =
+        let inline readKey (c: char voption) (reader: CharReader) (buffer: StringBuilder) =
             let rec recurseEnd (result: string) =
                 match reader () with
-                | Some ':'
-                | Some '='
+                | ValueSome ':'
+                | ValueSome '='
                 | IsWhitespace _ -> recurseEnd result
-                | Some '\r'
-                | Some '\n' -> result, false, None, IsEof.No
-                | None -> result, false, None, IsEof.Yes
-                | Some c -> result, true, Some c, IsEof.No
+                | ValueSome '\r'
+                | ValueSome '\n' -> result, false, ValueNone, IsEof.No
+                | ValueNone -> result, false, ValueNone, IsEof.Yes
+                | ValueSome c -> result, true, ValueSome c, IsEof.No
 
-            let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) =
+            let rec recurse (c: char voption) (buffer: StringBuilder) (escaping: bool) =
                 match c with
                 | EscapeSequence c when escaping ->
                     let realChar = readEscapeSequence c reader
                     recurse (reader ()) (buffer.Append(realChar)) false
-                | Some ' ' -> recurseEnd (buffer.ToString())
-                | Some ':'
-                | Some '=' when not escaping -> recurseEnd (buffer.ToString())
-                | Some '\r'
-                | Some '\n' -> buffer.ToString(), false, None, IsEof.No
-                | None -> buffer.ToString(), false, None, IsEof.Yes
-                | Some '\\' -> recurse (reader ()) buffer true
-                | Some c -> recurse (reader ()) (buffer.Append(c)) false
+                | ValueSome ' ' -> recurseEnd (buffer.ToString())
+                | ValueSome ':'
+                | ValueSome '=' when not escaping -> recurseEnd (buffer.ToString())
+                | ValueSome '\r'
+                | ValueSome '\n' -> buffer.ToString(), false, ValueNone, IsEof.No
+                | ValueNone -> buffer.ToString(), false, ValueNone, IsEof.Yes
+                | ValueSome '\\' -> recurse (reader ()) buffer true
+                | ValueSome c -> recurse (reader ()) (buffer.Append(c)) false
 
             recurse c buffer false
 
         let rec readComment (reader: CharReader) (buffer: StringBuilder) =
             match reader () with
-            | Some '\r'
-            | Some '\n' -> Some(Comment(buffer.ToString())), IsEof.No
-            | None -> Some(Comment(buffer.ToString())), IsEof.Yes
-            | Some c -> readComment reader (buffer.Append(c))
+            | ValueSome '\r'
+            | ValueSome '\n' -> Some(Comment(buffer.ToString())), IsEof.No
+            | ValueNone -> Some(Comment(buffer.ToString())), IsEof.Yes
+            | ValueSome c -> readComment reader (buffer.Append(c))
 
-        let inline readValue (c: char option) (reader: CharReader) (buffer: StringBuilder) =
-            let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) (cr: bool) (lineStart: bool) =
+        let inline readValue (c: char voption) (reader: CharReader) (buffer: StringBuilder) =
+            let rec recurse (c: char voption) (buffer: StringBuilder) (escaping: bool) (cr: bool) (lineStart: bool) =
                 match c with
                 | EscapeSequence c when escaping ->
                     let realChar = readEscapeSequence c reader
                     recurse (reader ()) (buffer.Append(realChar)) false false false
-                | Some '\r'
-                | Some '\n' ->
-                    if escaping || (cr && c = Some '\n') then
-                        recurse (reader ()) buffer false (c = Some '\r') true
+                | ValueSome '\r'
+                | ValueSome '\n' ->
+                    if escaping || (cr && c = ValueSome '\n') then
+                        recurse (reader ()) buffer false (c = ValueSome '\r') true
                     else
                         buffer.ToString(), IsEof.No
-                | None -> buffer.ToString(), IsEof.Yes
-                | Some _ when lineStart ->
+                | ValueNone -> buffer.ToString(), IsEof.Yes
+                | ValueSome _ when lineStart ->
                     let firstChar, _ = readToFirstChar c reader
                     recurse firstChar buffer false false false
-                | Some '\\' -> recurse (reader ()) buffer true false false
-                | Some c -> recurse (reader ()) (buffer.Append(c)) false false false
+                | ValueSome '\\' -> recurse (reader ()) buffer true false false
+                | ValueSome c -> recurse (reader ()) (buffer.Append(c)) false false false
 
             recurse c buffer false false true
 
         let rec readLine (reader: CharReader) (buffer: StringBuilder) =
             match readToFirstChar (reader ()) reader with
-            | Some '#', _
-            | Some '!', _ -> readComment reader (buffer.Clear())
-            | Some firstChar, _ ->
-                let key, hasValue, c, isEof = readKey (Some firstChar) reader (buffer.Clear())
+            | ValueSome '#', _
+            | ValueSome '!', _ -> readComment reader (buffer.Clear())
+            | ValueSome firstChar, _ ->
+                let key, hasValue, c, isEof = readKey (ValueSome firstChar) reader (buffer.Clear())
 
                 let value, isEof =
                     if hasValue then
                         // We know that we aren't at the end of the buffer, but readKey can return None if it didn't need the next char
                         let firstChar =
                             match c with
-                            | Some c -> Some c
-                            | None -> reader ()
+                            | ValueSome c -> ValueSome c
+                            | ValueNone -> reader ()
 
                         readValue firstChar reader (buffer.Clear())
                     else
                         "", isEof
 
                 Some(KeyValue(key, value)), isEof
-            | None, isEof -> None, isEof
+            | ValueNone, isEof -> None, isEof
 
         let inline textReaderToReader (reader: TextReader) =
             let buffer = [| '\u0000' |]
 
             fun () ->
                 let eof = reader.Read(buffer, 0, 1) = 0
-                if eof then None else Some(buffer[0])
+                if eof then ValueNone else ValueSome(buffer[0])
 
         let parseWithReader reader =
             let buffer = StringBuilder(255)

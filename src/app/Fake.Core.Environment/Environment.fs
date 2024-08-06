@@ -359,7 +359,7 @@ module Environment =
     /// </summary>
     let getNewestTool possibleToolPaths =
         possibleToolPaths
-        |> Seq.sortBy (fun p -> p)
+        |> Seq.sortBy id
         |> Array.ofSeq
         |> Array.rev
         |> Seq.ofArray

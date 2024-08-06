@@ -229,7 +229,7 @@ module internal Rendering =
     let inline appendListWithName name lines (sb: StringBuilder) =
         match lines with
         | [] -> sb
-        | singleLine :: [] -> sb |> appendWithName name singleLine
+        | [ singleLine ] -> sb |> appendWithName name singleLine
         | _ ->
             lines
             |> Seq.fold (fun s line -> s |> appendIndented line) (sb.Append(sprintf "%s\n" name))

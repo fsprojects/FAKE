@@ -136,7 +136,7 @@ module internal InternalStreams =
                 (fun res -> endAction res),
                 cancelAction =
                     (fun () ->
-                        while asyncResult.Value = null do
+                        while isNull asyncResult.Value do
                             Thread.Sleep 20
 
                         cancelAction (asyncResult.Value))
@@ -265,7 +265,7 @@ module internal InternalStreams =
                 data <- resultData
                 event.Set() |> ignore
 
-                if callback <> null then
+                if not (isNull callback) then
                     callback.Invoke(x :> IAsyncResult)
 
                 completed <- true)

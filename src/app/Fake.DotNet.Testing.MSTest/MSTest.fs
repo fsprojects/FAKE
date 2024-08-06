@@ -98,7 +98,7 @@ module MSTest =
     /// </summary>
     let buildArgs (parameters: MSTestParams) (assembly: string) =
         let testResultsFile =
-            if parameters.ResultsDir <> null then
+            if not (isNull parameters.ResultsDir) then
                 sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
             else
                 null
