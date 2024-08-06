@@ -10,12 +10,6 @@ open System.Text.RegularExpressions
 /// Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
 /// </summary>
 module SemVerActivePattern =
-    let (|ParseRegex|_|) pattern input =
-        let m = Regex.Match(input, pattern, RegexOptions.ExplicitCapture)
-
-        match m.Success with
-        | true -> Some(List.tail [ for g in m.Groups -> g.Value ])
-        | false -> None
 
     [<Literal>]
     let Pattern =
@@ -25,10 +19,19 @@ module SemVerActivePattern =
         + @"(\-(?<pre>[0-9A-Za-z\-\.]+))?"
         + @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
 
+    let RegMatch = Regex(Pattern, RegexOptions.ExplicitCapture)
+
+    let (|ParseRegex|_|) input =
+        let m = RegMatch.Match input
+
+        match m.Success with
+        | true -> Some(List.tail [ for g in m.Groups -> g.Value ])
+        | false -> None
+
     let (|SemVer|_|) version =
 
         match version with
-        | ParseRegex Pattern [ major; minor; patch; pre; build ] -> Some [ major; minor; patch; pre; build ]
+        | ParseRegex [ major; minor; patch; pre; build ] -> Some [ major; minor; patch; pre; build ]
         | _ -> None
 
     let (|ValidVersion|_|) =
@@ -273,18 +276,20 @@ module SemVer =
     /// <summary>
     /// Matches if str is convertible to Int and not less than zero, and returns the value as UInt.
     /// </summary>
+    [<return: Struct>]
     let inline private (|Int|_|) (str: string) =
         match Int32.TryParse(str, NumberStyles.Integer, null) with
-        | true, num when num > -1 -> Some num
-        | _ -> None
+        | true, num when num > -1 -> ValueSome num
+        | _ -> ValueNone
 
     /// <summary>
     /// Matches if str is convertible to big int and not less than zero, and returns the bigint value.
     /// </summary>
+    [<return: Struct>]
     let inline private (|Big|_|) (str: string) =
         match BigInteger.TryParse(str, NumberStyles.Integer, null) with
-        | true, big when big > -1I -> Some big
-        | _ -> None
+        | true, big when big > -1I -> ValueSome big
+        | _ -> ValueNone
 
     /// <summary>
     /// Splits the given version string by possible delimiters but keeps them as parts of resulting list.
@@ -340,7 +345,7 @@ module SemVer =
             if version.Contains("..") then
                 failwithf "Empty version part found in %s" version
 
-            let plusIndex = version.IndexOf("+")
+            let plusIndex = version.IndexOf '+'
 
             let versionStr =
                 match plusIndex with

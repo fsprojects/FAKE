@@ -361,10 +361,9 @@ module internal CompilerServiceExtensions =
             dllFiles
             |> Seq.map (fun file ->
                 file,
-                if referenceMap.ContainsKey file then
-                    Some referenceMap.[file]
-                else
-                    None)
+                match referenceMap.TryGetValue file with
+                | true, foundFile -> Some foundFile
+                | false, _ -> None)
 
         let getProjectReferencesSimple frameworkVersion dllFiles =
             let dllFiles = dllFiles |> Seq.toList
@@ -382,9 +381,9 @@ module internal CompilerServiceExtensions =
         member x.NamespaceName =
             x.FullName.Substring(
                 0,
-                match x.FullName.IndexOf("[") with
+                match x.FullName.IndexOf '[' with
                 | -1 -> x.FullName.Length
-                | _ as i -> i
+                | i -> i
             )
 
     type FSharpAssembly with
@@ -533,7 +532,7 @@ module internal StringHelpers =
     [<RequireQualifiedAccess>]
     module Assert =
         let notNull argName arg =
-            if arg = null then
+            if isNull arg then
                 nullArg argName
 
         let notNullOrEmpty argName arg =
@@ -1319,7 +1318,7 @@ type internal FsiOptions =
                | [] -> Seq.empty
                | opts ->
                    opts
-                   |> Seq.map (fun (enable, types) ->
+                   |> Seq.collect (fun (enable, types) ->
                        seq {
                            yield sprintf "--optimize%s" (getMinusPlus enable)
 
@@ -1336,7 +1335,6 @@ type internal FsiOptions =
                                        | NoTailCalls -> "notailcalls")
                                    |> String.concat ","
                        })
-                   |> Seq.concat
 
            yield! getSimpleBoolArg "--quiet" x.Quiet
            yield! getSimpleBoolArg "--quotations-debug" x.QuotationsDebug

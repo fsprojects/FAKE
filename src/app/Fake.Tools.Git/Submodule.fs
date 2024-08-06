@@ -55,7 +55,7 @@ module Submodule =
 
             let name, branch =
                 if n.Contains "(" then
-                    n.Substring(0, n.IndexOf "(") |> trimChars, n.Substring(n.IndexOf "(") |> trimChars
+                    n.Substring(0, n.IndexOf '(') |> trimChars, n.Substring(n.IndexOf '(') |> trimChars
                 else
                     n, null
 

@@ -33,8 +33,8 @@ module DocHelper =
                     let title = line'.Substring(0, idxCol)
 
                     let sectionName =
-                        let startIdx = title.IndexOf("[")
-                        let endIdx = title.IndexOf("]")
+                        let startIdx = title.IndexOf '['
+                        let endIdx = title.IndexOf ']'
 
                         if startIdx <> -1 && endIdx > startIdx then
                             title.Substring(startIdx + 1, endIdx - startIdx - 1)

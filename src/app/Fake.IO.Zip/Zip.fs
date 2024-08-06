@@ -406,8 +406,7 @@ module Zip =
     /// <param name="files">A sequence of target folders and files to include relative to their base directory.</param>
     let createZipOfIncludes fileName comment level (files: (string * IGlobbingPattern) seq) =
         files
-        |> Seq.map (fun (wd, glob) -> glob |> filesAsSpecs "" |> moveToFolder wd)
-        |> Seq.concat
+        |> Seq.collect (fun (wd, glob) -> glob |> filesAsSpecs "" |> moveToFolder wd)
         |> createZipSpec fileName comment level
     //let items = seq {
     //    for path, incl in files do

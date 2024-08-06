@@ -48,7 +48,7 @@ module StringBuilder =
     /// </summary>
     let inline appendWithoutQuotesIfNotNull (value: Object) s =
         appendIfTrueWithoutQuotes
-            (value <> null)
+            (not (isNull value))
             (match value with
              | :? String as sv -> (sprintf "%s%s" s sv)
              | _ -> (sprintf "%s%A" s value))
@@ -58,7 +58,7 @@ module StringBuilder =
     /// </summary>
     let inline appendIfNotNull (value: Object) s =
         appendIfTrue
-            (value <> null)
+            (not (isNull value))
             (match value with
              | :? String as sv -> (sprintf "%s%s" s sv)
              | _ -> (sprintf "%s%A" s value))
@@ -67,7 +67,7 @@ module StringBuilder =
     /// Appends a quoted text if the value is not null.
     /// </summary>
     let inline appendQuotedIfNotNull (value: Object) s (builder: StringBuilder) =
-        if (value = null) then
+        if isNull value then
             builder
         else
             (match value with

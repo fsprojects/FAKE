@@ -216,7 +216,7 @@ module Xml =
     let replaceXPath xpath value (doc: XmlDocument) =
         let node = doc.SelectSingleNode xpath
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             node.Value <- value
@@ -272,7 +272,7 @@ module Xml =
         namespaces |> Seq.iter nsmgr.AddNamespace
         let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             node.InnerText
@@ -290,7 +290,7 @@ module Xml =
         namespaces |> Seq.iter nsmgr.AddNamespace
         let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             let attributeValue = node.Attributes[attribute]
@@ -312,7 +312,7 @@ module Xml =
         namespaces |> Seq.iter nsmgr.AddNamespace
         let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             node
@@ -396,7 +396,7 @@ module Xml =
         namespaces |> Seq.iter nsmgr.AddNamespace
         let node = doc.SelectSingleNode(xpath, nsmgr)
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             node.Value <- value
@@ -416,7 +416,7 @@ module Xml =
         namespaces |> Seq.iter nsmgr.AddNamespace
         let node = doc.SelectSingleNode(xpath, nsmgr)
 
-        if node = null then
+        if isNull node then
             failwithf "XML node '%s' not found" xpath
         else
             node.InnerText <- innerTextValue

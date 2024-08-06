@@ -861,7 +861,7 @@ module Target =
             let isValidTarget name = targetLeftSet.Contains(name)
 
             let canBeExecuted (t: Target) =
-                t.Dependencies @ t.SoftDependencies |> Seq.filter isValidTarget |> Seq.isEmpty
+                t.Dependencies @ t.SoftDependencies |> Seq.exists isValidTarget |> not
 
             let map =
                 targetLeft
