@@ -1,7 +1,9 @@
 # Release Notes
 
-## 6.1.0 - 2024-07-27
+## 6.1.1 - 2024-08-07
 * BUGFIX: Allow RunSettingsArguments to be set, thanks @TheAngryByrd - https://github.com/fsprojects/FAKE/pull/2771
+
+## 6.1.0 - 2024-07-27
 * BUGFIX: MSBuild.build adds a bad string at the end of properties, thanks @0x53A - https://github.com/fsprojects/FAKE/issues/2738
 * BUGFIX: Allow setting Msbuild max cpu on Linux, thanks @TheAngryByrd - https://github.com/fsprojects/FAKE/pull/2772
 * ENHANCEMENT: Added shorthash to git functions, thanks @voronoipotato - https://github.com/fsprojects/FAKE/pull/2752
