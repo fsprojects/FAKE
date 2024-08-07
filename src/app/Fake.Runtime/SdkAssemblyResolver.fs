@@ -143,23 +143,28 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         if this.LogLevel.PrintVerbose then
             Trace.tracefn "Trying to resolve runtime version from network.."
 
-        try
-            let sdkVersionReleases =
-                ProductCollection.GetAsync()
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
-                |> List.ofSeq
-                |> List.filter (fun product ->
-                    this.SdkVersionRaws
-                    |> List.exists (fun raws -> product.ProductVersion.Equals raws))
+        let sdkSet = this.SdkVersionRaws |> Set.ofList
 
-            sdkVersionReleases
-            |> List.collect (fun rel ->
-                rel.GetReleasesAsync()
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
-                |> List.ofSeq)
+        try
+            task {
+                let! productCollection = ProductCollection.GetAsync()
+
+                let sdkVersionReleases =
+                    productCollection
+                    |> Seq.filter (fun product -> sdkSet |> Set.exists (fun raws -> product.ProductVersion.Equals raws))
+
+                let! releases =
+                    sdkVersionReleases
+                    |> Seq.map (fun rel -> rel.GetReleasesAsync())
+                    |> System.Threading.Tasks.Task.WhenAll
+
+                return releases |> Seq.collect (fun sdks -> sdks |> Seq.toList)
+            }
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
+            |> Seq.toList
             |> Some
+
         with ex ->
             Trace.traceError $"Could not get SDK runtime version from network due to: {ex.Message}"
             None
@@ -192,9 +197,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 |> Option.orElseWith (this.TryResolveSdkRuntimeVersionFromCache)
 
         let sdkRelease (release: ProductRelease) =
-            release.Sdks
-            |> List.ofSeq
-            |> List.exists (fun sdk -> sdk.Version.Equals(version))
+            release.Sdks |> Seq.exists (fun sdk -> sdk.Version.Equals(version))
 
         match net60releases with
         | None -> []
