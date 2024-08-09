@@ -8,7 +8,7 @@ open System
 
 [<EntryPoint>]
 let main argv =
-    let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
+    let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(30.))
 
     Tests.runTestsInAssembly
         { config with

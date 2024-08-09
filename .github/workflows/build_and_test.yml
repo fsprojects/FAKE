@@ -25,7 +25,7 @@ jobs:
             - name: add fake runner as a tool
               run: dotnet tool install fake-cli --add-source "./src/app/fake-cli/bin/Debug" --version 1.0.0-1
             - name: Build
-              run: dotnet fake build --parallel 3
+              run: dotnet fake -v build --parallel 3 -e FAKE_DETAILED_ERRORS=true
             - name: publish build artifacts
               uses: actions/upload-artifact@v4
               with:
