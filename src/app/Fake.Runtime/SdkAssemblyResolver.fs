@@ -45,12 +45,22 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
     member this.SdkVersionRaws = RuntimeAssemblyVersions
 
     member this.SdkVersions =
-        RuntimeAssemblyVersions |> List.map (fun v -> ReleaseVersion(v + ".0"))
+        RuntimeAssemblyVersions
+        |> List.map (fun v ->
+            if String.IsNullOrEmpty v || v = "\"\"" then
+                ReleaseVersion "6.0.0"
+            elif v.Contains "." then
+                ReleaseVersion(v + ".0")
+            else
+                ReleaseVersion(v + ".0.0"))
 
     member this.PaketFrameworkIdentifiers =
         this.SdkVersions
         |> List.map (fun thisSdk ->
-            FrameworkIdentifier.DotNetFramework(FrameworkVersion.TryParse(thisSdk.Major.ToString()).Value))
+            match FrameworkVersion.TryParse(thisSdk.Major.ToString()) with
+            | Some v -> FrameworkIdentifier.DotNetFramework v
+            | None -> failwithf $"Paket: .NET not found: {thisSdk.Major.ToString()}")
+
 
     member this.SdkVersionRaw = RuntimeAssemblyVersions |> Seq.head
     member this.SdkVersion = this.SdkVersions |> Seq.head
@@ -221,7 +231,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         match this.GetProductReleasesForSdk sdkVersion with
         | [] ->
             failwithf
-                $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. 8.0 )"
+                $"Could not find a suitable .NET 6 runtime version matching SDK version: {sdkVersion.ToString()} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. {sdkVersion.Major.ToString()}.0 )"
         | releases ->
             let versions =
                 releases |> List.map (fun release -> release.Runtime.Version.ToString())
