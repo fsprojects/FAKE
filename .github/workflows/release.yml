@@ -43,6 +43,7 @@ jobs:
                   GIT_DIRECTORY: ${{github.workspace}}
                   CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
                   DOCS_DOMAIN: ${{ secrets.DOCS_DOMAIN }}
+                  IGNORE_CONFLICT: true
                   NUGET_KEY: ${{ secrets.NUGET_KEY }}
                   NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
                   RELEASE_USER_GITHUB: ${{ secrets.RELEASE_USER_GITHUB }}
