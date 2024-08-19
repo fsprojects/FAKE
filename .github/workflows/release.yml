@@ -43,9 +43,10 @@ jobs:
                   GIT_DIRECTORY: ${{github.workspace}}
                   CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
                   DOCS_DOMAIN: ${{ secrets.DOCS_DOMAIN }}
+                  IGNORE_CONFLICT: true
                   NUGET_KEY: ${{ secrets.NUGET_KEY }}
                   NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
                   RELEASE_USER_GITHUB: ${{ secrets.RELEASE_USER_GITHUB }}
                   REPOSITORY_NAME_GITHUB: ${{ secrets.REPOSITORY_NAME_GITHUB }}
-                  TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: ${{github.workspace}}/release/dotnetcore/Fake.netcore/win7-x64/fake.exe build -t FastRelease

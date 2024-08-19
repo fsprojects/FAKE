@@ -454,9 +454,15 @@ let rec nugetPush tries nugetPackage =
     try
         if not <| String.IsNullOrEmpty apiKey.Value then
             let quoteString str = sprintf "\"%s\"" str
-            
-            let args = sprintf "push %s %s -Source %s" (quoteString nugetPackage) (quoteString apiKey.Value) (quoteString nugetSource)
-            
+
+            let args =
+                sprintf
+                    "push %s %s -Source %s %s"
+                    (quoteString nugetPackage)
+                    (quoteString apiKey.Value)
+                    (quoteString nugetSource)
+                    (if ignore_conflict then "-SkipDuplicate" else "")
+
             let errors = System.Collections.Generic.List<string>()
             let results = System.Collections.Generic.List<string>()
 
