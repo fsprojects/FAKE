@@ -994,7 +994,7 @@ Target.create "DotNetPushToNuGet" (fun _ ->
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
-    let auth = sprintf "%s:x-oauth-basic@" githubToken.Value
+    let auth = sprintf "x-access-token:%s@" githubToken.Value
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth githubReleaseUser gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
