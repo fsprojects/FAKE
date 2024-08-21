@@ -42,7 +42,7 @@
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
         </a>
         <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-            <span>6.0.0</span>
+            <span>6.1.0</span>
         </div>
         <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
                 @click="open = true">
@@ -317,7 +317,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L55-55" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L56-56" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -351,7 +351,89 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '970', 970)" onmouseover="showTip(event, '970', 970)">
+              <code onmouseout="hideTip(event, '971', 971)" onmouseover="showTip(event, '971', 971)">
+                <p>
+                  <a id="cleanInstall">
+                    <a href="#cleanInstall">
+                      <code><span>Npm.cleanInstall&#32;<span>setParams</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="971">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>Npm.cleanInstall&#32;<span>setParams</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="https://fake.build/reference/fake-javascript-npm-npmparams.html">NpmParams</a>&#32;->&#32;<a href="https://fake.build/reference/fake-javascript-npm-npmparams.html">NpmParams</a></span></code>
+                       - 
+                      Set command parameters
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.JavaScript.Npm.cleanInstall`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.JavaScript.Npm.cleanInstall\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L240-240" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Run <code>npm ci</code>.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="https://fake.build/reference/fake-javascript-npm-npmparams.html">NpmParams</a>&#32;->&#32;<a href="https://fake.build/reference/fake-javascript-npm-npmparams.html">NpmParams</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  Set command parameters
+                </p>
+              </dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ Npm.cleanInstall (fun o -&gt;
+         { o with
+             WorkingDirectory = &quot;./src/FAKESimple.Web/&quot;
+         })</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '972', 972)" onmouseover="showTip(event, '972', 972)">
                 <p>
                   <a id="defaultNpmParams">
                     <a href="#defaultNpmParams">
@@ -360,7 +442,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="970">
+              <div class="fsdocs-tip" id="972">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.defaultNpmParams&#32;<span></span></span></code>
@@ -385,7 +467,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L64-64" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L65-65" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -409,7 +491,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '971', 971)" onmouseover="showTip(event, '971', 971)">
+              <code onmouseout="hideTip(event, '973', 973)" onmouseover="showTip(event, '973', 973)">
                 <p>
                   <a id="exec">
                     <a href="#exec">
@@ -418,7 +500,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="971">
+              <div class="fsdocs-tip" id="973">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.exec&#32;<span>command&#32;setParams</span></span></code>
@@ -462,7 +544,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L239-239" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L257-257" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -513,7 +595,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '972', 972)" onmouseover="showTip(event, '972', 972)">
+              <code onmouseout="hideTip(event, '974', 974)" onmouseover="showTip(event, '974', 974)">
                 <p>
                   <a id="install">
                     <a href="#install">
@@ -522,7 +604,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="972">
+              <div class="fsdocs-tip" id="974">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.install&#32;<span>setParams</span></span></code>
@@ -556,7 +638,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L150-150" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L152-152" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -594,7 +676,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '973', 973)" onmouseover="showTip(event, '973', 973)">
+              <code onmouseout="hideTip(event, '975', 975)" onmouseover="showTip(event, '975', 975)">
                 <p>
                   <a id="installForced">
                     <a href="#installForced">
@@ -603,7 +685,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="973">
+              <div class="fsdocs-tip" id="975">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.installForced&#32;<span>setParams</span></span></code>
@@ -637,7 +719,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L134-134" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L136-136" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -675,7 +757,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '974', 974)" onmouseover="showTip(event, '974', 974)">
+              <code onmouseout="hideTip(event, '976', 976)" onmouseover="showTip(event, '976', 976)">
                 <p>
                   <a id="run">
                     <a href="#run">
@@ -684,7 +766,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="974">
+              <div class="fsdocs-tip" id="976">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.run&#32;<span>command&#32;setParams</span></span></code>
@@ -728,7 +810,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L167-167" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L169-169" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -778,7 +860,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '975', 975)" onmouseover="showTip(event, '975', 975)">
+              <code onmouseout="hideTip(event, '977', 977)" onmouseover="showTip(event, '977', 977)">
                 <p>
                   <a id="runSilent">
                     <a href="#runSilent">
@@ -787,7 +869,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="975">
+              <div class="fsdocs-tip" id="977">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.runSilent&#32;<span>command&#32;setParams</span></span></code>
@@ -831,7 +913,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L185-185" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L187-187" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -883,7 +965,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '976', 976)" onmouseover="showTip(event, '976', 976)">
+              <code onmouseout="hideTip(event, '978', 978)" onmouseover="showTip(event, '978', 978)">
                 <p>
                   <a id="runTest">
                     <a href="#runTest">
@@ -892,7 +974,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="976">
+              <div class="fsdocs-tip" id="978">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.runTest&#32;<span>command&#32;setParams</span></span></code>
@@ -936,7 +1018,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L204-204" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L206-206" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -989,7 +1071,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '977', 977)" onmouseover="showTip(event, '977', 977)">
+              <code onmouseout="hideTip(event, '979', 979)" onmouseover="showTip(event, '979', 979)">
                 <p>
                   <a id="test">
                     <a href="#test">
@@ -998,7 +1080,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="977">
+              <div class="fsdocs-tip" id="979">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>Npm.test&#32;<span>setParams</span></span></code>
@@ -1032,7 +1114,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L222-222" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.JavaScript.Npm/Npm.fs#L224-224" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -1141,7 +1223,7 @@
             <div class="mt-10 mx-auto w-full">
                 <p>© FAKE. All rights reserved | Version:
                     <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                        <span>6.0.0</span>
+                        <span>6.1.0</span>
                     </a>
                 </p>
             </div>

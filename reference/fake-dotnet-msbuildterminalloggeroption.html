@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>ArgumentStreamPosition (Fake)</title>
+    <title>MSBuildTerminalLoggerOption (Fake)</title>
     <meta charset="utf-8">
     <meta name="description" content="FAKE - F# Make - A DSL for build tasks - API docs page">
     <link rel="apple-touch-icon" sizes="180x180" href="/content/apple-touch-icon.png">
@@ -185,17 +185,17 @@
          class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20">
         <div>
   <h2>
-    ArgumentStreamPosition Type
+    MSBuildTerminalLoggerOption Type
   </h2>
   <dl class="fsdocs-metadata">
     <dt>
       Namespace: 
-      <a href="https://fake.build/reference/fake-core-commandlineparsing.html">
-        Fake.Core.CommandLineParsing
+      <a href="https://fake.build/reference/fake-dotnet.html">
+        Fake.DotNet
       </a>
     </dt>
     <dt>
-      Assembly: Fake.Core.CommandLineParsing.dll
+      Assembly: Fake.DotNet.MSBuild.dll
     </dt>
     <dt>
       Base Type: 
@@ -203,11 +203,11 @@
     </dt>
     <dt>
       All Interfaces: 
-      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a>&gt;</span></code>
+      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a href="https://fake.build/reference/fake-dotnet-msbuildterminalloggeroption.html">MSBuildTerminalLoggerOption</a>&gt;</span></code>
       , 
       <code><a href="https://docs.microsoft.com/dotnet/api/system.collections.istructuralequatable">IStructuralEquatable</a></code>
       , 
-      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a>&gt;</span></code>
+      <code><span><a href="https://docs.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a href="https://fake.build/reference/fake-dotnet-msbuildterminalloggeroption.html">MSBuildTerminalLoggerOption</a>&gt;</span></code>
       , 
       <code><a href="https://docs.microsoft.com/dotnet/api/system.icomparable">IComparable</a></code>
       , 
@@ -217,9 +217,18 @@
   <div class="fsdocs-xmldoc">
     <div>
       <p class="fsdocs-summary">
-        
+        <p class='fsdocs-para'>Specifies whether the terminal logger should be used for the build output. The default is auto, which first verifies the environment before enabling terminal logging. The environment check verifies that the terminal is capable of using modern output features and isn't using a redirected standard output before enabling the new logger. on skips the environment check and enables terminal logging. off skips the environment check and uses the default console logger.</p><p class='fsdocs-para'>The terminal logger shows you the restore phase followed by the build phase. During each phase, the currently building projects appear at the bottom of the terminal. Each project that's building outputs both the MSBuild target currently being built and the amount of time spent on that target. You can search this information to learn more about the build. When a project is finished building, a single "build completed" section is written that captures:</p><p class='fsdocs-para'><ul>
+  <li>The name of the built project.</li>
+  <li>The target framework (if multi-targeted).</li>
+  <li>The status of that build.</li>
+  <li>The primary output of that build (which is hyperlinked).</li>
+  <li>Any diagnostics generated for that project.</li>
+</ul></p>
       </p>
     </div>
+    <p class="fsdocs-remarks">
+      This option is available starting in .NET 8.
+    </p>
   </div>
   <div></div>
   <div></div>
@@ -243,32 +252,20 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '1710', 1710)" onmouseover="showTip(event, '1710', 1710)">
+              <code onmouseout="hideTip(event, '2609', 2609)" onmouseover="showTip(event, '2609', 2609)">
                 <p>
-                  <a id="ArgumentPos">
-                    <a href="#ArgumentPos">
-                      <code><span>ArgumentPos&#32;int</span></code>
+                  <a id="Auto">
+                    <a href="#Auto">
+                      <code><span>Auto</span></code>
                     </a>
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="1710">
+              <div class="fsdocs-tip" id="2609">
                 <div class="member-tooltip">
                   Full Usage: 
-                  <code><span>ArgumentPos&#32;int</span></code>
+                  <code><span>Auto</span></code>
                   <br/>
-                  <br/>
-                  Parameters: 
-                  <ul>
-                    <span>
-                      <b>
-                        Item
-                      </b>
-                      :
-                      <code>int</code>
-                    </span>
-                    <br/>
-                  </ul>
                   <br/>
                 </div>
               </div>
@@ -276,7 +273,7 @@
           </td>
           <td class="fsdocs-member-xmldoc">
             <div class="fsdocs-summary">
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L57-57" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L54-54" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -284,55 +281,25 @@
                 
               </p>
             </div>
-            <dl class="fsdocs-params">
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  Item
-                </span>
-                :
-                <code>int</code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-            </dl>
           </td>
         </tr>
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '1711', 1711)" onmouseover="showTip(event, '1711', 1711)">
+              <code onmouseout="hideTip(event, '2610', 2610)" onmouseover="showTip(event, '2610', 2610)">
                 <p>
-                  <a id="ShortArgumentPartialPos">
-                    <a href="#ShortArgumentPartialPos">
-                      <code><span>ShortArgumentPartialPos(<span>int,&#32;int</span>)</span></code>
+                  <a id="Off">
+                    <a href="#Off">
+                      <code><span>Off</span></code>
                     </a>
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="1711">
+              <div class="fsdocs-tip" id="2610">
                 <div class="member-tooltip">
                   Full Usage: 
-                  <code><span>ShortArgumentPartialPos(<span>int,&#32;int</span>)</span></code>
+                  <code><span>Off</span></code>
                   <br/>
-                  <br/>
-                  Parameters: 
-                  <ul>
-                    <span>
-                      <b>
-                        Item1
-                      </b>
-                      :
-                      <code>int</code>
-                    </span>
-                    <br/>
-                    <span>
-                      <b>
-                        Item2
-                      </b>
-                      :
-                      <code>int</code>
-                    </span>
-                    <br/>
-                  </ul>
                   <br/>
                 </div>
               </div>
@@ -340,7 +307,7 @@
           </td>
           <td class="fsdocs-member-xmldoc">
             <div class="fsdocs-summary">
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L59-59" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L53-53" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -348,24 +315,40 @@
                 
               </p>
             </div>
-            <dl class="fsdocs-params">
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  Item1
-                </span>
-                :
-                <code>int</code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  Item2
-                </span>
-                :
-                <code>int</code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '2611', 2611)" onmouseover="showTip(event, '2611', 2611)">
+                <p>
+                  <a id="On">
+                    <a href="#On">
+                      <code><span>On</span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="2611">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>On</span></code>
+                  <br/>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L52-52" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+              </p>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -374,371 +357,7 @@
   <div></div>
   <div></div>
   <div></div>
-  <div>
-    <h3>
-      Instance members
-    </h3>
-    <table class="table outer-list fsdocs-member-list">
-      <thead>
-        <tr>
-          <td class="fsdocs-member-list-header">
-            Instance member
-          </td>
-          <td class="fsdocs-member-list-header">
-            Description
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="fsdocs-member-usage">
-            <div>
-              <code onmouseout="hideTip(event, '1712', 1712)" onmouseover="showTip(event, '1712', 1712)">
-                <p>
-                  <a id="ArgIndex">
-                    <a href="#ArgIndex">
-                      <code><span>this.ArgIndex</span></code>
-                    </a>
-                  </a>
-                </p>
-              </code>
-              <div class="fsdocs-tip" id="1712">
-                <div class="member-tooltip">
-                  Full Usage: 
-                  <code><span>this.ArgIndex</span></code>
-                  <br/>
-                  <br/>
-                  <span>
-                    Returns: 
-                    <code>int</code>
-                  </span>
-                  <br/>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="fsdocs-member-xmldoc">
-            <div class="fsdocs-summary">
-              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:P:Fake.Core.CommandLineParsing.ArgumentStreamPosition.ArgIndex`')">
-                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
-              </div>
-              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'P:Fake.Core.CommandLineParsing.ArgumentStreamPosition.ArgIndex\'/>')">
-                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
-              </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L66-66" class="fsdocs-source-link" title="Source on GitHub">
-                <img src="https://fake.build/content/img/github.png" class="normal"/>
-                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
-              </a>
-              <p class="fsdocs-summary">
-                
-              </p>
-            </div>
-            <dl class="fsdocs-returns">
-              <dt>
-                <span class="fsdocs-return-name">
-                  Returns: 
-                </span>
-                <code>int</code>
-              </dt>
-              <dd class="fsdocs-return-docs"></dd>
-            </dl>
-          </td>
-        </tr>
-        <tr>
-          <td class="fsdocs-member-usage">
-            <div>
-              <code onmouseout="hideTip(event, '1713', 1713)" onmouseover="showTip(event, '1713', 1713)">
-                <p>
-                  <a id="InnerIndex">
-                    <a href="#InnerIndex">
-                      <code><span>this.InnerIndex</span></code>
-                    </a>
-                  </a>
-                </p>
-              </code>
-              <div class="fsdocs-tip" id="1713">
-                <div class="member-tooltip">
-                  Full Usage: 
-                  <code><span>this.InnerIndex</span></code>
-                  <br/>
-                  <br/>
-                  <span>
-                    Returns: 
-                    <code>int</code>
-                  </span>
-                  <br/>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="fsdocs-member-xmldoc">
-            <div class="fsdocs-summary">
-              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:P:Fake.Core.CommandLineParsing.ArgumentStreamPosition.InnerIndex`')">
-                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
-              </div>
-              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'P:Fake.Core.CommandLineParsing.ArgumentStreamPosition.InnerIndex\'/>')">
-                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
-              </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L71-71" class="fsdocs-source-link" title="Source on GitHub">
-                <img src="https://fake.build/content/img/github.png" class="normal"/>
-                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
-              </a>
-              <p class="fsdocs-summary">
-                
-              </p>
-            </div>
-            <dl class="fsdocs-returns">
-              <dt>
-                <span class="fsdocs-return-name">
-                  Returns: 
-                </span>
-                <code>int</code>
-              </dt>
-              <dd class="fsdocs-return-docs"></dd>
-            </dl>
-          </td>
-        </tr>
-        <tr>
-          <td class="fsdocs-member-usage">
-            <div>
-              <code onmouseout="hideTip(event, '1714', 1714)" onmouseover="showTip(event, '1714', 1714)">
-                <p>
-                  <a id="IsEndOf">
-                    <a href="#IsEndOf">
-                      <code><span>this.IsEndOf</span></code>
-                    </a>
-                  </a>
-                </p>
-              </code>
-              <div class="fsdocs-tip" id="1714">
-                <div class="member-tooltip">
-                  Full Usage: 
-                  <code><span>this.IsEndOf</span></code>
-                  <br/>
-                  <br/>
-                  Parameters: 
-                  <ul>
-                    <span>
-                      <b>
-                        argv
-                      </b>
-                      :
-                      <code><span>string&#32;array</span></code>
-                    </span>
-                    <br/>
-                  </ul>
-                  <br/>
-                  <span>
-                    Returns: 
-                    <code>bool</code>
-                  </span>
-                  <br/>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="fsdocs-member-xmldoc">
-            <div class="fsdocs-summary">
-              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.IsEndOf`')">
-                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
-              </div>
-              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.IsEndOf\'/>')">
-                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
-              </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L76-76" class="fsdocs-source-link" title="Source on GitHub">
-                <img src="https://fake.build/content/img/github.png" class="normal"/>
-                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
-              </a>
-              <p class="fsdocs-summary">
-                
-              </p>
-            </div>
-            <dl class="fsdocs-params">
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  argv
-                </span>
-                :
-                <code><span>string&#32;array</span></code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-            </dl>
-            <dl class="fsdocs-returns">
-              <dt>
-                <span class="fsdocs-return-name">
-                  Returns: 
-                </span>
-                <code>bool</code>
-              </dt>
-              <dd class="fsdocs-return-docs"></dd>
-            </dl>
-          </td>
-        </tr>
-        <tr>
-          <td class="fsdocs-member-usage">
-            <div>
-              <code onmouseout="hideTip(event, '1715', 1715)" onmouseover="showTip(event, '1715', 1715)">
-                <p>
-                  <a id="Next">
-                    <a href="#Next">
-                      <code><span>this.Next</span></code>
-                    </a>
-                  </a>
-                </p>
-              </code>
-              <div class="fsdocs-tip" id="1715">
-                <div class="member-tooltip">
-                  Full Usage: 
-                  <code><span>this.Next</span></code>
-                  <br/>
-                  <br/>
-                  Parameters: 
-                  <ul>
-                    <span>
-                      <b>
-                        argv
-                      </b>
-                      :
-                      <code><span>string&#32;array</span></code>
-                    </span>
-                    <br/>
-                  </ul>
-                  <br/>
-                  <span>
-                    Returns: 
-                    <code><a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a></code>
-                  </span>
-                  <br/>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="fsdocs-member-xmldoc">
-            <div class="fsdocs-summary">
-              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.Next`')">
-                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
-              </div>
-              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.Next\'/>')">
-                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
-              </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L88-88" class="fsdocs-source-link" title="Source on GitHub">
-                <img src="https://fake.build/content/img/github.png" class="normal"/>
-                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
-              </a>
-              <p class="fsdocs-summary">
-                
-              </p>
-            </div>
-            <dl class="fsdocs-params">
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  argv
-                </span>
-                :
-                <code><span>string&#32;array</span></code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-            </dl>
-            <dl class="fsdocs-returns">
-              <dt>
-                <span class="fsdocs-return-name">
-                  Returns: 
-                </span>
-                <code><a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a></code>
-              </dt>
-              <dd class="fsdocs-return-docs"></dd>
-            </dl>
-          </td>
-        </tr>
-        <tr>
-          <td class="fsdocs-member-usage">
-            <div>
-              <code onmouseout="hideTip(event, '1716', 1716)" onmouseover="showTip(event, '1716', 1716)">
-                <p>
-                  <a id="NextArg">
-                    <a href="#NextArg">
-                      <code><span>this.NextArg</span></code>
-                    </a>
-                  </a>
-                </p>
-              </code>
-              <div class="fsdocs-tip" id="1716">
-                <div class="member-tooltip">
-                  Full Usage: 
-                  <code><span>this.NextArg</span></code>
-                  <br/>
-                  <br/>
-                  Parameters: 
-                  <ul>
-                    <span>
-                      <b>
-                        argv
-                      </b>
-                      :
-                      <code><span>string&#32;array</span></code>
-                    </span>
-                    <br/>
-                  </ul>
-                  <br/>
-                  <span>
-                    Returns: 
-                    <code><a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a></code>
-                  </span>
-                  <br/>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="fsdocs-member-xmldoc">
-            <div class="fsdocs-summary">
-              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.NextArg`')">
-                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
-              </div>
-              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.Core.CommandLineParsing.ArgumentStreamPosition.NextArg\'/>')">
-                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
-                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
-              </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L120-120" class="fsdocs-source-link" title="Source on GitHub">
-                <img src="https://fake.build/content/img/github.png" class="normal"/>
-                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
-              </a>
-              <p class="fsdocs-summary">
-                
-              </p>
-            </div>
-            <dl class="fsdocs-params">
-              <dt class="fsdocs-param">
-                <span class="fsdocs-param-name">
-                  argv
-                </span>
-                :
-                <code><span>string&#32;array</span></code>
-              </dt>
-              <dd class="fsdocs-param-docs"></dd>
-            </dl>
-            <dl class="fsdocs-returns">
-              <dt>
-                <span class="fsdocs-return-name">
-                  Returns: 
-                </span>
-                <code><a href="https://fake.build/reference/fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a></code>
-              </dt>
-              <dd class="fsdocs-return-docs"></dd>
-            </dl>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <div></div>
   <div></div>
 </div>
         

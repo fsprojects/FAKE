@@ -42,7 +42,7 @@
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.0.0</span>
+                <span>6.1.0</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -222,6 +222,15 @@
         <div id="content"
             class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
             <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="6-1-0-2024-07-27" class="anchor" href="#6-1-0-2024-07-27">6.1.0 - 2024-07-27</a></h2>
+<ul>
+<li>BUGFIX: MSBuild.build adds a bad string at the end of properties, thanks @0x53A - <a href="https://github.com/fsprojects/FAKE/issues/2738">https://github.com/fsprojects/FAKE/issues/2738</a></li>
+<li>BUGFIX: Allow setting Msbuild max cpu on Linux, thanks @TheAngryByrd - <a href="https://github.com/fsprojects/FAKE/pull/2772">https://github.com/fsprojects/FAKE/pull/2772</a></li>
+<li>ENHANCEMENT: Added shorthash to git functions, thanks @voronoipotato - <a href="https://github.com/fsprojects/FAKE/pull/2752">https://github.com/fsprojects/FAKE/pull/2752</a></li>
+<li>ENHANCEMENT: Support for <code>/tl:[auto:on:off]</code> msbuild flag, thanks @smoothdeveloper - <a href="https://github.com/fsprojects/FAKE/pull/2768">https://github.com/fsprojects/FAKE/pull/2768</a></li>
+<li>ENHANCEMENT: Fixes for usage in .NET 8.0 enviroment projects.</li>
+<li>ENHANCEMENT: Add Context.setExecutionContextFromCommandLineArgs, thanks @cataggar - <a href="https://github.com/fsprojects/FAKE/pull/2750">https://github.com/fsprojects/FAKE/pull/2750</a></li>
+</ul>
 <h2><a name="6-0-0-2023-02-20" class="anchor" href="#6-0-0-2023-02-20">6.0.0 - 2023-02-20</a></h2>
 <ul>
 <li>ENHANCEMENT: Site UI fixes and documentation link fixes.</li>
@@ -2453,7 +2462,7 @@ New tasks:
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.0.0</span>
+                            <span>6.1.0</span>
                         </a>
                     </p>
                 </div>
