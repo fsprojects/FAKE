@@ -41,7 +41,7 @@ nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
 nuget System.Net.Http
-nuget Octokit
+nuget Octokit 6.0.0
 nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
