@@ -25,6 +25,7 @@ group fakerunner
     nuget FSharp.Core
     nuget FSharp.Compiler.Service
     nuget Microsoft.Deployment.DotNet.Releases
+    nuget System.Text.Json 8.0.4 # Update the ref in Microsoft.Deployment.DotNet.Releases to fix https://github.com/advisories/GHSA-hh2w-p6rv-4g7w
     nuget NuGet.Packaging
     nuget Paket.Core 8.1.0-alpha004
     nuget Mono.Cecil
