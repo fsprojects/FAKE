@@ -1,6 +1,7 @@
 # Release Notes
 
-## 6.1.1 - 2024-08-07
+## 6.1.1 - 2024-08-30
+* BUGFIX: Assembly resolver to pick a found SDK instead of first SDK - https://github.com/fsprojects/FAKE/pull/2797/files
 * BUGFIX: Allow RunSettingsArguments to be set, thanks @TheAngryByrd - https://github.com/fsprojects/FAKE/pull/2771
 
 ## 6.1.0 - 2024-07-27

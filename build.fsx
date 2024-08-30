@@ -41,7 +41,7 @@ nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
 nuget System.Net.Http
-nuget Octokit
+nuget Octokit 6.0.0
 nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
@@ -454,9 +454,15 @@ let rec nugetPush tries nugetPackage =
     try
         if not <| String.IsNullOrEmpty apiKey.Value then
             let quoteString str = sprintf "\"%s\"" str
-            
-            let args = sprintf "push %s %s -Source %s" (quoteString nugetPackage) (quoteString apiKey.Value) (quoteString nugetSource)
-            
+
+            let args =
+                sprintf
+                    "push %s %s -Source %s %s"
+                    (quoteString nugetPackage)
+                    (quoteString apiKey.Value)
+                    (quoteString nugetSource)
+                    (if ignore_conflict then "-SkipDuplicate" else "")
+
             let errors = System.Collections.Generic.List<string>()
             let results = System.Collections.Generic.List<string>()
 
@@ -956,6 +962,7 @@ Target.create "DotNetCreateDebianPackage" (fun _ ->
 Target.create "DotNetPushChocolateyPackage" (fun _ ->
     let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
     let path = sprintf "%s/%s" chocoReleaseDir name
+    let ignore_conflict = Environment.environVar "IGNORE_CONFLICT" = "true"
 
     if not Environment.isWindows && not (File.exists path) && fromArtifacts then
         Directory.ensure chocoReleaseDir
@@ -969,12 +976,15 @@ Target.create "DotNetPushChocolateyPackage" (fun _ ->
         else
             { p with ToolPath = altToolPath }
 
-    path
-    |> Choco.push (fun p ->
-        { p with
-            Source = chocoSource
-            ApiKey = chocoKey.Value }
-        |> changeToolPath))
+    try
+        path
+        |> Choco.push (fun p ->
+            { p with
+                Source = chocoSource
+                ApiKey = chocoKey.Value }
+            |> changeToolPath)
+    with exn when ignore_conflict ->
+        Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!")
 
 Target.create "DotNetPushToNuGet" (fun _ ->
     !!(appDir </> "*/*.fsproj") -- (appDir </> "Fake.netcore/*.fsproj")
@@ -988,7 +998,7 @@ Target.create "DotNetPushToNuGet" (fun _ ->
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
-    let auth = sprintf "%s:x-oauth-basic@" githubToken.Value
+    let auth = sprintf "x-access-token:%s@" githubToken.Value
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth githubReleaseUser gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
