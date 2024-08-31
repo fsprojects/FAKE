@@ -1,8 +1,9 @@
 # Release Notes
 
-## 6.1.1 - 2024-08-19
-* BUGFIX: Assembly resolver to pick a found SDK instead of first SDK - https://github.com/fsprojects/FAKE/pull/2797/files
+## 6.1.1 - 2024-08-30
+* BUGFIX: Assembly resolver to pick a found SDK instead of first SDK, thanks @Thorium - https://github.com/fsprojects/FAKE/pull/2797/files
 * BUGFIX: Fix issue parsing global.json when using prerelease .NET SDKs, thanks @numpsy - https://github.com/fsprojects/FAKE/issues/2803
+* BUGFIX: Allow RunSettingsArguments to be set, thanks @TheAngryByrd - https://github.com/fsprojects/FAKE/pull/2771
 
 ## 6.1.0 - 2024-07-27
 * BUGFIX: MSBuild.build adds a bad string at the end of properties, thanks @0x53A - https://github.com/fsprojects/FAKE/issues/2738

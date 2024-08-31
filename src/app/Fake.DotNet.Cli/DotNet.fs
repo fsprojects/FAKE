@@ -1170,20 +1170,32 @@ module DotNet =
 
         MSBuild.addBinaryLogger (common.DotNetCliPath + " msbuild") callMsBuildExe args disableFakeBinLog
 
-    let internal execWithBinLog project common command args msBuildArgs =
+    let internal buildAfterArgs args afterArgs =
+        [ yield! args
+          match afterArgs with
+          | Some a ->
+              yield "--"
+              yield a
+          | None -> () ]
+
+    let internal execWithBinLog project common command args msBuildArgs afterArgs =
         let msbuildArgList = MSBuild.fromCliArguments msBuildArgs
 
         let binLogPath, args =
             addBinaryLogger msBuildArgs.DisableInternalBinLog (args @ msbuildArgList) common
+
+        let args = buildAfterArgs args afterArgs
 
         let result = execArgsList (fun _ -> common) command args
         MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
 
-    let internal tryExecWithBinLog project common command args msBuildArgs =
+    let internal tryExecWithBinLog project common command args msBuildArgs afterArgs =
         let msbuildArgList = MSBuild.fromCliArguments msBuildArgs
 
         let binLogPath, args =
             addBinaryLogger msBuildArgs.DisableInternalBinLog (args @ msbuildArgList) common
+
+        let args = buildAfterArgs args afterArgs
 
         let result = execArgsList (fun _ -> common) command args
 
@@ -1227,7 +1239,7 @@ module DotNet =
 
         let param = MSBuildOptions.Create() |> setParams
         let args = [ project ]
-        execWithBinLog project param.Common "msbuild" args param.MSBuildParams
+        execWithBinLog project param.Common "msbuild" args param.MSBuildParams None
         __.MarkSuccess()
 
     // TODO: Make this API public? change return code?
@@ -1236,7 +1248,9 @@ module DotNet =
 
         let param = MSBuildOptions.Create() |> setParams
         let args = [ project ]
-        let r = tryExecWithBinLog project param.Common "msbuild" args param.MSBuildParams
+
+        let r =
+            tryExecWithBinLog project param.Common "msbuild" args param.MSBuildParams None
         //__.MarkSuccess()
         r
 
@@ -1323,7 +1337,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:restore" project
         let param = RestoreOptions.Create() |> setParams
         let args = project :: buildRestoreArgs param
-        execWithBinLog project param.Common "restore" args param.MSBuildParams
+        execWithBinLog project param.Common "restore" args param.MSBuildParams None
         __.MarkSuccess()
 
     /// build configuration
@@ -1460,7 +1474,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams
         let args = project :: buildPackArgs param
-        execWithBinLog project param.Common "pack" args param.MSBuildParams
+        execWithBinLog project param.Common "pack" args param.MSBuildParams None
         __.MarkSuccess()
 
     /// <summary>
@@ -1577,7 +1591,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:publish" project
         let param = PublishOptions.Create() |> setParams
         let args = project :: buildPublishArgs param
-        execWithBinLog project param.Common "publish" args param.MSBuildParams
+        execWithBinLog project param.Common "publish" args param.MSBuildParams None
         __.MarkSuccess()
 
     /// <summary>
@@ -1667,7 +1681,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:build" project
         let param = BuildOptions.Create() |> setParams
         let args = project :: buildBuildArgs param
-        execWithBinLog project param.Common "build" args param.MSBuildParams
+        execWithBinLog project param.Common "build" args param.MSBuildParams None
         __.MarkSuccess()
 
     /// <summary>
@@ -1818,7 +1832,7 @@ module DotNet =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
         let args = project :: buildTestArgs param
-        execWithBinLog project param.Common "test" args param.MSBuildParams
+        execWithBinLog project param.Common "test" args param.MSBuildParams param.RunSettingsArguments
         __.MarkSuccess()
 
     let internal buildNugetPushArgs (param: NuGet.NuGetPushParams) =

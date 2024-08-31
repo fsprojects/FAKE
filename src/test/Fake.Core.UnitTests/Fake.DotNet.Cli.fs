@@ -129,4 +129,22 @@ let tests =
 
               let expected = "--uninstall my-awesome-template"
 
-              Expect.equal cli expected "New --uninstall args generated correctly." ]
+              Expect.equal cli expected "New --uninstall args generated correctly."
+
+          testCase "Test buildAfterArgs with no after args"
+          <| fun _ ->
+              let expected = "hello"
+              let cli = DotNet.buildAfterArgs [ "hello" ] None |> Args.toWindowsCommandLine
+
+              Expect.equal cli expected "Empty after args."
+
+          testCase "Test buildAfterArgs with after args"
+          <| fun _ ->
+              let expected = "hello -- lol=foo"
+
+              let cli =
+                  DotNet.buildAfterArgs [ "hello" ] (Some "lol=foo") |> Args.toWindowsCommandLine
+
+              Expect.equal cli expected "Empty after args."
+
+          ]
