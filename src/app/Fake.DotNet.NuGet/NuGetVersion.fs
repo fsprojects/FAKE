@@ -162,7 +162,7 @@ module Version =
                         Some <| SemVer.parse m.Identity.Version.OriginalVersion
                     with _ ->
                         None)
-                |> Seq.sortByDescending (fun v -> v)
+                |> Seq.sortByDescending id
                 |> Seq.tryHead
         }
         |> Async.RunSynchronously

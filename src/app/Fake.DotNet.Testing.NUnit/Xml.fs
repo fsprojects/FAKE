@@ -38,8 +38,7 @@ module Xml =
     /// <param name="xDocs">A sequence of XML documents</param>
     let AllSucceeded xDocs =
         xDocs
-        |> Seq.map GetTestAssemblies
-        |> Seq.concat
+        |> Seq.collect GetTestAssemblies
         |> Seq.map (fun assembly -> assembly.Attribute(imp "result").Value)
         |> Seq.map ((<>) "Failure")
         |> Seq.reduce (&&)

@@ -136,7 +136,7 @@ module OpenCover =
             printParamWithValue paramName (mergeListAsValues paramList valueModification)
 
         let printParamListAsValuesWithQuote paramName paramList =
-            printParamWithValue paramName (quote (mergeListAsValues paramList (fun v -> v)))
+            printParamWithValue paramName (quote (mergeListAsValues paramList id))
 
         let printParamListAsValues paramName paramList =
             printParamListAsValuesWithModification paramName paramList (fun v -> string v)
