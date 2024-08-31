@@ -1,13 +1,9 @@
 group fakerunner
-
 Paket.Core
-nuget Microsoft.Deployment.DotNet.Releases
+Microsoft.Deployment.DotNet.Releases
 Mono.Cecil
 FSharp.Core
-
-System.Runtime.Loader
 NETStandard.Library
-
 FSharp.Compiler.Service
   exclude FSharp.Compiler.Service.MSBuild.*.dll
   exclude FSharp.Compiler.Service.MSBuild.v12.dll
