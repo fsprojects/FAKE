@@ -42,7 +42,7 @@
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.1.0</span>
+                <span>6.1.1</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -222,6 +222,12 @@
         <div id="content"
             class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
             <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="6-1-1-2024-08-30" class="anchor" href="#6-1-1-2024-08-30">6.1.1 - 2024-08-30</a></h2>
+<ul>
+<li>BUGFIX: Assembly resolver to pick a found SDK instead of first SDK, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2797/files">https://github.com/fsprojects/FAKE/pull/2797/files</a></li>
+<li>BUGFIX: Fix issue parsing global.json when using prerelease .NET SDKs, thanks @numpsy - <a href="https://github.com/fsprojects/FAKE/issues/2803">https://github.com/fsprojects/FAKE/issues/2803</a></li>
+<li>BUGFIX: Allow RunSettingsArguments to be set, thanks @TheAngryByrd - <a href="https://github.com/fsprojects/FAKE/pull/2771">https://github.com/fsprojects/FAKE/pull/2771</a></li>
+</ul>
 <h2><a name="6-1-0-2024-07-27" class="anchor" href="#6-1-0-2024-07-27">6.1.0 - 2024-07-27</a></h2>
 <ul>
 <li>BUGFIX: MSBuild.build adds a bad string at the end of properties, thanks @0x53A - <a href="https://github.com/fsprojects/FAKE/issues/2738">https://github.com/fsprojects/FAKE/issues/2738</a></li>
@@ -2462,7 +2468,7 @@ New tasks:
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.1.0</span>
+                            <span>6.1.1</span>
                         </a>
                     </p>
                 </div>
