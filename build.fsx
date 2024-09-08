@@ -1002,7 +1002,7 @@ Target.create "ReleaseDocs" (fun _ ->
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth githubReleaseUser gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
-    Git.Repository.fullclean "gh-pages"
+    Git.Repository.fullClean "gh-pages"
 
     Shell.copyRecursive "output" "gh-pages" true |> printfn "%A"
 
