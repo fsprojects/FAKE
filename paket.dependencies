@@ -70,4 +70,3 @@ group fakemodule
     nuget System.Runtime.Loader
     nuget System.Collections.Immutable
     nuget System.Data.SqlClient
-    nuget Microsoft.SqlServer.SqlManagementObjects
