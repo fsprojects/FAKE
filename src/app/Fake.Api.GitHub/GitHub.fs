@@ -469,4 +469,4 @@ module GitHub =
     /// </example>
     let createPullRequest owner repoName (pullRequest: NewPullRequest) (client: Async<GitHubClient>) =
         retryWithArg 5 client
-        <| fun client' -> async { return Async.AwaitTask <| client'.PullRequest.Create(owner, repoName, pullRequest) }
+        <| fun client' -> async { return! Async.AwaitTask <| client'.PullRequest.Create(owner, repoName, pullRequest) }
