@@ -11,6 +11,7 @@
         <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/debian-postinst.sh'))</PostInstallScript>
         <NoWarn>FS3186</NoWarn>
         <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+        <PublishReferencesDocumentationFiles>false</PublishReferencesDocumentationFiles>
     </PropertyGroup>
 
     <ItemGroup>
