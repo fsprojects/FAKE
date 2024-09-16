@@ -156,7 +156,7 @@ module CreateProcessDotNetExt =
         /// </example>
         let withToolType (toolType: ToolType) (c: CreateProcess<_>) =
             match toolType with
-            | ToolType.FullFramework _ -> c |> CreateProcess.withFramework
+            | ToolType.FullFramework -> c |> CreateProcess.withFramework
             | ToolType.FrameworkDependentDeployment dotnetOptions -> // dotnet ToolPath (can be a dll)
                 c |> DotNet.prefixProcess dotnetOptions.Options [ c.Command.Executable ]
             | ToolType.SelfContainedDeployment // just ToolPath
