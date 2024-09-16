@@ -2,6 +2,37 @@ module Fake.Core.ReleaseNotesTests
 
 open Fake.Core
 open Expecto
+open System
+
+[<Literal>]
+let private changelogReleasesText =
+    """# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## Unreleased
+
+### Changed
+- Foo 2
+
+## [0.1.0-pre.2] - 2023-10-19
+
+### Added
+- Foo 1
+
+## [0.1.0-pre.1] - 2023-10-11
+
+### Added
+- Foo 0"""
+
+[<Literal>]
+let private changelogReferencesText =
+    """[Unreleased]: https://github.com/bogus/Foo/compare/v0.1.0-pre.2...HEAD
+[0.1.0-pre.2]: https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.2
+[0.1.0-pre.1]: https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.1"""
 
 [<Tests>]
 let tests =
@@ -245,4 +276,108 @@ let tests =
                     checkPreRelease releaseNotesLines_case2 (Some "---RC-SNAPSHOT.12.9.1--.12") (Some "788")
                     checkPreRelease releaseNotesLines_case3 (Some "---R-S.12.9.1--.12") (Some "meta")
                     checkPreRelease releaseNotesLines_case4 (None) (Some "0.build.1-rc.10000aaa-kk-0.1")
-                    checkPreRelease releaseNotesLines_case5 (Some "0A.is.legal") (None) ] ]
+                    checkPreRelease releaseNotesLines_case5 (Some "0A.is.legal") (None) ]
+
+          // https://keepachangelog.com
+          testList
+              "Changelog"
+              [ testCase "Test that we can parse changelog without references"
+                <| fun _ ->
+                    let changelog = changelogReleasesText |> String.splitStr "\n" |> Changelog.parse
+
+                    Expect.isEmpty changelog.References "References not empty"
+                    Expect.isSome changelog.Unreleased "Unreleased section empty"
+                    Expect.hasLength changelog.Entries 2 "Wrong number of release entries parsed"
+                testCase "Test that we can parse changelog with references"
+                <| fun _ ->
+                    let changelogText = changelogReleasesText + "\n\n" + changelogReferencesText
+                    let changelog = changelogText |> String.splitStr "\n" |> Changelog.parse
+
+                    Expect.hasLength changelog.References 3 "Wrong number of references parsed"
+
+                    Expect.hasLength
+                        (changelog.References
+                         |> List.filter (fun r ->
+                             match r.SemVer with
+                             | Changelog.SemVerRef (_) -> true
+                             | _ -> false))
+                        2
+                        "Wrong number of released references parsed"
+
+                    Expect.hasLength
+                        (changelog.References
+                         |> List.filter (fun r ->
+                             match r.SemVer with
+                             | Changelog.SemVerRef (_) -> false
+                             | _ -> true))
+                        1
+                        "Wrong number of unreleased references parsed"
+
+                    Expect.hasLength changelog.References 3 "Wrong number of references parsed"
+                    Expect.isSome changelog.Unreleased "Unreleased section empty"
+                    Expect.hasLength changelog.Entries 2 "Wrong number of release entries parsed"
+                testCase "Test that references are not in the last changelog entry"
+                <| fun _ ->
+                    let changelogText = changelogReleasesText + "\n\n" + changelogReferencesText
+                    let changelog = changelogText |> String.splitStr "\n" |> Changelog.parse
+                    let lastEntry = changelog.Entries |> List.last
+                    let lastChanges = lastEntry.Changes
+
+                    Expect.isFalse
+                        (lastChanges
+                         |> List.exists (fun change ->
+                             change.ChangeText().CleanedText.Contains("https://github.com/bogus/Foo/")))
+                        "URL of reference contained in change text"
+                testCase "Test that a release and reference can be added and correctly turned into a string"
+                <| fun _ ->
+                    let changelogText = changelogReleasesText + "\n\n" + changelogReferencesText
+                    let changelog = changelogText |> String.splitStr "\n" |> Changelog.parse
+                    let versionText = "0.1.0-pre.3"
+                    let semVerInfo = SemVer.parse versionText
+
+                    let newUnreleasedRef =
+                        { Changelog.Reference.SemVer = Changelog.UnreleasedRef
+                          Changelog.Reference.RepoUrl = Uri("https://github.com/bogus/Foo/compare/v0.1.0-pre.3...HEAD") }
+
+                    let releasedRefs =
+                        changelog.References
+                        |> List.filter (fun r ->
+                            match r.SemVer with
+                            | Changelog.SemVerRef (_) -> true
+                            | _ -> false)
+
+                    let newReference =
+                        { Changelog.Reference.SemVer = Changelog.SemVerRef(semVerInfo)
+                          Changelog.Reference.RepoUrl = Uri("https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.3") }
+
+                    let newFixed =
+                        Changelog.Fixed(
+                            { CleanedText = "Foo 3"
+                              OriginalText = None }
+                        )
+
+                    let newReleaseEntry =
+                        Changelog.ChangelogEntry.New(
+                            "",
+                            versionText,
+                            Some(DateTime(2023, 11, 23)),
+                            None,
+                            [ newFixed ],
+                            false
+                        )
+
+                    let changelogNew =
+                        { changelog with
+                            Entries = newReleaseEntry :: changelog.Entries
+                            References = [ newUnreleasedRef; newReference ] @ releasedRefs }
+
+                    let expectedEnd =
+                        """[Unreleased]: https://github.com/bogus/Foo/compare/v0.1.0-pre.3...HEAD
+[0.1.0-pre.3]: https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.3
+[0.1.0-pre.2]: https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.2
+[0.1.0-pre.1]: https://github.com/bogus/Foo/releases/tag/v0.1.0-pre.1"""
+
+                    Expect.stringEnds
+                        (changelogNew.ToString())
+                        expectedEnd
+                        "Invalid references at end of changelog text" ] ]
