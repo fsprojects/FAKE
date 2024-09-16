@@ -389,7 +389,7 @@ module Changelog =
             let references =
                 x.References |> List.map (fun reference -> reference.ToString()) |> joinLines
 
-            (sprintf "# %s\n\n%s\n\n%s\n\n%s" header description entries references)
+            $"# {header}\n\n{description}\n\n{entries}\n\n{references}"
             |> fixMultipleNewlines
             |> String.trim
 
