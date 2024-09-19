@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME</DefineConstants>
+    <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;FAKE_RUNTIME;FAKE_INTERNAL_DOTNET_CORE_CLI</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
     <NoWarn>FS3186</NoWarn>
   </PropertyGroup>
@@ -13,6 +13,8 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Fake.DotNet.Cli\GlobalJson.fs" Link="GlobalJson.fs" />
+    <Compile Include="..\Fake.DotNet.Cli\DotNet.fs" Link="DotNet.fs" />
     <Compile Include="YaafFSharpScripting.fs" />
     <Compile Include="ThisAssemblyInfo.fs" />
     <Compile Include="..\Fake.Core.Process\CmdLineParsing.fs" />
@@ -36,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
-    <ProjectReference Include="..\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.DependencyManager.Paket\Fake.Core.DependencyManager.Paket.fsproj" />
   </ItemGroup>
