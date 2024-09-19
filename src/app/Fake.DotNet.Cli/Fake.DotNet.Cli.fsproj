@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="VisibleTo.fs" />
+    <Compile Include="GlobalJson.fs" />
     <Compile Include="DotNet.fs" />
     <Compile Include="CreateProcessExt.fs" />
   </ItemGroup>
