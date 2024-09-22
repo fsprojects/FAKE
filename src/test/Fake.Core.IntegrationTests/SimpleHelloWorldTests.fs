@@ -86,7 +86,7 @@ let tests =
 
                       directFake "--silent run hello_world.fsx" "core-no-dependencies-hello-world"
                   else
-                      fakeRunAndCheck Ctx.Default "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
+                      fakeRunAndCheck Ctx.Verbose "hello_world.fsx" "hello_world.fsx" "core-no-dependencies-hello-world"
 
               let stdOut = String.Join("\n", result.Messages)
               let stdErr = String.Join("\n", result.Errors)
