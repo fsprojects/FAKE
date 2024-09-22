@@ -467,11 +467,9 @@ module Process =
                     with
                     | :? InvalidOperationException
                     | :? NotSupportedException
-                    | :? System.ComponentModel.Win32Exception as e2 ->
-                        Trace.traceFAKE "Error while retrieving HasExited of process: %O" e2
-                        false
+                    | :? System.ComponentModel.Win32Exception as e2 -> false
 
-                if not hasExited then
+                if (not hasExited) && (Environment.isWindows || Trace.isVerbose false) then
                     Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
 
                 DateTime.Now
