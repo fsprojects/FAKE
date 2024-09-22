@@ -5,4 +5,3 @@ Microsoft.TestPlatform.TestHost
 FSharp.Core
 NETStandard.Library
 Expecto
-Expecto.TestResults

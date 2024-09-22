@@ -35,7 +35,6 @@ group fakerunner
 
     // Testing
     nuget Expecto
-    nuget Expecto.TestResults
     nuget Expecto.FsCheck
     nuget YoloDev.Expecto.TestSdk
     nuget Microsoft.TestPlatform.TestHost
