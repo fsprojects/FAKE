@@ -73,5 +73,21 @@ let inline internal fakeContextAssembly () =
 /// Gets the FAKE version no.
 let fakeVersion = fakeContextAssembly().GetName().Version.ToString()
 
+let getPlatform () =
+    match System.Reflection.Assembly.GetExecutingAssembly() with
+    | null -> ""
+    | x ->
+        match x.GetCustomAttributes(typeof<System.Runtime.Versioning.TargetFrameworkAttribute>, false) with
+        | null -> ""
+        | itms when itms.Length > 0 ->
+            (itms |> Seq.head :?> System.Runtime.Versioning.TargetFrameworkAttribute)
+                .FrameworkName
+        | _ -> ""
+
 /// Gets the FAKE Version string
-let fakeVersionStr = sprintf "FAKE 6 - F# Make (%s)" fakeVersion
+let fakeVersionStr =
+    sprintf
+        "FAKE %i - F# Make (%s) (running on %s)"
+        (fakeContextAssembly().GetName().Version.Major)
+        fakeVersion
+        (getPlatform ())
