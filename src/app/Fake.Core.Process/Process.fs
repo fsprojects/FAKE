@@ -467,7 +467,7 @@ module Process =
                     with
                     | :? InvalidOperationException
                     | :? NotSupportedException
-                    | :? System.ComponentModel.Win32Exception as e2 -> 
+                    | :? System.ComponentModel.Win32Exception as e2 ->
                         Trace.traceFAKE "Error while retrieving HasExited of process: %O" e2
                         false
 
