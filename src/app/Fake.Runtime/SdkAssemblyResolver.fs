@@ -66,7 +66,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
     member this.SdkVersion = this.SdkVersions |> Seq.head
     member this.PaketFrameworkIdentifier = this.PaketFrameworkIdentifiers |> Seq.head
 
-    member this.SdkVersionFromGlobalJson = DotNet.tryGetSDKVersionFromGlobalJson ()
+    member this.SdkVersionFromGlobalJson = GlobalJson.tryGetSDKVersionFromGlobalJson ()
 
     member this.IsSdkVersionFromGlobalJsonSameAsSdkVersion() =
         match this.SdkVersionFromGlobalJson with
@@ -217,7 +217,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         this.GetProductReleasesForSdk version |> List.tryHead
 
     member this.ResolveSdkRuntimeVersions() =
-        let versionOptions (options: DotNet.VersionOptions) =
+        let versionOptions (options: InternalDotNet.VersionOptions) =
             // If a custom CLI path is provided, configure the version command
             // to use that path.  This really only accomodates a test scenarios
             // in which FAKE_SDK_RESOLVER_CUSTOM_DOTNET_PATH is set.
@@ -226,7 +226,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 options.WithCommon(fun common -> { common with DotNetCliPath = root </> this.DotNetBinaryName })
             | None -> options
 
-        let sdkVersion = DotNet.getVersion versionOptions |> ReleaseVersion
+        let sdkVersion = InternalDotNet.getVersion versionOptions |> ReleaseVersion
 
         match this.GetProductReleasesForSdk sdkVersion with
         | [] ->
