@@ -126,6 +126,7 @@ using this approach are:
 
 * [<ins>TheAngryByrd/MiniScaffold</ins>](https://github.com/TheAngryByrd/MiniScaffold)
 * [<ins>CompositionalIT/SAFE-Dojo</ins>](https://github.com/CompositionalIT/SAFE-Dojo)
+* [<ins>Zaid-Ajaj/Femto</ins>](https://github.com/Zaid-Ajaj/Femto)
 
 You can examine these two repositories to get to know the approach and how to implement it in your own projects.
 
