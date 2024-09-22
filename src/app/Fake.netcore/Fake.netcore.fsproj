@@ -8,7 +8,7 @@
     <AssemblyName>fake</AssemblyName>
     <OutputType>Exe</OutputType>
     <NoWarn>FS3186</NoWarn>
-    <RuntimeIdentifiers>win7-x86;win7-x64;osx.10.11-x64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x86;win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -425,7 +425,7 @@ docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
     altToolPath
 
 //TODO:: see if we need to update the runtimes to newer versions of OSs
-let runtimes = [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "linux-x64" ]
+let runtimes = [ "win-x86"; "win-x64"; "osx-x64"; "linux-x64" ]
 
 /// <summary>
 /// Publishes the build artifacts for the given runtime
@@ -809,7 +809,10 @@ runtimes
                     { c with
                         Runtime = Some runtime.Value
                         Configuration = DotNet.Release
-                        OutputPath = Some outDir }
+                        OutputPath = Some outDir 
+                        Framework = Some "net6.0"
+                        // DisableInternalBinLog: https://github.com/fsprojects/FAKE/issues/2722
+                        MSBuildParams = { MSBuild.CliArguments.Create() with DisableInternalBinLog = true }}
                     |> dotnetSimple)
                 proj
 
@@ -876,7 +879,9 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
                     { c.MSBuildParams with
                         Properties =
                             [ ("Version", nugetVersion)
-                              ("PackageReleaseNotes", release.Notes |> String.toLines) ] } }
+                              ("PackageReleaseNotes", release.Notes |> String.toLines) ] 
+                        // DisableInternalBinLog: https://github.com/fsprojects/FAKE/issues/2722
+                        DisableInternalBinLog = true } }
             |> dotnetSimple)
         "Fake.sln"
 
@@ -916,7 +921,7 @@ Target.create "DotNetCreateChocolateyPackage" (fun _ ->
                 InstallerType = Choco.ChocolateyInstallerType.SelfContained
                 Version = chocoVersion
                 Files =
-                    [ System.IO.Path.GetFullPath(nugetDncDir </> @"Fake.netcore\win7-x86") + @"\**", Some "bin", None
+                    [ System.IO.Path.GetFullPath(nugetDncDir </> @"Fake.netcore\win-x86") + @"\**", Some "bin", None
                       (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
                       (System.IO.Path.GetFullPath @"License.txt"), Some "LICENSE.txt", None ]
                 OutputDir = chocoReleaseDir }

@@ -332,7 +332,9 @@ let findAndLoadInRuntimeDeps
 
                     let isFramework =
                         assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-                        |> Seq.exists (fun m -> m.Key = ".NETFrameworkAssembly")
+                        |> Seq.exists (fun m ->
+                            m.Key = ".NETFrameworkAssembly" // net8.0 framework assemblies have NETFrameworkAssembly attribute removed. So identify them via RepositoryUrl:
+                            || (m.Key = "RepositoryUrl" && m.Value.StartsWith "https://github.com/dotnet/"))
 
                     if not isFramework then
                         None

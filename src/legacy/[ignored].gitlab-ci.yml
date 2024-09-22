@@ -64,8 +64,8 @@ do_build:
 #    mkdir fake-bin
 #    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
 #    chmod +x fake-bin/fake
-#    mkdir -p nuget/dotnetcore/Fake.netcore/win7-x86
-#    unzip -n artifacts/fake-dotnetcore-win7-x86.zip -d nuget/dotnetcore/Fake.netcore/win7-x86 || echo unzip returned $?
+#    mkdir -p nuget/dotnetcore/Fake.netcore/win-x86
+#    unzip -n artifacts/fake-dotnetcore-win-x86.zip -d nuget/dotnetcore/Fake.netcore/win-x86 || echo unzip returned $?
 #    unzip -n artifacts/chocolatey-requirements.zip || echo unzip returned $?
 #    export artifactsdirectory=$PWD/artifacts
 #    fake-bin/fake build target DotNetCoreCreateChocolateyPackage

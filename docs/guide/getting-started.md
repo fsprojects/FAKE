@@ -215,7 +215,7 @@ There are various ways to install FAKE:
 
 5. Download the runtime specific zip.
    Just use the `-<runtime>` version matching your specific platform
-   of [<ins>the downloads</ins>](https://github.com/fsharp/FAKE/releases) (for example `fake-dotnetcore-win7-x64.zip`),
+   of [<ins>the downloads</ins>](https://github.com/fsharp/FAKE/releases) (for example `fake-dotnetcore-win-x64.zip`),
    extract it and execute the `fake` binary. Add the extracted binary to your `PATH` to just execute `fake` from any
    directory.
 

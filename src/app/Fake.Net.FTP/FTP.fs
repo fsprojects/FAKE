@@ -99,7 +99,7 @@ module FTP =
         List.forall (fun validator -> directoryName |> validator) validators
 
     /// Checks to see if the `ftp content` string contains the string `Given_Folder_Name`
-    let inline regexCheck folderName ftpContents =
+    let inline regexCheck folderName (ftpContents: string) =
         Regex.IsMatch(ftpContents, $@"\s+%s{folderName}\s+")
 
     /// <summary>

@@ -49,4 +49,4 @@ jobs:
                   RELEASE_USER_GITHUB: ${{ secrets.RELEASE_USER_GITHUB }}
                   REPOSITORY_NAME_GITHUB: ${{ secrets.REPOSITORY_NAME_GITHUB }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: ${{github.workspace}}/release/dotnetcore/Fake.netcore/win7-x64/fake.exe build -t FastRelease
+              run: ${{github.workspace}}/release/dotnetcore/Fake.netcore/win-x64/fake.exe build -t FastRelease

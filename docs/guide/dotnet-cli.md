@@ -40,7 +40,7 @@ DotNet.restore (fun args ->
 // Define more general properties in addition to the general ones, with arugments
 DotNet.restore (fun args ->
     { args with
-        Runtime = Some "win7-x86"
+        Runtime = Some "win-x86"
     } |> withWorkDir "./test" ) "mysolution.sln"
 ```
 
