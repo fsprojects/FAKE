@@ -457,6 +457,8 @@ module Process =
             try
                 proc.StartTime
             with
+            | :? PlatformNotSupportedException
+            | :? NotSupportedException
             | :? InvalidOperationException
             | :? System.ComponentModel.Win32Exception as e ->
                 let hasExited =
@@ -464,7 +466,10 @@ module Process =
                         proc.HasExited
                     with
                     | :? InvalidOperationException
-                    | :? System.ComponentModel.Win32Exception -> false
+                    | :? NotSupportedException
+                    | :? System.ComponentModel.Win32Exception as e2 -> 
+                        Trace.traceFAKE "Error while retrieving HasExited of process: %O" e2
+                        false
 
                 if not hasExited then
                     Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
