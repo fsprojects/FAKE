@@ -113,7 +113,6 @@ NUGET
     runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.3) - restriction: && (< monotouch) (< net45) (>= netstandard1.6) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
     runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.3) - restriction: && (< monotouch) (< net45) (>= netstandard1.6) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
     runtime.ubuntu.18.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.3) - restriction: && (< monotouch) (< net45) (>= netstandard1.6) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
-    SourceLink.Fake (1.1)
     Suave (2.6.2)
       FSharp.Core  - restriction: >= netstandard2.1
     System.AppContext (4.3) - restriction: || (&& (< net20) (>= net46) (< netstandard1.3)) (&& (< net20) (>= net46) (< netstandard1.4)) (&& (< net20) (>= netstandard1.3) (< netstandard1.4) (< win8) (< wpa81)) (&& (< net20) (< netstandard1.3) (>= netstandard1.4) (< win8) (< wpa81)) (&& (< net20) (< netstandard1.3) (>= netstandard1.5) (< win8) (< wpa81)) (&& (< net20) (< netstandard1.3) (>= netstandard1.6) (< win8) (< wpa81)) (&& (< net20) (>= netstandard1.4) (< netstandard1.5) (< win8) (< wpa81)) (&& (< net20) (>= netstandard1.5) (< netstandard1.6) (< win8) (< wpa81)) (&& (< net20) (>= netstandard1.6) (< netstandard2.0) (< win8) (< wpa81)) (&& (< netstandard1.3) (>= uap10.0)) (&& (< netstandard1.5) (>= uap10.0) (< uap10.1))

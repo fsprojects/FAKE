@@ -10,7 +10,6 @@ group Build
     nuget FSharp.Core
     nuget Suave
     nuget NuGet.CommandLine
-    nuget SourceLink.Fake
     nuget ILRepack
     nuget Newtonsoft.Json
     nuget System.Net.Http
