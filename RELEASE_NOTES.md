@@ -1,4 +1,8 @@
 # Release Notes
+## 8.0.0-alpha - 2024-09-03
+* Added .NET8.0 to package target libraries
+* Some dependency updates
+
 ## 6.1.2 - 2024-09-20
 * Runtime-identifier update to more recent runtimes.
 * Removed .NETFrameworkAssembly attribute fix on detecting .NET assemblies.

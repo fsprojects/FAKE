@@ -10,10 +10,6 @@ open System
 let main argv =
     let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(30.))
 
-    Tests.runTestsInAssembly
-        { config with
-            runInParallel = false
-            parallelWorkers = 0
-            printer = ExpectoHelpers.fakeDefaultPrinter
-            verbosity = LogLevel.Debug }
+    Tests.runTestsInAssemblyWithCLIArgs
+        [| Tests.CLIArguments.Sequenced; Tests.CLIArguments.Verbosity LogLevel.Debug |]
         argv

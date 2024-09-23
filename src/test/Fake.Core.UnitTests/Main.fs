@@ -11,8 +11,4 @@ open Fake.ExpectoSupport
 let main argv =
     let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(30.))
 
-    Tests.runTestsInAssembly
-        { config with
-            printer = ExpectoHelpers.fakeDefaultPrinter
-            verbosity = LogLevel.Debug }
-        argv
+    Tests.runTestsInAssemblyWithCLIArgs [| Tests.CLIArguments.Verbosity LogLevel.Debug |] argv
