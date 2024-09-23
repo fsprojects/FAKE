@@ -360,7 +360,7 @@ module AssemblyInfoFile =
             |> Seq.tryFind (fun (attr: Attribute) -> attr.Name = "AssemblyVersion")
         with
         | Some attr -> attr.Value
-        | None _ -> "\"" + BuildServer.buildVersion + "\""
+        | None -> "\"" + BuildServer.buildVersion + "\""
 
     let private getAssemblyInformationalVersion attributes =
         match
@@ -368,7 +368,7 @@ module AssemblyInfoFile =
             |> Seq.tryFind (fun (attr: Attribute) -> attr.Name = "AssemblyInformationalVersion")
         with
         | Some attr -> attr.Value
-        | None _ -> getAssemblyVersionInfo attributes
+        | None -> getAssemblyVersionInfo attributes
 
     let private getSortedAndNumberedAttributes (attrs: seq<Attribute>) =
         attrs

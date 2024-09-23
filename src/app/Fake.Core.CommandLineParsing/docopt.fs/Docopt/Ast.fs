@@ -93,19 +93,19 @@ type UsageAstBuilder =
 
     member x.UsageTag =
         match x with
-        | UsageAstBuilder.Eps _ -> Tag.Eps
+        | UsageAstBuilder.Eps -> Tag.Eps
         | UsageAstBuilder.Ano _ -> Tag.Ano
         | UsageAstBuilder.Sop _ -> Tag.Sop
         | UsageAstBuilder.Lop _ -> Tag.Lop
         | UsageAstBuilder.Sqb _ -> Tag.Sqb
         | UsageAstBuilder.Req _ -> Tag.Req
         | UsageAstBuilder.Arg _ -> Tag.Arg
-        | UsageAstBuilder.XorEmpty _ -> Tag.Xor
+        | UsageAstBuilder.XorEmpty -> Tag.Xor
         | UsageAstBuilder.Xor _ -> Tag.Xor
         | UsageAstBuilder.Seq _ -> Tag.Seq
         | UsageAstBuilder.Cmd _ -> Tag.Cmd
         | UsageAstBuilder.Ell _ -> Tag.Ell
-        | UsageAstBuilder.Sdh _ -> Tag.Sdh
+        | UsageAstBuilder.Sdh -> Tag.Sdh
 
 and UsageAstCell =
     { mutable Content: UsageAstBuilder option }
