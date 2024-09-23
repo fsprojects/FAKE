@@ -1,4 +1,9 @@
 # Release Notes
+
+## 8.0.0-alpha - 2025-10-25
+* Added .NET8.0 to package target libraries
+* Some dependency updates
+
 ## 6.2.0 - 2026-10-11
 * ENHANCEMENT: Add DotNet.testMTP to run dotnet test with the Microsoft.Testing.Platform runner of the .NET SDK 10, thanks @xperiandri - https://github.com/fsprojects/FAKE/pull/2903
 
