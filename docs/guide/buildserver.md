@@ -84,7 +84,7 @@ Fake itself uses `GitHubActions` support for importing and displaying test resul
 Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
 
 // upload artifacts
-Trace.publish ImportData.BuildArtifact ("release/dotnetcore/fake-dotnetcore-win7-x64.zip")
+Trace.publish ImportData.BuildArtifact ("release/dotnetcore/fake-dotnetcore-win-x64.zip")
 ```
 
 Also, prior to currently setup of FAKE which uses GitHub actions. The previous setup used VSTS (Azure DevOps)

@@ -35,7 +35,7 @@ module Path =
     /// </summary>
     ///
     /// <param name="path">The path to check</param>
-    let isDirectory path =
+    let isDirectory (path: string) =
         let attr = File.GetAttributes path
         attr &&& FileAttributes.Directory = FileAttributes.Directory
 

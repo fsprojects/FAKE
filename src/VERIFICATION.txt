@@ -4,4 +4,4 @@ in verifying that this package's contents are trustworthy.
  
 This package is published by the FAKE Project itself. Any binaries will be 
 identical to other package types published by the project, in particular
-the fake-dotnetcore-win7-x86.zip binary release.
+the fake-dotnetcore-win-x86.zip binary release.

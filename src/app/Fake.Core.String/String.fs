@@ -275,4 +275,4 @@ module String =
         /// <summary>
         /// Determines if a text matches a given regex pattern.
         /// </summary>
-        let (>**) pattern text = (getRegEx pattern).IsMatch text
+        let (>**) pattern (text: string) = (getRegEx pattern).IsMatch text
