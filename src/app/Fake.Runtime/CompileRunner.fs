@@ -5,6 +5,7 @@ open Fake.Runtime.Trace
 open Fake.Runtime.Runners
 open Fake.Runtime.SdkAssemblyResolver
 open Fake.IO.FileSystemOperators
+
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
@@ -67,6 +68,7 @@ let tryRunCached (c: CoreCacheInfo) (context: FakeContext) : RunResult =
                     try
                         ass.GetTypes()
                     with :? ReflectionTypeLoadException as ref ->
+                        traceFAKE "Loading from: %s" fullPath
                         traceFAKE "Could not load types of compiled script:"
 
                         for err in ref.LoaderExceptions do
@@ -242,12 +244,12 @@ let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
     if returnCode = 0 then
         // here we will move the result of compilation to FAKE script directory instead of temporary directory
         try
-            File.Move(compilerAssemblyTempPath, wishPath)
-        with :? System.IO.IOException ->
+            File.Move(compilerAssemblyTempPath, wishPath, true)
+        with :? System.IO.IOException as e ->
             traceError ("Moving to destination " + wishPath)
             reraise ()
 
-        File.Move(compilerPdbTempPath, pdbWishPath)
+        File.Move(compilerPdbTempPath, pdbWishPath, true)
 
         use execContext =
             Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
