@@ -2,6 +2,5 @@ group fakerunner
 
 FSharp.Core
 Expecto
-Expecto.TestResults
 Expecto.FsCheck
 FsCheck
