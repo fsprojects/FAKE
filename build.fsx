@@ -3,13 +3,11 @@
 // And to release do: dotnet fake run build.fsx -e configuration=Release -t Release
 
 #r "paket:
+source release/temp-recursion-break
 source release/dotnetcore
 source https://api.nuget.org/v3/index.json
 nuget FSharp.Core
-nuget Microsoft.Build 17.3.2
-nuget Microsoft.Build.Framework 17.3.2
-nuget Microsoft.Build.Tasks.Core 17.3.2
-nuget Microsoft.Build.Utilities.Core 17.3.2
+nuget Microsoft.Build 17.11.4
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
@@ -41,7 +39,7 @@ nuget System.Reactive
 nuget Suave
 nuget Newtonsoft.Json
 nuget System.Net.Http
-nuget Octokit 6.0.0
+nuget Octokit 13.0.1
 nuget Microsoft.Deployment.DotNet.Releases //"
 
 open System.Reflection
@@ -660,14 +658,14 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 
     runExpecto
         root
-        ("src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.IntegrationTests.dll")
+        ("src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.IntegrationTests.dll")
         "Fake_Core_IntegrationTests.TestResults.xml")
 
 Target.create "TemplateIntegrationTests" (fun _ ->
 
     runExpecto
         root
-        ("src" </> "test" </> "Fake.DotNet.Cli.IntegrationTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.DotNet.Cli.IntegrationTests.dll")
+        ("src" </> "test" </> "Fake.DotNet.Cli.IntegrationTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.DotNet.Cli.IntegrationTests.dll")
         "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
     
     Shell.rm_rf (root </> "test"))
@@ -676,13 +674,13 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     runExpecto
         root
-        ("src" </> "test" </> "Fake.Core.UnitTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.UnitTests.dll")
+        ("src" </> "test" </> "Fake.Core.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.UnitTests.dll")
         "Fake_Core_UnitTests.TestResults.xml"
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     runExpecto
         root
-        ("src" </> "test" </> "Fake.Core.CommandLine.UnitTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.CommandLine.UnitTests.dll")
+        ("src" </> "test" </> "Fake.Core.CommandLine.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.CommandLine.UnitTests.dll")
         "Fake_Core_CommandLine_UnitTests.TestResults.xml")
 
 // ----------------------------------------------------------------------------------------------------
@@ -776,7 +774,7 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     DotNet.publish
         (fun c ->
             { c with
-                Framework = Some "net6.0"
+                Framework = Some "net8.0"
                 OutputPath = Some outDir }
             |> dotnetSimple)
         netcoreFsproj
@@ -811,7 +809,7 @@ runtimes
                         Runtime = Some runtime.Value
                         Configuration = DotNet.Release
                         OutputPath = Some outDir 
-                        Framework = Some "net6.0"
+                        Framework = Some "net8.0"
                         // DisableInternalBinLog: https://github.com/fsprojects/FAKE/issues/2722
                         MSBuildParams = { MSBuild.CliArguments.Create() with DisableInternalBinLog = true }}
                     |> dotnetSimple)
@@ -899,7 +897,7 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
 
-    !! "src/test/*/bin/Release/net6.0/**" |> Zip.zip "src/test" testZip
+    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip
 
     publish testZip)
 
@@ -937,7 +935,7 @@ Target.create "DotNetCreateChocolateyPackage" (fun _ ->
 
 Target.create "DotNetCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework = "net6.0"
+    let targetFramework = "net8.0"
 
     let args =
         [ sprintf "--runtime %s" runtime
