@@ -3,7 +3,6 @@
 // And to release do: dotnet fake run build.fsx -e configuration=Release -t Release
 
 #r "paket:
-source release/temp-recursion-break
 source release/dotnetcore
 source https://api.nuget.org/v3/index.json
 nuget FSharp.Core
@@ -725,9 +724,9 @@ Target.create "BootstrapFake" (fun _ ->
 
             let fileName =
                 if Environment.isUnix then
-                    nugetDncDir </> "Fake.netcore/current/fake"
+                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake"
                 else
-                    nugetDncDir </> "Fake.netcore/current/fake.exe"
+                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake.exe"
 
 
             let processResult =
@@ -896,10 +895,13 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
 
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
+    let testZip8 = "temp/tests8.zip"
 
-    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip
-
-    publish testZip)
+    !! "src/test/*/bin/Release/net6.0/**" |> Zip.zip "src/test" testZip
+    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip8
+    
+    publish testZip
+    publish testZip8)
 
 Target.create "DotNetCreateChocolateyPackage" (fun _ ->
     let altToolPath = getChocoWrapper ()
