@@ -1,8 +1,8 @@
 # Release Notes
-## 6.1.2 - 2024-09-20
-* Runtime-identifier update to more recent runtimes.
-* Removed .NETFrameworkAssembly attribute fix on detecting .NET assemblies.
-* SdkAssemblyResolver: Support detecting multiple .NET paths.
+## 6.1.2 - 2024-09-24
+* ENHANCEMENT: Updated runtime-identifier to more recent runtimes.
+* LEGACY: Removed .NETFrameworkAssembly attribute fix on detecting .NET assemblies.
+* ENHANCEMENT: SdkAssemblyResolver. Support detecting multiple .NET paths.
 
 ## 6.1.1 - 2024-08-30
 * BUGFIX: Assembly resolver to pick a found SDK instead of first SDK, thanks @Thorium - https://github.com/fsprojects/FAKE/pull/2797/files
