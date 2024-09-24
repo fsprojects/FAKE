@@ -145,7 +145,7 @@ let setupTemplate () =
         | Option.None -> templatePackageName
 
     try // Specs have changed: needs full package name: https://github.com/dotnet/docs/pull/3054
-        DotNet.uninstallTemplate fakeTemplateName
+        DotNet.uninstallTemplate templatePackageName
     with exn ->
         $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo ()}"
         |> Expect.isTrue false
