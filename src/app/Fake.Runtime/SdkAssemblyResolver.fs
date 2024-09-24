@@ -341,10 +341,11 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 releases
                 |> Seq.map (fun release -> release.Runtime.Version.ToString())
                 |> Seq.distinct
+                |> Seq.toList
 
             if this.LogLevel.PrintVerbose then
                 versions
-                |> Seq.iter (fun version -> Trace.trace $"Resolved runtime version: {version}")
+                |> List.iter (fun version -> Trace.trace $"Resolved runtime version: {version}")
 
             versions
 
