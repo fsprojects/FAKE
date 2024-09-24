@@ -316,8 +316,8 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 [ DotNet.getVersion (versionOptions None) |> ReleaseVersion ]
             else
                 dotnetRoots
-                |> Array.map (fun dotnetRoot -> DotNet.getVersion (versionOptions (Some dotnetRoot)) |> ReleaseVersion)
-                |> Array.toList
+                |> Seq.map (fun dotnetRoot -> DotNet.getVersion (versionOptions (Some dotnetRoot)) |> ReleaseVersion)
+                |> Seq.toList
 
         let productReleases =
             sdkVersions
@@ -339,12 +339,12 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         | releases ->
             let versions =
                 releases
-                |> List.map (fun release -> release.Runtime.Version.ToString())
-                |> List.distinct
+                |> Seq.map (fun release -> release.Runtime.Version.ToString())
+                |> Seq.distinct
 
             if this.LogLevel.PrintVerbose then
                 versions
-                |> List.iter (fun version -> Trace.trace $"Resolved runtime version: {version}")
+                |> Seq.iter (fun version -> Trace.trace $"Resolved runtime version: {version}")
 
             versions
 
