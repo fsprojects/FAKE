@@ -294,7 +294,22 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
 
         match net60releases with
         | None -> []
-        | Some versions -> versions |> List.filter sdkRelease
+        | Some versions ->
+            match versions |> List.filter sdkRelease with
+            | [] ->
+
+                Trace.traceFAKE $"No exact match of product releases {version.ToString()} found."
+
+                match versions |> List.filter (fun release -> release.Version.Major = version.Major) with
+                | [] ->
+                    Trace.traceFAKE
+                        $"No product release found for {version.ToString()}. Maybe a pre-release? Returning all the versions."
+
+                    versions
+                | majorMatch ->
+                    Trace.traceFAKE $".NET {version.Major} product releases returned."
+                    majorMatch
+            | foundMatch -> foundMatch
 
     member this.GetProductReleaseForSdk(version: ReleaseVersion) =
         this.GetProductReleasesForSdk version |> List.tryHead
