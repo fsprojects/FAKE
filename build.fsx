@@ -655,7 +655,7 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 
     runExpecto
         root
-        ("src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.IntegrationTests.dll")
+        ("src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.IntegrationTests.dll")
         "Fake_Core_IntegrationTests.TestResults.xml")
 
 Target.create "TemplateIntegrationTests" (fun _ ->
@@ -663,7 +663,7 @@ Target.create "TemplateIntegrationTests" (fun _ ->
 
     runExpecto
         targetDir
-        ("bin" </> "Release" </> "net6.0" </> "Fake.DotNet.Cli.IntegrationTests.dll")
+        ("bin" </> "Release" </> "net8.0" </> "Fake.DotNet.Cli.IntegrationTests.dll")
         "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
     
     Shell.rm_rf (root </> "test"))
@@ -893,14 +893,11 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
     publish zipFile
 
     Directory.ensure "temp"
-    let testZip = "temp/tests.zip"
-    let testZip8 = "temp/tests8.zip"
+    let testZip8 = "temp/tests.zip"
 
-    !! "src/test/*/bin/Release/net6.0/**" |> Zip.zip "src/test" testZip
-    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip8
+    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip
     
-    publish testZip
-    publish testZip8)
+    publish testZip)
 
 Target.create "DotNetCreateChocolateyPackage" (fun _ ->
     let altToolPath = getChocoWrapper ()
