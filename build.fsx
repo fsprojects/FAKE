@@ -893,7 +893,7 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
     publish zipFile
 
     Directory.ensure "temp"
-    let testZip8 = "temp/tests.zip"
+    let testZip = "temp/tests.zip"
 
     !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip
     
