@@ -894,14 +894,11 @@ Target.create "DotNetCreateNuGetPackage" (fun _ ->
     publish zipFile
 
     Directory.ensure "temp"
-    let testZip = "temp/tests.zip"
-    let testZip8 = "temp/tests8.zip"
+    let testZip8 = "temp/tests.zip"
 
-    !! "src/test/*/bin/Release/net6.0/**" |> Zip.zip "src/test" testZip
-    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip8
+    !! "src/test/*/bin/Release/net8.0/**" |> Zip.zip "src/test" testZip
     
-    publish testZip
-    publish testZip8)
+    publish testZip)
 
 Target.create "DotNetCreateChocolateyPackage" (fun _ ->
     let altToolPath = getChocoWrapper ()

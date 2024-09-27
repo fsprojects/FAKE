@@ -83,7 +83,7 @@ let fakeToolPath =
                 </> "Fake.netcore"
                 </> "bin"
                 </> "Debug"
-                </> "net6.0"
+                </> "net8.0"
                 </> "fake"
             )
 
