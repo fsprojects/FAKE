@@ -655,15 +655,15 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 
     runExpecto
         root
-        "src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.IntegrationTests.dll"
+        ("src" </> "test" </> "Fake.Core.IntegrationTests" </> "bin" </> "Release" </> "net6.0" </> "Fake.Core.IntegrationTests.dll")
         "Fake_Core_IntegrationTests.TestResults.xml")
 
 Target.create "TemplateIntegrationTests" (fun _ ->
-    let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
+    let targetDir = (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")
 
     runExpecto
         targetDir
-        "bin" </> "Release" </> "net6.0" </> "Fake.DotNet.Cli.IntegrationTests.dll"
+        ("bin" </> "Release" </> "net6.0" </> "Fake.DotNet.Cli.IntegrationTests.dll")
         "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
     
     Shell.rm_rf (root </> "test"))
@@ -672,13 +672,13 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     runExpecto
         root
-        "src" </> "test" </> "Fake.Core.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.UnitTests.dll"
+        ("src" </> "test" </> "Fake.Core.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.UnitTests.dll")
         "Fake_Core_UnitTests.TestResults.xml"
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     runExpecto
         root
-        "src" </> "test" </> "Fake.Core.CommandLine.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.CommandLine.UnitTests.dll"
+        ("src" </> "test" </> "Fake.Core.CommandLine.UnitTests" </> "bin" </> "Release" </> "net8.0" </> "Fake.Core.CommandLine.UnitTests.dll")
         "Fake_Core_CommandLine_UnitTests.TestResults.xml")
 
 // ----------------------------------------------------------------------------------------------------
@@ -723,9 +723,9 @@ Target.create "BootstrapFake" (fun _ ->
 
             let fileName =
                 if Environment.isUnix then
-                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake"
+                    (nugetDncDir </> "Fake.netcore" </> "current" </> "fake")
                 else
-                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake.exe"
+                    (nugetDncDir </> "Fake.netcore" </> "current" </> "fake.exe")
 
 
             let processResult =
