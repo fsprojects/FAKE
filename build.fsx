@@ -724,9 +724,9 @@ Target.create "BootstrapFake" (fun _ ->
 
             let fileName =
                 if Environment.isUnix then
-                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake"
+                    (nugetDncDir </> "Fake.netcore" </> "current" </> "fake")
                 else
-                    nugetDncDir </> "Fake.netcore" </> "current" </> "fake.exe"
+                    (nugetDncDir </> "Fake.netcore" </> "current" </> "fake.exe")
 
 
             let processResult =
