@@ -1,0 +1,47 @@
+# This is used to publish test results to PRs so that we can support external forks
+
+name: Publish FAKE Test Results
+
+on:
+    workflow_run:
+      workflows: ["FAKE Build and Test"]
+      types:
+        - completed
+permissions: {}
+
+jobs:
+  test-results:
+    name: Test Results
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion != 'skipped'
+
+    permissions:
+      checks: write
+      pull-requests: write
+      actions: read
+
+    steps:
+      # Download the Github event file
+      - name: Download Event file
+        uses: dawidd6/action-download-artifact@v4
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
+          path: artifacts
+          name: EventFile
+
+      # Download all the test results files
+      - name: Download test results
+        uses: dawidd6/action-download-artifact@v4
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
+          path: test-results
+          pattern: test-results-*
+
+      # Publish the test report
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          commit: ${{ github.event.workflow_run.head_sha }}
+          event_file: artifacts/event.json
+          event_name: ${{ github.event.workflow_run.event }}
+          files: "test-results/**/*.xml"
