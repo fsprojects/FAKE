@@ -31,3 +31,9 @@ jobs:
               with:
                   name: fake-artifacts-${{ matrix.os }}
                   path: release/artifacts
+            - name: publish test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-results-${{ matrix.os }}
+                  path: testresults

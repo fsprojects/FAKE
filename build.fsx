@@ -393,8 +393,10 @@ let callPaket wd args =
 /// <param name="dllPath">Test assembly to run tests from</param>
 /// <param name="resultsXml">Expecto test results XML file</param>
 let runExpecto workDir dllPath resultsXml =
+    let resultsFile = "testresults" </> resultsXml
+
     let processResult =
-        DotNet.exec (dotnetWorkingDir workDir) (sprintf "%s" dllPath) (sprintf "--nunit-summary %s" resultsXml)
+        DotNet.exec (dotnetWorkingDir workDir) (sprintf "%s" dllPath) (sprintf "--nunit-summary %s" resultsFile)
 
     if processResult.ExitCode <> 0 then
         failwithf "Tests in %s failed." (Path.GetFileName dllPath)
