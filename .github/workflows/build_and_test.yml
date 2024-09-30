@@ -4,6 +4,16 @@ on:
     [push, pull_request]
 
 jobs:
+    event_file: # Used for test reporting
+      name: "Publish event file"
+      runs-on: ubuntu-latest
+      steps:
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: EventFile
+          path: ${{ github.event_path }}
+
     build:
 
         runs-on: ${{ matrix.os }}
@@ -31,3 +41,9 @@ jobs:
               with:
                   name: fake-artifacts-${{ matrix.os }}
                   path: release/artifacts
+            - name: publish test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-results-${{ matrix.os }}
+                  path: testresults
