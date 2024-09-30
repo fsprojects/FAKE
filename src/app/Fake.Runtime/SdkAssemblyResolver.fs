@@ -36,7 +36,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
     // Defaults still .NET 6.0 but could be overriden with .NET 8.0 or even comma-separated "6.0,8.0"
     let RuntimeAssemblyVersions =
         let versions =
-            Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION" "6.0"
+            Environment.environVarOrDefault "FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION" "8.0,6.0"
 
         versions.Split([| ','; ';' |]) |> Array.toList
 
@@ -350,7 +350,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 |> Option.defaultValue "6"
 
             failwithf
-                $"Could not find a suitable .NET 6 runtime version matching SDK version: {versions} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. {example}.0 )"
+                $"Could not find a suitable .NET runtime version matching SDK version: {versions} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. {example}.0 )"
         | releases ->
             let versions =
                 releases

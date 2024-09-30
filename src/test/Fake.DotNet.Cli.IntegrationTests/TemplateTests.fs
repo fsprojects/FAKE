@@ -132,16 +132,6 @@ let fileExists dir fileName =
 let setupTemplate () =
     Process.setEnableProcessTracing true
 
-    try
-        DotNet.uninstallTemplate templatePackageName
-    with exn ->
-        $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo ()}"
-        |> Expect.isTrue false
-
-    printfn $"{Environment.CurrentDirectory}"
-
-    DotNet.setupEnv dotnetSdk.Value
-
     let templateNupkg =
         GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg"
         |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__
@@ -153,6 +143,16 @@ let setupTemplate () =
         match templateNupkg with
         | Some t -> t
         | Option.None -> templatePackageName
+
+    try // Specs have changed: needs full package name: https://github.com/dotnet/docs/pull/3054
+        DotNet.uninstallTemplate templatePackageName
+    with exn ->
+        $"should clear out preexisting templates\nDebugging Info: {getDebuggingInfo ()}"
+        |> Expect.isTrue false
+
+    printfn $"{Environment.CurrentDirectory}"
+
+    DotNet.setupEnv dotnetSdk.Value
 
     try
         DotNet.installTemplate fakeTemplateName id

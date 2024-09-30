@@ -1,6 +1,11 @@
 # Release Notes
+## 8.0.0-alpha - 2024-09-03
+* Added .NET8.0 to package target libraries
+* Some dependency updates
+
 ## 6.1.3 - 2024-09-26
 * ENHANCEMENT: SdkAssemblyResolver. Support using the latest installed SDK.
+
 
 ## 6.1.2 - 2024-09-24
 * ENHANCEMENT: Updated runtime-identifier to more recent runtimes.
