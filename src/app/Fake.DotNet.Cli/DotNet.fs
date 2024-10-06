@@ -17,7 +17,7 @@ module DotNet =
     open System.IO
     open System.Security.Cryptography
     open System.Text
-    open Newtonsoft.Json.Linq
+    open System.Text.Json
 
     /// <summary>
     /// .NET Core SDK default install directory (set to default SDK installer paths
@@ -64,12 +64,15 @@ module DotNet =
         | Some globalJson ->
             try
                 let content = File.ReadAllText globalJson.FullName
-                let json = JObject.Parse content
-                let sdk = json.Item("sdk") :?> JObject
 
-                match sdk.Property("version") with
-                | null -> None
-                | version -> Some(version.Value.ToString())
+                let json =
+                    JsonDocument.Parse(content, JsonDocumentOptions(CommentHandling = JsonCommentHandling.Skip))
+
+                let sdk = json.RootElement.GetProperty("sdk")
+
+                match sdk.TryGetProperty("version") with
+                | false, _ -> None
+                | true, version -> Some(version.GetString())
             with exn ->
                 failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
 
