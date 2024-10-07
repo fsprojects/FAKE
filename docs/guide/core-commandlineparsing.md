@@ -38,6 +38,8 @@ match DocoptResult.tryGetArgument "-m" results with
 
 *Note the following links are permalinks to old commits. They are intended only as examples. You are encouraged to look at the current version too, because it's likely to have been updated.*
 
+See also: https://fake.build/guide/core-targets.html#Script-with-arguments
+
 A more sophisticated example can be found in the fake runner: [<ins>src/app/Fake.netcore/Program.fs#L204-L259</ins>](https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259)
 
 Or the target module:

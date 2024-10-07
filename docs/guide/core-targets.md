@@ -89,6 +89,11 @@ Now we have the following options:
 
 ## Script with arguments
 
+If you don't do `Target.initEnvironment()` at all, then FAKE will only use environment variables already set
+(e.g. Windows: `set mything=123`) instead of parsing the command-line `-e`.
+
+If you want multiple environment arguments, you can do `-e a=1 -e b=2`.
+
 Example:
 
 ```fsharp
