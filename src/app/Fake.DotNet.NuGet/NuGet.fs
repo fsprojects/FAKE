@@ -3,7 +3,7 @@ namespace Fake.DotNet.NuGet
 /// <summary>
 /// Contains helper functions and task which allow to inspect, create and publish
 /// <a href="https://www.nuget.org/">NuGet</a> packages.
-/// There is also a tutorial about <a href="/dotnet-nuget.html">nuget package creating</a> available.
+/// There is also a tutorial about <a href="/articles/dotnet-nuget.html">nuget package creating</a> available.
 /// </summary>
 module NuGet =
 

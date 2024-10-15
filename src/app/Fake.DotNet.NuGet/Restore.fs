@@ -5,7 +5,7 @@ namespace Fake.DotNet.NuGet
 /// <a href="http://www.nuget.org">nuget.org</a> using the
 /// <a href="https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-restore">
 /// nuget.exe restore command</a>. There is also a tutorial about
-/// <a href="/dotnet-nuget.html">nuget package restore</a> available.
+/// <a href="/articles/dotnet-nuget.html">nuget package restore</a> available.
 /// </summary>
 module Restore =
 
