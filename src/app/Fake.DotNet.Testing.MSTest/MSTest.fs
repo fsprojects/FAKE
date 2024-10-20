@@ -12,7 +12,7 @@ module MSTest =
     open Fake.Core
     open Fake.IO
     open Fake.Testing.Common
-    
+
     let private getAllVsPath () =
         VsInstances.getWithPackage "Microsoft.VisualStudio.PackageGroup.TestTools.MSTestV2.Managed" false
         |> List.map (fun vs -> Path.combine vs.InstallationPath "Common7\\Tools")

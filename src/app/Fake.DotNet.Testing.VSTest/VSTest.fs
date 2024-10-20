@@ -15,6 +15,7 @@ module VSTest =
 
     let private guessVSTestPaths () =
         let vsTestRelativePath = @"Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+
         VsInstances.getAll ()
         |> List.map (fun vs -> Fake.IO.Path.combine vs.InstallationPath vsTestRelativePath)
 
