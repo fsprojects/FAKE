@@ -2,6 +2,7 @@
 
 open Fake.Core
 open Fake.Testing.Common
+open BlackFox.VsWhere
 open System
 open System.IO
 open System.Text
@@ -12,14 +13,10 @@ open System.Text
 [<RequireQualifiedAccess>]
 module VSTest =
 
-    let private vsTestPaths =
-        [| @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
-           @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow" |]
+    let private guessVSTestPaths () =
+        let vsTestRelativePath = @"Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+        VsInstances.getAll ()
+        |> List.map (fun vs -> Fake.IO.Path.combine vs.InstallationPath vsTestRelativePath)
 
     let private vsTestExe =
         if Environment.isMono then
@@ -115,7 +112,7 @@ module VSTest =
           ListLoggers = false
           ListSettingsProviders = false
           ToolPath =
-            match ProcessUtils.tryFindFile vsTestPaths vsTestExe with
+            match ProcessUtils.tryFindFile (guessVSTestPaths ()) vsTestExe with
             | Some path -> path
             | None -> ""
           WorkingDir = null
