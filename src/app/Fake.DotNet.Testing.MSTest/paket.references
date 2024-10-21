@@ -2,3 +2,4 @@ group fakemodule
 
 FSharp.Core
 NETStandard.Library
+BlackFox.VsWhere
