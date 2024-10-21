@@ -608,7 +608,7 @@
         {
             "title": "Sign Files using SignTool",
             "description": "Digitally signs files, verifies signatures in files, or time stamps files",
-            "href": "/articles/fake-signtool.html"
+            "href": "/articles/tools-signtool.html"
         },
         {
             "title": "Releasifying NuGet Packages with Squirrel",
