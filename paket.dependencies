@@ -40,7 +40,6 @@ group fakerunner
     nuget Microsoft.TestPlatform.TestHost
     nuget FsCheck
     nuget FParsec
-    nuget Newtonsoft.Json
 
 group fakemodule
     source https://api.nuget.org/v3/index.json

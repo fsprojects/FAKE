@@ -5,7 +5,7 @@ open Expecto
 open Expecto.Flip
 open System
 open System.IO
-open Newtonsoft.Json.Linq
+open System.Text.Json
 open Fake.Core
 
 let fail s = Expect.isTrue s false
@@ -216,30 +216,33 @@ let tests =
                       |> ignProc
 
                   let json = File.ReadAllText tempFile
-                  let obj = JObject.Parse json
-                  let targets = obj["targets"] :?> JArray
+                  let obj = JsonDocument.Parse(json)
+                  let targets = obj.RootElement.GetProperty("targets")
 
-                  let parseDecl (t: JToken) =
-                      { File = string t["file"]
-                        Line = int t["line"]
-                        Column = int t["column"]
-                        ErrorDetail = string t["errorDetail"] }
+                  let parseDecl (t: JsonElement) =
+                      { File = string (t.GetProperty("file"))
+                        Line = t.GetProperty("line").GetInt32()
+                        Column = t.GetProperty("column").GetInt32()
+                        ErrorDetail = string (t.GetProperty("errorDetail")) }
 
-                  let parseDep (t: JToken) =
-                      { Name = string t["name"]
-                        Declaration = parseDecl t["declaration"] }
+                  let parseDep (t: JsonElement) =
+                      { Name = string (t.GetProperty("name"))
+                        Declaration = parseDecl (t.GetProperty("declaration")) }
 
-                  let parseArray parseItem (a: JToken) =
-                      (a :?> JArray) |> Seq.map parseItem |> Seq.toList
+                  let parseArray parseItem (a: JsonElement) =
+                      a.EnumerateArray() |> Seq.map parseItem |> Seq.toList
 
-                  let parseTarget (t: JToken) =
-                      { Name = string t["name"]
-                        Declaration = parseDecl t["declaration"]
-                        HardDependencies = parseArray parseDep t["hardDependencies"]
-                        SoftDependencies = parseArray parseDep t["softDependencies"]
-                        Description = string t["description"] }
+                  let parseTarget (t: JsonElement) =
+                      { Name = string (t.GetProperty("name"))
+                        Declaration = parseDecl (t.GetProperty("declaration"))
+                        HardDependencies = parseArray parseDep (t.GetProperty("hardDependencies"))
+                        SoftDependencies = parseArray parseDep (t.GetProperty("softDependencies"))
+                        Description = string (t.GetProperty("description")) }
 
-                  let dict = targets |> Seq.map (fun t -> let t = parseTarget t in t.Name, t) |> dict
+                  let dict =
+                      targets.EnumerateArray()
+                      |> Seq.map (fun t -> let t = parseTarget t in t.Name, t)
+                      |> dict
 
                   Expect.equal "Expected correct number of targets" 4 dict.Count
 
