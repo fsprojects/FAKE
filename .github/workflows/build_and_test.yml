@@ -29,7 +29,7 @@ jobs:
             - name: Setup .NET 8
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: '8.0.304'
+                  dotnet-version: '8.0.401'
             - name: Restore dotnet tools
               run: dotnet tool restore
             - name: remove current fake runner tool
