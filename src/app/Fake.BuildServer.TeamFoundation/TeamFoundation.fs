@@ -408,10 +408,10 @@ module TeamFoundation =
                         | TagStatus.Failed -> "Failed", "ERROR"
 
                     setBuildState vsoState msg
-                | TraceData.ImportData (ImportData.Junit _, path) -> publishTests "JUnit" [ path ] false "" "" "" true
+                | TraceData.ImportData (ImportData.Junit, path) -> publishTests "JUnit" [ path ] false "" "" "" true
                 | TraceData.ImportData (ImportData.Nunit _, path) -> publishTests "NUnit" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.Mstest _, path) -> publishTests "VSTest" [ path ] false "" "" "" true
-                | TraceData.ImportData (ImportData.Xunit _, path) -> publishTests "XUnit" [ path ] false "" "" "" true
+                | TraceData.ImportData (ImportData.Mstest, path) -> publishTests "VSTest" [ path ] false "" "" "" true
+                | TraceData.ImportData (ImportData.Xunit, path) -> publishTests "XUnit" [ path ] false "" "" "" true
                 | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
                     publishArtifactIfOk name (Some name) path
                 | TraceData.ImportData (typ, path) -> publishArtifactIfOk typ.Name (Some "fake-artifacts") path
