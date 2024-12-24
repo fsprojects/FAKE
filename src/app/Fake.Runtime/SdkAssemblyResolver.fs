@@ -350,7 +350,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
                 |> Option.defaultValue "6"
 
             failwithf
-                $"Could not find a suitable .NET runtime version matching SDK version: {sdkVersion.ToString()} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. {sdkVersion.Major.ToString()}.0 )"
+                $"Could not find a suitable .NET runtime version matching SDK version: {versions} (You can also try setting environment variable FAKE_SDK_RESOLVER_CUSTOM_DOTNET_VERSION to e.g. {example}.0 )"
 
         | releases ->
             let versions =
