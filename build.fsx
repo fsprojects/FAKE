@@ -839,7 +839,7 @@ Target.create "CacheDotNetReleases" (fun _ ->
         |> Async.AwaitTask
         |> Async.RunSynchronously
         |> List.ofSeq
-        |> List.find (fun product -> product.ProductVersion.Equals("6.0"))
+        |> List.find (fun product -> product.ProductVersion.Equals("8.0"))
 
     let client = new HttpClient()
 
