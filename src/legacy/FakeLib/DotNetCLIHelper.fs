@@ -564,7 +564,7 @@ let InstallDotNetSDK sdkVersion =
                     else
                         sprintf "dotnet-dev-osx-x64.%s.tar.gz" sdkVersion
 
-                let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+                let downloadPath = sprintf "https://builds.dotnet.microsoft.com/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
                 downloadSDK downloadPath archiveFileName
             with
             | _ -> 
