@@ -1,9 +1,7 @@
 group fakerunner
-
 YoloDev.Expecto.TestSdk
 Microsoft.TestPlatform.TestHost
 FSharp.Core
 NETStandard.Library
 Expecto
 FParsec
-Newtonsoft.Json
