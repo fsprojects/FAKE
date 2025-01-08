@@ -56,7 +56,7 @@ let inline redirect () =
 
 let getDebuggingInfo () =
     sprintf
-        "%s\nDOTNET_ROOT: %s\nPATH: %s\n"
+        "\nDOTNET_ROOT: %s\nPATH: %s\n"
         (Environment.GetEnvironmentVariable("DOTNET_ROOT"))
         (Environment.GetEnvironmentVariable "PATH")
 
