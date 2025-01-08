@@ -35,7 +35,7 @@ module TeamCityImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.FxCop -> "FxCop"
             | ImportData.Nunit _ -> "nunit"
-            | ImportData.Xunit _ -> "nunit"
+            | ImportData.Xunit -> "nunit"
 
 ///<summary>
 /// Native support for TeamCity specific APIs.
