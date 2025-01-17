@@ -1,0 +1,5 @@
+group fakemodule
+
+FSharp.Core
+NETStandard.Library
+Newtonsoft.Json

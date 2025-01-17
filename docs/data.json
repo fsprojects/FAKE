@@ -240,6 +240,10 @@
                     "href": "/reference/fake-api-slack.html"
                 },
                 {
+                    "title": "TelegramBot",
+                    "href": "/reference/fake-api-telegram-bot.html"
+                },
+                {
                     "title": "GitHub",
                     "href": "/reference/fake-api-github.html"
                 }

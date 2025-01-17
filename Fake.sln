@@ -195,6 +195,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.JavaScript.TypeScript"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.DotNet.Fsdocs", "src\app\Fake.DotNet.Fsdocs\Fake.DotNet.Fsdocs.fsproj", "{6918A236-3F2A-47EA-9651-020522C48E24}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Api.TelegramBot", "src\app\Fake.Api.TelegramBot\Fake.Api.TelegramBot.fsproj", "{D44BBF46-1490-4249-9D25-C7DF77039EE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1248,6 +1250,18 @@ Global
 		{6918A236-3F2A-47EA-9651-020522C48E24}.Release|x64.Build.0 = Release|Any CPU
 		{6918A236-3F2A-47EA-9651-020522C48E24}.Release|x86.ActiveCfg = Release|Any CPU
 		{6918A236-3F2A-47EA-9651-020522C48E24}.Release|x86.Build.0 = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|x64.Build.0 = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|x64.ActiveCfg = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|x64.Build.0 = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1341,6 +1355,7 @@ Global
 		{5472237F-020B-4F9A-8E06-01D553576387} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{1C476373-FF62-4EA7-8CCC-6A0D0DB96B6D} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{6918A236-3F2A-47EA-9651-020522C48E24} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
+		{D44BBF46-1490-4249-9D25-C7DF77039EE0} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {058A0C5E-2216-4306-8AFB-0AE28320C26A}
