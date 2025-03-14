@@ -4,7 +4,11 @@ namespace Fake.DotNet
 /// .NET Core + CLI tools helpers
 /// </summary>
 [<RequireQualifiedAccess>]
+#if FAKE_INTERNAL_DOTNET_CORE_CLI
+module InternalDotNet =
+#else
 module DotNet =
+#endif
 
     // NOTE: The #if can be removed once we have a working release with the "new" API
     // Currently we #load this file in build.fsx
@@ -12,12 +16,13 @@ module DotNet =
     open Fake.Core
     open Fake.IO
     open Fake.IO.FileSystemOperators
+#if !FAKE_INTERNAL_DOTNET_CORE_CLI
     open Fake.DotNet.NuGet
+#endif
     open System
     open System.IO
     open System.Security.Cryptography
     open System.Text
-    open System.Text.Json
 
     /// <summary>
     /// .NET Core SDK default install directory (set to default SDK installer paths
@@ -40,63 +45,18 @@ module DotNet =
             @"C:\Program Files\dotnet"
 
     /// <summary>
-    /// Tries to get the DotNet SDK from the global.json, starts searching in the given directory.
-    /// Returns None if global.json is not found
-    /// </summary>
-    ///
-    /// <param name="startDir">The directory to start search from</param>
-    let internal tryGetSDKVersionFromGlobalJsonDir startDir : string option =
-        let globalJsonPaths rootDir =
-            let rec loop (dir: DirectoryInfo) =
-                seq {
-                    match dir.GetFiles "global.json" with
-                    | [| json |] -> yield json
-                    | _ -> ()
-
-                    if not (isNull dir.Parent) then
-                        yield! loop dir.Parent
-                }
-
-            loop (DirectoryInfo rootDir)
-
-        match Seq.tryHead (globalJsonPaths startDir) with
-        | None -> None
-        | Some globalJson ->
-            try
-                let content = File.ReadAllText globalJson.FullName
-
-                let json =
-                    JsonDocument.Parse(content, JsonDocumentOptions(CommentHandling = JsonCommentHandling.Skip))
-
-                let sdk = json.RootElement.GetProperty("sdk")
-
-                match sdk.TryGetProperty("version") with
-                | false, _ -> None
-                | true, version -> Some(version.GetString())
-            with exn ->
-                failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
-
-
-    /// <summary>
-    /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
-    /// </summary>
-    let internal getSDKVersionFromGlobalJsonDir startDir : string =
-        tryGetSDKVersionFromGlobalJsonDir startDir
-        |> function
-            | Some version -> version
-            | None -> failwithf "global.json not found"
-
-    /// <summary>
     /// Tries the DotNet SDK from the global.json. This file can exist in the working
     /// directory or any of the parent directories Returns None if global.json is not found
     /// </summary>
-    let tryGetSDKVersionFromGlobalJson () : string option = tryGetSDKVersionFromGlobalJsonDir "."
+    let tryGetSDKVersionFromGlobalJson () : string option =
+        GlobalJson.tryGetSDKVersionFromGlobalJson ()
 
     /// <summary>
     /// Gets the DotNet SDK from the global.json. This file can exist in the working
     /// directory or any of the parent directories
     /// </summary>
-    let getSDKVersionFromGlobalJson () : string = getSDKVersionFromGlobalJsonDir "."
+    let getSDKVersionFromGlobalJson () : string =
+        GlobalJson.getSDKVersionFromGlobalJson ()
 
     /// <summary>
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
@@ -698,7 +658,7 @@ module DotNet =
         | UsePreviousFile
         | ReplaceWith of string list
 
-    let internal runRaw (firstArg: FirstArgReplacement) options (c: CreateProcess<'a>) =
+    let internal runRaw (firstArg: FirstArgReplacement) (options: Options) (c: CreateProcess<'a>) =
         //let timeout = TimeSpan.MaxValue
         let results = System.Collections.Generic.List<ConsoleMessage>()
 
@@ -809,6 +769,64 @@ module DotNet =
         |> runRaw (FirstArgReplacement.ReplaceWith firstArgs) options
         |> CreateProcess.map fst
 
+
+    /// <summary>
+    /// dotnet --version command options
+    /// </summary>
+    type VersionOptions =
+        {
+            /// Common tool options
+            Common: Options
+        }
+
+        /// Parameter default values.
+        static member Create() =
+            { Common = Options.Create().WithRedirectOutput true }
+
+        /// Gets the current environment
+        member x.Environment = x.Common.Environment
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f = { x with Common = f x.Common }
+
+        /// Sets the current environment variables.
+        member x.WithEnvironment map =
+            x.WithCommon(fun c -> { c with Environment = map })
+
+        /// Sets a value indicating whether the output for the given process is redirected.
+        member x.WithRedirectOutput shouldRedirect =
+            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+
+    /// <summary>
+    /// dotnet info result
+    /// </summary>
+    type VersionResult = string
+
+    /// <summary>
+    /// Execute dotnet --version command
+    /// </summary>
+    ///
+    /// <param name="setParams">set version command parameters</param>
+    let getVersion setParams =
+        use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
+        let param = VersionOptions.Create() |> setParams
+        let args = "--version"
+        let result = exec (fun _ -> param.Common) "" args
+
+        if not result.OK then
+            failwithf "dotnet --version failed with code %i" result.ExitCode
+
+        let version = result.Messages |> String.separated "\n" |> String.trim
+
+        if String.isNullOrWhiteSpace version then
+            failwithf "could not read version from output: \n%s" (String.Join("\n", result.Messages))
+
+        __.MarkSuccess()
+        version
+
+#if !FAKE_INTERNAL_DOTNET_CORE_CLI
+
     /// <summary>
     /// Setup the environment (<c>PATH</c> and <c>DOTNET_ROOT</c>) in such a way that started processes use the given
     /// dotnet SDK installation. This is useful for example when using fable,
@@ -918,62 +936,6 @@ module DotNet =
 
         __.MarkSuccess()
         { RID = rid.Value }
-
-
-    /// <summary>
-    /// dotnet --version command options
-    /// </summary>
-    type VersionOptions =
-        {
-            /// Common tool options
-            Common: Options
-        }
-
-        /// Parameter default values.
-        static member Create() =
-            { Common = Options.Create().WithRedirectOutput true }
-
-        /// Gets the current environment
-        member x.Environment = x.Common.Environment
-
-        /// Changes the "Common" properties according to the given function
-        member inline x.WithCommon f = { x with Common = f x.Common }
-
-        /// Sets the current environment variables.
-        member x.WithEnvironment map =
-            x.WithCommon(fun c -> { c with Environment = map })
-
-        /// Sets a value indicating whether the output for the given process is redirected.
-        member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
-
-
-    /// <summary>
-    /// dotnet info result
-    /// </summary>
-    type VersionResult = string
-
-    /// <summary>
-    /// Execute dotnet --version command
-    /// </summary>
-    ///
-    /// <param name="setParams">set version command parameters</param>
-    let getVersion setParams =
-        use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
-        let param = VersionOptions.Create() |> setParams
-        let args = "--version"
-        let result = exec (fun _ -> param.Common) "" args
-
-        if not result.OK then
-            failwithf "dotnet --version failed with code %i" result.ExitCode
-
-        let version = result.Messages |> String.separated "\n" |> String.trim
-
-        if String.isNullOrWhiteSpace version then
-            failwithf "could not read version from output: \n%s" (String.Join("\n", result.Messages))
-
-        __.MarkSuccess()
-        version
 
     /// <summary>
     /// Install .NET Core SDK if required
@@ -2076,3 +2038,4 @@ module DotNet =
         | false -> failwithf $"dotnet new --uninstall failed with code %i{result.ExitCode}"
 
         __.MarkSuccess()
+#endif
