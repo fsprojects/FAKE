@@ -1,4 +1,9 @@
 # Release Notes
+## 6.1.4 - 2025-03-14
+* BUGFIX: Fixes for the .NET CDN changes described at https://github.com/dotnet/core/issues/9671, thanks @richlander, @Numpsy
+* ENHANCEMENT: In Fake.Dotnet.Cli, parse global.json using System.Text.Json instead of Newtonsoft.Json, thanks @Numpsy - https://github.com/fsprojects/FAKE/pull/2839
+* ENHANCEMENT: Discover VSTest and MSTest using VSWhere, thanks @farlee2121 - https://github.com/fsprojects/FAKE/pull/2843
+
 ## 6.1.3 - 2024-09-26
 * ENHANCEMENT: SdkAssemblyResolver. Support using the latest installed SDK.
 
