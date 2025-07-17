@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "dotnet-deb": {
-      "version": "0.1.220",
+      "version": "0.1.232",
       "commands": [
         "dotnet-deb"
       ]
