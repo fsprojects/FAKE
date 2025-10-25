@@ -9,10 +9,11 @@ open Fake.ExpectoSupport
 
 [<EntryPoint>]
 let main argv =
-    let config = defaultConfig |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(30.))
 
-    Tests.runTestsInAssembly
-        { config with
-            printer = ExpectoHelpers.fakeDefaultPrinter
-            verbosity = LogLevel.Debug }
+    testFromThisAssembly ()
+    |> Option.defaultValue (TestList([], Normal))
+    |> ExpectoHelpers.addTimeout (TimeSpan.FromMinutes(20.))
+    |> Tests.runTestsWithCLIArgs
+        [| Tests.CLIArguments.Verbosity LogLevel.Debug
+           Tests.CLIArguments.Printer ExpectoHelpers.fakeDefaultPrinter |]
         argv

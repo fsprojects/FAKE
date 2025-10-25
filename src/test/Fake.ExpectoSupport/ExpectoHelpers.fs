@@ -146,5 +146,4 @@ module ExpectoHelpers =
         recMapping "" test
 
 
-    let addTimeout t config =
-        config |> addFilter (mapTest (withTimeout (t)))
+    let addTimeout t test = test |> mapTest (withTimeout (t))
