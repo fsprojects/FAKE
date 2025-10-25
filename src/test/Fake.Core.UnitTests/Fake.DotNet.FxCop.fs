@@ -288,7 +288,7 @@ let testCases =
                   }
 
               let dummy = Guid.NewGuid().ToString()
-              let levels = { 0..5 }
+              let levels = seq { 0..5 }
 
               let maps =
                   [| [ ("string(count(//Issue[@Level='CriticalError']))", 1)
@@ -317,7 +317,7 @@ let testCases =
                        ("string(count(//Issue[@Level='Warning']))", 0) ]
                      |> Map.ofList |]
 
-              let mapIndexes = { 0..4 }
+              let mapIndexes = seq { 0..4 }
 
               let messages =
                   [| "FxCop found 1 critical errors."
