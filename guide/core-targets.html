@@ -42,7 +42,7 @@
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.1.3</span>
+                <span>6.1.4</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -298,6 +298,10 @@ Using the current parameter object is not supported yet.</p>
 <li><code>fake run build.fsx</code> =&gt; starts the Deploy target (and runs the dependencies <em>Clean</em> and <em>Build</em>)</li>
 </ul>
 <h2><a name="Script-with-arguments" class="anchor" href="#Script-with-arguments">Script with arguments</a></h2>
+<p>If you don't call <code>Target.initEnvironment()</code> before you use the <code>Environment</code> module,
+then FAKE will only use system and inline environment variables
+(e.g. Windows: <code>set mything=123</code>) instead of parsing the command line <code>-e</code> params.</p>
+<p>If you want multiple environment arguments, you can do <code>-e a=1 -e b=2</code>.</p>
 <p>Example:</p>
 <pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="id">args</span> <span class="o">=</span> <span class="id">Target</span><span class="pn">.</span><span class="id">getArguments</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// use this at the top of your script instead of `Target.initEnvironment()`</span>
 
@@ -535,15 +539,13 @@ say that target B has a soft dependency on target A:</p>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://fsharp.org/">F#</a></li>
                             <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://ionide.io/">Ionide</a>
                             </li>
-                            <li class="border-b"><a class="hover:text-[#d4b43c]" href="https://forge.run/">Forge</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.1.3</span>
+                            <span>6.1.4</span>
                         </a>
                     </p>
                 </div>
