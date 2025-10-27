@@ -69,10 +69,32 @@ let isProcessSucceeded message (r: ProcessResult<ProcessOutput>) =
 
 let timeout = (TimeSpan.FromMinutes 10.)
 
+let writeTestNuGetConfig rootDir =
+
+    let nugetConfigFilePath = System.IO.Path.Combine(rootDir, "NuGet.config")
+
+    let nugetPackageFolder =
+        System.IO.Path.Combine(__SOURCE_DIRECTORY__, "..", "..", "..", "release", "dotnetcore")
+
+    let nugetConfig =
+        $"""<?xml version="1.0" encoding="utf-8"?>
+        <configuration>
+        <packageSources>
+        <clear />
+        <add key="api.nuget.org" value="https://api.nuget.org/v3/index.json" />
+        <add key="localBuild" value="{nugetPackageFolder}" />
+        </packageSources>
+        </configuration>
+        """
+
+    System.IO.File.WriteAllText(nugetConfigFilePath, nugetConfig)
+
 let runTemplate rootDir kind dependencies dsl =
     Directory.ensure rootDir
 
     try
+        writeTestNuGetConfig rootDir
+
         let result =
             DotNet.exec
                 (dotnetWorkingDir rootDir >> redirect ())
