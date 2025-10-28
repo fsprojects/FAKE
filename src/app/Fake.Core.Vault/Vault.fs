@@ -16,7 +16,8 @@ module Vault =
 
     let private aesCtrTransform (key: byte[], salt: byte[], inputStream: Stream, outputStream: Stream) =
         // https://stackoverflow.com/a/51188472/1269722
-        let aes = new AesManaged(Mode = CipherMode.ECB, Padding = PaddingMode.None)
+        // Use Aes.Create() instead of deprecated AesManaged
+        let aes = Aes.Create(Mode = CipherMode.ECB, Padding = PaddingMode.None)
         let blockSize = aes.BlockSize / 8
 
         if (salt.Length <> blockSize) then
@@ -187,12 +188,14 @@ module Vault =
           Variables = Map.empty }
 
     /// <summary>
-    /// Read in a vault from a given json string, make sure to delete the source of the json after using this API
+    /// Read a vault from a JSON string
     /// </summary>
     ///
     /// <param name="str">The JSON string of the vault to read</param>
     let fromJson str =
-        let vars = JsonConvert.DeserializeObject<Variables>(str)
+        // Secure JSON deserialization: disable type name handling to prevent deserialization attacks
+        let settings = JsonSerializerSettings(TypeNameHandling = TypeNameHandling.None)
+        let vars = JsonConvert.DeserializeObject<Variables>(str, settings)
         fromEncryptedVariables { KeyFile = vars.keyFile; Iv = vars.iv } vars.values
 
     /// <summary>
