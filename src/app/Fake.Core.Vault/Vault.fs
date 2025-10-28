@@ -17,7 +17,7 @@ module Vault =
     let private aesCtrTransform (key: byte[], salt: byte[], inputStream: Stream, outputStream: Stream) =
         // https://stackoverflow.com/a/51188472/1269722
         // Use Aes.Create() instead of deprecated AesManaged
-        let aes = Aes.Create(Mode = CipherMode.ECB, Padding = PaddingMode.None)
+        use aes = Aes.Create(Mode = CipherMode.ECB, Padding = PaddingMode.None)
         let blockSize = aes.BlockSize / 8
 
         if (salt.Length <> blockSize) then
