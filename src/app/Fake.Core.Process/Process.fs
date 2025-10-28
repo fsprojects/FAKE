@@ -1,4 +1,4 @@
-﻿namespace Fake.Core
+namespace Fake.Core
 
 open System
 open System.Diagnostics
@@ -815,7 +815,7 @@ module Process =
 
         while DateTime.Now <= endTime && not (getAllByName name |> Seq.isEmpty) do
             Trace.tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
-            Thread.Sleep 1000
+            Thread.Sleep 100
 
         if not (getAllByName name |> Seq.isEmpty) then
             failwithf "The process %s has not stopped (check the logs for errors)" name
