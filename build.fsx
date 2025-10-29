@@ -6,7 +6,7 @@
 source release/dotnetcore
 source https://api.nuget.org/v3/index.json
 nuget FSharp.Core
-nuget Microsoft.Build 17.11.4
+nuget Microsoft.Build 17.11.48
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
