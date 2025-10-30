@@ -19,7 +19,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-22.04, windows-latest, macOS-13]
+                os: [ubuntu-22.04, windows-latest, macos-15-intel]
         steps:
             - uses: actions/checkout@v4
             - name: Setup .NET 6
@@ -28,6 +28,9 @@ jobs:
                   dotnet-version: '6.0.301'
             - name: Restore dotnet tools
               run: dotnet tool restore
+            - name: Install mono (Mac)
+              if: runner.os == 'macOS'
+              run: brew install mono
             - name: remove current fake runner tool
               run: dotnet tool uninstall fake-cli
             - name: Build fake runner
