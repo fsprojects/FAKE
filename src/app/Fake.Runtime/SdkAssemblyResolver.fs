@@ -48,7 +48,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         RuntimeAssemblyVersions
         |> List.map (fun v ->
             if String.IsNullOrEmpty v || v = "\"\"" then
-                ReleaseVersion "6.0.0"
+                ReleaseVersion "8.0.0"
             elif v.Contains "." then
                 ReleaseVersion(v + ".0")
             else
