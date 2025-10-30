@@ -280,7 +280,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
             None
 
     member this.GetProductReleasesForSdk(version: ReleaseVersion) =
-        let net60releases =
+        let netReleases =
             if RuntimeResolverResolveMethod = "cache" then
                 // for testing only!
                 this.TryResolveSdkRuntimeVersionFromCache()
@@ -292,7 +292,7 @@ type SdkAssemblyResolver(logLevel: Trace.VerboseLevel) =
         let sdkRelease (release: ProductRelease) =
             release.Sdks |> Seq.exists (fun sdk -> sdk.Version.Equals(version))
 
-        match net60releases with
+        match netReleases with
         | None -> []
         | Some versions ->
             match versions |> List.filter sdkRelease with
