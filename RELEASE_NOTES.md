@@ -1,4 +1,8 @@
 # Release Notes
+## 8.0.0-alpha - 2025-10-25
+* Added .NET 8.0 to package target libraries
+* Some dependency updates
+
 ## 6.1.4 - 2025-10-25
 * BUGFIX: Fixes for the .NET CDN changes described at https://github.com/dotnet/core/issues/9671, thanks @richlander, @Numpsy
 * BUGFIX: Update NuGet package dependencies to pick up security fixes, refs https://github.com/fsprojects/FAKE/issues/2871. thanks @Numpsy - https://github.com/fsprojects/FAKE/pull/2872
