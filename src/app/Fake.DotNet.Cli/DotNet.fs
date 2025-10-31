@@ -831,12 +831,32 @@ module DotNet =
 
         let currentDotNetRoot = Environment.environVar "DOTNET_ROOT"
 
+        // resolve potential symbolic link to the real location
+        // On .NET we can use File.ResolveLinkTarget,  on .NET Standard we use Mono.Unix.UnixPath.GetRealPath
+        let resolveLinkTarget linkPath =
+
+            let resolvedPath =
+#if NET
+                // ResolveLinkTarget returns null if the input isn't a link. Just use the input path directly in that case.
+                // @@TODO@@ ResolveLinkTarget might throw if the input doesn't exist - maybe need to handle that.
+                let resolvedTarget = File.ResolveLinkTarget(linkPath, true)
+
+                if isNull resolvedTarget then
+                    linkPath
+                else
+                    resolvedTarget.FullName
+#else
+                // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
+                Mono.Unix.UnixPath.GetRealPath(dotnetTool)
+#endif
+
+            resolvedPath |> Path.GetDirectoryName
+
         let realFolder =
             if not Environment.isWindows then
 #if !FX_NO_POSIX
                 // resolve potential symbolic link to the real location
-                // https://stackoverflow.com/questions/58326739/how-can-i-find-the-target-of-a-linux-symlink-in-c-sharp
-                Mono.Unix.UnixPath.GetRealPath(dotnetTool) |> Path.GetDirectoryName
+                resolveLinkTarget dotnetTool
 #else
                 eprintf
                     "Setting 'DOTNET_ROOT' to '%s' this might be wrong as we didn't follow the symlink. Please upgrade to netcore."
