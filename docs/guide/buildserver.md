@@ -5,6 +5,8 @@ The `Fake.Core.BuildServer` namespace bundles support for various Build-Servers.
 Supported Build-Servers (Note: Not supported doesn't mean that it won't work, but colors and deep integration might be missing):
 
 - `Fake.BuildServer.AppVeyor`
+- `Fake.BuildServer.GitHubActions`
+- `Fake.BuildServer.GitLab`
 - `Fake.BuildServer.Travis`
 - `Fake.BuildServer.TeamCity`
 - `Fake.BuildServer.TeamFoundation`
