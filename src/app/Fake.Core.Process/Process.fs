@@ -612,8 +612,7 @@ module Process =
 
         /// Async version: Starts process and runs it to completion without blocking
         /// Preferred over 'run' for async workflows
-        let runAsync (processStarter: IProcessStarter) c =
-            startAndAwaitAsync processStarter c
+        let runAsync (processStarter: IProcessStarter) c = startAndAwaitAsync processStarter c
 
         /// Legacy: Starts process and runs it to completion (blocking)
         /// For backward compatibility - prefer runAsync in new code
