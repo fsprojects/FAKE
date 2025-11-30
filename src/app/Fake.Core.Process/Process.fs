@@ -927,12 +927,12 @@ type Shell private () =
           Args = [] }
 
     /// <summary>
-    /// Runs the given process, waits for it's completion and returns the exit code.
+    /// Runs the given process, waits for its completion and returns the exit code.
     /// </summary>
     ///
     /// <param name="cmd">The command which should be run in elevated context.</param>
     /// <param name="args">The process arguments (optional).</param>
-    /// <param name="directory">The working directory (optional).</param>
+    /// <param name="dir">The working directory (optional).</param>
     static member Exec(cmd, ?args, ?dir) =
         Process.shellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
 
@@ -942,7 +942,7 @@ type Shell private () =
     ///
     /// <param name="cmd">The command which should be run in elevated context.</param>
     /// <param name="args">The process arguments (optional).</param>
-    /// <param name="directory">The working directory (optional).</param>
+    /// <param name="dir">The working directory (optional).</param>
     static member AsyncExec(cmd, ?args, ?dir) =
         let internalArgs = Shell.GetParams(cmd, ?args = args, ?dir = dir)
 
