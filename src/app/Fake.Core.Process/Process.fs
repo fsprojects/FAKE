@@ -600,11 +600,24 @@ module Process =
 
         let startRawSync (processStarter: IProcessStarter) c = (startRaw processStarter c).Result
 
-        let startAndAwait (processStarter: IProcessStarter) c =
+        /// Async version: Starts process and awaits completion without blocking
+        /// Preferred over 'run' for async workflows to avoid blocking thread pool threads
+        let startAndAwaitAsync (processStarter: IProcessStarter) c =
             start processStarter c |> Async.AwaitTaskWithoutAggregate
 
+        /// Legacy: Starts process and awaits completion (blocking)
+        /// For backward compatibility - prefer startAndAwaitAsync in new code
+        let startAndAwait (processStarter: IProcessStarter) c =
+            startAndAwaitAsync processStarter c |> Async.RunSynchronously
+
+        /// Async version: Starts process and runs it to completion without blocking
+        /// Preferred over 'run' for async workflows
+        let runAsync (processStarter: IProcessStarter) c = startAndAwaitAsync processStarter c
+
+        /// Legacy: Starts process and runs it to completion (blocking)
+        /// For backward compatibility - prefer runAsync in new code
         let run (processStarter: IProcessStarter) c =
-            startAndAwait processStarter c |> Async.RunSynchronously
+            runAsync processStarter c |> Async.RunSynchronously
 
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
