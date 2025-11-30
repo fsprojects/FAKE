@@ -4,3 +4,4 @@ FSharp.Core
 NETStandard.Library
 MSBuild.StructuredLogger
 BlackFox.VsWhere
+System.Configuration.ConfigurationManager
