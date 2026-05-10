@@ -30,6 +30,9 @@ jobs:
               run: dotnet tool restore
             - name: Install mono (Mac)
               if: runner.os == 'macOS'
+              env:
+                 HOMEBREW_NO_AUTO_UPDATE: '1'
+                 HOMEBREW_NO_INSTALL_CLEANUP: '1'
               run: brew install mono
             - name: remove current fake runner tool
               run: dotnet tool uninstall fake-cli
