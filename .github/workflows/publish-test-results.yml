@@ -23,7 +23,7 @@ jobs:
     steps:
       # Download the Github event file
       - name: Download Event file
-        uses: dawidd6/action-download-artifact@v4
+        uses: dawidd6/action-download-artifact@v21
         with:
           run_id: ${{ github.event.workflow_run.id }}
           path: artifacts
@@ -31,7 +31,7 @@ jobs:
 
       # Download all the test results files
       - name: Download test results
-        uses: dawidd6/action-download-artifact@v4
+        uses: dawidd6/action-download-artifact@v21
         with:
           run_id: ${{ github.event.workflow_run.id }}
           path: test-results
