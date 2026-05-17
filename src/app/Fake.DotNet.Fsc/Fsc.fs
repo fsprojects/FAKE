@@ -481,7 +481,7 @@ module Fsc =
                 | FSharpDiagnosticSeverity.Hidden -> FscResultMessage.Warning e.Message
                 | FSharpDiagnosticSeverity.Info -> FscResultMessage.Warning e.Message)
 
-        errors, exitCode
+        errors, (if exitCode.IsNone then 0 else 1)
 
     /// <summary>
     /// Compiles the given F# source files with the specified parameters.
