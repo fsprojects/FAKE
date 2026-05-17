@@ -218,7 +218,7 @@ let compile (context: FakeContext) outDll =
         |> Seq.toList
 
     let compileErrors = CompilationErrors.ofErrors errors
-    compileErrors, returnCode
+    compileErrors, (if returnCode.IsNone then 0 else 1)
 
 let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
     // FSharp compiler will try to clean up the script directory after running the script.
@@ -245,7 +245,7 @@ let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
         // here we will move the result of compilation to FAKE script directory instead of temporary directory
         try
             File.Move(compilerAssemblyTempPath, wishPath, true)
-        with :? System.IO.IOException as e ->
+        with :? System.IO.IOException ->
             traceError ("Moving to destination " + wishPath)
             reraise ()
 
