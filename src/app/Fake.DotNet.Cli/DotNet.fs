@@ -1766,6 +1766,16 @@ module DotNet =
             /// order of tests execution before the crash.  (<c>--blame</c>)
             Blame: bool
 
+            /// Specifies the project to test via the <c>--project</c> flag (SDK 10+).
+            /// When set, overrides the positional <c>project</c> argument passed to <see cref="test"/>.
+            /// Use this instead of the positional argument when targeting SDK 10+ with Microsoft.Testing.Platform.
+            /// (<c>--project</c>)
+            Project: string option
+
+            /// Specifies the solution to test via the <c>--solution</c> flag (SDK 10+).
+            /// (<c>--solution</c>)
+            Solution: string option
+
             /// Other msbuild specific parameters
             MSBuildParams: MSBuild.CliArguments
         }
@@ -1789,6 +1799,8 @@ module DotNet =
               NoRestore = false
               RunSettingsArguments = None
               Blame = false
+              Project = None
+              Solution = None
               MSBuildParams = MSBuild.CliArguments.Create() }
 
         /// Gets the current environment
@@ -1820,7 +1832,9 @@ module DotNet =
           param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
           param.Collect |> Option.toList |> argList2 "collect"
           param.NoRestore |> argOption "no-restore"
-          param.Blame |> argOption "blame" ]
+          param.Blame |> argOption "blame"
+          param.Project |> Option.toList |> argList2 "project"
+          param.Solution |> Option.toList |> argList2 "solution" ]
         |> List.concat
         |> List.filter (not << String.IsNullOrEmpty)
 
@@ -1834,7 +1848,8 @@ module DotNet =
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
-        let args = project :: buildTestArgs param
+        let positionalArg = if String.IsNullOrEmpty project then [] else [ project ]
+        let args = positionalArg @ buildTestArgs param
         execWithBinLog project param.Common "test" args param.MSBuildParams param.RunSettingsArguments
         __.MarkSuccess()
 
