@@ -468,7 +468,7 @@ module Fsc =
         let scs = FSharpChecker.Create()
         // Always prepend "fsc.exe" since fsc compiler skips the first argument
         let optsArr = Array.append [| "fsc.exe" |] optsArr
-        let errors, exitCode = scs.Compile optsArr |> Async.RunSynchronously
+        let errors, exn = scs.Compile optsArr |> Async.RunSynchronously
 
         /// Better compile reporting thanks to:
         /// https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
@@ -481,7 +481,7 @@ module Fsc =
                 | FSharpDiagnosticSeverity.Hidden -> FscResultMessage.Warning e.Message
                 | FSharpDiagnosticSeverity.Info -> FscResultMessage.Warning e.Message)
 
-        errors, (if exitCode.IsNone then 0 else 1)
+        errors, (if exn.IsNone then 0 else 1)
 
     /// <summary>
     /// Compiles the given F# source files with the specified parameters.

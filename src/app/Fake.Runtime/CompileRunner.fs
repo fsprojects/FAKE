@@ -205,7 +205,7 @@ let compile (context: FakeContext) outDll =
 
     let fsc = FSharpChecker.Create()
 
-    let errors, returnCode =
+    let errors, exn =
         fsc.Compile(("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
 
     let errors =
@@ -218,7 +218,7 @@ let compile (context: FakeContext) outDll =
         |> Seq.toList
 
     let compileErrors = CompilationErrors.ofErrors errors
-    compileErrors, (if returnCode.IsNone then 0 else 1)
+    compileErrors, exn
 
 let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
     // FSharp compiler will try to clean up the script directory after running the script.
@@ -237,11 +237,11 @@ let runUncached (context: FakeContext) : ResultCoreCacheInfo * RunResult =
     let wishPath = context.CachedAssemblyFilePath + ".dll"
     let pdbWishPath = context.CachedAssemblyFilePath + ".pdb"
 
-    let compileErrors, returnCode = compile context compilerAssemblyTempPath
+    let compileErrors, exn = compile context compilerAssemblyTempPath
 
     let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
 
-    if returnCode = 0 then
+    if exn.IsNone then
         // here we will move the result of compilation to FAKE script directory instead of temporary directory
         try
             File.Move(compilerAssemblyTempPath, wishPath, true)
