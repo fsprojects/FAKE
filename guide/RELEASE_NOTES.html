@@ -42,7 +42,7 @@
                 <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
             </a>
             <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-                <span>6.1.4</span>
+                <span>6.1.5</span>
             </div>
             <button
                 class="flex block border-slate-700 md:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
@@ -222,6 +222,19 @@
         <div id="content"
             class="md:w-none min-h-screen mx-auto mt-8 px-4 lg:px-0 lg:mt-20 prose max-w-none md:prose-lg max-w-[50rem] prose-a:no-underline hover:prose-a:text-[#d4b43c]">
             <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="6-1-5-2026-10-11" class="anchor" href="#6-1-5-2026-10-11">6.1.5 - 2026-10-11</a></h2>
+<ul>
+<li>BUGFIX: Fix the parallel target runner hanging when a build is cancelled, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: Fix a race condition when tracking started processes under the parallel target runner, which could leave processes running after Ctrl+C, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: Invalidate the compiled script cache when paket.lock or the resolved dependencies change, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: Honour Environment.ExitCode set by a script in the Fake.netcore runner, consistent with fake-cli, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: VSTest, fail the build when the test host crashes with a negative exit code, even with ErrorLevel.DontFailBuild, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: Fix quoting of commit messages in Git.Commit.exec and Git.Commit.execExtended, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2900">https://github.com/fsprojects/FAKE/pull/2900</a></li>
+<li>BUGFIX: Fix last changelog entry having date removed, thanks @rmunn - <a href="https://github.com/fsprojects/FAKE/pull/2891">https://github.com/fsprojects/FAKE/pull/2891</a></li>
+<li>ENHANCEMENT: Use Aes.Create instead of the obsolete AesManaged and disable TypeNameHandling when reading Vault JSON, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2879">https://github.com/fsprojects/FAKE/pull/2879</a></li>
+<li>ENHANCEMENT: Reduce the polling delay in Process.ensureProcessesHaveStopped, thanks @Thorium - <a href="https://github.com/fsprojects/FAKE/pull/2879">https://github.com/fsprojects/FAKE/pull/2879</a></li>
+<li>ENHANCEMENT: Add GitHub Actions and GitLab to supported build servers in docs, thanks @gdziadkiewicz - <a href="https://github.com/fsprojects/FAKE/pull/2883">https://github.com/fsprojects/FAKE/pull/2883</a></li>
+</ul>
 <h2><a name="6-1-4-2025-10-25" class="anchor" href="#6-1-4-2025-10-25">6.1.4 - 2025-10-25</a></h2>
 <ul>
 <li>BUGFIX: Fixes for the .NET CDN changes described at <a href="https://github.com/dotnet/core/issues/9671,">https://github.com/dotnet/core/issues/9671,</a> thanks @richlander, @Numpsy</li>
@@ -2485,7 +2498,7 @@ New tasks:
                 <div class="mt-10 mx-auto w-full">
                     <p>© FAKE. All rights reserved | Version:
                         <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                            <span>6.1.4</span>
+                            <span>6.1.5</span>
                         </a>
                     </p>
                 </div>
