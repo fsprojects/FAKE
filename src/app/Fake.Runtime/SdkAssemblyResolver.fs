@@ -2,15 +2,11 @@ module Fake.Runtime.SdkAssemblyResolver
 
 open System
 open System.IO
-open System.Net
-open System.Net.Http
-open System.Threading
 open System.Runtime.InteropServices
 open Fake.Core
 open Fake.IO.FileSystemOperators
 open Fake.DotNet
 open Fake.Runtime
-open Newtonsoft.Json
 open Paket
 open Microsoft.Deployment.DotNet.Releases
 
