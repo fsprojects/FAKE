@@ -1688,7 +1688,8 @@ module DotNet =
         __.MarkSuccess()
 
     /// <summary>
-    /// dotnet test command options
+    /// dotnet test command options of the VSTest runner. The options of the Microsoft.Testing.Platform runner
+    /// are in <see cref="T:Fake.DotNet.DotNet.MTPTestOptions"/>.
     /// </summary>
     type TestOptions =
         {
@@ -1826,7 +1827,8 @@ module DotNet =
 
 
     /// <summary>
-    /// Execute dotnet test command
+    /// Execute dotnet test command. Its options are those of the VSTest runner. When <c>global.json</c> selects
+    /// the Microsoft.Testing.Platform runner, use <see cref="M:Fake.DotNet.DotNet.testMTP"/> instead.
     /// </summary>
     ///
     /// <param name="setParams">set test command parameters</param>
@@ -1836,6 +1838,693 @@ module DotNet =
         let param = TestOptions.Create() |> setParams
         let args = project :: buildTestArgs param
         execWithBinLog project param.Common "test" args param.MSBuildParams param.RunSettingsArguments
+        __.MarkSuccess()
+
+    /// <summary>
+    /// Selects what <c>dotnet test</c> runs when <c>global.json</c> selects the Microsoft.Testing.Platform runner,
+    /// see <see cref="M:Fake.DotNet.DotNet.testMTP"/>. That runner takes the target through an option: the
+    /// .NET SDK 10.0.100 rejects a project that is passed as the first argument. Only one of these targets can be
+    /// given for a run.
+    /// </summary>
+    [<RequireQualifiedAccess>]
+    type MTPTestTarget =
+        /// The project or solution of the working directory. No option is passed.
+        | CurrentDirectory
+
+        /// <summary>
+        /// A project file, or a directory that contains one (<c>--project</c>)
+        /// </summary>
+        | Project of path: string
+
+        /// <summary>
+        /// A solution file, or a directory that contains one (<c>--solution</c>)
+        /// </summary>
+        | Solution of path: string
+
+        /// <summary>
+        /// Test applications that are already built, selected by a file globbing expression such as
+        /// <c>**/bin/Release/net10.0/*.Tests.dll</c> (<c>--test-modules</c>). The expression is resolved from the
+        /// working directory, or from the given root directory (<c>--root-directory</c>). No project is evaluated
+        /// for this target, therefore <c>dotnet test</c> rejects it together with
+        /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Configuration"/>,
+        /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Framework"/>,
+        /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Runtime"/>,
+        /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Architecture"/> and
+        /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.OS"/>.
+        /// </summary>
+        | TestModules of expression: string * rootDirectory: string option
+
+    /// <summary>
+    /// How much of the test results <c>dotnet test</c> prints with the Microsoft.Testing.Platform runner
+    /// (<c>--output</c>)
+    /// </summary>
+    [<RequireQualifiedAccess>]
+    type MTPOutputVerbosity =
+        /// <summary>
+        /// Print the failed tests only. The documentation requires Microsoft.Testing.Platform 2.4 for this value,
+        /// and <c>dotnet test</c> of the .NET SDK 10.0.401 does not accept it.
+        /// </summary>
+        | Minimal
+
+        /// Print the failed and the skipped tests. This is what the runner does when nothing is specified.
+        | Normal
+
+        /// Print the passed tests as well.
+        | Detailed
+
+        /// Convert the output verbosity to a string that can be passed to the .NET CLI
+        override this.ToString() =
+            match this with
+            | MTPOutputVerbosity.Minimal -> "Minimal"
+            | MTPOutputVerbosity.Normal -> "Normal"
+            | MTPOutputVerbosity.Detailed -> "Detailed"
+
+    /// <summary>
+    /// The level of the diagnostic log of a Microsoft.Testing.Platform test application
+    /// (<c>--diagnostic-verbosity</c>)
+    /// </summary>
+    [<RequireQualifiedAccess>]
+    type MTPDiagnosticVerbosity =
+        /// The most detailed log. This is what the platform writes when nothing is specified.
+        | Trace
+
+        /// Debugging messages and everything more severe
+        | Debug
+
+        /// Informational messages and everything more severe
+        | Information
+
+        /// Warnings and everything more severe
+        | Warning
+
+        /// Errors and critical errors
+        | Error
+
+        /// Critical errors only
+        | Critical
+
+        /// Convert the diagnostic verbosity to a string that can be passed to the test application
+        override this.ToString() =
+            match this with
+            | MTPDiagnosticVerbosity.Trace -> "Trace"
+            | MTPDiagnosticVerbosity.Debug -> "Debug"
+            | MTPDiagnosticVerbosity.Information -> "Information"
+            | MTPDiagnosticVerbosity.Warning -> "Warning"
+            | MTPDiagnosticVerbosity.Error -> "Error"
+            | MTPDiagnosticVerbosity.Critical -> "Critical"
+
+    /// <summary>
+    /// The diagnostic log that every Microsoft.Testing.Platform test application can write. It is turned on by
+    /// setting <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Diagnostic"/> (<c>--diagnostic</c>); the test
+    /// applications reject the other diagnostic options without it.
+    /// </summary>
+    type MTPDiagnosticOptions =
+        {
+            /// <summary>
+            /// The level of the log, <see cref="T:Fake.DotNet.DotNet.MTPDiagnosticVerbosity.Trace"/> when not set
+            /// (<c>--diagnostic-verbosity</c>)
+            /// </summary>
+            Verbosity: MTPDiagnosticVerbosity option
+
+            /// <summary>
+            /// The directory of the log files, the test results directory when not set
+            /// (<c>--diagnostic-output-directory</c>)
+            /// </summary>
+            OutputDirectory: string option
+
+            /// <summary>
+            /// The prefix of the names of the log files. Microsoft.Testing.Platform has this option since
+            /// version 2.0. (<c>--diagnostic-file-prefix</c>)
+            /// </summary>
+            FilePrefix: string option
+
+            /// <summary>
+            /// Write the log synchronously, so that no entry is lost when the test application crashes. It slows
+            /// the test run down. Microsoft.Testing.Platform has this option since version 2.0.
+            /// (<c>--diagnostic-synchronous-write</c>)
+            /// </summary>
+            SynchronousWrite: bool
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPDiagnosticOptions =
+            { Verbosity = None
+              OutputDirectory = None
+              FilePrefix = None
+              SynchronousWrite = false }
+
+    /// <summary>
+    /// Options of the TRX report extension of Microsoft.Testing.Platform. The report is requested by setting
+    /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.TrxReport"/> (<c>--report-trx</c>). The extension is not a
+    /// part of the platform: a test application that does not reference the
+    /// <c>Microsoft.Testing.Extensions.TrxReport</c> package, directly or through a test framework package that
+    /// brings it, rejects these options as an invalid command line (its exit code is 5), and the test run fails.
+    /// </summary>
+    type MTPTrxReportOptions =
+        {
+            /// <summary>
+            /// The name of the report file, which is written to the test results directory
+            /// (<c>--report-trx-filename</c>)
+            /// </summary>
+            FileName: string option
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPTrxReportOptions = { FileName = None }
+
+    /// <summary>
+    /// The format of the file that the code coverage extension of Microsoft.Testing.Platform writes
+    /// (<c>--coverage-output-format</c>)
+    /// </summary>
+    [<RequireQualifiedAccess>]
+    type MTPCoverageFormat =
+        /// The binary format of Visual Studio. This is what the extension writes when nothing is specified.
+        | Coverage
+
+        /// The XML format of the Microsoft code coverage tools
+        | Xml
+
+        /// The Cobertura XML format
+        | Cobertura
+
+        /// Convert the coverage format to a string that can be passed to the test application
+        override this.ToString() =
+            match this with
+            | MTPCoverageFormat.Coverage -> "coverage"
+            | MTPCoverageFormat.Xml -> "xml"
+            | MTPCoverageFormat.Cobertura -> "cobertura"
+
+    /// <summary>
+    /// Options of the code coverage extension of Microsoft.Testing.Platform. Coverage is collected by setting
+    /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.CodeCoverage"/> (<c>--coverage</c>). The extension is not a
+    /// part of the platform: a test application that does not reference the
+    /// <c>Microsoft.Testing.Extensions.CodeCoverage</c> package, directly or through a test framework package
+    /// that brings it, rejects these options as an invalid command line (its exit code is 5), and the test run
+    /// fails.
+    /// </summary>
+    type MTPCodeCoverageOptions =
+        {
+            /// <summary>
+            /// The name or the path of the coverage file. A name without a directory is placed into the test
+            /// results directory. (<c>--coverage-output</c>)
+            /// </summary>
+            Output: string option
+
+            /// <summary>
+            /// The format of the coverage file (<c>--coverage-output-format</c>)
+            /// </summary>
+            OutputFormat: MTPCoverageFormat option
+
+            /// <summary>
+            /// The path of the XML file with the code coverage settings (<c>--coverage-settings</c>)
+            /// </summary>
+            Settings: string option
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPCodeCoverageOptions =
+            { Output = None
+              OutputFormat = None
+              Settings = None }
+
+    /// <summary>
+    /// The kind of the memory dump that the crash dump and the hang dump extensions of Microsoft.Testing.Platform
+    /// write (<c>--crashdump-type</c>, <c>--hangdump-type</c>)
+    /// </summary>
+    [<RequireQualifiedAccess>]
+    type MTPDumpType =
+        /// A small dump with the module list, the thread list, the exception information and all stacks
+        | Mini
+
+        /// A large dump that also has the handle information and all memory except for the mapped images
+        | Heap
+
+        /// The same as the small dump, but without personal information such as paths and passwords
+        | Triage
+
+        /// The largest dump with all memory, including the module images. This is what the extensions write when
+        /// nothing is specified.
+        | Full
+
+        /// Convert the dump type to a string that can be passed to the test application
+        override this.ToString() =
+            match this with
+            | MTPDumpType.Mini -> "Mini"
+            | MTPDumpType.Heap -> "Heap"
+            | MTPDumpType.Triage -> "Triage"
+            | MTPDumpType.Full -> "Full"
+
+    /// <summary>
+    /// Options of the crash dump extension of Microsoft.Testing.Platform. A dump of a crashed test application
+    /// is requested by setting <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.CrashDump"/> (<c>--crashdump</c>).
+    /// The extension is not a part of the platform: a test application that does not reference the
+    /// <c>Microsoft.Testing.Extensions.CrashDump</c> package rejects these options as an invalid command line (its
+    /// exit code is 5), and the test run fails.
+    /// </summary>
+    type MTPCrashDumpOptions =
+        {
+            /// <summary>
+            /// The name of the dump file (<c>--crashdump-filename</c>)
+            /// </summary>
+            FileName: string option
+
+            /// <summary>
+            /// The kind of the dump (<c>--crashdump-type</c>)
+            /// </summary>
+            DumpType: MTPDumpType option
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPCrashDumpOptions = { FileName = None; DumpType = None }
+
+    /// <summary>
+    /// Options of the hang dump extension of Microsoft.Testing.Platform. A dump of a test application that
+    /// stopped making progress is requested by setting
+    /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.HangDump"/> (<c>--hangdump</c>). The extension is not a part
+    /// of the platform: a test application that does not reference the
+    /// <c>Microsoft.Testing.Extensions.HangDump</c> package rejects these options as an invalid command line (its
+    /// exit code is 5), and the test run fails.
+    /// </summary>
+    type MTPHangDumpOptions =
+        {
+            /// <summary>
+            /// The name of the dump file (<c>--hangdump-filename</c>)
+            /// </summary>
+            FileName: string option
+
+            /// <summary>
+            /// The time without any activity after which the dump is written, 30 minutes when not set. It is passed
+            /// in whole seconds. (<c>--hangdump-timeout</c>)
+            /// </summary>
+            Timeout: TimeSpan option
+
+            /// <summary>
+            /// The kind of the dump (<c>--hangdump-type</c>)
+            /// </summary>
+            DumpType: MTPDumpType option
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPHangDumpOptions =
+            { FileName = None
+              Timeout = None
+              DumpType = None }
+
+    /// <summary>
+    /// dotnet test command options for the Microsoft.Testing.Platform runner, see
+    /// <see cref="M:Fake.DotNet.DotNet.testMTP"/>. With that runner <c>dotnet test</c> understands only a part of
+    /// the options itself and passes the others to the test applications. Every test application understands the
+    /// options of the platform. An option of a test framework or of an extension is rejected as an invalid command
+    /// line by a test application that does not reference that framework or extension, and the test run fails;
+    /// the documentation of each such field names what is needed.
+    /// </summary>
+    type MTPTestOptions =
+        {
+            /// <summary>
+            /// Common tool options. Its <see cref="P:Fake.DotNet.DotNet.Options.Verbosity"/> is the verbosity of
+            /// the build (<c>--verbosity</c>), and its <see cref="P:Fake.DotNet.DotNet.Options.CustomParams"/> are
+            /// placed in front of all other arguments of <c>dotnet test</c>.
+            /// </summary>
+            Common: Options
+
+            /// <summary>
+            /// Configuration to use for building and running the tests, <c>Debug</c> for most projects when not
+            /// set (<c>--configuration</c>)
+            /// </summary>
+            Configuration: BuildConfiguration option
+
+            /// <summary>
+            /// Target framework to run the tests for. The target framework has to be specified in the project
+            /// file. (<c>--framework</c>)
+            /// </summary>
+            Framework: string option
+
+            /// <summary>
+            /// Target runtime to run the tests for (<c>--runtime</c>)
+            /// </summary>
+            Runtime: string option
+
+            /// <summary>
+            /// Target architecture, a shorthand that is combined with the runtime of the machine (<c>--arch</c>)
+            /// </summary>
+            Architecture: string option
+
+            /// <summary>
+            /// Target operating system, a shorthand that is combined with the runtime of the machine
+            /// (<c>--os</c>)
+            /// </summary>
+            OS: string option
+
+            /// <summary>
+            /// Does not do an implicit restore when executing the command (<c>--no-restore</c>)
+            /// </summary>
+            NoRestore: bool
+
+            /// <summary>
+            /// Do not build the project before testing. Implies
+            /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.NoRestore"/>. (<c>--no-build</c>)
+            /// </summary>
+            NoBuild: bool
+
+            /// <summary>
+            /// MSBuild properties for the evaluation and the build of the test projects
+            /// (<c>--property:name=value</c>). There is no field for other MSBuild parameters, because
+            /// <c>dotnet test</c> does not take them with this runner: it hands switches such as
+            /// <c>/nodeReuse:False</c> over to the test applications, which reject them.
+            /// </summary>
+            Properties: (string * string) list
+
+            /// <summary>
+            /// The maximum number of test applications that run in parallel, the number of processors when not
+            /// set (<c>--max-parallel-test-modules</c>)
+            /// </summary>
+            MaxParallelTestModules: int option
+
+            /// <summary>
+            /// Lists the discovered tests instead of running them (<c>--list-tests</c>)
+            /// </summary>
+            ListTests: bool
+
+            /// <summary>
+            /// The minimum number of tests that have to run in the whole test run; with fewer tests the run fails
+            /// with the exit code 9 (<c>--minimum-expected-tests</c>)
+            /// </summary>
+            MinimumExpectedTests: int option
+
+            /// <summary>
+            /// The directory where the test results are going to be placed. The specified directory will be
+            /// created if it does not exist. (<c>--results-directory</c>)
+            /// </summary>
+            ResultsDirectory: string option
+
+            /// <summary>
+            /// The <c>testconfig.json</c> file to use for the test run (<c>--config-file</c>)
+            /// </summary>
+            ConfigFile: string option
+
+            /// <summary>
+            /// Do not use <c>launchSettings.json</c> to configure the test applications
+            /// (<c>--no-launch-profile</c>)
+            /// </summary>
+            NoLaunchProfile: bool
+
+            /// <summary>
+            /// Do not use the arguments that the launch profile specifies (<c>--no-launch-profile-arguments</c>)
+            /// </summary>
+            NoLaunchProfileArguments: bool
+
+            /// <summary>
+            /// Disables the progress indicator (<c>--no-progress</c>)
+            /// </summary>
+            NoProgress: bool
+
+            /// <summary>
+            /// Disables ANSI escape characters in the output (<c>--no-ansi</c>)
+            /// </summary>
+            NoAnsi: bool
+
+            /// <summary>
+            /// How much of the test results is printed (<c>--output</c>)
+            /// </summary>
+            Output: MTPOutputVerbosity option
+
+            /// <summary>
+            /// Run the tests that match the given expression (<c>--filter</c>). This is an option of the test
+            /// framework, not of the platform. MSTest and NUnit take the filter expressions of VSTest, see
+            /// https://aka.ms/vstest-filtering. Other frameworks have their own options, for example
+            /// <c>--filter-class</c> of xUnit.net v3; pass those through
+            /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.ApplicationArguments"/>.
+            /// </summary>
+            Filter: string option
+
+            /// <summary>
+            /// The time after which a test application stops its test run. This is an option of the platform,
+            /// so the time is counted for every test application on its own. It is passed in whole seconds.
+            /// Not to be confused with <see cref="P:Fake.DotNet.DotNet.Options.Timeout"/> of
+            /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Common"/>, which kills the <c>dotnet</c> process.
+            /// (<c>--timeout</c>)
+            /// </summary>
+            Timeout: TimeSpan option
+
+            /// <summary>
+            /// Exit codes of a test application that are not treated as a failure, for example <c>8</c> when a
+            /// test application that runs no tests is fine. The codes are listed at
+            /// https://aka.ms/testingplatform/exitcodes. This is an option of the platform.
+            /// (<c>--ignore-exit-code</c>)
+            /// </summary>
+            IgnoreExitCodes: int list
+
+            /// <summary>
+            /// Makes the test applications write a diagnostic log. This is an option of the platform.
+            /// (<c>--diagnostic</c>)
+            /// </summary>
+            Diagnostic: MTPDiagnosticOptions option
+
+            /// <summary>
+            /// Writes a TRX report. Needs the TRX report extension, see
+            /// <see cref="T:Fake.DotNet.DotNet.MTPTrxReportOptions"/>. (<c>--report-trx</c>)
+            /// </summary>
+            TrxReport: MTPTrxReportOptions option
+
+            /// <summary>
+            /// Collects code coverage. Needs the code coverage extension, see
+            /// <see cref="T:Fake.DotNet.DotNet.MTPCodeCoverageOptions"/>. (<c>--coverage</c>)
+            /// </summary>
+            CodeCoverage: MTPCodeCoverageOptions option
+
+            /// <summary>
+            /// Writes a memory dump when a test application crashes. Needs the crash dump extension, see
+            /// <see cref="T:Fake.DotNet.DotNet.MTPCrashDumpOptions"/>. (<c>--crashdump</c>)
+            /// </summary>
+            CrashDump: MTPCrashDumpOptions option
+
+            /// <summary>
+            /// Writes a memory dump when a test application stops making progress. Needs the hang dump
+            /// extension, see <see cref="T:Fake.DotNet.DotNet.MTPHangDumpOptions"/>. (<c>--hangdump</c>)
+            /// </summary>
+            HangDump: MTPHangDumpOptions option
+
+            /// <summary>
+            /// More arguments for the test applications, passed as they are after the options above. Use them for
+            /// the options of a test framework or of an extension that have no field here, for example
+            /// <c>[ "--retry-failed-tests"; "3" ]</c>. Arguments for <c>dotnet test</c> itself go to
+            /// <see cref="P:Fake.DotNet.DotNet.Options.CustomParams"/> of
+            /// <see cref="P:Fake.DotNet.DotNet.MTPTestOptions.Common"/>.
+            /// </summary>
+            ApplicationArguments: string list
+        }
+
+        /// Parameter default values.
+        static member Create() : MTPTestOptions =
+            { Common = Options.Create()
+              Configuration = None
+              Framework = None
+              Runtime = None
+              Architecture = None
+              OS = None
+              NoRestore = false
+              NoBuild = false
+              Properties = []
+              MaxParallelTestModules = None
+              ListTests = false
+              MinimumExpectedTests = None
+              ResultsDirectory = None
+              ConfigFile = None
+              NoLaunchProfile = false
+              NoLaunchProfileArguments = false
+              NoProgress = false
+              NoAnsi = false
+              Output = None
+              Filter = None
+              Timeout = None
+              IgnoreExitCodes = []
+              Diagnostic = None
+              TrxReport = None
+              CodeCoverage = None
+              CrashDump = None
+              HangDump = None
+              ApplicationArguments = [] }
+
+        /// Gets the current environment
+        member x.Environment = x.Common.Environment
+
+        /// Sets the current environment variables.
+        member x.WithEnvironment map =
+            { x with Common = { x.Common with Environment = map } }
+
+        /// Sets a value indicating whether the output for the given process is redirected.
+        member x.WithRedirectOutput shouldRedirect =
+            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f = { x with Common = f x.Common }
+
+    // A missing or blank value yields no arguments at all: neither an option without its value nor an empty
+    // argument may reach the command line, a test application rejects both.
+    let private argNotBlank name (value: string option) =
+        match value with
+        | Some value when not (String.IsNullOrWhiteSpace value) -> [ "--" + name; value ]
+        | _ -> []
+
+    // Whole seconds, because a fraction is not understood everywhere: the hang dump extension 2.2.3 rejects "90.5s".
+    let private buildMTPDurationArg (value: TimeSpan) =
+        sprintf "%ds" (int64 (Math.Ceiling value.TotalSeconds))
+
+    let internal buildMTPTestArgs (target: MTPTestTarget) (param: MTPTestOptions) =
+        let required caseName (value: string) =
+            if String.IsNullOrWhiteSpace value then
+                invalidArg
+                    "target"
+                    (sprintf
+                        "MTPTestTarget.%s needs a value. Use MTPTestTarget.CurrentDirectory to test the project or solution of the working directory."
+                        caseName)
+
+            value
+
+        let targetArgs =
+            match target with
+            | MTPTestTarget.CurrentDirectory -> []
+            | MTPTestTarget.Project path -> [ "--project"; required "Project" path ]
+            | MTPTestTarget.Solution path -> [ "--solution"; required "Solution" path ]
+            | MTPTestTarget.TestModules (expression, rootDirectory) ->
+                [ "--test-modules"; required "TestModules" expression ]
+                @ argNotBlank "root-directory" rootDirectory
+
+        // The options that dotnet test itself knows. They stay in front of the "--" below, because the position
+        // can change the meaning: the documentation of dotnet test says that "--minimum-expected-tests" counts the
+        // whole test run in front of the "--" and every test application behind it.
+        let sdkArgs =
+            [ param.Configuration |> Option.map string |> argNotBlank "configuration"
+              param.Framework |> argNotBlank "framework"
+              param.Runtime |> argNotBlank "runtime"
+              param.Architecture |> argNotBlank "arch"
+              param.OS |> argNotBlank "os"
+              param.NoRestore |> argOption "no-restore"
+              param.NoBuild |> argOption "no-build"
+              param.Properties
+              |> List.map (fun (name, value) -> sprintf "--property:%s=%s" name (MSBuild.escapePropertyValue value))
+              param.MaxParallelTestModules
+              |> Option.map string
+              |> argNotBlank "max-parallel-test-modules"
+              param.ListTests |> argOption "list-tests"
+              param.MinimumExpectedTests
+              |> Option.map string
+              |> argNotBlank "minimum-expected-tests"
+              param.ResultsDirectory |> argNotBlank "results-directory"
+              param.ConfigFile |> argNotBlank "config-file"
+              param.NoLaunchProfile |> argOption "no-launch-profile"
+              param.NoLaunchProfileArguments |> argOption "no-launch-profile-arguments"
+              param.NoProgress |> argOption "no-progress"
+              param.NoAnsi |> argOption "no-ansi"
+              param.Output |> Option.map string |> argNotBlank "output"
+              param.Diagnostic
+              |> Option.bind (fun diagnostic -> diagnostic.OutputDirectory)
+              |> argNotBlank "diagnostic-output-directory" ]
+            |> List.concat
+
+        let diagnosticArgs (diagnostic: MTPDiagnosticOptions) =
+            [ [ "--diagnostic" ]
+              diagnostic.Verbosity |> Option.map string |> argNotBlank "diagnostic-verbosity"
+              diagnostic.FilePrefix |> argNotBlank "diagnostic-file-prefix"
+              diagnostic.SynchronousWrite |> argOption "diagnostic-synchronous-write" ]
+            |> List.concat
+
+        let trxReportArgs (trxReport: MTPTrxReportOptions) =
+            "--report-trx" :: argNotBlank "report-trx-filename" trxReport.FileName
+
+        let codeCoverageArgs (codeCoverage: MTPCodeCoverageOptions) =
+            [ [ "--coverage" ]
+              codeCoverage.Output |> argNotBlank "coverage-output"
+              codeCoverage.OutputFormat
+              |> Option.map string
+              |> argNotBlank "coverage-output-format"
+              codeCoverage.Settings |> argNotBlank "coverage-settings" ]
+            |> List.concat
+
+        let crashDumpArgs (crashDump: MTPCrashDumpOptions) =
+            [ [ "--crashdump" ]
+              crashDump.FileName |> argNotBlank "crashdump-filename"
+              crashDump.DumpType |> Option.map string |> argNotBlank "crashdump-type" ]
+            |> List.concat
+
+        let hangDumpArgs (hangDump: MTPHangDumpOptions) =
+            [ [ "--hangdump" ]
+              hangDump.FileName |> argNotBlank "hangdump-filename"
+              hangDump.Timeout
+              |> Option.map buildMTPDurationArg
+              |> argNotBlank "hangdump-timeout"
+              hangDump.DumpType |> Option.map string |> argNotBlank "hangdump-type" ]
+            |> List.concat
+
+        // The options that dotnet test does not know and hands over to every test application.
+        let applicationArgs =
+            [ param.Filter |> argNotBlank "filter"
+              param.Timeout |> Option.map buildMTPDurationArg |> argNotBlank "timeout"
+              (match param.IgnoreExitCodes with
+               | [] -> []
+               | exitCodes -> [ "--ignore-exit-code"; exitCodes |> List.map string |> String.concat ";" ])
+              param.Diagnostic |> Option.map diagnosticArgs |> Option.defaultValue []
+              param.TrxReport |> Option.map trxReportArgs |> Option.defaultValue []
+              param.CodeCoverage |> Option.map codeCoverageArgs |> Option.defaultValue []
+              param.CrashDump |> Option.map crashDumpArgs |> Option.defaultValue []
+              param.HangDump |> Option.map hangDumpArgs |> Option.defaultValue []
+              param.ApplicationArguments |> List.filter (not << String.IsNullOrWhiteSpace) ]
+            |> List.concat
+
+        // dotnet test hands over everything it does not know anyway. The explicit "--" keeps that stable: an
+        // option of a test application keeps its meaning when a later SDK gives the same name to an option of
+        // its own, which the documentation of the .NET 11 SDK announces for "--timeout".
+        match applicationArgs with
+        | [] -> targetArgs @ sdkArgs
+        | _ -> targetArgs @ sdkArgs @ ("--" :: applicationArgs)
+
+    /// <summary>
+    /// Execute dotnet test command with the Microsoft.Testing.Platform runner, which <c>dotnet test</c> of the
+    /// .NET SDK 10 and later uses when <c>global.json</c> contains
+    /// <c>"test": { "runner": "Microsoft.Testing.Platform" }</c>. That runner has other options than the VSTest
+    /// runner of <see cref="M:Fake.DotNet.DotNet.test"/>, see
+    /// <see cref="T:Fake.DotNet.DotNet.MTPTestOptions"/>. Fails when <c>dotnet test</c> exits with a code other
+    /// than 0.
+    /// </summary>
+    ///
+    /// <param name="setParams">set test command parameters</param>
+    /// <param name="target">the project, the solution or the test applications to test</param>
+    ///
+    /// <example>
+    /// <code lang="fsharp">
+    /// DotNet.testMTP
+    ///     (fun options ->
+    ///         { options with
+    ///             NoBuild = true
+    ///             Configuration = Some DotNet.BuildConfiguration.Release
+    ///             ResultsDirectory = Some "TestResults"
+    ///             CodeCoverage =
+    ///                 Some
+    ///                     { DotNet.MTPCodeCoverageOptions.Create() with
+    ///                         OutputFormat = Some DotNet.MTPCoverageFormat.Cobertura } })
+    ///     (DotNet.MTPTestTarget.Project "tests/MyProject.Tests/MyProject.Tests.fsproj")
+    /// </code>
+    /// </example>
+    let testMTP (setParams: MTPTestOptions -> MTPTestOptions) (target: MTPTestTarget) =
+        let param = MTPTestOptions.Create() |> setParams
+
+        let description =
+            match target with
+            | MTPTestTarget.CurrentDirectory -> param.Common.WorkingDirectory
+            | MTPTestTarget.Project path
+            | MTPTestTarget.Solution path -> path
+            | MTPTestTarget.TestModules (expression, _) -> expression
+
+        use __ = Trace.traceTask "DotNet:test" description
+        let args = buildMTPTestArgs target param
+        let result = execArgsList (fun _ -> param.Common) "test" args
+
+        if not result.OK then
+            failwithf
+                "'dotnet test' of '%s' failed with exit code %d. The exit codes of Microsoft.Testing.Platform are listed at https://aka.ms/testingplatform/exitcodes"
+                description
+                result.ExitCode
+
         __.MarkSuccess()
 
     let internal buildNugetPushArgs (param: NuGet.NuGetPushParams) =
