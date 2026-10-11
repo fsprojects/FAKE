@@ -607,11 +607,15 @@ module Process =
 
         let startRawSync (processStarter: IProcessStarter) c = (startRaw processStarter c).Result
 
-        let startAndAwait (processStarter: IProcessStarter) c =
+        let startAndAwaitAsync (processStarter: IProcessStarter) c =
             start processStarter c |> Async.AwaitTaskWithoutAggregate
 
+        let startAndAwait (processStarter: IProcessStarter) c = startAndAwaitAsync processStarter c
+
+        let runAsync (processStarter: IProcessStarter) c = startAndAwaitAsync processStarter c
+
         let run (processStarter: IProcessStarter) c =
-            startAndAwait processStarter c |> Async.RunSynchronously
+            runAsync processStarter c |> Async.RunSynchronously
 
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
@@ -1141,6 +1145,22 @@ module Proc =
     /// <param name="c">The create process instance</param>
     let startAndAwait c =
         Process.Proc.startAndAwait Process.processStarter c
+
+    /// <summary>
+    /// Async alias for <c>startAndAwait</c> to make the non-blocking API explicit.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
+    let startAndAwaitAsync c =
+        Process.Proc.startAndAwaitAsync Process.processStarter c
+
+    /// <summary>
+    /// Like <c>startAndAwait</c> but named explicitly as an async operation.
+    /// </summary>
+    ///
+    /// <param name="c">The create process instance</param>
+    let runAsync c =
+        Process.Proc.runAsync Process.processStarter c
 
     /// <summary>
     /// Like <c>start</c> but waits for the result synchronously.
