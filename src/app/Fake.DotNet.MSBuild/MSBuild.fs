@@ -732,6 +732,21 @@ module MSBuild =
             |> Seq.append references
             |> Set.ofSeq
 
+    // see https://github.com/fsharp/FAKE/issues/2112
+    let internal escapePropertyValue (v: string) =
+        // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
+        v
+            .Replace("%", "%25")
+            .Replace("\\", "%5C")
+            .Replace("\"", "%22")
+            .Replace(";", "%3B")
+            .Replace(",", "%2C")
+            .Replace("$", "%24")
+            .Replace("@", "%40")
+            .Replace("'", "%27")
+            .Replace("?", "%3F")
+            .Replace("*", "%2A")
+
     let internal fromCliArguments (p: CliArguments) =
         let verbosityName v =
             match v with
@@ -745,21 +760,6 @@ module MSBuild =
             match p.Targets with
             | [] -> None
             | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
-
-        // see https://github.com/fsharp/FAKE/issues/2112
-        let escapePropertyValue (v: string) =
-            // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
-            v
-                .Replace("%", "%25")
-                .Replace("\\", "%5C")
-                .Replace("\"", "%22")
-                .Replace(";", "%3B")
-                .Replace(",", "%2C")
-                .Replace("$", "%24")
-                .Replace("@", "%40")
-                .Replace("'", "%27")
-                .Replace("?", "%3F")
-                .Replace("*", "%2A")
 
         let properties =
             p.Properties

@@ -46,6 +46,75 @@ DotNet.restore (fun args ->
 
 More on [*API Documentation*](/reference/fake-dotnet-dotnet.html)
 
+## Run tests
+
+`DotNet.test` runs `dotnet test` with the options of the VSTest runner, which `dotnet test` uses by default:
+
+```fsharp
+DotNet.test
+    (fun options ->
+        { options with
+            NoBuild = true
+            Logger = Some "trx" })
+    "tests/MyProject.Tests/MyProject.Tests.fsproj"
+```
+
+### Tests on Microsoft.Testing.Platform
+
+Since the .NET SDK 10, `dotnet test` has a second runner for test applications that are built on
+[*Microsoft.Testing.Platform*](https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro),
+for example MSTest, NUnit, xUnit.net v3 or TUnit projects that use that platform. The `global.json` file selects it:
+
+```json
+{
+  "test": {
+    "runner": "Microsoft.Testing.Platform"
+  }
+}
+```
+
+With that runner `dotnet test` has
+[*another command line*](https://learn.microsoft.com/dotnet/core/tools/dotnet-test-mtp): the project is named by
+`--project` instead of being the first argument, and the options of VSTest such as `--logger` or `--collect` do not
+exist. `DotNet.test` fails with that runner, because it passes the project as the first argument and adds MSBuild
+switches that the runner hands over to the test applications. Use `DotNet.testMTP` instead:
+
+```fsharp
+DotNet.testMTP
+    (fun options ->
+        { options with
+            NoBuild = true
+            Configuration = Some DotNet.BuildConfiguration.Release
+            ResultsDirectory = Some "TestResults"
+            TrxReport = Some(DotNet.MTPTrxReportOptions.Create())
+            CodeCoverage =
+                Some
+                    { DotNet.MTPCodeCoverageOptions.Create() with
+                        OutputFormat = Some DotNet.MTPCoverageFormat.Cobertura } })
+    (DotNet.MTPTestTarget.Project "tests/MyProject.Tests/MyProject.Tests.fsproj")
+```
+
+This runs
+
+```shell
+dotnet test --project tests/MyProject.Tests/MyProject.Tests.fsproj --configuration Release --no-build --results-directory TestResults -- --report-trx --coverage --coverage-output-format cobertura
+```
+
+- The second argument selects what is tested: `DotNet.MTPTestTarget.Project`, `DotNet.MTPTestTarget.Solution`,
+  `DotNet.MTPTestTarget.TestModules` for test applications that are already built, or
+  `DotNet.MTPTestTarget.CurrentDirectory` for the project or solution of the working directory.
+- The options behind the `--` are passed to the test applications. The TRX report, the code coverage, the crash dump
+  and the hang dump are extensions of the platform: a test application that does not reference the package of the
+  extension rejects its options, and the test run fails. The API documentation of `DotNet.MTPTrxReportOptions`,
+  `DotNet.MTPCodeCoverageOptions`, `DotNet.MTPCrashDumpOptions` and `DotNet.MTPHangDumpOptions` names the package.
+- Options that have no field go to `ApplicationArguments` when they belong to a test framework or to an extension,
+  for example `ApplicationArguments = [ "--filter-class"; "MyNamespace.MyTests" ]` for xUnit.net v3, and to
+  `Common.CustomParams` when they belong to `dotnet test`.
+- Of the MSBuild parameters only properties can be passed (`Properties`), because with that runner `dotnet test`
+  hands other MSBuild switches such as `/nodeReuse:False` over to the test applications, which reject them. FAKE
+  does not attach its binary log to this command either: build the projects with `DotNet.build` first if you rely
+  on FAKE to report the warnings and errors of the build to the build server.
+
 ## SDK tools (local, global, cli-reference)
 
 Some dotnet SDK based tools support project or path based installation. These tools have a `ToolType` parameter in addition to 
