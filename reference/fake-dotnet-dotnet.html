@@ -42,7 +42,7 @@
             <span class="text-lg text-slate-900 font-bold hover:text-[#d4b43c]">FAKE</span>
         </a>
         <div class="border border-l-2 border-l-[#d4b43c] ml-10 p-1 px-2 rounded-r">
-            <span>6.1.5</span>
+            <span>6.2.0</span>
         </div>
         <button class="flex block border-slate-700 lg:hidden hover:border-[#d4b43c] text-slate-700 hover:text-[#d4b43c]"
                 @click="open = true">
@@ -670,6 +670,390 @@
         <tr>
           <td class="fsdocs-entity-name">
             <p>
+              <a name="MTPCodeCoverageOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpcodecoverageoptions.html">
+                  MTPCodeCoverageOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPCodeCoverageOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPCodeCoverageOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2025-2025" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Options of the code coverage extension of Microsoft.Testing.Platform. Coverage is collected by setting
+ <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions.CodeCoverage</a> (<code>--coverage</code>). The extension is not a
+ part of the platform: a test application that does not reference the
+ <code>Microsoft.Testing.Extensions.CodeCoverage</code> package, directly or through a test framework package
+ that brings it, rejects these options as an invalid command line (its exit code is 5), and the test run
+ fails.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPCoverageFormat">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpcoverageformat.html">
+                  MTPCoverageFormat
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPCoverageFormat`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPCoverageFormat\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2000-2000" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The format of the file that the code coverage extension of Microsoft.Testing.Platform writes
+ (<code>--coverage-output-format</code>)
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPCrashDumpOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpcrashdumpoptions.html">
+                  MTPCrashDumpOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPCrashDumpOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPCrashDumpOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2084-2084" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Options of the crash dump extension of Microsoft.Testing.Platform. A dump of a crashed test application
+ is requested by setting <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions.CrashDump</a> (<code>--crashdump</code>).
+ The extension is not a part of the platform: a test application that does not reference the
+ <code>Microsoft.Testing.Extensions.CrashDump</code> package rejects these options as an invalid command line (its
+ exit code is 5), and the test run fails.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPDiagnosticOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpdiagnosticoptions.html">
+                  MTPDiagnosticOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPDiagnosticOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPDiagnosticOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1941-1941" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The diagnostic log that every Microsoft.Testing.Platform test application can write. It is turned on by
+ setting <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions.Diagnostic</a> (<code>--diagnostic</code>); the test
+ applications reject the other diagnostic options without it.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPDiagnosticVerbosity">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpdiagnosticverbosity.html">
+                  MTPDiagnosticVerbosity
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPDiagnosticVerbosity`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPDiagnosticVerbosity\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1907-1907" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The level of the diagnostic log of a Microsoft.Testing.Platform test application
+ (<code>--diagnostic-verbosity</code>)
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPDumpType">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpdumptype.html">
+                  MTPDumpType
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPDumpType`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPDumpType\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2055-2055" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ The kind of the memory dump that the crash dump and the hang dump extensions of Microsoft.Testing.Platform
+ write (<code>--crashdump-type</code>, <code>--hangdump-type</code>)
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPHangDumpOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtphangdumpoptions.html">
+                  MTPHangDumpOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPHangDumpOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPHangDumpOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2108-2108" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Options of the hang dump extension of Microsoft.Testing.Platform. A dump of a test application that
+ stopped making progress is requested by setting
+ <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions.HangDump</a> (<code>--hangdump</code>). The extension is not a part
+ of the platform: a test application that does not reference the
+ <code>Microsoft.Testing.Extensions.HangDump</code> package rejects these options as an invalid command line (its
+ exit code is 5), and the test run fails.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPOutputVerbosity">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtpoutputverbosity.html">
+                  MTPOutputVerbosity
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPOutputVerbosity`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPOutputVerbosity\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1882-1882" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ How much of the test results <code>dotnet test</code> prints with the Microsoft.Testing.Platform runner
+ (<code>--output</code>)
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPTestOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">
+                  MTPTestOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPTestOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPTestOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2141-2141" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ dotnet test command options for the Microsoft.Testing.Platform runner, see
+ <a href="https://fake.build/reference/fake-dotnet-dotnet.html">DotNet.testMTP</a>. With that runner <code>dotnet test</code> understands only a part of
+ the options itself and passes the others to the test applications. Every test application understands the
+ options of the platform. An option of a test framework or of an extension is rejected as an invalid command
+ line by a test application that does not reference that framework or extension, and the test run fails;
+ the documentation of each such field names what is needed.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPTestTarget">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptesttarget.html">
+                  MTPTestTarget
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPTestTarget`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPTestTarget\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1850-1850" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Selects what <code>dotnet test</code> runs when <code>global.json</code> selects the Microsoft.Testing.Platform runner,
+ see <a href="https://fake.build/reference/fake-dotnet-dotnet.html">DotNet.testMTP</a>. That runner takes the target through an option: the
+ .NET SDK 10.0.100 rejects a project that is passed as the first argument. Only one of these targets can be
+ given for a run.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
+              <a name="MTPTrxReportOptions">
+                <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptrxreportoptions.html">
+                  MTPTrxReportOptions
+                </a>
+              </a>
+            </p>
+          </td>
+          <td class="fsdocs-entity-xmldoc">
+            <div>
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:T:Fake.DotNet.DotNet.MTPTrxReportOptions`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'T:Fake.DotNet.DotNet.MTPTrxReportOptions\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1983-1983" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Options of the TRX report extension of Microsoft.Testing.Platform. The report is requested by setting
+ <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions.TrxReport</a> (<code>--report-trx</code>). The extension is not a
+ part of the platform: a test application that does not reference the
+ <code>Microsoft.Testing.Extensions.TrxReport</code> package, directly or through a test framework package that
+ brings it, rejects these options as an invalid command line (its exit code is 5), and the test run fails.
+ 
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-entity-name">
+            <p>
               <a name="NewLanguage">
                 <a href="https://fake.build/reference/fake-dotnet-dotnet-newlanguage.html">
                   NewLanguage
@@ -687,7 +1071,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1915-1915" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2604-2604" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -719,7 +1103,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1930-1930" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2619-2619" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -751,7 +1135,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1859-1859" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2548-2548" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -910,7 +1294,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1968-1968" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2657-2657" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -942,7 +1326,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1985-1985" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2674-2674" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -974,13 +1358,14 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1693-1693" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1694-1694" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
               <p class="fsdocs-summary">
                 
- dotnet test command options
+ dotnet test command options of the VSTest runner. The options of the Microsoft.Testing.Platform runner
+ are in <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a>.
  
               </p>
             </div>
@@ -2010,7 +2395,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2041-2041" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2730-2730" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -2222,7 +2607,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2024-2024" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2713-2713" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -2316,7 +2701,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1893-1893" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2582-2582" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -2914,13 +3299,14 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1834-1834" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L1836-1836" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
               <p class="fsdocs-summary">
                 
- Execute dotnet test command
+ Execute dotnet test command. Its options are those of the VSTest runner. When <code>global.json</code> selects
+ the Microsoft.Testing.Platform runner, use <a href="https://fake.build/reference/fake-dotnet-dotnet.html">DotNet.testMTP</a> instead.
  
               </p>
             </div>
@@ -2957,6 +3343,122 @@
             <div>
               <code onmouseout="hideTip(event, '623', 623)" onmouseover="showTip(event, '623', 623)">
                 <p>
+                  <a id="testMTP">
+                    <a href="#testMTP">
+                      <code><span>DotNet.testMTP&#32;<span>setParams&#32;target</span></span></code>
+                    </a>
+                  </a>
+                </p>
+              </code>
+              <div class="fsdocs-tip" id="623">
+                <div class="member-tooltip">
+                  Full Usage: 
+                  <code><span>DotNet.testMTP&#32;<span>setParams&#32;target</span></span></code>
+                  <br/>
+                  <br/>
+                  Parameters: 
+                  <ul>
+                    <span>
+                      <b>
+                        setParams
+                      </b>
+                      :
+                      <code><span><a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a>&#32;->&#32;<a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a></span></code>
+                       - 
+                      set test command parameters
+                    </span>
+                    <br/>
+                    <span>
+                      <b>
+                        target
+                      </b>
+                      :
+                      <code><a href="https://fake.build/reference/fake-dotnet-dotnet-mtptesttarget.html">MTPTestTarget</a></code>
+                       - 
+                      the project, the solution or the test applications to test
+                    </span>
+                    <br/>
+                  </ul>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="fsdocs-member-xmldoc">
+            <div class="fsdocs-summary">
+              <div class="fsdocs-source-link" title="Copy signature (Markdown)" onclick="Clipboard_CopyTo('`cref:M:Fake.DotNet.DotNet.testMTP`')">
+                <img src="https://fake.build/content/img/copy-md.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-md-hover.png" class="hover"/>
+              </div>
+              <div class="fsdocs-source-link" title="Copy signature (XML)" onclick="Clipboard_CopyTo('<see cref=\'M:Fake.DotNet.DotNet.testMTP\'/>')">
+                <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
+                <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
+              </div>
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2508-2508" class="fsdocs-source-link" title="Source on GitHub">
+                <img src="https://fake.build/content/img/github.png" class="normal"/>
+                <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
+              </a>
+              <p class="fsdocs-summary">
+                
+ Execute dotnet test command with the Microsoft.Testing.Platform runner, which <code>dotnet test</code> of the
+ .NET SDK 10 and later uses when <code>global.json</code> contains
+ <code>&quot;test&quot;: { &quot;runner&quot;: &quot;Microsoft.Testing.Platform&quot; }</code>. That runner has other options than the VSTest
+ runner of <a href="https://fake.build/reference/fake-dotnet-dotnet.html">DotNet.test</a>, see
+ <a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a>. Fails when <code>dotnet test</code> exits with a code other
+ than 0.
+ 
+              </p>
+            </div>
+            <dl class="fsdocs-params">
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  setParams
+                </span>
+                :
+                <code><span><a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a>&#32;->&#32;<a href="https://fake.build/reference/fake-dotnet-dotnet-mtptestoptions.html">MTPTestOptions</a></span></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  set test command parameters
+                </p>
+              </dd>
+              <dt class="fsdocs-param">
+                <span class="fsdocs-param-name">
+                  target
+                </span>
+                :
+                <code><a href="https://fake.build/reference/fake-dotnet-dotnet-mtptesttarget.html">MTPTestTarget</a></code>
+              </dt>
+              <dd class="fsdocs-param-docs">
+                <p>
+                  the project, the solution or the test applications to test
+                </p>
+              </dd>
+            </dl>
+            <h5 class="fsdocs-example-header">
+              Example
+            </h5>
+            <p class="fsdocs-example" id="example">
+              <pre><code class="fsharp language-fsharp">
+ DotNet.testMTP
+     (fun options -&gt;
+         { options with
+             NoBuild = true
+             Configuration = Some DotNet.BuildConfiguration.Release
+             ResultsDirectory = Some &quot;TestResults&quot;
+             CodeCoverage =
+                 Some
+                     { DotNet.MTPCodeCoverageOptions.Create() with
+                         OutputFormat = Some DotNet.MTPCoverageFormat.Cobertura } })
+     (DotNet.MTPTestTarget.Project &quot;tests/MyProject.Tests/MyProject.Tests.fsproj&quot;)</code></pre>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fsdocs-member-usage">
+            <div>
+              <code onmouseout="hideTip(event, '624', 624)" onmouseover="showTip(event, '624', 624)">
+                <p>
                   <a id="tryGetSDKVersionFromGlobalJson">
                     <a href="#tryGetSDKVersionFromGlobalJson">
                       <code><span>DotNet.tryGetSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
@@ -2964,7 +3466,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="623">
+              <div class="fsdocs-tip" id="624">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>DotNet.tryGetSDKVersionFromGlobalJson&#32;<span>()</span></span></code>
@@ -3036,7 +3538,7 @@
         <tr>
           <td class="fsdocs-member-usage">
             <div>
-              <code onmouseout="hideTip(event, '624', 624)" onmouseover="showTip(event, '624', 624)">
+              <code onmouseout="hideTip(event, '625', 625)" onmouseover="showTip(event, '625', 625)">
                 <p>
                   <a id="uninstallTemplate">
                     <a href="#uninstallTemplate">
@@ -3045,7 +3547,7 @@
                   </a>
                 </p>
               </code>
-              <div class="fsdocs-tip" id="624">
+              <div class="fsdocs-tip" id="625">
                 <div class="member-tooltip">
                   Full Usage: 
                   <code><span>DotNet.uninstallTemplate&#32;<span>templateName</span></span></code>
@@ -3079,7 +3581,7 @@
                 <img src="https://fake.build/content/img/copy-xml.png" class="normal"/>
                 <img src="https://fake.build/content/img/copy-xml-hover.png" class="hover"/>
               </div>
-              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2058-2058" class="fsdocs-source-link" title="Source on GitHub">
+              <a href="https://github.com/fsprojects/Fake/tree/master/src/app/Fake.DotNet.Cli/DotNet.fs#L2747-2747" class="fsdocs-source-link" title="Source on GitHub">
                 <img src="https://fake.build/content/img/github.png" class="normal"/>
                 <img src="https://fake.build/content/img/github-hover.png" class="hover"/>
               </a>
@@ -3175,7 +3677,7 @@
             <div class="mt-10 mx-auto w-full">
                 <p>© FAKE. All rights reserved | Version:
                     <a class="hover:text-[#d4b43c]" href="https://github.com/fsprojects/FAKE/releases">
-                        <span>6.1.5</span>
+                        <span>6.2.0</span>
                     </a>
                 </p>
             </div>
