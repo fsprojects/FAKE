@@ -1,4 +1,7 @@
 # Release Notes
+## 6.2.0 - 2026-10-11
+* ENHANCEMENT: Add DotNet.testMTP to run dotnet test with the Microsoft.Testing.Platform runner of the .NET SDK 10, thanks @xperiandri - https://github.com/fsprojects/FAKE/pull/2903
+
 ## 6.1.5 - 2026-10-11
 * BUGFIX: Fix the parallel target runner hanging when a build is cancelled, thanks @Thorium - https://github.com/fsprojects/FAKE/pull/2900
 * BUGFIX: Fix a race condition when tracking started processes under the parallel target runner, which could leave processes running after Ctrl+C, thanks @Thorium - https://github.com/fsprojects/FAKE/pull/2900
