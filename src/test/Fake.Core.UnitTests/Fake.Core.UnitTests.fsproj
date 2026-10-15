@@ -29,7 +29,6 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Paket\Fake.DotNet.Paket.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.NUnit\Fake.DotNet.Testing.NUnit.fsproj" />
-    <ProjectReference Include="..\..\app\Fake.DotNet.Testing.SpecFlow\Fake.DotNet.Testing.SpecFlow.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Xdt\Fake.DotNet.Xdt.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Testing.ReportGenerator\Fake.Testing.ReportGenerator.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Testing.SonarQube\Fake.Testing.SonarQube.fsproj" />
@@ -64,7 +63,6 @@
     <Compile Include="Fake.DotNet.Paket.fs" />
     <Compile Include="Fake.DotNet.Testing.NUnit.fs" />
     <Compile Include="Fake.DotNet.Testing.VSTest.fs" />
-    <Compile Include="Fake.DotNet.Testing.SpecFlow.fs" />
     <Compile Include="Fake.DotNet.Testing.Coverlet.fs" />
     <Compile Include="Fake.DotNet.Fsi.fs" />
     <Compile Include="Fake.DotNet.Xdt.fs" />
