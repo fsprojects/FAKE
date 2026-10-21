@@ -136,7 +136,7 @@ module DotNet =
     /// Get .NET Core SDK download uri
     /// </summary>
     let private getGenericDotNetCliInstallerUrl branch installerName =
-        sprintf "https://raw.githubusercontent.com/dotnet/cli/%s/scripts/obtain/%s" branch installerName
+        sprintf "https://raw.githubusercontent.com/dotnet/install-scripts/%s/src/%s" branch installerName
 
     let private getPowershellDotNetCliInstallerUrl branch =
         getGenericDotNetCliInstallerUrl branch "dotnet-install.ps1"
@@ -188,7 +188,7 @@ module DotNet =
         /// Parameter default values.
         static member Default =
             { AlwaysDownload = false
-              Branch = "master"
+              Branch = "main"
               CustomDownloadDir = None }
 
     /// <summary>
