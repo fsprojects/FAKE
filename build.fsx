@@ -813,7 +813,11 @@ runtimes
                         OutputPath = Some outDir 
                         Framework = Some "net6.0"
                         // DisableInternalBinLog: https://github.com/fsprojects/FAKE/issues/2722
-                        MSBuildParams = { MSBuild.CliArguments.Create() with DisableInternalBinLog = true }}
+                        MSBuildParams =
+                            { MSBuild.CliArguments.Create() with
+                                DisableInternalBinLog = true
+                                Properties = [ ("Version", nugetVersion) ] } }
+
                     |> dotnetSimple)
                 proj
 
